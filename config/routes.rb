@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :transactions
+  resources :transactions do 
+    collection do 
+      get :autocomplete
+    end
+  end
   root to: 'transactions#index'
 end
