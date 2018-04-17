@@ -1,13 +1,14 @@
-<nav class="navbar navbar-expand-md navbar-light bg-faded">
+<nav class="navbar navbar-expand-md navbar-light bg-faded bg-dark navbar-custom">
   <div class="container">
-    <%= link_to "Spark", root_path, class: "navbar-brand" %>
+    <%= link_to "BestSecrectPlaces.com", root_path, class: "navbar-brand" %>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <%= form_with(url: transactions_path, class: "form-inline my-2 my-lg-0 mr-auto", local: true, method: :get) do |f| %>
-        <%= f.text_field :near, class: "form-control mr-sm-2", placeholder: "Search" %>
+      <%= form_with(url: transactions_path, class: "form-inline my-lg-2 mr-auto", local: true, method: :get) do |f| %>
+
+        <%= f.text_field :near, id: "q", class: "form-control mr-sm-2 my-lg-12", placeholder: "Search" %>
         <%= f.submit "Search", class: "btn btn-outline-secondary my-2 my-sm-0" %>
       <% end %>
 

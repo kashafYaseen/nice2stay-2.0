@@ -63,5 +63,7 @@ gem 'webpacker', '~> 1.1'
 gem 'sidekiq', '~> 5.0'
 gem 'foreman', '~> 0.84.0'
 
+gem 'jquery-ui-rails'
+
 gem 'geocoder'
 gem 'searchkick'

@@ -2,7 +2,8 @@ class Transaction < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-  searchkick locations: [:location]
+  searchkick locations: [:location], text_start: [:city]
+ 
 
   def address
     [street, city, zip, state].compact.join(", ")
