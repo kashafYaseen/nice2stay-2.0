@@ -3,10 +3,13 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   # GET /transactions.json
+  
+
   def index
+   
     @transactions = if params[:l]
                       sw_lat, sw_lng, ne_lat, ne_lng = params[:l].split(",")
-                      Transaction.search("*", page: params[:page], per_page: 8, where: {
+                      Transaction.search("*", aggs: [:beds, :baths], page: params[:page], per_page: 10, order: {price: {order: "asc"}}, where: {
                         location: {
                           top_left: {
                             lat: ne_lat,
@@ -22,7 +25,7 @@ class TransactionsController < ApplicationController
                       #Transaction.near(params[:near]).page(params[:page]).per(5)
 
                       location = Geocoder.search(params[:near]).first
-                      Transaction.search "*", page: params[:page], per_page: 8,
+                      Transaction.search "*", page: params[:page], aggs: [:beds, :baths], per_page: 8,
                         boost_by_distance: {location: {origin: {lat: location.latitude, lon: location.longitude}}},
                         where: {
                           location: {
@@ -30,11 +33,13 @@ class TransactionsController < ApplicationController
                               lat: location.latitude,
                               lon: location.longitude
                             },
-                            within: "5mi"
+                            within: "3mi"
                           }
                         }
                     else
-                      Transaction.all.page(params[:page]).per(5)
+
+                      Transaction.facets_search(params)
+                  
                     end
   end
 
@@ -92,6 +97,10 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def snippet_params
+    params.require(:transaction).permit(:street, :city, :zip, :state, :beds, :baths, :sq__ft, :sale_date, :price, :latitude, :longitude)
+  end
+
   def autocomplete
     render json: Transaction.search(params[:term], fields: [{city: :text_start}], limit: 10).map(&:city)
   end
@@ -104,6 +113,6 @@ class TransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.require(:transaction).permit(:street, :city, :zip, :state, :beds, :baths, :sq__ft, :sale_date, :price, :latitude, :longitude)
+      params.require(:transaction).permit(:image, :street, :city, :zip, :state, :beds, :baths, :sq__ft, :sale_date, :price, :latitude, :longitude)
     end
 end

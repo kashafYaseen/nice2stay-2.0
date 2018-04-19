@@ -15,5 +15,19 @@ class Transaction < ApplicationRecord
 
   def search_data
     attributes.merge location: { lat: latitude, lon: longitude }
+
   end
+
+  def self.facets_search(params)
+    query = params[:query].presence || "*"
+    conditions = {}
+    conditions[:beds] = params[:beds] if params[:beds].present?
+    conditions[:baths] = params[:baths] if params[:baths].present?
+
+    transactions = Transaction.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page]
+      
+end
+
+  mount_uploader :image, ImageUploader
+
 end
