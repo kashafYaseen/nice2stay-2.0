@@ -66,4 +66,4 @@ gem 'foreman', '~> 0.84.0'
 gem 'jquery-ui-rails'
 
 gem 'geocoder'
-gem 'searchkick'
+gem 'searchkick', '~> 3.0.2'
