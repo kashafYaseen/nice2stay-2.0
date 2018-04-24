@@ -1,18 +1,5 @@
 
-
-
-
-<%= form_with(url: transactions_path, class: "form-inline my-lg-2 mr-auto", local: true, method: :get) do |f| %>
-	
-	
-	<%= f.check_box :beds%>
-	<%= f.submit "Search", class: "btn btn-outline-secondary my-2 my-sm-0" %>
- <% end %>
-
-
 <h6> Found: <b><%= @transactions.total_count %></b></h6>
-
-
 
 
 <%= tag.div id: "transactions-list", data: { transactions: @transactions.to_json(methods: [:address]), l: params[:l] } do %>
