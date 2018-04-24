@@ -11,6 +11,8 @@ gem 'rails', '~> 5.1.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 
+gem 'bootstrap-typeahead-rails'
+
 gem 'carrierwave'
 
 # Use Puma as the app server
