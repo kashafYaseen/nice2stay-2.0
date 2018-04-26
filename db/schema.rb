@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417105634) do
+ActiveRecord::Schema.define(version: 20180425083540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,10 @@ ActiveRecord::Schema.define(version: 20180417105634) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+    t.integer "transaction_type", default: 1
+    t.integer "adults", default: 1
+    t.integer "children", default: 1
+    t.integer "infants", default: 1
   end
 
   create_table "users", force: :cascade do |t|
