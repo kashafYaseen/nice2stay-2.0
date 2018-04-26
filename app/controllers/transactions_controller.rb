@@ -4,43 +4,8 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   
-
   def index
-   
-    @transactions = if params[:l]
-                      sw_lat, sw_lng, ne_lat, ne_lng = params[:l].split(",")
-                      Transaction.search("*", aggs: [:beds, :baths], page: params[:page], per_page: 10, order: {price: {order: "asc"}}, where: {
-                        location: {
-                          top_left: {
-                            lat: ne_lat,
-                            lon: sw_lng
-                          },
-                          bottom_right: {
-                            lat: sw_lat,
-                            lon: ne_lng
-                          }
-                        }
-                      })
-                    elsif params[:near]
-                      #Transaction.near(params[:near]).page(params[:page]).per(5)
-
-                      location = Geocoder.search(params[:near]).first
-                      Transaction.search "*", page: params[:page], aggs: [:beds, :baths], per_page: 8,
-                        boost_by_distance: {location: {origin: {lat: location.latitude, lon: location.longitude}}},
-                        where: {
-                          location: {
-                            near: {
-                              lat: location.latitude,
-                              lon: location.longitude
-                            },
-                            within: "3mi"
-                          }
-                        }
-                    else
-
-                      Transaction.facets_search(params)
-                  
-                    end
+    @transactions = SearchTransactions.call(params)
   end
 
   # GET /transactions/1
