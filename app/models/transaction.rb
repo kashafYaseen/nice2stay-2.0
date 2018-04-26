@@ -1,9 +1,15 @@
 class Transaction < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
+  mount_uploader :image, ImageUploader
 
   searchkick locations: [:location], text_start: [:city]
- 
+
+  enum transaction_type: {
+    villa: 1,
+    apartment: 2,
+    bnb: 3,
+  }
 
   def address
     [street, city, zip, state].compact.join(", ")
@@ -15,19 +21,5 @@ class Transaction < ApplicationRecord
 
   def search_data
     attributes.merge location: { lat: latitude, lon: longitude }
-
   end
-
-  def self.facets_search(params)
-    query = params[:query].presence || "*"
-    conditions = {}
-    conditions[:beds] = params[:beds] if params[:beds].present?
-    conditions[:baths] = params[:baths] if params[:baths].present?
-
-    transactions = Transaction.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page]
-      
-end
-
-  mount_uploader :image, ImageUploader
-
 end

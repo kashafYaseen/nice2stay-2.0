@@ -1,8 +1,6 @@
-
-<h6> Found: <b><%= @transactions.total_count %></b></h6>
-
-
 <%= tag.div id: "transactions-list", data: { transactions: @transactions.to_json(methods: [:address]), l: params[:l] } do %>
+  <h6> Found: <b><%= @transactions.total_count %></b></h6>
+
   <% @transactions.each do |transaction| %>
     <div>
     	<%= image_tag(transaction.image_url(:middle).to_s) %>
@@ -15,4 +13,8 @@
   <% end %>
 
   <%= paginate @transactions, theme: 'twitter-bootstrap-4', remote: true %>
+<% end %>
+
+<%= content_for :js_init do %>
+  $(".dropdown-toggle").dropdown();
 <% end %>

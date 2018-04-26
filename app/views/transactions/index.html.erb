@@ -1,3 +1,44 @@
+<div class="row mb-5">
+  <div class="dropdown col-sm-1">
+    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+      Type
+    </button>
+
+    <div class="dropdown-menu">
+      <%= form_tag transactions_path, method: :get do %>
+        <% Transaction.transaction_types.each do |key, value| %>
+          <label>
+            <%= check_box_tag "transaction_type_in[]", key, is_checked?(key) %>
+            <span><%= key %></span>
+          </label>
+          <br>
+        <% end %>
+
+        <%= submit_tag 'Apply', class: 'float-right' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="dropdown col-sm-1">
+    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+      Guests
+    </button>
+
+    <div class="dropdown-menu">
+      <%= form_tag transactions_path, method: :get do %>
+        <label>Adults</label>
+        <%= number_field_tag :adults, params[:adults], min: 0 %>
+        <label>Children</label>
+        <%= number_field_tag :children, params[:children], min: 0 %>
+        <label>Babies</label>
+        <%= number_field_tag :babies, params[:babies], min: 0 %>
+
+        <%= submit_tag 'Apply', class: 'float-right' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-lg-6 col-sm-12">
     <%= render partial: "list" %>
