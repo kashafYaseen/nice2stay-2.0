@@ -1,5 +1,6 @@
 class Lodging < ApplicationRecord
   has_many :reservations
+  has_many :availabilities
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -24,7 +25,7 @@ class Lodging < ApplicationRecord
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
-      booking_date: reservations.pluck(:booking_date)
+      available_on: availabilities.pluck(:available_on)
     )
   end
 end
