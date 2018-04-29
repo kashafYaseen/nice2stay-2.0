@@ -23,7 +23,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <%= hidden_field_tag :lodging_id, lodging.id %>
+          <%= f.hidden_field :lodging_id, value: lodging.id %>
           <%= f.label :check_in %>
           <%= f.date_field :check_in %>
           <div class="clearfix"></div>

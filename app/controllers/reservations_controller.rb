@@ -2,7 +2,8 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    if current_user.reservations.create(reservation_params)
+    reservation = current_user.reservations.new(reservation_params)
+    if reservation.save
       flash[:notice] = "The lodging was successfully reserved."
     else
       flash[:alert] = "Something went wrong"
