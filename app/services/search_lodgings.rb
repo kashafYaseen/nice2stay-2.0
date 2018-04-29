@@ -10,8 +10,6 @@ class SearchLodgings
   end
 
   def call
-    return search_locations_in_frame if params[:l].present?
-    return search_near if params[:near].present?
     Lodging.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page]
   end
 
@@ -23,19 +21,15 @@ class SearchLodgings
 
     def conditions
       conditions = {}
-      conditions[:beds] = { gte: params[:beds] } if params[:beds].present?
-      conditions[:baths] = { gte: params[:baths] } if params[:baths].present?
-      conditions[:adults] = { gte: params[:adults] } if params[:adults].present?
-      conditions[:children] = { gte: params[:children] } if params[:children].present?
-      conditions[:babies] = { gte: params[:babies] } if params[:babies].present?
+      conditions[:beds]         = { gte: params[:beds] } if params[:beds].present?
+      conditions[:baths]        = { gte: params[:baths] } if params[:baths].present?
+      conditions[:adults]       = { gte: params[:adults] } if params[:adults].present?
+      conditions[:children]     = { gte: params[:children] } if params[:children].present?
+      conditions[:babies]       = { gte: params[:babies] } if params[:babies].present?
       conditions[:lodging_type] = { all: params[:lodging_type_in] } if params[:lodging_type_in].present?
+      conditions[:location]     = near_condition if params[:near].present?
+      conditions[:location]     = frame_coordinates if params[:l].present?
       conditions
-    end
-
-    def search_locations_in_frame
-      Lodging.search(query, where: conditions, aggs: [:beds, :baths], page: params[:page], per_page: 10, order: {price: {order: "asc"}}, where: {
-        location: frame_coordinates
-      })
     end
 
     def frame_coordinates
@@ -52,18 +46,14 @@ class SearchLodgings
       }
     end
 
-    def search_near
+    def near_condition
       location = Geocoder.search(params[:near]).first
-      Lodging.search query, where: conditions, page: params[:page], aggs: [:beds, :baths], per_page: 10,
-        boost_by_distance: {location: {origin: {lat: location.latitude, lon: location.longitude}}},
-        where: {
-          location: {
-            near: {
-              lat: location.latitude,
-              lon: location.longitude
-            },
-            within: "3mi"
-          }
-        }
+      {
+        near: {
+          lat: location.latitude,
+          lon: location.longitude
+        },
+        within: "3mi"
+      }
     end
 end
