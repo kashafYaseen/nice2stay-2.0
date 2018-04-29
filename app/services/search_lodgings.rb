@@ -26,7 +26,8 @@ class SearchLodgings
       conditions[:adults]       = { gte: params[:adults] } if params[:adults].present?
       conditions[:children]     = { gte: params[:children] } if params[:children].present?
       conditions[:babies]       = { gte: params[:babies] } if params[:babies].present?
-      conditions[:lodging_type] = { all: params[:lodging_type_in] } if params[:lodging_type_in].present?
+      conditions[:lodging_type] = params[:lodging_type_in] if params[:lodging_type_in].present?
+      conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
       conditions[:location]     = frame_coordinates if params[:l].present?
       conditions
@@ -54,6 +55,14 @@ class SearchLodgings
           lon: location.longitude
         },
         within: "3mi"
+      }
+    end
+
+    def availability_condition
+      check_in = params[:check_in].presence || params[:check_out]
+      check_out = params[:check_out].presence || params[:check_in]
+      {
+        all: (check_in..check_out).map(&:to_s)
       }
     end
 end
