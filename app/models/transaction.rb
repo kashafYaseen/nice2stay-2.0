@@ -1,4 +1,6 @@
 class Transaction < ApplicationRecord
+  has_many :reservations
+
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
   mount_uploader :image, ImageUploader
@@ -20,6 +22,9 @@ class Transaction < ApplicationRecord
   end
 
   def search_data
-    attributes.merge location: { lat: latitude, lon: longitude }
+    attributes.merge(
+      location: { lat: latitude, lon: longitude },
+      booking_date: reservations.pluck(:booking_date)
+    )
   end
 end
