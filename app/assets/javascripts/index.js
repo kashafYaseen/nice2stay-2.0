@@ -51,4 +51,12 @@ document.addEventListener("turbolinks:load", function() {
 
     Turbolinks.visit(`/lodgings?l=${location}`);
   });
+
+
+  map.addListener("zoom_changed", function() {
+    var bounds = map.getBounds();
+    var location = bounds.getSouthWest().toUrlValue() + "," + bounds.getNorthEast().toUrlValue();
+
+    Turbolinks.visit(`/lodgings?l=${location}`);
+  });
 });
