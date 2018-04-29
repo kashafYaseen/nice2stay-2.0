@@ -6,6 +6,7 @@ class LodgingsController < ApplicationController
 
   def index
     @lodgings = SearchLodgings.call(params)
+    @reservation = Reservation.new
   end
 
   # GET /lodgings/1

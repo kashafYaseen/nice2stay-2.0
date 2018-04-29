@@ -23,4 +23,6 @@ Rails.application.routes.draw do
     end
   end
   root to: 'lodgings#index'
+
+  resources :reservations, only: [:create]
 end
