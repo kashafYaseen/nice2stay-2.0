@@ -41,8 +41,11 @@
 
         <%= hidden_field_tag :check_in, params[:check_in] if params[:check_in].present? %>
         <%= hidden_field_tag :check_out, params[:check_out] if params[:check_out].present? %>
-        <% params[:lodging_type_in].each do |lodging_type| %>
-          <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
+
+        <% if params[:lodging_type_in].present? %>
+          <% params[:lodging_type_in].each do |lodging_type| %>
+            <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
+          <% end %>
         <% end %>
 
         <%= submit_tag 'Apply', class: 'float-right' %>
@@ -65,8 +68,11 @@
         <%= hidden_field_tag :adults, params[:adults] if params[:adults].present? %>
         <%= hidden_field_tag :children, params[:children] if params[:children].present? %>
         <%= hidden_field_tag :babies, params[:babies] if params[:babies].present? %>
-        <% params[:lodging_type_in].each do |lodging_type| %>
-          <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
+
+        <% if params[:lodging_type_in].present? %>
+          <% params[:lodging_type_in].each do |lodging_type| %>
+            <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
+          <% end %>
         <% end %>
 
         <%= submit_tag 'Apply', class: 'float-right' %>
