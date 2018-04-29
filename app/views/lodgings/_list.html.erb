@@ -1,0 +1,20 @@
+<%= tag.div id: "lodgings-list", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } do %>
+  <h6> Found: <b><%= @lodgings.total_count %></b></h6>
+
+  <% @lodgings.each do |lodging| %>
+    <div>
+      <%= image_tag(lodging.image_url(:middle).to_s) %>
+      <br>
+      <h7><%= link_to lodging.address, lodging %></h7>
+      <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %> <%= lodging.sq__ft %> sqft</div>
+      <div>Sold: <%= l lodging.sale_date.to_date %> for <%= number_to_currency lodging.price %></div>
+    </div>
+    <hr />
+  <% end %>
+
+  <%= paginate @lodgings, theme: 'twitter-bootstrap-4', remote: true %>
+<% end %>
+
+<%= content_for :js_init do %>
+  $(".dropdown-toggle").dropdown();
+<% end %>

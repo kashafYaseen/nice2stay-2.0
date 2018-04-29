@@ -1,4 +1,4 @@
-class Transaction < ApplicationRecord
+class Lodging < ApplicationRecord
   has_many :reservations
 
   geocoded_by :address
@@ -7,7 +7,7 @@ class Transaction < ApplicationRecord
 
   searchkick locations: [:location], text_start: [:city]
 
-  enum transaction_type: {
+  enum lodging_type: {
     villa: 1,
     apartment: 2,
     bnb: 3,

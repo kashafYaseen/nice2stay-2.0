@@ -24,24 +24,14 @@ ActiveRecord::Schema.define(version: 20180429093813) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "reservations", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "transaction_id"
-    t.date "booking_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["transaction_id"], name: "index_reservations_on_transaction_id"
-    t.index ["user_id"], name: "index_reservations_on_user_id"
-  end
-
-  create_table "transactions", force: :cascade do |t|
+  create_table "lodgings", force: :cascade do |t|
     t.string "street"
     t.string "city"
     t.string "zip"
     t.string "state"
-    t.string "beds"
-    t.string "baths"
-    t.string "sq__ft"
+    t.integer "beds"
+    t.integer "baths"
+    t.float "sq__ft"
     t.datetime "sale_date"
     t.integer "price"
     t.float "latitude"
@@ -49,10 +39,20 @@ ActiveRecord::Schema.define(version: 20180429093813) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
-    t.integer "transaction_type", default: 1
+    t.integer "lodging_type", default: 1
     t.integer "adults", default: 1
     t.integer "children", default: 1
     t.integer "infants", default: 1
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "lodging_id"
+    t.date "booking_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,6 +76,6 @@ ActiveRecord::Schema.define(version: 20180429093813) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "reservations", "transactions"
+  add_foreign_key "reservations", "lodgings"
   add_foreign_key "reservations", "users"
 end

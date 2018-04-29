@@ -8,8 +8,8 @@
 
 require 'csv'
 
-Transaction.destroy_all
+Lodging.destroy_all
 
-CSV.foreach("db/Sacramentorealestatetransactions.csv", headers: true) do |line|
-  Transaction.create! line.to_hash.except(*%w{type latitude longitude})
+CSV.foreach("db/Sacramentorealestatelodgings.csv", headers: true) do |line|
+  Lodging.create! line.to_hash.except(*%w{type latitude longitude})
 end

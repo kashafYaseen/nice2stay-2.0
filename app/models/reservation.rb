@@ -1,10 +1,10 @@
 class Reservation < ApplicationRecord
   belongs_to :user
-  belongs_to :transaction
+  belongs_to :lodging
 
-  after_commit :reindex_transaction
+  after_commit :reindex_lodging
 
-  def reindex_transaction
-    transaction.reindex
+  def reindex_lodging
+    lodging.reindex
   end
 end

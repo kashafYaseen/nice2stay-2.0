@@ -5,6 +5,6 @@
 
 jQuery ->
   $("#q").autocomplete(
-    source: "/transactions/autocomplete",
+    source: "/lodgings/autocomplete",
     minLength: 1
   )

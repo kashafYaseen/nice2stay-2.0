@@ -1,4 +1,4 @@
-class SearchTransactions
+class SearchLodgings
   attr_reader :params
 
   def self.call(params)
@@ -12,7 +12,7 @@ class SearchTransactions
   def call
     return search_locations_in_frame if params[:l].present?
     return search_near if params[:near].present?
-    Transaction.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page]
+    Lodging.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page]
   end
 
   private
@@ -28,12 +28,12 @@ class SearchTransactions
       conditions[:adults] = { gte: params[:adults] } if params[:adults].present?
       conditions[:children] = { gte: params[:children] } if params[:children].present?
       conditions[:babies] = { gte: params[:babies] } if params[:babies].present?
-      conditions[:transaction_type] = { all: params[:transaction_type_in] } if params[:transaction_type_in].present?
+      conditions[:lodging_type] = { all: params[:lodging_type_in] } if params[:lodging_type_in].present?
       conditions
     end
 
     def search_locations_in_frame
-      Transaction.search(query, where: conditions, aggs: [:beds, :baths], page: params[:page], per_page: 10, order: {price: {order: "asc"}}, where: {
+      Lodging.search(query, where: conditions, aggs: [:beds, :baths], page: params[:page], per_page: 10, order: {price: {order: "asc"}}, where: {
         location: frame_coordinates
       })
     end
@@ -54,7 +54,7 @@ class SearchTransactions
 
     def search_near
       location = Geocoder.search(params[:near]).first
-      Transaction.search query, where: conditions, page: params[:page], aggs: [:beds, :baths], per_page: 10,
+      Lodging.search query, where: conditions, page: params[:page], aggs: [:beds, :baths], per_page: 10,
         boost_by_distance: {location: {origin: {lat: location.latitude, lon: location.longitude}}},
         where: {
           location: {

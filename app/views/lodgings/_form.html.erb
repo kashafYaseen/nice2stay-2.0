@@ -1,10 +1,10 @@
-<%= form_with(model: transaction, local: true) do |form| %>
-  <% if transaction.errors.any? %>
+<%= form_with(model: lodging, local: true) do |form| %>
+  <% if lodging.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+      <h2><%= pluralize(lodging.errors.count, "error") %> prohibited this lodging from being saved:</h2>
 
       <ul>
-      <% transaction.errors.full_messages.each do |message| %>
+      <% lodging.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,57 +13,57 @@
 
   <div class="field">
     <%= form.label :street %>
-    <%= form.text_field :street, id: :transaction_street %>
+    <%= form.text_field :street, id: :lodging_street %>
   </div>
 
   <div class="field">
     <%= form.label :city %>
-    <%= form.text_field :city, id: :transaction_city %>
+    <%= form.text_field :city, id: :lodging_city %>
   </div>
 
   <div class="field">
     <%= form.label :zip %>
-    <%= form.text_field :zip, id: :transaction_zip %>
+    <%= form.text_field :zip, id: :lodging_zip %>
   </div>
 
   <div class="field">
     <%= form.label :state %>
-    <%= form.text_field :state, id: :transaction_state %>
+    <%= form.text_field :state, id: :lodging_state %>
   </div>
 
   <div class="field">
     <%= form.label :beds %>
-    <%= form.text_field :beds, id: :transaction_beds %>
+    <%= form.text_field :beds, id: :lodging_beds %>
   </div>
 
   <div class="field">
     <%= form.label :baths %>
-    <%= form.text_field :baths, id: :transaction_baths %>
+    <%= form.text_field :baths, id: :lodging_baths %>
   </div>
 
   <div class="field">
     <%= form.label :sq__ft %>
-    <%= form.text_field :sq__ft, id: :transaction_sq__ft %>
+    <%= form.text_field :sq__ft, id: :lodging_sq__ft %>
   </div>
 
   <div class="field">
     <%= form.label :sale_date %>
-    <%= form.datetime_select :sale_date, id: :transaction_sale_date %>
+    <%= form.datetime_select :sale_date, id: :lodging_sale_date %>
   </div>
 
   <div class="field">
     <%= form.label :price %>
-    <%= form.number_field :price, id: :transaction_price %>
+    <%= form.number_field :price, id: :lodging_price %>
   </div>
 
   <div class="field">
     <%= form.label :latitude %>
-    <%= form.text_field :latitude, id: :transaction_latitude %>
+    <%= form.text_field :latitude, id: :lodging_latitude %>
   </div>
 
   <div class="field">
     <%= form.label :longitude %>
-    <%= form.text_field :longitude, id: :transaction_longitude %>
+    <%= form.text_field :longitude, id: :lodging_longitude %>
   </div>
 
   <div class="field">

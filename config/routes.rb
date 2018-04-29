@@ -17,10 +17,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :transactions do 
+  resources :lodgings do
     collection do 
       get :autocomplete
     end
   end
-  root to: 'transactions#index'
+  root to: 'lodgings#index'
 end
