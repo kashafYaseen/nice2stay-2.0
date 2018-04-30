@@ -25,7 +25,7 @@ class SearchLodgings
       conditions[:baths]        = { gte: params[:baths] } if params[:baths].present?
       conditions[:adults]       = { gte: params[:adults] } if params[:adults].present?
       conditions[:children]     = { gte: params[:children] } if params[:children].present?
-      conditions[:babies]       = { gte: params[:babies] } if params[:babies].present?
+      conditions[:infants]       = { gte: params[:infants] } if params[:infants].present?
       conditions[:lodging_type] = params[:lodging_type_in] if params[:lodging_type_in].present?
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?

@@ -33,12 +33,32 @@
 
   <div class="field">
     <%= form.label :beds %>
-    <%= form.text_field :beds, id: :lodging_beds %>
+    <%= form.number_field :beds, id: :lodging_beds, min: 0 %>
   </div>
 
   <div class="field">
     <%= form.label :baths %>
-    <%= form.text_field :baths, id: :lodging_baths %>
+    <%= form.number_field :baths, id: :lodging_baths, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :adults %>
+    <%= form.number_field :adults, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :children %>
+    <%= form.number_field :children, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :infants %>
+    <%= form.number_field :infants, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lodging_type %>
+    <%= form.select :lodging_type, Lodging.lodging_types.keys %>
   </div>
 
   <div class="field">
