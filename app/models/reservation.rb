@@ -9,6 +9,6 @@ class Reservation < ApplicationRecord
   private
 
     def update_lodging_availability
-      lodging.availabilities.where(available_on: (check_in..check_out).map(&:to_s)).delete_all
+      lodging.availabilities.where(available_on: (check_in..check_out).map(&:to_s)).destroy_all
     end
 end
