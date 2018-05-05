@@ -55,7 +55,7 @@
 
   <div class="dropdown col-sm-1">
     <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-      Guests
+      Dates
     </button>
 
     <div class="dropdown-menu">
@@ -90,3 +90,7 @@
     <%= tag.div nil, id: 'map' %>
   </div>
 </div>
+
+<%= content_for :js_init do %>
+  $("input[type='number']").InputSpinner();
+<% end %>
