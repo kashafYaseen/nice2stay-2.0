@@ -1,0 +1,40 @@
+<div>
+  <%= image_tag(lodging.image_url(:middle).to_s) %>
+  <br>
+  <h7><%= link_to lodging.address, lodging %></h7>
+  <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %> <%= lodging.sq__ft %> sqft</div>
+  <div>Sold: <%= l lodging.sale_date.to_date %> for <%= number_to_currency lodging.price %></div>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#lodging-<%= lodging.id %>-modal">
+    Make a Reservation
+  </button>
+</div>
+<hr />
+
+<!-- Modal -->
+<div class="modal fade" id="lodging-<%= lodging.id %>-modal" tabindex="-1" role="dialog" aria-labelledby="lodgingModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_for @reservation do |f| %>
+        <div class="modal-header">
+          <h5 class="modal-title" id="lodgingModalLabel">Make a Reservation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= f.hidden_field :lodging_id, value: lodging.id %>
+          <%= f.label :check_in %>
+          <%= f.date_field :check_in %>
+          <div class="clearfix"></div>
+          <%= f.label :check_out %>
+          <%= f.date_field :check_out %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit 'Save', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

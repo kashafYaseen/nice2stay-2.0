@@ -1,0 +1,9 @@
+<%= tag.div id: "lodgings-list", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } do %>
+  <h6> Found: <b><%= @lodgings.total_count %></b></h6>
+  <%= render @lodgings %>
+  <%= paginate @lodgings, theme: 'twitter-bootstrap-4', remote: true %>
+<% end %>
+
+<%= content_for :js_init do %>
+  $(".dropdown-toggle").dropdown();
+<% end %>

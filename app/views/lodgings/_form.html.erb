@@ -1,0 +1,97 @@
+<%= form_with(model: lodging, local: true) do |form| %>
+  <% if lodging.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(lodging.errors.count, "error") %> prohibited this lodging from being saved:</h2>
+
+      <ul>
+      <% lodging.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :street %>
+    <%= form.text_field :street, id: :lodging_street %>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city, id: :lodging_city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :zip %>
+    <%= form.text_field :zip, id: :lodging_zip %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state, id: :lodging_state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :beds %>
+    <%= form.number_field :beds, id: :lodging_beds, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :baths %>
+    <%= form.number_field :baths, id: :lodging_baths, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :adults %>
+    <%= form.number_field :adults, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :children %>
+    <%= form.number_field :children, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :infants %>
+    <%= form.number_field :infants, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lodging_type %>
+    <%= form.select :lodging_type, Lodging.lodging_types.keys %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sq__ft %>
+    <%= form.text_field :sq__ft, id: :lodging_sq__ft %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sale_date %>
+    <%= form.datetime_select :sale_date, id: :lodging_sale_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price, id: :lodging_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude, id: :lodging_latitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude, id: :lodging_longitude %>
+  </div>
+
+  <div class="field">
+    add an image....
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
