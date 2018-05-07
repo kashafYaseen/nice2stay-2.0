@@ -72,7 +72,7 @@ gem 'devise', '~> 4.3.0'
 gem 'devise-bootstrapped', github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
 gem 'jquery-rails', '~> 4.3.1'
 gem 'bootstrap', '~> 4.0.0.beta'
-gem 'webpacker', '~> 1.1'
+gem 'webpacker'
 gem 'sidekiq', '~> 5.0'
 gem 'foreman', '~> 0.84.0'
 
