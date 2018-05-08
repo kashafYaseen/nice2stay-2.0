@@ -1,7 +1,5 @@
 <div>
-  <%= image_tag(lodging.image_url(:middle).to_s) %>
-  <br>
-  <h7><%= link_to lodging.address, lodging %></h7>
+ <p><%= link_to lodging.address, lodging %></p>
   <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %> <%= lodging.sq__ft %> sqft</div>
   <div>Sold: <%= l lodging.sale_date.to_date %> for <%= number_to_currency lodging.price %></div>
 
