@@ -6238,6 +6238,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-airbnb-style-datepicker@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/vue-airbnb-style-datepicker/-/vue-airbnb-style-datepicker-1.8.0.tgz#fb230fc3c8c4a423c7500ca40e6cd0b530ad6f01"
+
 vue-hot-reload-api@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.0.tgz#97976142405d13d8efae154749e88c4e358cf926"
