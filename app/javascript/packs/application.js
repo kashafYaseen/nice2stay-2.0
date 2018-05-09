@@ -7,4 +7,19 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-console.log('Hello World from Webpacker')
+import Vue from 'vue'
+import App from '../app.vue'
+
+import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
+
+const datepickerOptions = {}
+
+// make sure we can use it in our components
+Vue.use(AirbnbStyleDatepicker, datepickerOptions)
+
+window.addEventListener('load', function () {
+  new Vue({
+    el: '#datepicker',
+    render: h => h(App)
+  })
+})

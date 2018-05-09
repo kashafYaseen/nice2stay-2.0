@@ -42,12 +42,8 @@
               <h3 class="widget-title">Date search</h3>
               <ul>
                 
-                <%= form_tag lodgings_path, method: :get do %>
-                  <label>Check In</label> <br>
-                  <%= date_field_tag :check_in, params[:check_in] %>
-                  <label>Check Out</label> <br> 
-                  <%= date_field_tag :check_out, params[:check_out] %>
-
+                <%= form_tag lodgings_path, method: :get, id: 'dates-form' do %>
+                  <div id='datepicker'></div>
                   <%= hidden_field_tag :adults, params[:adults] if params[:adults].present? %>
                   <%= hidden_field_tag :children, params[:children] if params[:children].present? %>
                   <%= hidden_field_tag :infants, params[:infants] if params[:infants].present? %>
@@ -57,8 +53,6 @@
                       <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
                     <% end %>
                   <% end %>
-                  <br> 
-                  <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
                 <% end %>
 
                
