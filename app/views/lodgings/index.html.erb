@@ -53,36 +53,19 @@
     </div>
   </div>
 
-  <div id="datepicker">
-    <div class="datepicker-trigger">
-      <button class="btn btn-info dropdown-toggle" id="trigger-range">Dates {{ check_in + ' ' + check_out }}</button>
+  <%= form_tag lodgings_path, method: :get, id: 'dates-form' do %>
+    <div id="datepicker"></div>
 
-      <airbnb-style-datepicker
-        :trigger-element-id="'trigger-range'"
-        :date-one="check_in"
-        :date-two="check_out"
-        v-on:date-one-selected="function(val) { check_in = val + ' - ' }"
-        v-on:date-two-selected="function(val) { check_out = val }"
-      ></airbnb-style-datepicker>
+    <%= hidden_field_tag :adults, params[:adults] if params[:adults].present? %>
+    <%= hidden_field_tag :children, params[:children] if params[:children].present? %>
+    <%= hidden_field_tag :infants, params[:infants] if params[:infants].present? %>
 
-      <%= form_tag lodgings_path, method: :get do %>
-        <input type="hidden" name="check_in" :value="check_in" >
-        <input type="hidden" name="check_out" :value="check_out">
-
-        <%= hidden_field_tag :adults, params[:adults] if params[:adults].present? %>
-        <%= hidden_field_tag :children, params[:children] if params[:children].present? %>
-        <%= hidden_field_tag :infants, params[:infants] if params[:infants].present? %>
-
-        <% if params[:lodging_type_in].present? %>
-          <% params[:lodging_type_in].each do |lodging_type| %>
-            <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
-          <% end %>
-        <% end %>
-
-        <%= submit_tag 'Apply', class: 'float-right mt-2' %>
+    <% if params[:lodging_type_in].present? %>
+      <% params[:lodging_type_in].each do |lodging_type| %>
+        <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
       <% end %>
-    </div>
-  </div>
+    <% end %>
+  <% end %>
 </div>
 
 <div class="row">
@@ -97,5 +80,4 @@
 
 <%= content_for :js_init do %>
   $("input[type='number']").InputSpinner();
-  InitDatepicker();
 <% end %>
