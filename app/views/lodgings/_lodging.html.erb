@@ -21,12 +21,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <%= f.hidden_field :lodging_id, value: lodging.id %>
-          <%= f.label :check_in %>
-          <%= f.date_field :check_in %>
-          <div class="clearfix"></div>
-          <%= f.label :check_out %>
-          <%= f.date_field :check_out %>
+          <label>Check in - Check out</label>
+          <div id='reservation-datepicker'></div>
+            <%= f.hidden_field :lodging_id, value: lodging.id %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

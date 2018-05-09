@@ -9,6 +9,7 @@
 
 import Vue from 'vue'
 import Datepicker from '../vue_components/datepicker.vue'
+import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
 
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
 import 'vue-airbnb-style-datepicker/dist/styles.css'
@@ -16,8 +17,16 @@ import 'vue-airbnb-style-datepicker/dist/styles.css'
 Vue.use(AirbnbStyleDatepicker)
 
 window.addEventListener('load', function () {
+  const datepicker = $('#datepicker')
+  const reservation_datepicker = $('#reservation-datepicker')
+
   new Vue({
     el: '#datepicker',
     render: h => h(Datepicker)
+  })
+
+  new Vue({
+    el: '#reservation-datepicker',
+    render: h => h(ReservationDatepicker)
   })
 })
