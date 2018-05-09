@@ -1,3 +1,2 @@
-web: bundle exec rails server
-sidekiq: bundle exec sidekiq
-webpack: bin/webpack-dev-server
+web: rails s -p 3000
+webpacker: ruby bin/webpack-dev-server
