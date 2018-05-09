@@ -8,18 +8,16 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Vue from 'vue'
-import App from '../app.vue'
+import Datepicker from '../vue_components/datepicker.vue'
 
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
+import 'vue-airbnb-style-datepicker/dist/styles.css'
 
-const datepickerOptions = {}
-
-// make sure we can use it in our components
-Vue.use(AirbnbStyleDatepicker, datepickerOptions)
+Vue.use(AirbnbStyleDatepicker)
 
 window.addEventListener('load', function () {
   new Vue({
     el: '#datepicker',
-    render: h => h(App)
+    render: h => h(Datepicker)
   })
 })

@@ -21,10 +21,12 @@
 
   export default {
     data() {
+      let check_in = $('#dates-form').data('check-in');
+      let check_out = $('#dates-form').data('check-out');
       return {
         dateFormat: 'D MMM',
-        check_in: '',
-        check_out: '',
+        check_in: check_in ? check_in : '',
+        check_out: check_out ? check_out : '',
       }
     },
     methods: {
