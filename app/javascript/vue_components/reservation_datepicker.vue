@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary btn-sm" id="reservation-trigger-range">Dates {{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary btn-sm" :id="id">Dates {{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
-        :trigger-element-id="'reservation-trigger-range'"
+        :trigger-element-id="this.id"
         :date-one="check_in"
         :date-two="check_out"
         @date-one-selected="val => { check_in = val }"
@@ -26,7 +26,11 @@
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
+        id: "reservation-trigger-range-"
       }
+    },
+    mounted() {
+      this.id = "reservation-trigger-range-"+ this._uid
     },
     methods: {
       formatDates(dateOne, dateTwo) {
