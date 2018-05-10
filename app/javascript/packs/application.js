@@ -26,10 +26,13 @@ document.addEventListener('turbolinks:load', () => {
     })
   }
 
-  if ($('#reservation-datepicker').length) {
-    new Vue({
-      el: '#reservation-datepicker',
-      render: h => h(ReservationDatepicker)
-    })
+  if ($('.reservation-datepicker').length) {
+    const vues = document.querySelectorAll(".reservation-datepicker");
+    Array.prototype.forEach.call(vues, (el, index) =>
+      new Vue({
+        el: el,
+        render: h => h(ReservationDatepicker)
+      })
+    )
   }
 })
