@@ -4,6 +4,7 @@ class Lodging < ApplicationRecord
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
+  after_create :add_lodging_availabilities
   mount_uploader :image, ImageUploader
 
   searchkick locations: [:location], text_start: [:city]
@@ -28,4 +29,13 @@ class Lodging < ApplicationRecord
       available_on: availabilities.pluck(:available_on)
     )
   end
+
+  private
+    def add_lodging_availabilities
+      Availability.bulk_insert do |availability|
+        (Date.today..365.days.from_now).map(&:to_s).each do |date|
+          availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
+        end
+      end
+    end
 end
