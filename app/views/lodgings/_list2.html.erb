@@ -8,14 +8,10 @@
             <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= @lodgings.total_count %></div>
             
           </div>
-          
-          <div class="row mb-2">
+
+          <%= tag.div id: "lodgings-list", class: "row mb-2", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } do %>
             <%= render @lodgings %>
-          </div>
-          
-
-
-
+          <% end %>
 
           <nav class="pagination">
             <div class="column">
@@ -43,13 +39,13 @@
               <ul>
                 <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
                   <div id='datepicker'></div>
-                  <%= hidden_field_tag :adults, params[:adults] if params[:adults].present? %>
-                  <%= hidden_field_tag :children, params[:children] if params[:children].present? %>
-                  <%= hidden_field_tag :infants, params[:infants] if params[:infants].present? %>
+                  <%= hidden_field_tag :adults, params[:adults], id: :dates_adults if params[:adults].present? %>
+                  <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
+                  <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
-                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
+                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
                     <% end %>
                   <% end %>
                 <% end %>
@@ -71,12 +67,12 @@
                   <label>Infants</label><br>
                   <%= number_field_tag :infants, params[:infants], min: 0 %>
 
-                  <%= hidden_field_tag :check_in, params[:check_in] if params[:check_in].present? %>
-                  <%= hidden_field_tag :check_out, params[:check_out] if params[:check_out].present? %>
+                  <%= hidden_field_tag :check_in, params[:check_in], id: :guests_check_in if params[:check_in].present? %>
+                  <%= hidden_field_tag :check_out, params[:check_out], id: :guests_check_out if params[:check_out].present? %>
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
-                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type %>
+                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "guests_lodging_type_#{lodging_type}" %>
                     <% end %>
                   <% end %>
 
@@ -96,17 +92,17 @@
                 <%= form_tag lodgings_path, method: :get do %>
                   <% Lodging.lodging_types.each do |key, value| %>
                     <label>
-                      <%= check_box_tag "lodging_type_in[]", key, is_checked?(key) %>
+                      <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}" %>
                       <span><%= key %></span>
                     </label>
                     <br>
                   <% end %>
 
-                  <%= hidden_field_tag :check_in, params[:check_in] if params[:check_in].present? %>
-                  <%= hidden_field_tag :check_out, params[:check_out] if params[:check_out].present? %>
-                  <%= hidden_field_tag :adults, params[:adults] if params[:adults].present? %>
-                  <%= hidden_field_tag :children, params[:children] if params[:children].present? %>
-                  <%= hidden_field_tag :infants, params[:infants] if params[:infants].present? %>
+                  <%= hidden_field_tag :check_in, params[:check_in], id: :lodgings_check_in if params[:check_in].present? %>
+                  <%= hidden_field_tag :check_out, params[:check_out], id: :lodgings_check_out if params[:check_out].present? %>
+                  <%= hidden_field_tag :adults, params[:adults], id: :lodgings_adults if params[:adults].present? %>
+                  <%= hidden_field_tag :children, params[:children], id: :lodgings_children if params[:children].present? %>
+                  <%= hidden_field_tag :infants, params[:infants], id: :lodgings_infants if params[:infants].present? %>
 
                   <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
 

@@ -17,16 +17,17 @@ import 'vue-airbnb-style-datepicker/dist/styles.css'
 Vue.use(AirbnbStyleDatepicker)
 
 window.addEventListener('load', function () {
-  const datepicker = $('#datepicker')
-  const reservation_datepicker = $('#reservation-datepicker')
+  if ($('#datepicker').length) {
+    new Vue({
+      el: '#datepicker',
+      render: h => h(Datepicker)
+    })
+  }
 
-  new Vue({
-    el: '#datepicker',
-    render: h => h(Datepicker)
-  })
-
-  new Vue({
-    el: '#reservation-datepicker',
-    render: h => h(ReservationDatepicker)
-  })
+  if ($('#reservation-datepicker').length) {
+    new Vue({
+      el: '#reservation-datepicker',
+      render: h => h(ReservationDatepicker)
+    })
+  }
 })

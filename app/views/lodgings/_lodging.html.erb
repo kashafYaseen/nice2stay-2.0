@@ -13,7 +13,7 @@
 <div class="modal fade" id="lodging-<%= lodging.id %>-modal" tabindex="-1" role="dialog" aria-labelledby="lodgingModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <%= form_for @reservation do |f| %>
+      <%= form_for @reservation, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
         <div class="modal-header">
           <h5 class="modal-title" id="lodgingModalLabel">Make a Reservation</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -23,7 +23,7 @@
         <div class="modal-body">
           <label>Check in - Check out</label>
           <div id='reservation-datepicker'></div>
-            <%= f.hidden_field :lodging_id, value: lodging.id %>
+            <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

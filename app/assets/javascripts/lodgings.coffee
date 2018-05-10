@@ -4,7 +4,7 @@
 
 
 jQuery ->
-  $("#q").autocomplete(
-    source: "/lodgings/autocomplete",
-    minLength: 1
-  )
+  # $("#q").autocomplete(
+  #   source: "/lodgings/autocomplete",
+  #   minLength: 1
+  # )
