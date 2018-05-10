@@ -85,6 +85,15 @@ namespace :deploy do
     end
   end
 
+  desc 'Run rake yarn:install'
+  task :compile_assets do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && bundle exec rails assets:precompile")
+      end
+    end
+  end
+
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
