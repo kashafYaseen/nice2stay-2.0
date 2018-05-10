@@ -10,13 +10,15 @@
 import Vue from 'vue'
 import Datepicker from '../vue_components/datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
+import TurbolinksAdapter from 'vue-turbolinks'
 
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
 import 'vue-airbnb-style-datepicker/dist/styles.css'
 
+Vue.use(TurbolinksAdapter)
 Vue.use(AirbnbStyleDatepicker)
 
-window.addEventListener('load', function () {
+document.addEventListener('turbolinks:load', () => {
   if ($('#datepicker').length) {
     new Vue({
       el: '#datepicker',
