@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :autocomplete
     end
   end
+
+  
   root to: 'lodgings#index'
 
   resources :reservations, only: [:create]

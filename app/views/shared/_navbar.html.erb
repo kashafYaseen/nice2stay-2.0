@@ -356,9 +356,11 @@
           </div>
           <!-- Search Section-->
           <div class="toolbar-section" id="search">
-            <form class="search-form mb-2" method="get">
-              <input type="search" placeholder="Type search query"><i class="material-icons">search</i>
-            </form>
+            <%= form_tag lodgings_path, class: "search-form mb-2", method: :get do %>
+              <%= text_field_tag :query, params[:query], :placeholder => "Type search query", class: 'form-control typeahead', id: "lodging_search" %><i class="material-icons">search</i>
+                <%= submit_tag "Search", :style => "display: none;" %>
+              <% end %>
+           
             <!-- Products-->
             <div class="widget widget-featured-products">
               <h3 class="widget-title">Found in Products</h3>

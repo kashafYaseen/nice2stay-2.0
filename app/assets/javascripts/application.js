@@ -12,6 +12,9 @@
 //
 
 //= require popper
+
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+//= require typeahead
+//= require lodgings

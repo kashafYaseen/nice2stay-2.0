@@ -6,7 +6,7 @@ class Lodging < ApplicationRecord
   after_validation :geocode, if: :address_changed?
   mount_uploader :image, ImageUploader
 
-  searchkick locations: [:location], text_start: [:city]
+  searchkick locations: [:location], word_start: [:city]
 
   enum lodging_type: {
     villa: 1,
