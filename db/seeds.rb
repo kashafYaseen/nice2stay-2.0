@@ -13,9 +13,3 @@ Lodging.destroy_all
 CSV.foreach("db/Sacramentorealestatelodgings.csv", headers: true) do |line|
   Lodging.create! line.to_hash.except(*%w{type latitude longitude})
 end
-
-Lodging.find_each do |lodging|
-  (Date.current..Date.current + 1.year).map(&:to_s).each do |date|
-    lodging.availabilities.create(available_on: date)
-  end
-end
