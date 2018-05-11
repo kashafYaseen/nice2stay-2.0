@@ -1,19 +1,19 @@
 var map;
 
 window.addMarkers = function addMarkers() {
-  var element = document.querySelector("#transactions-list");
-  var transactions = window.transactions = JSON.parse(element.dataset.transactions);
+  var element = document.querySelector("#lodgings-list");
+  var lodgings = window.transactions = JSON.parse(element.dataset.lodgings);
 
   map.removeMarkers();
 
-  transactions.forEach(function(transaction) {
-    if (transaction.latitude && transaction.longitude) {
+  lodgings.forEach(function(lodging) {
+    if (lodging.latitude && lodging.longitude) {
       var marker = map.addMarker({
-        lat: transaction.latitude,
-        lng: transaction.longitude,
-        title: transaction.address,
+        lat: lodging.latitude,
+        lng: lodging.longitude,
+        title: lodging.address,
         infoWindow: {
-          content: `<p><a href='/transactions/${transaction.id}'>${transaction.address}</a></p>`
+          content: `<p><a href='/lodgings/${lodging.id}'>${lodging.address}</a></p>`
         }
       });
     }
@@ -49,6 +49,15 @@ document.addEventListener("turbolinks:load", function() {
     var bounds = map.getBounds();
     var location = bounds.getSouthWest().toUrlValue() + "," + bounds.getNorthEast().toUrlValue();
 
-    Turbolinks.visit(`/transactions?l=${location}`);
+    Turbolinks.visit(`/lodgings?l=${location}`);
+  });
+
+  map.addListener('mousemove', function() {
+    map.addListener("zoom_changed", function() {
+      var bounds = map.getBounds();
+      var location = bounds.getSouthWest().toUrlValue() + "," + bounds.getNorthEast().toUrlValue();
+
+      Turbolinks.visit(`/lodgings?l=${location}`);
+    });
   });
 });

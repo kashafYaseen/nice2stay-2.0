@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417105634) do
+ActiveRecord::Schema.define(version: 20180429134319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,14 +24,22 @@ ActiveRecord::Schema.define(version: 20180417105634) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "transactions", force: :cascade do |t|
+  create_table "availabilities", force: :cascade do |t|
+    t.date "available_on"
+    t.bigint "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+  end
+
+  create_table "lodgings", force: :cascade do |t|
     t.string "street"
     t.string "city"
     t.string "zip"
     t.string "state"
-    t.string "beds"
-    t.string "baths"
-    t.string "sq__ft"
+    t.integer "beds"
+    t.integer "baths"
+    t.float "sq__ft"
     t.datetime "sale_date"
     t.integer "price"
     t.float "latitude"
@@ -39,6 +47,21 @@ ActiveRecord::Schema.define(version: 20180417105634) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+    t.integer "lodging_type", default: 1
+    t.integer "adults", default: 1
+    t.integer "children", default: 1
+    t.integer "infants", default: 1
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "lodging_id"
+    t.date "check_in"
+    t.date "check_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,4 +85,7 @@ ActiveRecord::Schema.define(version: 20180417105634) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "availabilities", "lodgings"
+  add_foreign_key "reservations", "lodgings"
+  add_foreign_key "reservations", "users"
 end

@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
@@ -26,6 +27,8 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'mini_magick'
 
+gem 'materialize-sass', '~> 1.0.0.rc1'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -46,6 +49,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -55,6 +59,12 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'capistrano',         require: false
+  gem 'capistrano-rbenv',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -62,11 +72,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'administrate', '~> 0.8.1'
 gem 'bootstrap4-kaminari-views'
-gem 'devise', '~> 4.3.0'
+gem 'devise', '~> 4.4'
 gem 'devise-bootstrapped', github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
 gem 'jquery-rails', '~> 4.3.1'
 gem 'bootstrap', '~> 4.0.0.beta'
-gem 'webpacker', '~> 1.1'
+gem 'webpacker', '~> 3.5'
 gem 'sidekiq', '~> 5.0'
 gem 'foreman', '~> 0.84.0'
 
