@@ -11,6 +11,7 @@
 // about supported directives.
 //
 
+//= require vendor.min
 //= require popper
 //= require bootstrap
 //= require turbolinks

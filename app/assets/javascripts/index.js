@@ -37,27 +37,29 @@ function setSafeBounds(element) {
 }
 
 document.addEventListener("turbolinks:load", function() {
-  map = window.map = new GMaps({
-    div: '#map',
-    lat: 38.5816,
-    lng: -121.4944
-  });
+  if ($('#map').length) {
+    map = window.map = new GMaps({
+      div: '#map',
+      lat: 38.5816,
+      lng: -121.4944
+    });
 
-  addMarkers();
+    addMarkers();
 
-  map.addListener("dragend", function() {
-    var bounds = map.getBounds();
-    var location = bounds.getSouthWest().toUrlValue() + "," + bounds.getNorthEast().toUrlValue();
-
-    Turbolinks.visit(`/lodgings?l=${location}`);
-  });
-
-  map.addListener('mousemove', function() {
-    map.addListener("zoom_changed", function() {
+    map.addListener("dragend", function() {
       var bounds = map.getBounds();
       var location = bounds.getSouthWest().toUrlValue() + "," + bounds.getNorthEast().toUrlValue();
 
       Turbolinks.visit(`/lodgings?l=${location}`);
     });
-  });
+
+    map.addListener('mousemove', function() {
+      map.addListener("zoom_changed", function() {
+        var bounds = map.getBounds();
+        var location = bounds.getSouthWest().toUrlValue() + "," + bounds.getNorthEast().toUrlValue();
+
+        Turbolinks.visit(`/lodgings?l=${location}`);
+      });
+    });
+  }
 });
