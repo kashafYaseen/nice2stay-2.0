@@ -147,7 +147,7 @@
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
-                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "guests_lodging_type_#{lodging_type}" %>
+                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "price_lodging_type_#{lodging_type}" %>
                     <% end %>
                   <% end %>
                 <% end %>
