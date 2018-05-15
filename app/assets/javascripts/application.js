@@ -11,6 +11,9 @@
 // about supported directives.
 //
 
+//= require vendor.min
+//= require scripts.min
+//= require modernizr.min
 //= require popper
 
 //= require bootstrap

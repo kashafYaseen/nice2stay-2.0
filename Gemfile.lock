@@ -75,6 +75,8 @@ GEM
       kaminari (>= 0.13)
       rails (>= 3.1)
     builder (3.2.3)
+    bulk_insert (1.6.0)
+      activerecord (>= 4.1.0)
     byebug (9.1.0)
     capistrano (3.10.2)
       airbrussh (>= 1.0.0)
@@ -319,6 +321,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.beta)
   bootstrap-typeahead-rails
   bootstrap4-kaminari-views
+  bulk_insert
   byebug
   capistrano
   capistrano-bundler

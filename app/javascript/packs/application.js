@@ -10,23 +10,29 @@
 import Vue from 'vue'
 import Datepicker from '../vue_components/datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
+import TurbolinksAdapter from 'vue-turbolinks'
 
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
 import 'vue-airbnb-style-datepicker/dist/styles.css'
 
+Vue.use(TurbolinksAdapter)
 Vue.use(AirbnbStyleDatepicker)
 
-window.addEventListener('load', function () {
-  const datepicker = $('#datepicker')
-  const reservation_datepicker = $('#reservation-datepicker')
+document.addEventListener('turbolinks:load', () => {
+  if ($('#datepicker').length) {
+    new Vue({
+      el: '#datepicker',
+      render: h => h(Datepicker)
+    })
+  }
 
-  new Vue({
-    el: '#datepicker',
-    render: h => h(Datepicker)
-  })
-
-  new Vue({
-    el: '#reservation-datepicker',
-    render: h => h(ReservationDatepicker)
-  })
+  if ($('.reservation-datepicker').length) {
+    const vues = document.querySelectorAll(".reservation-datepicker");
+    Array.prototype.forEach.call(vues, (el, index) =>
+      new Vue({
+        el: el,
+        render: h => h(ReservationDatepicker)
+      })
+    )
+  }
 })
