@@ -1,10 +1,9 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+(->
+  window.Lodging or (window.Lodging = {})
 
+  Lodging.init = ->
+    Slider.init()
+    $('.lodging_type').change ->
+      $(this).parents('form').submit()
 
-jQuery ->
-  # $("#q").autocomplete(
-  #   source: "/lodgings/autocomplete",
-  #   minLength: 1
-  # )
+).call this

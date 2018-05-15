@@ -30,6 +30,7 @@ class SearchLodgings
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
       conditions[:location]     = frame_coordinates if params[:l].present?
+      conditions[:price]        = price_range if params[:min_price].present? && params[:max_price].present?
       conditions
     end
 
@@ -64,5 +65,9 @@ class SearchLodgings
       {
         all: (check_in..check_out).map(&:to_s)
       }
+    end
+
+    def price_range
+      { gte: params[:min_price], lte: params[:max_price] }
     end
 end

@@ -43,6 +43,9 @@
                   <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
                   <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
 
+                  <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
+                  <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
+
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
                       <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
@@ -60,15 +63,18 @@
               <ul>
                 
                 <%= form_tag lodgings_path, method: :get do %>
-                  <label>Adults</label><br>
+                  <label>Adults</label>
                   <%= number_field_tag :adults, params[:adults], min: 0 %>
-                  <label>Children</label><br>
-                  <%= number_field_tag :children, params[:children], min: 0 %><br>
-                  <label>Infants</label><br>
+                  <label>Children</label>
+                  <%= number_field_tag :children, params[:children], min: 0 %>
+                  <label>Infants</label>
                   <%= number_field_tag :infants, params[:infants], min: 0 %>
 
                   <%= hidden_field_tag :check_in, params[:check_in], id: :guests_check_in if params[:check_in].present? %>
                   <%= hidden_field_tag :check_out, params[:check_out], id: :guests_check_out if params[:check_out].present? %>
+
+                  <%= hidden_field_tag :min_price, params[:min_price], id: :guests_min_price if params[:min_price].present? %>
+                  <%= hidden_field_tag :max_price, params[:max_price], id: :guests_max_price if params[:max_price].present? %>
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
@@ -83,16 +89,14 @@
               </ul>
             </section>
 
-
-              <section>
-              
+            <section>
               <h3 class="widget-title">Accommodation type</h3>
+
               <ul>
-                
                 <%= form_tag lodgings_path, method: :get do %>
                   <% Lodging.lodging_types.each do |key, value| %>
                     <label>
-                      <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}" %>
+                      <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
                       <span><%= key %></span>
                     </label>
                     <br>
@@ -104,39 +108,52 @@
                   <%= hidden_field_tag :children, params[:children], id: :lodgings_children if params[:children].present? %>
                   <%= hidden_field_tag :infants, params[:infants], id: :lodgings_infants if params[:infants].present? %>
 
-                  <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
-
+                  <%= hidden_field_tag :min_price, params[:min_price], id: :lodgings_min_price if params[:min_price].present? %>
+                  <%= hidden_field_tag :max_price, params[:max_price], id: :lodgings_max_price if params[:max_price].present? %>
                 <% end %>
-
-               
               </ul>
             </section>
 
-           
-
-
-             <section class="widget widget-categories">
+            <section class="widget widget-categories">
               <h3 class="widget-title">Price Night Range</h3>
-              <form class="price-range-slider" method="post" data-start-min="70" data-start-max="1000" data-min="0" data-max="1200" data-step="1">
-                <div class="ui-range-slider"></div>
-                <footer class="ui-range-slider-footer">
-                  <div class="column">
-                    <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
-                  </div>
-                  <div class="column">
-                    <div class="ui-range-values">
-                      <div class="ui-range-value-min">$<span></span>
-                        <input type="hidden">
-                      </div>&nbsp;-&nbsp;
-                      <div class="ui-range-value-max">$<span></span>
-                        <input type="hidden">
+
+              <%= form_tag lodgings_path, method: :get do %>
+                <div class="price-range-slider" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1000" data-step="1">
+                  <div class="ui-range-slider"></div>
+
+                  <footer class="ui-range-slider-footer">
+                    <div class="column">
+                      <%= submit_tag 'Filter', class: 'btn btn-outline-primary btn-sm' %>
+                    </div>
+
+                    <div class="column">
+                      <div class="ui-range-values">
+                        <div class="ui-range-value-min">$<span></span>
+                          <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
+                        </div>&nbsp;-&nbsp;
+
+                        <div class="ui-range-value-max">$<span></span>
+                          <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </footer>
-              </form>
+                  </footer>
+
+                  <%= hidden_field_tag :check_in, params[:check_in], id: :price_check_in if params[:check_in].present? %>
+                  <%= hidden_field_tag :check_out, params[:check_out], id: :price_check_out if params[:check_out].present? %>
+                  <%= hidden_field_tag :adults, params[:adults], id: :price_adults if params[:adults].present? %>
+                  <%= hidden_field_tag :children, params[:children], id: :price_children if params[:children].present? %>
+                  <%= hidden_field_tag :infants, params[:infants], id: :price_infants if params[:infants].present? %>
+
+                  <% if params[:lodging_type_in].present? %>
+                    <% params[:lodging_type_in].each do |lodging_type| %>
+                      <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "price_lodging_type_#{lodging_type}" %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
             </section>
-              
+
               <h3 class="widget-title">Shop Categories</h3>
               <ul>
                 <li class="has-children"><a href="#">Desks &amp; Benching</a><span>(1138)</span>
@@ -209,28 +226,6 @@
               </ul>
             </section>
             
-            <!-- Widget Price Range-->
-            <section class="widget widget-categories">
-              <h3 class="widget-title">Price Range</h3>
-              <form class="price-range-slider" method="post" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
-                <div class="ui-range-slider"></div>
-                <footer class="ui-range-slider-footer">
-                  <div class="column">
-                    <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
-                  </div>
-                  <div class="column">
-                    <div class="ui-range-values">
-                      <div class="ui-range-value-min">$<span></span>
-                        <input type="hidden">
-                      </div>&nbsp;-&nbsp;
-                      <div class="ui-range-value-max">$<span></span>
-                        <input type="hidden">
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              </form>
-            </section>
             <!-- Widget Brand Filter-->
             <section class="widget">
               <h3 class="widget-title">Filter by Brand</h3>
