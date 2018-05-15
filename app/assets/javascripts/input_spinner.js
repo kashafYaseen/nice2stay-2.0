@@ -22,13 +22,13 @@
         };
         Object.assign(config, options);
 
-        var html = '<div class="input-group ' + config.groupClass + '">' +
+        var html = '<div class="input-spinner-group ' + config.groupClass + '">' +
             '<div class="input-group-prepend">' +
-            '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-decrement ' + config.buttonsClass + '" type="button">' + config.decrementButton + '</button>' +
+            '<button style="min-width: ' + config.buttonsWidth + '" class="input-spinner-btn btn-decrement ' + config.buttonsClass + '" type="button">' + config.decrementButton + '</button>' +
             '</div>' +
-            '<input type="text" style="text-align: ' + config.textAlign + '" class="form-control"/>' +
+            '<input type="text" style="text-align: ' + config.textAlign + '" class="input-spinner-form"/>' +
             '<div class="input-group-append">' +
-            '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-increment ' + config.buttonsClass + '" type="button">' + config.incrementButton + '</button>' +
+            '<button style="min-width: ' + config.buttonsWidth + '" class="input-spinner-btn btn-increment ' + config.buttonsClass + '" type="button">' + config.incrementButton + '</button>' +
             '</div>' +
             '</div>';
 
