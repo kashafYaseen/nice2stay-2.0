@@ -99,7 +99,7 @@
                   <% Lodging.lodging_types.each do |key, value| %>
                     <label>
                       <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
-                      <span><%= key %></span>
+                      <span><%= key %> (<%= count_lodging_type(@lodgings, key) %>)</span>
                     </label>
                     <br>
                   <% end %>
