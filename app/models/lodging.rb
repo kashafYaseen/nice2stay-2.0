@@ -37,5 +37,11 @@ class Lodging < ApplicationRecord
           availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
         end
       end
+
+      Price.bulk_insert do |price|
+        availabilities.each do |availability|
+          price.add(amount: self.price, availability_id: availability.id, adults: adults, children: children, infants: infants, created_at: DateTime.now, updated_at: DateTime.now)
+        end
+      end
     end
 end
