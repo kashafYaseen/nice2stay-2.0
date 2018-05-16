@@ -45,6 +45,7 @@
 
                   <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
                   <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
+                  <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
@@ -75,6 +76,7 @@
 
                   <%= hidden_field_tag :min_price, params[:min_price], id: :guests_min_price if params[:min_price].present? %>
                   <%= hidden_field_tag :max_price, params[:max_price], id: :guests_max_price if params[:max_price].present? %>
+                  <%= hidden_field_tag :order, params[:order], id: :guests_order if params[:order].present? %>
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
@@ -110,6 +112,7 @@
 
                   <%= hidden_field_tag :min_price, params[:min_price], id: :lodgings_min_price if params[:min_price].present? %>
                   <%= hidden_field_tag :max_price, params[:max_price], id: :lodgings_max_price if params[:max_price].present? %>
+                  <%= hidden_field_tag :order, params[:order], id: :lodgings_order if params[:order].present? %>
                 <% end %>
               </ul>
             </section>
@@ -138,12 +141,12 @@
                       </div>
                     </div>
                   </footer>
-
                   <%= hidden_field_tag :check_in, params[:check_in], id: :price_check_in if params[:check_in].present? %>
                   <%= hidden_field_tag :check_out, params[:check_out], id: :price_check_out if params[:check_out].present? %>
                   <%= hidden_field_tag :adults, params[:adults], id: :price_adults if params[:adults].present? %>
                   <%= hidden_field_tag :children, params[:children], id: :price_children if params[:children].present? %>
                   <%= hidden_field_tag :infants, params[:infants], id: :price_infants if params[:infants].present? %>
+                  <%= hidden_field_tag :order, params[:order], id: :price_order if params[:order].present? %>
 
                   <% if params[:lodging_type_in].present? %>
                     <% params[:lodging_type_in].each do |lodging_type| %>
@@ -152,6 +155,32 @@
                   <% end %>
                 <% end %>
               </div>
+            </section>
+
+            <!-- Widget Sorting-->
+            <section class="widget widget-icon-list">
+              <h3 class="widget-title">Sort By</h3>
+              <%= form_tag lodgings_path, method: :get do %>
+                <ul>
+                  <li><%= link_to 'Lowest Price', '#', class: 'lowest-price' %></li>
+                  <li><%= link_to 'Highest Price', '#', class: 'highest-price' %></li>
+                  <%= hidden_field_tag :order, params[:order] %>
+                </ul>
+
+                <%= hidden_field_tag :min_price, params[:min_price], id: :sort_min_price if params[:min_price].present? %>
+                <%= hidden_field_tag :max_price, params[:max_price], id: :sort_max_price if params[:max_price].present? %>
+                <%= hidden_field_tag :check_in, params[:check_in], id: :sort_check_in if params[:check_in].present? %>
+                <%= hidden_field_tag :check_out, params[:check_out], id: :sort_check_out if params[:check_out].present? %>
+                <%= hidden_field_tag :adults, params[:adults], id: :sort_adults if params[:adults].present? %>
+                <%= hidden_field_tag :children, params[:children], id: :sort_children if params[:children].present? %>
+                <%= hidden_field_tag :infants, params[:infants], id: :sort_infants if params[:infants].present? %>
+
+                <% if params[:lodging_type_in].present? %>
+                  <% params[:lodging_type_in].each do |lodging_type| %>
+                    <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "sort_lodging_type_#{lodging_type}" %>
+                  <% end %>
+                <% end %>
+              <% end %>
             </section>
 
               <h3 class="widget-title">Shop Categories</h3>
@@ -212,17 +241,6 @@
                     <li><a href="#">Monitor Arms</a><span>(106)</span></li>
                   </ul>
                 </li>
-              </ul>
-            </section>
-            <!-- Widget Sorting-->
-            <section class="widget widget-icon-list">
-              <h3 class="widget-title">Sort By</h3>
-              <ul>
-                <li><a href="#"><i class="material-icons sort"></i>Default</a></li>
-                <li><a href="#"><i class="material-icons favorite_border"></i>Popularity</a></li>
-                <li><a href="#"><i class="material-icons vertical_align_top"></i>Last entries</a></li>
-                <li><a href="#"><i class="material-icons star_border"></i>Average rating</a></li>
-                <li><a href="#"><i class="material-icons sort_by_alpha"></i>Alphabetically</a></li>
               </ul>
             </section>
             

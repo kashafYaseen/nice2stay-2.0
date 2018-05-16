@@ -10,7 +10,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page]
+    Lodging.search query, where: conditions, aggs: [:beds, :baths], per_page: 10, page: params[:page], order: order
   end
 
   private
@@ -69,5 +69,10 @@ class SearchLodgings
 
     def price_range
       { gte: params[:min_price], lte: params[:max_price] }
+    end
+
+    def order
+      return { price: :asc } if params[:order] == 'price_asc'
+      { price: :desc } if params[:order] == 'price_desc'
     end
 end
