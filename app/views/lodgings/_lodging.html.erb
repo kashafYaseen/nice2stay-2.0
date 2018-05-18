@@ -1,7 +1,7 @@
 <div>
  <p><%= link_to lodging.address, lodging %></p>
   <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %> <%= lodging.sq__ft %> sqft</div>
-  <div>Sold: <%= l lodging.sale_date.to_date %> for <%= number_to_currency lodging.price %></div>
+  <div>From $<%= lodging.minimum_price %> per night</div>
 
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#lodging-<%= lodging.id %>-modal">
     Make a Reservation

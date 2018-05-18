@@ -35,6 +35,10 @@ class Lodging < ApplicationRecord
     )
   end
 
+  def minimum_price
+    prices.minimum(:amount)
+  end
+
   private
     def add_lodging_availabilities
       Availability.bulk_insert do |availability|
