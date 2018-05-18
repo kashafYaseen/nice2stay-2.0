@@ -12,6 +12,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings/1
   # GET /lodgings/1.json
   def show
+    @reservation = @lodging.reservations.build
   end
 
   # GET /lodgings/new

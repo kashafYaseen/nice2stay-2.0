@@ -8,13 +8,13 @@ class ReservationsController < ApplicationController
     else
       flash[:alert] = "Something went wrong"
     end
-    redirect_to root_path
+    redirect_to lodging_path(reservation.lodging_id)
   end
 
   private
 
 
     def reservation_params
-      params.require(:reservation).permit(:check_in, :check_out, :lodging_id)
+      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants)
     end
 end

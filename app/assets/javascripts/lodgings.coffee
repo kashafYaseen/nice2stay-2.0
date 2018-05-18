@@ -22,9 +22,9 @@
       e.preventDefault();
       values = [$("input[name='reservation[check_in]']").val(),
                 $("input[name='reservation[check_out]']").val(),
-                $('#adults').val(),
-                $('#children').val(),
-                $('#infants').val()]
+                $('#reservation_adults').val(),
+                $('#reservation_children').val(),
+                $('#reservation_infants').val()]
 
       if values.some(check_values)
         $('#lbl-error').text('Please select dates & guest details')
