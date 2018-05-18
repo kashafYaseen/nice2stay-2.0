@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :lodgings do
+    get :price_details, on: :member
     collection do 
       get :autocomplete
     end

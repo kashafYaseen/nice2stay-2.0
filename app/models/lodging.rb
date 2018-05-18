@@ -39,6 +39,19 @@ class Lodging < ApplicationRecord
     prices.minimum(:amount)
   end
 
+  def maximum_guests(type)
+    prices.maximum(type)
+  end
+
+  def minimum_guests(type)
+    prices.minimum(type)
+  end
+
+  def price_details(values)
+    check_in, check_out = values[0], (values[1].to_date - 1.day).to_s
+    prices.joins(:availability).where('adults >= ? and children >= ? and infants >= ?', values[2], values[3], values[4]).where('availabilities.available_on': (check_in..check_out)).pluck(:amount)
+  end
+
   private
     def add_lodging_availabilities
       Availability.bulk_insert do |availability|
