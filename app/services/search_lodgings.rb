@@ -27,9 +27,9 @@ class SearchLodgings
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
       conditions[:location]     = frame_coordinates if params[:l].present?
-      conditions[:availability_adults]   = { gte: params[:adults] } if params[:adults].present?
-      conditions[:availability_children] = { gte: params[:children] } if params[:children].present?
-      conditions[:availability_infants]  = { gte: params[:infants] } if params[:infants].present?
+      conditions[:availability_adults]   = params[:adults] if params[:adults].present?
+      conditions[:availability_children] = params[:children] if params[:children].present?
+      conditions[:availability_infants]  = params[:infants] if params[:infants].present?
       conditions[:availability_price]    = price_range if params[:min_price].present? && params[:max_price].present?
       conditions
     end
