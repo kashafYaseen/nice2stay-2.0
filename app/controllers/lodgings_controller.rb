@@ -1,5 +1,5 @@
 class LodgingsController < ApplicationController
-  before_action :set_lodging, only: [:show, :edit, :update, :destroy]
+  before_action :set_lodging, only: [:show, :edit, :update, :destroy, :price_details]
 
   # GET /lodgings
   # GET /lodgings.json
@@ -12,6 +12,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings/1
   # GET /lodgings/1.json
   def show
+    @reservation = @lodging.reservations.build
   end
 
   # GET /lodgings/new
@@ -61,6 +62,11 @@ class LodgingsController < ApplicationController
       format.html { redirect_to lodgings_url, notice: 'Lodging was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def price_details
+    rates = @lodging.price_details(params[:values].split(','))
+    render json: rates.inject(Hash.new(0)){ |h, i| h[i]+=1; h }
   end
 
   def snippet_params

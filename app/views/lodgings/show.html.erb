@@ -1,79 +1,123 @@
-<p id="notice"><%= notice %></p>
-<p>
+<div class="row">
+  <div class="col-md-6">
+    <p id="notice"><%= notice %></p>
+    <p>
 
-  <strong>Street:</strong>
-  <%= @lodging.street %>
-</p>
+      <strong>Street:</strong>
+      <%= @lodging.street %>
+    </p>
 
-<p>
-  <strong>City:</strong>
-  <%= @lodging.city %>
-</p>
+    <p>
+      <strong>City:</strong>
+      <%= @lodging.city %>
+    </p>
 
-<p>
-  <strong>Zip:</strong>
-  <%= @lodging.zip %>
-</p>
+    <p>
+      <strong>Zip:</strong>
+      <%= @lodging.zip %>
+    </p>
 
-<p>
-  <strong>State:</strong>
-  <%= @lodging.state %>
-</p>
+    <p>
+      <strong>State:</strong>
+      <%= @lodging.state %>
+    </p>
 
-<p>
-  <strong>Beds:</strong>
-  <%= @lodging.beds %>
-</p>
+    <p>
+      <strong>Beds:</strong>
+      <%= @lodging.beds %>
+    </p>
 
-<p>
-  <strong>Baths:</strong>
-  <%= @lodging.baths %>
-</p>
+    <p>
+      <strong>Baths:</strong>
+      <%= @lodging.baths %>
+    </p>
 
-<p>
-  <strong>Adults:</strong>
-  <%= @lodging.adults %>
-</p>
+    <p>
+      <strong>Adults:</strong>
+      <%= @lodging.adults %>
+    </p>
 
-<p>
-  <strong>Children:</strong>
-  <%= @lodging.children %>
-</p>
+    <p>
+      <strong>Children:</strong>
+      <%= @lodging.children %>
+    </p>
 
-<p>
-  <strong>Infants:</strong>
-  <%= @lodging.infants %>
-</p>
+    <p>
+      <strong>Infants:</strong>
+      <%= @lodging.infants %>
+    </p>
 
-<p>
-  <strong>Type:</strong>
-  <%= @lodging.lodging_type %>
-</p>
+    <p>
+      <strong>Type:</strong>
+      <%= @lodging.lodging_type %>
+    </p>
 
-<p>
-  <strong>Sq  ft:</strong>
-  <%= @lodging.sq__ft %>
-</p>
+    <p>
+      <strong>Sq  ft:</strong>
+      <%= @lodging.sq__ft %>
+    </p>
 
-<p>
-  <strong>Sale date:</strong>
-  <%= @lodging.sale_date %>
-</p>
+    <p>
+      <strong>Sale date:</strong>
+      <%= @lodging.sale_date %>
+    </p>
 
-<p>
-  <strong>Price:</strong>
-  <%= @lodging.price %>
-</p>
+    <p>
+      <strong>Price:</strong>
+      <%= @lodging.price %>
+    </p>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @lodging.latitude %>
-</p>
+    <p>
+      <strong>Latitude:</strong>
+      <%= @lodging.latitude %>
+    </p>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @lodging.longitude %>
-</p>
+    <p>
+      <strong>Longitude:</strong>
+      <%= @lodging.longitude %>
+    </p>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">
+          <h3>From $<%= @lodging.minimum_price %> <span>per night</span></h3>
+          <hr>
+        </div>
+
+        <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>"></div>
+
+        <%= form_for @reservation do |f| %>
+          <label>Check in - Check out</label>
+          <div class='reservation-datepicker'></div>
+
+          <label>Adults</label>
+          <%= f.number_field :adults, value: f.object.adults, min: 0, max: @lodging.maximum_guests(:adults) %>
+
+          <label>Children</label>
+          <%= f.number_field :children, value: f.object.children, min: 0, max: @lodging.maximum_guests(:children) %>
+
+          <label>Infants</label>
+          <%= f.number_field :infants, value: f.object.infants, min: 0, max: @lodging.maximum_guests(:infants)%>
+
+          <%= f.hidden_field :lodging_id, value: @lodging.id %>
+
+          <p id="lbl-error"></p>
+          <a href="#" class="calculate">Calculate</a>
+          <p id="bill"></p>
+
+          <%= f.submit 'Book', class: 'btn btn-primary col-md-12' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_lodging_path(@lodging) %> |
 <%= link_to 'Back', lodgings_path %>
+
+<%= content_for :js_init do %>
+  $("input[type='number']").InputSpinner();
+  Lodging.update_bill();
+<% end %>
