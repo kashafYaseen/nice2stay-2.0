@@ -8,7 +8,7 @@ module LodgingsHelper
   end
 
   def render_max_price(price)
-    price || 1000
+    price || 100000
   end
 
   def count_lodging_type(lodgings, type)
