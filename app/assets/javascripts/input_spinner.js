@@ -26,7 +26,7 @@
             '<div class="input-group-prepend">' +
             '<button style="min-width: ' + config.buttonsWidth + '" class="input-spinner-btn btn-decrement ' + config.buttonsClass + '" type="button">' + config.decrementButton + '</button>' +
             '</div>' +
-            '<input type="text" style="text-align: ' + config.textAlign + '" class="input-spinner-form"/>' +
+            '<input type="text" style="text-align: ' + config.textAlign + '" class="input-spinner-form" disabled/>' +
             '<div class="input-group-append">' +
             '<button style="min-width: ' + config.buttonsWidth + '" class="input-spinner-btn btn-increment ' + config.buttonsClass + '" type="button">' + config.incrementButton + '</button>' +
             '</div>' +
@@ -154,6 +154,16 @@
         element.addEventListener("mousedown", function (e) {
             e.preventDefault();
             callback(e);
+
+            if($('#calculate_bill').val() == 'true') {
+                var values = [$("input[name='reservation[check_in]']").val(),
+                  $("input[name='reservation[check_out]']").val(),
+                  $('#reservation_adults').val(),
+                  $('#reservation_children').val(),
+                  $('#reservation_infants').val()
+                ];
+                Lodging.update_bill(values);
+            }
         });
         element.addEventListener("touchstart", function (e) {
             e.preventDefault();

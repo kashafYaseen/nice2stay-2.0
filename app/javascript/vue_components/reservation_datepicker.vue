@@ -6,8 +6,10 @@
         :trigger-element-id="this.id"
         :date-one="check_in"
         :date-two="check_out"
-        @date-one-selected="val => { check_in = val }"
-        @date-two-selected="val => { check_out = val }"
+        @date-one-selected="date_one_selected"
+        @date-two-selected="date_two_selected"
+        :inline="true"
+        :disabled-dates="disabled_dates"
       ></airbnb-style-datepicker>
       <input type="hidden" name="reservation[check_in]" :value="check_in">
       <input type="hidden" name="reservation[check_out]" :value="check_out">
@@ -26,11 +28,13 @@
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
-        id: "reservation-trigger-range-"
+        id: "reservation-trigger-range-",
+        disabled_dates: []
       }
     },
     mounted() {
       this.id = "reservation-trigger-range-"+ this._uid
+      this.disabled_dates = $('#lodging-url').data('disabled-dates');
     },
     methods: {
       formatDates(dateOne, dateTwo) {
@@ -43,6 +47,27 @@
         }
         return formattedDates
       },
+      date_one_selected(val) {
+        this.check_in = val
+        calculate_bill(this.check_in, this.check_out);
+      },
+      date_two_selected(val) {
+        this.check_out = val
+        calculate_bill(this.check_in, this.check_out);
+      }
     }
   }
+
+  function calculate_bill(check_in, check_out) {
+    if($('#calculate_bill').val() == 'true') {
+      var values = [check_in,
+        check_out,
+        $('#reservation_adults').val(),
+        $('#reservation_children').val(),
+        $('#reservation_infants').val()
+      ];
+
+      Lodging.update_bill(values);
+    }
+  };
 </script>

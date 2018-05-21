@@ -13,3 +13,4 @@ Lodging.destroy_all
 CSV.foreach("db/Sacramentorealestatelodgings.csv", headers: true) do |line|
   Lodging.create! line.to_hash.except(*%w{type latitude longitude})
 end
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
