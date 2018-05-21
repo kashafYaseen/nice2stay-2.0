@@ -83,3 +83,4 @@ gem 'jquery-ui-rails'
 
 gem 'geocoder'
 gem 'searchkick'
+gem 'activeadmin'
