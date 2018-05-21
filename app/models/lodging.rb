@@ -47,6 +47,10 @@ class Lodging < ApplicationRecord
     prices.minimum(type)
   end
 
+  def not_available_on
+    (2.years.ago.to_date..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+  end
+
   def price_details(values)
     check_in, check_out = values[0], (values[1].to_date - 1.day).to_s
     prices.joins(:availability).where('adults >= ? and children >= ? and infants >= ?', values[2], values[3], values[4]).where('availabilities.available_on': (check_in..check_out)).pluck(:amount)

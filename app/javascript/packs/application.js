@@ -16,7 +16,7 @@ import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
 import 'vue-airbnb-style-datepicker/dist/styles.css'
 
 Vue.use(TurbolinksAdapter)
-Vue.use(AirbnbStyleDatepicker)
+Vue.use(AirbnbStyleDatepicker, { colors: { disabled: '#e2dede' } })
 
 document.addEventListener('turbolinks:load', () => {
   if ($('#datepicker').length) {

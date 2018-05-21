@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-5">
     <p id="notice"><%= notice %></p>
     <p>
 
@@ -78,7 +78,7 @@
     </p>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-7">
     <div class="card">
       <div class="card-body">
         <div class="card-title">
@@ -86,7 +86,7 @@
           <hr>
         </div>
 
-        <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>"></div>
+        <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>" data-disabled-dates="<%= @lodging.not_available_on %>"></div>
 
         <%= form_for @reservation do |f| %>
           <label>Check in - Check out</label>

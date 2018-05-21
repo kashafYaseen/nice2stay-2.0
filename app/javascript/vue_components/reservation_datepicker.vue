@@ -8,6 +8,8 @@
         :date-two="check_out"
         @date-one-selected="date_one_selected"
         @date-two-selected="date_two_selected"
+        :inline="true"
+        :disabled-dates="disabled_dates"
       ></airbnb-style-datepicker>
       <input type="hidden" name="reservation[check_in]" :value="check_in">
       <input type="hidden" name="reservation[check_out]" :value="check_out">
@@ -26,11 +28,13 @@
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
-        id: "reservation-trigger-range-"
+        id: "reservation-trigger-range-",
+        disabled_dates: []
       }
     },
     mounted() {
       this.id = "reservation-trigger-range-"+ this._uid
+      this.disabled_dates = $('#lodging-url').data('disabled-dates');
     },
     methods: {
       formatDates(dateOne, dateTwo) {
