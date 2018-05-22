@@ -55,7 +55,10 @@ class Lodging < ApplicationRecord
 
   def price_details(values)
     check_in, check_out = values[0], (values[1].to_date - 1.day).to_s
-    prices.joins(:availability).where('adults >= ? and children >= ? and infants >= ?', values[2], values[3], values[4]).where('availabilities.available_on': (check_in..check_out)).pluck(:amount)
+    total_nights = (check_out.to_date - check_in.to_date).to_i + 1
+    price_list = prices.joins(:availability).where(availabilities: { available_on: (check_in..check_out).map(&:to_s) }, adults: values[2], children: values[3], infants: values[4]).pluck(:amount)
+    price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
+    price_list
   end
 
   private
