@@ -10,6 +10,8 @@ class Lodging < ApplicationRecord
 
   searchkick locations: [:location], text_start: [:city]
 
+  accepts_nested_attributes_for :availabilities, allow_destroy: true
+
   enum lodging_type: {
     villa: 1,
     apartment: 2,

@@ -1,18 +1,46 @@
 ActiveAdmin.register Availability do
-  controller do
-    def permitted_params
-      params.permit!
-    end
-  end
+  menu false
+  actions :all, except: [:index, :new, :create]
+  permit_params :available_on, prices_attributes: [:id, :amount, :adults, :children, :infants, :_destroy]
 
   form do |f|
     inputs 'Availability' do
-      f.input :lodging_id, as: :select, label: 'Lodging', collection: Lodging.ids
+      f.input :lodging_id, input_html: { disabled: true }
       f.input :available_on
+    end
+
+    f.has_many :prices, allow_destroy: true, new_record: 'Add Price' do |price|
+      price.input :amount
+      price.input :adults
+      price.input :children
+      price.input :infants
     end
 
     f.actions do
       f.action :submit
     end
+  end
+
+  show do
+    attributes_table do
+      row :lodging
+      row :available_on
+      row :created_at
+      row :updated_at
+    end
+
+    panel "Prices" do
+      table_for availability.prices do
+        column :amount
+        column :adults
+        column :children
+        column :infants
+
+        column 'Action' do |price|
+          link_to 'Edit Price', edit_admin_price_path(price)
+        end
+      end
+    end
+    active_admin_comments
   end
 end
