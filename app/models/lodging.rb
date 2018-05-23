@@ -6,9 +6,12 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
   after_create :add_lodging_availabilities
+  after_create :reindex_prices
   mount_uploader :image, ImageUploader
 
   searchkick locations: [:location], text_start: [:city]
+
+  accepts_nested_attributes_for :availabilities, allow_destroy: true
 
   enum lodging_type: {
     villa: 1,
@@ -52,8 +55,12 @@ class Lodging < ApplicationRecord
   end
 
   def price_details(values)
-    check_in, check_out = values[0], (values[1].to_date - 1.day).to_s
-    prices.joins(:availability).where('adults >= ? and children >= ? and infants >= ?', values[2], values[3], values[4]).where('availabilities.available_on': (check_in..check_out)).pluck(:amount)
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: id })
+  end
+
+  def cumulative_price(params)
+    return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children, :infants).all?(&:present?)
+    "$#{price_list(params).sum} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
   end
 
   private
@@ -69,5 +76,16 @@ class Lodging < ApplicationRecord
           price.add(amount: self.price, availability_id: availability.id, adults: adults, children: children, infants: infants, created_at: DateTime.now, updated_at: DateTime.now)
         end
       end
+    end
+
+    def price_list(params)
+      total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
+      price_list = SearchPrices.call(params.merge(lodging_id: id)).pluck(:amount)
+      price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
+      price_list
+    end
+
+    def reindex_prices
+      prices.reindex
     end
 end
