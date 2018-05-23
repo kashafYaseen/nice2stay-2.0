@@ -6,6 +6,7 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
   after_create :add_lodging_availabilities
+  after_create :reindex_prices
   mount_uploader :image, ImageUploader
 
   searchkick locations: [:location], text_start: [:city]
@@ -61,6 +62,14 @@ class Lodging < ApplicationRecord
     price_list
   end
 
+  def cumulative_price(params)
+    return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children, :infants).all?(&:present?)
+    total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
+    price_list = SearchPrices.call(params.merge(lodging_id: id)).pluck(:amount)
+    price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
+    "$#{price_list.sum} for #{total_nights} nights"
+  end
+
   private
     def add_lodging_availabilities
       Availability.bulk_insert do |availability|
@@ -74,5 +83,9 @@ class Lodging < ApplicationRecord
           price.add(amount: self.price, availability_id: availability.id, adults: adults, children: children, infants: infants, created_at: DateTime.now, updated_at: DateTime.now)
         end
       end
+    end
+
+    def reindex_prices
+      prices.reindex
     end
 end
