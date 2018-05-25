@@ -2,6 +2,7 @@ class Lodging < ApplicationRecord
   has_many :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities
+  has_many :rules
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
