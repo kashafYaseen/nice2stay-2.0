@@ -44,6 +44,13 @@ ActiveAdmin.register Lodging do
       f.input :infants
     end
 
+    f.has_many :rules, allow_destroy: true, new_record:  'Add Rule'  do |rule|
+      rule.input :start_date
+      rule.input :end_date
+      rule.input :days_multiplier, min: 1, step: 1
+      rule.input :check_in_days, collection: Rule::DAY_OF_WEEK, as: :select
+    end
+
     f.has_many :availabilities, allow_destroy: true, new_record:  'Add Availability'  do |availability|
       availability.input :available_on
       availability.has_many :prices, allow_destroy: true, new_record: 'Add Price' do |price|
@@ -79,6 +86,19 @@ ActiveAdmin.register Lodging do
       row :infants
       row :created_at
       row :updated_at
+    end
+
+    panel "Rules" do
+      table_for lodging.rules do
+        column :start_date
+        column :end_date
+        column :days_multiplier
+        column :check_in_days
+
+        column 'Action' do |rule|
+          link_to 'Edit', edit_admin_rule_path(rule)
+        end
+      end
     end
 
     panel "Availabilities" do
