@@ -2,6 +2,7 @@ class Lodging < ApplicationRecord
   has_many :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities
+  has_many :rules
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -12,6 +13,7 @@ class Lodging < ApplicationRecord
   searchkick locations: [:location], word_start: [:city]
 
   accepts_nested_attributes_for :availabilities, allow_destroy: true
+  accepts_nested_attributes_for :rules, allow_destroy: true
 
   enum lodging_type: {
     villa: 1,
