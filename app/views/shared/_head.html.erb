@@ -9,3 +9,13 @@
 <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 <%= javascript_pack_tag 'application' %>
 <%= stylesheet_pack_tag 'application', media: 'all' %>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-899429-9"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'UA-899429-9');
+</script>
