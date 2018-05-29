@@ -22,8 +22,8 @@
 
   export default {
     data() {
-      let check_in = $('#dates-form').data('check-in');
-      let check_out = $('#dates-form').data('check-out');
+      let check_in = $('#new_reservation').data('check-in');
+      let check_out = $('#new_reservation').data('check-out');
       return {
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
