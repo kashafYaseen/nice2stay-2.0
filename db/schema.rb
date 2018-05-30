@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524080535) do
+ActiveRecord::Schema.define(version: 20180530065413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(version: 20180524080535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "reservation_days"
+    t.float "discount_percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
   end
 
   create_table "lodgings", force: :cascade do |t|
@@ -142,6 +153,7 @@ ActiveRecord::Schema.define(version: 20180524080535) do
   end
 
   add_foreign_key "availabilities", "lodgings"
+  add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "reservations", "lodgings"
   add_foreign_key "reservations", "users"
