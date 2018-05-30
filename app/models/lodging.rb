@@ -54,7 +54,7 @@ class Lodging < ApplicationRecord
   end
 
   def not_available_on
-    (2.years.ago.to_date..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+    (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
   end
 
   def price_details(values)
