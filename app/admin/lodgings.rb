@@ -8,7 +8,7 @@ ActiveAdmin.register Lodging do
 
     def scoped_collection
       return Lodging.all if action_name == "index"
-      Lodging.includes(availabilities: :prices)
+      Lodging.includes({availabilities: :prices}, :discounts, :rules)
     end
   end
 
@@ -51,6 +51,13 @@ ActiveAdmin.register Lodging do
       rule.input :end_date
       rule.input :days_multiplier, min: 1, step: 1
       rule.input :check_in_days, collection: Rule::DAY_OF_WEEK, as: :select
+    end
+
+    f.has_many :discounts, allow_destroy: true, new_record:  'Add Discount'  do |discount|
+      discount.input :start_date
+      discount.input :end_date
+      discount.input :reservation_days, min: 1, step: 1
+      discount.input :discount_percentage
     end
 
     f.has_many :availabilities, allow_destroy: true, new_record:  'Add Availability'  do |availability|
@@ -99,6 +106,19 @@ ActiveAdmin.register Lodging do
 
         column 'Action' do |rule|
           link_to 'Edit', edit_admin_rule_path(rule)
+        end
+      end
+    end
+
+    panel "Discounts" do
+      table_for lodging.discounts do
+        column :start_date
+        column :end_date
+        column :reservation_days
+        column :discount_percentage
+
+        column 'Action' do |discount|
+          link_to 'Edit', edit_admin_discount_path(discount)
         end
       end
     end
