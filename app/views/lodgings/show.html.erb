@@ -90,6 +90,12 @@
         <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>" data-disabled-dates="<%= @lodging.not_available_on %>"></div>
 
         <%= form_for @reservation, data: { check_in: @reservation.check_in, check_out: @reservation.check_out } do |f| %>
+
+          <div class="float-right">
+            <p class="text-xs">Check in allowed on: <%= @lodging.allow_check_in_days %><br>
+            Total reservation days allowed: Multiplicands of <%= @lodging.allow_days_multipliers %></p>
+          </div>
+
           <label>Check in - Check out</label>
           <div class='reservation-datepicker'></div>
 

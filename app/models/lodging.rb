@@ -16,6 +16,8 @@ class Lodging < ApplicationRecord
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
 
+  delegate :active, to: :rules, allow_nil: true, prefix: true
+
   enum lodging_type: {
     villa: 1,
     apartment: 2,
@@ -64,6 +66,16 @@ class Lodging < ApplicationRecord
   def cumulative_price(params)
     return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children, :infants).all?(&:present?)
     "$#{price_list(params).sum} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
+  end
+
+  def allow_check_in_days
+    days = rules_active.pluck(:check_in_days).join(',')
+    days.present? ? days : "All days"
+  end
+
+  def allow_days_multipliers
+    days = rules_active.pluck(:days_multiplier).join(',')
+    days.present? ? days : "All numbers"
   end
 
   private
