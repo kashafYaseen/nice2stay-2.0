@@ -7,6 +7,7 @@ ActiveAdmin.register Lodging do
     end
 
     def scoped_collection
+      return Lodging.all if action_name == "index"
       Lodging.includes(availabilities: :prices)
     end
   end
@@ -23,6 +24,7 @@ ActiveAdmin.register Lodging do
     actions
   end
 
+  remove_filter :reservations, :availabilities, :prices, :rules, :discounts
 
   form do |f|
     inputs 'Lodging' do
