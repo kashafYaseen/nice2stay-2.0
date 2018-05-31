@@ -25,12 +25,17 @@
       $.ajax
         url: "#{$('#lodging-url').data('url')}?values=#{values}"
         type: 'GET'
-        success: (rates) ->
+        success: (data) ->
           result = ""
           total = 0
-          $.each rates, (key, value) ->
+          $.each data.rates, (key, value) ->
             result += "<p>$#{key} x #{value} night</p>"
             total += (key * value)
+
+          if data.discount
+            discount = total * data.discount/100
+            result += "<p>Discount #{data.discount}% : $#{discount}</p>"
+            total -= discount
 
           if total > 0
             result += "<p>total: #{total}</p>"
