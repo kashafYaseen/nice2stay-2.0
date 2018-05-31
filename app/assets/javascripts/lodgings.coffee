@@ -28,6 +28,7 @@
         success: (data) ->
           result = ""
           total = 0
+          validate(values)
           $.each data.rates, (key, value) ->
             result += "<p>$#{key} x #{value} night</p>"
             total += (key * value)
@@ -42,5 +43,13 @@
             $('#bill').html(result)
           else
             $('#bill').text('Lodging not available.')
+
+  validate = (values) ->
+    values.push $('#reservation_lodging_id').val()
+    $.ajax
+      url: "/reservations/validate?values=#{values}"
+      type: 'GET'
+      success: (data) ->
+        return
 
 ).call this
