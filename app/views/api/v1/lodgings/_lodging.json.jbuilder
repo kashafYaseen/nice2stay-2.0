@@ -16,3 +16,15 @@ json.children      lodging.children
 json.infants       lodging.infants
 json.created_at    lodging.created_at
 json.updated_at    lodging.updated_at
+
+json.rules do
+  json.array! lodging.rules, partial: 'api/v1/rules/rule', as: :rule
+end
+
+json.discounts do
+  json.array! lodging.discounts, partial: 'api/v1/discounts/discount', as: :discount
+end
+
+json.availabilities do
+  json.array! lodging.availabilities, partial: 'api/v1/availabilities/availability', as: :availability
+end
