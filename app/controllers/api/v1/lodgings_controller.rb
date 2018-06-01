@@ -1,5 +1,5 @@
 class Api::V1::LodgingsController < Api::V1::ApiController
-  before_action :set_lodging, only: [:show]
+  before_action :set_lodging, only: [:show, :update]
 
   def show
     return not_acceptable("Lodging not found") unless @lodging.present?
@@ -9,6 +9,14 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     @lodging = Lodging.new(lodging_params)
     if @lodging.save
       render status: :created
+    else
+      render json: @lodging.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @lodging.update(lodging_params)
+      render status: :ok
     else
       render json: @lodging.errors, status: :unprocessable_entity
     end
