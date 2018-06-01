@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180530065413) do
+ActiveRecord::Schema.define(version: 20180601071441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20180530065413) do
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "check_out_only", default: false
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 
