@@ -84,9 +84,6 @@ gem 'foreman', '~> 0.84.0'
 gem 'jquery-ui-rails'
 
 gem 'geocoder'
-<<<<<<< HEAD
-gem 'searchkick', '~> 3.0.2'
-=======
 gem 'searchkick'
 gem 'activeadmin'
->>>>>>> 56814b17c1087a448ee0fd2248aaff5bf7d32e99
+
