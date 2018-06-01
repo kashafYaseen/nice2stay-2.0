@@ -78,12 +78,12 @@ class Lodging < ApplicationRecord
   end
 
   def allow_check_in_days
-    days = rules_active.pluck(:check_in_days).join(',')
+    days = rules_active(Date.today,Date.today).pluck(:check_in_days).join(',')
     days.present? ? days : "All days"
   end
 
   def allow_days_multipliers
-    days = rules_active.pluck(:days_multiplier).join(',')
+    days = rules_active(Date.today,Date.today).pluck(:days_multiplier).join(',')
     days.present? ? days : "All numbers"
   end
 
