@@ -10,6 +10,7 @@
         @date-two-selected="date_two_selected"
         :inline="true"
         :disabled-dates="disabled_dates"
+        :min-date="this.current_date.toString()"
       ></airbnb-style-datepicker>
       <input type="hidden" name="reservation[check_in]" :value="check_in">
       <input type="hidden" name="reservation[check_out]" :value="check_out">
@@ -24,12 +25,14 @@
     data() {
       let check_in = $('#new_reservation').data('check-in');
       let check_out = $('#new_reservation').data('check-out');
+      let today = this.get_yesterday()
       return {
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
         id: "reservation-trigger-range-",
-        disabled_dates: []
+        disabled_dates: [],
+        current_date: today
       }
     },
     mounted() {
@@ -54,6 +57,11 @@
       date_two_selected(val) {
         this.check_out = val
         calculate_bill(this.check_in, this.check_out);
+      },
+      get_yesterday() {
+        var d = new Date();
+        d.setDate(d.getDate() - 1);
+        return d;
       }
     }
   }

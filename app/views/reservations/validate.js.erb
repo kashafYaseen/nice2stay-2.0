@@ -1,0 +1,7 @@
+<% if @reservation.validate %>
+  $('.btn-booking').removeClass('disabled');
+<% else %>
+  $('.btn-booking').addClass('disabled');
+<% end %>
+
+$('.reservation-form-errors').html("<%= j render 'shared/errors', resource: @reservation %>");
