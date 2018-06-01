@@ -5,6 +5,7 @@ class Reservation < ApplicationRecord
 
   validates :check_in, :check_out, presence: true
   validate :availability
+  validate :check_out_only
   validate :accommodation_rules
 
   after_create :update_lodging_availability
@@ -14,20 +15,28 @@ class Reservation < ApplicationRecord
   private
 
     def update_lodging_availability
-      lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s)).destroy_all
+      lodging.availabilities.find_by(available_on: check_in).update(check_out_only: true)
+      lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
     end
 
     def availability
       return unless check_in.present? && check_out.present?
-      available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s)).count
+      errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
+      available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
       errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i
     end
 
+    def check_out_only
+      return unless check_in.present? && check_out.present?
+      check_out_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: true)
+      errors.add(:base, "#{check_out_days.pluck(:available_on)} only available for check out") if check_out_days.present?
+    end
+
     def accommodation_rules
-      return unless rules_active.present?
-      rules_active.each do |rule|
+      return unless rules_active(check_in, check_out).present?
+      rules_active(check_in, check_out).each do |rule|
         if rule.days_multiplier.present?
-          errors.add(:base, "Reserve days should be multiple of #{rule.days_multiplier}") unless (check_out - check_in).to_i % rule.days_multiplier == 0
+          errors.add(:base, "Reserved days count must be multiple of #{rule.days_multiplier}") unless (check_out - check_in).to_i % rule.days_multiplier == 0
         end
 
         if rule.check_in_days.present? & check_in.present?
