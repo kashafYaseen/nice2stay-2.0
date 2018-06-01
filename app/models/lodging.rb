@@ -3,6 +3,7 @@ class Lodging < ApplicationRecord
   has_many :availabilities
   has_many :prices, through: :availabilities
   has_many :rules
+  has_many :discounts
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -14,6 +15,10 @@ class Lodging < ApplicationRecord
 
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
+  accepts_nested_attributes_for :discounts, allow_destroy: true
+
+  delegate :active, to: :rules, allow_nil: true, prefix: true
+  delegate :active, to: :discounts, allow_nil: true, prefix: true
 
   enum lodging_type: {
     villa: 1,
@@ -53,16 +58,33 @@ class Lodging < ApplicationRecord
   end
 
   def not_available_on
-    (2.years.ago.to_date..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+    (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
   end
 
   def price_details(values)
     price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: id })
   end
 
+  def discount_details(values)
+    discount({ check_in: values[0], check_out: values[1] })
+  end
+
   def cumulative_price(params)
     return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children, :infants).all?(&:present?)
-    "$#{price_list(params).sum} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
+    total_price = price_list(params).sum
+    total_discount = discount(params)
+    total_price -= total_price * (total_discount/100) if total_discount.present?
+    "$#{total_price} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
+  end
+
+  def allow_check_in_days
+    days = rules_active.pluck(:check_in_days).join(',')
+    days.present? ? days : "All days"
+  end
+
+  def allow_days_multipliers
+    days = rules_active.pluck(:days_multiplier).join(',')
+    days.present? ? days : "All numbers"
   end
 
   private
@@ -89,5 +111,11 @@ class Lodging < ApplicationRecord
 
     def reindex_prices
       prices.reindex
+    end
+
+    def discount(params)
+      total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
+      discount = discounts_active.where('reservation_days <= ?', total_nights).order(:reservation_days).last
+      discount.discount_percentage if discount.present?
     end
 end

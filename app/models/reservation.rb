@@ -14,11 +14,12 @@ class Reservation < ApplicationRecord
   private
 
     def update_lodging_availability
-      lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s)).destroy_all
+      lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
     end
 
     def availability
       return unless check_in.present? && check_out.present?
+      errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
       available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s)).count
       errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i
     end
