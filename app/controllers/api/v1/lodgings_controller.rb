@@ -28,6 +28,25 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     end
 
     def lodging_params
-      params.require(:lodging).permit(:street, :city, :zip, :state, :beds, :baths, :sq__ft, :sale_date, :price, :latitude, :longitude, :adults, :children, :infants, :lodging_type)
+      params.require(:lodging).permit(
+        :street,
+        :city,
+        :zip,
+        :state,
+        :beds,
+        :baths,
+        :sq__ft,
+        :sale_date,
+        :price,
+        :latitude,
+        :longitude,
+        :adults,
+        :children,
+        :infants,
+        :lodging_type,
+        availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants]],
+        rules_attributes: [:id, :start_date, :end_date, :days_multiplier, :check_in_days],
+        discounts_attributes: [:id, :start_date, :end_date, :reservation_days, :discount_percentage],
+      )
     end
 end
