@@ -11,6 +11,7 @@
         :inline="true"
         :disabled-dates="disabled_dates"
         :min-date="this.current_date.toString()"
+        :months-to-show="1"
       ></airbnb-style-datepicker>
       <input type="hidden" name="reservation[check_in]" :value="check_in">
       <input type="hidden" name="reservation[check_out]" :value="check_out">
