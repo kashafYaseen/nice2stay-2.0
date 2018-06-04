@@ -15,8 +15,9 @@ class Reservation < ApplicationRecord
   private
 
     def update_lodging_availability
-      lodging.availabilities.find_by(available_on: check_in).update(check_out_only: true)
+      update_check_in_day
       lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
+      lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
     def availability
@@ -43,5 +44,11 @@ class Reservation < ApplicationRecord
           errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days
         end
       end
+    end
+
+    def update_check_in_day
+      days = lodging.availabilities.where(available_on: [check_in-1.day, check_in]).order(available_on: :desc)
+      return days.take.update(check_out_only: true) if days.size == 2
+      days.take.delete
     end
 end
