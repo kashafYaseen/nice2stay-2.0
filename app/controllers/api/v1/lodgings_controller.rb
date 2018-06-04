@@ -44,7 +44,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
         :children,
         :infants,
         :lodging_type,
-        availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants]],
+        availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],
         rules_attributes: [:id, :start_date, :end_date, :days_multiplier, :check_in_days],
         discounts_attributes: [:id, :start_date, :end_date, :reservation_days, :discount_percentage],
       )
