@@ -7,17 +7,7 @@
         <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= @lodgings.total_count %></div>
       </div>
 
-<<<<<<< HEAD
-    <!-- Page Content-->
-    <div class="container padding-bottom-3x mb-1">
-      <div class="row">
-        <!-- Content-->
-        <div class="col-lg-9 col-md-8 order-md-2">
-           <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
-            <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= @lodgings.total_count %></div>
-            
-          </div>
-<<<<<<< HEAD
+
 
           
           <div class="row mb-2">
@@ -26,17 +16,6 @@
           
 
 
-=======
->>>>>>> af42035339fccf75fa8b614b4b4a29f0bca3d721
-
-          <%= tag.div id: "lodgings-list", class: "row mb-2", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } do %>
-            <%= render @lodgings %>
-          <% end %>
-=======
-      <%= tag.div id: "lodgings-list", class: "row mb-2", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } do %>
-        <%= render @lodgings %>
-      <% end %>
->>>>>>> e7ea865a46564fa63e5ef09c92e4a9798217d669
 
       <nav class="pagination">
         <div class="column">
