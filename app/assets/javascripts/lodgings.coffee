@@ -30,8 +30,9 @@
           total = 0
           validate(values)
           $.each data.rates, (key, value) ->
-            result += "<p>$#{key} x #{value} night</p>"
+            result += "<b>€ #{key} x #{value} night</b>"
             total += (key * value)
+
 
           if data.discount
             discount = total * data.discount/100

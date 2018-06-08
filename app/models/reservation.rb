@@ -36,7 +36,7 @@ class Reservation < ApplicationRecord
       return unless rules_active(check_in, check_out).present?
       rules_active(check_in, check_out).each do |rule|
         if rule.days_multiplier.present?
-          errors.add(:base, "Reserved days count must be multiple of #{rule.days_multiplier}") unless (check_out - check_in).to_i % rule.days_multiplier == 0
+          errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless (check_out - check_in).to_i % rule.days_multiplier == 0
         end
 
         if rule.check_in_days.present? & check_in.present?
