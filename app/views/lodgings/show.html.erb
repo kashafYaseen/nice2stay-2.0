@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-6">
     <p id="notice"><%= notice %></p>
     <p>
 
@@ -78,7 +78,7 @@
     </p>
   </div>
 
-  <div class="col-md-7">
+  <div class="col-md-6">
     <div class="card">
       <div class="card-body">
         <div class="card-title">
@@ -89,30 +89,48 @@
           </div>
         </div>
 
+
+
         <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>" data-disabled-dates="<%= @lodging.not_available_on %>"></div>
 
-        <%= form_for @reservation, data: { check_in: @reservation.check_in, check_out: @reservation.check_out } do |f| %>
+        <div class="row">
+          <div class="col-sm">
+            <div class='reservation-datepicker'></div>
+          </div>
+          <div class="col-sm">
+            <p id="bill"></p>
+            <%= form_for @reservation, data: { check_in: @reservation.check_in, check_out: @reservation.check_out } do |f| %>
 
-          <label>Check in - Check out</label>
-          <div class='reservation-datepicker'></div>
+         
+            
+           
 
-          <label>Adults</label>
-          <%= f.number_field :adults, value: f.object.adults, min: 1, max: @lodging.maximum_guests(:adults), class: 'input-spinner' %>
+              <label>Adults</label>
+              <%= f.number_field :adults, value: f.object.adults, min: 1, max: @lodging.maximum_guests(:adults), class: 'input-spinner' %>
 
-          <label>Children</label>
-          <%= f.number_field :children, value: f.object.children, min: 0, max: @lodging.maximum_guests(:children), class: 'input-spinner' %>
+              <label>Children</label>
+              <%= f.number_field :children, value: f.object.children, min: 0, max: @lodging.maximum_guests(:children), class: 'input-spinner' %>
 
-          <label>Infants</label>
-          <%= f.number_field :infants, value: f.object.infants, min: 0, max: @lodging.maximum_guests(:infants), class: 'input-spinner' %>
+              <label>Infants</label>
+              <%= f.number_field :infants, value: f.object.infants, min: 0, max: @lodging.maximum_guests(:infants), class: 'input-spinner' %>
 
-          <%= f.hidden_field :lodging_id, value: @lodging.id %>
-          <%= hidden_field_tag :calculate_bill, true %>
+              <%= f.hidden_field :lodging_id, value: @lodging.id %>
+              <%= hidden_field_tag :calculate_bill, true %>
 
-          <p id="lbl-error"></p>
-          <p id="bill"></p>
+              <p id="lbl-error"></p>
+              
 
-          <%= f.submit 'Book', class: 'btn btn-primary col-md-12 btn-booking disabled' %>
-        <% end %>
+            
+          </div>
+        
+        </div>
+
+
+
+
+              <%= f.submit 'Book', class: 'btn btn-primary col-md-12 btn-booking disabled' %>
+            <% end %>
+          
       </div>
     </div>
   </div>
