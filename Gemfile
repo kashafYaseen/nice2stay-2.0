@@ -5,10 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.3.1'
+ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.2'
+gem 'rails', '~> 5.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 
@@ -71,7 +71,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'administrate', '~> 0.8.1'
 gem 'bootstrap4-kaminari-views'
 gem 'devise', '~> 4.4'
 gem 'devise-bootstrapped', github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
