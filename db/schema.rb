@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180601071441) do
+ActiveRecord::Schema.define(version: 2018_06_13_083308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,17 @@ ActiveRecord::Schema.define(version: 20180601071441) do
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "user_id"
+    t.integer "stars"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_reviews_on_lodging_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "rules", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -158,5 +169,7 @@ ActiveRecord::Schema.define(version: 20180601071441) do
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "reservations", "lodgings"
   add_foreign_key "reservations", "users"
+  add_foreign_key "reviews", "lodgings"
+  add_foreign_key "reviews", "users"
   add_foreign_key "rules", "lodgings", on_delete: :cascade
 end
