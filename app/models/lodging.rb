@@ -5,6 +5,7 @@ class Lodging < ApplicationRecord
   has_many :rules
   has_many :discounts
   has_many :reviews
+  has_many :specifications
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
