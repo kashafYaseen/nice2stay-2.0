@@ -110,14 +110,14 @@
         <div class="col-md-6">
           
           <h3>Specifications</h3>
-         <ul class="text-sm mb-4">
+          <% if @lodging.specifications.present? %>
+            <ul class="text-sm mb-4">
+              <%= render @lodging.specifications %>
+            </ul>
+          <% else %>
+            <p>No specifications were provided.</p>
+          <% end %>
 
-            <li>Kindvriendelijk</li>
-            <li>Ut enim ad minima veniam, quis nostrum exercitationem</li>
-            <li>Nor again is there anyone who loves or pursues</li>
-            <li>At vero eos et accusamus et iusto odio dignissimos ducimus</li>
-            <li>Nam libero tempore, cum soluta nobis est eligendi </li>
-          </ul>
           <h5>Bezocht door Marit</h5>
           <div class="col-sm-4"> <img class="d-block mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/18173/Marit2.jpg" alt="Image"></div>
 
