@@ -98,6 +98,16 @@ class Lodging < ApplicationRecord
     reviews.where(stars: stars).count
   end
 
+  def truncated_description
+    return unless description.present?
+    return description.truncate(600) if truncate_description?
+    description
+  end
+
+  def truncate_description?
+    description.split(' ').length > 600
+  end
+
   private
     def add_lodging_availabilities
       Availability.bulk_insert do |availability|
