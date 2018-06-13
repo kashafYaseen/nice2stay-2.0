@@ -31,8 +31,8 @@
           <div class="col-md-6 mb-30">
             <div class="card border-default bg-white pt-2 box-shadow">
               <div class="card-body">
-                <h2 class="mb-3">Ingetogen luxe in een rustieke design setting dichtbij zee</h2>
-                 <p class="text-sm text-muted">l'oubliée | stijlvol en bijzondere villa op een domein in zuid frankrijk</p>
+                <h2 class="mb-3"><%= @lodging.title %></h2>
+                 <p class="text-sm text-muted"><%= @lodging.subtitle %></p>
                
                 
                 <div class="reservation-form-errors">
@@ -98,9 +98,8 @@
       <!-- Details-->
       <div class="row pt-2">
         <div class="col-md-6">
-          <h3>l'oubliée | stijlvol en bijzondere villa op een domein in zuid frankrijk</h3>
-          <p class="text-sm mb-4"><p><strong>L'Oubliée</strong> is een vrijstaand vakantie villa privé gelegen in het 8ha park van <strong>Domaine de Ribaute.</strong> Het domein is een 13e eeuws kasteeldorpje een paar kilometer landinwaarts vanaf de <strong>witte zandstranden</strong> in de regio <strong>Languedoc-Roussillon</strong> in Zuid Frankrijk. Op 10 minuten rijden ligt het mooie <strong>Béziers</strong>, een van de <strong>oudste steden</strong> van Frankrijk.</p>
-          <p>De Franse eigenaren hebben het domein <strong>volledig gerenoveerd</strong> en omgetoverd tot een discreet luxe en ruime <strong>vakantie villa</strong> en vier vakantie appartementen. Tijdens de verbouwing zijn de originele kenmerken, zoals de <strong>authentieke tegelvloeren </strong>en houten balken, behouden en er is gewerkt met traditionele materialen. De inrichting heeft een <strong>eclectische stijl </strong>en is met veel passie gedaan, u vindt er zowel strak design, als vintage elementen.. het geheel is zeer smaakvol.</p>
+          <h3><%= @lodging.subtitle %></h3>
+          <p class="text-sm mb-4"><p><%= @lodging.description %></p>
 
 
          </p>

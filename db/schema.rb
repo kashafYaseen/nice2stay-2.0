@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_13_083308) do
+ActiveRecord::Schema.define(version: 2018_06_13_104516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,9 @@ ActiveRecord::Schema.define(version: 2018_06_13_083308) do
     t.integer "adults", default: 1
     t.integer "children", default: 1
     t.integer "infants", default: 1
+    t.string "title"
+    t.string "subtitle"
+    t.text "description"
   end
 
   create_table "prices", force: :cascade do |t|
