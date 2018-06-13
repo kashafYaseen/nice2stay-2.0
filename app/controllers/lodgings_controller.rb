@@ -13,6 +13,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings/1.json
   def show
     @reservation = @lodging.reservations.build
+    @reviews = @lodging.reviews.page(params[:page]).per(2)
   end
 
   # GET /lodgings/new
