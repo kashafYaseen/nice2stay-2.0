@@ -61,12 +61,12 @@
                     <br>
 
 
-                    <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input' %>
+                    <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-1' %>
                      <label>Booking</label>
 
                      <br>
 
-                    <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input' %>
+                    <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-2' %>
                      <label>Option</label>
                                          <%= f.hidden_field :lodging_id, value: @lodging.id %>
                     <%= hidden_field_tag :calculate_bill, true %>
