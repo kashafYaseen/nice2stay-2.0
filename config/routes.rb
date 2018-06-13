@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   
-  root to: 'lodgings#index'
+  root to: 'lodgings#homepage'
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection

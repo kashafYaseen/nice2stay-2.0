@@ -1,14 +1,16 @@
+
 <header class="navbar navbar-sticky">
       <!-- Site Branding-->
       <div class="site-branding">
         <%= link_to root_path do %>
-           <%= image_tag "https://www.nice2stay.com/assets/logo-nice2stay-png-c98849dba20f1e88951cd09afef151a1.png", class: "site-logo hidden-xs-down" %>
+           <%= image_tag "https://www.nice2stay.com/assets/logo-nice2stay-png-c98849dba20f1e88951cd09afef151a1.png", class: "site-logo" %>
         <% end %>
   
         
       </div>
       <!-- Main Navigation-->
       <nav class="site-menu">
+
         <ul>
           <li class="active"><a href="index.html"><span>Home</span></a>
             <ul class="sub-menu">
@@ -50,45 +52,7 @@
               </li>
             </ul>
           </li>
-          <li><a href="#"><span> Mega Menu</span></a>
-            <ul class="mega-menu">
-              <li><span class="mega-menu-title text-uppercase">Furniture</span>
-                <ul>
-                  <li><a href="#">Desk &amp; Benching</a></li>
-                  <li><a href="#">Adjustable Desks</a></li>
-                  <li><a href="#">File Cabinets</a></li>
-                  <li><a href="#">Office Chairs</a></li>
-                  <li><a href="#">Tables</a></li>
-                  <li><a href="#">Storage Units</a></li>
-                  <li><a href="#">Accessories</a></li>
-                </ul>
-              </li>
-              <li><span class="mega-menu-title text-uppercase">Lighting</span>
-                <ul>
-                  <li><a href="#">Ceiling Lights</a></li>
-                  <li><a href="#">Kitchen Lighting</a></li>
-                  <li><a href="#">Lamps</a></li>
-                  <li><a href="#">Wall Lights</a></li>
-                  <li><a href="#">Outdoor Lights</a></li>
-                  <li><a href="#">Dimmers &amp; Controls</a></li>
-                  <li><a href="#">Light Bulbs</a></li>
-                </ul>
-              </li>
-              <li><span class="mega-menu-title text-uppercase">Shop by Color</span>
-                <div class="widget widget-colors">
-                  <ul>
-                    <li><a href="#"><span class="color" style="background-color: #fff; border: 1px solid #dcdcdc;"></span>White</a></li>
-                    <li><a href="#"><span class="color" style="background-color: #93c4ef;"></span>Blue</a></li>
-                    <li><a href="#"><span class="color" style="background-color: #a7c04d;"></span>Green</a></li>
-                    <li><a href="#"><span class="color" style="background-color: #ef0568;"></span>Red</a></li>
-                    <li><a href="#"><span class="color" style="background-color: #ffce2b;"></span>Yellow</a></li>
-                    <li><a href="#"><span class="color" style="background-color: #b5651d;"></span>Brown</a></li>
-                  </ul>
-                </div>
-              </li>
-              <li class="banner-column"><a href="#" style="background-image: url();"></a></li>
-            </ul>
-          </li>
+         
           <li><a href="account-orders.html"><span>Account</span></a>
             <ul class="sub-menu">
                 <li><a href="account-orders.html">Orders List</a></li>
@@ -119,6 +83,17 @@
           </li>
           <li><a href="components/accordion.html"><span>Components</span></a>
             <ul class="mega-menu">
+              <li><span class="mega-menu-title">A - F</span>
+                  <ul>
+                    <li><a href="components/accordion.html">Accordion</a></li>
+                    <li><a href="components/alerts.html">Alerts</a></li>
+                    <li><a href="components/buttons.html">Buttons</a></li>
+                    <li><a href="components/cards.html">Cards</a></li>
+                    <li><a href="components/carousel.html">Carousel</a></li>
+                    <li><a href="components/countdown.html">Countdown</a></li>
+                    <li><a href="components/forms.html">Forms</a></li>
+                  </ul>
+              </li>
               <li><span class="mega-menu-title">A - F</span>
                   <ul>
                     <li><a href="components/accordion.html">Accordion</a></li>
@@ -166,6 +141,8 @@
           </li>
         </ul>
       </nav>
+
+
       <!-- Toolbar-->
       <div class="toolbar">
         <div class="inner"><a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu"><i class="material-icons menu"></i></a><a class="toolbar-toggle search-toggle" href="#search"> <i class="material-icons">search</i></a><a class="toolbar-toggle" href="#account"><i class="material-icons">help_outline  </i></a><a class="toolbar-toggle" href="#account"><i class="material-icons">account_circle</i></a><a class="toolbar-toggle" href="#cart"><i><i class="material-icons">shopping_cart</i><span class="count">3</span></i></a></div>
@@ -359,8 +336,10 @@
             <%= form_tag lodgings_path, class: "search-form mb-2", method: :get do %>
               <%= text_field_tag :query, params[:query], :placeholder => "Type search query", class: 'form-control typeahead', id: "lodging_search" %><i class="material-icons">search</i>
                 <%= submit_tag "Search", :style => "display: none;" %>
+                <div class='reservation-datepicker'></div>
+
               <% end %>
-           
+            
             <!-- Products-->
             <div class="widget widget-featured-products">
               <h3 class="widget-title">Found in Products</h3>
@@ -406,47 +385,47 @@
             </div>
           </div>
           <!-- Account Section-->
-          <div class="toolbar-section" id="account">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-              <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" role="tab">Log In</a></li>
-              <li class="nav-item"><a class="nav-link" href="#signup" data-toggle="tab" role="tab">Sign Up</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane fade show active" id="login" role="tabpanel">
-                <form autocomplete="off" id="login-form">
-                  <div class="form-group input-group">
-                    <input class="form-control" type="email" placeholder="Email" required><span class="input-group-addon"><i class="material-icons">email</i></span>
-                  </div>
-                  <div class="form-group input-group">
-                    <input class="form-control" type="password" placeholder="Password" required><span class="input-group-addon"><<i class="material-icons">email</i></span>
-                  </div>
-                  <div class="custom-control custom-checkbox form-group">
-                    <input class="custom-control-input" type="checkbox" id="logged" checked>
-                    <label class="custom-control-label" for="logged">Keep me logged in</label>
-                  </div>
-                  <button class="btn btn-primary btn-block" type="submit">Log In</button>
-                </form>
-              </div>
-              <div class="tab-pane fade" id="signup" role="tabpanel">
-                <form autocomplete="off" id="signup-form">
-                  <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Full Name" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="email" placeholder="Email" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="password" placeholder="Password" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="password" placeholder="Confirm Password" required>
-                  </div>
-                  <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
-                  <p class="text-muted text-sm mt-4">OR sign up with your social account</p><a class="media-btn media-facebook" href="#"><i class="socicon-facebook"></i><span>Signup with Facebook</span></a><a class="media-btn media-google" href="#"><i class="socicon-googleplus"></i><span>Signup with Google+</span></a><a class="media-btn media-twitter" href="#"><i class="socicon-twitter"></i><span>Signup with Twitter</span></a>
-                </form>
+            <div class="toolbar-section" id="account">
+              <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" role="tab">Log In</a></li>
+                <li class="nav-item"><a class="nav-link" href="#signup" data-toggle="tab" role="tab">Sign Up</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="login" role="tabpanel">
+                  <form autocomplete="off" id="login-form">
+                    <div class="form-group input-group">
+                      <input class="form-control" type="email" placeholder="Email" required><span class="input-group-addon"><i class="material-icons">email</i></span>
+                    </div>
+                    <div class="form-group input-group">
+                      <input class="form-control" type="password" placeholder="Password" required><span class="input-group-addon"><<i class="material-icons">email</i></span>
+                    </div>
+                    <div class="custom-control custom-checkbox form-group">
+                      <input class="custom-control-input" type="checkbox" id="logged" checked>
+                      <label class="custom-control-label" for="logged">Keep me logged in</label>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Log In</button>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="signup" role="tabpanel">
+                  <form autocomplete="off" id="signup-form">
+                    <div class="form-group">
+                      <input class="form-control" type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Confirm Password" required>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
+                    <p class="text-muted text-sm mt-4">OR sign up with your social account</p><a class="media-btn media-facebook" href="#"><i class="socicon-facebook"></i><span>Signup with Facebook</span></a><a class="media-btn media-google" href="#"><i class="socicon-googleplus"></i><span>Signup with Google+</span></a><a class="media-btn media-twitter" href="#"><i class="socicon-twitter"></i><span>Signup with Twitter</span></a>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
           <!-- Shopping Cart Section-->
           <div class="toolbar-section" id="cart">
             <div class="table-responsive shopping-cart mb-0">

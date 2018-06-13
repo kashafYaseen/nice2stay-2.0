@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'shared/head' %>
+  </head>
+
+  <body>
+    <%= render 'shared/navbar' %>
+    <%= render 'shared/notices' %>
+
+   
+    <%= yield %>
+   
+    <%= render 'shared/footer' %>
+
+    <script type="text/javascript">
+      <%= yield :js_init %>
+    </script>
+
+  </body>
+</html>

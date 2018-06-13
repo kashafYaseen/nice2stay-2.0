@@ -3,7 +3,10 @@ class LodgingsController < ApplicationController
 
   # GET /lodgings
   # GET /lodgings.json
-
+  def homepage
+   render :layout => 'homepage'
+   
+  end
   def index
     @lodgings = SearchLodgings.call(params)
     @reservation = Reservation.new
