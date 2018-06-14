@@ -15,6 +15,7 @@ ActiveAdmin.register Lodging do
   index do
     selectable_column
     id_column
+    column :title
     column :address
     column :beds
     column :baths
@@ -28,6 +29,9 @@ ActiveAdmin.register Lodging do
 
   form do |f|
     inputs 'Lodging' do
+      f.input :owner
+      f.input :title
+      f.input :subtitle
       f.input :street
       f.input :city
       f.input :zip
@@ -39,11 +43,17 @@ ActiveAdmin.register Lodging do
       f.input :price
       f.input :latitude
       f.input :longitude
-      f.input :image, as: :file
+      f.input :images, as: :file, input_html: { multiple: true }
       f.input :lodging_type
       f.input :adults
       f.input :children
       f.input :infants
+      f.input :description
+    end
+
+    f.has_many :specifications, allow_destroy: true, new_record:  'Add Specification'  do |spec|
+      spec.input :title
+      spec.input :description
     end
 
     f.has_many :rules, allow_destroy: true, new_record:  'Add Rule'  do |rule|
@@ -58,6 +68,12 @@ ActiveAdmin.register Lodging do
       discount.input :end_date
       discount.input :reservation_days, min: 1, step: 1
       discount.input :discount_percentage
+    end
+
+    f.has_many :reviews, allow_destroy: true, new_record:  'Add Review'  do |review|
+      review.input :user
+      review.input :stars, min: 1, max: 5, step: 1
+      review.input :description
     end
 
     f.has_many :availabilities, allow_destroy: true, new_record:  'Add Availability'  do |availability|
@@ -77,6 +93,9 @@ ActiveAdmin.register Lodging do
 
   show do
     attributes_table do
+      row :title
+      row :subtitle
+      row :owner
       row :street
       row :city
       row :zip
@@ -88,13 +107,33 @@ ActiveAdmin.register Lodging do
       row :price
       row :latitude
       row :longitude
-      row :image, as: :file
+      row :description
+      row :images do
+        ul do
+          lodging.images.each do |image|
+            li do
+              image_tag(image.url(:thumb))
+            end
+          end
+        end
+      end
       row :lodging_type
       row :adults
       row :children
       row :infants
       row :created_at
       row :updated_at
+    end
+
+    panel "Specifications" do
+      table_for lodging.specifications do
+        column :title
+        column :description
+
+        column 'Action' do |specification|
+          link_to 'Edit', edit_admin_specification_path(specification)
+        end
+      end
     end
 
     panel "Rules" do
@@ -119,6 +158,18 @@ ActiveAdmin.register Lodging do
 
         column 'Action' do |discount|
           link_to 'Edit', edit_admin_discount_path(discount)
+        end
+      end
+    end
+
+    panel "Reviews" do
+      table_for lodging.reviews do
+        column :user
+        column :stars
+        column :description
+
+        column 'Action' do |review|
+          link_to 'Edit', edit_admin_review_path(review)
         end
       end
     end

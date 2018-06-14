@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180601071441) do
+ActiveRecord::Schema.define(version: 2018_06_14_091637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,11 +89,36 @@ ActiveRecord::Schema.define(version: 20180601071441) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image"
     t.integer "lodging_type", default: 1
     t.integer "adults", default: 1
     t.integer "children", default: 1
     t.integer "infants", default: 1
+    t.string "title"
+    t.string "subtitle"
+    t.text "description"
+    t.bigint "owner_id"
+    t.json "images"
+    t.index ["owner_id"], name: "index_lodgings_on_owner_id"
+  end
+
+  create_table "owners", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
+    t.index ["email"], name: "index_owners_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
   end
 
   create_table "prices", force: :cascade do |t|
@@ -121,6 +146,17 @@ ActiveRecord::Schema.define(version: 20180601071441) do
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "user_id"
+    t.integer "stars"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_reviews_on_lodging_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "rules", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -130,6 +166,15 @@ ActiveRecord::Schema.define(version: 20180601071441) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
+  end
+
+  create_table "specifications", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_specifications_on_lodging_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -155,8 +200,12 @@ ActiveRecord::Schema.define(version: 20180601071441) do
 
   add_foreign_key "availabilities", "lodgings"
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
+  add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "reservations", "lodgings"
   add_foreign_key "reservations", "users"
+  add_foreign_key "reviews", "lodgings"
+  add_foreign_key "reviews", "users"
   add_foreign_key "rules", "lodgings", on_delete: :cascade
+  add_foreign_key "specifications", "lodgings"
 end

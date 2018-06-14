@@ -13,6 +13,10 @@ class ImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
+  def default_url
+    '/fallback/avatar.png' if self.model.is_a?(Owner)
+  end
+
   version :thumb do
     process :resize_to_fit => [50, 150]
   end

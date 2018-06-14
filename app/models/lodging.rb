@@ -1,24 +1,30 @@
 class Lodging < ApplicationRecord
+  belongs_to :owner
   has_many :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities
   has_many :rules
   has_many :discounts
+  has_many :reviews
+  has_many :specifications
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
   after_create :add_lodging_availabilities
   after_create :reindex_prices
-  mount_uploader :image, ImageUploader
+  mount_uploaders :images, ImageUploader
 
   searchkick locations: [:location], word_start: [:city]
 
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
   accepts_nested_attributes_for :discounts, allow_destroy: true
+  accepts_nested_attributes_for :specifications, allow_destroy: true
+  accepts_nested_attributes_for :reviews, allow_destroy: true
 
   delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
+  delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
 
   enum lodging_type: {
     villa: 1,
@@ -85,6 +91,26 @@ class Lodging < ApplicationRecord
   def allow_days_multipliers
     days = rules_active(Date.today,Date.today).pluck(:days_multiplier).join(',')
     days.present? ? days : "All numbers"
+  end
+
+  def avg_rating
+    return 0.0 unless reviews.present?
+    reviews.average(:stars).round(2)
+  end
+
+  def rating_for(stars)
+    reviews.where(stars: stars).count
+  end
+
+  def truncated_description
+    return unless description.present?
+    return description.truncate(600) if truncate_description?
+    description
+  end
+
+  def truncate_description?
+    return false unless description.present?
+    description.split(' ').length > 600
   end
 
   private

@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :owner %>
+    <%= form.select :owner_id, Owner.all.collect {|p| [ p.full_name, p.id ] } %>
+  </div>
+
+  <div class="field">
     <%= form.label :street %>
     <%= form.text_field :street, id: :lodging_street %>
   </div>
@@ -87,8 +92,8 @@
   </div>
 
   <div class="field">
-    add an image....
-    <%= form.file_field :image %>
+    add images....
+    <%= form.file_field :images, multiple: true %>
   </div>
 
   <div class="actions">
