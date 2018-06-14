@@ -1,4 +1,5 @@
 class Lodging < ApplicationRecord
+  belongs_to :owner
   has_many :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities

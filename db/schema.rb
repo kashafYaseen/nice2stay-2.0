@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_081504) do
+ActiveRecord::Schema.define(version: 2018_06_14_084255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2018_06_14_081504) do
     t.string "title"
     t.string "subtitle"
     t.text "description"
+    t.bigint "owner_id"
+    t.index ["owner_id"], name: "index_lodgings_on_owner_id"
   end
 
   create_table "owners", force: :cascade do |t|
@@ -197,6 +199,7 @@ ActiveRecord::Schema.define(version: 2018_06_14_081504) do
 
   add_foreign_key "availabilities", "lodgings"
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
+  add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "reservations", "lodgings"
   add_foreign_key "reservations", "users"
