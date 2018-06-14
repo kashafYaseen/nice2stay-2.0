@@ -22,6 +22,7 @@ class Lodging < ApplicationRecord
 
   delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
+  delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
 
   enum lodging_type: {
     villa: 1,
@@ -106,6 +107,7 @@ class Lodging < ApplicationRecord
   end
 
   def truncate_description?
+    return false unless description.present?
     description.split(' ').length > 600
   end
 

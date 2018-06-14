@@ -119,9 +119,10 @@
             <p>No specifications were provided.</p>
           <% end %>
 
-          <h5>Bezocht door Marit</h5>
-          <div class="col-sm-4"> <img class="d-block mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/18173/Marit2.jpg" alt="Image"></div>
-
+          <h5><%= @lodging.owner_full_name %></h5>
+          <div class="col-sm-4">
+            <%= image_tag @lodging.owner_image_url, class: "block mx-auto img-thumbnail rounded-circle mb-3" %>
+          </div>
         </div>
       </div>
 
