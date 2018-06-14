@@ -3,7 +3,6 @@ class LodgingsController < ApplicationController
 
   # GET /lodgings
   # GET /lodgings.json
-
   def index
     @lodgings = SearchLodgings.call(params)
     @reservation = Reservation.new

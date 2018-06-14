@@ -2192,7 +2192,7 @@ select.form-control.input-light option {
   padding-left: 32px;
   transition: border-color .35s;
   border: 0;
-  border-bottom: 2px solid #eaeaea;
+  border: 2px solid #eaeaea;
   border-radius: 0;
   color: #606060;
   -webkit-appearance: none;
@@ -6212,7 +6212,7 @@ video {
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100%;
-  min-height: 80px;
+  min-height: 70px;
   background-color: #ffffff;
   z-index: 9000;
 }
@@ -6222,7 +6222,7 @@ video {
 }
 
 .navbar.navbar-sticky + * {
-  margin-top: 80px;
+  margin-top: 70px;
 }
 
 .site-branding {
@@ -6230,7 +6230,7 @@ video {
   top: 0;
   left: 0;
   height: 100%;
-  padding: 25px 0 25px 30px;
+  padding: 10px 10px 15px 30px;
   z-index: 6;
 }
 
@@ -6241,6 +6241,7 @@ video {
   text-decoration: none;
   vertical-align: middle;
   z-index: 10;
+  max-width: 80%;
 }
 
 .site-logo > img {
@@ -7371,7 +7372,7 @@ video {
 .product-gallery .gallery-item > a {
   cursor: url("../img/gallery-cursor.png") 0 0, pointer;
   /* Legacy */
-  cursor: -webkit-image-set(url("../img/gallery-cursor.png") 1x, url("../img/gallery-cursor@2x.png") 2x) 0 0, pointer;
+  cursor: -webkit-image-set(url("") 1x, url("") 2x) 0 0, pointer;
   /* Webkit */
 }
 

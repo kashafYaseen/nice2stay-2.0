@@ -7,15 +7,9 @@
         <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= @lodgings.total_count %></div>
       </div>
 
-
-
-          
-          <div class="row mb-2">
-            <%= render @lodgings %>
-          </div>
-          
-
-
+      <div class="row mb-2">
+        <%= render @lodgings %>
+      </div>
 
       <nav class="pagination">
         <div class="column">
@@ -28,14 +22,24 @@
             <li><a href="#">12</a></li>
           </ul>
         </div>
-        <div class="column text-right hidden-xs-down"><a class="btn btn-outline-secondary btn-sm" href="#">Next&nbsp;<i class="material-icons keyboard_arrow_right"></i></a></div>
+        <div class="column text-right hidden-xs-down">
+          <a class="btn btn-outline-secondary btn-sm" href="#">Next&nbsp;
+            <i class="material-icons keyboard_arrow_right"></i>
+          </a>
+        </div>
       </nav>
     </div>
-    <!-- Sidebar          -->
+
+    <!-- Sidebar -->
     <div class="col-lg-3 col-md-4 order-md-1">
-      <div class="sidebar-toggle position-left"><i class="material-icons filter_list"></i></div>
-      <aside class="sidebar sidebar-offcanvas position-left"><span class="sidebar-close">
-        <i class="material-icons icon_close"></i></span>
+      <div class="sidebar-toggle position-left">
+        <i class="material-icons filter_list"></i>
+      </div>
+
+      <aside class="sidebar sidebar-offcanvas position-left">
+        <span class="sidebar-close">
+          <i class="material-icons icon_close"></i>
+        </span>
         <!-- Widget Categories-->
         <section class="widget widget-categories pt-0">
            <section class="widget widget-icon-list">
@@ -56,17 +60,13 @@
                   <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
                 <% end %>
               <% end %>
-            <% end %>
-
-           
           </ul>
         </section>
 
         <section>
           <br>
-         <h3 class="widget-title">Number of Guests</h3>
+          <h3 class="widget-title">Number of Guests</h3>
           <ul>
-            
             <%= form_tag lodgings_path, method: :get do %>
               <label>Adults</label>
               <%= number_field_tag :adults, params[:adults], min: 0 %>
@@ -90,8 +90,6 @@
 
               <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
             <% end %>
-
-           
           </ul>
         </section>
 
