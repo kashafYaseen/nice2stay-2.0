@@ -19,6 +19,8 @@ class Lodging < ApplicationRecord
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
   accepts_nested_attributes_for :discounts, allow_destroy: true
+  accepts_nested_attributes_for :specifications, allow_destroy: true
+  accepts_nested_attributes_for :reviews, allow_destroy: true
 
   delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
