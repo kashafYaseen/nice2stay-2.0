@@ -3,27 +3,23 @@
         <div class="row">
           <!-- Product Gallery-->
           <div class="col-md-6 mb-30">
-            <div class="product-gallery"><span class="product-badge text-danger">Sale</span>
+            <div class="product-gallery">
               <div class="product-carousel owl-carousel gallery-wrapper">
-                <div class="gallery-item" data-hash="one"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="two"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="three"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="four"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="five"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="six"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="seven"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
-                <div class="gallery-item" data-hash="eight"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="555x480"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
+                <% @lodging.images.each_with_index do |image, index| %>
+                  <div class="gallery-item" data-hash="<%= index %>">
+                    <%= image_tag image.url %>
+                  </div>
+                <% end %>
               </div>
-              <ul class="product-thumbnails">
-                <li class="active"><a href="#one"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#two"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#three"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#four"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#five"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#six"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#seven"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
-                <li><a href="#eight"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></li>
 
+              <ul class="product-thumbnails">
+                <% @lodging.images.each_with_index do |image, index| %>
+                  <li class="active">
+                    <a href="#<%= index %>">
+                      <%= image_tag image.url %>
+                    </a>
+                  </li>
+                <% end %>
               </ul>
             </div>
           </div>
