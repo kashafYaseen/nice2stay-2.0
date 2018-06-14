@@ -3,4 +3,5 @@ class Owner < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :lodgings
+  mount_uploader :image, ImageUploader
 end
