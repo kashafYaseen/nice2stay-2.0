@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_085139) do
+ActiveRecord::Schema.define(version: 2018_06_14_091637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,6 @@ ActiveRecord::Schema.define(version: 2018_06_14_085139) do
     t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image"
     t.integer "lodging_type", default: 1
     t.integer "adults", default: 1
     t.integer "children", default: 1
@@ -98,6 +97,7 @@ ActiveRecord::Schema.define(version: 2018_06_14_085139) do
     t.string "subtitle"
     t.text "description"
     t.bigint "owner_id"
+    t.json "images"
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
   end
 

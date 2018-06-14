@@ -12,7 +12,7 @@ class Lodging < ApplicationRecord
   after_validation :geocode, if: :address_changed?
   after_create :add_lodging_availabilities
   after_create :reindex_prices
-  mount_uploader :image, ImageUploader
+  mount_uploaders :images, ImageUploader
 
   searchkick locations: [:location], word_start: [:city]
 
