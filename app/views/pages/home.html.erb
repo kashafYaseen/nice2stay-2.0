@@ -407,3 +407,8 @@
     </div>
   </div>
 </section>
+
+
+<%= content_for :js_init do %>
+  $("input[type='number']").InputSpinner();
+<% end %>
