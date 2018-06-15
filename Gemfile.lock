@@ -145,6 +145,9 @@ GEM
       faraday
       multi_json
     erubi (1.7.1)
+    exception_notification (4.2.2)
+      actionmailer (>= 4.0, < 6)
+      activesupport (>= 4.0, < 6)
     execjs (2.7.0)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
@@ -360,6 +363,7 @@ DEPENDENCIES
   devise (~> 4.4)
   devise-bootstrapped!
   dotenv-rails
+  exception_notification
   foreman (~> 0.84.0)
   geocoder
   jbuilder (~> 2.5)
