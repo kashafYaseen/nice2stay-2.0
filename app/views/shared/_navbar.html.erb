@@ -333,33 +333,42 @@
           </div>
           <!-- Search Section-->
           <div class="toolbar-section" id="search">
-            <%= form_tag lodgings_path, class: "search-form mb-2", method: :get do %>
-              <%= text_field_tag :query, params[:query], :placeholder => "Type search query", class: 'form-control typeahead', id: "lodging_search" %><i class="material-icons">search</i>
-                <%= submit_tag "Search", :style => "display: none;" %>
-                <div class='reservation-datepicker'></div>
+            <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
+              <%= text_field_tag :query, params[:query], :placeholder => "Type your search query or nothing", class: 'form-control', id: "lodging_search" %>
+              <%= hidden_field_tag :adults, params[:adults], id: :dates_adults if params[:adults].present? %>
+              <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
+              <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
 
+              <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
+              <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
+              <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
+
+              <% if params[:lodging_type_in].present? %>
+                <% params[:lodging_type_in].each do |lodging_type| %>
+                  <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
+                <% end %>
               <% end %>
-            
+              <% end %>
             <!-- Products-->
             <div class="widget widget-featured-products">
               <h3 class="widget-title">Found in Products</h3>
               <!-- Entry-->
               <div class="entry">
-                <div class="entry-thumb"><a href="shop-single.html"><img src="" alt="Product"></a></div>
+                <div class="entry-thumb"><a href="shop-single.html"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
                 <div class="entry-content">
                   <h4 class="entry-title"><a href="shop-single.html">Max <span class='text-highlighted'>Task Chair</span></a></h4><span class="entry-meta">$299.00</span>
                 </div>
               </div>
               <!-- Entry-->
               <div class="entry">
-                <div class="entry-thumb"><a href="shop-single.html"><img src="" alt="Product"></a></div>
+                <div class="entry-thumb"><a href="shop-single.html"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
                 <div class="entry-content">
                   <h4 class="entry-title"><a href="shop-single.html"><span class='text-highlighted'>Drawer</span> File Cabinet</a></h4><span class="entry-meta">$265.00</span>
                 </div>
               </div>
               <!-- Entry-->
               <div class="entry">
-                <div class="entry-thumb"><a href="shop-single.html"><img src="" alt="Product"></a></div>
+                <div class="entry-thumb"><a href="shop-single.html"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product"></a></div>
                 <div class="entry-content">
                   <h4 class="entry-title"><a href="shop-single.html">Campfire <span class='text-highlighted'>Paper</span> Table</a></h4><span class="entry-meta">$570.00</span>
                 </div>
@@ -370,14 +379,14 @@
               <h3 class="widget-title">Found in Blog</h3>
               <!-- Entry-->
               <div class="entry">
-                <div class="entry-thumb"><a href="blog-single.html"><img src="" alt="Post"></a></div>
+                <div class="entry-thumb"><a href="blog-single.html"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Post"></a></div>
                 <div class="entry-content">
                   <h4 class="entry-title"><a href="blog-single.html"><span class='text-highlighted'>Modern</span> Working Space</a></h4><span class="entry-meta">May 09</span>
                 </div>
               </div>
               <!-- Entry-->
               <div class="entry">
-                <div class="entry-thumb"><a href="blog-single.html"><img src="" alt="Post"></a></div>
+                <div class="entry-thumb"><a href="blog-single.html"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Post"></a></div>
                 <div class="entry-content">
                   <h4 class="entry-title"><a href="blog-single.html">Interior <span class='text-highlighted'>Design</span> Tricks</a></h4><span class="entry-meta">April 18</span>
                 </div>
