@@ -1,251 +1,264 @@
 <div class="bg-secondary pb-4 padding-top-3x">
-      <div class="container">
-        <div class="row">
-          <!-- Product Gallery-->
-          <div class="col-md-6 mb-30">
-            <div class="product-gallery">
-              <div class="product-carousel owl-carousel gallery-wrapper">
-                <% @lodging.images.each_with_index do |image, index| %>
-                  <div class="gallery-item" data-hash="<%= index %>">
-                    <%= image_tag image.url %>
-                  </div>
-                <% end %>
+  <div class="container">
+    <div class="row">
+      <!-- Product Gallery-->
+      <div class="col-md-6 mb-30">
+        <div class="product-gallery">
+          <div class="product-carousel owl-carousel gallery-wrapper">
+            <% @lodging.images.each_with_index do |image, index| %>
+              <div class="gallery-item" data-hash="<%= index %>">
+                <%= image_tag image.url %>
               </div>
-
-              <ul class="product-thumbnails">
-                <% @lodging.images.each_with_index do |image, index| %>
-                  <li class="active">
-                    <a href="#<%= index %>">
-                      <%= image_tag image.url %>
-                    </a>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
+            <% end %>
           </div>
-          <!-- Product Info-->
-          <div class="col-md-6 mb-30">
-            <div class="card border-default bg-white pt-2 box-shadow">
-              <div class="card-body">
-                <h2 class="mb-3"><%= @lodging.title %></h2>
-                 <p class="text-sm text-muted"><%= @lodging.subtitle %></p>
-               
-                
-                <div class="reservation-form-errors">
-                  <%= render 'shared/errors', resource: @reservation %>
+
+          <ul class="product-thumbnails">
+            <% @lodging.images.each_with_index do |image, index| %>
+              <li class="active">
+                <a href="#<%= index %>">
+                  <%= image_tag image.url %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Product Info-->
+      <div class="col-md-6 mb-30">
+        <div class="card border-default bg-white pt-2 box-shadow">
+          <div class="card-body">
+            <h2 class="mb-3"><%= @lodging.title %></h2>
+            <p class="text-sm text-muted"><%= @lodging.subtitle %></p>
+
+            <div class="reservation-form-errors">
+              <%= render 'shared/errors', resource: @reservation %>
+            </div>
+
+            <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>" data-disabled-dates="<%= @lodging.not_available_on %>"></div>
+            <%= form_for @reservation, data: { check_in: @reservation.check_in, check_out: @reservation.check_out } do |f| %>
+              <div class="row">
+                <div class="col-sm">
+                  <div class='reservation-datepicker'></div>
                 </div>
-                <div class="row">
-                  <div class="col-sm">
-                    <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>" data-disabled-dates="<%= @lodging.not_available_on %>"></div>
-                    <%= form_for @reservation, data: { check_in: @reservation.check_in, check_out: @reservation.check_out } do |f| %>
-                  
-                     <div class='reservation-datepicker'></div>
-                  </div>
 
-                  <div class="col-sm">
-                     <p id="lbl-error"></p>
-                     
-                     <label>Adults</label>
-                    <%= f.number_field :adults, value: f.object.adults, min: 1, max: @lodging.maximum_guests(:adults), class: 'input-spinner' %>
+                <div class="col-sm">
+                  <p id="lbl-error"></p>
 
-                    <label>Children</label>
-                    <%= f.number_field :children, value: f.object.children, min: 0, max: @lodging.maximum_guests(:children), class: 'input-spinner' %>
+                  <label>Adults</label>
+                  <%= f.number_field :adults, value: f.object.adults, min: 1, max: @lodging.maximum_guests(:adults), class: 'input-spinner' %>
 
-                    <label>Infants</label>
-                    <%= f.number_field :infants, value: f.object.infants, min: 0, max: @lodging.maximum_guests(:infants), class: 'input-spinner' %>
+                  <label>Children</label>
+                  <%= f.number_field :children, value: f.object.children, min: 0, max: @lodging.maximum_guests(:children), class: 'input-spinner' %>
 
-                    <br>
+                  <label>Infants</label>
+                  <%= f.number_field :infants, value: f.object.infants, min: 0, max: @lodging.maximum_guests(:infants), class: 'input-spinner' %>
 
+                  <br>
 
-                    <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-1' %>
-                     <label>Booking</label>
+                  <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-1' %>
+                  <label>Booking</label>
 
-                     <br>
+                  <br>
 
-                    <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-2' %>
-                     <label>Option</label>
-                                         <%= f.hidden_field :lodging_id, value: @lodging.id %>
-                    <%= hidden_field_tag :calculate_bill, true %>
-                      
-                      <br>
-                      <br>
-                     <h5 class="text-normal" id="bill"></h5>
-                   
-                  </div>
-                 
-                </div>  
-
-                 <%= f.submit 'Add', class: 'btn btn-primary col-md-12 btn-booking disabled' %>
-
-                
-              <% end %>
-
-
-           <a class="btn btn-outline-secondary btn-sm text-danger" href="#"><i class="material-icons favorite_border"></i>&nbsp;Save To Wishlist</a>
-           
-            </div>
+                  <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-2' %>
+                   <label>Option</label>
+                  <%= f.hidden_field :lodging_id, value: @lodging.id %>
+                  <%= hidden_field_tag :calculate_bill, true %>
+                  <br>
+                  <br>
+                  <h5 class="text-normal" id="bill"></h5>
+                </div>
+              </div>
+              <%= f.submit 'Add', class: 'btn btn-primary col-md-12 btn-booking disabled' %>
+            <% end %>
           </div>
-         </div>
+          <a class="btn btn-outline-secondary btn-sm text-danger" href="#"><i class="material-icons favorite_border"></i>&nbsp;Save To Wishlist</a>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="container padding-bottom-3x pt-5 mb-1">
-      <!-- Details-->
-      <div class="row pt-2">
-        <div class="col-md-6">
-          <h3><%= @lodging.subtitle %></h3>
-          <p class="text-sm mb-4">
-            <p id="lodging-description"><%= @lodging.truncated_description %></p>
-          </p>
+<div class="container padding-bottom-3x pt-5 mb-1">
+  <!-- Details-->
+  <div class="row pt-2">
+    <div class="col-md-6">
+      <h3><%= @lodging.subtitle %></h3>
+      <p class="text-sm mb-4">
+        <p id="lodging-description"><%= @lodging.truncated_description %></p>
+      </p>
 
-          <% if @lodging.truncate_description? %>
-            <a class="btn btn-outline-secondary btn-block btn-read-more" href="#" data-truncated="<%= @lodging.truncated_description %>" data-actual="<%= @lodging.description %>" data-target="#lodging-description">Read more</a>
-          <% end %>
-        </div>
+      <% if @lodging.truncate_description? %>
+        <a class="btn btn-outline-secondary btn-block btn-read-more" href="#" data-truncated="<%= @lodging.truncated_description %>" data-actual="<%= @lodging.description %>" data-target="#lodging-description">Read more</a>
+      <% end %>
+    </div>
 
-        <div class="col-md-6">
-          
-          <h3>Specifications</h3>
-          <% if @lodging.specifications.present? %>
-            <ul class="text-sm mb-4">
-              <%= render @lodging.specifications %>
-            </ul>
-          <% else %>
-            <p>No specifications were provided.</p>
-          <% end %>
+    <div class="col-md-6">
+      <h3>Specifications</h3>
+      <% if @lodging.specifications.present? %>
+        <ul class="text-sm mb-4">
+          <%= render @lodging.specifications %>
+        </ul>
+      <% else %>
+        <p>No specifications were provided.</p>
+      <% end %>
 
-          <h5><%= @lodging.owner_full_name %></h5>
-          <div class="col-sm-4">
-            <%= image_tag @lodging.owner_image_url, class: "block mx-auto img-thumbnail rounded-circle mb-3" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-12 margin-bottom-2x">
-        <h6 class="text-muted text-normal text-uppercase">Default Map</h6>
-        <hr class="margin-bottom-1x">
-        <div class="google-map" data-height="670" data-address="<%= @lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
-      </div>
-
-     <div class="row mt-30">
-        <div class="col-md-4 mb-4">
-          <%= render 'reviews/rating', lodging: @lodging %>
-        </div>
-        <div class="col-md-8">
-          <h3 class="padding-bottom-1x">Latest Reviews</h3>
-
-          <% if @reviews.present? %>
-            <%= render @reviews %>
-            <%= paginate @reviews %>
-          <% else %>
-            <p>Lodging does not have any review yet.</p>
-          <% end %>
-        </div>
-      </div>
-    <div class="gallery-wrapper isotope-grid cols-2" data-pswp-uid="2" style="position: relative; height: 565px;">
-            <div class="gutter-sizer"></div>
-            <div class="grid-sizer"></div>
-            <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 0px;"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14297/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-DSC_0638---copie.jpg" data-size="1000x667"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14297/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-DSC_0638---copie.jpg" alt="Image"></a><span class="caption">Bonsai on the table</span></div>
-            
-            <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 282px;"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14306/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-2-IMG_4222.jpg" data-size="1000x667"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14306/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-2-IMG_4222.jpg" alt="Image"></a><span class="caption">Working desk</span></div>
-            <div class="grid-item gallery-item" style="position: absolute; left: 423px; top: 282px;"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="1000x667"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Image"></a><span class="caption">Table lamp</span></div>
-             <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 0px;"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17271/img1.jpg" data-size="1000x667"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17271/img1.jpg" alt="Image"></a><span class="caption">Bonsai on the table</span></div>
-            
-            <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 282px;"><a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14302/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4276.jpg" data-size="1000x667"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14302/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4276.jpg" alt="Image"></a><span class="caption">Working desk</span></div>
-            
-          </div>
-      <!-- Reviews-->
-     
-
-     
-      <!-- Related Products Carousel-->
-      <h3 class="text-center padding-top-2x mt-2 padding-bottom-1x">You May Also Like</h3>
-      <!-- Carousel-->
-      <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 30, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;576&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
-        <!-- Product-->
-        <div class="product-card">
-          <div class="product-card-thumb"> <span class="product-badge text-danger">Sale</span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product">
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
-              <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-            </div>
-          </div>
-          <div class="product-card-details">
-            <h3 class="product-card-title"><a href="shop-single.html">Pendant Lamp</a></h3>
-            <h4 class="product-card-price">
-              <del>$54.00</del>$27.00
-            </h4>
-          </div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-          <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
-              <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-            </div>
-          </div>
-          <div class="product-card-details">
-            <h3 class="product-card-title"><a href="shop-single.html">Stylish Chair</a></h3>
-            <h4 class="product-card-price">$417.00</h4>
-          </div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-          <div class="product-card-thumb"><span class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star_border"></i></span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product">
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
-              <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-            </div>
-          </div>
-          <div class="product-card-details">
-            <h3 class="product-card-title"><a href="shop-single.html">Lounge Chair</a></h3>
-            <h4 class="product-card-price">$1099.00</h4>
-          </div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-          <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
-              <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-            </div>
-          </div>
-          <div class="product-card-details">
-            <h3 class="product-card-title"><a href="shop-single.html">Navy Box Bench</a></h3>
-            <h4 class="product-card-price">$75.00</h4>
-          </div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-          <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
-              <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-            </div>
-          </div>
-          <div class="product-card-details">
-            <h3 class="product-card-title"><a href="shop-single.html">Campfire Table</a></h3>
-            <h4 class="product-card-price">$1087.00</h4>
-          </div>
-        </div>
-        <!-- Product-->
-        <div class="product-card mb-30">
-          <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
-              <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-            </div>
-          </div>
-          <div class="product-card-details">
-            <h3 class="product-card-title"><a href="shop-single.html">LED Lighting</a></h3>
-            <h4 class="product-card-price">$130.00</h4>
-          </div>
-        </div>
+      <h5><%= @lodging.owner_full_name %></h5>
+      <div class="col-sm-4">
+        <%= image_tag @lodging.owner_image_url, class: "block mx-auto img-thumbnail rounded-circle mb-3" %>
       </div>
     </div>
-  
+  </div>
+
+  <div class="col-md-12 margin-bottom-2x">
+    <h6 class="text-muted text-normal text-uppercase">Default Map</h6>
+    <hr class="margin-bottom-1x">
+    <div class="google-map" data-height="670" data-address="<%= @lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
+  </div>
+
+ <div class="row mt-30">
+    <div class="col-md-4 mb-4">
+      <%= render 'reviews/rating', lodging: @lodging %>
+    </div>
+    <div class="col-md-8">
+      <h3 class="padding-bottom-1x">Latest Reviews</h3>
+
+      <% if @reviews.present? %>
+        <%= render @reviews %>
+        <%= paginate @reviews %>
+      <% else %>
+        <p>Lodging does not have any review yet.</p>
+      <% end %>
+    </div>
+  </div>
+<div class="gallery-wrapper isotope-grid cols-2" data-pswp-uid="2" style="position: relative; height: 565px;">
+  <div class="gutter-sizer"></div>
+  <div class="grid-sizer"></div>
+  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 0px;">
+    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14297/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-DSC_0638---copie.jpg" data-size="1000x667">
+      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14297/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-DSC_0638---copie.jpg" alt="Image">
+    </a>
+    <span class="caption">Bonsai on the table</span>
+  </div>
+
+  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 282px;">
+    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14306/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-2-IMG_4222.jpg" data-size="1000x667">
+      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14306/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-2-IMG_4222.jpg" alt="Image">
+    </a>
+    <span class="caption">Working desk</span>
+  </div>
+
+  <div class="grid-item gallery-item" style="position: absolute; left: 423px; top: 282px;">
+    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="1000x667">
+      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Image">
+    </a>
+    <span class="caption">Table lamp</span>
+  </div>
+
+  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 0px;">
+    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17271/img1.jpg" data-size="1000x667">
+      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17271/img1.jpg" alt="Image">
+    </a>
+    <span class="caption">Bonsai on the table</span>
+  </div>
+
+  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 282px;">
+    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14302/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4276.jpg" data-size="1000x667">
+      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14302/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4276.jpg" alt="Image">
+    </a>
+    <span class="caption">Working desk</span></div>
+  </div>
+
+  <!-- Related Products Carousel-->
+  <h3 class="text-center padding-top-2x mt-2 padding-bottom-1x">You May Also Like</h3>
+  <!-- Carousel-->
+  <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 30, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;576&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
+    <!-- Product-->
+    <div class="product-card">
+      <div class="product-card-thumb"> <span class="product-badge text-danger">Sale</span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product">
+        <div class="product-card-buttons">
+          <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
+          <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card-details">
+        <h3 class="product-card-title"><a href="shop-single.html">Pendant Lamp</a></h3>
+        <h4 class="product-card-price">
+          <del>$54.00</del>$27.00
+        </h4>
+      </div>
+    </div>
+
+    <!-- Product-->
+    <div class="product-card">
+      <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
+        <div class="product-card-buttons">
+          <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
+          <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card-details">
+        <h3 class="product-card-title"><a href="shop-single.html">Stylish Chair</a></h3>
+        <h4 class="product-card-price">$417.00</h4>
+      </div>
+    </div>
+
+    <!-- Product-->
+    <div class="product-card">
+      <div class="product-card-thumb"><span class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star_border"></i></span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Product">
+        <div class="product-card-buttons">
+          <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
+          <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card-details">
+        <h3 class="product-card-title"><a href="shop-single.html">Lounge Chair</a></h3>
+        <h4 class="product-card-price">$1099.00</h4>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="product-card">
+      <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
+        <div class="product-card-buttons">
+          <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
+          <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card-details">
+        <h3 class="product-card-title"><a href="shop-single.html">Navy Box Bench</a></h3>
+        <h4 class="product-card-price">$75.00</h4>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="product-card">
+      <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
+        <div class="product-card-buttons">
+          <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
+          <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card-details">
+        <h3 class="product-card-title"><a href="shop-single.html">Campfire Table</a></h3>
+        <h4 class="product-card-price">$1087.00</h4>
+      </div>
+    </div>
+
+    <!-- Product-->
+    <div class="product-card mb-30">
+      <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="" alt="Product">
+        <div class="product-card-buttons">
+          <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="Wishlist"><i class="material-icons favorite_border"></i></button>
+          <button class="btn btn-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-card-details">
+        <h3 class="product-card-title"><a href="shop-single.html">LED Lighting</a></h3>
+        <h4 class="product-card-price">$130.00</h4>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_lodging_path(@lodging) %> |
 <%= link_to 'Back', lodgings_path %>
