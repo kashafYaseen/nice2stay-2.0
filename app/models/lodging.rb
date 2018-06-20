@@ -26,6 +26,7 @@ class Lodging < ApplicationRecord
   delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
+  delegate :country, to: :region, allow_nil: true
 
   enum lodging_type: {
     villa: 1,
@@ -44,6 +45,8 @@ class Lodging < ApplicationRecord
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
+      country: country.name,
+      region: region.name,
       available_on: availabilities.pluck(:available_on),
       availability_price: prices.pluck(:amount),
       availability_adults: prices.pluck(:adults),

@@ -55,6 +55,7 @@
               <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
               <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
               <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :dates_region if params[:region].present? %>
 
               <% if params[:lodging_type_in].present? %>
                 <% params[:lodging_type_in].each do |lodging_type| %>
@@ -83,6 +84,7 @@
               <%= hidden_field_tag :min_price, params[:min_price], id: :guests_min_price if params[:min_price].present? %>
               <%= hidden_field_tag :max_price, params[:max_price], id: :guests_max_price if params[:max_price].present? %>
               <%= hidden_field_tag :order, params[:order], id: :guests_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :guests_region if params[:region].present? %>
 
               <% if params[:lodging_type_in].present? %>
                 <% params[:lodging_type_in].each do |lodging_type| %>
@@ -117,6 +119,7 @@
               <%= hidden_field_tag :min_price, params[:min_price], id: :lodgings_min_price if params[:min_price].present? %>
               <%= hidden_field_tag :max_price, params[:max_price], id: :lodgings_max_price if params[:max_price].present? %>
               <%= hidden_field_tag :order, params[:order], id: :lodgings_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :lodgings_region if params[:region].present? %>
             <% end %>
           </ul>
         </section>
@@ -151,6 +154,7 @@
               <%= hidden_field_tag :children, params[:children], id: :price_children if params[:children].present? %>
               <%= hidden_field_tag :infants, params[:infants], id: :price_infants if params[:infants].present? %>
               <%= hidden_field_tag :order, params[:order], id: :price_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :price_region if params[:region].present? %>
 
               <% if params[:lodging_type_in].present? %>
                 <% params[:lodging_type_in].each do |lodging_type| %>
@@ -178,12 +182,37 @@
             <%= hidden_field_tag :adults, params[:adults], id: :sort_adults if params[:adults].present? %>
             <%= hidden_field_tag :children, params[:children], id: :sort_children if params[:children].present? %>
             <%= hidden_field_tag :infants, params[:infants], id: :sort_infants if params[:infants].present? %>
+            <%= hidden_field_tag :region, params[:region], id: :sort_region if params[:region].present? %>
 
             <% if params[:lodging_type_in].present? %>
               <% params[:lodging_type_in].each do |lodging_type| %>
                 <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "sort_lodging_type_#{lodging_type}" %>
               <% end %>
             <% end %>
+          <% end %>
+        </section>
+
+        <section class="widget widget-icon-list">
+          <h3 class="widget-title">Region</h3>
+          <%= form_tag lodgings_path, method: :get do %>
+
+            <%= select_tag :region, options_for_select(@regions, params[:region]), include_blank: "Select Region", class: 'form-control' %>
+
+            <%= hidden_field_tag :min_price, params[:min_price], id: :sort_min_price if params[:min_price].present? %>
+            <%= hidden_field_tag :max_price, params[:max_price], id: :sort_max_price if params[:max_price].present? %>
+            <%= hidden_field_tag :check_in, params[:check_in], id: :sort_check_in if params[:check_in].present? %>
+            <%= hidden_field_tag :check_out, params[:check_out], id: :sort_check_out if params[:check_out].present? %>
+            <%= hidden_field_tag :adults, params[:adults], id: :sort_adults if params[:adults].present? %>
+            <%= hidden_field_tag :children, params[:children], id: :sort_children if params[:children].present? %>
+            <%= hidden_field_tag :infants, params[:infants], id: :sort_infants if params[:infants].present? %>
+
+            <% if params[:lodging_type_in].present? %>
+              <% params[:lodging_type_in].each do |lodging_type| %>
+                <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "sort_lodging_type_#{lodging_type}" %>
+              <% end %>
+            <% end %>
+
+            <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm' %>
           <% end %>
         </section>
 
