@@ -90,4 +90,5 @@ gem 'geocoder'
 gem 'searchkick'
 gem 'activeadmin'
 gem 'route_translator'
+gem 'globalize', git: 'https://github.com/globalize/globalize'
 
