@@ -1,0 +1,11 @@
+<h1><%= @region.name %></h1>
+<ul>
+  <li>Title: <%= @region.title %></li>
+  <li>Meta title: <%= @region.meta_title %></li>
+  <li>Villas des: <%= @region.villas_desc %></li>
+  <li>Apartment des: <%= @region.apartment_desc %></li>
+  <li>Bb dec: <%= @region.bb_desc %></li>
+</ul>
+
+<h3>Lodgings</h3>
+<%= render @region.lodgings %>

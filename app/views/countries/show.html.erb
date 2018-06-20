@@ -1,0 +1,22 @@
+<h1><%= @country.name %></h1>
+<ul>
+  <li>Title: <%= @country.title %></li>
+  <li>Meta title: <%= @country.meta_title %></li>
+  <li>Villas des: <%= @country.villas_desc %></li>
+  <li>Apartment des: <%= @country.apartment_desc %></li>
+  <li>Bb dec: <%= @country.bb_desc %></li>
+</ul>
+
+<h3>Regions</h3>
+
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Title</th>
+    <th>Actions</th>
+  </thead>
+
+  <tbody>
+    <%= render @country.regions %>
+  </tbody>
+</table>

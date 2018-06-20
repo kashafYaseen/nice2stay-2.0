@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_091637) do
+ActiveRecord::Schema.define(version: 2018_06_20_082232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,22 @@ ActiveRecord::Schema.define(version: 2018_06_14_091637) do
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.text "content"
+    t.boolean "disable", default: true
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.text "villas_desc"
+    t.text "apartment_desc"
+    t.text "bb_desc"
+    t.boolean "dropdown", default: false
+    t.boolean "sidebar", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "discounts", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -98,7 +114,9 @@ ActiveRecord::Schema.define(version: 2018_06_14_091637) do
     t.text "description"
     t.bigint "owner_id"
     t.json "images"
+    t.bigint "region_id"
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
+    t.index ["region_id"], name: "index_lodgings_on_region_id"
   end
 
   create_table "owners", force: :cascade do |t|
@@ -130,6 +148,22 @@ ActiveRecord::Schema.define(version: 2018_06_14_091637) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["availability_id"], name: "index_prices_on_availability_id"
+  end
+
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+    t.bigint "country_id"
+    t.text "content"
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.text "villas_desc"
+    t.text "apartment_desc"
+    t.text "bb_desc"
+    t.text "short_desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
   create_table "reservations", force: :cascade do |t|
@@ -201,7 +235,9 @@ ActiveRecord::Schema.define(version: 2018_06_14_091637) do
   add_foreign_key "availabilities", "lodgings"
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
+  add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "lodgings"
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "lodgings"
