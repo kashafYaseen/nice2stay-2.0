@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_14_091637) do
+ActiveRecord::Schema.define(version: 2018_06_20_080319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,22 @@ ActiveRecord::Schema.define(version: 2018_06_14_091637) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.text "content"
+    t.boolean "disable", default: true
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.text "villas_desc"
+    t.text "apartment_desc"
+    t.text "bb_desc"
+    t.boolean "dropdown", default: false
+    t.boolean "sidebar", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "discounts", force: :cascade do |t|
