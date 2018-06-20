@@ -28,6 +28,8 @@ class Lodging < ApplicationRecord
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
   delegate :country, to: :region, allow_nil: true
 
+  translates :title, :subtitle, :description
+
   enum lodging_type: {
     villa: 1,
     apartment: 2,
