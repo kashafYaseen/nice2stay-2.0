@@ -34,5 +34,7 @@ Rails.application.routes.draw do
     get :validate, on: :collection
   end
 
-  resources :countries, only: [:index, :show]
+  resources :countries, only: [:index, :show] do
+    resources :regions, only: [:show]
+  end
 end
