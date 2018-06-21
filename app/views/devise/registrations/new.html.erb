@@ -1,8 +1,17 @@
-<div class="row">
-  <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
-    <h1 class="text-center">Sign Up</h1>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+
+<div class="container padding-bottom-3x mb-2">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+          <h2>Signup for nice2stay account</h2>
+          <p>Share you're favorites, get the latest deals, and much more...</p>
+          <ol class="list-unstyled">
+            <li><span class="text-primary text-medium">1. </span>Fill in your email address below.</li>
+            <li><span class="text-primary text-medium">2. </span>We'll email you a activation link</li>
+            <li><span class="text-primary text-medium">3. </span>Use the code to change your password on our secure website.</li>
+          </ol>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
 
       <div class="form-group">
@@ -21,9 +30,7 @@
         <%= f.submit "Sign up", class: "btn btn-primary btn-block btn-lg" %>
       </div>
     <% end %>
-
-    <div class="text-center">
-      <%= render "devise/shared/links" %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+
