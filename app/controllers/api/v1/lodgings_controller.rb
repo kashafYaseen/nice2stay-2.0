@@ -7,6 +7,9 @@ class Api::V1::LodgingsController < Api::V1::ApiController
 
   def create
     @lodging = Lodging.new(lodging_params)
+    @lodging.owner_id = Owner.find_by(email: params[:lodging][:owner_email]).try(:id)
+    @lodging.region_id = Region.find_or_create_region(params[:lodging][:country_name], params[:lodging][:region_name]).try(:id)
+
     if @lodging.save
       render status: :created
     else
