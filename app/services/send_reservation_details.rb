@@ -8,7 +8,7 @@ class SendReservationDetails
 
   def initialize(reservation)
     @reservation = reservation
-    @uri = URI.parse("http://localhost:3001/en/api/booking_carts")
+    @uri = URI.parse("#{ENV['CRM_BASE_URL']}/booking_carts")
   end
 
   def call
