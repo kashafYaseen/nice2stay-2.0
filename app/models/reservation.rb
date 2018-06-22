@@ -9,6 +9,7 @@ class Reservation < ApplicationRecord
   validate :accommodation_rules
 
   after_create :update_lodging_availability
+  after_create :send_reservation_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
 
@@ -50,5 +51,9 @@ class Reservation < ApplicationRecord
       days = lodging.availabilities.where(available_on: [check_in-1.day, check_in]).order(available_on: :desc)
       return days.take.update(check_out_only: true) if days.size == 2
       days.take.delete
+    end
+
+    def send_reservation_details
+      SendReservationDetails.call self
     end
 end
