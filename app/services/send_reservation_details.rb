@@ -26,8 +26,8 @@ class SendReservationDetails
     def booking_cart
       {
         booking_cart: {
-          accommodation_slug: reservation.lodging.slug,
-          customer_email: reservation.user.email,
+          accommodation_slug: reservation.lodging_slug,
+          customer_email: reservation.user_email,
           from: reservation.check_in,
           to: reservation.check_out,
           persons: reservation.adults,
