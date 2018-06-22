@@ -36,7 +36,8 @@ class SendReservationDetails
           booking_total: reservation.total_price,
           rental_price: reservation.rent,
           discount: reservation.discount,
-          cleaning_cost: reservation.cleaning_cost
+          cleaning_cost: reservation.cleaning_cost,
+          skip_data_posting: true
         }
       }
     end

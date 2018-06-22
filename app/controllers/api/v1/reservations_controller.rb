@@ -9,7 +9,6 @@ class Api::V1::ReservationsController < Api::V1::ApiController
     @reservation = Reservation.new(reservation_params)
     @reservation.lodging_id = Lodging.find_by(slug: params[:reservation][:lodging_slug]).try(:id)
     @reservation.user_id = User.find_by(email: params[:reservation][:user_email]).try(:id)
-
     if @reservation.save
       render status: :created
     else
@@ -42,7 +41,8 @@ class Api::V1::ReservationsController < Api::V1::ApiController
         :total_price,
         :rent,
         :discount,
-        :cleaning_cost
+        :cleaning_cost,
+        :skip_data_posting
       )
     end
 end

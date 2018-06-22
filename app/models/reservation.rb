@@ -15,6 +15,8 @@ class Reservation < ApplicationRecord
   delegate :slug, to: :lodging, prefix: true
   delegate :email, to: :user, prefix: true
 
+  attr_accessor :skip_data_posting
+
   private
 
     def update_lodging_availability
@@ -56,6 +58,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      SendReservationDetails.call self
+      SendReservationDetails.call(self) unless skip_data_posting
     end
 end
