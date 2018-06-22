@@ -11,6 +11,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     @lodging.region_id = Region.find_or_create_region(params[:lodging][:country_name], params[:lodging][:region_name]).try(:id)
 
     if @lodging.save
+      UpdateLodgingPrices.call(@lodging, params[:lodging][:prices])
       render status: :created
     else
       render json: @lodging.errors, status: :unprocessable_entity
