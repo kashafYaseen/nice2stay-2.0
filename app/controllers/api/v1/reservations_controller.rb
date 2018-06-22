@@ -39,6 +39,10 @@ class Api::V1::ReservationsController < Api::V1::ApiController
         :adults,
         :children,
         :infants,
+        :total_price,
+        :rent,
+        :discount,
+        :cleaning_cost
       )
     end
 end
