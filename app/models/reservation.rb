@@ -24,7 +24,7 @@ class Reservation < ApplicationRecord
       return unless check_in.present? && check_out.present?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
       available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
-      errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i
+      errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i || check_in < Date.today
     end
 
     def check_out_only
