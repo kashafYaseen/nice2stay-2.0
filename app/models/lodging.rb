@@ -119,6 +119,10 @@ class Lodging < ApplicationRecord
     description.split(' ').length > 600
   end
 
+  def prices_with_in(from, to)
+    prices.with_in(from, to)
+  end
+
   private
     def add_lodging_availabilities
       Availability.bulk_insert do |availability|

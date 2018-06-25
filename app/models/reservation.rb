@@ -9,8 +9,13 @@ class Reservation < ApplicationRecord
   validate :accommodation_rules
 
   after_create :update_lodging_availability
+  after_create :send_reservation_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
+  delegate :slug, to: :lodging, prefix: true
+  delegate :email, to: :user, prefix: true
+
+  attr_accessor :skip_data_posting
 
   private
 
@@ -21,20 +26,20 @@ class Reservation < ApplicationRecord
     end
 
     def availability
-      return unless check_in.present? && check_out.present?
+      return unless check_in.present? && check_out.present? && lodging.present?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
       available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
       errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i
     end
 
     def check_out_only
-      return unless check_in.present? && check_out.present?
+      return unless check_in.present? && check_out.present? && lodging.present?
       check_out_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: true)
       errors.add(:base, "#{check_out_days.pluck(:available_on)} only available for check out") if check_out_days.present?
     end
 
     def accommodation_rules
-      return unless rules_active(check_in, check_out).present?
+      return unless rules_active(check_in, check_out).present? && lodging.present?
       rules_active(check_in, check_out).each do |rule|
         if rule.days_multiplier.present?
           errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless (check_out - check_in).to_i % rule.days_multiplier == 0
@@ -50,5 +55,9 @@ class Reservation < ApplicationRecord
       days = lodging.availabilities.where(available_on: [check_in-1.day, check_in]).order(available_on: :desc)
       return days.take.update(check_out_only: true) if days.size == 2
       days.take.delete
+    end
+
+    def send_reservation_details
+      SendReservationDetails.call(self) unless skip_data_posting
     end
 end
