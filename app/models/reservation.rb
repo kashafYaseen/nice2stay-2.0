@@ -17,6 +17,20 @@ class Reservation < ApplicationRecord
 
   attr_accessor :skip_data_posting
 
+  enum booking_status: {
+    prebooking: 0,
+    booked: 1,
+    customer_data_requested: 2,
+    confirmation_sent: 3,
+    pre_paid: 4,
+    fully_paid: 5,
+    route_sent: 6,
+    arrival_email_sent: 7,
+    option: 8 ,
+    request_price: 9,
+    canceled: 10,
+  }
+
   private
 
     def update_lodging_availability

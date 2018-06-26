@@ -57,10 +57,10 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
 
   create_table "availabilities", force: :cascade do |t|
     t.date "available_on"
-    t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
+    t.bigint "lodging_id"
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 
@@ -206,7 +206,6 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
 
   create_table "reservations", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "lodging_id"
     t.date "check_in"
     t.date "check_out"
     t.datetime "created_at", null: false
@@ -214,10 +213,13 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
     t.integer "adults", default: 0
     t.integer "children", default: 0
     t.integer "infants", default: 0
+    t.bigint "lodging_id"
     t.float "total_price", default: 0.0
     t.float "rent", default: 0.0
     t.float "discount", default: 0.0
     t.float "cleaning_cost", default: 0.0
+    t.integer "booking_status", default: 0
+    t.integer "request_status", default: 0
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
