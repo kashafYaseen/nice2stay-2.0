@@ -8,13 +8,13 @@ class SendReservationDetails
 
   def initialize(reservation)
     @reservation = reservation
-    @uri = URI.parse("#{ENV['CRM_BASE_URL']}/booking_carts")
+    @uri = URI.parse("#{ENV['CRM_BASE_URL']}/bookings")
   end
 
   def call
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, header)
-    request.body = booking_cart.to_json
+    request.body = booking.to_json
     http.request(request)
   end
 
@@ -23,22 +23,41 @@ class SendReservationDetails
       { 'Content-Type': 'application/json' }
     end
 
-    def booking_cart
+    def booking
       {
-        booking_cart: {
+        booking: {
           accommodation_slug: reservation.lodging_slug,
-          customer_email: reservation.user_email,
-          from: reservation.check_in,
-          to: reservation.check_out,
-          persons: reservation.adults,
-          childs: reservation.children,
-          babies: reservation.infants,
-          booking_total: reservation.total_price,
-          rental_price: reservation.rent,
-          discount: reservation.discount,
-          cleaning_cost: reservation.cleaning_cost,
+          customer: customer(reservation.user),
+          booking_accommodations_attributes: booking_accommodation,
+          by_houseowner: false,
           skip_data_posting: true
         }
+      }
+    end
+
+    def booking_accommodation
+      [
+        {
+          from: reservation.check_in,
+          to: reservation.check_out,
+          persons_number: reservation.adults,
+          children_number: reservation.children,
+          babies: reservation.infants,
+          total_price: reservation.total_price,
+          rental_price: reservation.rent,
+          discount: reservation.discount,
+          cleaning_cost_price: reservation.cleaning_cost,
+          status: reservation.booking_status,
+          by_houseowner: false
+        }
+      ]
+    end
+
+    def customer(user)
+      {
+        email: user.email,
+        name: user.first_name,
+        surname: user.last_name
       }
     end
 end
