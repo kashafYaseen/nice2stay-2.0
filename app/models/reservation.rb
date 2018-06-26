@@ -72,6 +72,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      SendReservationDetails.call(self) unless skip_data_posting
+      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting
     end
 end
