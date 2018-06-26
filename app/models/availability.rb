@@ -1,5 +1,6 @@
 class Availability < ApplicationRecord
-  belongs_to :lodging
+  belongs_to :lodging_child
+  has_one :lodging, through: :lodging_child
   has_many :prices
 
   after_commit :reindex_lodging

@@ -1,6 +1,7 @@
 class Reservation < ApplicationRecord
   belongs_to :user
-  belongs_to :lodging
+  belongs_to :lodging_child
+  has_one :lodging, through: :lodging_child
   has_many :rules, through: :lodging
 
   validates :check_in, :check_out, presence: true
@@ -35,20 +36,20 @@ class Reservation < ApplicationRecord
 
     def update_lodging_availability
       update_check_in_day
-      lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
-      lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
+      lodging_child.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
+      lodging_child.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
     def availability
-      return unless check_in.present? && check_out.present? && lodging.present?
+      return unless check_in.present? && check_out.present? && lodging_child.present?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
-      errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i
+      available_days = lodging_child.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
+      errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i || check_in < Date.today
     end
 
     def check_out_only
-      return unless check_in.present? && check_out.present? && lodging.present?
-      check_out_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: true)
+      return unless check_in.present? && check_out.present?
+      check_out_days = lodging_child.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: true)
       errors.add(:base, "#{check_out_days.pluck(:available_on)} only available for check out") if check_out_days.present?
     end
 
@@ -66,7 +67,7 @@ class Reservation < ApplicationRecord
     end
 
     def update_check_in_day
-      days = lodging.availabilities.where(available_on: [check_in-1.day, check_in]).order(available_on: :desc)
+      days = lodging_child.availabilities.where(available_on: [check_in-1.day, check_in]).order(available_on: :desc)
       return days.take.update(check_out_only: true) if days.size == 2
       days.take.delete
     end

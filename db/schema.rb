@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_22_110048) do
+ActiveRecord::Schema.define(version: 2018_06_25_070645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
-    t.bigint "lodging_id"
-    t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+    t.bigint "lodging_child_id"
+    t.index ["lodging_child_id"], name: "index_availabilities_on_lodging_child_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -89,6 +89,13 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
+  end
+
+  create_table "lodging_children", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_lodging_children_on_lodging_id"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -213,14 +220,14 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
     t.integer "adults", default: 0
     t.integer "children", default: 0
     t.integer "infants", default: 0
-    t.bigint "lodging_id"
     t.float "total_price", default: 0.0
     t.float "rent", default: 0.0
     t.float "discount", default: 0.0
     t.float "cleaning_cost", default: 0.0
     t.integer "booking_status", default: 0
     t.integer "request_status", default: 0
-    t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
+    t.bigint "lodging_child_id"
+    t.index ["lodging_child_id"], name: "index_reservations_on_lodging_child_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
@@ -283,13 +290,14 @@ ActiveRecord::Schema.define(version: 2018_06_22_110048) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "availabilities", "lodgings"
+  add_foreign_key "availabilities", "lodging_children"
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
+  add_foreign_key "lodging_children", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
-  add_foreign_key "reservations", "lodgings"
+  add_foreign_key "reservations", "lodging_children"
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "lodgings"
   add_foreign_key "reviews", "users"

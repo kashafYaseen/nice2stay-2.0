@@ -1,9 +1,10 @@
 class Lodging < ApplicationRecord
   belongs_to :owner
   belongs_to :region
-  has_many :reservations
-  has_many :availabilities
-  has_many :prices, through: :availabilities
+  has_many :lodging_children
+  has_many :reservations, through: :lodging_children
+  has_many :availabilities, through: :lodging_children
+  has_many :prices, through: :lodging_children
   has_many :rules
   has_many :discounts
   has_many :reviews
@@ -11,8 +12,6 @@ class Lodging < ApplicationRecord
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
-  after_create :add_lodging_availabilities
-  after_create :reindex_prices
   mount_uploaders :images, ImageUploader
 
   searchkick locations: [:location], word_start: [:city]
@@ -124,29 +123,11 @@ class Lodging < ApplicationRecord
   end
 
   private
-    def add_lodging_availabilities
-      Availability.bulk_insert do |availability|
-        (Date.today..365.days.from_now).map(&:to_s).each do |date|
-          availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
-        end
-      end
-
-      Price.bulk_insert do |price|
-        availabilities.each do |availability|
-          price.add(amount: self.price, availability_id: availability.id, adults: adults, children: children, infants: infants, created_at: DateTime.now, updated_at: DateTime.now)
-        end
-      end
-    end
-
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
       price_list = SearchPrices.call(params.merge(lodging_id: id)).pluck(:amount)
       price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
       price_list
-    end
-
-    def reindex_prices
-      prices.reindex
     end
 
     def discount(params)
