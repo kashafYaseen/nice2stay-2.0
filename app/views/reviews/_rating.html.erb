@@ -1,0 +1,26 @@
+<div class="card border-default">
+  <div class="card-body">
+    <div class="text-center">
+      <div class="d-inline align-baseline display-2 mr-1"><%= lodging.avg_rating %></div>
+
+      <div class="d-inline align-baseline text-sm text-warning mr-1">
+        <i class="material-icons star"></i>
+        <i class="material-icons star"></i>
+        <i class="material-icons star"></i>
+        <i class="material-icons star"></i>
+        <i class="material-icons star_half"></i>
+      </div>
+    </div>
+
+    <div class="pt-3">
+      <% total_reviews = lodging.reviews.count %>
+      <%= rating_tag lodging, total_reviews, 5 %>
+      <%= rating_tag lodging, total_reviews, 4 %>
+      <%= rating_tag lodging, total_reviews, 3 %>
+      <%= rating_tag lodging, total_reviews, 2 %>
+      <%= rating_tag lodging, total_reviews, 1 %>
+    </div>
+
+    <div class="pt-2"><a class="btn btn-warning btn-block" href="#" data-toggle="modal" data-target="#leaveReview">Leave a Review</a></div>
+  </div>
+</div>

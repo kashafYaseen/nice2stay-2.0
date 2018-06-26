@@ -1,0 +1,323 @@
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-1">
+  <div class="row">
+    <!-- Content-->
+    <div class="col-lg-9 col-md-8 order-md-2">
+       <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
+        <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= @lodgings.total_count %></div>
+      </div>
+
+      <div class="row mb-2">
+        <%= tag.div id: "lodgings-list", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } %>
+        <%= render @lodgings %>
+      </div>
+
+      <nav class="pagination">
+        <div class="column">
+          <ul class="pages">
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li>...</li>
+            <li><a href="#">12</a></li>
+          </ul>
+        </div>
+        <div class="column text-right hidden-xs-down">
+          <a class="btn btn-outline-secondary btn-sm" href="#">Next&nbsp;
+            <i class="material-icons keyboard_arrow_right"></i>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-3 col-md-4 order-md-1">
+      <div class="sidebar-toggle position-left">
+        <i class="material-icons filter_list"></i>
+      </div>
+
+      <aside class="sidebar sidebar-offcanvas position-left">
+        <span class="sidebar-close">
+          <i class="material-icons icon_close"></i>
+        </span>
+        <!-- Widget Categories-->
+        <section class="widget widget-categories pt-0">
+           <section class="widget widget-icon-list">
+          <h3 class="widget-title">Date search</h3>
+          
+          <div class='reservation-datepicker'></div>
+          <ul>
+            <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
+              <div id='datepicker'></div>
+              <%= hidden_field_tag :adults, params[:adults], id: :dates_adults if params[:adults].present? %>
+              <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
+              <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
+
+              <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
+              <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
+              <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :dates_region if params[:region].present? %>
+
+              <% if params[:lodging_type_in].present? %>
+                <% params[:lodging_type_in].each do |lodging_type| %>
+                  <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </ul>
+        </section>
+
+        <section>
+          <br>
+          <h3 class="widget-title">Number of Guests</h3>
+          <ul>
+            <%= form_tag lodgings_path, method: :get do %>
+              <label>Adults</label>
+              <%= number_field_tag :adults, params[:adults], min: 0 %>
+              <label>Children</label>
+              <%= number_field_tag :children, params[:children], min: 0 %>
+              <label>Infants</label>
+              <%= number_field_tag :infants, params[:infants], min: 0 %>
+
+              <%= hidden_field_tag :check_in, params[:check_in], id: :guests_check_in if params[:check_in].present? %>
+              <%= hidden_field_tag :check_out, params[:check_out], id: :guests_check_out if params[:check_out].present? %>
+
+              <%= hidden_field_tag :min_price, params[:min_price], id: :guests_min_price if params[:min_price].present? %>
+              <%= hidden_field_tag :max_price, params[:max_price], id: :guests_max_price if params[:max_price].present? %>
+              <%= hidden_field_tag :order, params[:order], id: :guests_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :guests_region if params[:region].present? %>
+
+              <% if params[:lodging_type_in].present? %>
+                <% params[:lodging_type_in].each do |lodging_type| %>
+                  <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "guests_lodging_type_#{lodging_type}" %>
+                <% end %>
+              <% end %>
+
+              <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
+            <% end %>
+          </ul>
+        </section>
+
+        <section>
+          <h3 class="widget-title">Accommodation type</h3>
+
+          <ul>
+            <%= form_tag lodgings_path, method: :get do %>
+              <% Lodging.lodging_types.each do |key, value| %>
+                <label>
+                  <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
+                  <span><%= key %> (<%= count_lodging_type(@lodgings, key) %>)</span>
+                </label>
+                <br>
+              <% end %>
+
+              <%= hidden_field_tag :check_in, params[:check_in], id: :lodgings_check_in if params[:check_in].present? %>
+              <%= hidden_field_tag :check_out, params[:check_out], id: :lodgings_check_out if params[:check_out].present? %>
+              <%= hidden_field_tag :adults, params[:adults], id: :lodgings_adults if params[:adults].present? %>
+              <%= hidden_field_tag :children, params[:children], id: :lodgings_children if params[:children].present? %>
+              <%= hidden_field_tag :infants, params[:infants], id: :lodgings_infants if params[:infants].present? %>
+
+              <%= hidden_field_tag :min_price, params[:min_price], id: :lodgings_min_price if params[:min_price].present? %>
+              <%= hidden_field_tag :max_price, params[:max_price], id: :lodgings_max_price if params[:max_price].present? %>
+              <%= hidden_field_tag :order, params[:order], id: :lodgings_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :lodgings_region if params[:region].present? %>
+            <% end %>
+          </ul>
+        </section>
+
+        <section class="widget widget-categories">
+          <h3 class="widget-title">Price/Night Range</h3>
+
+          <%= form_tag lodgings_path, method: :get do %>
+            <div class="price-range-slider" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="100000" data-step="1">
+              <div class="ui-range-slider"></div>
+
+              <footer class="ui-range-slider-footer">
+                <div class="column">
+                  <%= submit_tag 'Filter', class: 'btn btn-outline-primary btn-sm' %>
+                </div>
+
+                <div class="column">
+                  <div class="ui-range-values">
+                    <div class="ui-range-value-min">$<span></span>
+                      <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
+                    </div>&nbsp;-&nbsp;
+
+                    <div class="ui-range-value-max">$<span></span>
+                      <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+              <%= hidden_field_tag :check_in, params[:check_in], id: :price_check_in if params[:check_in].present? %>
+              <%= hidden_field_tag :check_out, params[:check_out], id: :price_check_out if params[:check_out].present? %>
+              <%= hidden_field_tag :adults, params[:adults], id: :price_adults if params[:adults].present? %>
+              <%= hidden_field_tag :children, params[:children], id: :price_children if params[:children].present? %>
+              <%= hidden_field_tag :infants, params[:infants], id: :price_infants if params[:infants].present? %>
+              <%= hidden_field_tag :order, params[:order], id: :price_order if params[:order].present? %>
+              <%= hidden_field_tag :region, params[:region], id: :price_region if params[:region].present? %>
+
+              <% if params[:lodging_type_in].present? %>
+                <% params[:lodging_type_in].each do |lodging_type| %>
+                  <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "price_lodging_type_#{lodging_type}" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </section>
+
+        <!-- Widget Sorting-->
+        <section class="widget widget-icon-list">
+          <h3 class="widget-title">Sort By</h3>
+          <%= form_tag lodgings_path, method: :get do %>
+            <ul>
+              <li><%= link_to 'Lowest Price', '#', class: 'lowest-price' %></li>
+              <li><%= link_to 'Highest Price', '#', class: 'highest-price' %></li>
+              <%= hidden_field_tag :order, params[:order] %>
+            </ul>
+
+            <%= hidden_field_tag :min_price, params[:min_price], id: :sort_min_price if params[:min_price].present? %>
+            <%= hidden_field_tag :max_price, params[:max_price], id: :sort_max_price if params[:max_price].present? %>
+            <%= hidden_field_tag :check_in, params[:check_in], id: :sort_check_in if params[:check_in].present? %>
+            <%= hidden_field_tag :check_out, params[:check_out], id: :sort_check_out if params[:check_out].present? %>
+            <%= hidden_field_tag :adults, params[:adults], id: :sort_adults if params[:adults].present? %>
+            <%= hidden_field_tag :children, params[:children], id: :sort_children if params[:children].present? %>
+            <%= hidden_field_tag :infants, params[:infants], id: :sort_infants if params[:infants].present? %>
+            <%= hidden_field_tag :region, params[:region], id: :sort_region if params[:region].present? %>
+
+            <% if params[:lodging_type_in].present? %>
+              <% params[:lodging_type_in].each do |lodging_type| %>
+                <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "sort_lodging_type_#{lodging_type}" %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </section>
+
+        <section class="widget widget-icon-list">
+          <h3 class="widget-title">Region</h3>
+          <%= form_tag lodgings_path, method: :get do %>
+
+            <%= select_tag :region, options_for_select(@regions, params[:region]), include_blank: "Select Region", class: 'form-control' %>
+
+            <%= hidden_field_tag :min_price, params[:min_price], id: :sort_min_price if params[:min_price].present? %>
+            <%= hidden_field_tag :max_price, params[:max_price], id: :sort_max_price if params[:max_price].present? %>
+            <%= hidden_field_tag :check_in, params[:check_in], id: :sort_check_in if params[:check_in].present? %>
+            <%= hidden_field_tag :check_out, params[:check_out], id: :sort_check_out if params[:check_out].present? %>
+            <%= hidden_field_tag :adults, params[:adults], id: :sort_adults if params[:adults].present? %>
+            <%= hidden_field_tag :children, params[:children], id: :sort_children if params[:children].present? %>
+            <%= hidden_field_tag :infants, params[:infants], id: :sort_infants if params[:infants].present? %>
+
+            <% if params[:lodging_type_in].present? %>
+              <% params[:lodging_type_in].each do |lodging_type| %>
+                <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "sort_lodging_type_#{lodging_type}" %>
+              <% end %>
+            <% end %>
+
+            <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm' %>
+          <% end %>
+        </section>
+
+          <h3 class="widget-title">Shop Categories</h3>
+          <ul>
+            <li class="has-children"><a href="#">Desks &amp; Benching</a><span>(1138)</span>
+              <ul>
+                <li><a href="#">Executive Desks</a><span>(508)</span>
+                  <ul>
+                    <li><a href="#">Standing Desks</a></li>
+                    <li><a href="#">Benching Desks</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Single Desks</a><span>(423)</span>
+                  <ul>
+                    <li><a href="#">Standing Desks</a></li>
+                    <li><a href="#">Benching Desks</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">File Cabinets</a><span>(97)</span></li>
+                <li><a href="#">Office Chairs</a><span>(110)</span></li>
+              </ul>
+            </li>
+            <li class="has-children"><a href="#">Lighting</a><span>(2356)</span>
+              <ul>
+                <li><a href="#">Indoor Lights</a><span>(1032)</span>
+                  <ul>
+                    <li><a href="#">Ceiling Lights</a></li>
+                    <li><a href="#">Kitchen Lighting</a></li>
+                    <li><a href="#">Wall Lights</a></li>
+                    <li><a href="#">Lamps</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Outdoor Lights</a><span>(937)</span>
+                  <ul>
+                    <li><a href="#">Light Stands</a></li>
+                    <li><a href="#">Wall Lights</a></li>
+                    <li><a href="#">Light Bulbs</a></li>
+                    <li><a href="#">Lamps</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Dimmers &amp; Controls</a><span>(386)</span></li>
+              </ul>
+            </li>
+            <li class="has-children"><a href="#">Storage Units</a><span>(420)</span>
+              <ul>
+                <li><a href="#">Bookcases</a><span>(180)</span></li>
+                <li><a href="#">Box Seats &amp; Benches</a><span>(132)</span></li>
+                <li><a href="#">Cupboards</a><span>(47)</span></li>
+                <li><a href="#">Caskets</a><span>(61)</span></li>
+              </ul>
+            </li>
+            <li class="has-children"><a href="#">Furniture Accessories</a><span>(874)</span>
+              <ul>
+                <li><a href="#">Cable &amp; Power Management</a><span>(211)</span></li>
+                <li><a href="#">Desk Add Ons</a><span>(195)</span></li>
+                <li><a href="#">Desk Risers</a><span>(159)</span></li>
+                <li><a href="#">Lamps</a><span>(203)</span></li>
+                <li><a href="#">Monitor Arms</a><span>(106)</span></li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <!-- Widget Brand Filter-->
+        <section class="widget">
+          <h3 class="widget-title">Filter by Brand</h3>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="aspen">
+            <label class="custom-control-label" for="aspen">Aspen Home&nbsp;<span class="text-muted">(254)</span></label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="bernhardt">
+            <label class="custom-control-label" for="bernhardt">Bernhardt&nbsp;<span class="text-muted">(39)</span></label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="allen">
+            <label class="custom-control-label" for="allen">Ethan Allen&nbsp;<span class="text-muted">(128)</span></label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="harris">
+            <label class="custom-control-label" for="harris">Henkle Harris&nbsp;<span class="text-muted">(310)</span></label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="flanigan">
+            <label class="custom-control-label" for="flanigan">Raymour &amp; Flanigan&nbsp;<span class="text-muted">(42)</span></label>
+          </div>
+        </section>
+        <!-- Widget Colors-->
+        <section class="widget widget-colors">
+          <h3 class="widget-title">Filter by Color</h3>
+          <ul>
+            <li><a href="#"><span class="color" style="background-color: #93c4ef;"></span>Blue</a></li>
+            <li><a href="#"><span class="color" style="background-color: #a7c04d;"></span>Green</a></li>
+            <li><a href="#"><span class="color" style="background-color: #ef0568;"></span>Red</a></li>
+            <li><a href="#"><span class="color" style="background-color: #ffce2b;"></span>Yellow</a></li>
+          </ul>
+        </section>
+        <!-- Widget Tags-->
+        <section class="widget widget-tags">
+          <h3 class="widget-title">Popular Tags</h3><a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag active">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+        </section>
+      </aside>
+    </div>
+  </div>
+</div>

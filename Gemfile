@@ -8,7 +8,7 @@ end
 ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.2'
+gem 'rails', '~> 5.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 
@@ -53,6 +53,10 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
+group :production do
+  gem 'exception_notification'
+end
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
@@ -62,7 +66,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'capistrano',         require: false
-  gem 'capistrano-rbenv',     require: false
+  gem 'capistrano-rbenv',   require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
@@ -71,7 +75,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'administrate', '~> 0.8.1'
 gem 'bootstrap4-kaminari-views'
 gem 'devise', '~> 4.4'
 gem 'devise-bootstrapped', github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
@@ -86,4 +89,6 @@ gem 'jquery-ui-rails'
 gem 'geocoder'
 gem 'searchkick'
 gem 'activeadmin'
+gem 'route_translator'
+gem 'globalize', git: 'https://github.com/globalize/globalize'
 

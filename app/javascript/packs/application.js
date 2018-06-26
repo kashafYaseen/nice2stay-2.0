@@ -9,6 +9,7 @@
 
 import Vue from 'vue'
 import Datepicker from '../vue_components/datepicker.vue'
+import HomeDatepicker from '../vue_components/home_datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
@@ -23,6 +24,13 @@ document.addEventListener('turbolinks:load', () => {
     new Vue({
       el: '#datepicker',
       render: h => h(Datepicker)
+    })
+  }
+
+  if ($('#home-datepicker').length) {
+    new Vue({
+      el: '#home-datepicker',
+      render: h => h(HomeDatepicker)
     })
   }
 

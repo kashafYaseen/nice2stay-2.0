@@ -31,6 +31,8 @@ class SearchLodgings
       conditions[:availability_children] = params[:children] if params[:children].present?
       conditions[:availability_infants]  = params[:infants] if params[:infants].present?
       conditions[:availability_price]    = price_range if params[:min_price].present? && params[:max_price].present?
+      conditions[:country] = params[:region].split(', ').last if params[:region].present?
+      conditions[:region]  = params[:region].split(', ').first if params[:region].present?
       conditions
     end
 

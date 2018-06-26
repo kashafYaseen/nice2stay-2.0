@@ -5,4 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :reservations
+  has_many :reviews
+
+  def full_name
+    "#{first_name} #{last_name}".titleize
+  end
 end

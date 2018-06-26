@@ -7,6 +7,7 @@ class ReservationsController < ApplicationController
       redirect_to lodging_path(@reservation.lodging_id), notice: "The lodging was successfully reserved."
     else
       @lodging = @reservation.lodging
+      @reviews = @lodging.reviews.page(params[:page]).per(2)
       render 'lodgings/show'
     end
   end
