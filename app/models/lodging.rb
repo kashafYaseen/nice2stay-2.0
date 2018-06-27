@@ -12,6 +12,7 @@ class Lodging < ApplicationRecord
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
+  after_create :create_child
   mount_uploaders :images, ImageUploader
 
   searchkick locations: [:location], word_start: [:city]
@@ -134,5 +135,10 @@ class Lodging < ApplicationRecord
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
       discount = discounts_active.where('reservation_days <= ?', total_nights).order(:reservation_days).last
       discount.discount_percentage if discount.present?
+    end
+
+    def create_child
+      return if lodging_children.present?
+      lodging_children.create title: "#{title} #1"
     end
 end
