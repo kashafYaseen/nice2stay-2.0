@@ -17,7 +17,7 @@ class LodgingChild < ApplicationRecord
 
       Price.bulk_insert do |price|
         availabilities.each do |availability|
-          price.add(amount: lodging.price, availability_id: availability.id, adults: adults, children: children, infants: infants, created_at: DateTime.now, updated_at: DateTime.now)
+          price.add(amount: lodging.price, availability_id: availability.id, adults: lodging.adults, children: lodging.children, infants: lodging.infants, created_at: DateTime.now, updated_at: DateTime.now)
         end
       end
     end
