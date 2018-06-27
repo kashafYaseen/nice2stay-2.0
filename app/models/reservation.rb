@@ -33,7 +33,6 @@ class Reservation < ApplicationRecord
   }
 
   private
-
     def update_lodging_availability
       update_check_in_day
       lodging_child.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
@@ -48,7 +47,7 @@ class Reservation < ApplicationRecord
     end
 
     def check_out_only
-      return unless check_in.present? && check_out.present?
+      return unless check_in.present? && check_out.present? && lodging.present?
       check_out_days = lodging_child.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: true)
       errors.add(:base, "#{check_out_days.pluck(:available_on)} only available for check out") if check_out_days.present?
     end

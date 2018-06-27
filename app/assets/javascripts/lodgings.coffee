@@ -17,13 +17,15 @@
       $(this).parents('form').submit()
 
   Lodging.update_bill = (values) ->
+    child_id = values[5]
     if values.some(check_values)
-      $('#lbl-error').text('Please select dates & guest details')
-      $('#bill').text('')
+      $("#lbl-error-#{child_id}").text('Please select dates & guest details')
+      $("#bill-#{child_id}").text('')
     else
-      $('#lbl-error').text('')
+      url = $('.persisted-data').data('url')
+      $("#lbl-error-#{child_id}").text('')
       $.ajax
-        url: "#{$('#lodging-url').data('url')}?values=#{values}"
+        url: "#{url}?values=#{values}"
         type: 'GET'
         success: (data) ->
           result = ""
@@ -41,9 +43,9 @@
 
           if total > 0
             result += "<p>total: #{total}</p>"
-            $('#bill').html(result)
+            $("#bill-#{child_id}").html(result)
           else
-            $('#bill').text('Lodging not available.')
+            $("#bill-#{child_id}").text('Lodging not available.')
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->
@@ -56,9 +58,9 @@
         $(this).text('Read more')
 
   validate = (values) ->
-    values.push $('#reservation_lodging_id').val()
+    url = $('.persisted-data').data('validate-url');
     $.ajax
-      url: "/reservations/validate?values=#{values}"
+      url: "#{url}?values=#{values}"
       type: 'GET'
       success: (data) ->
         return

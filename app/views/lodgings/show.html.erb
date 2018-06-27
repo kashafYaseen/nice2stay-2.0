@@ -26,55 +26,9 @@
 
       <!-- Product Info-->
       <div class="col-md-6 mb-30">
-        <div class="card border-default bg-white pt-2 box-shadow">
-          <div class="card-body">
-            <h2 class="mb-3"><%= @lodging.title %></h2>
-            <p class="text-sm text-muted"><%= @lodging.subtitle %></p>
-
-            <div class="reservation-form-errors">
-              <%= render 'shared/errors', resource: @reservation %>
-            </div>
-
-            <div id="lodging-url" data-url="<%= price_details_lodging_path(@lodging) %>" data-disabled-dates="<%= @lodging.not_available_on %>"></div>
-            <%= form_for @reservation, data: { check_in: params[:check_in], check_out: params[:check_out] } do |f| %>
-              <div class="row">
-                <div class="col-sm">
-                  <div class='reservation-datepicker'></div>
-                </div>
-
-                <div class="col-sm">
-                  <p id="lbl-error"></p>
-
-                  <label>Adults</label>
-                  <%= f.number_field :adults, value: f.object.adults, min: 1, max: @lodging.maximum_guests(:adults), class: 'input-spinner' %>
-
-                  <label>Children</label>
-                  <%= f.number_field :children, value: f.object.children, min: 0, max: @lodging.maximum_guests(:children), class: 'input-spinner' %>
-
-                  <label>Infants</label>
-                  <%= f.number_field :infants, value: f.object.infants, min: 0, max: @lodging.maximum_guests(:infants), class: 'input-spinner' %>
-
-                  <br>
-
-                  <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-1' %>
-                  <label>Booking</label>
-
-                  <br>
-
-                  <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: 'radio-2' %>
-                   <label>Option</label>
-                  <%= f.hidden_field :lodging_id, value: @lodging.id %>
-                  <%= hidden_field_tag :calculate_bill, true %>
-                  <br>
-                  <br>
-                  <h5 class="text-normal" id="bill"></h5>
-                </div>
-              </div>
-              <%= f.submit 'Add', class: 'btn btn-primary col-md-12 btn-booking disabled' %>
-            <% end %>
-          </div>
-          <a class="btn btn-outline-secondary btn-sm text-danger" href="#"><i class="material-icons favorite_border"></i>&nbsp;Save To Wishlist</a>
-        </div>
+        <% @lodging.lodging_children.each do |lodging_child| %>
+          <%= render 'reservations/form', lodging_child: lodging_child, lodging: @lodging %>
+        <% end %>
       </div>
     </div>
   </div>

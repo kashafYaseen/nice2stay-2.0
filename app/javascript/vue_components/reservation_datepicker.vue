@@ -24,8 +24,8 @@
 
   export default {
     data() {
-      let check_in = $('#new_reservation').data('check-in');
-      let check_out = $('#new_reservation').data('check-out');
+      let check_in = $('.persisted-data').data('check-in');
+      let check_out = $('.persisted-data').data('check-out');
       let today = this.get_yesterday()
       return {
         dateFormat: 'D MMM',
@@ -33,12 +33,16 @@
         check_out: check_out ? check_out : '',
         id: "reservation-trigger-range-",
         disabled_dates: [],
-        current_date: today
+        current_date: today,
+        child_id: '',
+        flag_id: ''
       }
     },
     mounted() {
-      this.id = "reservation-trigger-range-"+ this._uid
-      this.disabled_dates = $('#lodging-url').data('disabled-dates');
+      this.child_id = this.$el.parentElement.dataset.childId
+      this.flag_id = this.$el.parentElement.dataset.flagId
+      this.id = `reservation-trigger-range-${this.child_id}`
+      this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
     },
     methods: {
       formatDates(dateOne, dateTwo) {
@@ -53,11 +57,11 @@
       },
       date_one_selected(val) {
         this.check_in = val
-        calculate_bill(this.check_in, this.check_out);
+        calculate_bill(this.check_in, this.check_out, this.child_id, this.flag_id);
       },
       date_two_selected(val) {
         this.check_out = val
-        calculate_bill(this.check_in, this.check_out);
+        calculate_bill(this.check_in, this.check_out, this.child_id, this.flag_id);
       },
       get_yesterday() {
         var d = new Date();
@@ -67,13 +71,14 @@
     }
   }
 
-  function calculate_bill(check_in, check_out) {
-    if($('#calculate_bill').val() == 'true') {
+  function calculate_bill(check_in, check_out, child_id, flag_id) {
+    if($(flag_id).val() == 'true') {
       var values = [check_in,
         check_out,
-        $('#reservation_adults').val(),
-        $('#reservation_children').val(),
-        $('#reservation_infants').val()
+        $(`#reservation_adults_${child_id}`).val(),
+        $(`#reservation_children_${child_id}`).val(),
+        $(`#reservation_infants_${child_id}`).val(),
+        child_id
       ];
 
       Lodging.update_bill(values);

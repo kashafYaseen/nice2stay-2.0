@@ -57,24 +57,8 @@ class Lodging < ApplicationRecord
     )
   end
 
-  def minimum_price
-    prices.minimum(:amount)
-  end
-
-  def maximum_guests(type)
-    prices.maximum(type)
-  end
-
-  def minimum_guests(type)
-    prices.minimum(type)
-  end
-
-  def not_available_on
-    (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
-  end
-
   def price_details(values)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: id })
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_child_id: values[5] })
   end
 
   def discount_details(values)

@@ -24,7 +24,7 @@ class SearchPrices
       conditions[:adults]   = params[:adults]
       conditions[:children] = params[:children]
       conditions[:infants]  = params[:infants]
-      conditions[:lodging_id]  = params[:lodging_id]
+      conditions[:lodging_child_id] = params[:lodging_child_id]
       conditions
     end
 

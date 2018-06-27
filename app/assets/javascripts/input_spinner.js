@@ -154,15 +154,18 @@
         element.addEventListener("mousedown", function (e) {
             e.preventDefault();
             callback(e);
-
-            if($('#calculate_bill').val() == 'true') {
-                var values = [$("input[name='reservation[check_in]']").val(),
-                  $("input[name='reservation[check_out]']").val(),
-                  $('#reservation_adults').val(),
-                  $('#reservation_children').val(),
-                  $('#reservation_infants').val()
-                ];
-                Lodging.update_bill(values);
+            if ($(this).parents('form').attr('id') != undefined) {
+                var child_id = $(this).parents('form').attr('id').split('-')[2]
+                if($(`#calculate_bill_${child_id}`).val() == 'true') {
+                    var values = [$("input[name='reservation[check_in]']").val(),
+                      $("input[name='reservation[check_out]']").val(),
+                      $(`#reservation_adults_${child_id}`).val(),
+                      $(`#reservation_children_${child_id}`).val(),
+                      $(`#reservation_infants_${child_id}`).val(),
+                      child_id
+                    ];
+                    Lodging.update_bill(values);
+                }
             }
         });
         element.addEventListener("touchstart", function (e) {

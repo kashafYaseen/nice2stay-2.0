@@ -7,6 +7,22 @@ class LodgingChild < ApplicationRecord
   after_create :add_availabilities_and_prices
   after_create :reindex_prices
 
+  def minimum_price
+    prices.minimum(:amount)
+  end
+
+  def maximum_guests(type)
+    prices.maximum(type)
+  end
+
+  def minimum_guests(type)
+    prices.minimum(type)
+  end
+
+  def not_available_on
+    (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+  end
+
   private
     def add_availabilities_and_prices
       Availability.bulk_insert do |availability|
