@@ -1,5 +1,5 @@
 <div>
- <p><%= link_to lodging.address, lodging %></p>
+ <p><%= link_to lodging.address, lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]) %></p>
   <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %> <%= lodging.sq__ft %> sqft</div>
   <div><%= lodging.cumulative_price(params) %></div>
 
