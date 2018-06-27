@@ -8,19 +8,8 @@
   <!-- Main Navigation-->
   <nav class="site-menu">
     <ul>
-      <li class="active"><a href="index.html"><span>Home</span></a>
-        <ul class="sub-menu">
-          <li class="active has-children"><a href="index.html"><span>Hero Slider</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="index.html"><img src="" alt="Hero Slider Home"></a></li>
-            </ul>
-          </li>
-          <li class="has-children"><a href="home-featured-categories.html"><span>Categories Grid</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="home-featured-categories.html"><img src="" alt="Categories Grid Home"></a></li>
-            </ul>
-          </li>
-        </ul>
+      <li><span><%= link_to "home", root_path %></span>
+        
       </li>
 
       <li><a href="shop-boxed-ls.html"><span>Shop</span></a>
@@ -84,68 +73,31 @@
           <li><a class="text-danger" href="docs/dev-setup.html">Documentation</a></li>
         </ul>
       </li>
-      <li><a href="components/accordion.html"><span>Components</span></a>
+
+
+     
+      
+      <li><a href="#"><span>Landen</span></a>
+
+        
         <ul class="mega-menu">
-          <li><span class="mega-menu-title">A - F</span>
+          <% @countries.each do |country| %>
+          <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
               <ul>
-                <li><a href="components/accordion.html">Accordion</a></li>
-                <li><a href="components/alerts.html">Alerts</a></li>
-                <li><a href="components/buttons.html">Buttons</a></li>
-                <li><a href="components/cards.html">Cards</a></li>
-                <li><a href="components/carousel.html">Carousel</a></li>
-                <li><a href="components/countdown.html">Countdown</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
+                <% country.regions.each do | region | %>
+                <li> 
+                  <%= link_to region.name, country_region_path(country, region) %>
+                  <% end %>
+                </li>
               </ul>
-          </li>
-          <li><span class="mega-menu-title">A - F</span>
-              <ul>
-                <li><a href="components/accordion.html">Accordion</a></li>
-                <li><a href="components/alerts.html">Alerts</a></li>
-                <li><a href="components/buttons.html">Buttons</a></li>
-                <li><a href="components/cards.html">Cards</a></li>
-                <li><a href="components/carousel.html">Carousel</a></li>
-                <li><a href="components/countdown.html">Countdown</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">G - M</span>
-              <ul>
-                <li><a href="components/gallery.html">Gallery</a></li>
-                <li><a href="components/google-maps.html">Google Maps</a></li>
-                <li><a href="components/images.html">Images &amp; Figures</a></li>
-                <li><a href="components/list-group.html">List Group</a></li>
-                <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
-                <li><a href="components/media.html">Media Object</a></li>
-                <li><a href="components/modal.html">Modal</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">P - T</span>
-              <ul>
-                <li><a href="components/pagination.html">Pagination</a></li>
-                <li><a href="components/pills.html">Pills</a></li>
-                <li><a href="components/progress-bars.html">Progress Bars</a></li>
-                <li><a href="components/shop-items.html">Shop Items</a></li>
-                <li><a href="components/steps.html">Steps</a></li>
-                <li><a href="components/tables.html">Tables</a></li>
-                <li><a href="components/tabs.html">Tabs</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">T - W</span>
-              <ul>
-                <li><a href="components/team.html">Team</a></li>
-                <li><a href="components/toasts.html">Toast Notifications</a></li>
-                <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
-                <li><a href="components/typography.html">Typography</a></li>
-                <li><a href="components/video-player.html">Video Player</a></li>
-                <li><a href="components/widgets.html">Widgets</a></li>
-              </ul>
-          </li>
+              </li>
+           <% end %>
         </ul>
       </li>
     </ul>
   </nav>
 
-<<<<<<< HEAD
+
       <!-- Toolbar-->
       <div class="toolbar">
         <div class="inner">
@@ -177,7 +129,7 @@
                   </ul>
                 </div>
               </div>
-=======
+
   <!-- Toolbar-->
   <div class="toolbar">
     <div class="inner"><a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu"><i class="material-icons menu"></i></a><a class="toolbar-toggle search-toggle" href="#search"> <i class="material-icons">search</i></a><a class="toolbar-toggle" href="#account"><i class="material-icons">help_outline  </i></a><a class="toolbar-toggle" href="#account"><i class="material-icons">account_circle</i></a><a class="toolbar-toggle" href="#cart"><i><i class="material-icons">shopping_cart</i><span class="count">3</span></i></a></div>
@@ -202,7 +154,7 @@
                 <li><a href="#"><img src="" alt="Deutsch">Deutsch</a></li>
                 <li><a href="#"><img src="" alt="Italiano">Italiano</a></li>
               </ul>
->>>>>>> 43afd5270f72faf78f7d0cd8d50ce36f89b4a4e5
+
             </div>
           </div>
         </div>
@@ -375,7 +327,7 @@
               </form>
             </div>
           </div>
-<<<<<<< HEAD
+
           <!-- Account Section-->
             <div class="toolbar-section" id="account">
               <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -493,7 +445,6 @@
               <div class="pr-2 py-1 text-sm">Subtotal: <span class='text-dark text-medium'>$622.40</span></div><a class="btn btn-sm btn-success mb-0 mr-0" href="checkout-address.html">Checkout</a>
             </div>
           </div>
-=======
         </div>
       <!-- Shopping Cart Section-->
       <div class="toolbar-section" id="cart">
