@@ -9,6 +9,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     @lodging = Lodging.new(lodging_params)
     @lodging.owner_id = Owner.find_by(email: params[:lodging][:owner_email]).try(:id)
     @lodging.region_id = Region.find_or_create_region(params[:lodging][:country_name], params[:lodging][:region_name]).try(:id)
+    @lodging.remote_images_urls = params[:lodging][:images]
 
     if @lodging.save
       UpdateLodgingPrices.call(@lodging, params[:lodging][:prices])
