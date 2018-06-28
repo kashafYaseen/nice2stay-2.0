@@ -7,7 +7,7 @@ class Api::V1::ReservationsController < Api::V1::ApiController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    @reservation.lodging_id = Lodging.find_by(slug: params[:reservation][:lodging_slug]).try(:id)
+    @reservation.lodging_child_id = Lodging.find_by(slug: params[:reservation][:lodging_slug]).try(:child_id)
     @reservation.user_id = User.find_by(email: params[:reservation][:user_email]).try(:id)
     if @reservation.save
       render status: :created
@@ -31,7 +31,7 @@ class Api::V1::ReservationsController < Api::V1::ApiController
 
     def reservation_params
       params.require(:reservation).permit(
-        :lodging_id,
+        :lodging_child_id,
         :user_id,
         :check_in,
         :check_out,

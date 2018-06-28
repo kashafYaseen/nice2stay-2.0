@@ -107,6 +107,10 @@ class Lodging < ApplicationRecord
     prices.with_in(from, to)
   end
 
+  def child_id
+    lodging_children.ids.first
+  end
+
   private
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
