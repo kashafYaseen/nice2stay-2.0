@@ -3,6 +3,7 @@ class Reservation < ApplicationRecord
   belongs_to :lodging_child
   has_one :lodging, through: :lodging_child
   has_many :rules, through: :lodging
+  has_one :review
 
   validates :check_in, :check_out, presence: true
   validate :availability

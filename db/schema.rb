@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_27_081837) do
+ActiveRecord::Schema.define(version: 2018_06_28_093136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,7 +246,9 @@ ActiveRecord::Schema.define(version: 2018_06_27_081837) do
     t.float "service", default: 0.0
     t.text "suggetion"
     t.string "title"
+    t.bigint "reservation_id"
     t.index ["lodging_id"], name: "index_reviews_on_lodging_id"
+    t.index ["reservation_id"], name: "index_reviews_on_reservation_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -301,6 +303,7 @@ ActiveRecord::Schema.define(version: 2018_06_27_081837) do
   add_foreign_key "reservations", "lodging_children"
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "lodgings"
+  add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users"
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "specifications", "lodgings"
