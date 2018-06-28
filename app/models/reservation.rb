@@ -14,7 +14,7 @@ class Reservation < ApplicationRecord
   after_create :send_reservation_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, to: :lodging, prefix: true
+  delegate :slug, :name, to: :lodging, prefix: true
   delegate :email, to: :user, prefix: true
 
   attr_accessor :skip_data_posting

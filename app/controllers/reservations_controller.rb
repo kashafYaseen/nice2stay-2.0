@@ -1,6 +1,10 @@
 class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @reservations = current_user.reservations
+  end
+
   def create
     @reservation = current_user.reservations.new(reservation_params)
     if @reservation.save

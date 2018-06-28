@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
-  resources :reservations, only: [:create] do
+  resources :reservations, only: [:create, :index] do
     get :validate, on: :collection
   end
 
