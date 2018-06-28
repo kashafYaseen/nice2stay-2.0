@@ -3,5 +3,9 @@
   <td><%= reservation.check_in %></td>
   <td><%= reservation.check_out %></td>
   <td><%= reservation.booking_status %></td>
-  <td><%= link_to 'review', '' %></td>
+  <% if reservation.can_review?(current_user) %>
+    <td><%= link_to 'submit review', new_reservation_review_path(reservation) %></td>
+  <% else %>
+    <td><%= link_to 'view', reservation.lodging %></td>
+  <% end %>
 </tr>

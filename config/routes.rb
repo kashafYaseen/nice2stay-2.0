@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   resources :reservations, only: [:create, :index] do
     get :validate, on: :collection
+    resources :reviews, only: [:new, :create]
   end
 
   resources :countries, only: [:index, :show] do

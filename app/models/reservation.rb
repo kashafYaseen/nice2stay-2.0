@@ -33,6 +33,10 @@ class Reservation < ApplicationRecord
     canceled: 10,
   }
 
+  def can_review? user
+    user == self.user && review.blank?
+  end
+
   private
     def update_lodging_availability
       update_check_in_day
