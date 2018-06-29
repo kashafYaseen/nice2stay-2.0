@@ -1,7 +1,7 @@
 class Dashboard::ReviewsController < DashboardController
   before_action :set_reservation
   before_action :check_authorization_to_create, only: [:new, :create]
-  before_action :set_review
+  before_action :set_review, only: [:edit, :update, :destroy]
 
   def new
     @review = @reservation.build_review
@@ -25,6 +25,11 @@ class Dashboard::ReviewsController < DashboardController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @review.destroy
+    redirect_to dashboard_reservations_path, notice: 'Reivew was removed successfully.'
   end
 
   private

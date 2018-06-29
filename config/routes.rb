@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   namespace :dashboard do
     resources :reservations, only: [:index] do
-      resources :reviews, only: [:new, :create, :edit, :update]
+      resources :reviews, except: [:show, :index]
     end
   end
 

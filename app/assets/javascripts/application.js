@@ -15,6 +15,7 @@
 //= require scripts.min
 //= require modernizr.min
 //= require popper
+//= require jquery_ujs
 
 //= require bootstrap
 //= require turbolinks
