@@ -62,6 +62,8 @@ class Reservation < ApplicationRecord
       rules_active(check_in, check_out).each do |rule|
         if rule.days_multiplier.present?
           errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless (check_out - check_in).to_i % rule.days_multiplier == 0
+        elsif rule.minimal_stay.present?
+          errors.add(:base, "Minimaal is #{rule.minimal_stay} nachten verblijf in deze periode") if (check_out - check_in).to_i < rule.minimal_stay
         end
 
         if rule.check_in_days.present? & check_in.present?
