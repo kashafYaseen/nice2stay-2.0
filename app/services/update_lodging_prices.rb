@@ -21,6 +21,13 @@ class UpdateLodgingPrices
       prices.each do |price|
         _prices = lodging.prices_with_in(price[:from], price[:to])
         _prices.update_all(amount: price[:amount], children: price[:children], adults: price[:adults], infants: price[:infants]) if _prices.present?
+        create_rule(price[:from], price[:to], price[:minimal_stay]) if price[:minimal_stay].present?
       end
+    end
+
+    def create_rule(from, to, minimal_stay)
+      rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
+      rule.minimal_stay = minimal_stay
+      rule.save
     end
 end
