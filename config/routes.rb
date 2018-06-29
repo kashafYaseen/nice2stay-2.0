@@ -33,6 +33,10 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
+  get "dashboard", to: "dashboard#index"
+  namespace :dashboard do
+  end
+
   resources :reservations, only: [:create, :index] do
     get :validate, on: :collection
     resources :reviews, only: [:new, :create]

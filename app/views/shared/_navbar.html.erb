@@ -8,6 +8,13 @@
   <!-- Main Navigation-->
   <nav class="site-menu">
     <ul>
+      <% if user_signed_in? %>
+        <li class="active">
+          <%= link_to dashboard_path do %>
+            <span>Dashboard</span>
+          <% end %>
+        </li>
+      <% end %>
       <li class="active"><a href="index.html"><span>Home</span></a>
         <ul class="sub-menu">
           <li class="active has-children"><a href="index.html"><span>Hero Slider</span></a>
@@ -186,6 +193,7 @@
                   <li><a href="home-featured-categories.html">Categories Grid</a></li>
               </ul>
             </li>
+
             <li class="has-children"><span><a href="shop-boxed-ls.html"><span>Shop</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
                   <li><a href="shop-categories.html">Shop Categories</a></li>

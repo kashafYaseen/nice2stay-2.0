@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'shared/head' %>
+  </head>
+
+  <body>
+    <%= render 'shared/navbar' %>
+    <%= render 'shared/notices' %>
+
+    <div class="row">
+      <%= render 'shared/sidebar' %>
+      <div class="col-md-9">
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= render 'shared/footer' %>
+
+    <script type="text/javascript">
+      <%= yield :js_init %>
+    </script>
+
+  </body>
+</html>
