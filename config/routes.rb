@@ -34,12 +34,15 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   get "dashboard", to: "dashboard#index"
+
   namespace :dashboard do
+    resources :reservations, only: [:index] do
+      resources :reviews, only: [:new, :create]
+    end
   end
 
-  resources :reservations, only: [:create, :index] do
+  resources :reservations, only: [:create] do
     get :validate, on: :collection
-    resources :reviews, only: [:new, :create]
   end
 
   resources :countries, only: [:index, :show] do

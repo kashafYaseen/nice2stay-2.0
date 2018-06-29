@@ -1,5 +1,4 @@
-class ReviewsController < ApplicationController
-  before_action :authenticate_user!
+class Dashboard::ReviewsController < DashboardController
   before_action :set_reservation
   before_action :check_authorization
 
