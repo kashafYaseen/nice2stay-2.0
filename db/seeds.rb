@@ -10,10 +10,11 @@ require 'csv'
 
 Lodging.destroy_all
 
-Region.find_or_create_region('America', 'Florida')
-Owner.find_or_create_by(email: 'owner@mail.com', password: 'password')
+region = Region.find_or_create_region('America', 'Florida')
+owner = Owner.find_by(email: 'owner@mail.com')
+owner = Owner.create(email: 'owner@mail.com', password: 'password') unless owner.present?
 
 CSV.foreach("db/Sacramentorealestatelodgings.csv", headers: true) do |line|
-  Lodging.create! line.to_hash.except(*%w{type latitude longitude}).merge({ region_id: Region.first.id, owner_id: Owner.first.id })
+  Lodging.create! line.to_hash.except(*%w{type latitude longitude}).merge({ region_id: region.id, owner_id: owner.id })
 end
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
