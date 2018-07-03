@@ -1,31 +1,44 @@
-class Api::V1::LodgingsController < Api::V1::ApiController
-  before_action :set_lodging, only: [:show, :update]
+class SaveLodgingDetails
+  attr_reader :params
+  attr_reader :lodging
 
-  def show
-    return not_acceptable("Lodging not found") unless @lodging.present?
+  def self.call(params)
+    self.new(params).call
   end
 
-  def create
-    @lodging = SaveLodgingDetails.call(params)
-
-    if @lodging.valid?
-      render status: :created
-    else
-      render json: @lodging.errors, status: :unprocessable_entity
-    end
+  def initialize(params)
+    @params = params
+    @lodging = Lodging.find_or_initialize_by(slug: lodging_params[:slug])
   end
 
-  def update
-    if @lodging.update(lodging_params)
-      render status: :ok
-    else
-      render json: @lodging.errors, status: :unprocessable_entity
-    end
+  def call
+    save_lodging
+    lodging
   end
 
   private
-    def set_lodging
-      @lodging = Lodging.find_by(id: params[:id])
+    def save_lodging
+      lodging.owner = owner
+      lodging.region = region
+      lodging.lodging_type = lodging_type(params[:lodging][:lodging_type])
+      lodging.attributes = lodging_params
+      lodging.remote_images_urls = params[:lodging][:images]
+      UpdateLodgingPrices.call(lodging, params[:lodging][:prices]) if lodging.save
+    end
+
+    def owner
+      password = Devise.friendly_token[0, 20]
+      Owner.where(email: owner_params[:email]).first_or_create(owner_params.merge(password: password, password_confirmation: password))
+    end
+
+    def region
+      Region.find_or_create_region(params[:lodging][:country_name], params[:lodging][:region_name])
+    end
+
+    def lodging_type(type)
+      return 'villa' if type == 'villas' || 'vakantiehuizen'
+      return 'apartment' if type == 'apartments' || 'appartementen'
+      return 'bnb' if type == 'boutique-hotels'
     end
 
     def lodging_params
@@ -44,7 +57,6 @@ class Api::V1::LodgingsController < Api::V1::ApiController
         :adults,
         :children,
         :infants,
-        :lodging_type,
         :title,
         :subtitle,
         :description,
@@ -81,6 +93,14 @@ class Api::V1::LodgingsController < Api::V1::ApiController
         availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],
         rules_attributes: [:id, :start_date, :end_date, :days_multiplier, :check_in_days],
         discounts_attributes: [:id, :start_date, :end_date, :reservation_days, :discount_percentage],
+      )
+    end
+
+    def owner_params
+      params.require(:owner).permit(
+        :first_name,
+        :last_name,
+        :email
       )
     end
 end
