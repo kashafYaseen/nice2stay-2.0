@@ -18,10 +18,17 @@ class UpdateLodgingPrices
 
   private
     def update_prices
-      prices.each do |price|
-        _prices = lodging.prices_with_in(price[:from], price[:to])
-        _prices.update_all(amount: price[:amount], children: price[:children], adults: price[:adults], infants: price[:infants]) if _prices.present?
-        create_rule(price[:from], price[:to], price[:minimal_stay]) if price[:minimal_stay].present?
+      prices.each do |price_range|
+        Price.bulk_insert do |price|
+          lodging.availabilities_with_in(price_range[:from], price_range[:to]).each do |availability|
+            price_range[:minimal_stay].each do |minimal_stay|
+              price.add(amount: price_range[:amount], children: price_range[:children], adults: price_range[:adults],
+                infants: price_range[:infants], minimum_stay: minimal_stay, friday_price: price_range[:friday_price], availability_id: availability.id,
+                saturday_price: price_range[:saturday_price], sunday_price: price_range[:sunday_price], minimum_per_day_price: price_range[:minimum_per_day_price])
+            end
+          end
+        end
+        create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay]) if price_range[:minimal_stay].present?
       end
     end
 
