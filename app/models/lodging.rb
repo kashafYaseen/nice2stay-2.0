@@ -104,10 +104,6 @@ class Lodging < ApplicationRecord
     description.split(' ').length > 600
   end
 
-  def prices_with_in(from, to)
-    prices.with_in(from, to)
-  end
-
   def child_id
     lodging_children.ids.first
   end

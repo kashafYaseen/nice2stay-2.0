@@ -3,8 +3,6 @@ class Price < ApplicationRecord
 
   delegate :lodging, :lodging_child, to: :availability
 
-  scope :with_in, -> (from, to) { joins(:availability).where('availabilities.available_on > ? and availabilities.available_on <= ?', from, to) }
-
   searchkick
 
   def search_data
