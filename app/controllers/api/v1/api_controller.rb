@@ -20,6 +20,10 @@ class Api::V1::ApiController < ActionController::API
 
     def filter_ip
       return unless Rails.env.production?
+      logger.debug "*" * 100000
+      logger.debug "IP: #{request.remote_ip}"
+      logger.debug ENV['CRM_REMOTE_IP'] == request.remote_ip
+      logger.debug "IP: #{ENV['CRM_REMOTE_IP']}"
       not_authenticated unless ENV['CRM_REMOTE_IP'] == request.remote_ip
     end
 end
