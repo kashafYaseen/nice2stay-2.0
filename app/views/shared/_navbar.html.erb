@@ -108,12 +108,7 @@
 
       <!-- Toolbar-->
       <div class="toolbar">
-        <div class="inner">
-          <a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu"><i class="material-icons menu"></i></a>
-          <a class="toolbar-toggle search-toggle" href="#search"> <i class="material-icons">search</i></a>
-          
-          <a class="toolbar-toggle" href="#account"><i class="material-icons">account_circle</i></a>
-          <a class="toolbar-toggle" href="#cart"><i><i class="material-icons">shopping_cart</i><span class="count">3</span></i></a></div>
+        <div class="inner"><a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu"><i class="material-icons menu"></i></a><a class="toolbar-toggle search-toggle" href="#search"> <i class="material-icons">search</i></a><a class="toolbar-toggle" href="#account"><i class="material-icons">help_outline  </i></a><a class="toolbar-toggle" href="#account"><i class="material-icons">account_circle</i></a><a class="toolbar-toggle" href="#cart"><i><i class="material-icons">shopping_cart</i><span class="count">3</span></i></a></div>
         <!-- Toolbar Dropdown-->
         <div class="toolbar-dropdown">
           <!-- Mobile Menu Section-->
@@ -122,7 +117,7 @@
             <div class="text-center mb-4">
               <div class="lang-currency-switcher">
                 <div class="lang-currency-toggle"><img src="" alt="English"><span>USD</span><i class="material-icons arrow_drop_down"></i>
-                  <ul class="lang-currency-toggle-dropdown">
+                  <ul class="lang-currency-dropdown">
                     <li>
                       <select class="form-control form-control-sm">
                         <option value="usd">$ USD</option>
@@ -282,9 +277,7 @@
                 <% params[:lodging_type_in].each do |lodging_type| %>
                   <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "navbar_lodging_type_#{lodging_type}" %>
                 <% end %>
-
               <% end %>
-                
               <% end %>
             <!-- Products-->
             <div class="widget widget-featured-products">
@@ -345,60 +338,35 @@
               </ul>
               <div class="tab-content">
                 <div class="tab-pane fade show active" id="login" role="tabpanel">
-                  <% if user_signed_in? %>
-                   <p> Dear current_user.email </p>
-                   <p> You are login, if you want to logout press the logout button </p>
-
-                    <li><%= link_to "Settings", edit_user_registration_path %></li>
-                    <li><%= link_to "Logout", destroy_user_session_path, method: "delete" %></li>
-                   <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-block btn-xs' %>
-                  
-                            
-                    <% else %>
-                      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-                        <div class="form-group">
-                          <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: 'form-control' %>
-                        </div>
-
-                        <div class="form-group">
-                          <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control' %>
-                        </div>
-
-                        <% if devise_mapping.rememberable? -%>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <%= f.check_box :remember_me, class: "form-check-input" %>
-                              Remember me
-                            </label>
-                          </div>
-                        <% end -%>
-
-                        <div class="form-group">
-                          <%= f.submit "Log in", class: "btn btn-primary btn-block btn-lg" %>
-                        </div>
-                      <% end %>
-                    <% end %>
+                  <form autocomplete="off" id="login-form">
+                    <div class="form-group input-group">
+                      <input class="form-control" type="email" placeholder="Email" required><span class="input-group-addon"><i class="material-icons">email</i></span>
+                    </div>
+                    <div class="form-group input-group">
+                      <input class="form-control" type="password" placeholder="Password" required><span class="input-group-addon"><<i class="material-icons">email</i></span>
+                    </div>
+                    <div class="custom-control custom-checkbox form-group">
+                      <input class="custom-control-input" type="checkbox" id="logged" checked>
+                      <label class="custom-control-label" for="logged">Keep me logged in</label>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Log In</button>
+                  </form>
                 </div>
                 <div class="tab-pane fade" id="signup" role="tabpanel">
-                    <%= form_for(resource, as: resource_name, :id => "sign_up_user" , url: registration_path(resource_name)) do |f| %>
-                      <%= devise_error_messages! %>
-
-                      <div class="form-group">
-                        <%= f.email_field :email, autofocus: false, class: 'form-control', placeholder: "Email Address" %>
-                      </div>
-
-                      <div class="form-group">
-                        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password' %>
-                      </div>
-
-                      <div class="form-group">
-                        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm Password' %>
-                      </div>
-
-                      <div class="form-group">
-                        <%= f.submit "Sign up", class: "btn btn-primary btn-block btn-lg" %>
-                      </div>
-                    <% end %>
+                  <form autocomplete="off" id="signup-form">
+                    <div class="form-group">
+                      <input class="form-control" type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Confirm Password" required>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
                     <p class="text-muted text-sm mt-4">OR sign up with your social account</p><a class="media-btn media-facebook" href="#"><i class="socicon-facebook"></i><span>Signup with Facebook</span></a><a class="media-btn media-google" href="#"><i class="socicon-googleplus"></i><span>Signup with Google+</span></a><a class="media-btn media-twitter" href="#"><i class="socicon-twitter"></i><span>Signup with Twitter</span></a>
                   </form>
                 </div>
