@@ -9,15 +9,14 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+// 
 
-//= require vendor.min
-//= require scripts.min
-//= require modernizr.min
-//= require popper
-//= require jquery_ujs
-//= require bootstrap
-//= require turbolinks
-//= require_tree .
-//= require typeahead
-//= require lodgings
+
+
+
+
+
+
+
+
+
