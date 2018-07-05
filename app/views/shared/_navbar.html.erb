@@ -15,19 +15,9 @@
           <% end %>
         </li>
       <% end %>
-      <li class="active"><a href="index.html"><span>Home</span></a>
-        <ul class="sub-menu">
-          <li class="active has-children"><a href="index.html"><span>Hero Slider</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="index.html"><img src="" alt="Hero Slider Home"></a></li>
-            </ul>
-          </li>
-          <li class="has-children"><a href="home-featured-categories.html"><span>Categories Grid</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="home-featured-categories.html"><img src="" alt="Categories Grid Home"></a></li>
-            </ul>
-          </li>
-        </ul>
+
+      <li>
+        <span><%= link_to "home", root_path %></span>
       </li>
 
       <li><a href="shop-boxed-ls.html"><span>Shop</span></a>
@@ -91,66 +81,62 @@
           <li><a class="text-danger" href="docs/dev-setup.html">Documentation</a></li>
         </ul>
       </li>
-      <li><a href="components/accordion.html"><span>Components</span></a>
+
+
+     
+      
+      <li><a href="#"><span>Landen</span></a>
+
+        
         <ul class="mega-menu">
-          <li><span class="mega-menu-title">A - F</span>
+          <% @countries.each do |country| %>
+          <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
               <ul>
-                <li><a href="components/accordion.html">Accordion</a></li>
-                <li><a href="components/alerts.html">Alerts</a></li>
-                <li><a href="components/buttons.html">Buttons</a></li>
-                <li><a href="components/cards.html">Cards</a></li>
-                <li><a href="components/carousel.html">Carousel</a></li>
-                <li><a href="components/countdown.html">Countdown</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
+                <% country.regions.each do | region | %>
+                <li> 
+                  <%= link_to region.name, country_region_path(country, region) %>
+                  <% end %>
+                </li>
               </ul>
-          </li>
-          <li><span class="mega-menu-title">A - F</span>
-              <ul>
-                <li><a href="components/accordion.html">Accordion</a></li>
-                <li><a href="components/alerts.html">Alerts</a></li>
-                <li><a href="components/buttons.html">Buttons</a></li>
-                <li><a href="components/cards.html">Cards</a></li>
-                <li><a href="components/carousel.html">Carousel</a></li>
-                <li><a href="components/countdown.html">Countdown</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">G - M</span>
-              <ul>
-                <li><a href="components/gallery.html">Gallery</a></li>
-                <li><a href="components/google-maps.html">Google Maps</a></li>
-                <li><a href="components/images.html">Images &amp; Figures</a></li>
-                <li><a href="components/list-group.html">List Group</a></li>
-                <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
-                <li><a href="components/media.html">Media Object</a></li>
-                <li><a href="components/modal.html">Modal</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">P - T</span>
-              <ul>
-                <li><a href="components/pagination.html">Pagination</a></li>
-                <li><a href="components/pills.html">Pills</a></li>
-                <li><a href="components/progress-bars.html">Progress Bars</a></li>
-                <li><a href="components/shop-items.html">Shop Items</a></li>
-                <li><a href="components/steps.html">Steps</a></li>
-                <li><a href="components/tables.html">Tables</a></li>
-                <li><a href="components/tabs.html">Tabs</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">T - W</span>
-              <ul>
-                <li><a href="components/team.html">Team</a></li>
-                <li><a href="components/toasts.html">Toast Notifications</a></li>
-                <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
-                <li><a href="components/typography.html">Typography</a></li>
-                <li><a href="components/video-player.html">Video Player</a></li>
-                <li><a href="components/widgets.html">Widgets</a></li>
-              </ul>
-          </li>
+              </li>
+           <% end %>
         </ul>
       </li>
     </ul>
   </nav>
+
+
+      <!-- Toolbar-->
+      <div class="toolbar">
+        <div class="inner">
+          <a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu"><i class="material-icons menu"></i></a>
+          <a class="toolbar-toggle search-toggle" href="#search"> <i class="material-icons">search</i></a>
+          
+          <a class="toolbar-toggle" href="#account"><i class="material-icons">account_circle</i></a>
+          <a class="toolbar-toggle" href="#cart"><i><i class="material-icons">shopping_cart</i><span class="count">3</span></i></a></div>
+        <!-- Toolbar Dropdown-->
+        <div class="toolbar-dropdown">
+          <!-- Mobile Menu Section-->
+          <div class="toolbar-section" id="mobileMenu">
+            <!-- Currency / Language Siwtcher-->
+            <div class="text-center mb-4">
+              <div class="lang-currency-switcher">
+                <div class="lang-currency-toggle"><img src="" alt="English"><span>USD</span><i class="material-icons arrow_drop_down"></i>
+                  <ul class="lang-currency-toggle-dropdown">
+                    <li>
+                      <select class="form-control form-control-sm">
+                        <option value="usd">$ USD</option>
+                        <option value="usd">€ EUR</option>
+                        <option value="usd">£ UKP</option>
+                        <option value="usd">¥ JPY</option>
+                      </select>
+                    </li>
+                    <li><a href="#"><img src="" alt="Français">Français</a></li>
+                    <li><a href="#"><img src="" alt="Deutsch">Deutsch</a></li>
+                    <li><a href="#"><img src="" alt="Italiano">Italiano</a></li>
+                  </ul>
+                </div>
+              </div>
 
   <!-- Toolbar-->
   <div class="toolbar">
@@ -176,6 +162,7 @@
                 <li><a href="#"><img src="" alt="Deutsch">Deutsch</a></li>
                 <li><a href="#"><img src="" alt="Italiano">Italiano</a></li>
               </ul>
+
             </div>
           </div>
         </div>
@@ -295,7 +282,9 @@
                 <% params[:lodging_type_in].each do |lodging_type| %>
                   <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "navbar_lodging_type_#{lodging_type}" %>
                 <% end %>
+
               <% end %>
+                
               <% end %>
             <!-- Products-->
             <div class="widget widget-featured-products">
@@ -347,6 +336,124 @@
               </form>
             </div>
           </div>
+
+          <!-- Account Section-->
+            <div class="toolbar-section" id="account">
+              <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" role="tab">Log In</a></li>
+                <li class="nav-item"><a class="nav-link" href="#signup" data-toggle="tab" role="tab">Sign Up</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="login" role="tabpanel">
+                  <% if user_signed_in? %>
+                   <p> Dear current_user.email </p>
+                   <p> You are login, if you want to logout press the logout button </p>
+
+                    <li><%= link_to "Settings", edit_user_registration_path %></li>
+                    <li><%= link_to "Logout", destroy_user_session_path, method: "delete" %></li>
+                   <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-block btn-xs' %>
+                  
+                            
+                    <% else %>
+                      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                        <div class="form-group">
+                          <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: 'form-control' %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control' %>
+                        </div>
+
+                        <% if devise_mapping.rememberable? -%>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <%= f.check_box :remember_me, class: "form-check-input" %>
+                              Remember me
+                            </label>
+                          </div>
+                        <% end -%>
+
+                        <div class="form-group">
+                          <%= f.submit "Log in", class: "btn btn-primary btn-block btn-lg" %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                </div>
+                <div class="tab-pane fade" id="signup" role="tabpanel">
+                    <%= form_for(resource, as: resource_name, :id => "sign_up_user" , url: registration_path(resource_name)) do |f| %>
+                      <%= devise_error_messages! %>
+
+                      <div class="form-group">
+                        <%= f.email_field :email, autofocus: false, class: 'form-control', placeholder: "Email Address" %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password' %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm Password' %>
+                      </div>
+
+                      <div class="form-group">
+                        <%= f.submit "Sign up", class: "btn btn-primary btn-block btn-lg" %>
+                      </div>
+                    <% end %>
+                    <p class="text-muted text-sm mt-4">OR sign up with your social account</p><a class="media-btn media-facebook" href="#"><i class="socicon-facebook"></i><span>Signup with Facebook</span></a><a class="media-btn media-google" href="#"><i class="socicon-googleplus"></i><span>Signup with Google+</span></a><a class="media-btn media-twitter" href="#"><i class="socicon-twitter"></i><span>Signup with Twitter</span></a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <!-- Shopping Cart Section-->
+          <div class="toolbar-section" id="cart">
+            <div class="table-responsive shopping-cart mb-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      <div class="d-flex justify-content-between align-items-center">Products<a class="navi-link text-uppercase" href="cart.html"><span class="text-xxs">Expand Cart</span><i class="material-icons keyboard_arrow_right"></i></a></div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="" alt="Product"></a>
+                        <div class="product-info">
+                          <h4 class="product-title"><a href="shop-single.html">3-Drawer File Cabinet</a></h4><span><em>Price:</em> $257.00</span><span><em>Quantity:</em> 1</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center"><a class="remove-from-cart" href="#"><i class="material-icons icon_close"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="" alt="Product"></a>
+                        <div class="product-info">
+                          <h4 class="product-title"><a href="shop-single.html">Plastic Tissue Holder</a></h4><span><em>Price:</em> $76.40</span><span><em>Quantity:</em> 2</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center"><a class="remove-from-cart" href="#"><i class="material-icons icon_close"></i></a></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="" alt="Product"></a>
+                        <div class="product-info">
+                          <h4 class="product-title"><a href="shop-single.html">Campfire Paper Table</a></h4><span><em>Price:</em> $289.00</span><span><em>Quantity:</em> 1</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center"><a class="remove-from-cart" href="#"><i class="material-icons icon_close"></i></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr class="mb-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+              <div class="pr-2 py-1 text-sm">Subtotal: <span class='text-dark text-medium'>$622.40</span></div><a class="btn btn-sm btn-success mb-0 mr-0" href="checkout-address.html">Checkout</a>
+            </div>
+          </div>
         </div>
       <!-- Shopping Cart Section-->
       <div class="toolbar-section" id="cart">
@@ -396,6 +503,7 @@
         <hr class="mb-3">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
           <div class="pr-2 py-1 text-sm">Subtotal: <span class='text-dark text-medium'>$622.40</span></div><a class="btn btn-sm btn-success mb-0 mr-0" href="checkout-address.html">Checkout</a>
+>>>>>>> 43afd5270f72faf78f7d0cd8d50ce36f89b4a4e5
         </div>
       </div>
     </div>
