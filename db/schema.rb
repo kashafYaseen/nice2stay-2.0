@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_05_060723) do
+ActiveRecord::Schema.define(version: 2018_07_05_100943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -267,7 +267,7 @@ ActiveRecord::Schema.define(version: 2018_07_05_060723) do
     t.string "check_in_days"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "minimal_stay"
+    t.text "minimal_stay", default: [], array: true
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
   end
 
