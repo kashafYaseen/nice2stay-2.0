@@ -104,8 +104,8 @@ class Lodging < ApplicationRecord
     description.split(' ').length > 600
   end
 
-  def child_id
-    lodging_children.ids.first
+  def child
+    lodging_children.first_or_create(title: "#{title} #1")
   end
 
   private

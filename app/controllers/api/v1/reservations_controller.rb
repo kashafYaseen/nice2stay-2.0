@@ -6,10 +6,9 @@ class Api::V1::ReservationsController < Api::V1::ApiController
   end
 
   def create
-    @reservation = Reservation.new(reservation_params)
-    @reservation.lodging_child_id = Lodging.find_by(slug: params[:reservation][:lodging_slug]).try(:child_id)
-    @reservation.user_id = User.find_by(email: params[:reservation][:user_email]).try(:id)
-    if @reservation.save
+    @reservation = SaveReservationDetails.call(params)
+
+    if @reservation.valid?
       render status: :created
     else
       render json: @reservation.errors, status: :unprocessable_entity
