@@ -5,18 +5,18 @@
       <div class="col-md-6 mb-30">
         <div class="product-gallery">
           <div class="product-carousel owl-carousel gallery-wrapper">
-            <% @lodging.images.each_with_index do |image, index| %>
+            <% @lodging.images.each_with_index do |image_url, index| %>
               <div class="gallery-item" data-hash="<%= index %>">
-                <%= image_tag image.url %>
+                <%= image_tag image_url %>
               </div>
             <% end %>
           </div>
 
           <ul class="product-thumbnails">
-            <% @lodging.images.each_with_index do |image, index| %>
+            <% @lodging.images.each_with_index do |image_url, index| %>
               <li class="active">
                 <a href="#<%= index %>">
-                  <%= image_tag image.url %>
+                  <%= image_tag image_url %>
                 </a>
               </li>
             <% end %>

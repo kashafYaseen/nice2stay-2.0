@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_05_100943) do
+ActiveRecord::Schema.define(version: 2018_07_06_173127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,7 +133,6 @@ ActiveRecord::Schema.define(version: 2018_07_05_100943) do
     t.string "subtitle"
     t.text "description"
     t.bigint "owner_id"
-    t.json "images"
     t.bigint "region_id"
     t.string "slug"
     t.string "name"
@@ -161,6 +160,7 @@ ActiveRecord::Schema.define(version: 2018_07_05_100943) do
     t.datetime "route_updated_at"
     t.datetime "price_updated_at"
     t.integer "status"
+    t.string "images", array: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
   end

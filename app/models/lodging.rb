@@ -15,7 +15,6 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
   after_create :create_child
-  mount_uploaders :images, ImageUploader
 
   searchkick locations: [:location], word_start: [:city]
 
