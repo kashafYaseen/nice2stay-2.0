@@ -2,7 +2,7 @@
   <p><%= link_to lodging.name, lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]) %></p>
   <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %></div>
   <div><%= lodging.cumulative_price(params) %></div>
-  <% if image_url = lodging.images.first %>
+  <% if image_url = lodging.images.try(:first) %>
     <div style="width: 22%;"><%= image_tag image_url %></div>
   <% end %>
 
