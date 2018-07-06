@@ -25,7 +25,7 @@ class SearchPrices
       conditions[:children] = params[:children]
       conditions[:infants]  = params[:infants]
       conditions[:lodging_child_id] = params[:lodging_child_id]
-      conditions[:minimum_stay] = params[:minimum_stay]
+      conditions[:minimum_stay] = [params[:minimum_stay], nil]
       conditions
     end
 
