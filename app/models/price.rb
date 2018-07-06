@@ -1,7 +1,9 @@
 class Price < ApplicationRecord
   belongs_to :availability
+  has_one :lodging, through: :availability
+  has_one :lodging_child, through: :availability
 
-  delegate :lodging, :lodging_child, to: :availability
+  scope :of_child, -> (child_id) { joins(:availability).where('lodging_child_id = ?', child_id) }
 
   searchkick
 
