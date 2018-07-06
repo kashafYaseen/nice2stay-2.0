@@ -76,6 +76,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
         :price_updated_at,
         :status,
         :region_id,
+        :images,
         specifications_attributes: [:id, :title, :description],
         reviews_attributes: [:id, :user_id, :stars, :description],
         availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],

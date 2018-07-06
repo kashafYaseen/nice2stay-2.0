@@ -21,7 +21,7 @@ class SaveLodgingDetails
       lodging.owner = owner
       lodging.region = region
       lodging.lodging_type = lodging_type(params[:lodging][:lodging_type])
-      lodging.images = []
+      lodging.images = params[:lodging][:images]
       lodging.attributes = lodging_params
       UpdateLodgingPrices.call(lodging, params[:lodging][:prices]) if lodging.save
     end
