@@ -20,26 +20,26 @@ json.description   lodging.description
 json.created_at    lodging.created_at
 json.updated_at    lodging.updated_at
 
-json.owner do
-  json.partial! 'api/v1/owners/owner', owner: lodging.owner
-end
+# json.owner do
+#   json.partial! 'api/v1/owners/owner', owner: lodging.owner
+# end
 
-json.specifications do
-  json.array! lodging.specifications, partial: 'api/v1/specifications/specification', as: :specification
-end
+# json.specifications do
+#   json.array! lodging.specifications, partial: 'api/v1/specifications/specification', as: :specification
+# end
 
-json.rules do
-  json.array! lodging.rules, partial: 'api/v1/rules/rule', as: :rule
-end
+# json.rules do
+#   json.array! lodging.rules, partial: 'api/v1/rules/rule', as: :rule
+# end
 
-json.discounts do
-  json.array! lodging.discounts, partial: 'api/v1/discounts/discount', as: :discount
-end
+# json.discounts do
+#   json.array! lodging.discounts, partial: 'api/v1/discounts/discount', as: :discount
+# end
 
-json.reviews do
-  json.array! lodging.reviews, partial: 'api/v1/reviews/review', as: :review
-end
+# json.reviews do
+#   json.array! lodging.reviews, partial: 'api/v1/reviews/review', as: :review
+# end
 
-json.availabilities do
-  json.array! lodging.availabilities, partial: 'api/v1/availabilities/availability', as: :availability
-end
+# json.availabilities do
+#   json.array! lodging.availabilities, partial: 'api/v1/availabilities/availability', as: :availability
+# end
