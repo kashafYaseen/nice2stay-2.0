@@ -107,7 +107,7 @@ class Lodging < ApplicationRecord
   end
 
   def child
-    lodging_children.first_or_create(title: "#{title} #1")
+    lodging_children.first_or_create(title: "#{title} #1", name: "#{name} #1")
   end
 
   private
@@ -126,6 +126,6 @@ class Lodging < ApplicationRecord
 
     def create_child
       return if lodging_children.present?
-      lodging_children.create title: "#{title} #1"
+      lodging_children.create(title: "#{title} #1", name: "#{name} #1")
     end
 end
