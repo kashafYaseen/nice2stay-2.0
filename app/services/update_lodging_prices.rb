@@ -13,6 +13,7 @@ class UpdateLodgingPrices
 
   def call
     return unless prices.present?
+    clear_prices
     update_prices
   end
 
@@ -29,6 +30,12 @@ class UpdateLodgingPrices
           end
         end
         create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], lodging.check_in_day) if price_range[:minimal_stay].present?
+      end
+    end
+
+    def clear_prices
+      lodging.lodging_children.each do |child|
+        Price.of_child(child.id).delete_all
       end
     end
 
