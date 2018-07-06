@@ -10,6 +10,8 @@ class Lodging < ApplicationRecord
   has_many :reviews
   has_many :specifications
 
+  attr_accessor :check_in_day
+
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
   after_create :create_child
