@@ -36,8 +36,8 @@ class SaveLodgingDetails
     end
 
     def lodging_type(type)
-      return 'villa' if type == 'villas' || 'vakantiehuizen'
-      return 'apartment' if type == 'apartments' || 'appartementen'
+      return 'villa' if type == 'villas' || type =='vakantiehuizen'
+      return 'apartment' if type == 'apartments' || type =='appartementen'
       return 'bnb' if type == 'boutique-hotels'
     end
 
