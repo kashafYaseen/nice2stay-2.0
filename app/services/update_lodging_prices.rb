@@ -23,9 +23,8 @@ class UpdateLodgingPrices
         Price.bulk_insert do |price|
           lodging.availabilities_with_in(price_range[:from], price_range[:to]).each do |availability|
             price_range[:minimal_stay].each do |minimal_stay|
-              price.add(amount: price_range[:amount], children: price_range[:children], adults: price_range[:adults],
-                infants: price_range[:infants], minimum_stay: minimal_stay, friday_price: price_range[:friday_price], availability_id: availability.id,
-                saturday_price: price_range[:saturday_price], sunday_price: price_range[:sunday_price], minimum_per_day_price: price_range[:minimum_per_day_price])
+              price.add(amount: day_price(price_range, availability.available_on), children: price_range[:children], adults: price_range[:adults],
+                infants: price_range[:infants], minimum_stay: minimal_stay, availability_id: availability.id)
             end
           end
         end
@@ -44,5 +43,12 @@ class UpdateLodgingPrices
       rule.minimal_stay = minimal_stay
       rule.check_in_days = check_in_day
       rule.save
+    end
+
+    def day_price(price_range, available_on)
+      return price_range[:sunday_price] if available_on.wday == 0 && price_range[:sunday_price].present?
+      return price_range[:friday_price] if available_on.wday == 5 && price_range[:friday_price].present?
+      return price_range[:saturday_price] if available_on.wday == 6 && price_range[:saturday_price].present?
+      price_range[:minimum_per_day_price] || price_range[:amount]
     end
 end

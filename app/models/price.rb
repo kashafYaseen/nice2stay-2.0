@@ -16,11 +16,4 @@ class Price < ApplicationRecord
       lodging_child_id: lodging_child.id
     )
   end
-
-  def day_price
-    return sunday_price if available_on.wday == 0 && sunday_price.present?
-    return friday_price if available_on.wday == 5 && friday_price.present?
-    return saturday_price if available_on.wday == 6 && saturday_price.present?
-    minimum_per_day_price || amount
-  end
 end
