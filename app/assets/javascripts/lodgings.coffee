@@ -51,10 +51,10 @@
     $('.btn-read-more').click ->
       $target = $($(this).data('target'))
       if $(this).text() == "Read more"
-        $target.text($(this).data('actual'))
+        $target.html($(this).data('actual'))
         $(this).text('Show less')
       else
-        $target.text($(this).data('truncated'))
+        $target.html($(this).data('truncated'))
         $(this).text('Read more')
 
   validate = (values) ->
