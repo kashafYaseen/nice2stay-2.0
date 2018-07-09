@@ -9,6 +9,7 @@
         @date-one-selected="val => { check_in = val }"
         @date-two-selected="val => { check_out = val }"
         @apply="onApplyMethod"
+        :min-date="this.yesterday"
       ></airbnb-style-datepicker>
       <input type="hidden" name="check_in" :value="check_in">
       <input type="hidden" name="check_out" :value="check_out">
@@ -27,6 +28,7 @@
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
+        yesterday: this.getYesterday()
       }
     },
     methods: {
@@ -42,6 +44,11 @@
       },
       onApplyMethod(e) {
         $('.dates-form').submit();
+      },
+      getYesterday() {
+        var d = new Date();
+        d.setDate(d.getDate() - 1);
+        return d.toString();
       }
     }
   }
