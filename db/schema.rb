@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(version: 2018_07_06_173127) do
     t.datetime "route_updated_at"
     t.datetime "price_updated_at"
     t.integer "status"
-    t.string "images", array: true
+    t.string "images", default: [], array: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
   end
