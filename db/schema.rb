@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_075017) do
+ActiveRecord::Schema.define(version: 2018_07_10_120618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -297,18 +297,18 @@ ActiveRecord::Schema.define(version: 2018_07_09_075017) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "availabilities", "lodging_children"
+  add_foreign_key "availabilities", "lodging_children", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodging_children", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
-  add_foreign_key "reservations", "lodging_children"
-  add_foreign_key "reservations", "users"
-  add_foreign_key "reviews", "lodgings"
+  add_foreign_key "reservations", "lodging_children", on_delete: :cascade
+  add_foreign_key "reservations", "users", on_delete: :cascade
+  add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade
-  add_foreign_key "reviews", "users"
+  add_foreign_key "reviews", "users", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
-  add_foreign_key "specifications", "lodgings"
+  add_foreign_key "specifications", "lodgings", on_delete: :cascade
 end
