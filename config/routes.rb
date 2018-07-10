@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       resources :lodgings
       resources :reservations
     end
+
+    namespace :v2 do
+      resources :lodgings
+    end
   end
 
   get '/privacy', to: 'home#privacy'
