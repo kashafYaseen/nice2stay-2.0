@@ -4,7 +4,7 @@ class LodgingChild < ApplicationRecord
   has_many :availabilities
   has_many :prices, through: :availabilities
 
-  after_create :add_availabilities_and_prices
+  after_create :add_availabilities
   after_create :reindex_prices
 
   def minimum_price
@@ -24,16 +24,10 @@ class LodgingChild < ApplicationRecord
   end
 
   private
-    def add_availabilities_and_prices
+    def add_availabilities
       Availability.bulk_insert do |availability|
         (Date.today..365.days.from_now).map(&:to_s).each do |date|
           availability.add(available_on: date, lodging_child_id: id, created_at: DateTime.now, updated_at: DateTime.now)
-        end
-      end
-
-      Price.bulk_insert do |price|
-        availabilities.each do |availability|
-          price.add(amount: lodging.price, availability_id: availability.id, adults: lodging.adults, children: lodging.children, infants: lodging.infants, created_at: DateTime.now, updated_at: DateTime.now)
         end
       end
     end
