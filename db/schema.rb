@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_10_120618) do
+ActiveRecord::Schema.define(version: 2018_07_10_123403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,17 @@ ActiveRecord::Schema.define(version: 2018_07_10_120618) do
     t.string "title"
     t.string "subtitle"
     t.text "description"
+    t.text "meta_desc"
+    t.string "slug"
+    t.string "h1"
+    t.string "h2"
+    t.string "h3"
+    t.string "highlight_1"
+    t.string "highlight_2"
+    t.string "highlight_3"
+    t.text "summary"
+    t.text "short_desc"
+    t.text "location_description"
     t.index ["locale"], name: "index_lodging_translations_on_locale"
     t.index ["lodging_id"], name: "index_lodging_translations_on_lodging_id"
   end
