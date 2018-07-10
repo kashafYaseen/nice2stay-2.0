@@ -112,7 +112,7 @@ ActiveAdmin.register Lodging do
         ul do
           lodging.images.each do |image|
             li do
-              image_tag(image.url(:thumb))
+              image_tag(image)
             end
           end
         end
