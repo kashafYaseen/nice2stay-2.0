@@ -28,7 +28,7 @@ class UpdateLodgingPrices
             end
           end
         end
-        create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], lodging.check_in_day) if price_range[:minimal_stay].present?
+        create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], lodging.check_in_day) if price_range[:minimal_stay].first.present?
       end
     end
 
