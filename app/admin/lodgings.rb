@@ -21,6 +21,9 @@ ActiveAdmin.register Lodging do
     column :baths
     column :sq__ft
     column :price
+    column :total_prices
+    column :total_rules
+    column :total_children
 
     actions
   end
@@ -121,6 +124,9 @@ ActiveAdmin.register Lodging do
       row :adults
       row :children
       row :infants
+      row :total_prices
+      row :total_rules
+      row :total_children
       row :created_at
       row :updated_at
     end
@@ -185,6 +191,7 @@ ActiveAdmin.register Lodging do
             column :adults
             column :children
             column :infants
+            column :minimum_stay
 
             column 'Action' do |price|
               link_to 'Edit Price', edit_admin_price_path(price)

@@ -109,6 +109,18 @@ class Lodging < ApplicationRecord
     lodging_children.first_or_create(title: "#{name} #1")
   end
 
+  def total_prices
+    prices.count
+  end
+
+  def total_rules
+    rules.count
+  end
+
+  def total_children
+    lodging_children.count
+  end
+
   private
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i

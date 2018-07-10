@@ -25,6 +25,7 @@ ActiveAdmin.register Price do
       row :adults
       row :children
       row :infants
+      row :minimum_stay
       row :created_at
       row :updated_at
     end
