@@ -61,26 +61,14 @@ class Reservation < ApplicationRecord
       return unless lodging.present?
       nights = (check_out - check_in).to_i
 
-      if rules_active(check_in, check_out).present?
-        rules_active(check_in, check_out).each do |rule|
-          if rule.days_multiplier.present?
-            errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless nights % rule.days_multiplier == 0
-          elsif rule.minimal_stay.present?
-            errors.add(:base, "Minimaal is #{rule.minimal_stay} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
-          else
-            validate_default_rule(nights, rule)
-          end
+      rules_active(check_in, check_out).each do |rule|
+        if rule.days_multiplier.present?
+          errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless nights % rule.days_multiplier == 0
+        elsif rule.minimal_stay.present?
+          errors.add(:base, "Minimaal is #{rule.minimal_stay} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
         end
-      else
-        validate_default_rule(nights)
+        errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days.titleize
       end
-    end
-
-    def validate_default_rule(nights, rule = nil)
-      errors.add(:base, "Minimaal is 7 nachten verblijf in deze periode") unless nights % 7 == 0
-      check_in_day = rule.try(:check_in_days) || 'saturday'
-      return unless check_in.present?
-      errors.add(:base, "Check in day should be #{check_in_day}") unless check_in.strftime("%A") == check_in_day.titleize
     end
 
     def update_check_in_day
