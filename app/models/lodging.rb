@@ -94,17 +94,6 @@ class Lodging < ApplicationRecord
     reviews.where(stars: stars).count
   end
 
-  def truncated_description
-    return unless description.present?
-    return description.truncate(600) if truncate_description?
-    description
-  end
-
-  def truncate_description?
-    return false unless description.present?
-    description.split(' ').length > 600
-  end
-
   def child
     lodging_children.first_or_create(title: "#{name} #1")
   end

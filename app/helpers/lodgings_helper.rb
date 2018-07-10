@@ -20,4 +20,15 @@ module LodgingsHelper
     end if buckets.present?
     0
   end
+
+  def truncated_description(description)
+    return unless description.present?
+    return description.truncate(600) if truncate_description?(description)
+    description
+  end
+
+  def truncate_description?(description)
+    return false unless description.present?
+    description.split(' ').length > 600
+  end
 end
