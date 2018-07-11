@@ -16,7 +16,7 @@ class Lodging < ApplicationRecord
   after_validation :geocode, if: :address_changed?
   after_create :create_child
 
-  searchkick locations: [:location], word_start: [:city]
+  searchkick locations: [:location], word_start: [:name]
 
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
