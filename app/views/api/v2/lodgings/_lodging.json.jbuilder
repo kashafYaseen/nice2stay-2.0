@@ -1,4 +1,6 @@
 json.id            lodging.id
+json.name          lodging.name
+json.summary       lodging.summary
 json.title         lodging.title
 json.subtitle      lodging.subtitle
 json.street        lodging.street
@@ -17,8 +19,10 @@ json.adults        lodging.adults
 json.children      lodging.children
 json.infants       lodging.infants
 json.description   lodging.description
+json.short_desc    lodging.short_desc
 json.created_at    lodging.created_at
 json.updated_at    lodging.updated_at
+json.images        lodging.images
 
 json.owner do
   json.partial! 'api/v1/owners/owner', owner: lodging.owner
