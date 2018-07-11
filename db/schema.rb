@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_10_123403) do
+ActiveRecord::Schema.define(version: 2018_07_11_051853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,14 +198,14 @@ ActiveRecord::Schema.define(version: 2018_07_10_123403) do
 
   create_table "prices", force: :cascade do |t|
     t.float "amount", default: 0.0
-    t.integer "adults", default: 1
-    t.integer "children", default: 1
-    t.integer "infants", default: 1
     t.bigint "availability_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "weekly_price"
     t.integer "minimum_stay"
+    t.text "adults", default: [], array: true
+    t.text "children", default: [], array: true
+    t.text "infants", default: [], array: true
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
