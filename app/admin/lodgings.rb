@@ -16,6 +16,7 @@ ActiveAdmin.register Lodging do
     selectable_column
     id_column
     column :title
+    column :name
     column :address
     column :beds
     column :baths
