@@ -23,7 +23,9 @@ class SaveLodgingDetails
       lodging.lodging_type = lodging_type(params[:lodging][:lodging_type])
       lodging.images = params[:lodging][:images]
       lodging.attributes = lodging_params
-      UpdateLodgingPrices.call(lodging, params[:lodging][:prices]) if lodging.save
+      return unless lodging.save
+      UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
+      UpdateLodgingTranslations.call(lodging, params[:translations])
     end
 
     def owner
