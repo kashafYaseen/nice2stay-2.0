@@ -21,9 +21,9 @@ class SearchPrices
     def conditions
       conditions = {}
       conditions[:available_on] = availability_condition
-      conditions[:adults]   = params[:adults]
-      conditions[:children] = params[:children]
-      conditions[:infants]  = params[:infants]
+      conditions[:adults]   = [params[:adults], nil]
+      conditions[:children] = [params[:children], nil]
+      conditions[:infants]  = [params[:infants], nil]
       conditions[:lodging_child_id] = params[:lodging_child_id]
       conditions[:minimum_stay] = [params[:minimum_stay], nil]
       conditions
