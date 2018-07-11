@@ -15,6 +15,7 @@ class UpdateLodgingPrices
     return unless prices.present?
     clear_prices
     update_prices
+    reindex_prices
   end
 
   private
@@ -34,6 +35,10 @@ class UpdateLodgingPrices
       lodging.lodging_children.each do |child|
         Price.of_child(child.id).delete_all
       end
+    end
+
+    def reindex_prices
+      lodging.prices.reindex
     end
 
     def create_rule(from, to, minimal_stay, check_in_day)
