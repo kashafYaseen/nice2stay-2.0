@@ -12,11 +12,11 @@ class LodgingChild < ApplicationRecord
   end
 
   def maximum_guests(type)
-    prices.maximum(type)
+    prices.maximum(type).max
   end
 
   def minimum_guests(type)
-    prices.minimum(type)
+    prices.minimum(type).min
   end
 
   def not_available_on
