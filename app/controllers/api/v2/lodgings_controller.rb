@@ -6,7 +6,7 @@ class Api::V2::LodgingsController < Api::V1::ApiController
   end
 
   def index
-    @lodgings = Lodging.all.includes(:owner).limit(100)
+    @lodgings = SearchLodgings.call(params)
   end
 
   private
