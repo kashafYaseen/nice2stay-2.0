@@ -18,6 +18,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require turbolinks
+//= require chosen-jquery
 //= require_tree .
 //= require typeahead
 //= require lodgings

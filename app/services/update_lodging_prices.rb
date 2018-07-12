@@ -26,7 +26,7 @@ class UpdateLodgingPrices
         Price.bulk_insert do |price|
           lodging.availabilities_with_in(price_range[:from], price_range[:to]).each do |availability|
             price.add(amount: day_price(price_range, availability.available_on), children: price_range[:children], adults: price_range[:adults],
-              infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id)
+              infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
           end
         end
         create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], lodging.check_in_day)

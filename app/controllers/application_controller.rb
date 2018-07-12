@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale, :set_countries
 
   def set_countries
-   @countries = Country.all
+   @countries = Country.all.includes(:regions)
   end
 
   def set_locale

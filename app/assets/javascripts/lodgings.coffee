@@ -65,4 +65,13 @@
       success: (data) ->
         return
 
+  Lodging.autocomplete = ->
+    lodgings = new Bloodhound(
+      datumTokenizer: Bloodhound.tokenizers.whitespace
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+      remote:
+        url: '/lodgings/autocomplete?query=%QUERY'
+        wildcard: '%QUERY')
+    $('.autocomplete').typeahead null, source: lodgings
+
 ).call this
