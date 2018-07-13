@@ -38,8 +38,8 @@ class SaveLodgingDetails
     end
 
     def lodging_type(type)
-      return 'villa' if ['villas', 'vakantiehuizen'].include?(type)
-      return 'apartment' if ['apartments', 'appartementen'].include?(type)
+      return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
+      return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
       'bnb'
     end
 
