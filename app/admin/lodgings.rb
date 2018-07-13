@@ -149,6 +149,7 @@ ActiveAdmin.register Lodging do
         column :end_date
         column :days_multiplier
         column :check_in_days
+        column :minimal_stay
 
         column 'Action' do |rule|
           link_to 'Edit', edit_admin_rule_path(rule)
