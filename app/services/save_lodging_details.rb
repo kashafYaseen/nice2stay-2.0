@@ -20,9 +20,7 @@ class SaveLodgingDetails
     def save_lodging
       lodging.owner = owner
       lodging.region = region
-      lodging.lodging_type = lodging_type(params[:lodging][:lodging_type])
-      lodging.images = params[:lodging][:images]
-      lodging.attributes = lodging_params
+      lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
       UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
       UpdateLodgingTranslations.call(lodging, params[:translations])
@@ -91,7 +89,7 @@ class SaveLodgingDetails
         :status,
         :region_id,
         :check_in_day,
-        :images,
+        { images: [] },
         specifications_attributes: [:id, :title, :description],
         reviews_attributes: [:id, :user_id, :stars, :description],
         availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],
