@@ -48,7 +48,8 @@ class SaveReservationDetails
         :discount,
         :cleaning_cost,
         :crm_booking_id,
-        :skip_data_posting
+        :skip_data_posting,
+        :booking_status,
       )
     end
 
