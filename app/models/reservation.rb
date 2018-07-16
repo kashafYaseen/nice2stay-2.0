@@ -1,5 +1,5 @@
 class Reservation < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :lodging_child
   has_one :lodging, through: :lodging_child
   has_many :rules, through: :lodging
