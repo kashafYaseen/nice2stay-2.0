@@ -25,6 +25,7 @@ class SaveReservationDetails
     end
 
     def user
+      return unless params[:user].present?
       password = Devise.friendly_token[0, 20]
       User.where(email: user_params[:email]).first_or_create(user_params.merge(password: password, password_confirmation: password))
     end

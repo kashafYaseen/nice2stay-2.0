@@ -1,5 +1,5 @@
 class Reservation < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :lodging_child
   has_one :lodging, through: :lodging_child
   has_many :rules, through: :lodging
@@ -64,10 +64,10 @@ class Reservation < ApplicationRecord
       rules_active(check_in, check_out).each do |rule|
         if rule.days_multiplier.present?
           errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless nights % rule.days_multiplier == 0
+          errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days.titleize
         elsif rule.minimal_stay.present?
           errors.add(:base, "Minimaal is #{rule.minimal_stay} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
         end
-        errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days.titleize
       end
     end
 

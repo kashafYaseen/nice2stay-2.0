@@ -45,12 +45,12 @@ class UpdateLodgingPrices
 
     def create_rule(from, to, minimal_stay, check_in_day)
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
-      rule.check_in_days = check_in_day || 'Saturday'
 
       if minimal_stay.first.present?
         rule.minimal_stay = minimal_stay
       else
         rule.days_multiplier = 7
+        rule.check_in_days = check_in_day.presence || 'Saturday'
       end
 
       rule.save
