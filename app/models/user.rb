@@ -10,4 +10,23 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}".titleize
   end
+
+  def auth_token
+    JsonWebToken.encode({ user_id: self.id, exp: auth_expires_at })
+  end
+
+  def regenerate_auth_token
+    JsonWebToken.encode({ user_id: self.id, exp: update_token_expire_time })
+  end
+
+  private
+    def auth_expires_at
+      self.token_expires_at || update_token_expire_time
+    end
+
+    def update_token_expire_time
+      expire_time = Time.now.to_i + 86400
+      self.update_columns token_expires_at: expire_time
+      expire_time
+    end
 end

@@ -1,4 +1,5 @@
-class Api::V2::LodgingsController < Api::V1::ApiController
+class Api::V2::LodgingsController < Api::V2::ApiController
+  before_action :authenticate
   before_action :set_lodging, only: [:show, :update]
 
   def show
