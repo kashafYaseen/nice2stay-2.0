@@ -112,15 +112,6 @@ ActiveAdmin.register Lodging do
       row :latitude
       row :longitude
       row :description
-      row :images do
-        ul do
-          lodging.images.each do |image|
-            li do
-              image_tag(image)
-            end
-          end
-        end
-      end
       row :lodging_type
       row :adults
       row :children
