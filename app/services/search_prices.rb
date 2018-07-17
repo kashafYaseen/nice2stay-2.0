@@ -28,9 +28,8 @@ class SearchPrices
     def first_attempt_conditions
       conditions = {}
       conditions[:available_on] = availability_condition
-      conditions[:adults]   = [params[:adults], nil]
-      conditions[:children] = [params[:children], nil]
-      conditions[:infants]  = [params[:infants], nil]
+      conditions[:adults]   = params[:adults]
+      conditions[:children] = params[:children]
       conditions[:lodging_child_id] = params[:lodging_child_id]
       conditions[:minimum_stay] = [params[:minimum_stay], nil]
       conditions
@@ -39,9 +38,8 @@ class SearchPrices
     def second_attempt_conditions dates
       conditions = {}
       conditions[:available_on] = dates
-      conditions[:adults]   = gte_or_nil params[:adults]
-      conditions[:children] = gte_or_nil params[:children]
-      conditions[:infants]  = gte_or_nil params[:infants]
+      conditions[:adults]   = { gte: params[:adults] }
+      conditions[:children] = { gte: params[:children] }
       conditions[:lodging_child_id] = params[:lodging_child_id]
       conditions[:minimum_stay] = [params[:minimum_stay], nil]
       conditions
@@ -50,8 +48,7 @@ class SearchPrices
     def third_attempt_conditions dates
       conditions = {}
       conditions[:available_on] = dates
-      conditions[:adults]  = gte_or_nil params[:adults]
-      conditions[:infants] = gte_or_nil params[:infants]
+      conditions[:adults]  = { gte: params[:adults] }
       conditions[:lodging_child_id] = params[:lodging_child_id]
       conditions[:minimum_stay] = [params[:minimum_stay], nil]
       conditions[:adults_and_children] = { gte: (params[:adults].to_i + params[:children].to_i) }
@@ -66,10 +63,5 @@ class SearchPrices
 
     def dates_without_price(result, query_dates)
       query_dates - result.collect(&:available_on).map{ |a| a.strftime('%Y-%m-%d') }
-    end
-
-    def gte_or_nil(value)
-      return nil if value == '0'
-      { gte: value }
     end
 end
