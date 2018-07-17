@@ -21,9 +21,8 @@ class UpdateLodgingPrices
   private
     def update_prices
       prices.each do |price_range|
-        price_range[:infants] = [] if price_range[:infants].map(&:empty?).all?
-        price_range[:minimal_stay] = [] if price_range[:minimal_stay].map(&:empty?).all?
         Price.bulk_insert do |price|
+          update_arrays(price_range)
           lodging.availabilities_with_in(price_range[:from], price_range[:to]).each do |availability|
             price.add(amount: day_price(price_range, availability.available_on), children: price_range[:children], adults: price_range[:adults],
               infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
@@ -61,5 +60,12 @@ class UpdateLodgingPrices
       return price_range[:friday_price] if available_on.wday == 5 && price_range[:friday_price].present?
       return price_range[:saturday_price] if available_on.wday == 6 && price_range[:saturday_price].present?
       price_range[:minimum_per_day_price] || price_range[:amount]
+    end
+
+    def update_arrays(price_range)
+      price_range[:children] = ['999'] if price_range[:children] == []
+      price_range[:adults] = ['999']   if price_range[:adults] == []
+      price_range[:infants] = ['999']  if price_range[:infants].map(&:empty?).all? || price_range[:infants] == []
+      price_range[:minimal_stay] = []  if price_range[:minimal_stay].map(&:empty?).all?
     end
 end
