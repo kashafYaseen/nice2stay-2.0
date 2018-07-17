@@ -115,8 +115,8 @@ ActiveAdmin.register Lodging do
       row :images do
         ul do
           lodging.images.each do |image|
-            li do
-              image_tag(image)
+            li class: 'd-inline' do
+              image_tag image, class: 'w-25'
             end
           end
         end
