@@ -31,4 +31,9 @@ module LodgingsHelper
     return false unless description.present?
     description.split(' ').length > 600
   end
+
+  def no_of_adults(adults)
+    return 1 if adults == 0
+    adults
+  end
 end

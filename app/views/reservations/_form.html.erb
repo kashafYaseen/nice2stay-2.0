@@ -27,14 +27,13 @@
           <p id="lbl-error-<%= lodging_child.id %>"></p>
 
           <label>Adults</label>
-          <%= f.number_field :adults, value: f.object.adults, min: 1, max: lodging_child.maximum_guests(:adults), class: 'input-spinner', id: "reservation_adults_#{lodging_child.id}" %>
+          <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, max: lodging_child.maximum_guests(:adults), class: 'input-spinner', id: "reservation_adults_#{lodging_child.id}" %>
 
           <label>Children</label>
-          <%= f.number_field :children, value: f.object.children, min: 0, max: lodging_child.maximum_guests(:children), class: 'input-spinner', id: "reservation_children_#{lodging_child.id}" %>
+          <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner', id: "reservation_children_#{lodging_child.id}" %>
 
           <label>Infants</label>
-          <%= f.number_field :infants, value: f.object.infants, min: 0, max: lodging_child.maximum_guests(:infants), class: 'input-spinner', id: "reservation_infants_#{lodging_child.id}" %>
-
+          <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner', id: "reservation_infants_#{lodging_child.id}" %>
           <br>
 
           <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: "radio-1-#{lodging_child.id}" %>
