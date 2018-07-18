@@ -19,6 +19,11 @@ class User < ApplicationRecord
     JsonWebToken.encode({ user_id: self.id, exp: update_token_expire_time })
   end
 
+  def self.authenticate(email:, password:)
+    user = User.find_for_authentication(email: email)
+    user&.valid_password?(password) ? user : nil
+  end
+
   private
     def auth_expires_at
       self.token_expires_at || update_token_expire_time

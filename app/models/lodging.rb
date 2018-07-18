@@ -30,6 +30,8 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, to: :availabilities, allow_nil: true, prefix: true
 
+  scope :search_import, -> { includes(:availabilities, :translations, :region, :prices) }
+
   translates :title, :subtitle, :description
 
   enum lodging_type: {
@@ -53,9 +55,7 @@ class Lodging < ApplicationRecord
       region: region.name,
       available_on: availabilities.pluck(:available_on),
       availability_price: prices.pluck(:amount),
-      availability_adults: prices.pluck(:adults),
-      availability_children: prices.pluck(:children),
-      availability_infants: prices.pluck(:infants)
+      adults_and_children: (adults.to_i + children.to_i),
     )
   end
 
@@ -68,8 +68,8 @@ class Lodging < ApplicationRecord
   end
 
   def cumulative_price(params)
-    return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children, :infants).all?(&:present?)
-    total_price = price_list(params).sum
+    return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
+    total_price = price_list(params.merge(lodging_child_id: child.id)).sum
     total_discount = discount(params)
     total_price -= total_price * (total_discount/100) if total_discount.present?
     "$#{total_price} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
@@ -113,7 +113,7 @@ class Lodging < ApplicationRecord
   private
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).pluck(:amount)
+      price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).sort.uniq(&:available_on).pluck(:amount)
       price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
       price_list
     end

@@ -27,12 +27,11 @@ class SearchLodgings
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
       conditions[:location]     = frame_coordinates if params[:l].present?
-      conditions[:availability_adults]   = params[:adults] if params[:adults].present?
-      conditions[:availability_children] = params[:children] if params[:children].present?
-      conditions[:availability_infants]  = params[:infants] if params[:infants].present?
-      conditions[:availability_price]    = price_range if params[:min_price].present? && params[:max_price].present?
-      conditions[:country] = params[:region].split(', ').last if params[:region].present?
-      conditions[:region]  = params[:region].split(', ').first if params[:region].present?
+      conditions[:adults]       = { gte: params[:adults] }  if params[:adults].present?
+      conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
+      conditions[:country]      = params[:region].split(', ').last if params[:region].present?
+      conditions[:region]       = params[:region].split(', ').first if params[:region].present?
+      conditions[:availability_price] = price_range if params[:min_price].present? && params[:max_price].present?
       conditions
     end
 
@@ -76,5 +75,12 @@ class SearchLodgings
     def order
       return { price: :asc } if params[:order] == 'price_asc'
       { price: :desc } if params[:order] == 'price_desc'
+    end
+
+    def adults_plus_children
+      [
+        { children: { gte: params[:children].to_i } },
+        { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } }
+      ]
     end
 end

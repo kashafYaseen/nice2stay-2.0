@@ -32,7 +32,7 @@
           total = 0
           validate(values)
           $.each data.rates, (key, value) ->
-            result += "<b>€ #{key} x #{value} night</b>"
+            result += "<b>€ #{key} x #{value} night</b></br>"
             total += (key * value)
 
 
