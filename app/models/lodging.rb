@@ -56,7 +56,7 @@ class Lodging < ApplicationRecord
       availability_adults: prices.pluck(:adults),
       availability_children: prices.pluck(:children),
       availability_infants: prices.pluck(:infants),
-      availability_adults_and_children: (prices.pluck(:adults).max.first.to_i + prices.pluck(:children).max.first.to_i),
+      availability_adults_and_children: prices.collect(&:adults_and_children),
     )
   end
 
