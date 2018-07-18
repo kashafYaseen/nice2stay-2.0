@@ -7,6 +7,7 @@ class Reservation < ApplicationRecord
 
   validates :check_in, :check_out, presence: true
   validate :availability
+  validate :no_of_guests
   validate :check_out_only
   validate :accommodation_rules
 
@@ -69,6 +70,11 @@ class Reservation < ApplicationRecord
           errors.add(:base, "Minimaal is #{rule.minimal_stay.min} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
         end
       end
+    end
+
+    def no_of_guests
+      errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults.present? && lodging.adults < adults
+      errors.add(:base, "Maximum #{lodging.children} children are allowed") if lodging.children.present? && lodging.children < children
     end
 
     def update_check_in_day
