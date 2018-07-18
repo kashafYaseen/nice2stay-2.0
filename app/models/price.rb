@@ -14,7 +14,11 @@ class Price < ApplicationRecord
       available_on: availability.available_on,
       lodging_id: lodging.id,
       lodging_child_id: lodging_child.id,
-      adults_and_children: (adults.max.to_i + children.max.to_i)
+      adults_and_children: adults_and_children
     )
+  end
+
+  def adults_and_children
+    adults.max.to_i + children.max.to_i
   end
 end
