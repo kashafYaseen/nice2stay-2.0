@@ -53,10 +53,7 @@ class Lodging < ApplicationRecord
       region: region.name,
       available_on: availabilities.pluck(:available_on),
       availability_price: prices.pluck(:amount),
-      availability_adults: prices.pluck(:adults),
-      availability_children: prices.pluck(:children),
-      availability_infants: prices.pluck(:infants),
-      availability_adults_and_children: prices.collect(&:adults_and_children),
+      adults_and_children: (adults.to_i + children.to_i),
     )
   end
 
