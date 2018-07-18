@@ -113,7 +113,7 @@ class Lodging < ApplicationRecord
   private
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).pluck(:amount)
+      price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).sort.uniq(&:available_on).pluck(:amount)
       price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
       price_list
     end
