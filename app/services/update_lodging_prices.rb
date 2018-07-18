@@ -63,9 +63,11 @@ class UpdateLodgingPrices
     end
 
     def update_arrays(price_range)
-      price_range[:children] = ['999'] if price_range[:children] == []
-      price_range[:adults] = ['999']   if price_range[:adults] == []
-      price_range[:infants] = ['999']  if price_range[:infants].map(&:empty?).all? || price_range[:infants] == []
+      [price_range[:adults], price_range[:children], price_range[:infants]].each{ |values| values.delete('') }
       price_range[:minimal_stay] = []  if price_range[:minimal_stay].map(&:empty?).all?
+      return price_range[:adults] = price_range[:children] = price_range[:infants] = ['999'] if price_range.values_at(:adults, :children, :infants).map(&:empty?).all?
+      price_range[:children] = ['0'] if price_range[:children] == []
+      price_range[:adults]   = ['0'] if price_range[:adults] == []
+      price_range[:infants]  = ['0'] if price_range[:infants] == []
     end
 end
