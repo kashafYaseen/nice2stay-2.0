@@ -59,7 +59,7 @@ class UpdateLodgingPrices
       return price_range[:sunday_price] if available_on.wday == 0 && price_range[:sunday_price].present?
       return price_range[:friday_price] if available_on.wday == 5 && price_range[:friday_price].present?
       return price_range[:saturday_price] if available_on.wday == 6 && price_range[:saturday_price].present?
-      price_range[:minimum_per_day_price] || price_range[:amount]
+      price_range[:minimal_price_per_day] || price_range[:amount]
     end
 
     def update_arrays(price_range)
