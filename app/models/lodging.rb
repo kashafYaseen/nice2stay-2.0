@@ -30,6 +30,8 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, to: :availabilities, allow_nil: true, prefix: true
 
+  scope :search_import, -> { includes(:availabilities, :translations, :region, :prices) }
+
   translates :title, :subtitle, :description
 
   enum lodging_type: {
