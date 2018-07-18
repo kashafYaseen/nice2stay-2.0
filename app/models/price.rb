@@ -4,6 +4,7 @@ class Price < ApplicationRecord
   has_one :lodging_child, through: :availability
 
   scope :of_child, -> (child_id) { joins(:availability).where('lodging_child_id = ?', child_id) }
+  scope :search_import, -> { includes(:lodging, :lodging_child) }
 
   delegate :available_on, to: :availability
 
