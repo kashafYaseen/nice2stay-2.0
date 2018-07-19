@@ -74,7 +74,7 @@ class Reservation < ApplicationRecord
 
     def no_of_guests
       errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults.present? && lodging.adults < adults
-      errors.add(:base, "Maximum #{lodging.children} children are allowed") if lodging.children.present? && lodging.children < children
+      errors.add(:base, "Maximum #{lodging.adults_plus_children} guests are allowed") if lodging.adults_plus_children < adults.to_i + children.to_i
     end
 
     def update_check_in_day
