@@ -66,15 +66,20 @@ class Reservation < ApplicationRecord
         if rule.days_multiplier.present?
           errors.add(:base, "Minimaal is #{rule.days_multiplier} nachten verblijf in deze periode") unless nights % rule.days_multiplier == 0
           errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days.titleize
-        elsif rule.minimal_stay.present? && nights != 7 && nights < rule.minimal_stay.max.to_i
-          errors.add(:base, "Minimaal is #{rule.minimal_stay.min} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
+        elsif rule.minimal_stay.present? && nights != 7 && nights < rule.minimal_stay.collect(&:to_i).max
+          errors.add(:base, "Minimaal is #{rule.minimal_stay.collect(&:to_i).min} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
         end
       end
     end
 
     def no_of_guests
-      errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults.present? && lodging.adults < adults
-      errors.add(:base, "Maximum #{lodging.children} children are allowed") if lodging.children.present? && lodging.children < children
+      return unless lodging.adults.present?
+      if lodging.adults < adults
+        errors.add(:base, "Maximum #{lodging.adults} adults are allowed")
+        return
+      end
+      children_vacancies = lodging.children.to_i + lodging.adults.to_i - adults
+      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children
     end
 
     def update_check_in_day
