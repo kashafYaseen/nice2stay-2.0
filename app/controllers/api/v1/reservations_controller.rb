@@ -6,9 +6,9 @@ class Api::V1::ReservationsController < Api::V1::ApiController
   end
 
   def create
-    @reservation = SaveReservationDetails.call(params)
+    @reservation, result = SaveReservationDetails.call(params)
 
-    if @reservation.valid?
+    if result
       render status: :created
     else
       render json: @reservation.errors, status: :unprocessable_entity
