@@ -12,8 +12,7 @@ class SaveReservationDetails
   end
 
   def call
-    save_reservation
-    reservation
+    [reservation, save_reservation]
   end
 
   private

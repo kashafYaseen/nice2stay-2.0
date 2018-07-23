@@ -24,6 +24,7 @@ class SaveLodgingDetails
       return unless lodging.save
       UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
       UpdateLodgingTranslations.call(lodging, params[:translations])
+      UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
     end
 
     def owner

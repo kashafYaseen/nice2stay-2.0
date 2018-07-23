@@ -30,8 +30,6 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, to: :availabilities, allow_nil: true, prefix: true
 
-  scope :search_import, -> { includes(:availabilities, :translations, :region, :prices) }
-
   translates :title, :subtitle, :description
 
   enum lodging_type: {
@@ -55,8 +53,12 @@ class Lodging < ApplicationRecord
       region: region.name,
       available_on: availabilities.pluck(:available_on),
       availability_price: prices.pluck(:amount),
-      adults_and_children: (adults.to_i + children.to_i),
+      adults_and_children: adults_plus_children,
     )
+  end
+
+  def adults_plus_children
+    adults.to_i + children.to_i
   end
 
   def price_details(values)
