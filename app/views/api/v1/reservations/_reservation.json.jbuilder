@@ -12,7 +12,7 @@ json.created_at    reservation.created_at
 json.updated_at    reservation.updated_at
 
 json.user do
-  json.partial! 'api/v1/users/user', user: reservation.user
+  json.partial! 'api/v1/users/user', user: reservation.user if reservation.user.present?
 end
 
 json.lodging do
