@@ -48,7 +48,8 @@ class SendReservationDetails
           discount: reservation.discount,
           cleaning_cost_price: reservation.cleaning_cost,
           status: reservation.booking_status,
-          by_houseowner: false
+          by_houseowner: false,
+          booking_request_attributes: { status: 'new' }
         }
       ]
     end
