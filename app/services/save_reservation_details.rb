@@ -20,7 +20,7 @@ class SaveReservationDetails
       reservation.user = user
       reservation.lodging_child = child
       reservation.attributes = reservation_params
-      reservation.save
+      reservation.save(validate: false)
     end
 
     def user
