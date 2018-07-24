@@ -13,4 +13,10 @@ class Availability < ApplicationRecord
   def reindex_lodging
     lodging.reindex
   end
+
+  def self.check_out_only!(check_in)
+    days = where(available_on: [check_in -1.day, check_in]).order(available_on: :desc)
+    return days.take.update_columns(check_out_only: true) if days.size == 2
+    days.take.try(:delete)
+  end
 end

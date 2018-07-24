@@ -40,7 +40,7 @@ class Reservation < ApplicationRecord
 
   private
     def update_lodging_availability
-      update_check_in_day
+      lodging_child.availabilities.check_out_only!(check_in)
       lodging_child.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
       lodging_child.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
@@ -80,12 +80,6 @@ class Reservation < ApplicationRecord
       end
       children_vacancies = lodging.children.to_i + lodging.adults.to_i - adults.to_i
       errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
-    end
-
-    def update_check_in_day
-      days = lodging_child.availabilities.where(available_on: [check_in-1.day, check_in]).order(available_on: :desc)
-      return days.take.update(check_out_only: true) if days.size == 2
-      days.take.try(:delete)
     end
 
     def send_reservation_details
