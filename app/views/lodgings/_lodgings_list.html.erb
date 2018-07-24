@@ -4,20 +4,20 @@
     <!-- Content-->
     <div class="col-lg-9 col-md-8 order-md-2">
        <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
-        <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= @lodgings.total_count %></div>
+        <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= lodgings.total_count %></div>
       </div>
 
       <div class="row mb-2">
-        <%= tag.div id: "lodgings-list", data: { lodgings: @lodgings.to_json(methods: [:address]), l: params[:l] } %>
-        <%= render @lodgings %>
+        <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), l: params[:l] } %>
+        <%= render lodgings %>
       </div>
 
       <nav class="pagination">
-        <%= paginate @lodgings %>
+        <%= paginate lodgings %>
       </nav>
     </div>
 
-    <%= render 'filters', regions: @regions, lodgings: @lodgings %>
+    <%= render 'filters', regions: regions, lodgings: lodgings %>
   </div>
 </div>
 

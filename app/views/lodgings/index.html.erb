@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-lg-12 col-sm-12">
-    <%= render partial: "lodgings_list" %>
+  <div class="col-lg-12 col-sm-12 lodgings-list">
+    <%= render "lodgings_list", lodgings: @lodgings, regions: @regions %>
   </div>
 
   <div class="col-lg-5 col-sm-4">
