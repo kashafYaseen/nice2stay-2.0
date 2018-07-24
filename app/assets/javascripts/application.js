@@ -19,6 +19,7 @@
 //= require bootstrap
 //= require turbolinks
 //= require chosen-jquery
+//= require photoswipe
 //= require_tree .
 //= require typeahead
 //= require lodgings
