@@ -5,11 +5,11 @@
     <div class="row">
       <!-- Product Gallery-->
       <div class="col-md-6 mb-30">
-        <div class="lodging-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+        <div class="lodging-gallery" itemscope>
           <% @lodging.images.each_with_index do |image_url, index| %>
-            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+            <figure itemprop="associatedMedia" itemscope>
               <a href="<%= image_url %>" itemprop="contentUrl">
-                <img src="<%= image_url %>" itemprop="thumbnail" alt="Image description" class="img-fluid img-thumbnail" />
+                <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
               </a>
               <figcaption itemprop="caption description"><%= index %></figcaption>
             </figure>
