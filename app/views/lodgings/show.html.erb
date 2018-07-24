@@ -1,26 +1,19 @@
+<%= render 'shared/photoswipe' %>
+
 <div class="bg-secondary pb-4 padding-top-3x">
   <div class="container">
     <div class="row">
       <!-- Product Gallery-->
       <div class="col-md-6 mb-30">
-        <div class="product-gallery">
-          <div class="product-carousel owl-carousel gallery-wrapper">
-            <% @lodging.images.each_with_index do |image_url, index| %>
-              <div class="gallery-item" data-hash="<%= index %>">
-                <%= image_tag image_url %>
-              </div>
-            <% end %>
-          </div>
-
-          <ul class="product-thumbnails">
-            <% @lodging.images.each_with_index do |image_url, index| %>
-              <li class="active">
-                <a href="#<%= index %>">
-                  <%= image_tag image_url %>
-                </a>
-              </li>
-            <% end %>
-          </ul>
+        <div class="lodging-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          <% @lodging.images.each_with_index do |image_url, index| %>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+              <a href="<%= image_url %>" itemprop="contentUrl">
+                <img src="<%= image_url %>" itemprop="thumbnail" alt="Image description" class="img-fluid img-thumbnail" />
+              </a>
+              <figcaption itemprop="caption description"><%= index %></figcaption>
+            </figure>
+          <% end %>
         </div>
       </div>
 
@@ -219,4 +212,5 @@
 <%= content_for :js_init do %>
   $(".input-spinner").InputSpinner();
   Lodging.read_more()
+  initPhotoSwipeFromDOM('.lodging-gallery');
 <% end %>

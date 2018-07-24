@@ -96,3 +96,22 @@
     background-color: #dc9814;
   }
 }
+
+.lodging-gallery {
+  width: 100%;
+  float: left;
+}
+.lodging-gallery img {
+  width: 100%;
+  height: auto;
+}
+.lodging-gallery figure {
+  display: block;
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 24%;
+  height: 70px;
+}
+.lodging-gallery figcaption {
+  display: none;
+}
