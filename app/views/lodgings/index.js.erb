@@ -1,2 +1,3 @@
-$("#lodgings-list").replaceWith("<%=j render partial: "list" %>");
-addMarkers();
+$('.lodgings-list').html("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
+Lodging.init();
+$("input[type='number']").InputSpinner();

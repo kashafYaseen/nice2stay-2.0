@@ -9,7 +9,7 @@
       <i class="material-icons icon_close"></i>
     </span>
 
-    <%= form_tag lodgings_path, method: :get, class: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
+    <%= form_tag lodgings_path, method: :get, class: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
       <section class="widget widget-categories pt-0">
         <section class="widget widget-icon-list">
           <h3 class="widget-title">Date search</h3>

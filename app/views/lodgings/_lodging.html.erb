@@ -1,4 +1,4 @@
-<div>
+<div class="col-md-4">
   <p><%= link_to lodging.name, lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]) %></p>
   <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %></div>
   <div><%= lodging.cumulative_price(params) %></div>
@@ -8,4 +8,3 @@
 
   <%= link_to 'Make a Reservation', lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: 'btn btn-primary' %>
 </div>
-<hr />
