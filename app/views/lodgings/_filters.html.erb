@@ -1,0 +1,92 @@
+<!-- Sidebar -->
+<div class="col-lg-3 col-md-4 order-md-1">
+  <div class="sidebar-toggle position-left">
+    <i class="material-icons filter_list"></i>
+  </div>
+
+  <aside class="sidebar sidebar-offcanvas position-left">
+    <span class="sidebar-close">
+      <i class="material-icons icon_close"></i>
+    </span>
+
+    <%= form_tag lodgings_path, method: :get, class: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
+      <section class="widget widget-categories pt-0">
+        <section class="widget widget-icon-list">
+          <h3 class="widget-title">Date search</h3>
+          <div class='datepicker'></div>
+          <ul><div id='datepicker'></div></ul>
+        </section>
+
+        <section>
+          <br>
+          <h3 class="widget-title">Number of Guests</h3>
+          <ul>
+            <label>Adults</label>
+            <%= number_field_tag :adults, params[:adults], min: 0 %>
+            <label>Children</label>
+            <%= number_field_tag :children, params[:children], min: 0 %>
+            <label>Infants</label>
+            <%= number_field_tag :infants, params[:infants], min: 0 %>
+            <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
+          </ul>
+        </section>
+
+        <section>
+          <h3 class="widget-title">Accommodation type</h3>
+
+          <ul>
+            <% Lodging.lodging_types.each do |key, value| %>
+              <label>
+                <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
+                <span><%= key %> (<%= count_lodging_type(lodgings, key) %>)</span>
+              </label>
+              <br>
+            <% end %>
+          </ul>
+        </section>
+
+        <section class="widget widget-categories">
+          <h3 class="widget-title">Price/Night Range</h3>
+          <div class="price-range-slider" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
+            <div class="ui-range-slider"></div>
+
+            <footer class="ui-range-slider-footer">
+              <div class="column">
+                <%= submit_tag 'Filter', class: 'btn btn-outline-primary btn-sm' %>
+              </div>
+
+              <div class="column">
+                <div class="ui-range-values">
+                  <div class="ui-range-value-min">$<span></span>
+                    <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
+                  </div>&nbsp;-&nbsp;
+
+                  <div class="ui-range-value-max">$<span></span>
+                    <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </section>
+
+        <section class="widget widget-icon-list">
+          <h3 class="widget-title">Sort By</h3>
+            <ul>
+              <li><%= link_to 'Lowest Price', '#', class: 'lowest-price' %></li>
+              <li><%= link_to 'Highest Price', '#', class: 'highest-price' %></li>
+              <%= hidden_field_tag :order, params[:order] %>
+            </ul>
+        </section>
+
+        <section class="widget widget-icon-list">
+          <h3 class="widget-title">Region</h3>
+
+          <%= select_tag :region, options_for_select(regions, params[:region]), include_blank: "Select Region", class: 'form-control chosen-select' %>
+          <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm' %>
+        </section>
+      </section>
+    <% end %>
+  </aside>
+</div>
+<!-- Sidebar -->
