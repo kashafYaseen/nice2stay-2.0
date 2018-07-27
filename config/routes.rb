@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         get :autocomplete
       end
     end
+    resource :carts
   end
 
   root to: 'pages#home'

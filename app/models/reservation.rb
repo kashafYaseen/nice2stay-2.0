@@ -15,7 +15,7 @@ class Reservation < ApplicationRecord
   after_create :send_reservation_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, to: :lodging, prefix: true
+  delegate :slug, :name, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true
 
   attr_accessor :skip_data_posting
@@ -37,6 +37,11 @@ class Reservation < ApplicationRecord
 
   def can_review? user
     user == self.user && review.blank?
+  end
+
+  def total_nights
+    return unless check_out.present? && check_in.present?
+    (check_out - check_in).to_i
   end
 
   private

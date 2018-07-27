@@ -1,0 +1,27 @@
+<tr>
+  <td>
+    <div class="product-item">
+      <%= link_to reservation.lodging, class: 'product-thumb' do %>
+        <%= image_tag reservation.lodging_image %>
+      <% end %>
+
+      <div class="product-info">
+        <h4 class="product-title">
+          <%= link_to reservation.lodging_name, reservation.lodging %>
+        </h4>
+      </div>
+    </div>
+  </td>
+
+  <td class="text-center">
+    <div class="count-input"><%= reservation.total_nights %></div>
+  </td>
+
+  <td class="text-center text-lg text-medium">$<%= reservation.rent %></td>
+  <td class="text-center text-lg text-medium">$<%= reservation.discount %></td>
+  <td class="text-center">
+    <%= link_to '#', class: 'remove-from-cart' do %>
+      <i class="material-icons icon_close"></i>
+    <% end %>
+  </td>
+</tr>

@@ -112,6 +112,10 @@ class Lodging < ApplicationRecord
     lodging_children.count
   end
 
+  def image
+    images.first
+  end
+
   private
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
