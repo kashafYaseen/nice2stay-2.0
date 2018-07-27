@@ -11,8 +11,8 @@ class Reservation < ApplicationRecord
   validate :check_out_only
   validate :accommodation_rules
 
-  after_create :update_lodging_availability
-  after_create :send_reservation_details
+  after_commit :update_lodging_availability
+  after_commit :send_reservation_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :image, to: :lodging, prefix: true, allow_nil: true
@@ -90,6 +90,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting
+      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting || in_cart?
     end
 end
