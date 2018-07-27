@@ -20,7 +20,7 @@
   <td class="text-center text-lg text-medium">$<%= reservation.rent %></td>
   <td class="text-center text-lg text-medium">$<%= reservation.discount %></td>
   <td class="text-center">
-    <%= link_to '#', class: 'remove-from-cart' do %>
+    <%= link_to edit_carts_en_path(reservation_id: reservation), class: 'remove-from-cart' do %>
       <i class="material-icons">close</i>
     <% end %>
   </td>
