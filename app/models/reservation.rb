@@ -32,6 +32,7 @@ class Reservation < ApplicationRecord
     option: 8 ,
     request_price: 9,
     canceled: 10,
+    in_cart: 11,
   }
 
   def can_review? user
@@ -40,6 +41,7 @@ class Reservation < ApplicationRecord
 
   private
     def update_lodging_availability
+      return if in_cart?
       lodging_child.availabilities.check_out_only!(check_in)
       lodging_child.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
       lodging_child.availabilities.where(available_on: check_out, check_out_only: true).delete_all

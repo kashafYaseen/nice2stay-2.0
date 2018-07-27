@@ -2,7 +2,7 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @reservation = current_user.reservations.new(reservation_params)
+    @reservation = current_user.reservations.new(reservation_params.merge(booking_status: :in_cart))
     if @reservation.save
       redirect_to lodging_path(@reservation.lodging), notice: "The lodging was successfully reserved."
     else
