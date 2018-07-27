@@ -10,7 +10,9 @@
             <th class="text-center">Nights</th>
             <th class="text-center">Subtotal</th>
             <th class="text-center">Discount</th>
-            <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Clear Cart</a></th>
+            <th class="text-center">
+              <%= link_to 'Clear Cart', carts_en_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
+            </th>
           </tr>
         </thead>
 

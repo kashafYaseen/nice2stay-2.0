@@ -4,6 +4,11 @@ class CartsController < ApplicationController
   def show
   end
 
+  def destroy
+    return unless @reservations.present?
+    redirect_to carts_en_path, notice: 'Cart was cleared successfully.' if @reservations.delete_all
+  end
+
   private
     def set_reservations
       return unless current_user.present?
