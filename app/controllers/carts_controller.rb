@@ -1,11 +1,11 @@
 class CartsController < ApplicationController
   before_action :set_reservations
-  before_action :empty_cart, only: [:edit, :destroy]
+  before_action :empty_cart, only: [:remove, :destroy]
 
   def show
   end
 
-  def edit
+  def remove
     @reservations.find_by_id(params[:reservation_id]).try(:delete)
     session[:reservations] = @reservations.ids.join(',') if session[:reservations].present?
     redirect_to carts_en_path, notice: 'Reservation was removed successfully.'
