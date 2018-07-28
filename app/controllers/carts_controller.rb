@@ -1,6 +1,5 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!, only: [:update]
-  before_action :set_reservations
   before_action :empty_cart, only: [:remove, :destroy]
 
   def show
@@ -34,11 +33,6 @@ class CartsController < ApplicationController
   end
 
   private
-    def set_reservations
-      return @reservations = current_user.reservations_in_cart if current_user.present?
-      @reservations = Reservation.where(id: session[:reservations].split(',')) if session[:reservations].present?
-    end
-
     def empty_cart
       return redirect_to carts_en_path unless @reservations.present?
     end

@@ -447,55 +447,7 @@
         </div>
       </div>
       <!-- Shopping Cart Section-->
-      <div class="toolbar-section" id="cart">
-        <div class="table-responsive shopping-cart mb-0">
-          <table class="table">
-            <thead>
-              <tr>
-                <th colspan="2">
-                  <div class="d-flex justify-content-between align-items-center">Products<a class="navi-link text-uppercase" href="cart.html"><span class="text-xxs">Expand Cart</span><i class="material-icons keyboard_arrow_right"></i></a></div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="" alt="Product"></a>
-                    <div class="product-info">
-                      <h4 class="product-title"><a href="shop-single.html">3-Drawer File Cabinet</a></h4><span><em>Price:</em> $257.00</span><span><em>Quantity:</em> 1</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-center"><a class="remove-from-cart" href="#"><i class="material-icons icon_close"></i></a></td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="" alt="Product"></a>
-                    <div class="product-info">
-                      <h4 class="product-title"><a href="shop-single.html">Plastic Tissue Holder</a></h4><span><em>Price:</em> $76.40</span><span><em>Quantity:</em> 2</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-center"><a class="remove-from-cart" href="#"><i class="material-icons icon_close"></i></a></td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="product-item"><a class="product-thumb" href="shop-single.html"><img src="" alt="Product"></a>
-                    <div class="product-info">
-                      <h4 class="product-title"><a href="shop-single.html">Campfire Paper Table</a></h4><span><em>Price:</em> $289.00</span><span><em>Quantity:</em> 1</span>
-                    </div>
-                  </div>
-                </td>
-                <td class="text-center"><a class="remove-from-cart" href="#"><i class="material-icons icon_close"></i></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <hr class="mb-3">
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
-          <div class="pr-2 py-1 text-sm">Subtotal: <span class='text-dark text-medium'>$622.40</span></div><a class="btn btn-sm btn-success mb-0 mr-0" href="checkout-address.html">Checkout</a>
-        </div>
-      </div>
+      <%= render 'shared/cart' %>
     </div>
   </div>
 </header>
