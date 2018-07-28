@@ -7,7 +7,7 @@ class CartsController < ApplicationController
 
   def remove
     @reservations.find_by_id(params[:reservation_id]).try(:delete)
-    session[:reservations] = @reservations.ids.join(',') if session[:reservations].present?
+    cookies[:reservations] = @reservations.ids.join(',') if cookies[:reservations].present?
     redirect_to carts_en_path, notice: 'Reservation was removed successfully.'
   end
 
@@ -28,7 +28,7 @@ class CartsController < ApplicationController
 
   def destroy
     @reservations.delete_all
-    session.delete(:reservations) if session[:reservations].present?
+    cookies.delete(:reservations) if cookies[:reservations].present?
     redirect_to carts_en_path, notice: 'Cart was cleared successfully.'
   end
 

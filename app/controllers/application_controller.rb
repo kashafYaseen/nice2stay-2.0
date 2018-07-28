@@ -3,8 +3,12 @@ class ApplicationController < ActionController::Base
   before_action :set_locale, :set_reservations
 
   def set_reservations
-    return @reservations = current_user.reservations_in_cart if current_user.present?
-    @reservations = Reservation.where(id: session[:reservations].split(',')) if session[:reservations].present?
+    @reservations = Reservation.where(id: cookies[:reservations].split(',')) if cookies[:reservations].present?
+    if current_user.present?
+      @reservations.update_all(user_id: current_user.id) if cookies[:reservations].present?
+      @reservations = current_user.reservations_in_cart
+      cookies.delete(:reservations)
+    end
   end
 
   def set_locale

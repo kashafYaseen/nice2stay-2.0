@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
     end
 
     def save_cart_items
-      return session[:reservations] += ",#{@reservation.id}" if session[:reservations].present?
-      session[:reservations] = @reservation.id.to_s
+      return cookies[:reservations] += ",#{@reservation.id}" if cookies[:reservations].present?
+      cookies[:reservations] = @reservation.id.to_s
     end
 end
