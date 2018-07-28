@@ -13,6 +13,7 @@
 //= require turbolinks
 //= require jquery.min
 //= require jquery_ujs
+//= require gmap3.min
 //= require modernizr.min
 //= require popper.min
 //= require bootstrap.min
