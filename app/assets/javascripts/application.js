@@ -10,16 +10,22 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-
-//= require vendor.min
-//= require scripts.min
-//= require modernizr.min
-//= require popper
-//= require jquery_ujs
-//= require bootstrap
 //= require turbolinks
+//= require jquery.min
+//= require jquery_ujs
+//= require gmap3.min
+//= require modernizr.min
+//= require popper.min
+//= require bootstrap.min
+//= require downCount.min
+//= require imagesloaded.pkgd.min
+//= require isotope.pkgd.min
+//= require iziToast.min
+//= require nouislider.min
+//= require owl.carousel.min
+//= require photoswipe-ui-default.min
+//= require photoswipe.min
+//= require velocity.min
 //= require chosen-jquery
-//= require photoswipe
+//= require scripts.min
 //= require_tree .
-//= require typeahead
-//= require lodgings

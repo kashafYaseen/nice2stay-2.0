@@ -11,11 +11,11 @@ class Reservation < ApplicationRecord
   validate :check_out_only
   validate :accommodation_rules
 
-  after_create :update_lodging_availability
-  after_create :send_reservation_details
+  after_commit :update_lodging_availability
+  after_commit :send_reservation_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, to: :lodging, prefix: true
+  delegate :slug, :name, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true
 
   attr_accessor :skip_data_posting
@@ -32,14 +32,21 @@ class Reservation < ApplicationRecord
     option: 8 ,
     request_price: 9,
     canceled: 10,
+    in_cart: 11,
   }
 
   def can_review? user
     user == self.user && review.blank?
   end
 
+  def total_nights
+    return unless check_out.present? && check_in.present?
+    (check_out - check_in).to_i
+  end
+
   private
     def update_lodging_availability
+      return if in_cart?
       lodging_child.availabilities.check_out_only!(check_in)
       lodging_child.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
       lodging_child.availabilities.where(available_on: check_out, check_out_only: true).delete_all
@@ -83,6 +90,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting
+      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting || in_cart?
     end
 end

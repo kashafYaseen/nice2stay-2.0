@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :reservations
   has_many :reviews
 
+  delegate :in_cart, to: :reservations, allow_nil: true, prefix: true
+
   def full_name
     "#{first_name} #{last_name}".titleize
   end
