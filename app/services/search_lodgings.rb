@@ -26,7 +26,7 @@ class SearchLodgings
       conditions[:lodging_type] = params[:lodging_type_in] if params[:lodging_type_in].present?
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
-      conditions[:location]     = frame_coordinates if params[:l].present?
+      conditions[:location]     = frame_coordinates if params[:bounds].present?
       conditions[:adults]       = params[:adults]  if params[:adults].present?
       conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
       conditions[:country]      = params[:region].split(', ').last if params[:region].present?
@@ -36,7 +36,7 @@ class SearchLodgings
     end
 
     def frame_coordinates
-      sw_lat, sw_lng, ne_lat, ne_lng = params[:l].split(",")
+      sw_lat, sw_lng, ne_lat, ne_lng = params[:bounds].split(",")
       {
         top_left: {
           lat: ne_lat,

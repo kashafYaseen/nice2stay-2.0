@@ -7,14 +7,14 @@
   Lodging.init = ->
     Slider.init()
     $('.lodging_type').change ->
-      $(this).parents('form').submit()
+      Rails.fire($('.lodgings-filters').get(0), 'submit')
 
     $('.lowest-price, .highest-price').click ->
       if $(this).hasClass 'lowest-price'
         $('#order').val('price_asc')
       else if $(this).hasClass 'highest-price'
         $('#order').val('price_desc')
-      $(this).parents('form').submit()
+      Rails.fire($('.lodgings-filters').get(0), 'submit')
 
   Lodging.update_bill = (values) ->
     child_id = values[5]

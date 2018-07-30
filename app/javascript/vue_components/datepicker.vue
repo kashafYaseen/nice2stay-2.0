@@ -22,8 +22,8 @@
 
   export default {
     data() {
-      let check_in = $('.dates-form').data('check-in');
-      let check_out = $('.dates-form').data('check-out');
+      let check_in = $('.lodgings-filters').data('check-in');
+      let check_out = $('.lodgings-filters').data('check-out');
       return {
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
@@ -43,7 +43,7 @@
         return formattedDates
       },
       onApplyMethod(e) {
-        $('.dates-form').submit();
+        Rails.fire($('.lodgings-filters').get(0), 'submit');
       },
       getYesterday() {
         var d = new Date();

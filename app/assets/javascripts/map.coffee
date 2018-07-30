@@ -11,13 +11,8 @@
       map.addListener 'dragend', ->
         bounds = map.getBounds()
         location = bounds.getSouthWest().toUrlValue() + ',' + bounds.getNorthEast().toUrlValue()
-        Turbolinks.visit("/lodgings?l=#{location}")
-        return
-      map.addListener 'mousemove', ->
-        map.addListener 'zoom_changed', ->
-          bounds = map.getBounds()
-          location = bounds.getSouthWest().toUrlValue() + ',' + bounds.getNorthEast().toUrlValue()
-          Turbolinks.visit("/lodgings?l=#{location}")
+        $('#bounds').val(location)
+        Rails.fire($('.lodgings-filters').get(0), 'submit')
 
   Map.add_markers = ->
     element = document.querySelector('#lodgings-list')
