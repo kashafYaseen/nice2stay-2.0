@@ -9,6 +9,7 @@ class Lodging < ApplicationRecord
   has_many :discounts
   has_many :reviews
   has_many :specifications
+  has_many :wishlists
 
   attr_accessor :check_in_day
 

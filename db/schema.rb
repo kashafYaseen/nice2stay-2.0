@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_16_050849) do
+ActiveRecord::Schema.define(version: 2018_07_30_123218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,15 @@ ActiveRecord::Schema.define(version: 2018_07_16_050849) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wishlists", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_wishlists_on_lodging_id"
+    t.index ["user_id"], name: "index_wishlists_on_user_id"
+  end
+
   add_foreign_key "availabilities", "lodging_children", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodging_children", "lodgings", on_delete: :cascade
@@ -324,4 +333,6 @@ ActiveRecord::Schema.define(version: 2018_07_16_050849) do
   add_foreign_key "reviews", "users", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
+  add_foreign_key "wishlists", "lodgings", on_delete: :cascade
+  add_foreign_key "wishlists", "users", on_delete: :cascade
 end

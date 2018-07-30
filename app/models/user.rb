@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :reservations
   has_many :reviews
+  has_many :wishlists
+  has_many :favourite_lodgings, through: :wishlists, source: :lodging
 
   delegate :in_cart, to: :reservations, allow_nil: true, prefix: true
 
