@@ -69,41 +69,6 @@ jQuery(document).on('turbolinks:load', function() {
   });
 
 
-
-  // Toolbar Dropdown
-  //------------------------------------------------------------
-  var toolbarToggle = $('.toolbar-toggle'),
-    toolbarDropdown = $('.toolbar-dropdown'),
-    toolbarSection = $('.toolbar-section'),
-    mobileMenu = $('.slideable-menu .menu');
-
-  function closeToolBox() {
-    toolbarToggle.removeClass('active');
-    toolbarSection.removeClass('current');
-  }
-
-  toolbarToggle.on('click', function(e) {
-    var currentValue = $(this).attr('href');
-    if ($(e.target).is('.active')) {
-      closeToolBox();
-      toolbarDropdown.removeClass('open');
-    } else {
-      toolbarDropdown.addClass('open');
-
-      closeToolBox();
-      $(this).addClass('active');
-      $(currentValue).addClass('current');
-      mobileMenu.attr('data-height', mobileMenu.height());
-    }
-    e.preventDefault();
-  });
-  $('.close-dropdown').on('click', function() {
-    toolbarDropdown.removeClass('open');
-    toolbarToggle.removeClass('active');
-    toolbarSection.removeClass('current');
-  });
-
-
   // Slidable (Mobile) Menu
   //---------------------------------------------------------
   var backBtnText = 'Back',
