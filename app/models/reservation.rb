@@ -13,6 +13,7 @@ class Reservation < ApplicationRecord
 
   after_commit :update_lodging_availability
   after_commit :send_reservation_details
+  after_create :update_price_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :image, to: :lodging, prefix: true, allow_nil: true
@@ -43,6 +44,14 @@ class Reservation < ApplicationRecord
   def total_nights
     return unless check_out.present? && check_in.present?
     (check_out - check_in).to_i
+  end
+
+  def calculate_rent
+    rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants, lodging_child_id]).sum
+  end
+
+  def calculate_discount
+    discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
   end
 
   private
@@ -88,6 +97,11 @@ class Reservation < ApplicationRecord
       end
       children_vacancies = lodging.children.to_i + lodging.adults.to_i - adults.to_i
       errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
+    end
+
+    def update_price_details
+      rent, discount = calculate_rent, calculate_discount
+      update_columns rent: rent, discount: discount, total_price: (rent - discount)
     end
 
     def send_reservation_details

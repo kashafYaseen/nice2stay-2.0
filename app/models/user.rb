@@ -30,6 +30,10 @@ class User < ApplicationRecord
     reservations_in_cart.count
   end
 
+  def cart_subtotal
+    reservations_in_cart.sum(:total_price)
+  end
+
   private
     def auth_expires_at
       self.token_expires_at || update_token_expire_time

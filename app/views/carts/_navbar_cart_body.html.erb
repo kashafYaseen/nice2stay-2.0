@@ -11,7 +11,7 @@
             <h4 class="product-title">
               <%= link_to reservation.lodging_name, reservation.lodging %>
             </h4>
-            <span><em>Price:</em> $<%= reservation.rent - reservation.discount %></span>
+            <span><em>Price:</em> $<%= reservation.total_price %></span>
             <span><em>Nights:</em><%= reservation.total_nights %></span>
           </div>
         </div>
