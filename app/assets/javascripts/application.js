@@ -27,5 +27,4 @@
 //= require photoswipe.min
 //= require velocity.min
 //= require chosen-jquery
-//= require scripts.min
 //= require_tree .
