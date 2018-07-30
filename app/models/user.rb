@@ -26,6 +26,10 @@ class User < ApplicationRecord
     user&.valid_password?(password) ? user : nil
   end
 
+  def cart_items_count
+    reservations_in_cart.count
+  end
+
   private
     def auth_expires_at
       self.token_expires_at || update_token_expire_time

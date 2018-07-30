@@ -14,38 +14,8 @@
         </tr>
       </thead>
 
-      <tbody>
-        <% if @reservations.present? %>
-          <% @reservations.each do |reservation| %>
-            <tr>
-              <td>
-                <div class="product-item">
-                  <%= link_to reservation.lodging, class: 'product-thumb' do %>
-                    <%= image_tag reservation.lodging_image %>
-                  <% end %>
-
-                  <div class="product-info">
-                    <h4 class="product-title">
-                      <%= link_to reservation.lodging_name, reservation.lodging %>
-                    </h4>
-                    <span><em>Price:</em> $<%= reservation.rent - reservation.discount %></span>
-                    <span><em>Nights:</em><%= reservation.total_nights %></span>
-                  </div>
-                </div>
-              </td>
-
-              <td class="text-center">
-                <%= link_to remove_carts_en_path(reservation_id: reservation), class: 'remove-from-cart' do %>
-                  <i class="material-icons">close</i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        <% else %>
-          <tr>
-            <td>Cart is empty.</td>
-          </tr>
-        <% end %>
+      <tbody id="navbar-cart-body">
+        <%= render 'carts/navbar_cart_body', reservations: reservations %>
       </tbody>
     </table>
   </div>

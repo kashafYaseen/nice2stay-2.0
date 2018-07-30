@@ -14,7 +14,7 @@
 
     <div id="lodging-url-<%= lodging_child.id %>"></div>
 
-    <%= form_for lodging_child.reservations.build, html: { id: "new-reservation-#{lodging_child.id}" } do |f| %>
+    <%= form_for lodging_child.reservations.build, html: { id: "new-reservation-#{lodging_child.id}" }, remote: true do |f| %>
       <div class="row">
         <div class="col-sm" id="lodging-url-<%= lodging_child.id %>"
              data-child-id="<%= lodging_child.id %>"

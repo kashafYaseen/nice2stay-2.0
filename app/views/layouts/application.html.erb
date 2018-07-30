@@ -6,7 +6,9 @@
 
   <body>
     <%= render 'shared/navbar' %>
-    <%= render 'shared/notices' %>
+    <div id="flash-messages">
+      <%= render 'shared/notices' %>
+    </div>
 
    
       <%= yield %>

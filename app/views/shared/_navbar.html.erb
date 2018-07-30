@@ -169,7 +169,26 @@
   </nav>
   <!-- Toolbar-->
   <div class="toolbar">
-    <div class="inner"><a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu"><i class="material-icons menu"></i></a><a class="toolbar-toggle search-toggle" href="#search"><i class="material-icons search"></i></a><a class="toolbar-toggle" href="#account"><i class="material-icons person"></i></a><a class="toolbar-toggle" href="#cart"><i><span class="material-icons shopping_basket"></span><span class="count">3</span></i></a></div>
+    <div class="inner">
+      <a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu">
+        <i class="material-icons menu"></i>
+      </a>
+
+      <a class="toolbar-toggle search-toggle" href="#search">
+        <i class="material-icons search"></i>
+      </a>
+
+      <a class="toolbar-toggle" href="#account">
+        <i class="material-icons person"></i>
+      </a>
+
+      <a class="toolbar-toggle" href="#cart">
+        <i>
+          <span class="material-icons shopping_basket"></span>
+          <span class="count cart-items-count"><%= cart_items_count(@reservations) %></span>
+        </i>
+      </a>
+    </div>
     <!-- Toolbar Dropdown-->
     <div class="toolbar-dropdown">
       <!-- Mobile Menu Section-->
@@ -447,7 +466,7 @@
         </div>
       </div>
       <!-- Shopping Cart Section-->
-      <%= render 'shared/cart' %>
+      <%= render 'shared/cart', reservations: @reservations %>
     </div>
   </div>
 </header>

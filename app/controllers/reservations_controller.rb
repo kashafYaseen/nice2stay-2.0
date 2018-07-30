@@ -3,11 +3,10 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params.merge(booking_status: :in_cart, user: current_user))
     if @reservation.save
       save_cart_items unless current_user.present?
-      redirect_to lodging_path(@reservation.lodging), notice: "The lodging was successfully reserved."
+      flash.now[:notice] = "The lodging was successfully reserved."
     else
       @lodging = @reservation.lodging
       @reviews = @lodging.reviews.page(params[:page]).per(2)
-      render 'lodgings/show'
     end
   end
 
@@ -22,7 +21,11 @@ class ReservationsController < ApplicationController
     end
 
     def save_cart_items
-      return cookies[:reservations] += ",#{@reservation.id}" if cookies[:reservations].present?
-      cookies[:reservations] = @reservation.id.to_s
+      if cookies[:reservations].present?
+        cookies[:reservations] += ",#{@reservation.id}"
+      else
+        cookies[:reservations] = @reservation.id.to_s
+      end
+      @reservations = Reservation.where(id: cookies[:reservations].split(','))
     end
 end

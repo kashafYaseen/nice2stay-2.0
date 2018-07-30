@@ -17,6 +17,7 @@ class Reservation < ApplicationRecord
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true
+  delegate :id, to: :lodging_child, prefix: true
 
   attr_accessor :skip_data_posting
 
