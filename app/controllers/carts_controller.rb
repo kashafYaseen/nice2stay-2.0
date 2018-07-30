@@ -6,9 +6,8 @@ class CartsController < ApplicationController
   end
 
   def remove
-    @reservations.find_by_id(params[:reservation_id]).try(:delete)
-    cookies[:reservations] = @reservations.ids.join(',') if cookies[:reservations].present?
-    redirect_to carts_en_path, notice: 'Reservation was removed successfully.'
+    @reservations = ManageCart.new(reservations: @reservations, user: current_user, cookies: cookies).delete(params[:reservation_id])
+    flash.now[:notice] = 'Reservation was removed successfully.'
   end
 
   def update

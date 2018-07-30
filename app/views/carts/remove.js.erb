@@ -1,0 +1,4 @@
+$('#flash-messages').html("<%= j render 'shared/notices' %>");
+$('#navbar-cart-body').html("<%= j render 'carts/navbar_cart_body', reservations: @reservations %>");
+$('#cart-body').html("<%= j render partial: 'reservation', collection: @reservations %>");
+$('.cart-items-count').html("<%= cart_items_count(@reservations) %>");
