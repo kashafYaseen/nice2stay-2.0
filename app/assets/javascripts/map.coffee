@@ -10,6 +10,8 @@
 
       bounds_changed = window.bounds_changed = false
       Map.add_markers()
+      Map.highlight_lodgings()
+
       map.addListener 'dragend', ->
         bounds = map.getBounds()
         location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
@@ -44,7 +46,8 @@
           id: lodging.id
           lat: lodging.latitude
           lng: lodging.longitude
-          title: lodging.address)
+          title: lodging.address
+          infoWindow: content: "<p><a href='/lodgings/#{lodging.id}'>#{lodging.name}</a></p>")
     set_safe_bounds document.querySelector('#lodgings-list')
 
   set_safe_bounds = (element) ->
@@ -63,5 +66,17 @@
       window.bounds_changed = true
       map.fitZoom()
 
+  Map.highlight_lodgings = ->
+    $('.lodgings').on 'mouseenter', '.lodging-container', ->
+        markers = map.markers
+        for marker in markers
+          if marker.id == $(this).data('lodging-id')
+            marker.setAnimation 1
+
+    $('.lodgings').on 'mouseleave', '.lodging-container', ->
+        markers = map.markers
+        for marker in markers
+          if marker.id == $(this).data('lodging-id')
+            marker.setAnimation(null)
 
 ).call this
