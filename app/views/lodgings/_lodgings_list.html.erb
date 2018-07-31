@@ -8,7 +8,7 @@
       </div>
 
       <div class="row mb-2">
-        <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), bounds: params[:bounds] } %>
+        <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
         <%= render lodgings %>
       </div>
 

@@ -28,17 +28,24 @@
       window.bounds_changed = true
 
   Map.add_markers = ->
-    element = document.querySelector('#lodgings-list')
-    lodgings = window.transactions = JSON.parse(element.dataset.lodgings)
-    map.removeMarkers()
-    lodgings.forEach (lodging) ->
+    lodgings = $('#lodgings-list').map(-> JSON.parse @dataset.lodgings).get()
+    ids = $('#lodgings-list').map(-> JSON.parse @dataset.ids).get()
+
+    remove_marker_list = []
+    for marker in map.markers
+      if marker && ids.includes(marker.id)
+        continue
+      remove_marker_list.push marker
+    map.removeMarkers(remove_marker_list)
+
+    for lodging in lodgings
       if lodging.latitude and lodging.longitude
         marker = map.addMarker(
+          id: lodging.id
           lat: lodging.latitude
           lng: lodging.longitude
-          title: lodging.address
-          infoWindow: content: "<p><a href='/lodgings/#{lodging.id}'>#{lodging.address}</a></p>")
-    set_safe_bounds element
+          title: lodging.address)
+    set_safe_bounds document.querySelector('#lodgings-list')
 
   set_safe_bounds = (element) ->
     l = element.dataset.bounds
