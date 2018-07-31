@@ -8,12 +8,12 @@
       </div>
 
       <div class="row mb-2">
-        <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), l: params[:l] } %>
+        <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), bounds: params[:bounds] } %>
         <%= render lodgings %>
       </div>
 
       <nav class="pagination">
-        <%= paginate lodgings %>
+        <%= paginate lodgings, remote: true %>
       </nav>
     </div>
 

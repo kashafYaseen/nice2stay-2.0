@@ -28,13 +28,15 @@
     set_safe_bounds element
 
   set_safe_bounds = (element) ->
-    l = element.dataset.l
+    l = element.dataset.bounds
     if l
       latlngs = l.split(',')
       southWest = new (google.maps.LatLng)(latlngs[0], latlngs[1])
       northEast = new (google.maps.LatLng)(latlngs[2], latlngs[3])
       bounds = new (google.maps.LatLngBounds)(southWest, northEast)
+      zoom = map.getZoom()
       map.fitBounds bounds, 0
+      map.setZoom zoom
     else
       map.fitZoom()
 
