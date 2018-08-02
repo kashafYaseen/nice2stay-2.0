@@ -16,10 +16,26 @@ class ManageCart
     reservations
   end
 
+  def checkout(signed_in)
+    errors = {}
+    reservations.each do |reservation|
+      if reservation.update(user: user, booking_status: :prebooking)
+        remove_cookie(reservation.id) unless signed_in
+      else
+        errors[reservation.lodging_name] = reservation.errors
+      end
+    end
+    errors
+  end
+
   private
     def set_reservations
       return @reservations = user.reservations_in_cart if user.present?
       @reservations = Reservation.where(id: cookies[:reservations].split(',')) if cookies[:reservations].present?
+    end
+
+    def remove_cookie(id)
+      cookies[:reservations] = (cookies[:reservations].split(',') - [id.to_s]).join(',')
     end
 
     def update_cookies

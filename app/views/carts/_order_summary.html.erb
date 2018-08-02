@@ -1,0 +1,24 @@
+<div class="col-xl-3 col-lg-4 mt-5">
+  <aside class="sidebar">
+    <div class="padding-top-2x hidden-lg-up"></div>
+    <section class="widget widget-order-summary bg-secondary border-0 p-4">
+      <h3 class="widget-title">Order Summary</h3>
+      <table class="table text-sm mb-0">
+        <tr>
+          <td>Cart Subtotal:</td>
+          <td class="text-medium"><%= cart_sub_total(reservations) %></td>
+        </tr>
+
+        <tr>
+          <td>Estimated tax:</td>
+          <td class="text-medium">$0.0</td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td class="text-lg text-medium">$<%= cart_sub_total(reservations) %></td>
+        </tr>
+      </table>
+    </section>
+  </aside>
+</div>

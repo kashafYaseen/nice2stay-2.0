@@ -1,6 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!, only: [:update]
-  before_action :empty_cart, only: [:remove, :destroy]
+  before_action :empty_cart, only: [:remove, :destroy, :update, :edit]
 
   def show
   end
@@ -10,16 +9,19 @@ class CartsController < ApplicationController
     flash.now[:notice] = 'Reservation was removed successfully.'
   end
 
+  def edit
+    @user = current_user || User.without_login.new
+  end
+
   def update
-    @errors = {}
-    @reservations.each do |reservation|
-      unless reservation.update(user: current_user, booking_status: :prebooking)
-        @errors[reservation.id] = reservation.errors
-      end
+    unless current_user.present?
+      return render :edit unless create_user
     end
 
-    if @errors.present?
-      redirect_to carts_en_path, alert: @errors
+    errors = ManageCart.new(reservations: @reservations, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
+
+    if errors.present?
+      redirect_to carts_en_path, alert: errors
     else
       redirect_to carts_en_path, notice: 'Reservations was created successfully.'
     end
@@ -34,5 +36,20 @@ class CartsController < ApplicationController
   private
     def empty_cart
       return redirect_to carts_en_path unless @reservations.present?
+    end
+
+    def create_user
+      if params[:create_account].present?
+        @user = User.with_login.new(user_params)
+      else
+        @user = User.without_login.find_or_initialize_by(email: user_params[:email])
+        @user.attributes = user_params
+        @user.password = @user.password_confirmation = Devise.friendly_token[0, 20]
+      end
+      return true if @user.save
+    end
+
+    def user_params
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     end
 end

@@ -8,4 +8,9 @@ module ReservationsHelper
     return "$#{reservations.sum(:total_price)}" if reservations.present?
     "$0"
   end
+
+  def show_password_fields?(user)
+    return true if user.with_login?
+    false
+  end
 end
