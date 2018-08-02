@@ -11,6 +11,11 @@ class User < ApplicationRecord
 
   delegate :in_cart, to: :reservations, allow_nil: true, prefix: true
 
+  enum creation_status: {
+    with_login: 0,
+    without_login: 1,
+  }
+
   def full_name
     "#{first_name} #{last_name}".titleize
   end
