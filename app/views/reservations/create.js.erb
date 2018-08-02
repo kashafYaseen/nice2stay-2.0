@@ -6,6 +6,9 @@
   $('.cart-items-count').html("<%= cart_items_count(@reservations) %>");
   $('.reservation-form-<%= @reservation.lodging_child_id %>').html("<%= j render 'reservations/form', lodging_child: @reservation.lodging_child, lodging: @reservation.lodging %>");
   $('.cart-subtotal').html("<%= cart_sub_total(@reservations) %>");
+  $('#cart').addClass('current');
+  $('.toolbar-dropdown').addClass('open');
+  $('.toolbar-cart').addClass('active');
   $("input[type='number']").InputSpinner();
   initDatePicker();
 <% end %>
