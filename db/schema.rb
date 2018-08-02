@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_075533) do
+ActiveRecord::Schema.define(version: 2018_08_02_111548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_075533) do
     t.integer "request_status", default: 0
     t.bigint "lodging_child_id"
     t.integer "crm_booking_id"
+    t.boolean "in_cart", default: false
     t.index ["lodging_child_id"], name: "index_reservations_on_lodging_child_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

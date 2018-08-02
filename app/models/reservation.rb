@@ -20,6 +20,8 @@ class Reservation < ApplicationRecord
   delegate :email, to: :user, prefix: true
   delegate :id, to: :lodging_child, prefix: true
 
+  scope :in_cart, -> { where(in_cart: true) }
+
   attr_accessor :skip_data_posting
 
   enum booking_status: {
@@ -34,7 +36,6 @@ class Reservation < ApplicationRecord
     option: 8 ,
     request_price: 9,
     canceled: 10,
-    in_cart: 11,
   }
 
   def can_review? user

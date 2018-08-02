@@ -36,13 +36,12 @@
           <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner', id: "reservation_infants_#{lodging_child.id}" %>
           <br>
 
-          <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: "radio-1-#{lodging_child.id}" %>
-          <label>Booking</label>
+          <% [:prebooking, :option].each do |status| %>
+            <%= f.radio_button :booking_status, status %>
+            <label><%= status %></label><br>
+          <% end %>
 
           <br>
-
-          <%= f.radio_button :infants, value: f.object.infants, class: 'custom-control-input', id: "radio-2-#{lodging_child.id}" %>
-           <label>Option</label>
           <%= f.hidden_field :lodging_child_id, value: lodging_child.id %>
           <%= hidden_field_tag "calculate_bill_#{lodging_child.id}", true %>
           <br>
