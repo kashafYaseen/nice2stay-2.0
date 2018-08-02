@@ -13,4 +13,8 @@ module ReservationsHelper
     return true if user.with_login?
     false
   end
+
+  def render_reservation_dates(reservation)
+    "#{reservation.check_in} - #{reservation.check_out}"
+  end
 end

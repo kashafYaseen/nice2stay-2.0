@@ -13,6 +13,9 @@
             </h4>
             <span><em>Price:</em> $<%= reservation.total_price %></span>
             <span><em>Nights:</em><%= reservation.total_nights %></span>
+            <span><em>From:</em> <%= reservation.check_in %></span>
+            <span><em>To:</em> <%= reservation.check_out %></span>
+            <span><em>Guests:</em> <%= reservation.adults + reservation.children %></span>
           </div>
         </div>
       </td>

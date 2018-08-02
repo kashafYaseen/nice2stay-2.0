@@ -13,12 +13,13 @@
     </div>
   </td>
 
-  <td class="text-center">
-    <div class="count-input"><%= reservation.total_nights %></div>
-  </td>
-
+  <td class="text-center text-lg text-medium"><%= reservation.total_nights %></td>
+  <td class="text-center text-lg text-medium"><%= render_reservation_dates(reservation) %></td>
+  <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
+  <td class="text-center text-lg text-medium"><%= reservation.children %></td>
   <td class="text-center text-lg text-medium">$<%= reservation.rent %></td>
   <td class="text-center text-lg text-medium">$<%= reservation.discount %></td>
+
   <td class="text-center">
     <%= link_to remove_carts_en_path(reservation_id: reservation), class: 'remove-from-cart', remote: true do %>
       <i class="material-icons">close</i>
