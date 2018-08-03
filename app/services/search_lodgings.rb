@@ -64,7 +64,7 @@ class SearchLodgings
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       {
-        all: (check_in.to_date..check_out.to_date).map(&:to_s)
+        all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)
       }
     end
 
