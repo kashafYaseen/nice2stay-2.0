@@ -19,11 +19,9 @@
 
       <!-- Product Info-->
       <div class="col-md-6 mb-30">
-        <% @lodging.lodging_children.each do |lodging_child| %>
-          <div class="reservation-form-<%= lodging_child.id %>">
-            <%= render 'reservations/form', lodging_child: lodging_child, lodging: @lodging %>
-          </div>
-        <% end %>
+        <div class="reservation-form-<%= lodging.id %>">
+          <%= render 'reservations/form', lodging: @lodging %>
+        </div>
       </div>
     </div>
   </div>

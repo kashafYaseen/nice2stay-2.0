@@ -1,7 +1,7 @@
 <% if @reservation.validate %>
-  $('.btn-booking-<%= @reservation.lodging_child.id %>').removeClass('disabled');
+  $('.btn-booking-<%= @reservation.lodging_id %>').removeClass('disabled');
 <% else %>
-  $('.btn-booking-<%= @reservation.lodging_child.id %>').addClass('disabled');
+  $('.btn-booking-<%= @reservation.lodging_id %>').addClass('disabled');
 <% end %>
 
-$('.reservation-form-errors-<%= @reservation.lodging_child.id %>').html("<%= j render 'reservations/errors', resource: @reservation %>");
+$('.reservation-form-errors-<%= @reservation.lodging_id %>').html("<%= j render 'reservations/errors', resource: @reservation %>");

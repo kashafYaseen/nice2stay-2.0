@@ -5,35 +5,34 @@
        data-validate-url="<%= validate_reservations_path %>"></div>
 
   <div class="card-body">
-    <h2 class="mb-3"><%= lodging_child.title %></h2>
+    <h2 class="mb-3"><%= lodging.title %></h2>
     <p class="text-sm text-muted"><%= lodging.subtitle %></p>
 
-    <div class="reservation-form-errors-<%= lodging_child.id %>">
-      <%= render 'shared/errors', resource: lodging_child.reservations.build %>
+    <div class="reservation-form-errors-<%= lodging.id %>">
+      <%= render 'shared/errors', resource: lodging.reservations.build %>
     </div>
 
-    <div id="lodging-url-<%= lodging_child.id %>"></div>
+    <div id="lodging-url-<%= lodging.id %>"></div>
 
-    <%= form_for lodging_child.reservations.build, html: { id: "new-reservation-#{lodging_child.id}" }, remote: true do |f| %>
+    <%= form_for lodging.reservations.build, remote: true do |f| %>
       <div class="row">
-        <div class="col-sm" id="lodging-url-<%= lodging_child.id %>"
-             data-child-id="<%= lodging_child.id %>"
-             data-disabled-dates="<%= lodging_child.not_available_on %>"
-             data-flag-id="#calculate_bill_<%= lodging_child.id %>">
+        <div class="col-sm" id="lodging-url-<%= lodging.id %>"
+             data-disabled-dates="<%= lodging.not_available_on %>"
+             data-flag-id="#calculate_bill_<%= lodging.id %>">
           <div class='reservation-datepicker'></div>
         </div>
 
         <div class="col-sm">
-          <p id="lbl-error-<%= lodging_child.id %>"></p>
+          <p id="lbl-error-<%= lodging.id %>"></p>
 
           <label>Adults</label>
-          <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, max: lodging_child.maximum_guests(:adults), class: 'input-spinner', id: "reservation_adults_#{lodging_child.id}" %>
+          <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, max: lodging.maximum_guests(:adults), class: 'input-spinner' %>
 
           <label>Children</label>
-          <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner', id: "reservation_children_#{lodging_child.id}" %>
+          <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner' %>
 
           <label>Infants</label>
-          <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner', id: "reservation_infants_#{lodging_child.id}" %>
+          <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner' %>
           <br>
 
           <% [:prebooking, :option].each do |status| %>
@@ -42,14 +41,14 @@
           <% end %>
 
           <br>
-          <%= f.hidden_field :lodging_child_id, value: lodging_child.id %>
-          <%= hidden_field_tag "calculate_bill_#{lodging_child.id}", true %>
+          <%= f.hidden_field :lodging_id, value: lodging.id %>
+          <%= hidden_field_tag "calculate_bill_#{lodging.id}", true %>
           <br>
           <br>
-          <h5 class="text-normal" id="bill-<%= lodging_child.id %>"></h5>
+          <h5 class="text-normal" id="bill-<%= lodging.id %>"></h5>
         </div>
       </div>
-      <%= f.submit 'Add', class: "btn btn-primary col-md-12 btn-booking-#{ lodging_child.id} disabled" %>
+      <%= f.submit 'Add', class: "btn btn-primary col-md-12 btn-booking-#{ lodging.id} disabled" %>
     <% end %>
   </div>
 
