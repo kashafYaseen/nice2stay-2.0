@@ -51,7 +51,7 @@
       </div>
       <%= f.submit 'Add', class: "btn btn-primary col-md-12 btn-booking-#{ lodging_child.id} disabled" %>
     <% end %>
-  </div>
 
-  <a class="btn btn-outline-secondary btn-sm text-danger" href="#"><i class="material-icons favorite_border"></i>&nbsp;Save To Wishlist</a>
+    <%= render 'wishlists/form', lodging: lodging %>
+  </div>
 </div>

@@ -1,0 +1,6 @@
+$('#flash-messages').html("<%= j render 'shared/notices' %>");
+$('#navbar-wishlist-body').html("<%= j render 'navbar_wishlist_body', wishlists: @wishlists %>");
+$('.wishlist-items-count').html("<%= wishlist_items_count(@wishlists) %>");
+$('#wishlist').addClass('current');
+$('.toolbar-dropdown').addClass('open');
+$('.toolbar-wishlist').addClass('active');

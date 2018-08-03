@@ -156,6 +156,9 @@
             callback(e);
             if ($(this).parents('form').attr('id') != undefined) {
                 var child_id = $(this).parents('form').attr('id').split('-')[2]
+                $('#wishlist_adults').val($(`#reservation_adults_${child_id}`).val());
+                $('#wishlist_children').val($(`#reservation_children_${child_id}`).val());
+
                 if($(`#calculate_bill_${child_id}`).val() == 'true') {
                     var values = [$("input[name='reservation[check_in]']").val(),
                       $("input[name='reservation[check_out]']").val(),
