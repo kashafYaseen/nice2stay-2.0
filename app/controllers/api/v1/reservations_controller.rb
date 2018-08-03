@@ -30,7 +30,7 @@ class Api::V1::ReservationsController < Api::V1::ApiController
 
     def reservation_params
       params.require(:reservation).permit(
-        :lodging_child_id,
+        :lodging_id,
         :user_id,
         :check_in,
         :check_out,
