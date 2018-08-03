@@ -18,7 +18,7 @@ class SaveReservationDetails
   private
     def save_reservation
       reservation.user = user
-      reservation.lodging_child = child
+      reservation.lodging = lodging
       reservation.attributes = reservation_params
       reservation.save(validate: false)
     end
@@ -29,13 +29,13 @@ class SaveReservationDetails
       User.where(email: user_params[:email]).first_or_create(user_params.merge(password: password, password_confirmation: password))
     end
 
-    def child
-      Lodging.find_by(slug: params[:reservation][:lodging_slug]).try(:child)
+    def lodging
+      Lodging.find_by(slug: params[:reservation][:lodging_slug])
     end
 
     def reservation_params
       params.require(:reservation).permit(
-        :lodging_child_id,
+        :lodging_id,
         :user_id,
         :check_in,
         :check_out,

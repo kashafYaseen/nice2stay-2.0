@@ -33,9 +33,7 @@ class UpdateLodgingPrices
     end
 
     def clear_prices
-      lodging.lodging_children.each do |child|
-        Price.of_child(child.id).delete_all
-      end
+      Price.of_child(lodging.id).delete_all
     end
 
     def reindex_prices
