@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_111548) do
+ActiveRecord::Schema.define(version: 2018_08_03_125240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 2018_08_02_111548) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
-    t.bigint "lodging_child_id"
-    t.index ["lodging_child_id"], name: "index_availabilities_on_lodging_child_id"
+    t.bigint "lodging_id"
+    t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -89,14 +89,6 @@ ActiveRecord::Schema.define(version: 2018_08_02_111548) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
-  end
-
-  create_table "lodging_children", force: :cascade do |t|
-    t.bigint "lodging_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "title"
-    t.index ["lodging_id"], name: "index_lodging_children_on_lodging_id"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -241,10 +233,10 @@ ActiveRecord::Schema.define(version: 2018_08_02_111548) do
     t.float "cleaning_cost", default: 0.0
     t.integer "booking_status", default: 0
     t.integer "request_status", default: 0
-    t.bigint "lodging_child_id"
     t.integer "crm_booking_id"
     t.boolean "in_cart", default: false
-    t.index ["lodging_child_id"], name: "index_reservations_on_lodging_child_id"
+    t.bigint "lodging_id"
+    t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
@@ -317,18 +309,23 @@ ActiveRecord::Schema.define(version: 2018_08_02_111548) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "check_in"
+    t.date "check_out"
+    t.integer "adults"
+    t.integer "children"
+    t.string "name"
+    t.text "notes"
     t.index ["lodging_id"], name: "index_wishlists_on_lodging_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
-  add_foreign_key "availabilities", "lodging_children", on_delete: :cascade
+  add_foreign_key "availabilities", "lodgings", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
-  add_foreign_key "lodging_children", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
-  add_foreign_key "reservations", "lodging_children", on_delete: :cascade
+  add_foreign_key "reservations", "lodgings", on_delete: :cascade
   add_foreign_key "reservations", "users", on_delete: :cascade
   add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade

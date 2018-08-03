@@ -1,10 +1,9 @@
 class Lodging < ApplicationRecord
   belongs_to :owner
   belongs_to :region
-  has_many :lodging_children
-  has_many :reservations, through: :lodging_children
-  has_many :availabilities, through: :lodging_children
-  has_many :prices, through: :lodging_children
+  has_many :reservations
+  has_many :availabilities
+  has_many :prices
   has_many :rules
   has_many :discounts
   has_many :reviews
@@ -15,7 +14,6 @@ class Lodging < ApplicationRecord
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
-  after_create :create_child
 
   searchkick locations: [:location], word_start: [:name]
 
@@ -38,6 +36,25 @@ class Lodging < ApplicationRecord
     apartment: 2,
     bnb: 3,
   }
+
+  after_create :add_availabilities
+  after_create :reindex_prices
+
+  def minimum_price
+    prices.minimum(:amount)
+  end
+
+  def maximum_guests(type)
+    prices.maximum(type).max
+  end
+
+  def minimum_guests(type)
+    prices.minimum(type).min
+  end
+
+  def not_available_on
+    (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+  end
 
   def address
     [street, city, zip, state].compact.join(", ")
@@ -63,7 +80,7 @@ class Lodging < ApplicationRecord
   end
 
   def price_details(values)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_child_id: values[5] })
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4] })
   end
 
   def discount_details(values)
@@ -72,7 +89,7 @@ class Lodging < ApplicationRecord
 
   def cumulative_price(params)
     return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
-    total_price = price_list(params.merge(lodging_child_id: child.id)).sum
+    total_price = price_list(params).sum
     total_discount = discount(params)
     total_price -= total_price * (total_discount/100) if total_discount.present?
     "$#{total_price} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
@@ -97,10 +114,6 @@ class Lodging < ApplicationRecord
     reviews.where(stars: stars).count
   end
 
-  def child
-    lodging_children.first_or_create(title: "#{name} #1")
-  end
-
   def total_prices
     prices.count
   end
@@ -109,15 +122,19 @@ class Lodging < ApplicationRecord
     rules.count
   end
 
-  def total_children
-    lodging_children.count
-  end
-
   def image
     images.first
   end
 
   private
+    def add_availabilities
+      Availability.bulk_insert do |availability|
+        (Date.today..365.days.from_now).map(&:to_s).each do |date|
+          availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
+        end
+      end
+    end
+
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
       price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).sort.uniq(&:available_on).pluck(:amount)
@@ -131,8 +148,7 @@ class Lodging < ApplicationRecord
       discount.discount_percentage if discount.present?
     end
 
-    def create_child
-      return if lodging_children.present?
-      lodging_children.create(title: "#{name} #1")
+    def reindex_prices
+      prices.reindex
     end
 end
