@@ -317,6 +317,12 @@ ActiveRecord::Schema.define(version: 2018_08_02_111548) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "check_in"
+    t.date "check_out"
+    t.integer "adults"
+    t.integer "children"
+    t.string "name"
+    t.text "notes"
     t.index ["lodging_id"], name: "index_wishlists_on_lodging_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end

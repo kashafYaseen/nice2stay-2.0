@@ -57,10 +57,12 @@
       },
       date_one_selected(val) {
         this.check_in = val
+        $('#wishlist_check_in').val(val);
         calculate_bill(this.check_in, this.check_out, this.child_id, this.flag_id);
       },
       date_two_selected(val) {
         this.check_out = val
+        $('#wishlist_check_out').val(val);
         calculate_bill(this.check_in, this.check_out, this.child_id, this.flag_id);
       },
       get_yesterday() {

@@ -38,6 +38,9 @@ Rails.application.routes.draw do
     resource :carts do
       get :remove, on: :member
     end
+    resource :wishlists do
+      get :remove, on: :member
+    end
   end
 
   root to: 'pages#home'

@@ -182,6 +182,13 @@
         <i class="material-icons person"></i>
       </a>
 
+      <a class="toolbar-toggle toolbar-wishlist" href="#wishlist">
+        <i>
+          <span class="material-icons favorite_border"></span>
+          <span class="count wishlist-items-count"><%= wishlist_items_count(@wishlists) %></span>
+        </i>
+      </a>
+
       <a class="toolbar-toggle toolbar-cart" href="#cart">
         <i>
           <span class="material-icons shopping_basket"></span>
@@ -427,6 +434,8 @@
       <%= render 'shared/account' %>
       <!-- Shopping Cart Section-->
       <%= render 'shared/cart', reservations: @reservations %>
+      <!-- Wishlist Section-->
+      <%= render 'shared/wishlist', wishlists: @wishlists %>
     </div>
   </div>
 </header>
