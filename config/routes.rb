@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     end
     resource :wishlists do
       get :remove, on: :member
+      post :checkout
     end
   end
 
