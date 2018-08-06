@@ -1,0 +1,44 @@
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-1">
+  <!-- Shopping Cart-->
+  <% if @wishlists.present? %>
+    <div class="table-responsive shopping-cart">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Lodging</th>
+            <th class="text-center">Check in</th>
+            <th class="text-center">Check out</th>
+            <th class="text-center">Adults</th>
+            <th class="text-center">Children</th>
+            <th class="text-center">
+              <%= link_to 'Clear Wishlist', wishlists_en_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody id="wishlist-body">
+          <%= render partial: 'wishlist', collection: @wishlists %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="shopping-cart-footer">
+      <div class="column">
+        <%= link_to lodgings_en_path, class: 'btn btn-outline-secondary' do %>
+          <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="shopping-cart-footer">
+      <div class="text-center">
+        <p>CART IS EMPTY.</p>
+
+        <%= link_to lodgings_en_path, class: 'btn btn-outline-secondary' do %>
+          <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
