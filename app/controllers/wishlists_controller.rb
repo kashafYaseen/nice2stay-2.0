@@ -5,7 +5,7 @@ class WishlistsController < ApplicationController
   end
 
   def create
-    @wishlist = Wishlist.create!(wishlist_params.merge(user: current_user))
+    @wishlist = Wishlist.create(wishlist_params.merge(user: current_user))
     save_wishlist_items unless current_user.present?
     flash.now[:notice] = "The wishlist was saved successfully."
   end
