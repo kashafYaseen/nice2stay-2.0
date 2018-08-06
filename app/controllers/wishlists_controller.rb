@@ -10,11 +10,6 @@ class WishlistsController < ApplicationController
     flash.now[:notice] = "The wishlist was saved successfully."
   end
 
-  def remove
-    @wishlists = ManageWishlists.new(wishlists: @wishlists, user: current_user, cookies: cookies).delete(params[:wishlist_id])
-    flash.now[:notice] = 'Wishlist was removed successfully.'
-  end
-
   def edit
     @user = current_user || User.without_login.new
   end
@@ -28,6 +23,11 @@ class WishlistsController < ApplicationController
     @wishlists.delete_all
     cookies.delete(:wishlists) if cookies[:wishlists].present?
     redirect_to wishlists_en_path, notice: 'Wishlists was cleared successfully.'
+  end
+
+  def remove
+    @wishlists = ManageWishlists.new(wishlists: @wishlists, user: current_user, cookies: cookies).delete(params[:wishlist_id])
+    flash.now[:notice] = 'Wishlist was removed successfully.'
   end
 
   private
