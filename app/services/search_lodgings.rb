@@ -27,7 +27,7 @@ class SearchLodgings
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
       conditions[:location]     = frame_coordinates if params[:bounds].present?
-      conditions[:adults]       = params[:adults]  if params[:adults].present?
+      conditions[:adults]       = { gte: params[:adults] }  if params[:adults].present?
       conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
       conditions[:country]      = params[:region].split(', ').last if params[:region].present?
       conditions[:region]       = params[:region].split(', ').first if params[:region].present?
@@ -64,7 +64,7 @@ class SearchLodgings
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       {
-        all: (check_in.to_date..check_out.to_date).map(&:to_s)
+        all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)
       }
     end
 
@@ -79,8 +79,8 @@ class SearchLodgings
 
     def adults_plus_children
       [
-        { children: params[:children].to_i  },
-        { adults_and_children: params[:adults].to_i + params[:children].to_i }
+        { children: { gte: params[:children].to_i } },
+        { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } }
       ]
     end
 end

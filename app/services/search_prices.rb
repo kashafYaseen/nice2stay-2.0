@@ -58,7 +58,7 @@ class SearchPrices
     def availability_condition
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
-      (check_in..check_out.to_date.prev_day.strftime('%Y-%m-%d')).map(&:to_s)
+      (Date.parse(check_in)..Date.parse(check_out).prev_day).map(&:to_s)
     end
 
     def dates_without_price(result, query_dates)
