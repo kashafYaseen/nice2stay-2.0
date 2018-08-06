@@ -155,14 +155,14 @@
             e.preventDefault();
             callback(e);
             if ($(this).parents('form').attr('id') != undefined) {
-                var child_id = $(this).parents('form').attr('id').split('-')[2]
-                if($(`#calculate_bill_${child_id}`).val() == 'true') {
+
+                if($('#calculate_bill').val() == 'true') {
                     var values = [$("input[name='reservation[check_in]']").val(),
                       $("input[name='reservation[check_out]']").val(),
-                      $(`#reservation_adults_${child_id}`).val(),
-                      $(`#reservation_children_${child_id}`).val(),
-                      $(`#reservation_infants_${child_id}`).val(),
-                      child_id
+                      $('#reservation_adults').val(),
+                      $('#reservation_children').val(),
+                      $('#reservation_infants').val(),
+                      $("#reservation_lodging_id").val()
                     ];
                     Lodging.update_bill(values);
                 }

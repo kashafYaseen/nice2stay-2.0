@@ -19,8 +19,8 @@
 
       <!-- Product Info-->
       <div class="col-md-6 mb-30">
-        <div class="reservation-form-<%= @lodging.id %>">
-          <%= render 'reservations/form', lodging: @lodging %>
+        <div class="reservation-form">
+          <%= render 'reservations/form', lodging: @lodging, reservation: @reservation %>
         </div>
       </div>
     </div>

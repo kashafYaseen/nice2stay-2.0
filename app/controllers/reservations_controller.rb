@@ -12,7 +12,7 @@ class ReservationsController < ApplicationController
 
   def validate
     values = params[:values].split(',')
-    @reservation = Reservation.new(check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4])
+    @reservation = Reservation.new(check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: values[5])
   end
 
   private

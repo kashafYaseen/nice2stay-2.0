@@ -17,13 +17,12 @@
       Rails.fire($('.lodgings-filters').get(0), 'submit')
 
   Lodging.update_bill = (values) ->
-    child_id = values[5]
     if values.some(check_values)
-      $("#lbl-error-#{child_id}").text('Please select dates & guest details')
-      $("#bill-#{child_id}").text('')
+      $("#lbl-error").text('Please select dates & guest details')
+      $("#bill").text('')
     else
       url = $('.persisted-data').data('url')
-      $("#lbl-error-#{child_id}").text('')
+      $("#lbl-error").text('')
       $.ajax
         url: "#{url}?values=#{values}"
         type: 'GET'
@@ -43,9 +42,9 @@
 
           if total > 0
             result += "<p>total: #{total}</p>"
-            $("#bill-#{child_id}").html(result)
+            $("#bill").html(result)
           else
-            $("#bill-#{child_id}").text('Lodging not available.')
+            $("#bill").text('Lodging not available.')
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->

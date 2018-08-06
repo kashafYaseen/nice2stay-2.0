@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary btn-sm" :id="id">Dates {{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary btn-sm" id="datepicker-trigger">Dates {{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
-        :trigger-element-id="this.id"
+        :trigger-element-id="'datepicker-trigger'"
         :date-one="check_in"
         :date-two="check_out"
         @date-one-selected="date_one_selected"
@@ -31,17 +31,13 @@
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
-        id: "reservation-trigger-range-",
         disabled_dates: [],
         current_date: today,
-        child_id: '',
-        flag_id: ''
+        lodging_id: '',
       }
     },
     mounted() {
-      this.child_id = this.$el.parentElement.dataset.childId
-      this.flag_id = this.$el.parentElement.dataset.flagId
-      this.id = `reservation-trigger-range-${this.child_id}`
+      this.lodging_id = this.$el.parentElement.dataset.lodgingId
       this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
     },
     methods: {
@@ -57,11 +53,11 @@
       },
       date_one_selected(val) {
         this.check_in = val
-        calculate_bill(this.check_in, this.check_out, this.child_id, this.flag_id);
+        calculate_bill(this.check_in, this.check_out, this.lodging_id);
       },
       date_two_selected(val) {
         this.check_out = val
-        calculate_bill(this.check_in, this.check_out, this.child_id, this.flag_id);
+        calculate_bill(this.check_in, this.check_out, this.lodging_id);
       },
       get_yesterday() {
         var d = new Date();
@@ -71,14 +67,14 @@
     }
   }
 
-  function calculate_bill(check_in, check_out, child_id, flag_id) {
-    if($(flag_id).val() == 'true') {
+  function calculate_bill(check_in, check_out, lodging_id) {
+    if($("#calculate_bill").val() == 'true') {
       var values = [check_in,
         check_out,
-        $(`#reservation_adults_${child_id}`).val(),
-        $(`#reservation_children_${child_id}`).val(),
-        $(`#reservation_infants_${child_id}`).val(),
-        child_id
+        $('#reservation_adults').val(),
+        $('#reservation_children').val(),
+        $('#reservation_infants').val(),
+        lodging_id
       ];
 
       Lodging.update_bill(values);
