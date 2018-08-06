@@ -18,7 +18,7 @@ class ManageWishlists
 
   private
     def set_wishlists
-      return @wishlists = user.wishlists.includes(:lodging).reload if user.present?
+      return @wishlists = user.wishlists_active.includes(:lodging).reload if user.present?
       @wishlists = Wishlist.where(id: cookies[:wishlists].split(',')).includes(:lodging) if cookies[:wishlists].present?
     end
 

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     @wishlists = Wishlist.where(id: cookies[:wishlists].split(',')).includes(:lodging) if cookies[:wishlists].present?
     if current_user.present?
       @wishlists.update_all(user_id: current_user.id) if cookies[:wishlists].present?
-      @wishlists = current_user.wishlists.includes(:lodging)
+      @wishlists = current_user.wishlists_active.includes(:lodging)
       cookies.delete(:wishlists)
     end
   end
