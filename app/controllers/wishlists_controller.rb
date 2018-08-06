@@ -1,5 +1,5 @@
 class WishlistsController < ApplicationController
-  before_action :empty_wishlist, only: [:remove, :destroy, :update]
+  before_action :empty_wishlist, only: [:remove, :destroy, :update, :edit]
 
   def show
   end
@@ -15,7 +15,13 @@ class WishlistsController < ApplicationController
     flash.now[:notice] = 'Wishlist was removed successfully.'
   end
 
+  def edit
+    @user = current_user || User.without_login.new
+  end
+
   def update
+    Wishlist.update(params[:wishlist].keys, params[:wishlist].values)
+    redirect_to edit_wishlists_en_path, notice: 'Wishlists were updated successfully.'
   end
 
   def destroy
