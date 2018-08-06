@@ -3,7 +3,7 @@ class Lodging < ApplicationRecord
   belongs_to :region
   has_many :reservations
   has_many :availabilities
-  has_many :prices
+  has_many :prices, through: :availabilities
   has_many :rules
   has_many :discounts
   has_many :reviews
@@ -39,18 +39,6 @@ class Lodging < ApplicationRecord
 
   after_create :add_availabilities
   after_create :reindex_prices
-
-  def minimum_price
-    prices.minimum(:amount)
-  end
-
-  def maximum_guests(type)
-    prices.maximum(type).max
-  end
-
-  def minimum_guests(type)
-    prices.minimum(type).min
-  end
 
   def not_available_on
     (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)

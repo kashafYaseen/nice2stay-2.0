@@ -26,7 +26,7 @@
           <p id="lbl-error-<%= lodging.id %>"></p>
 
           <label>Adults</label>
-          <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, max: lodging.maximum_guests(:adults), class: 'input-spinner' %>
+          <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner' %>
 
           <label>Children</label>
           <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner' %>
