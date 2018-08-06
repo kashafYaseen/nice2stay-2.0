@@ -8,4 +8,11 @@ class Wishlist < ApplicationRecord
    active: 0,
    checkout: 1,
   }
+
+  after_commit :sync_with_crm
+
+  private
+    def sync_with_crm
+      SendWishlistDetailsJob.perform_later(self.id) if checkout?
+    end
 end
