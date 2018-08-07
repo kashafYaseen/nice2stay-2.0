@@ -10,6 +10,9 @@ class Lodging < ApplicationRecord
   has_many :specifications
   has_many :wishlists
 
+  belongs_to :parent, class_name: 'Lodging', optional: true
+  has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
+
   attr_accessor :check_in_day
 
   geocoded_by :address
