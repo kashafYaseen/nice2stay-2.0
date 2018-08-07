@@ -19,7 +19,8 @@ class SaveLodgingDetails
   private
     def save_lodging
       lodging.owner = owner
-      lodging.region = region
+      lodging.region = region(params[:lodging][:country_name], params[:lodging][:region_name])
+      lodging.parent = parent
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
       UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
@@ -32,8 +33,17 @@ class SaveLodgingDetails
       Owner.where(email: owner_params[:email]).first_or_create(owner_params.merge(password: password, password_confirmation: password))
     end
 
-    def region
-      Region.find_or_create_region(params[:lodging][:country_name], params[:lodging][:region_name])
+    def region(country_name, region_name)
+      Region.find_or_create_region(country_name, region_name)
+    end
+
+    def parent
+      return unless params[:parent].present?
+      Lodging.find_or_create_by(slug: parent_params[:slug]) do |parent|
+        lodging.owner = owner
+        lodging.region = region(params[:parent][:country_name], params[:parent][:region_name])
+        lodging.attributes = parent_params.merge(lodging_type: lodging_type(params[:parent][:lodging_type]), crm_synced_at: DateTime.current)
+      end
     end
 
     def lodging_type(type)
@@ -104,6 +114,24 @@ class SaveLodgingDetails
         :first_name,
         :last_name,
         :email
+      )
+    end
+
+    def parent_params
+      params.require(:parent).permit(
+        :slug,
+        :name,
+        :title,
+        :status,
+        :latitude,
+        :longitude,
+        :price,
+        :check_in_day,
+        :street,
+        :adults,
+        :children,
+        :infants,
+        { images: [] },
       )
     end
 end
