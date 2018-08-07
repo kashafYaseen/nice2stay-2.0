@@ -54,10 +54,12 @@
       date_one_selected(val) {
         this.check_in = val
         calculate_bill(this.check_in, this.check_out, this.lodging_id);
+        $('#wishlist_check_in').val(val);
       },
       date_two_selected(val) {
         this.check_out = val
         calculate_bill(this.check_in, this.check_out, this.lodging_id);
+        $('#wishlist_check_in').val(val);
       },
       get_yesterday() {
         var d = new Date();
