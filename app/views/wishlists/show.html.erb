@@ -29,11 +29,15 @@
           <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping
         <% end %>
       </div>
+
+      <div class="column">
+        <%= link_to 'Checkout', edit_wishlists_en_path, class: 'btn btn-success' %>
+      </div>
     </div>
   <% else %>
     <div class="shopping-cart-footer">
       <div class="text-center">
-        <p>CART IS EMPTY.</p>
+        <p>WISH LIST IS EMPTY.</p>
 
         <%= link_to lodgings_en_path, class: 'btn btn-outline-secondary' do %>
           <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping

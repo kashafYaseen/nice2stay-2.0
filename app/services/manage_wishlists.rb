@@ -16,9 +16,21 @@ class ManageWishlists
     wishlists
   end
 
+  def checkout(signed_in)
+    errors = {}
+    wishlists.each do |wishlist|
+      if wishlist.update(user: user, status: :checkout)
+        remove_cookie(wishlist.id) unless signed_in
+      else
+        errors[wishlist.name || wishlist.id] = wishlist.errors
+      end
+    end
+    errors
+  end
+
   private
     def set_wishlists
-      return @wishlists = user.wishlists.includes(:lodging).reload if user.present?
+      return @wishlists = user.wishlists_active.includes(:lodging).reload if user.present?
       @wishlists = Wishlist.where(id: cookies[:wishlists].split(',')).includes(:lodging) if cookies[:wishlists].present?
     end
 
