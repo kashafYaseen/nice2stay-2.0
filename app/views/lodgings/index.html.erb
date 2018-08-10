@@ -1,5 +1,5 @@
 <div class="row ml-1">
-  <div class="col-lg-8 col-sm-8 lodgings-list">
+  <div class="col-lg-8 col-sm-8 lodgings-list scrollable-content">
     <%= render "lodgings_list", lodgings: @lodgings, regions: @regions %>
   </div>
 
@@ -14,3 +14,5 @@
   $("input[type='number']").InputSpinner();
   initDatePicker();
 <% end %>
+
+<%= content_for :footer_class do 'd-none' end %>

@@ -1,7 +1,9 @@
 class WishlistsController < ApplicationController
   before_action :empty_wishlist, only: [:remove, :destroy, :update, :edit]
+  before_action :set_wishlist, only: [:edit, :update]
 
   def show
+    @user = current_user || User.without_login.new
   end
 
   def create
@@ -11,12 +13,14 @@ class WishlistsController < ApplicationController
   end
 
   def edit
-    @user = current_user || User.without_login.new
   end
 
   def update
-    Wishlist.update(params[:wishlist].keys, params[:wishlist].values)
-    redirect_to edit_wishlists_en_path, notice: 'Wishlists were updated successfully.'
+    if @wishlist.update(wishlist_params)
+      redirect_to wishlists_en_path, notice: 'Wishlist was updated successfully.'
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -32,7 +36,7 @@ class WishlistsController < ApplicationController
 
   def checkout
     unless current_user.present?
-      return render :edit unless create_user
+      return render :show unless create_user
     end
 
     errors = ManageWishlists.new(wishlists: @wishlists, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
@@ -50,11 +54,15 @@ class WishlistsController < ApplicationController
     end
 
     def wishlist_params
-      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children)
+      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children, :name)
     end
 
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    end
+
+    def set_wishlist
+      @wishlist = @wishlists.find(params[:wishlist_id])
     end
 
     def save_wishlist_items

@@ -884,6 +884,15 @@ GMaps.prototype.addMarker = function(options) {
 
   GMaps.fire('marker_added', marker, this);
 
+  marker.addListener('click', function() {
+    var el = $(`#lodging-${this.id}`);
+    el.focus();
+    $('.lodging-selected').removeClass('lodging-selected');
+    el.addClass('lodging-selected');
+    el.get(0).scrollIntoView({behavior: "instant", block: "center", inline: "nearest"});
+  });
+
+
   return marker;
 };
 

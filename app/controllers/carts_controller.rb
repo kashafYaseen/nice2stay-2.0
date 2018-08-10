@@ -1,7 +1,8 @@
 class CartsController < ApplicationController
-  before_action :empty_cart, only: [:remove, :destroy, :update, :edit]
+  before_action :empty_cart, only: [:remove, :destroy, :update]
 
   def show
+    @user = current_user || User.without_login.new
   end
 
   def remove
@@ -9,13 +10,9 @@ class CartsController < ApplicationController
     flash.now[:notice] = 'Reservation was removed successfully.'
   end
 
-  def edit
-    @user = current_user || User.without_login.new
-  end
-
   def update
     unless current_user.present?
-      return render :edit unless create_user
+      return render :show unless create_user
     end
 
     errors = ManageCart.new(reservations: @reservations, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
