@@ -122,8 +122,9 @@
   min-height: 400px;
 }
 
-.lodging-container.lodging-selected {
-  background-color: cornsilk;
-  box-shadow: -4px 3px 6px 1px rgba(2, 2, 2, 0.18);
-  border: 2px solid blanchedalmond;
+.lodging-container {
+  .lodging-selected {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 3px;
+  }
 }
