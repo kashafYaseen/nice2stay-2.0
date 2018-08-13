@@ -13,6 +13,7 @@
       Map.highlight_lodgings()
 
       map.addListener 'dragend', ->
+        $('#loader').show()
         bounds = map.getBounds()
         location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
         $('#bounds').val(location)
@@ -23,6 +24,7 @@
         if window.bounds_changed
           window.bounds_changed = false
         else
+          $('#loader').show();
           location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
           $('#bounds').val(location)
           window.bounds_changed = true

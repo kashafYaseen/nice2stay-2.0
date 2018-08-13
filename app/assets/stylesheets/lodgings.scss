@@ -128,3 +128,10 @@
     margin: 3px;
   }
 }
+
+#loader {
+  position: fixed;
+  top: 50%;
+  left: 40%;
+  z-index: 3000;
+}

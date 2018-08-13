@@ -1,4 +1,8 @@
 <div class="row ml-1">
+  <div id="loader">
+    <%= image_tag 'loader.gif', class: 'w-50' %>
+  </div>
+
   <div class="col-lg-8 col-sm-8 lodgings-list scrollable-content">
     <%= render "lodgings_list", lodgings: @lodgings, regions: @regions %>
   </div>
@@ -13,6 +17,7 @@
   Map.init();
   $("input[type='number']").InputSpinner();
   initDatePicker();
+  $('#loader').hide();
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>
