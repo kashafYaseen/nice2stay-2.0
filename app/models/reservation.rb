@@ -85,7 +85,7 @@ class Reservation < ApplicationRecord
           errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days.titleize
           errors.add(:base, "The stay should be in multiple of #{rule.days_multiplier}") unless nights % rule.days_multiplier == 0
         elsif rule.minimal_stay.present? && nights != 7 && nights < rule.minimal_stay.collect(&:to_i).max
-          errors.add(:base, "Minimaal is #{rule.minimal_stay.collect(&:to_i).min} nachten verblijf in deze periode") unless nights.to_s.in?(rule.minimal_stay)
+          errors.add(:base, "You can stay for following number of nights only: #{rule.minimal_stay.collect(&:to_i).join(', ')}") unless nights.to_s.in?(rule.minimal_stay)
         end
       end
     end
