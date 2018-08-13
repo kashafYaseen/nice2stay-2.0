@@ -43,6 +43,7 @@
         return formattedDates
       },
       onApplyMethod(e) {
+        $('#loader').show();
         Rails.fire($('.lodgings-filters').get(0), 'submit');
       },
       getYesterday() {

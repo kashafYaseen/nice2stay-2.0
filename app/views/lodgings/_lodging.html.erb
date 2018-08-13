@@ -1,10 +1,17 @@
 <div class="col-md-6 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
-  <p><%= link_to lodging.name, lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]) %></p>
-  <div><%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %></div>
-  <div><%= lodging.cumulative_price(params) %></div>
-  <% if image_url = lodging.images.try(:first) %>
-    <div style="width: 22%;"><%= image_tag image_url %></div>
-  <% end %>
+  <div class="card">
+    <%= render_image_tag lodging, class: "card-img-top" %>
 
-  <%= link_to 'Make a Reservation', lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: 'btn btn-primary' %>
+    <div class="card-body">
+      <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do %>
+        <h4 class="card-title"><%= lodging.name %></h4>
+        <p class="card-text">
+          <%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %><br>
+          <%= lodging.cumulative_price(params) %>
+        </p>
+      <% end %>
+
+      <%= link_to "Make a Reservation", lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
 </div>
