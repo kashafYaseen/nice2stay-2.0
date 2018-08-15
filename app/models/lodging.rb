@@ -32,7 +32,7 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, to: :availabilities, allow_nil: true, prefix: true
 
-  scope :all_parents, -> { where(parent_id: nil) }
+  scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
 
   translates :title, :subtitle, :description
 
