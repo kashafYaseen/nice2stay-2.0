@@ -32,6 +32,8 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, to: :availabilities, allow_nil: true, prefix: true
 
+  scope :all_parents, -> { where(parent_id: nil) }
+
   translates :title, :subtitle, :description
 
   enum lodging_type: {
