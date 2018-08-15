@@ -11,10 +11,8 @@
         :inline="true"
         :disabled-dates="disabled_dates"
         :min-date="this.current_date.toString()"
-        :months-to-show="1"
+        :months-to-show="2"
       ></airbnb-style-datepicker>
-      <input type="hidden" name="reservation[check_in]" :value="check_in">
-      <input type="hidden" name="reservation[check_out]" :value="check_out">
     </div>
   </div>
 </template>
@@ -53,13 +51,11 @@
       },
       date_one_selected(val) {
         this.check_in = val
-        calculate_bill(this.check_in, this.check_out, this.lodging_id);
-        $('#wishlist_check_in').val(val);
+        $('.check_in').val(val);
       },
       date_two_selected(val) {
         this.check_out = val
-        calculate_bill(this.check_in, this.check_out, this.lodging_id);
-        $('#wishlist_check_in').val(val);
+        $('.check_out').val(val);
       },
       get_yesterday() {
         var d = new Date();
@@ -68,18 +64,4 @@
       }
     }
   }
-
-  function calculate_bill(check_in, check_out, lodging_id) {
-    if($("#calculate_bill").val() == 'true') {
-      var values = [check_in,
-        check_out,
-        $('#reservation_adults').val(),
-        $('#reservation_children').val(),
-        $('#reservation_infants').val(),
-        lodging_id
-      ];
-
-      Lodging.update_bill(values);
-    }
-  };
 </script>

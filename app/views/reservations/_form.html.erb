@@ -8,18 +8,18 @@
     <h2 class="mb-3"><%= lodging.title %></h2>
     <p class="text-sm text-muted"><%= lodging.subtitle %></p>
 
-    <div class="reservation-form-errors">
+    <div class="reservation-form-errors-<%= lodging.id %>">
       <%= render 'reservations/errors', resource: reservation %>
     </div>
 
-    <%= form_for reservation, url: reservations_path, remote: true do |f| %>
-      <div class="row">
-        <div class="col-sm" data-lodging-id="<%= lodging.id %>"
-             data-disabled-dates="<%= lodging.not_available_on %>">
-          <div class='reservation-datepicker'></div>
-        </div>
+    <div class="row">
+      <div class="col-md-7" data-lodging-id="<%= lodging.id %>"
+           data-disabled-dates="<%= lodging.childs_not_available_on %>">
+        <div class='reservation-datepicker'></div>
+      </div>
 
-        <div class="col-sm">
+      <div class="col-md-5">
+        <%= form_for reservation, url: reservations_path, remote: true do |f| %>
           <p id="lbl-error"></p>
 
           <label>Adults</label>
@@ -32,23 +32,14 @@
           <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner' %>
           <br>
 
-          <% [:prebooking, :option].each do |status| %>
-            <%= f.radio_button :booking_status, status %>
-            <label><%= status %></label><br>
-          <% end %>
-
           <br>
           <%= f.hidden_field :lodging_id, value: lodging.id %>
           <%= hidden_field_tag "calculate_bill", true %>
           <br>
-          <br>
-          <h5 class="text-normal" id="bill"></h5>
-        </div>
+        <% end %>
+
+        <%= render 'wishlists/form', lodging: lodging %>
       </div>
-
-      <%= f.submit 'Add', class: "btn btn-primary col-md-12 btn-booking disabled" %>
-    <% end %>
-
-    <%= render 'wishlists/form', lodging: lodging %>
+    </div>
   </div>
 </div>

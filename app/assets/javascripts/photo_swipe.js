@@ -45,6 +45,10 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     return el && (fn(el) ? el : closest(el.parentNode, fn));
   };
 
+  var onControlsClick = function(e) {
+    openPhotoSwipe(1, document.querySelectorAll(gallerySelector)[0]);
+  }
+
   // triggers when user clicks on thumbnail
   var onThumbnailsClick = function(e) {
     e = e || window.event;
@@ -180,6 +184,12 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
   // loop through all gallery elements and bind events
   var galleryElements = document.querySelectorAll(gallerySelector);
+  var galleryControls = document.querySelectorAll('.gallery-control');
+
+  for (var i = 0, l = galleryControls.length; i < l; i++) {
+    galleryControls[i].setAttribute('data-pswp-uid', i + 1);
+    galleryControls[i].onclick = onControlsClick;
+  }
 
   for (var i = 0, l = galleryElements.length; i < l; i++) {
     galleryElements[i].setAttribute('data-pswp-uid', i + 1);

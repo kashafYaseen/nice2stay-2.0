@@ -21,35 +21,42 @@
     $('.submit-filters').click ->
       $('#loader').show();
 
-  Lodging.update_bill = (values) ->
-    if values.some(check_values)
-      $("#lbl-error").text('Please select dates & guest details')
-      $("#bill").text('')
-    else
-      url = $('.persisted-data').data('url')
-      $("#lbl-error").text('')
-      $.ajax
-        url: "#{url}?values=#{values}"
-        type: 'GET'
-        success: (data) ->
-          result = ""
-          total = 0
-          validate(values)
-          $.each data.rates, (key, value) ->
-            result += "<b>€ #{key} x #{value} night</b></br>"
-            total += (key * value)
+  Lodging.calculate_bill = ->
+    $('.btn-calculate-bill').click (e) ->
+      e.preventDefault()
+      lodging_id = $(this).data('lodging-id')
+      values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
+                $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
+                $("#infants_#{lodging_id}").val(), lodging_id]
+
+      if values.some(check_values)
+        $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
+        $("#bill-#{lodging_id}").text('')
+      else
+        url = $('.persisted-data').data('url')
+        $("#lbl-error-#{lodging_id}").text('')
+        $.ajax
+          url: "#{url}?values=#{values}"
+          type: 'GET'
+          success: (data) ->
+            result = ""
+            total = 0
+            validate(values)
+            $.each data.rates, (key, value) ->
+              result += "<b>€ #{key} x #{value} night</b></br>"
+              total += (key * value)
 
 
-          if data.discount
-            discount = total * data.discount/100
-            result += "<p>Discount #{data.discount}% : $#{discount}</p>"
-            total -= discount
+            if data.discount
+              discount = total * data.discount/100
+              result += "<p>Discount #{data.discount}% : $#{discount}</p>"
+              total -= discount
 
-          if total > 0
-            result += "<p>total: #{total}</p>"
-            $("#bill").html(result)
-          else
-            $("#bill").text('Lodging not available.')
+            if total > 0
+              result += "<p>total: #{total}</p>"
+              $("#bill-#{lodging_id}").html(result)
+            else
+              $("#bill-#{lodging_id}").text('Lodging not available.')
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->

@@ -135,3 +135,10 @@
   left: 40%;
   z-index: 3000;
 }
+
+.lodging {
+  .short-desc {
+    max-height: 180px;
+    overflow: auto;
+  }
+}
