@@ -42,6 +42,12 @@ class Lodging < ApplicationRecord
     bnb: 3,
   }
 
+  enum presentation: {
+    as_parent: 1,
+    as_standalone: 2,
+    as_child: 3,
+  }
+
   after_create :add_availabilities
   after_create :reindex_prices
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_07_061409) do
+ActiveRecord::Schema.define(version: 2018_08_15_125815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2018_08_07_061409) do
     t.string "images", default: [], array: true
     t.datetime "crm_synced_at"
     t.bigint "parent_id"
+    t.integer "presentation", default: 1
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
