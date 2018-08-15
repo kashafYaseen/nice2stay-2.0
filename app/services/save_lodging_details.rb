@@ -100,6 +100,7 @@ class SaveLodgingDetails
         :status,
         :region_id,
         :check_in_day,
+        :presentation,
         { images: [] },
         specifications_attributes: [:id, :title, :description],
         reviews_attributes: [:id, :user_id, :stars, :description],
@@ -131,6 +132,7 @@ class SaveLodgingDetails
         :adults,
         :children,
         :infants,
+        :presentation,
         { images: [] },
       )
     end
