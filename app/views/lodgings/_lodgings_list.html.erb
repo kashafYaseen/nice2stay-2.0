@@ -7,7 +7,7 @@
       <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= lodgings.total_count %></div>
     </div>
 
-    <div class="row mb-2 lodgings scrollable-content">
+    <div class="row mb-2 lodgings">
       <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
       <%= render lodgings %>
     </div>

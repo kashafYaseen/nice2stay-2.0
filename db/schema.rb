@@ -317,6 +317,7 @@ ActiveRecord::Schema.define(version: 2018_08_07_061409) do
     t.integer "children"
     t.string "name"
     t.text "notes"
+    t.integer "status", default: 0
     t.index ["lodging_id"], name: "index_wishlists_on_lodging_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end

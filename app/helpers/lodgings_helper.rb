@@ -36,4 +36,8 @@ module LodgingsHelper
     return 1 if adults == 0
     adults
   end
+
+  def render_image_tag lodging, options = {}
+    image_tag lodging.images.try(:first) || image_path('default-lodging.png'), options
+  end
 end

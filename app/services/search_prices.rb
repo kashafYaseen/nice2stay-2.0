@@ -28,10 +28,10 @@ class SearchPrices
     def first_attempt_conditions
       conditions = {}
       conditions[:available_on] = availability_condition
-      conditions[:adults]   = params[:adults]
-      conditions[:children] = params[:children]
+      conditions[:adults]   = [params[:adults], 999]
+      conditions[:children] = [params[:children], 999]
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = [params[:minimum_stay], nil]
+      conditions[:minimum_stay] = [params[:minimum_stay], 999]
       conditions
     end
 
@@ -41,7 +41,7 @@ class SearchPrices
       conditions[:adults]   = { gte: params[:adults] }
       conditions[:children] = { gte: params[:children] }
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = [params[:minimum_stay], nil]
+      conditions[:minimum_stay] = [params[:minimum_stay], 999]
       conditions
     end
 
@@ -50,7 +50,7 @@ class SearchPrices
       conditions[:available_on] = dates
       conditions[:adults]  = { gte: params[:adults] }
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = [params[:minimum_stay], nil]
+      conditions[:minimum_stay] = [params[:minimum_stay], 999]
       conditions[:adults_and_children] = { gte: (params[:adults].to_i + params[:children].to_i) }
       conditions
     end

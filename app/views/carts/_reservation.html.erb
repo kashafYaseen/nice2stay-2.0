@@ -24,5 +24,9 @@
     <%= link_to remove_carts_en_path(reservation_id: reservation), class: 'remove-from-cart', remote: true do %>
       <i class="material-icons">close</i>
     <% end %>
+
+    <%= link_to reservation.lodging, class: 'remove-from-cart' do %>
+      <i class="material-icons">edit</i>
+    <% end %>
   </td>
 </tr>

@@ -7,6 +7,7 @@
   Lodging.init = ->
     Slider.init()
     $('.lodging_type').change ->
+      $('#loader').show();
       Rails.fire($('.lodgings-filters').get(0), 'submit')
 
     $('.lowest-price, .highest-price').click ->
@@ -14,7 +15,11 @@
         $('#order').val('price_asc')
       else if $(this).hasClass 'highest-price'
         $('#order').val('price_desc')
+      $('#loader').show();
       Rails.fire($('.lodgings-filters').get(0), 'submit')
+
+    $('.submit-filters').click ->
+      $('#loader').show();
 
   Lodging.update_bill = (values) ->
     if values.some(check_values)

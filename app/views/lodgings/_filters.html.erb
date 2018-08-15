@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="col-lg-3 col-md-4">
+<div class="col-lg-3 col-md-4 p-0">
   <div class="sidebar-toggle position-left">
     <i class="material-icons filter_list"></i>
   </div>
@@ -27,7 +27,7 @@
             <%= number_field_tag :children, params[:children], min: 0 %>
             <label>Infants</label>
             <%= number_field_tag :infants, params[:infants], min: 0 %>
-            <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm' %>
+            <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm submit-filters' %>
           </ul>
         </section>
 
@@ -52,7 +52,7 @@
 
             <footer class="ui-range-slider-footer">
               <div class="column">
-                <%= submit_tag 'Filter', class: 'btn btn-outline-primary btn-sm' %>
+                <%= submit_tag 'Filter', class: 'btn btn-outline-primary btn-sm submit-filters' %>
               </div>
 
               <div class="column">
@@ -85,7 +85,7 @@
           <%= select_tag :region, options_for_select(regions, params[:region]), include_blank: "Select Region", class: 'form-control chosen-select' %>
 
           <%= hidden_field_tag :bounds, params[:bounds] %>
-          <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm' %>
+          <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm submit-filters' %>
         </section>
       </section>
     <% end %>

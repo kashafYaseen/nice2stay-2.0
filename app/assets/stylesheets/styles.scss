@@ -7475,7 +7475,8 @@ video {
 }
 
 #map {
-  height: 800px;
+  height: 100%;
+  min-height: 400px;
 }
 
 .twitter-typeahead {
@@ -7632,4 +7633,8 @@ video {
 }
 .tt-suggestion p {
   margin: 0;
+}
+
+.text-decoration-none {
+  text-decoration: none;
 }
