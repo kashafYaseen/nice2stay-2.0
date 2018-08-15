@@ -28,18 +28,25 @@
         </div>
       </div>
 
-      <!-- Product Info-->
-      <div class="col-md-12 mb-30">
-        <div class="reservation-form">
-          <%= render 'reservations/form', lodging: @lodging, reservation: @reservation %>
+      <% if @lodging.as_standalone? %>
+        <div class="col-md-12 mb-30">
+          <div class="reservation-form">
+            <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation %>
+          </div>
         </div>
-      </div>
+      <% else %>
+        <div class="col-md-12 mb-30">
+          <div class="reservation-form">
+            <%= render 'reservations/form', lodging: @lodging, reservation: @reservation %>
+          </div>
+        </div>
 
-      <div class="col-md-12 mb-30">
-        <div class="lodging-children">
-          <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
+        <div class="col-md-12 mb-30">
+          <div class="lodging-children">
+            <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
