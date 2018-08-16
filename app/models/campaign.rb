@@ -4,6 +4,7 @@ class Campaign < ApplicationRecord
   searchkick word_start: [:title]
 
   validates :title, :description, presence: true
+  translates :title, :url, :description
 
   def search_data
     attributes.merge(
