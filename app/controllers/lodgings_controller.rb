@@ -84,7 +84,7 @@ class LodgingsController < ApplicationController
       limit: 10,
       load: false,
       misspellings: {below: 5}
-    }).map(&:name)
+    }).map{ |lodging| { name: lodging.name, id: lodging.id } }
   end
 
 

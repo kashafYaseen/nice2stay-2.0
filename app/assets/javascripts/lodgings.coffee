@@ -83,6 +83,9 @@
       remote:
         url: '/lodgings/autocomplete?query=%QUERY'
         wildcard: '%QUERY')
-    $('.autocomplete').typeahead null, source: lodgings
+    $('.autocomplete').typeahead null, displayKey: 'name', source: lodgings
+
+    $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
+      window.location.href = "/lodgings/#{datum.id}?check_in=#{$('#check_in').val()}&check_out=#{$('#check_out').val()}"
 
 ).call this
