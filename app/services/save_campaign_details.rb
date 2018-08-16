@@ -14,6 +14,7 @@ class SaveCampaignDetails
   def call
     save_campaign
     save_regions
+    update_translations
     campaign
   end
 
@@ -28,6 +29,15 @@ class SaveCampaignDetails
       params[:regions].each do |region_params|
         region = Region.find_or_create_region(region_params[:country_name], region_params[:region_name])
         campaign.regions << region unless campaign.regions.find_by(id: region.id).present?
+      end
+    end
+
+    def update_translations
+      return unless params[:translations].present?
+      params[:translations].each do |translation|
+        _translation = campaign.translations.find_or_initialize_by(locale: translation[:locale])
+        _translation.attributes = translation_params(translation)
+        _translation.save
       end
     end
 
@@ -53,4 +63,14 @@ class SaveCampaignDetails
         { publish: [] },
       )
     end
+
+    def translation_params(translation)
+      translation.permit(
+        :url,
+        :locale,
+        :title,
+        :description,
+      )
+    end
+
 end
