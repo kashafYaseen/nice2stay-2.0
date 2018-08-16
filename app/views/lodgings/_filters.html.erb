@@ -10,7 +10,18 @@
     </span>
 
     <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
-      <section class="widget widget-categories pt-0">
+      <div class="dropdown price-dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort By
+        </button>
+        <div class="dropdown-menu" aria-labelledby="PriceSortFilter">
+          <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
+          <a class="dropdown-item highest-price" href="#">Highest Price</a>
+          <%= hidden_field_tag :order, params[:order] %>
+        </div>
+      </div>
+
+      <section class="widget widget-categories dates-dropdown">
         <section class="widget widget-icon-list">
           <h3 class="widget-title">Date search</h3>
           <div class='datepicker'></div>
@@ -68,15 +79,6 @@
               </div>
             </footer>
           </div>
-        </section>
-
-        <section class="widget widget-icon-list">
-          <h3 class="widget-title">Sort By</h3>
-            <ul>
-              <li><%= link_to 'Lowest Price', '#', class: 'lowest-price' %></li>
-              <li><%= link_to 'Highest Price', '#', class: 'highest-price' %></li>
-              <%= hidden_field_tag :order, params[:order] %>
-            </ul>
         </section>
 
         <section class="widget widget-icon-list">

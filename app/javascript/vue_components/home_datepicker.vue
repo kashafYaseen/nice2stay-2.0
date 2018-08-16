@@ -13,8 +13,8 @@
         :disabled-dates="disabled_dates"
         :min-date="this.current_date.toString()"
       ></airbnb-style-datepicker>
-      <input type="hidden" name="check_in" :value="check_in">
-      <input type="hidden" name="check_out" :value="check_out">
+      <input type="hidden" name="check_in" id="check_in" :value="check_in">
+      <input type="hidden" name="check_out" id="check_out" :value="check_out">
     </div>
   </div>
 </template>
