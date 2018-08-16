@@ -1,0 +1,38 @@
+<div class="row">
+  <!-- Product Gallery-->
+  <div class="col-md-12 mb-30">
+    <div class="gallery-control">
+      <figure itemprop="associatedMedia" itemscope>
+        <a itemprop="contentUrl">
+          <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
+        </a>
+        <figcaption itemprop="caption description">
+          <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="lodging-gallery" itemscope>
+      <% @lodging.images.each_with_index do |image_url, index| %>
+        <figure itemprop="associatedMedia" itemscope class="d-none">
+          <a href="<%= image_url %>" itemprop="contentUrl">
+            <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+          </a>
+          <figcaption itemprop="caption description"><%= index %></figcaption>
+        </figure>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-12 mb-30">
+    <div class="reservation-parent-form">
+      <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
+    </div>
+  </div>
+
+  <div class="col-md-12 mb-30">
+    <div class="lodging-children">
+      <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
+    </div>
+  </div>
+</div>

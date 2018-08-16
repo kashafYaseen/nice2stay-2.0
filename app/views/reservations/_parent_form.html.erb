@@ -2,7 +2,8 @@
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
        data-url="<%= price_details_lodging_path(lodging) %>"
-       data-validate-url="<%= validate_reservations_path %>"></div>
+       data-validate-url="<%= validate_reservations_path %>"
+       data-months="2"></div>
 
   <div class="card-body">
     <h2 class="mb-3"><%= lodging.title %></h2>
@@ -20,8 +21,6 @@
 
       <div class="col-md-5">
         <%= form_for reservation, url: reservations_path, remote: true do |f| %>
-          <p id="lbl-error"></p>
-
           <label>Adults</label>
           <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner' %>
 

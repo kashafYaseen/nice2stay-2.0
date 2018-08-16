@@ -2,7 +2,8 @@
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
        data-url="<%= price_details_lodging_path(lodging) %>"
-       data-validate-url="<%= validate_reservations_path %>"></div>
+       data-validate-url="<%= validate_reservations_path %>"
+       data-months="1"></div>
 
   <div class="card-body">
     <h2 class="mb-3"><%= lodging.title %></h2>
@@ -12,16 +13,15 @@
       <%= render 'reservations/errors', resource: reservation %>
     </div>
 
-    <div class="row">
-      <div class="col-md-7" data-lodging-id="<%= lodging.id %>"
-           data-disabled-dates="<%= lodging.childs_not_available_on %>">
-        <div class='reservation-datepicker'></div>
-      </div>
+    <%= form_for reservation, url: reservations_path, remote: true do |f| %>
+      <div class="row">
+        <div class="col-md-7" data-lodging-id="<%= lodging.id %>"
+             data-disabled-dates="<%= lodging.not_available_on %>">
+          <div class='reservation-datepicker'></div>
+        </div>
 
-      <div class="col-md-5">
-        <%= form_for reservation, url: reservations_path, remote: true do |f| %>
+        <div class="col-md-5">
           <p id="lbl-error"></p>
-
           <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
           <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
 
@@ -44,15 +44,15 @@
             <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
             <label><%= status %></label><br>
           <% end %>
-
+          <p id="lbl-error-<%= lodging.id %>"></p><br>
           <h5 class="text-normal" id="bill-<%= lodging.id %>"></h5>
-
-          <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_id: lodging.id } %>
-          <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
-        <% end %>
-
-        <%= render 'wishlists/form', lodging: lodging %>
+        </div>
       </div>
-    </div>
+      <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_id: lodging.id } %>
+
+      <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
+    <% end %>
+
+    <%= render 'wishlists/form', lodging: lodging %>
   </div>
 </div>

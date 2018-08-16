@@ -11,7 +11,7 @@
         :inline="true"
         :disabled-dates="disabled_dates"
         :min-date="this.current_date.toString()"
-        :months-to-show="2"
+        :months-to-show="this.months"
       ></airbnb-style-datepicker>
     </div>
   </div>
@@ -24,6 +24,7 @@
     data() {
       let check_in = $('.persisted-data').data('check-in');
       let check_out = $('.persisted-data').data('check-out');
+      let months = $('.persisted-data').data('months');
       let today = this.get_yesterday()
       return {
         dateFormat: 'D MMM',
@@ -32,6 +33,7 @@
         disabled_dates: [],
         current_date: today,
         lodging_id: '',
+        months: months ? months : 1,
       }
     },
     mounted() {
