@@ -86,6 +86,9 @@
     $('.autocomplete').typeahead null, displayKey: 'name', source: lodgings
 
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
-      window.location.href = "/lodgings/#{datum.id}?check_in=#{$('#check_in').val()}&check_out=#{$('#check_out').val()}"
+      if datum.type == 'lodging'
+        window.location.href = "#{datum.url}?check_in=#{$('#check_in').val()}&check_out=#{$('#check_out').val()}"
+      else
+        window.location.href = datum.url
 
 ).call this
