@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_16_071448) do
+ActiveRecord::Schema.define(version: 2018_08_16_073830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,13 @@ ActiveRecord::Schema.define(version: 2018_08_16_071448) do
     t.boolean "collection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "campaigns_regions", force: :cascade do |t|
+    t.bigint "campaign_id"
+    t.bigint "region_id"
+    t.index ["campaign_id"], name: "index_campaigns_regions_on_campaign_id"
+    t.index ["region_id"], name: "index_campaigns_regions_on_region_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -343,6 +350,8 @@ ActiveRecord::Schema.define(version: 2018_08_16_071448) do
   end
 
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
+  add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
+  add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
