@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_15_125815) do
+ActiveRecord::Schema.define(version: 2018_08_16_071448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,25 @@ ActiveRecord::Schema.define(version: 2018_08_15_125815) do
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "title"
+    t.string "slug"
+    t.string "url"
+    t.string "article_spotlight"
+    t.text "publish", default: [], array: true
+    t.text "images", default: [], array: true
+    t.text "description"
+    t.text "slider_desc"
+    t.integer "price"
+    t.boolean "slider"
+    t.boolean "spotlight"
+    t.boolean "popular_search"
+    t.boolean "popular_homepage"
+    t.boolean "collection"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "countries", force: :cascade do |t|
