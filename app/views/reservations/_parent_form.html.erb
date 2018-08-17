@@ -19,7 +19,7 @@
         <div class='reservation-datepicker'></div>
       </div>
 
-      <div class="col-md-5">
+      <div class="col-md-5 my-auto">
         <%= form_for reservation, url: reservations_path, remote: true do |f| %>
           <label>Adults</label>
           <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner' %>
@@ -29,15 +29,12 @@
 
           <label>Infants</label>
           <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner' %>
-          <br>
 
-          <br>
           <%= f.hidden_field :lodging_id, value: lodging.id %>
           <%= hidden_field_tag "calculate_bill", true %>
-          <br>
         <% end %>
 
-        <%= render 'wishlists/form', lodging: lodging %>
+        <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
       </div>
     </div>
   </div>

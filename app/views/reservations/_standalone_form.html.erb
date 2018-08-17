@@ -48,7 +48,7 @@
           <h5 class="text-normal" id="bill-<%= lodging.id %>"></h5>
         </div>
       </div>
-      <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_id: lodging.id } %>
+      <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_ids: [lodging.id] } %>
 
       <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
     <% end %>

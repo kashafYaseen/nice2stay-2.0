@@ -4,6 +4,32 @@
   check_values = (value) ->
     value == ''
 
+  display_bill = (values, lodging_id) ->
+    url = $('.persisted-data').data('url')
+    $("#lbl-error-#{lodging_id}").text('')
+    $.ajax
+      url: "#{url}?values=#{values}"
+      type: 'GET'
+      success: (data) ->
+        result = ""
+        total = 0
+        validate(values)
+        $.each data.rates, (key, value) ->
+          result += "<b>€ #{key} x #{value} night</b></br>"
+          total += (key * value)
+
+
+        if data.discount
+          discount = total * data.discount/100
+          result += "<p>Discount #{data.discount}% : $#{discount}</p>"
+          total -= discount
+
+        if total > 0
+          result += "<p>total: #{total}</p>"
+          $("#bill-#{lodging_id}").html(result)
+        else
+          $("#bill-#{lodging_id}").text('Lodging not available.')
+
   Lodging.init = ->
     Slider.init()
     $('.lodging_type').change ->
@@ -24,39 +50,18 @@
   Lodging.calculate_bill = ->
     $('.btn-calculate-bill').click (e) ->
       e.preventDefault()
-      lodging_id = $(this).data('lodging-id')
-      values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
-                $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
-                $("#infants_#{lodging_id}").val(), lodging_id]
+      lodging_ids = $(this).data('lodging-ids')
 
-      if values.some(check_values)
-        $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
-        $("#bill-#{lodging_id}").text('')
-      else
-        url = $('.persisted-data').data('url')
-        $("#lbl-error-#{lodging_id}").text('')
-        $.ajax
-          url: "#{url}?values=#{values}"
-          type: 'GET'
-          success: (data) ->
-            result = ""
-            total = 0
-            validate(values)
-            $.each data.rates, (key, value) ->
-              result += "<b>€ #{key} x #{value} night</b></br>"
-              total += (key * value)
+      for lodging_id in lodging_ids
+        values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
+                  $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
+                  $("#infants_#{lodging_id}").val(), lodging_id]
 
-
-            if data.discount
-              discount = total * data.discount/100
-              result += "<p>Discount #{data.discount}% : $#{discount}</p>"
-              total -= discount
-
-            if total > 0
-              result += "<p>total: #{total}</p>"
-              $("#bill-#{lodging_id}").html(result)
-            else
-              $("#bill-#{lodging_id}").text('Lodging not available.')
+        if values.some(check_values)
+          $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
+          $("#bill-#{lodging_id}").text('')
+        else
+          display_bill(values, lodging_id)
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->
