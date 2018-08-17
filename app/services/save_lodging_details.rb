@@ -39,10 +39,11 @@ class SaveLodgingDetails
 
     def parent
       return unless params[:parent].present?
+
       Lodging.find_or_create_by(slug: parent_params[:slug]) do |parent|
-        lodging.owner = owner
-        lodging.region = region(params[:parent][:country_name], params[:parent][:region_name])
-        lodging.attributes = parent_params.merge(lodging_type: lodging_type(params[:parent][:lodging_type]), crm_synced_at: DateTime.current)
+        parent.owner = owner
+        parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
+        parent.attributes = parent_params.merge(lodging_type: lodging_type(params[:parent][:lodging_type]), crm_synced_at: DateTime.current)
       end
     end
 
