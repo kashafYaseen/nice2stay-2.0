@@ -1,5 +1,6 @@
 class LodgingsController < ApplicationController
   before_action :set_lodging, only: [:show, :edit, :update, :destroy, :price_details]
+  before_action :set_parent, only: [:show]
 
   # GET /lodgings
   # GET /lodgings.json
@@ -92,6 +93,10 @@ class LodgingsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_lodging
       @lodging = Lodging.find(params[:id])
+    end
+
+    def set_parent
+      @lodging = @lodging.parent if @lodging.parent.present?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
