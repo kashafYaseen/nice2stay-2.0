@@ -32,9 +32,8 @@
       window.bounds_changed = true
 
   Map.add_markers = ->
-    lodgings = $('#lodgings-list').map(-> JSON.parse @dataset.lodgings).get()
-    ids = $('#lodgings-list').map(-> JSON.parse @dataset.ids).get()
-
+    lodgings = $('.lodgings-list-json').map(-> JSON.parse @dataset.lodgings).get()
+    ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
     remove_marker_list = []
     for marker in map.markers
       if marker && ids.includes(marker.id)
@@ -50,7 +49,7 @@
           lng: lodging.longitude
           title: lodging.address
           infoWindow: content: "<p><a href='/lodgings/#{lodging.id}'>#{lodging.name}</a></p>")
-    set_safe_bounds document.querySelector('#lodgings-list')
+    set_safe_bounds document.querySelector('.lodgings-list-json')
 
   set_safe_bounds = (element) ->
     l = element.dataset.bounds
@@ -69,13 +68,13 @@
       map.fitZoom()
 
   Map.highlight_lodgings = ->
-    $('.lodgings').on 'mouseenter', '.lodging-container', ->
+    $('.lodgings-list').on 'mouseenter', '.lodging-container', ->
         markers = map.markers
         for marker in markers
           if marker.id == $(this).data('lodging-id')
             marker.setAnimation 1
 
-    $('.lodgings').on 'mouseleave', '.lodging-container', ->
+    $('.lodgings-list').on 'mouseleave', '.lodging-container', ->
         markers = map.markers
         for marker in markers
           if marker.id == $(this).data('lodging-id')

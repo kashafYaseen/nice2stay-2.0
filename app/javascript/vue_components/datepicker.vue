@@ -11,8 +11,8 @@
         @apply="onApplyMethod"
         :min-date="this.yesterday"
       ></airbnb-style-datepicker>
-      <input type="hidden" name="check_in" :value="check_in">
-      <input type="hidden" name="check_out" :value="check_out">
+      <input type="hidden" name="check_in" class="check-in" :value="check_in">
+      <input type="hidden" name="check_out" class="check-out" :value="check_out">
     </div>
   </div>
 </template>
