@@ -28,19 +28,30 @@
           <ul><div id='datepicker'></div></ul>
         </section>
 
-        <section>
-          <br>
-          <h3 class="widget-title">Number of Guests</h3>
-          <ul>
-            <label>Adults</label>
-            <%= number_field_tag :adults, params[:adults], min: 0 %>
-            <label>Children</label>
-            <%= number_field_tag :children, params[:children], min: 0 %>
-            <label>Infants</label>
-            <%= number_field_tag :infants, params[:infants], min: 0 %>
-            <%= submit_tag 'Apply', class: 'btn btn-outline-primary btn-sm submit-filters' %>
-          </ul>
-        </section>
+        <h3 class="widget-title">Guests search</h3>
+        <div class="dropdown guests-dropdown mb-3">
+          <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="title">Guest</span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-item">
+              <label>Adults</label>
+              <%= number_field_tag :adults, params[:adults], min: 0 %>
+            </div>
+            <div class="dropdown-item">
+              <label>Children</label>
+              <%= number_field_tag :children, params[:children], min: 0 %>
+            </div>
+            <div class="dropdown-item">
+              <label>Infants</label>
+              <%= number_field_tag :infants, params[:infants], min: 0 %>
+            </div>
+
+            <div class="dropdown-item">
+              <%= submit_tag 'Done', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
+            </div>
+          </div>
+        </div>
 
         <section>
           <h3 class="widget-title">Accommodation type</h3>

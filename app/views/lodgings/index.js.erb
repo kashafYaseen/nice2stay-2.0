@@ -1,5 +1,5 @@
 $('.lodgings-list').html("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
-$("input[type='number']").InputSpinner();
+GuestDropdown.init();
 Lodging.init();
 initDatePicker();
 Map.add_markers();
