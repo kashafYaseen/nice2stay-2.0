@@ -78,7 +78,7 @@ class LodgingsController < ApplicationController
   
 
  def autocomplete
-    render json: Lodging.searchable.search(params[:query], {
+    render json: Lodging.search(params[:query], {
       fields: ["name"],
       match: :word_start,
       limit: 10,
