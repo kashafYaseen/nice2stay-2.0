@@ -10,6 +10,9 @@
     $('.guests-dropdown').on 'hide.bs.dropdown', (e) ->
       update_text()
 
+    $('.guests-dropdown .submit-filters').click ->
+      $(this).dropdown("toggle")
+
   update_text = ->
     adults = $('.guests-dropdown #adults').val()
     children = $('.guests-dropdown #children').val()

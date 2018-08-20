@@ -1,17 +1,17 @@
 <div class="col-md-6 pr-0 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
   <div class="card">
-    <%= render_image_tag lodging, class: "card-img-top" %>
-
-    <div class="card-body">
-      <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do %>
-        <h4 class="card-title"><%= lodging.name %></h4>
-        <p class="card-text">
-          <%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %><br>
-          <%= lodging.cumulative_price(params) %>
-        </p>
-      <% end %>
-
-      <%= link_to "Make a Reservation", lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "btn btn-primary btn-sm" %>
+    <div class="owl-carousel">
+      <%= render_image_tags lodging, class: "card-img-top" %>
     </div>
+
+    <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do %>
+      <div class="card-body">
+          <h4 class="card-title"><%= lodging.name %></h4>
+          <p class="card-text">
+            <%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %><br>
+            <%= lodging.cumulative_price(params) %>
+          </p>
+      </div>
+    <% end %>
   </div>
 </div>
