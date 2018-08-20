@@ -26,6 +26,9 @@ class UpdateLodgingPrices
           lodging.availabilities_with_in(price_range[:from], price_range[:to]).each do |availability|
             price.add(amount: day_price(price_range, availability.available_on), children: price_range[:children], adults: price_range[:adults],
               infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
+
+            price.add(amount: price_range[:amount], children: price_range[:children], adults: price_range[:adults],
+              infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current) if price_range[:weekly_price].present? && lodging.prices.find_by(minimum_stay: ['7'], amount: price_range[:amount], availability_id: availability.id, adults: price_range[:adults], children: price_range[:children]).blank?
           end
         end
         create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], lodging.check_in_day)
