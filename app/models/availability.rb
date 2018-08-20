@@ -25,4 +25,8 @@ class Availability < ApplicationRecord
     return if days.size == 2
     days.take.try(:delete)
   end
+
+  def price_with(adults, children, amount, days)
+    prices.find_by(adults: adults, children: children, amount: amount, minimum_stay: days)
+  end
 end
