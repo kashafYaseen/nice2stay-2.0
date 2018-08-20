@@ -40,4 +40,17 @@ module LodgingsHelper
   def render_image_tag lodging, options = {}
     image_tag lodging.images.try(:first) || image_path('default-lodging.png'), options
   end
+
+  def render_image_tags lodging, options = {}
+    return image_tag_with_link(lodging, image_path('default-lodging.png'), options) unless lodging.images.present?
+    tags = ''
+    lodging.images.take(5).each { |image_path|  tags << image_tag_with_link(lodging, image_path, options) }
+    tags.html_safe
+  end
+
+  def image_tag_with_link lodging, image_path, options = {}
+    link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do
+      image_tag(image_path, options)
+    end
+  end
 end
