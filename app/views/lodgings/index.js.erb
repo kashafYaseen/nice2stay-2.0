@@ -15,3 +15,4 @@ Map.add_markers();
 Map.highlight_lodgings();
 Url.update();
 $('#loader').hide();
+$('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");
