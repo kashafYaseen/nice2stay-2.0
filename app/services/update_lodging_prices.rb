@@ -49,7 +49,7 @@ class UpdateLodgingPrices
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
 
       if minimal_stay.first.present?
-        rule.minimal_stay = minimal_stay
+        rule.minimal_stay = (rule.minimal_stay + minimal_stay).uniq
       else
         rule.days_multiplier = 7
         rule.check_in_days = check_in_day.presence || 'Saturday'
