@@ -1,6 +1,17 @@
 <div class="row">
   <!-- Product Gallery-->
-  <div class="col-md-6 mb-30">
+  <div class="col-md-9 mb-30">
+    <div class="gallery-control">
+      <figure itemprop="associatedMedia" itemscope>
+        <a itemprop="contentUrl">
+          <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
+        </a>
+        <figcaption itemprop="caption description">
+          <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
+        </figcaption>
+      </figure>
+    </div>
+
     <div class="lodging-gallery" itemscope>
       <% @lodging.images.each_with_index do |image_url, index| %>
         <figure itemprop="associatedMedia" itemscope>
@@ -13,7 +24,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 mb-30">
+  <div class="col-md-3 fixed">
     <div class="reservation-standalone-form">
       <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation %>
     </div>

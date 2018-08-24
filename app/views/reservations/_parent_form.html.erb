@@ -5,9 +5,6 @@
        data-validate-url="<%= validate_reservations_path %>"></div>
 
   <div class="card-body">
-    <h2 class="mb-3"><%= lodging.title %></h2>
-    <p class="text-sm text-muted"><%= lodging.subtitle %></p>
-
     <div class="reservation-form-errors-<%= lodging.id %>">
       <%= render 'reservations/errors', resource: reservation %>
     </div>
@@ -42,16 +39,11 @@
 
             <%= f.hidden_field :lodging_id, value: lodging.id %>
             <%= hidden_field_tag "calculate_bill", true %>
-
-            <div class="dropdown-item">
-              <%= submit_tag 'Calculate Bill', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
-            </div>
           <% end %>
         </div>
       </div>
 
       <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
-      </div>
     </div>
   </div>
 </div>

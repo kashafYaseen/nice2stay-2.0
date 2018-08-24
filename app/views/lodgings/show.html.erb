@@ -13,7 +13,7 @@
 <div class="container padding-bottom-3x pt-5 mb-1">
   <!-- Details-->
   <div class="row pt-2">
-    <div class="col-md-8">
+    <div class="col-md-9">
       <h3><%= @lodging.name %></h3>
       <p class="text-sm mb-4">
         <div id="lodging-description">
@@ -28,7 +28,7 @@
       <% end %>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-9">
       <h3>Specifications</h3>
       <% if @lodging.specifications.present? %>
         <ul class="text-sm mb-4">
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="col-md-8 margin-bottom-2x">
+    <div class="col-md-9 margin-bottom-2x">
       <h6 class="text-muted text-normal text-uppercase">Default Map</h6>
       <hr class="margin-bottom-1x">
       <div class="google-map" data-height="670" data-address="<%= @lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
@@ -54,7 +54,7 @@
         <%= render 'reviews/rating', lodging: @lodging %>
       </div>
 
-      <div class="col-md-8">
+      <div class="col-md-9">
         <h3 class="padding-bottom-1x">Latest Reviews</h3>
 
         <% if @reviews.present? %>

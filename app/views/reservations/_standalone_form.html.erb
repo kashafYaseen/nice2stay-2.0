@@ -6,9 +6,6 @@
        data-months="1"></div>
 
   <div class="card-body">
-    <h2 class="mb-3"><%= lodging.title %></h2>
-    <p class="text-sm text-muted"><%= lodging.subtitle %></p>
-
     <div class="reservation-form-errors-<%= lodging.id %>">
       <%= render 'reservations/errors', resource: reservation %>
     </div>
@@ -20,35 +17,33 @@
           <div class='reservation-datepicker'></div>
         </div>
 
-        <div class="col-md-5">
-          <p id="lbl-error"></p>
-          <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
-          <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
+        <div class="dropdown guests-dropdown mb-3">
+          <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="title">Guest</span>
+          </button>
 
-          <label>Adults</label>
-          <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner', id: "adults_#{lodging.id}" %>
+          <%= form_for reservation, url: reservations_path, remote: true do |f| %>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-item">
+                <label>Adults</label>
+                <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner' %>
+              </div>
 
-          <label>Children</label>
-          <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner', id: "children_#{lodging.id}" %>
+              <div class="dropdown-item">
+                <label>Children</label>
+                <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner' %>
+              </div>
 
-          <label>Infants</label>
-          <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner', id: "infants_#{lodging.id}" %>
-          <br>
+              <div class="dropdown-item">
+                <label>Infants</label>
+                <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner' %>
+              </div>
 
-          <br>
-          <%= f.hidden_field :lodging_id, value: lodging.id %>
-          <%= hidden_field_tag "calculate_bill", true %>
-          <br>
-
-          <% [:prebooking, :option].each do |status| %>
-            <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-            <label><%= status %></label><br>
-          <% end %>
-          <p id="lbl-error-<%= lodging.id %>"></p><br>
-          <h5 class="text-normal" id="bill-<%= lodging.id %>"></h5>
+              <%= f.hidden_field :lodging_id, value: lodging.id %>
+            <% end %>
+          </div>
         </div>
       </div>
-      <%= link_to 'Check Availability', '', class: "btn btn-primary col-md-12 btn-calculate-bill", data: { lodging_ids: [lodging.id] } %>
 
       <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
     <% end %>
