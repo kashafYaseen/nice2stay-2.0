@@ -3,10 +3,12 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
+  <div class="col-sm-12">
+    <%= render 'filters', lodgings: @lodgings %>
+  </div>
+
   <div class="col-lg-8 col-sm-8">
     <div class="row">
-      <%= render 'filters', lodgings: @lodgings %>
-
       <div class="col-md-12 ">
         <div class="row mb-2 lodgings-list scrollable-content" id="lodgings-list">
           <%= render 'lodgings_list', lodgings: @lodgings %>
