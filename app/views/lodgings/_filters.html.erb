@@ -1,107 +1,91 @@
-<!-- Sidebar -->
-<div class="col-lg-3 col-md-4">
-  <div class="sidebar-toggle position-left">
-    <i class="material-icons filter_list"></i>
-  </div>
+<%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
-  <aside class="sidebar sidebar-offcanvas position-left">
-    <span class="sidebar-close">
-      <i class="material-icons icon_close"></i>
-    </span>
+  <div class="row">
 
-    <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
-      <div class="dropdown price-dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sort By
-        </button>
-        <div class="dropdown-menu" aria-labelledby="PriceSortFilter">
-          <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
-          <a class="dropdown-item highest-price" href="#">Highest Price</a>
-          <%= hidden_field_tag :order, params[:order] %>
+    <div class='col-md-3'>
+      <div class='datepicker'></div>
+      <ul>
+        <div id='datepicker'></div>
+      </ul>
+    </div>
+
+    <div class="dropdown guests-dropdown col-md-3">
+      <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="title">Guest</span>
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <div class="dropdown-item">
+          <label>Adults</label>
+          <%= number_field_tag :adults, params[:adults], min: 0 %>
+        </div>
+
+        <div class="dropdown-item">
+          <label>Children</label>
+          <%= number_field_tag :children, params[:children], min: 0 %>
+        </div>
+
+        <div class="dropdown-item">
+          <label>Infants</label>
+          <%= number_field_tag :infants, params[:infants], min: 0 %>
+        </div>
+
+        <div class="dropdown-item">
+          <%= submit_tag 'Done', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
         </div>
       </div>
+    </div>
 
-      <section class="widget widget-categories dates-dropdown">
-        <section class="widget widget-icon-list">
-          <h3 class="widget-title">Date search</h3>
-          <div class='datepicker'></div>
-          <ul><div id='datepicker'></div></ul>
-        </section>
+    <div class="dropdown col-md-3">
+      <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="title">Accommodation Type</span>
+      </button>
 
-        <h3 class="widget-title">Guests search</h3>
-        <div class="dropdown guests-dropdown mb-3">
-          <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="title">Guest</span>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <div class="dropdown-item">
-              <label>Adults</label>
-              <%= number_field_tag :adults, params[:adults], min: 0 %>
-            </div>
-            <div class="dropdown-item">
-              <label>Children</label>
-              <%= number_field_tag :children, params[:children], min: 0 %>
-            </div>
-            <div class="dropdown-item">
-              <label>Infants</label>
-              <%= number_field_tag :infants, params[:infants], min: 0 %>
-            </div>
-
-            <div class="dropdown-item">
-              <%= submit_tag 'Done', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
-            </div>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <% Lodging.lodging_types.each do |key, value| %>
+          <div class="dropdown-item">
+            <label>
+              <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
+              <span><%= key %> (<%= count_lodging_type(lodgings, key) %>)</span>
+            </label>
           </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="price-range-slider col-md-3" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
+      <div class="ui-range-slider"></div>
+      <div class="ui-range-values pull-right">
+        <div class="ui-range-value-min">$<span></span>
+          <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
+        </div>&nbsp;-&nbsp;
+
+        <div class="ui-range-value-max">$<span></span>
+          <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
         </div>
+      </div>
+    </div>
 
-        <section>
-          <h3 class="widget-title">Accommodation type</h3>
+    <div class='col-md-3 ml-3'>
+      <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
+        <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left">
+          <span class="text-muted mr-2 lodgings-heading">
+            <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+          </span>
+        </div>
+      </div>
+    </div>
 
-          <ul>
-            <% Lodging.lodging_types.each do |key, value| %>
-              <label>
-                <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
-                <span><%= key %> (<%= count_lodging_type(lodgings, key) %>)</span>
-              </label>
-              <br>
-            <% end %>
-          </ul>
-        </section>
+    <div class="dropdown col-md-2">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort By
+      </button>
 
-        <section class="widget widget-categories">
-          <h3 class="widget-title">Price/Night Range</h3>
-          <div class="price-range-slider" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
-            <div class="ui-range-slider"></div>
-
-            <footer class="ui-range-slider-footer">
-              <div class="column">
-                <%= submit_tag 'Filter', class: 'btn btn-outline-primary btn-sm submit-filters' %>
-              </div>
-
-              <div class="column">
-                <div class="ui-range-values">
-                  <div class="ui-range-value-min">$<span></span>
-                    <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
-                  </div>&nbsp;-&nbsp;
-
-                  <div class="ui-range-value-max">$<span></span>
-                    <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
-                  </div>
-                </div>
-              </div>
-            </footer>
-          </div>
-        </section>
-
-        <section class="widget widget-icon-list">
-          <h3 class="widget-title">Region</h3>
-
-          <%= select_tag :region, options_for_select(regions, params[:region]), include_blank: "Select Region", class: 'form-control chosen-select' %>
-
-          <%= hidden_field_tag :bounds, params[:bounds] %>
-          <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm submit-filters' %>
-        </section>
-      </section>
-    <% end %>
-  </aside>
-</div>
-<!-- Sidebar -->
+      <div class="dropdown-menu" aria-labelledby="PriceSortFilter">
+        <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
+        <a class="dropdown-item highest-price" href="#">Highest Price</a>
+        <%= hidden_field_tag :order, params[:order] %>
+      </div>
+    </div>
+  </div>
+<% end %>

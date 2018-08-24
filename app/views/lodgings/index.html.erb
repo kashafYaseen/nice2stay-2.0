@@ -5,17 +5,9 @@
 
   <div class="col-lg-8 col-sm-8">
     <div class="row">
-      <!-- Content-->
-      <%= render 'filters', regions: @regions, lodgings: @lodgings %>
+      <%= render 'filters', lodgings: @lodgings %>
 
-      <div class="col-lg-9 col-md-8">
-        <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
-
-          <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left">
-          <span class="text-muted mr-2 lodgings-heading"><%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %></span>
-          </div>
-        </div>
-
+      <div class="col-md-12 ">
         <div class="row mb-2 lodgings-list scrollable-content" id="lodgings-list">
           <%= render 'lodgings_list', lodgings: @lodgings %>
         </div>

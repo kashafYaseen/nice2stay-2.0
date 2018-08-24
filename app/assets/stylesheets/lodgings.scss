@@ -147,14 +147,3 @@ div.fixed {
   position: fixed;
   right: 4%;
 }
-
-@media (min-width: 1200px) {
-  .price-dropdown {
-    margin-left: 350%;
-    z-index: 100
-  }
-
-  .dates-dropdown {
-    margin-top: -65px;
-  }
-}
