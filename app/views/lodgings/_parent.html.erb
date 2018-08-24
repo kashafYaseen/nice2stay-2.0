@@ -1,6 +1,6 @@
 <div class="row">
   <!-- Product Gallery-->
-  <div class="col-md-12 mb-30">
+  <div class="col-md-8 mb-30">
     <div class="gallery-control">
       <figure itemprop="associatedMedia" itemscope>
         <a itemprop="contentUrl">
@@ -24,13 +24,14 @@
     </div>
   </div>
 
-  <div class="col-md-12 mb-30">
+  <div class="col-md-3 fixed">
     <div class="reservation-parent-form">
       <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
     </div>
   </div>
 
-  <div class="col-md-12 mb-30">
+
+  <div class="col-md-8 mb-30">
     <div class="lodging-children">
       <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
     </div>

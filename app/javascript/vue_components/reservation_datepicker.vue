@@ -9,9 +9,9 @@
         @date-one-selected="date_one_selected"
         @date-two-selected="date_two_selected"
         :inline="true"
+        :months-to-show="1"
         :disabled-dates="disabled_dates"
         :min-date="this.current_date.toString()"
-        :months-to-show="this.months"
       ></airbnb-style-datepicker>
     </div>
   </div>

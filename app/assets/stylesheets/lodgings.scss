@@ -143,6 +143,11 @@
   }
 }
 
+div.fixed {
+  position: fixed;
+  right: 10%;
+}
+
 @media (min-width: 1200px) {
   .price-dropdown {
     margin-left: 350%;
