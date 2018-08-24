@@ -2,15 +2,25 @@
   window.GuestDropdown or (window.GuestDropdown = {})
 
   GuestDropdown.init = ->
-    $("input[type='number']").InputSpinner();
+    $("input[types='number']").InputSpinner();
     update_text()
-    $('.guests-dropdown .dropdown-menu').click (e) ->
+    update_types_text()
+    $('.types-dropdown .dropdown-menu').click (e) ->
       e.stopPropagation()
 
     $('.guests-dropdown').on 'hide.bs.dropdown', (e) ->
       update_text()
 
     $('.guests-dropdown .submit-filters').click ->
+      $(this).dropdown("toggle")
+
+    $('.types-dropdown .dropdown-menu').click (e) ->
+      e.stopPropagation()
+
+    $('.types-dropdown').on 'hide.bs.dropdown', (e) ->
+      update_types_text()
+
+    $('.types-dropdown .submit-filters').click ->
       $(this).dropdown("toggle")
 
   update_text = ->
@@ -26,4 +36,14 @@
       $('.guests-dropdown .dropdown-toggle').addClass 'btn-primary'
       $('.guests-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'
 
+
+  update_types_text = ->
+    text = ""
+    text += " Villa" if $('#lodging_type_villa').is(":checked")
+    text += " BnB" if $('#lodging_type_bnb').is(":checked")
+    text += " Apartment" if $('#lodging_type_apartment').is(":checked")
+    if text
+      $('.types-dropdown .dropdown-toggle .title').text(text)
+      $('.types-dropdown .dropdown-toggle').addClass 'btn-primary'
+      $('.types-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'
 ).call this
