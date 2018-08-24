@@ -11,9 +11,9 @@
       </div>
     </div>
 
-    <div class="dropdown col-md-2">
-      <button class="btn btn-outline-secondary" dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Sort By
+    <div class="price-dropdown dropdown col-md-2">
+      <button class="btn <%= params[:order].blank? ? 'btn-outline-secondary' : 'btn btn-outline-primary' %> dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="title"><%= render_sort_text %></span>
       </button>
 
       <div class="dropdown-menu" aria-labelledby="PriceSortFilter">

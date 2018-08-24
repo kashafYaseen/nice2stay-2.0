@@ -53,4 +53,10 @@ module LodgingsHelper
       image_tag(image_path, options)
     end
   end
+
+  def render_sort_text
+    return 'Sort By' if params[:order].blank?
+    return 'Highest to Lowest' if params[:order] == 'price_desc'
+    return 'Lowest to Highest' if params[:order] == 'price_asc'
+  end
 end

@@ -37,10 +37,15 @@
       Rails.fire($('.lodgings-filters').get(0), 'submit')
 
     $('.lowest-price, .highest-price').click ->
+      $('.price-dropdown .dropdown-toggle').addClass 'btn-primary'
+      $('.price-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'
+
       if $(this).hasClass 'lowest-price'
         $('#order').val('price_asc')
+        $('.price-dropdown .dropdown-toggle .title').text('Lowest to Highest')
       else if $(this).hasClass 'highest-price'
         $('#order').val('price_desc')
+        $('.price-dropdown .dropdown-toggle .title').text('Highest to Lowest')
       $('#loader').show();
       Rails.fire($('.lodgings-filters').get(0), 'submit')
 

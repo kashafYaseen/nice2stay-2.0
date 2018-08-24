@@ -2,7 +2,7 @@
   window.GuestDropdown or (window.GuestDropdown = {})
 
   GuestDropdown.init = ->
-    $("input[types='number']").InputSpinner();
+    $("input[type='number']").InputSpinner();
     update_text()
     update_types_text()
     $('.types-dropdown .dropdown-menu').click (e) ->
