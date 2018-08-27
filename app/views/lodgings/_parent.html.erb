@@ -1,6 +1,6 @@
 <div class="row">
   <!-- Product Gallery-->
-  <div class="col-md-9 mb-30">
+  <div class="col-md-8 mb-30 scrollable-content">
     <div class="gallery-control">
       <figure itemprop="associatedMedia" itemscope>
         <a itemprop="contentUrl">
@@ -14,7 +14,7 @@
 
     <div class="lodging-gallery" itemscope>
       <% @lodging.images.each_with_index do |image_url, index| %>
-        <figure itemprop="associatedMedia" itemscope>
+        <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index > 7 %>">
           <a href="<%= image_url %>" itemprop="contentUrl">
             <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
           </a>
@@ -22,18 +22,19 @@
         </figure>
       <% end %>
     </div>
+
+    <div class="mb-30">
+      <div class="lodging-children">
+        <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
+      </div>
+    </div>
+
+    <%= render 'shared_content' %>
   </div>
 
-  <div class="col-md-3 fixed">
+  <div class="col-md-4">
     <div class="reservation-parent-form">
       <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
-    </div>
-  </div>
-
-
-  <div class="col-md-9 mb-30">
-    <div class="lodging-children">
-      <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
     </div>
   </div>
 </div>
