@@ -12,7 +12,7 @@
       </figure>
     </div>
 
-    <div class="lodging-gallery" itemscope>
+    <div class="lodging-gallery scrollable-gallery" itemscope>
       <% @lodging.images.each_with_index do |image_url, index| %>
         <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index > 7 %>">
           <a href="<%= image_url %>" itemprop="contentUrl">
@@ -21,6 +21,24 @@
           <figcaption itemprop="caption description"><%= index %></figcaption>
         </figure>
       <% end %>
+    </div>
+
+    <div class="card border-default bg-white pt-2 box-shadow">
+      <div class="card-body">
+        <h3 class="card-title"><%= @lodging.name %></h3>
+
+        <p class="text-sm mb-4">
+          <div id="lodging-description">
+            <%= truncated_description(@lodging.description).try(:html_safe) %>
+          </div>
+        </p>
+
+        <% if truncate_description?(@lodging.description) %>
+          <a class="btn btn-outline-secondary btn-block btn-read-more" href="#" data-truncated="<%= truncated_description(@lodging.description) %>" data-actual="<%= @lodging.description %>" data-target="#lodging-description">
+            Read more
+          </a>
+        <% end %>
+      </div>
     </div>
 
     <div class="mb-30">
