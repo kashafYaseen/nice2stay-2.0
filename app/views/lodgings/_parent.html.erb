@@ -29,15 +29,15 @@
 
         <p class="text-sm mb-4">
           <div id="lodging-description">
-            <%= truncated_description(@lodging.description).try(:html_safe) %>
+            <%= @lodging.description.try(:html_safe) %>
           </div>
         </p>
 
-        <% if truncate_description?(@lodging.description) %>
+<!--         <%# if truncate_description?(@lodging.description) %>
           <a class="btn btn-outline-secondary btn-block btn-read-more" href="#" data-truncated="<%= truncated_description(@lodging.description) %>" data-actual="<%= @lodging.description %>" data-target="#lodging-description">
             Read more
           </a>
-        <% end %>
+        <%# end %> -->
       </div>
     </div>
 

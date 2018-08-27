@@ -134,6 +134,11 @@ class Lodging < ApplicationRecord
     images.first
   end
 
+  def child_name
+    return unless as_child? && name.include?('-')
+    name.split('-').last.strip
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|

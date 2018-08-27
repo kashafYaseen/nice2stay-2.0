@@ -124,7 +124,6 @@
 
 .scrollable-gallery {
   overflow: auto;
-  height: 50vh;
   min-height: 200px;
   margin-bottom: 20px;
   margin-top: 20px;
@@ -149,6 +148,11 @@
     max-height: 180px;
     overflow: auto;
   }
+}
+
+div.fixed-standalone {
+  position: fixed;
+  right: 4%;
 }
 
 div.fixed {

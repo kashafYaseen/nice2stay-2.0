@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-md-4 lodging">
-              <h3><%= lodging.name %></h3>
+              <h6><%= lodging.child_name %></h6>
               <% [:prebooking, :option].each do |status| %>
                 <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                 <label><%= status %></label>
