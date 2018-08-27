@@ -23,13 +23,13 @@ module LodgingsHelper
 
   def truncated_description(description)
     return unless description.present?
-    return description.truncate(600) if truncate_description?(description)
+    return description.truncate(300) if truncate_description?(description)
     description
   end
 
   def truncate_description?(description)
     return false unless description.present?
-    description.split(' ').length > 600
+    description.split(' ').length > 300
   end
 
   def no_of_adults(adults)
