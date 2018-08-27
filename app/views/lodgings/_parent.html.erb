@@ -22,16 +22,22 @@
         </figure>
       <% end %>
     </div>
+    
+    </div>
+    </div>
+    </div>
 
-    <div class="card border-default bg-white box-shadow container padding-bottom-2x pt-5 mb-1">
+    <div class="bg-white padding-bottom-3x pt-5 mb-1">
+      <div class="container">
       <div class="card-body col-md-8">
         <h3 class="card-title"><%= @lodging.name %></h3>
 
-        <p class="text-sm mb-4">
+        <p class="text-sm col-md-4">
           <div id="lodging-description">
-            <%= @lodging.description.try(:html_safe) %>
+            <%= @lodging.summary.try(:html_safe) %>
           </div>
         </p>
+        </div>
 
 <!--         <%# if truncate_description?(@lodging.description) %>
           <a class="btn btn-outline-secondary btn-block btn-read-more" href="#" data-truncated="<%= truncated_description(@lodging.description) %>" data-actual="<%= @lodging.description %>" data-target="#lodging-description">
@@ -41,11 +47,17 @@
       </div>
     </div>
 
+    
+  <!-- Product Gallery-->
+  <div class="container">
+    <div class="col-md-8 padding-top-2x mb-30">
     <div class="mb-30">
       <div class="lodging-children">
+        <h3 class="card-title">Available</h3>
         <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
       </div>
     </div>
+  
 
     <%= render 'shared_content' %>
   </div>
@@ -55,4 +67,6 @@
       <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
     </div>
   </div>
+</div>
+ </div>
 </div>
