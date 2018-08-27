@@ -69,7 +69,7 @@
 </div>
 
 <%= content_for :js_init do %>
-  $(".input-spinner").InputSpinner();
+  GuestDropdown.init();
   Lodging.read_more()
   initPhotoSwipeFromDOM('.lodging-gallery');
   initDatePicker();
