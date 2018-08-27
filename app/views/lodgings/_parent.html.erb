@@ -1,6 +1,6 @@
 <div class="row">
   <!-- Product Gallery-->
-  <div class="col-md-8 mb-30 scrollable-content">
+  <div class="col-md-8 mb-30">
     <div class="gallery-control">
       <figure itemprop="associatedMedia" itemscope>
         <a itemprop="contentUrl">
@@ -32,7 +32,7 @@
     <%= render 'shared_content' %>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-4 fixed">
     <div class="reservation-parent-form">
       <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
     </div>
