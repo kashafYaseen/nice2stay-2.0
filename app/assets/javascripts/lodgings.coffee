@@ -68,6 +68,9 @@
     $('.btn-calculate-bill').click (e) ->
       e.preventDefault()
       Lodging.calculate_bill($(this).data('lodging-ids'))
+      if !$('#standalone').val()
+        $('.lodging-children').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
+
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->
