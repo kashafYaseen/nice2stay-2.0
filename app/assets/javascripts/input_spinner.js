@@ -156,7 +156,7 @@
     element.addEventListener("mousedown", function(e) {
       e.preventDefault();
       callback(e);
-      if ($(this).parents('form').attr('id') != undefined) {
+      if ($(this).parents('form').attr('id') != undefined && !$('#standalone').val()) {
         $('.adults').val($('#reservation_adults').val());
         $('.children').val($('#reservation_children').val());
         $('.infants').val($('#reservation_infants').val());
