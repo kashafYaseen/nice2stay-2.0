@@ -52,21 +52,25 @@
     $('.submit-filters').click ->
       $('#loader').show();
 
-  Lodging.calculate_bill = ->
+  Lodging.calculate_bill = (lodging_ids) ->
+    for lodging_id in lodging_ids
+      values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
+                $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
+                $("#infants_#{lodging_id}").val(), lodging_id]
+
+      if values.some(check_values)
+        $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
+        $("#bill-#{lodging_id}").text('')
+      else
+        display_bill(values, lodging_id)
+
+  Lodging.init_bill_calculation = ->
     $('.btn-calculate-bill').click (e) ->
       e.preventDefault()
-      lodging_ids = $(this).data('lodging-ids')
+      Lodging.calculate_bill($(this).data('lodging-ids'))
+      if !$('#standalone').val()
+        $('.lodging-children').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
 
-      for lodging_id in lodging_ids
-        values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
-                  $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
-                  $("#infants_#{lodging_id}").val(), lodging_id]
-
-        if values.some(check_values)
-          $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
-          $("#bill-#{lodging_id}").text('')
-        else
-          display_bill(values, lodging_id)
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->

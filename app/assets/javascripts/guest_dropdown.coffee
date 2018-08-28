@@ -11,8 +11,8 @@
     $('.guests-dropdown').on 'hide.bs.dropdown', (e) ->
       update_text()
 
-    $('.guests-dropdown .submit-filters').click ->
-      $(this).dropdown("toggle")
+    $('.guests-dropdown .submit-filters, .guests-dropdown .btn-calculate-bill').click ->
+      $('.guests-dropdown').dropdown("toggle")
 
     $('.types-dropdown .dropdown-menu').click (e) ->
       e.stopPropagation()
@@ -24,9 +24,9 @@
       $(this).dropdown("toggle")
 
   update_text = ->
-    adults = $('.guests-dropdown #adults, .guests-dropdown #reservation_adults').val()
-    children = $('.guests-dropdown #children, .guests-dropdown #reservation_children').val()
-    infants = $('.guests-dropdown #infants, .guests-dropdown #reservation_infants').val()
+    adults = $(".guests-dropdown .adults").val()
+    children = $(".guests-dropdown .children").val()
+    infants = $(".guests-dropdown .infants").val()
     guests = ""
     if adults then guests += "#{adults} #{if adults > 1 then 'adults' else 'adult'}"
     if children then guests += "#{if adults then ', ' else ' '} #{children} #{if children > 1 then 'children' else 'child'}"

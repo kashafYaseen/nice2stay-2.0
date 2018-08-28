@@ -58,6 +58,10 @@
       date_two_selected(val) {
         this.check_out = val
         $('.check_out').val(val);
+
+        if ($('#standalone').val()) {
+          Lodging.calculate_bill([this.lodging_id])
+        }
       },
       get_yesterday() {
         var d = new Date();
