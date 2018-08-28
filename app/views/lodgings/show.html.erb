@@ -2,9 +2,7 @@
 
 <div class="bg-secondary pb-4 padding-top-1x">
   <% if @lodging.as_standalone? %>
-    <div class="container">
-      <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-    </div>
+    <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
   <% else %>
     <%= render 'parent', lodging: @lodging, reservation: @reservation %>
   <% end %>

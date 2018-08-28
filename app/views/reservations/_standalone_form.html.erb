@@ -12,40 +12,42 @@
 
     <%= form_for reservation, url: reservations_path, remote: true do |f| %>
       <div class="row">
-        <div class="col-md-7" data-lodging-id="<%= lodging.id %>"
-             data-disabled-dates="<%= lodging.not_available_on %>">
-          <div class='reservation-datepicker'></div>
-        </div>
+        <div class="col-md-12">
+          <div class="dropdown guests-dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title">Guest</span>
+            </button>
 
-        <div class="dropdown guests-dropdown mb-3">
-          <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="title">Guest</span>
-          </button>
+            <%= form_for reservation, url: reservations_path, remote: true do |f| %>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-item">
+                  <label>Adults</label>
+                  <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner' %>
+                </div>
 
-          <%= form_for reservation, url: reservations_path, remote: true do |f| %>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <div class="dropdown-item">
-                <label>Adults</label>
-                <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner' %>
-              </div>
+                <div class="dropdown-item">
+                  <label>Children</label>
+                  <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner' %>
+                </div>
 
-              <div class="dropdown-item">
-                <label>Children</label>
-                <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner' %>
-              </div>
+                <div class="dropdown-item">
+                  <label>Infants</label>
+                  <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner' %>
+                </div>
 
-              <div class="dropdown-item">
-                <label>Infants</label>
-                <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner' %>
-              </div>
+                <%= f.hidden_field :lodging_id, value: lodging.id %>
+              <% end %>
+            </div>
+          </div>
 
-              <%= f.hidden_field :lodging_id, value: lodging.id %>
-            <% end %>
+          <div data-lodging-id="<%= lodging.id %>"
+               data-disabled-dates="<%= lodging.not_available_on %>">
+            <div class='reservation-datepicker'></div>
           </div>
         </div>
       </div>
 
-      <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
+      <%= f.submit 'Add to Cart', class: "btn btn-primary btn-sm col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
     <% end %>
 
     <%= render 'wishlists/form', lodging: lodging %>
