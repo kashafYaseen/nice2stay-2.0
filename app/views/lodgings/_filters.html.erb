@@ -1,7 +1,7 @@
 <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
   <div class="row">
-    <div class='col-md-2'>
+    <div class="col-md-2">
       <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
         <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left">
           <span class="text-muted mr-2 lodgings-heading">
@@ -11,26 +11,9 @@
       </div>
     </div>
 
-    <div class="price-dropdown dropdown col-md-2">
-      <button class="btn <%= params[:order].blank? ? 'btn-outline-secondary' : 'btn btn-outline-primary' %> dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="title"><%= render_sort_text %></span>
-      </button>
+    <div id="datepicker"></div>
 
-      <div class="dropdown-menu" aria-labelledby="PriceSortFilter">
-        <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
-        <a class="dropdown-item highest-price" href="#">Highest Price</a>
-        <%= hidden_field_tag :order, params[:order] %>
-      </div>
-    </div>
-
-    <div class='col-md-2'>
-      <div class='datepicker'></div>
-      <ul>
-        <div id='datepicker'></div>
-      </ul>
-    </div>
-
-    <div class="dropdown guests-dropdown col-md-2">
+    <div class="dropdown guests-dropdown">
       <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="title">Guest</span>
       </button>
@@ -57,7 +40,19 @@
       </div>
     </div>
 
-    <div class="dropdown types-dropdown col-md-2">
+    <div class="price-dropdown dropdown">
+      <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="title"><%= render_sort_text %></span>
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="PriceSortFilter">
+        <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
+        <a class="dropdown-item highest-price" href="#">Highest Price</a>
+        <%= hidden_field_tag :order, params[:order] %>
+      </div>
+    </div>
+
+    <div class="dropdown types-dropdown">
       <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="title">Accommodation Type</span>
       </button>
