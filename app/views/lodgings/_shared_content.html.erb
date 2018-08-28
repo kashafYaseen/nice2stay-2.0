@@ -1,42 +1,61 @@
-<div class="padding-bottom-3x pt-5 mb-1">
-  <!-- Details-->
-  <div class="row pt-2">
-    <div class="col-md-8">
-      <h3>Specifications</h3>
-      <% if lodging.specifications.present? %>
-        <ul class="text-sm mb-4">
-          <%= render lodging.specifications %>
-        </ul>
-      <% else %>
-        <p>No specifications were provided.</p>
-      <% end %>
-
-      <h5><%= lodging.owner_full_name %></h5>
-      <div class="col-sm-4">
-      </div>
-    </div>
-
+<div class="container">
+  <div class="col-md-8 padding-top-2x mb-30">
     <div class="col-md-12 margin-bottom-2x">
-      <h6 class="text-muted text-normal text-uppercase">Default Map</h6>
+      <h3 class="card-title">Location</h3>
       <hr class="margin-bottom-1x">
       <div class="google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
     </div>
+  </div>
+</div>
 
-    <div class="row mt-30">
-      <div class="col-md-8 mb-4">
-        <%= render 'reviews/rating', lodging: lodging %>
+<div class="bg-white padding-bottom-3x pt-5 mb-1">
+  <div class="container">
+    <div class="card-body col-md-8">
+      <h3 class="card-title">Reviews</h3>
+      <%= render 'reviews/rating', lodging: lodging %>
+
+      <div class="padding-top-2x"></div>
+      <!-- Review-->
+      <div class="comment">
+        <div class="comment-author-ava"><img src="img/reviews/02.jpg" alt="Comment author"></div>
+        <div class="comment-body">
+          <div class="comment-header d-flex flex-wrap justify-content-between">
+            <h4 class="comment-title">My husband love his new...</h4>
+            <div class="mb-2">
+              <div class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i></div>
+            </div>
+          </div>
+          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+          <div class="comment-footer"><span class="comment-meta">Maggie Scott</span></div>
+        </div>
       </div>
-
-      <div class="col-md-8">
-        <h3 class="padding-bottom-1x">Latest Reviews</h3>
-
-        <% if @reviews.present? %>
-          <%= render @reviews %>
-          <%= paginate @reviews %>
-        <% else %>
-          <p>Lodging does not have any review yet.</p>
-        <% end %>
+      <!-- Review-->
+      <div class="comment">
+        <div class="comment-author-ava"><img src="img/reviews/03.jpg" alt="Comment author"></div>
+        <div class="comment-body">
+          <div class="comment-header d-flex flex-wrap justify-content-between">
+            <h4 class="comment-title">Awesome quality for the price</h4>
+            <div class="mb-2">
+              <div class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star_border"></i></div>
+            </div>
+          </div>
+          <p class="comment-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>
+          <div class="comment-footer"><span class="comment-meta">Jacob Hammond</span></div>
+        </div>
       </div>
+      <!-- View All Button-->
+      <a class="btn btn-outline-secondary btn-block" href="#">View All Reviews</a>
     </div>
   </div>
+</div>
+
+<div class="col-md-8">
+  <h3 class="padding-bottom-1x">Latest Reviews</h3>
+
+  <% if @reviews.present? %>
+    <%= render @reviews %>
+    <%= paginate @reviews %>
+  <% else %>
+    <p>Lodging does not have any review yet.</p>
+  <% end %>
 </div>

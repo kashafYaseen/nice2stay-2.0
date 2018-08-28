@@ -30,7 +30,8 @@
 <div class="bg-white padding-bottom-3x pt-5 mb-1">
   <div class="container">
     <div class="card-body col-md-8">
-      <h3 class="card-title"><%= lodging.name %></h3>
+      <h3 class="card-title"><%= lodging.h1 %></h3>
+      <h6 class="card-title"><%= lodging.h2 %></h6>
       <p class="text-sm col-md-4">
         <div id="lodging-description">
           <%= lodging.summary.try(:html_safe) %>
@@ -40,14 +41,10 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="col-md-8 padding-top-2x mb-30">
-    <%= render 'shared_content', lodging: lodging %>
-  </div>
+<%= render 'shared_content', lodging: lodging %>
 
-  <div class="col-md-4 fixed">
-    <div class="reservation-standalone-form">
-      <%= render 'reservations/standalone_form', lodging: lodging, reservation: reservation %>
-    </div>
+<div class="col-md-4 fixed">
+  <div class="reservation-standalone-form">
+    <%= render 'reservations/standalone_form', lodging: lodging, reservation: reservation %>
   </div>
 </div>

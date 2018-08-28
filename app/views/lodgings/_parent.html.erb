@@ -30,7 +30,8 @@
 <div class="bg-white padding-bottom-3x pt-5 mb-1">
   <div class="container">
     <div class="card-body col-md-8">
-      <h3 class="card-title"><%= lodging.name %></h3>
+      <h3 class="card-title"><%= lodging.h1 %></h3>
+      <h5 class="card-title"><%= lodging.h2 %></h5>
       <p class="text-sm col-md-4">
         <div id="lodging-description">
           <%= lodging.summary.try(:html_safe) %>
@@ -49,13 +50,13 @@
         <%= render partial: 'child_details_modal', collection: lodging.lodging_children, as: :lodging  %>
       </div>
     </div>
-
-    <%= render 'shared_content', lodging: lodging %>
   </div>
+</div>
 
-  <div class="col-md-4 fixed">
-    <div class="reservation-parent-form">
-      <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation %>
-    </div>
+<%= render 'shared_content', lodging: lodging %>
+
+<div class="col-md-4 fixed">
+  <div class="reservation-parent-form">
+    <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation %>
   </div>
 </div>
