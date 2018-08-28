@@ -49,13 +49,13 @@
         <%= render partial: 'reservations/child_form', collection: lodging.lodging_children, as: :lodging %>
       </div>
     </div>
-
-    <%= render 'shared_content', lodging: lodging %>
   </div>
+</div>
 
-  <div class="col-md-4 fixed">
-    <div class="reservation-parent-form">
-      <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation %>
-    </div>
+<%= render 'shared_content', lodging: lodging %>
+
+<div class="col-md-4 fixed">
+  <div class="reservation-parent-form">
+    <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation %>
   </div>
 </div>

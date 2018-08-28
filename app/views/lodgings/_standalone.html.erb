@@ -41,14 +41,10 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="col-md-8 padding-top-2x mb-30">
-    <%= render 'shared_content', lodging: lodging %>
-  </div>
+<%= render 'shared_content', lodging: lodging %>
 
-  <div class="col-md-4 fixed">
-    <div class="reservation-standalone-form">
-      <%= render 'reservations/standalone_form', lodging: lodging, reservation: reservation %>
-    </div>
+<div class="col-md-4 fixed">
+  <div class="reservation-standalone-form">
+    <%= render 'reservations/standalone_form', lodging: lodging, reservation: reservation %>
   </div>
 </div>
