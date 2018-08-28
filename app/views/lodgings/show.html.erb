@@ -1,13 +1,13 @@
 <%= render 'shared/photoswipe' %>
 
 <div class="bg-secondary pb-4 padding-top-1x">
-  <div class="container">
-    <% if @lodging.as_standalone? %>
+  <% if @lodging.as_standalone? %>
+    <div class="container">
       <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-    <% else %>
-      <%= render 'parent', lodging: @lodging, reservation: @reservation %>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <%= render 'parent', lodging: @lodging, reservation: @reservation %>
+  <% end %>
 </div>
 
 <%= content_for :js_init do %>
