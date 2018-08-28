@@ -54,6 +54,13 @@ module LodgingsHelper
     end
   end
 
+  def render_modal_slider_images lodging, options = {}
+    return image_tag image_path('default-lodging.png'), options unless lodging.images.present?
+    tags = ''
+    lodging.images.each { |image_path|  tags << image_tag(image_path, options) }
+    tags.html_safe
+  end
+
   def render_sort_text
     return 'Sort By' if params[:order].blank?
     return 'Highest to Lowest' if params[:order] == 'price_desc'

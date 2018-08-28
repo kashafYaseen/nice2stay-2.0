@@ -46,6 +46,7 @@
       <div class="lodging-children">
         <h3 class="card-title">Available</h3>
         <%= render partial: 'reservations/child_form', collection: lodging.lodging_children, as: :lodging %>
+        <%= render partial: 'child_details_modal', collection: lodging.lodging_children, as: :lodging  %>
       </div>
     </div>
 
