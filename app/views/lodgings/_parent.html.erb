@@ -1,63 +1,53 @@
-<div class="row">
-  <!-- Product Gallery-->
-  <div class="col-md-8 mb-30">
-    <div class="gallery-control">
-      <figure itemprop="associatedMedia" itemscope>
-        <a itemprop="contentUrl">
-          <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
-        </a>
-        <figcaption itemprop="caption description">
-          <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="lodging-gallery scrollable-gallery" itemscope>
-      <% @lodging.images.each_with_index do |image_url, index| %>
-        <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index > 7 %>">
-          <a href="<%= image_url %>" itemprop="contentUrl">
-            <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+<div class="container">
+  <div class="row">
+    <!-- Product Gallery-->
+    <div class="col-md-8 mb-30">
+      <div class="gallery-control">
+        <figure itemprop="associatedMedia" itemscope>
+          <a itemprop="contentUrl">
+            <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
           </a>
-          <figcaption itemprop="caption description"><%= index %></figcaption>
+          <figcaption itemprop="caption description">
+            <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
+          </figcaption>
         </figure>
-      <% end %>
-    </div>
-    
-    </div>
-    </div>
-    </div>
+      </div>
 
-    <div class="bg-white padding-bottom-3x pt-5 mb-1">
-      <div class="container">
-      <div class="card-body col-md-8">
-        <h3 class="card-title"><%= @lodging.name %></h3>
-
-        <p class="text-sm col-md-4">
-          <div id="lodging-description">
-            <%= @lodging.summary.try(:html_safe) %>
-          </div>
-        </p>
-        </div>
-
-<!--         <%# if truncate_description?(@lodging.description) %>
-          <a class="btn btn-outline-secondary btn-block btn-read-more" href="#" data-truncated="<%= truncated_description(@lodging.description) %>" data-actual="<%= @lodging.description %>" data-target="#lodging-description">
-            Read more
-          </a>
-        <%# end %> -->
+      <div class="lodging-gallery scrollable-gallery" itemscope>
+        <% @lodging.images.each_with_index do |image_url, index| %>
+          <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index > 7 %>">
+            <a href="<%= image_url %>" itemprop="contentUrl">
+              <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+            </a>
+            <figcaption itemprop="caption description"><%= index %></figcaption>
+          </figure>
+        <% end %>
       </div>
     </div>
+  </div>
+</div>
 
-    
-  <!-- Product Gallery-->
+<div class="bg-white padding-bottom-3x pt-5 mb-1">
   <div class="container">
-    <div class="col-md-8 padding-top-2x mb-30">
+    <div class="card-body col-md-8">
+      <h3 class="card-title"><%= @lodging.name %></h3>
+      <p class="text-sm col-md-4">
+        <div id="lodging-description">
+          <%= @lodging.summary.try(:html_safe) %>
+        </div>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-8 padding-top-2x mb-30">
     <div class="mb-30">
       <div class="lodging-children">
         <h3 class="card-title">Available</h3>
         <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
       </div>
     </div>
-  
 
     <%= render 'shared_content' %>
   </div>
@@ -67,6 +57,4 @@
       <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
     </div>
   </div>
-</div>
- </div>
 </div>
