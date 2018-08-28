@@ -15,7 +15,7 @@
 
       <div class="lodging-gallery scrollable-gallery" itemscope>
         <% lodging.images.each_with_index do |image_url, index| %>
-          <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index > 7 %>">
+          <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index >= 4 %>">
             <a href="<%= image_url %>" itemprop="contentUrl">
               <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= lodging.name %>" class="img-fluid img-thumbnail" />
             </a>
