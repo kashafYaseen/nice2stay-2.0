@@ -1,3 +1,4 @@
+
 <div class="card border-default bg-white pt-2 box-shadow mt-2">
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
@@ -10,16 +11,20 @@
     </div>
 
     <div class="row">
+
       <div class="col-md-12">
         <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
           <div class="row">
             <div class="col-md-4">
               <%= render_image_tag lodging %>
+              <figcaption itemprop="caption description">
+                <input type="button" name="view-more-info" value="more information" class="btn btn-white btn-sm">
+              </figcaption>
             </div>
 
             <div class="col-md-4 lodging">
-              <h6><%= lodging.child_name %></h6>
+              <h5><%= lodging.child_name %></h5>
               <% [:prebooking, :option].each do |status| %>
                 <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                 <label><%= status %></label>

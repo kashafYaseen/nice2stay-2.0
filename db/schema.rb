@@ -234,8 +234,6 @@ ActiveRecord::Schema.define(version: 2018_08_15_125815) do
     t.float "rent", default: 0.0
     t.float "discount", default: 0.0
     t.float "cleaning_cost", default: 0.0
-    t.integer "booking_status", default: 0
-    t.integer "request_status", default: 0
     t.integer "crm_booking_id"
     t.boolean "in_cart", default: false
     t.bigint "lodging_id"
