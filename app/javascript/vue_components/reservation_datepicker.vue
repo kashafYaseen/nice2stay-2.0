@@ -1,17 +1,19 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary btn-sm" id="datepicker-trigger">Dates {{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary w-100" id="datepicker-trigger">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
         :trigger-element-id="'datepicker-trigger'"
         :date-one="check_in"
         :date-two="check_out"
         @date-one-selected="date_one_selected"
         @date-two-selected="date_two_selected"
-        :inline="true"
+        @apply="apply"
+        :inline="false"
         :months-to-show="1"
         :disabled-dates="disabled_dates"
         :min-date="this.current_date.toString()"
+        :show-action-buttons="true"
       ></airbnb-style-datepicker>
     </div>
   </div>
@@ -43,12 +45,24 @@
     methods: {
       formatDates(dateOne, dateTwo) {
         let formattedDates = ''
+
+        if (!dateTwo && !dateOne){
+          formattedDates = 'Check in - Check out'
+          $('#datepicker-trigger').addClass('btn-outline-primary');
+          $('#datepicker-trigger').removeClass('btn-primary');
+        }
+
         if (dateOne) {
-          formattedDates = format(dateOne, this.dateFormat)
+          formattedDates = format(dateOne, this.dateFormat) + ' - Check out'
+          $('#datepicker-trigger').removeClass('btn-outline-primary');
+          $('#datepicker-trigger').addClass('btn-primary');
         }
+
         if (dateTwo) {
-          formattedDates += ' - ' + format(dateTwo, this.dateFormat)
+          formattedDates = format(dateOne, this.dateFormat) + ' - ' + format(dateTwo, this.dateFormat)
         }
+
+        $('.sm-check-in-out').text(formattedDates);
         return formattedDates
       },
       date_one_selected(val) {
@@ -58,7 +72,8 @@
       date_two_selected(val) {
         this.check_out = val
         $('.check_out').val(val);
-
+      },
+      apply() {
         if ($('#standalone').val()) {
           Lodging.calculate_bill([this.lodging_id])
         }

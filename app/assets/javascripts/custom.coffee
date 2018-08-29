@@ -29,4 +29,14 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
+    $(window).resize ->
+      check_standalone_form()
+    check_standalone_form()
+
+  check_standalone_form = ->
+    if $('.standalone-modal-btn').is(':visible')
+      $('.reservation-standalone-form').remove()
+    else
+      $('.reservation-standalone-form-modal').remove()
+
 ).call this

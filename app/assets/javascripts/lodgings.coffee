@@ -15,17 +15,17 @@
         total = 0
         validate(values)
         $.each data.rates, (key, value) ->
-          result += "<b>€ #{key} x #{value} night</b></br>"
+          result += "<span class='float-left'>#{value} #{if value > 1 then 'nights' else 'night'}</span> <span class='float-right'><b>€#{key}/night</b></span></br><hr>"
           total += (key * value)
-
 
         if data.discount
           discount = total * data.discount/100
-          result += "<p>Discount #{data.discount}% : $#{discount}</p>"
+          result += "<span class='float-left'>Discount #{data.discount}%</span> <span class='float-right'><b>$#{discount}</b></span>"
           total -= discount
 
         if total > 0
-          result += "<p>total: #{total}</p>"
+          result += "<span class='float-left'><b>Total</b></span> <span class='float-right'><b>€#{total}</b></span>"
+          $('.sm-total').text("Price: $#{total}")
           $("#bill-#{lodging_id}").html(result)
         else
           $("#bill-#{lodging_id}").text('Lodging not available.')
@@ -69,8 +69,8 @@
       e.preventDefault()
       Lodging.calculate_bill($(this).data('lodging-ids'))
       if !$('#standalone').val()
-        $('.lodging-children').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
-
+        $('.children-scroll-section').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
+        $('#parent-form-modal').modal('hide')
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->

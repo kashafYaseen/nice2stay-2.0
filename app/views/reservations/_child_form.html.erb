@@ -43,7 +43,7 @@
               <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
 
 
-              <h5 class="text-normal" id="bill-<%= lodging.id %>"></h5>
+              <div class="text-dark line-height-2" id="bill-<%= lodging.id %>"></div>
 
               <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
               <% end %>
