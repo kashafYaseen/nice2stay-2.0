@@ -10,9 +10,16 @@
     </div>
 
     <div class="row">
+      <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
+           data-disabled-dates="<%= lodging.children_not_available_on %>">
+        <label class="mb-0 text-xs">Dates</label>
+        <div class="reservation-datepicker"></div>
+      </div>
+
       <div class="col-md-12">
+        <label class="mb-0 text-xs">Guests</label>
         <div class="dropdown guests-dropdown">
-          <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="title">Guest</span>
           </button>
 
@@ -38,11 +45,6 @@
             <% end %>
           </div>
         </div>
-      </div>
-
-      <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
-           data-disabled-dates="<%= lodging.children_not_available_on %>">
-        <div class="reservation-datepicker"></div>
       </div>
 
       <div class="col-md-12">
