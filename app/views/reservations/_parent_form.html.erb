@@ -10,39 +10,40 @@
     </div>
 
     <div class="row">
+      <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
+           data-disabled-dates="<%= lodging.children_not_available_on %>">
+        <label class="mb-0 text-xs">Dates</label>
+        <div class="reservation-datepicker"></div>
+      </div>
+
       <div class="col-md-12">
-        <div class="dropdown guests-dropdown">
-          <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <label class="mb-0 text-xs">Guests</label>
+        <div class="dropdown guests-dropdown" id="dropdown<%= id_sufix %>">
+          <button class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="title">Guest</span>
           </button>
 
-          <%= form_for reservation, url: reservations_path, remote: true do |f| %>
+          <%= form_for reservation, url: reservations_path, remote: true, html: {id: "new_reservation#{id_sufix}"} do |f| %>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <div class="dropdown-item">
                 <label>Adults</label>
-                <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner adults' %>
+                <%= f.number_field "adults#{id_sufix}", value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
               </div>
 
               <div class="dropdown-item">
                 <label>Children</label>
-                <%= f.number_field :children, value: f.object.children, min: 0, class: 'input-spinner children' %>
+                <%= f.number_field "children#{id_sufix}", value: f.object.children, min: 0, class: 'input-spinner parent-children children' %>
               </div>
 
               <div class="dropdown-item">
                 <label>Infants</label>
-                <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner infants' %>
+                <%= f.number_field "infants#{id_sufix}", value: f.object.infants, min: 0, class: 'input-spinner parent-infants infants' %>
               </div>
 
-              <%= f.hidden_field :lodging_id, value: lodging.id %>
-              <%= hidden_field_tag "calculate_bill", true %>
+              <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
             <% end %>
           </div>
         </div>
-      </div>
-
-      <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
-           data-disabled-dates="<%= lodging.children_not_available_on %>">
-        <div class="reservation-datepicker"></div>
       </div>
 
       <div class="col-md-12">

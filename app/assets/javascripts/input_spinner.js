@@ -157,9 +157,16 @@
       e.preventDefault();
       callback(e);
       if ($(this).parents('form').attr('id') != undefined && !$('#standalone').val()) {
-        $('.adults').val($('#reservation_adults').val());
-        $('.children').val($('#reservation_children').val());
-        $('.infants').val($('#reservation_infants').val());
+        if ($('#dropdown_modal').is(':visible')){
+          $('.adults').val($('#dropdown_modal .parent-adults').val());
+          $('.children').val($('#dropdown_modal .parent-children').val());
+          $('.infants').val($('#dropdown_modal .parent-infants').val());
+        }
+        else {
+          $('.adults').val($('.parent-adults').val());
+          $('.children').val($('.parent-children').val());
+          $('.infants').val($('.parent-infants').val());
+        }
       }
     });
 

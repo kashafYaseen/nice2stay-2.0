@@ -158,6 +158,27 @@ div.fixed {
   top: 90px;
 }
 
+div.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
 img.modal-slider-img {
   max-height: 505px;
+}
+
+div.line-height-2 {
+  line-height: 2;
+}
+
+input.autocomplete-field {
+  margin-top: -46px;
+  z-index: 1;
+}
+
+@media only screen and (max-width: 600px) {
+  div.homepage-actions-row {
+    margin: 0;
+  }
 }
