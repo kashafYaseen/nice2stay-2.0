@@ -25,6 +25,7 @@
 
         if total > 0
           result += "<span class='float-left'><b>Total</b></span> <span class='float-right'><b>€#{total}</b></span>"
+          $('.sm-total').text("Price: $#{total}")
           $("#bill-#{lodging_id}").html(result)
         else
           $("#bill-#{lodging_id}").text('Lodging not available.')
