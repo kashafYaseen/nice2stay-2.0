@@ -68,8 +68,8 @@
       e.preventDefault()
       Lodging.calculate_bill($(this).data('lodging-ids'))
       if !$('#standalone').val()
-        $('.lodging-children').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
-
+        $('.children-scroll-section').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
+        $('#parent-form-modal').modal('hide')
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->

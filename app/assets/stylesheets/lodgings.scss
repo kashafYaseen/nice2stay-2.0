@@ -158,6 +158,12 @@ div.fixed {
   top: 90px;
 }
 
+div.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
 img.modal-slider-img {
   max-height: 505px;
 }

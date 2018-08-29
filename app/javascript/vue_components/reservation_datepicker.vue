@@ -62,6 +62,7 @@
           formattedDates = format(dateOne, this.dateFormat) + ' - ' + format(dateTwo, this.dateFormat)
         }
 
+        $('.sm-check-in-out').text(formattedDates);
         return formattedDates
       },
       date_one_selected(val) {
