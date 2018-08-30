@@ -14,6 +14,7 @@ class Lodging < ApplicationRecord
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
 
   attr_accessor :check_in_day
+  attr_accessor :flexible_search
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -139,6 +140,10 @@ class Lodging < ApplicationRecord
     name.split('-').last.strip
   end
 
+  def flexible_search
+    @flexible_search || false
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|
@@ -150,9 +155,13 @@ class Lodging < ApplicationRecord
 
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).sort.uniq(&:available_on).pluck(:amount)
-      price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
-      price_list
+      if as_child?
+        return SearchFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights), self)
+      else
+        price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).sort.uniq(&:available_on).pluck(:amount)
+        price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
+        return price_list
+      end
     end
 
     def discount(params)

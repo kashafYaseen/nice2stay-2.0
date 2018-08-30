@@ -65,8 +65,10 @@ class LodgingsController < ApplicationController
   end
 
   def price_details
-    rates = @lodging.price_details(params[:values].split(','))
-    render json: { rates: rates.inject(Hash.new(0)){ |h, i| h[i]+=1; h }, discount: @lodging.discount_details(params[:values].split(',')) }
+    results = @lodging.price_details(params[:values].split(','))
+    @rates = results[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }
+    @search_params = results[:search_params]
+    @discount = @lodging.discount_details(params[:values].split(','))
   end
 
   def snippet_params

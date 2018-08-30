@@ -13,6 +13,13 @@
       success: (data) ->
         result = ""
         total = 0
+        if data.flexible
+          values[0] = data.search_params['check_in']
+          values[1] = data.search_params['check_out']
+          $("#check_in_#{lodging_id}").val(values[0])
+          $("#check_out_#{lodging_id}").val(values[1])
+          $("#flexible-search-#{lodging_id}").text("#{values[0]} - #{values[1]}")
+
         validate(values)
         $.each data.rates, (key, value) ->
           result += "<span class='float-left'>#{value} #{if value > 1 then 'nights' else 'night'}</span> <span class='float-right'><b>€#{key}/night</b></span></br><hr>"

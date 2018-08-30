@@ -29,6 +29,8 @@
                 <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                 <label><%= status %></label>
               <% end %>
+              <br><br>
+              <div id="flexible-search-<%= lodging.id %>"></div>
             </div>
 
             <div class="col-md-4">
