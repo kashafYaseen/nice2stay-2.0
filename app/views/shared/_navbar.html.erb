@@ -280,7 +280,7 @@
       <!-- Search Section-->
       <div class="toolbar-section" id="search">
         <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
-          <%= text_field_tag :query, params[:query], placeholder: "Type your search query or nothing", class: 'form-control autocomplete' %>
+          <%= text_field_tag :query, params[:query], placeholder: "Type your search query or nothing", class: 'form-control autocomplete', id: "navbar-autocomplete" %>
           <%= hidden_field_tag :adults, params[:adults], id: :dates_adults if params[:adults].present? %>
           <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
           <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
