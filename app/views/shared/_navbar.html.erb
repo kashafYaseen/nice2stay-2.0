@@ -9,19 +9,10 @@
   <!-- Main Navigation-->
   <nav class="site-menu">
     <ul>
-      <li><a href="index.html"><span>Home</span></a>
-        <ul class="sub-menu">
-          <li class="has-children"><a href="index.html"><span>Hero Slider</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="index.html"><img src="" alt="Hero Slider Home"></a></li>
-            </ul>
-          </li>
-          <li class="has-children"><a href="home-featured-categories.html"><span>Categories Grid</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="home-featured-categories.html"><img src="" alt="Categories Grid Home"></a></li>
-            </ul>
-          </li>
-        </ul>
+      <li>
+        <%= link_to root_path do %>
+          <span>Home</span>
+        <% end %>
       </li>
 
      
