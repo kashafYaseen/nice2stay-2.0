@@ -16,6 +16,11 @@
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
 
+.homepage-actions-row {
+  padding-left: 3%;
+  padding-top: 1%;
+}
+
 .sub-menu > li {
   display: block;
   position: relative;
@@ -30,11 +35,10 @@
   background-size: cover;
   color: #fff;
 }
+
 .centered-form .panel{
   background: #ccc;
 }
-
-
 
 .sub-menu > li > a {
   display: block;

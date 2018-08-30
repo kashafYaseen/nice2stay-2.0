@@ -9,160 +9,56 @@
   <!-- Main Navigation-->
   <nav class="site-menu">
     <ul>
-      <li><a href="index.html"><span>Home</span></a>
+      <li>
+        <%= link_to root_path do %>
+          <span>Home</span>
+        <% end %>
+      </li>
+
+      <li><a href="blog.html"><span>Advies</span></a>
         <ul class="sub-menu">
-          <li class="has-children"><a href="index.html"><span>Hero Slider</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="index.html"><img src="" alt="Hero Slider Home"></a></li>
-            </ul>
-          </li>
-          <li class="has-children"><a href="home-featured-categories.html"><span>Categories Grid</span></a>
-            <ul class="sub-menu w-400 p-0">
-              <li><a class="p-0" href="home-featured-categories.html"><img src="" alt="Categories Grid Home"></a></li>
-            </ul>
-          </li>
+          <li><a href="blog.html">Blog List</a></li>
+          <li><a href="blog-single.html">Single Post</a></li>
         </ul>
       </li>
 
-      <li class="active"><a href="shop-boxed-ls.html"><span>Shop</span></a>
+      <li><a href="#"><span>Nice2stay</span></a>
         <ul class="sub-menu">
-            <li><a href="shop-categories.html">Shop Categories</a></li>
-          <li class="has-children"><a href="shop-boxed-ls.html"><span>Shop Layout</span></a>
-            <ul class="sub-menu">
-                <li><a href="shop-boxed-ls.html">Boxed Left Sidebar</a></li>
-                <li><a href="shop-boxed-rs.html">Boxed Right Sidebar</a></li>
-                <li><a href="shop-boxed-ft.html">Boxed Filters Top</a></li>
-                <li><a href="shop-full-ls.html">Full Width Left Sidebar</a></li>
-                <li><a href="shop-full-rs.html">Full Width Right Sidebar</a></li>
-                <li><a href="shop-full-ft.html">Full Width Filters Top</a></li>
-            </ul>
-          </li>
-
-            <li><a href="shop-single.html">Single Product</a></li>
-            <li class="active"><a href="cart.html">Cart</a></li>
-          <li class="has-children"><a href="checkout-address.html"><span>Checkout</span></a>
-            <ul class="sub-menu">
-                <li><a href="checkout-address.html">Address</a></li>
-                <li><a href="checkout-shipping.html">Shipping</a></li>
-                <li><a href="checkout-payment.html">Payment</a></li>
-                <li><a href="checkout-review.html">Review</a></li>
-                <li><a href="checkout-complete.html">Complete</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="#"><span> Mega Menu</span></a>
-        <ul class="mega-menu">
-          <li><span class="mega-menu-title text-uppercase">Furniture</span>
-            <ul>
-              <li><a href="#">Desk &amp; Benching</a></li>
-              <li><a href="#">Adjustable Desks</a></li>
-              <li><a href="#">File Cabinets</a></li>
-              <li><a href="#">Office Chairs</a></li>
-              <li><a href="#">Tables</a></li>
-              <li><a href="#">Storage Units</a></li>
-              <li><a href="#">Accessories</a></li>
-            </ul>
-          </li>
-          <li><span class="mega-menu-title text-uppercase">Lighting</span>
-            <ul>
-              <li><a href="#">Ceiling Lights</a></li>
-              <li><a href="#">Kitchen Lighting</a></li>
-              <li><a href="#">Lamps</a></li>
-              <li><a href="#">Wall Lights</a></li>
-              <li><a href="#">Outdoor Lights</a></li>
-              <li><a href="#">Dimmers &amp; Controls</a></li>
-              <li><a href="#">Light Bulbs</a></li>
-            </ul>
-          </li>
-          <li><span class="mega-menu-title text-uppercase">Shop by Color</span>
-            <div class="widget widget-colors">
-              <ul>
-                <li><a href="#"><span class="color" style="background-color: #fff; border: 1px solid #dcdcdc;"></span>White</a></li>
-                <li><a href="#"><span class="color" style="background-color: #93c4ef;"></span>Blue</a></li>
-                <li><a href="#"><span class="color" style="background-color: #a7c04d;"></span>Green</a></li>
-                <li><a href="#"><span class="color" style="background-color: #ef0568;"></span>Red</a></li>
-                <li><a href="#"><span class="color" style="background-color: #ffce2b;"></span>Yellow</a></li>
-                <li><a href="#"><span class="color" style="background-color: #b5651d;"></span>Brown</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="banner-column"><a href="#" style="background-image: url();"></a></li>
-        </ul>
-      </li>
-      <li><a href="account-orders.html"><span>Account</span></a>
-        <ul class="sub-menu">
-            <li><a href="account-orders.html">Orders List</a></li>
-            <li><a href="account-wishlist.html">Wishlist</a></li>
-            <li><a href="account-profile.html">Profile Page</a></li>
-            <li><a href="account-address.html">Contact / Shipping Address</a></li>
-            <li><a href="account-tickets.html">My Tickets</a></li>
-            <li><a href="account-single-ticket.html">Single Ticket</a></li>
-            <li><a href="account-password-recovery.html">Password Recovery</a></li>
-        </ul>
-      </li>
-      <li><a href="blog.html"><span>Blog List</span></a>
-        <ul class="sub-menu">
-            <li><a href="blog.html">Blog List</a></li>
-            <li><a href="blog-single.html">Single Post</a></li>
-        </ul>
-      </li>
-      <li><a href="#"><span>Pages</span></a>
-        <ul class="sub-menu">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contacts.html">Contacts</a></li>
-            <li><a href="faq.html">Help / FAQ</a></li>
-            <li><a href="order-tracking.html">Order Tracking</a></li>
-            <li><a href="404.html">404 Not Found</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contacts.html">Contacts</a></li>
+          <li><a href="faq.html">Help / FAQ</a></li>
+          <li><a href="order-tracking.html">Order Tracking</a></li>
+          <li><a href="404.html">404 Not Found</a></li>
+          <li><a href="coming-soon.html">Coming Soon</a></li>
           <li><a class="text-danger" href="docs/dev-setup.html">Documentation</a></li>
         </ul>
       </li>
-      <li><a href="components/accordion.html"><span>Components</span></a>
+
+       <li><a href="#"><span>Landen & regio's</span></a>
         <ul class="mega-menu">
-          <li><span class="mega-menu-title">A - F</span>
+          <% @countries.each do |country| %>
+            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
               <ul>
-                <li><a href="components/accordion.html">Accordion</a></li>
-                <li><a href="components/alerts.html">Alerts</a></li>
-                <li><a href="components/buttons.html">Buttons</a></li>
-                <li><a href="components/cards.html">Cards</a></li>
-                <li><a href="components/carousel.html">Carousel</a></li>
-                <li><a href="components/countdown.html">Countdown</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
+                <% country.regions.each do | region | %>
+                  <li><%= link_to region.name, country_region_path(country, region) %></li>
+                <% end %>
               </ul>
-          </li>
-          <li><span class="mega-menu-title">G - M</span>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+
+      <li><a href="#"><span>collecties</span></a>
+        <ul class="mega-menu">
+          <% @countries.each do |country| %>
+            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
               <ul>
-                <li><a href="components/gallery.html">Gallery</a></li>
-                <li><a href="components/google-maps.html">Google Maps</a></li>
-                <li><a href="components/images.html">Images &amp; Figures</a></li>
-                <li><a href="components/list-group.html">List Group</a></li>
-                <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
-                <li><a href="components/media.html">Media Object</a></li>
-                <li><a href="components/modal.html">Modal</a></li>
+                <% country.regions.each do | region | %>
+                  <li><%= link_to region.name, country_region_path(country, region) %></li>
+                <% end %>
               </ul>
-          </li>
-          <li><span class="mega-menu-title">P - T</span>
-              <ul>
-                <li><a href="components/pagination.html">Pagination</a></li>
-                <li><a href="components/pills.html">Pills</a></li>
-                <li><a href="components/progress-bars.html">Progress Bars</a></li>
-                <li><a href="components/shop-items.html">Shop Items</a></li>
-                <li><a href="components/steps.html">Steps</a></li>
-                <li><a href="components/tables.html">Tables</a></li>
-                <li><a href="components/tabs.html">Tabs</a></li>
-              </ul>
-          </li>
-          <li><span class="mega-menu-title">T - W</span>
-              <ul>
-                <li><a href="components/team.html">Team</a></li>
-                <li><a href="components/toasts.html">Toast Notifications</a></li>
-                <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
-                <li><a href="components/typography.html">Typography</a></li>
-                <li><a href="components/video-player.html">Video Player</a></li>
-                <li><a href="components/widgets.html">Widgets</a></li>
-              </ul>
-          </li>
+            </li>
+          <% end %>
         </ul>
       </li>
     </ul>
@@ -239,23 +135,23 @@
                   <li><a href="shop-categories.html">Shop Categories</a></li>
                 <li class="has-children"><span><a href="shop-boxed-ls.html"><span>Shop Layout</span></a><span class="sub-menu-toggle"></span></span>
                   <ul class="slideable-submenu">
-                      <li><a href="shop-boxed-ls.html">Boxed Left Sidebar</a></li>
-                      <li><a href="shop-boxed-rs.html">Boxed Right Sidebar</a></li>
-                      <li><a href="shop-boxed-ft.html">Boxed Filters Top</a></li>
-                      <li><a href="shop-full-ls.html">Full Width Left Sidebar</a></li>
-                      <li><a href="shop-full-rs.html">Full Width Right Sidebar</a></li>
-                      <li><a href="shop-full-ft.html">Full Width Filters Top</a></li>
+                    <li><a href="shop-boxed-ls.html">Boxed Left Sidebar</a></li>
+                    <li><a href="shop-boxed-rs.html">Boxed Right Sidebar</a></li>
+                    <li><a href="shop-boxed-ft.html">Boxed Filters Top</a></li>
+                    <li><a href="shop-full-ls.html">Full Width Left Sidebar</a></li>
+                    <li><a href="shop-full-rs.html">Full Width Right Sidebar</a></li>
+                    <li><a href="shop-full-ft.html">Full Width Filters Top</a></li>
                   </ul>
                 </li>
                   <li><a href="shop-single.html">Single Product</a></li>
                   <li class="active"><a href="cart.html">Cart</a></li>
                 <li class="has-children"><span><a href="checkout-address.html"><span>Checkout</span></a><span class="sub-menu-toggle"></span></span>
                   <ul class="slideable-submenu">
-                      <li><a href="checkout-address.html">Address</a></li>
-                      <li><a href="checkout-shipping.html">Shipping</a></li>
-                      <li><a href="checkout-payment.html">Payment</a></li>
-                      <li><a href="checkout-review.html">Review</a></li>
-                      <li><a href="checkout-complete.html">Complete</a></li>
+                    <li><a href="checkout-address.html">Address</a></li>
+                    <li><a href="checkout-shipping.html">Shipping</a></li>
+                    <li><a href="checkout-payment.html">Payment</a></li>
+                    <li><a href="checkout-review.html">Review</a></li>
+                    <li><a href="checkout-complete.html">Complete</a></li>
                   </ul>
                 </li>
               </ul>
@@ -349,33 +245,33 @@
             </li>
             <li class="has-children"><span><a href="components/accordion.html"><span>Components</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
-                  <li><a href="components/accordion.html">Accordion</a></li>
-                  <li><a href="components/alerts.html">Alerts</a></li>
-                  <li><a href="components/buttons.html">Buttons</a></li>
-                  <li><a href="components/cards.html">Cards</a></li>
-                  <li><a href="components/carousel.html">Carousel</a></li>
-                  <li><a href="components/countdown.html">Countdown</a></li>
-                  <li><a href="components/forms.html">Forms</a></li>
-                  <li><a href="components/gallery.html">Gallery</a></li>
-                  <li><a href="components/google-maps.html">Google Maps</a></li>
-                  <li><a href="components/images.html">Images &amp; Figures</a></li>
-                  <li><a href="components/list-group.html">List Group</a></li>
-                  <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
-                  <li><a href="components/media.html">Media Object</a></li>
-                  <li><a href="components/modal.html">Modal</a></li>
-                  <li><a href="components/pagination.html">Pagination</a></li>
-                  <li><a href="components/pills.html">Pills</a></li>
-                  <li><a href="components/progress-bars.html">Progress Bars</a></li>
-                  <li><a href="components/shop-items.html">Shop Items</a></li>
-                  <li><a href="components/steps.html">Steps</a></li>
-                  <li><a href="components/tables.html">Tables</a></li>
-                  <li><a href="components/tabs.html">Tabs</a></li>
-                  <li><a href="components/team.html">Team</a></li>
-                  <li><a href="components/toasts.html">Toast Notifications</a></li>
-                  <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
-                  <li><a href="components/typography.html">Typography</a></li>
-                  <li><a href="components/video-player.html">Video Player</a></li>
-                  <li><a href="components/widgets.html">Widgets</a></li>
+                <li><a href="components/accordion.html">Accordion</a></li>
+                <li><a href="components/alerts.html">Alerts</a></li>
+                <li><a href="components/buttons.html">Buttons</a></li>
+                <li><a href="components/cards.html">Cards</a></li>
+                <li><a href="components/carousel.html">Carousel</a></li>
+                <li><a href="components/countdown.html">Countdown</a></li>
+                <li><a href="components/forms.html">Forms</a></li>
+                <li><a href="components/gallery.html">Gallery</a></li>
+                <li><a href="components/google-maps.html">Google Maps</a></li>
+                <li><a href="components/images.html">Images &amp; Figures</a></li>
+                <li><a href="components/list-group.html">List Group</a></li>
+                <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
+                <li><a href="components/media.html">Media Object</a></li>
+                <li><a href="components/modal.html">Modal</a></li>
+                <li><a href="components/pagination.html">Pagination</a></li>
+                <li><a href="components/pills.html">Pills</a></li>
+                <li><a href="components/progress-bars.html">Progress Bars</a></li>
+                <li><a href="components/shop-items.html">Shop Items</a></li>
+                <li><a href="components/steps.html">Steps</a></li>
+                <li><a href="components/tables.html">Tables</a></li>
+                <li><a href="components/tabs.html">Tabs</a></li>
+                <li><a href="components/team.html">Team</a></li>
+                <li><a href="components/toasts.html">Toast Notifications</a></li>
+                <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
+                <li><a href="components/typography.html">Typography</a></li>
+                <li><a href="components/video-player.html">Video Player</a></li>
+                <li><a href="components/widgets.html">Widgets</a></li>
               </ul>
             </li>
           </ul>

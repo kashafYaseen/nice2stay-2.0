@@ -1,6 +1,6 @@
-<section class="fw-section padding-top-4x padding-bottom-4x" style="background-image: url(https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg);">
+<section class="fw-section padding-top-4x padding-bottom-4x" style="background-image: url(https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24627/Beach_house_Lounge.jpg);">
   <div class="container">
-    <div class="col-md-11">
+    <div class="col-md-6">
       <div class="card border-default bg-white pt-2 box-shadow">
         <div class="card-body">
           <h2 class="mb-3">Mooie verhalen beginnen hier...</h2>
@@ -8,11 +8,11 @@
 
           <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
             <div class="row">
-              <div class="col-md-6 col-sm-12">
+              <div class="col-md-12 col-sm-12">
                 <%= text_field_tag :query, params[:query], placeholder: "Type your search query or nothing", class: 'form-control autocomplete autocomplete-field' %>
               </div>
 
-              <div class="col-md-6 col-sm-12">
+              <div class="col-md-12 col-sm-12">
                 <div class="row homepage-actions-row">
                   <div id='datepicker'></div>
 
@@ -79,49 +79,69 @@
       </div>
     </section>
 
-
-<div class="container padding-top-1x pb-5 homepage">
-        <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-9">
-           <h2 class="mb-3">New ? signup for nice2stay account......</h2>
-                <p>Share you're favorites, get the latest deals, and much more...</p>
+<% if user_signed_in? %>
+  <div class="container padding-top-1x pb-5 homepage">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-9">
+        <h2 class="mb-3">New ? signup for nice2stay account......</h2>
+        <p>Share you're favorites, get the latest deals, and much more...</p>
         <%= link_to 'GET STARTED WITH THE ACCOUNT', new_user_registration_path, class: 'btn btn-outline-primary' %>
-        
-         <a class="btn btn-white" href="#">Who is nice2stay?</a>
-     
-       </div>
-       <div class="col-xs-12 col-sm-6 col-md-2 homepage_image">
-           
+        <a class="btn btn-white" href="#">Who is nice2stay?</a>
       </div>
-       </div>
+      <div class="col-xs-12 col-sm-6 col-md-2 homepage_image">
+      </div>
     </div>
+  </div>
+<% else %>
+  <div class="container padding-top-1x pb-5 homepage">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <h3 class="mb-3">
+          Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfort
+        </h3>
+
+        <p>
+          Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.
+        </p>
+
+        <%= link_to 'more information', new_user_registration_path, class: 'btn btn-outline-primary' %>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3"></div>
+      <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
+    </div>
+  </div>
+<% end %>
+
 
 <section class="container padding-top-3x pb-5">
   <h3 class="text-center mb-30">Just added</h3>
-
-<div class="card-deck">
-            <div class="card margin-bottom-1x"><img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-              <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
-            </div>
-            <div class="card margin-bottom-1x"><img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-              </div>
-              <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
-            </div>
-            <div class="card margin-bottom-1x"><img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-              </div>
-              <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
-            </div>
-          </div>
+  <div class="card-deck">
+    <div class="card margin-bottom-1x">
+      <img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
+      <div class="card-body">
+        <h4 class="card-title">Card title</h4>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+      <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
+    </div>
+    <div class="card margin-bottom-1x">
+      <img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
+      <div class="card-body">
+        <h4 class="card-title">Card title</h4>
+        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+      </div>
+      <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
+    </div>
+    <div class="card margin-bottom-1x">
+      <img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
+      <div class="card-body">
+        <h4 class="card-title">Card title</h4>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+      </div>
+      <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
+    </div>
+  </div>
 </section>
 
 <section class="container padding-top-3x pb-5">
@@ -129,7 +149,7 @@
   <div class="row">
     <!-- Special Offer-->
     <!-- Fetured Products-->
-    <div class="col-xl-12 col-md-8">
+    <div class="col-xl-12 col-md-12">
       <div class="row">
         <!-- Item-->
         <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -137,19 +157,16 @@
             <div class="product-card-thumb">
               <span class="product-badge text-danger">Sale</span>
               <a class="product-card-link" href="shop-single.html"></a>
-              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product"><
-
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
               <div class="product-card-buttons">
                 <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
                 <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
               </div>
             </div>
-
             <div class="product-card-details">
               <h3 class="product-card-title">
                 <a href="shop-single.html">Storage Box</a>
               </h3>
-
               <h4 class="product-card-price">
                 <del>$49.00</del>$38.00
               </h4>
@@ -163,21 +180,17 @@
             <div class="product-card-thumb">
               <a class="product-card-link" href="shop-single.html"></a>
               <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
               <div class="product-card-buttons">
                 <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
-                  <i class="material-icons favorite_border"></i>
+                <i class="material-icons favorite_border"></i>
                 </button>
-
                 <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
               </div>
             </div>
-
             <div class="product-card-details">
               <h3 class="product-card-title">
                 <a href="shop-single.html">Lounge Chair</a>
               </h3>
-
               <h4 class="product-card-price">$1420.00</h4>
             </div>
           </div>
@@ -188,169 +201,148 @@
           <div class="product-card mb-30">
             <div class="product-card-thumb">
               <span class="product-rating text-warning">
-                <i class="material-icons star"></i>
-                <i class="material-icons star"></i>
-                <i class="material-icons star"></i>
-                <i class="material-icons star_half"></i>
-                <i class="material-icons star_border"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star_half"></i>
+              <i class="material-icons star_border"></i>
               </span>
-
               <a class="product-card-link" href="shop-single.html"></a>
-
               <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
               <div class="product-card-buttons">
                 <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
-                  <i class="material-icons favorite_border"></i>
+                <i class="material-icons favorite_border"></i>
                 </button>
-
                 <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
               </div>
             </div>
-
             <div class="product-card-details">
               <h3 class="product-card-title">
                 <a href="shop-single.html">Navy Box Bench</a>
               </h3>
-
               <h4 class="product-card-price">$75.00</h4>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Item-->
-      <div class="col-xl-3 col-lg-4 col-sm-6">
-        <div class="product-card mb-30">
-          <div class="product-card-thumb">
-            <span class="product-badge text-muted">Out of stock</span>
-            <a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-badge text-muted">Out of stock</span>
+              <a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
                 <i class="material-icons favorite_border"></i>
-              </button>
-              <a class="btn btn-white btn-sm" hre="shop-single.html">View Details</a>
+                </button>
+                <a class="btn btn-white btn-sm" hre="shop-single.html">View Details</a>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">LED Lighting</a>
+              </h3>
+              <h4 class="product-card-price">$130.00</h4>
             </div>
           </div>
-
-          <div class="product-card-details">
-            <h3 class="product-card-title">
-              <a href="shop-single.html">LED Lighting</a>
-            </h3>
-            <h4 class="product-card-price">$130.00</h4>
-          </div>
         </div>
-      </div>
 
-      <!-- Item-->
-      <div class="col-xl-3 col-lg-4 col-sm-6">
-        <div class="product-card mb-30">
-          <div class="product-card-thumb">
-            <a class="product-card-link" href="shop-single.html"></a>
-            <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
-            <div class="product-card-buttons">
-              <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
                 <i class="material-icons favorite_border"></i>
-              </button>
-
-              <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Campfire Table</a>
+              </h3>
+              <h4 class="product-card-price">$1087.00</h4>
             </div>
           </div>
-
-          <div class="product-card-details">
-            <h3 class="product-card-title">
-              <a href="shop-single.html">Campfire Table</a>
-            </h3>
-            <h4 class="product-card-price">$1087.00</h4>
-          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Item-->
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-      <div class="product-card mb-30">
-        <div class="product-card-thumb">
-          <span class="product-rating text-warning">
-            <i class="material-icons star"></i>
-            <i class="material-icons star"></i>
-            <i class="material-icons star"></i>
-            <i class="material-icons star"></i>
-            <i class="material-icons star_border"></i>
-          </span>
-          <a class="product-card-link" href="shop-single.html"></a>
-          <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
-          <div class="product-card-buttons">
-            <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
-              <i class="material-icons favorite_border"></i>
-            </button>
-
-            <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-rating text-warning">
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star_border"></i>
+              </span>
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Tissue Holder</a>
+              </h3>
+              <h4 class="product-card-price">$76.40</h4>
+            </div>
           </div>
         </div>
 
-        <div class="product-card-details">
-          <h3 class="product-card-title">
-            <a href="shop-single.html">Tissue Holder</a>
-          </h3>
-          <h4 class="product-card-price">$76.40</h4>
-        </div>
-      </div>
-    </div>
-
-    <!-- Item-->
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-      <div class="product-card mb-30">
-        <div class="product-card-thumb">
-          <span class="product-badge text-danger">Sale</span>
-          <a class="product-card-link" href="shop-single.html"></a>
-          <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
-          <div class="product-card-buttons">
-            <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
-              <i class="material-icons favorite_border"></i>
-            </button>
-
-            <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-badge text-danger">Sale</span>
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Pendant Lamp</a>
+              </h3>
+              <h4 class="product-card-price">
+                <del>$54.00</del>$27.00
+              </h4>
+            </div>
           </div>
         </div>
 
-        <div class="product-card-details">
-          <h3 class="product-card-title">
-            <a href="shop-single.html">Pendant Lamp</a>
-          </h3>
-
-          <h4 class="product-card-price">
-            <del>$54.00</del>$27.00
-          </h4>
-        </div>
-      </div>
-    </div>
-
-    <!-- Item-->
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-      <div class="product-card mb-30">
-        <div class="product-card-thumb">
-          <a class="product-card-link" href="shop-single.html"></a>
-          <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
-
-          <div class="product-card-buttons">
-            <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
-              <i class="material-icons favorite_border"></i>
-            </button>
-
-            <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Office Chair</a>
+              </h3>
+              <h4 class="product-card-price">$329.00</h4>
+            </div>
           </div>
-        </div>
-
-        <div class="product-card-details">
-          <h3 class="product-card-title">
-            <a href="shop-single.html">Office Chair</a>
-          </h3>
-          <h4 class="product-card-price">$329.00</h4>
         </div>
       </div>
     </div>
@@ -359,50 +351,6 @@
 
 <section class="container padding-top-3x pb-5">
   <h3 class="text-center mb-30">Just added</h3>
-
-  <div class="gallery-wrapper isotope-grid cols-2" data-pswp-uid="2" style="position: relative; height: 1262.67px;">
-  <div class="gutter-sizer"></div>
-  <div class="grid-sizer"></div>
-  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 0px;">
-    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14297/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-DSC_0638---copie.jpg" data-size="1000x667">
-      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14297/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-DSC_0638---copie.jpg" alt="Image">
-    </a>
-    <span class="caption">Bonsai on the table</span>
-  </div>
-
-  <div class="grid-item gallery-item" style="position: absolute; left: 585px; top: 0px;">
-    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14306/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-2-IMG_4222.jpg" data-size="1000x667">
-      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14306/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-2-IMG_4222.jpg" alt="Image">
-    </a>
-    <span class="caption">Working desk</span>
-  </div>
-
-  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 400px;">
-    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" data-size="1000x667">
-      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14303/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4235.jpg" alt="Image">
-    </a>
-    <span class="caption">Table lamp</span>
-  </div>
-
-  <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 800px;">
-    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17271/img1.jpg" data-size="1000x667">
-      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17271/img1.jpg" alt="Image">
-    </a>
-    <span class="caption">Bonsai on the table</span>
-  </div>
-
-  <div class="grid-item gallery-item" style="position: absolute; left: 585px; top: 862px;">
-    <a href="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14302/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4276.jpg" data-size="1000x667">
-      <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/14302/Domaine-de-Ribaute-family-friendly-holiday-Beziers-France-1-IMG_4276.jpg" alt="Image">
-    </a>
-    <span class="caption">Working desk</span>
-  </div>
-</section>
-
-
-<section class="container padding-top-3x pb-5">
-  <h3 class="text-center mb-30">Just added</h3>
-
   <div class="card-deck">
     <div class="card margin-bottom-1x">
       <img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
@@ -418,12 +366,10 @@
 
     <div class="card margin-bottom-1x">
       <img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
-
       <div class="card-body">
         <h4 class="card-title">Card title</h4>
         <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
       </div>
-
       <div class="card-footer text-xs text-muted">
         Last updated 3mins ago
       </div>
@@ -431,19 +377,16 @@
 
     <div class="card margin-bottom-1x">
       <img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
-
       <div class="card-body">
         <h4 class="card-title">Card title</h4>
         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
       </div>
-
       <div class="card-footer text-xs text-muted">
         Last updated 3mins ago
       </div>
     </div>
   </div>
 </section>
-
 
 <%= content_for :js_init do %>
   Lodging.autocomplete();
