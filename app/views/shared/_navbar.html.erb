@@ -15,59 +15,50 @@
         <% end %>
       </li>
 
-     
-      
-     
-      
       <li><a href="blog.html"><span>Advies</span></a>
         <ul class="sub-menu">
-            <li><a href="blog.html">Blog List</a></li>
-            <li><a href="blog-single.html">Single Post</a></li>
+          <li><a href="blog.html">Blog List</a></li>
+          <li><a href="blog-single.html">Single Post</a></li>
         </ul>
       </li>
+
       <li><a href="#"><span>Nice2stay</span></a>
         <ul class="sub-menu">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contacts.html">Contacts</a></li>
-            <li><a href="faq.html">Help / FAQ</a></li>
-            <li><a href="order-tracking.html">Order Tracking</a></li>
-            <li><a href="404.html">404 Not Found</a></li>
-            <li><a href="coming-soon.html">Coming Soon</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contacts.html">Contacts</a></li>
+          <li><a href="faq.html">Help / FAQ</a></li>
+          <li><a href="order-tracking.html">Order Tracking</a></li>
+          <li><a href="404.html">404 Not Found</a></li>
+          <li><a href="coming-soon.html">Coming Soon</a></li>
           <li><a class="text-danger" href="docs/dev-setup.html">Documentation</a></li>
         </ul>
       </li>
-       <li><a href="#"><span>Landen & regio's</span></a>
 
-        
+       <li><a href="#"><span>Landen & regio's</span></a>
         <ul class="mega-menu">
           <% @countries.each do |country| %>
-          <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
+            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
               <ul>
                 <% country.regions.each do | region | %>
-                <li> 
-                  <%= link_to region.name, country_region_path(country, region) %>
-                  <% end %>
-                </li>
+                  <li><%= link_to region.name, country_region_path(country, region) %></li>
+                <% end %>
               </ul>
-              </li>
-           <% end %>
+            </li>
+          <% end %>
         </ul>
       </li>
-        <li><a href="#"><span>collecties</span></a>
 
-        
+      <li><a href="#"><span>collecties</span></a>
         <ul class="mega-menu">
           <% @countries.each do |country| %>
-          <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
+            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
               <ul>
                 <% country.regions.each do | region | %>
-                <li> 
-                  <%= link_to region.name, country_region_path(country, region) %>
-                  <% end %>
-                </li>
+                  <li><%= link_to region.name, country_region_path(country, region) %></li>
+                <% end %>
               </ul>
-              </li>
-           <% end %>
+            </li>
+          <% end %>
         </ul>
       </li>
     </ul>
@@ -144,23 +135,23 @@
                   <li><a href="shop-categories.html">Shop Categories</a></li>
                 <li class="has-children"><span><a href="shop-boxed-ls.html"><span>Shop Layout</span></a><span class="sub-menu-toggle"></span></span>
                   <ul class="slideable-submenu">
-                      <li><a href="shop-boxed-ls.html">Boxed Left Sidebar</a></li>
-                      <li><a href="shop-boxed-rs.html">Boxed Right Sidebar</a></li>
-                      <li><a href="shop-boxed-ft.html">Boxed Filters Top</a></li>
-                      <li><a href="shop-full-ls.html">Full Width Left Sidebar</a></li>
-                      <li><a href="shop-full-rs.html">Full Width Right Sidebar</a></li>
-                      <li><a href="shop-full-ft.html">Full Width Filters Top</a></li>
+                    <li><a href="shop-boxed-ls.html">Boxed Left Sidebar</a></li>
+                    <li><a href="shop-boxed-rs.html">Boxed Right Sidebar</a></li>
+                    <li><a href="shop-boxed-ft.html">Boxed Filters Top</a></li>
+                    <li><a href="shop-full-ls.html">Full Width Left Sidebar</a></li>
+                    <li><a href="shop-full-rs.html">Full Width Right Sidebar</a></li>
+                    <li><a href="shop-full-ft.html">Full Width Filters Top</a></li>
                   </ul>
                 </li>
                   <li><a href="shop-single.html">Single Product</a></li>
                   <li class="active"><a href="cart.html">Cart</a></li>
                 <li class="has-children"><span><a href="checkout-address.html"><span>Checkout</span></a><span class="sub-menu-toggle"></span></span>
                   <ul class="slideable-submenu">
-                      <li><a href="checkout-address.html">Address</a></li>
-                      <li><a href="checkout-shipping.html">Shipping</a></li>
-                      <li><a href="checkout-payment.html">Payment</a></li>
-                      <li><a href="checkout-review.html">Review</a></li>
-                      <li><a href="checkout-complete.html">Complete</a></li>
+                    <li><a href="checkout-address.html">Address</a></li>
+                    <li><a href="checkout-shipping.html">Shipping</a></li>
+                    <li><a href="checkout-payment.html">Payment</a></li>
+                    <li><a href="checkout-review.html">Review</a></li>
+                    <li><a href="checkout-complete.html">Complete</a></li>
                   </ul>
                 </li>
               </ul>
@@ -254,33 +245,33 @@
             </li>
             <li class="has-children"><span><a href="components/accordion.html"><span>Components</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
-                  <li><a href="components/accordion.html">Accordion</a></li>
-                  <li><a href="components/alerts.html">Alerts</a></li>
-                  <li><a href="components/buttons.html">Buttons</a></li>
-                  <li><a href="components/cards.html">Cards</a></li>
-                  <li><a href="components/carousel.html">Carousel</a></li>
-                  <li><a href="components/countdown.html">Countdown</a></li>
-                  <li><a href="components/forms.html">Forms</a></li>
-                  <li><a href="components/gallery.html">Gallery</a></li>
-                  <li><a href="components/google-maps.html">Google Maps</a></li>
-                  <li><a href="components/images.html">Images &amp; Figures</a></li>
-                  <li><a href="components/list-group.html">List Group</a></li>
-                  <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
-                  <li><a href="components/media.html">Media Object</a></li>
-                  <li><a href="components/modal.html">Modal</a></li>
-                  <li><a href="components/pagination.html">Pagination</a></li>
-                  <li><a href="components/pills.html">Pills</a></li>
-                  <li><a href="components/progress-bars.html">Progress Bars</a></li>
-                  <li><a href="components/shop-items.html">Shop Items</a></li>
-                  <li><a href="components/steps.html">Steps</a></li>
-                  <li><a href="components/tables.html">Tables</a></li>
-                  <li><a href="components/tabs.html">Tabs</a></li>
-                  <li><a href="components/team.html">Team</a></li>
-                  <li><a href="components/toasts.html">Toast Notifications</a></li>
-                  <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
-                  <li><a href="components/typography.html">Typography</a></li>
-                  <li><a href="components/video-player.html">Video Player</a></li>
-                  <li><a href="components/widgets.html">Widgets</a></li>
+                <li><a href="components/accordion.html">Accordion</a></li>
+                <li><a href="components/alerts.html">Alerts</a></li>
+                <li><a href="components/buttons.html">Buttons</a></li>
+                <li><a href="components/cards.html">Cards</a></li>
+                <li><a href="components/carousel.html">Carousel</a></li>
+                <li><a href="components/countdown.html">Countdown</a></li>
+                <li><a href="components/forms.html">Forms</a></li>
+                <li><a href="components/gallery.html">Gallery</a></li>
+                <li><a href="components/google-maps.html">Google Maps</a></li>
+                <li><a href="components/images.html">Images &amp; Figures</a></li>
+                <li><a href="components/list-group.html">List Group</a></li>
+                <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
+                <li><a href="components/media.html">Media Object</a></li>
+                <li><a href="components/modal.html">Modal</a></li>
+                <li><a href="components/pagination.html">Pagination</a></li>
+                <li><a href="components/pills.html">Pills</a></li>
+                <li><a href="components/progress-bars.html">Progress Bars</a></li>
+                <li><a href="components/shop-items.html">Shop Items</a></li>
+                <li><a href="components/steps.html">Steps</a></li>
+                <li><a href="components/tables.html">Tables</a></li>
+                <li><a href="components/tabs.html">Tabs</a></li>
+                <li><a href="components/team.html">Team</a></li>
+                <li><a href="components/toasts.html">Toast Notifications</a></li>
+                <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
+                <li><a href="components/typography.html">Typography</a></li>
+                <li><a href="components/video-player.html">Video Player</a></li>
+                <li><a href="components/widgets.html">Widgets</a></li>
               </ul>
             </li>
           </ul>
