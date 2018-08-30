@@ -1,49 +1,13 @@
-<div class="col-md-8">
-          <h3 class="padding-bottom-1x">Latest Reviews</h3>
-          <!-- Review-->
-          <div class="comment">
-            <div class="comment-author-ava"><img src="img/reviews/02.jpg" alt="Comment author"></div>
-            <div class="comment-body">
-              <div class="comment-header d-flex flex-wrap justify-content-between">
-                <h4 class="comment-title">My husband love his new...</h4>
-                <div class="mb-2">
-                  <div class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i></div>
-                </div>
-              </div>
-              <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-              <div class="comment-footer"><span class="comment-meta">Maggie Scott</span></div>
-            </div>
-          </div>
-          <!-- Review-->
-          <div class="comment">
-            <div class="comment-author-ava"><img src="img/reviews/03.jpg" alt="Comment author"></div>
-            <div class="comment-body">
-              <div class="comment-header d-flex flex-wrap justify-content-between">
-                <h4 class="comment-title">Awesome quality for the price</h4>
-                <div class="mb-2">
-                  <div class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star_border"></i></div>
-                </div>
-              </div>
-              <p class="comment-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>
-              <div class="comment-footer"><span class="comment-meta">Jacob Hammond</span></div>
-            </div>
-          </div>
-          <!-- View All Button--><a class="btn btn-outline-secondary btn-block" href="#">View All Reviews</a>
-        </div>
-
-        <!-- Review-->
+<!-- Review-->
 <div class="comment">
   <div class="comment-body">
     <div class="comment-header d-flex flex-wrap justify-content-between">
-      <h4 class="comment-title"></h4>
-
+      <h4 class="comment-title"><%= review.title %></h4>
       <div class="mb-2">
         <div class="product-rating text-warning">
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
+          <% review.stars.times do |star| %>
+            <i class="material-icons star"></i>
+          <% end %>
         </div>
       </div>
     </div>
@@ -52,4 +16,3 @@
     <div class="comment-footer"><span class="comment-meta"><%= review.user_full_name %></span></div>
   </div>
 </div>
-<!-- Review-->
