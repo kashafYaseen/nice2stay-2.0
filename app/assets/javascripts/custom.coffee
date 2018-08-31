@@ -42,7 +42,7 @@
       $('.reservation-standalone-form-modal').remove()
 
   set_top_position = ->
-    $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()}px");
-    $('#map').css("top", "#{$('.fixed-filters').height()}px");
+    $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
+    $('#map').css("top", "#{$('.fixed-filters').height()-10}px");
 
 ).call this

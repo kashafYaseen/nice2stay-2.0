@@ -2,6 +2,14 @@
 
   <div class="col-md-12">
     <div class="row">
+      <div class="col-md-1 p-0">
+        <div class="pt-3 pb-1 pb-sm-3 text-sm">
+          <span class="text-muted mr-2 lodgings-heading">
+            <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+          </span>
+        </div>
+      </div>
+
       <div id="datepicker"></div>
 
       <div class="dropdown guests-dropdown">
@@ -71,16 +79,6 @@
             <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-12">
-    <div class="row">
-      <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left">
-        <span class="text-muted mr-2 lodgings-heading">
-          <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
-        </span>
       </div>
     </div>
   </div>
