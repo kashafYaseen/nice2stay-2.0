@@ -152,6 +152,16 @@ div.fixed-standalone {
   right: 4%;
 }
 
+div.fixed-map {
+  position: fixed;
+  right: 0;
+}
+
+nav.fixed-filters {
+  top: 70px;
+  min-height: 40px;
+}
+
 div.fixed {
   position: fixed;
   right: 0;

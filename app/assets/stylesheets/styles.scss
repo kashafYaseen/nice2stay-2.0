@@ -31,7 +31,7 @@
 }
 
 .homepage_image {
-  background: url(explorer.png);
+  background: asset-url('explorer.png');
   background-size: cover;
   color: #fff;
 }
@@ -7481,7 +7481,7 @@ video {
 }
 
 #map {
-  height: 100%;
+  height: calc(100vh - 135px);
   min-height: 400px;
 }
 
