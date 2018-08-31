@@ -7481,7 +7481,7 @@ video {
 }
 
 #map {
-  height: 100%;
+  height: calc(100vh - 135px);
   min-height: 400px;
 }
 
