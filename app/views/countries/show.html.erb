@@ -1,64 +1,49 @@
-<section class="fw-section padding-top-4x padding-bottom-4x" style="background-image: url(https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg);">
+<section class="fw-section padding-top-4x padding-bottom-4x" style="background-image: url(https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24627/Beach_house_Lounge.jpg);">
   <div class="container">
-    <div class="col-md-7">
+    <div class="col-md-6">
       <div class="card border-default bg-white pt-2 box-shadow">
         <div class="card-body">
           <h2 class="mb-3">Mooie verhalen beginnen hier...</h2>
           <p class="text-sm text-muted">Unieke vakantiehuizen, appartementen en ​boutique hotels in Italie, Frankrijk, Portugal, Spanje en Griekenland</p>
 
-          <div class="row">
-            <div class="col-sm-12">
-              <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
-                <%= text_field_tag :query, params[:query], placeholder: "Type your search query or nothing", class: 'form-control' %>
-                <%= hidden_field_tag :adults, params[:adults], id: :dates_adults if params[:adults].present? %>
-                <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
-                <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
+          <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <%= text_field_tag :query, params[:query], placeholder: "Type your search query or nothing", class: 'form-control autocomplete autocomplete-field' %>
+              </div>
 
-                <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
-                <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
-                <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
+              <div class="col-md-12 col-sm-12">
+                <div class="row homepage-actions-row">
+                  <div id='datepicker'></div>
 
-                <% if params[:lodging_type_in].present? %>
-                  <% params[:lodging_type_in].each do |lodging_type| %>
-                    <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
-                  <% end %>
-                <% end %>
+                  <div class="dropdown guests-dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="title">Guest</span>
+                    </button>
 
-                <div class="row">
-                  <div class="col-sm-6 ">
-                    <div id='home-datepicker'></div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <div class="dropdown-item">
+                        <label>Adults</label>
+                        <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
+                      </div>
+
+                      <div class="dropdown-item">
+                        <label>Children</label>
+                        <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
+                      </div>
+
+                      <div class="dropdown-item">
+                        <label>Infants</label>
+                        <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="col-sm-6 padding-top-2x padding-bottom-2x">
-                    <small>Adults</small>
-                    <%= number_field_tag :adults, params[:adults], min: 0 %>
-                    <small>Children</small>
-                    <%= number_field_tag :children, params[:children], min: 0 %>
-                    <small>Infants</small>
-                    <%= number_field_tag :infants, params[:infants], min: 0 %>
-
-                    <%= hidden_field_tag :check_in, params[:check_in], id: :guests_check_in if params[:check_in].present? %>
-                    <%= hidden_field_tag :check_out, params[:check_out], id: :guests_check_out if params[:check_out].present? %>
-
-                    <%= hidden_field_tag :min_price, params[:min_price], id: :guests_min_price if params[:min_price].present? %>
-                    <%= hidden_field_tag :max_price, params[:max_price], id: :guests_max_price if params[:max_price].present? %>
-                    <%= hidden_field_tag :order, params[:order], id: :guests_order if params[:order].present? %>
-
-                    <% if params[:lodging_type_in].present? %>
-                      <% params[:lodging_type_in].each do |lodging_type| %>
-                        <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "guests_lodging_type_#{lodging_type}" %>
-                      <% end %>
-                    <% end %>
-                    <small></small>
-                    <%= submit_tag 'SEARCH', class: 'col-md-12 btn btn-primary btn-sm' %>
-                    <% end %>
-                  </div>
-
+                  <%= submit_tag 'SEARCH', class: 'btn btn-primary btn-sm' %>
                 </div>
-
-               
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
@@ -95,47 +80,282 @@
     </section>
 
 
-<div class="container padding-top-1x pb-5 homepage">
-        <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-9">
-           <h2 class="mb-3">New ? signup for nice2stay account......</h2>
-                <p>Share you're favorites, get the latest deals, and much more...</p>
+<% if user_signed_in? %>
+  <div class="container padding-top-1x pb-5 homepage">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-9">
+        <h2 class="mb-3">New ? signup for nice2stay account......</h2>
+        <p>Share you're favorites, get the latest deals, and much more...</p>
         <%= link_to 'GET STARTED WITH THE ACCOUNT', new_user_registration_path, class: 'btn btn-outline-primary' %>
-        
-         <a class="btn btn-white" href="#">Who is nice2stay?</a>
-     
-       </div>
-       <div class="col-xs-12 col-sm-6 col-md-2 homepage_image">
-           
+        <a class="btn btn-white" href="#">Who is nice2stay?</a>
       </div>
-       </div>
+      <div class="col-xs-12 col-sm-6 col-md-2 homepage_image">
+      </div>
     </div>
+  </div>
+<% else %>
+  <div class="container padding-top-1x pb-5 homepage">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <h3 class="mb-3">
+          Een selectie villa's, appartenten en B&B's in <%= @country.name.capitalize %> die door ons bezocht en geselecteert zijn op kwaliteit & comfort
+        </h3>
+
+        <p>
+          Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.
+        </p>
+
+        <%= link_to 'more information', new_user_registration_path, class: 'btn btn-outline-primary' %>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3"></div>
+      <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
+    </div>
+  </div>
+<% end %>
+
+
+<section class="container padding-top-3x pb-5">
+  <h3 class="text-center mb-30">Featured Products</h3>
+  <div class="row">
+    <!-- Special Offer-->
+    <!-- Fetured Products-->
+    <div class="col-xl-12 col-md-12">
+      <div class="row">
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-badge text-danger">Sale</span>
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Storage Box</a>
+              </h3>
+              <h4 class="product-card-price">
+                <del>$49.00</del>$38.00
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Lounge Chair</a>
+              </h3>
+              <h4 class="product-card-price">$1420.00</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-rating text-warning">
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star_half"></i>
+              <i class="material-icons star_border"></i>
+              </span>
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Navy Box Bench</a>
+              </h3>
+              <h4 class="product-card-price">$75.00</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-badge text-muted">Out of stock</span>
+              <a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <a class="btn btn-white btn-sm" hre="shop-single.html">View Details</a>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">LED Lighting</a>
+              </h3>
+              <h4 class="product-card-price">$130.00</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Campfire Table</a>
+              </h3>
+              <h4 class="product-card-price">$1087.00</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-rating text-warning">
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star"></i>
+              <i class="material-icons star_border"></i>
+              </span>
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Tissue Holder</a>
+              </h3>
+              <h4 class="product-card-price">$76.40</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <span class="product-badge text-danger">Sale</span>
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Pendant Lamp</a>
+              </h3>
+              <h4 class="product-card-price">
+                <del>$54.00</del>$27.00
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item-->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="product-card mb-30">
+            <div class="product-card-thumb">
+              <a class="product-card-link" href="shop-single.html"></a>
+              <img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Product">
+              <div class="product-card-buttons">
+                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist">
+                <i class="material-icons favorite_border"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+              </div>
+            </div>
+            <div class="product-card-details">
+              <h3 class="product-card-title">
+                <a href="shop-single.html">Office Chair</a>
+              </h3>
+              <h4 class="product-card-price">$329.00</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="container padding-top-2x pb-5">
+  <h3 class="text-center mb-30">Just added in  <%= @country.name.capitalize %></h3>
+
+<div class="card-deck">
+            <div class="card margin-bottom-1x"><img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
+            </div>
+            <div class="card margin-bottom-1x"><img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+              </div>
+              <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
+            </div>
+            <div class="card margin-bottom-1x"><img class="card-img-top" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/21943/terrasfikus.jpg" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">Card title</h4>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+              </div>
+              <div class="card-footer text-xs text-muted">Last updated 3mins ago</div>
+            </div>
+          </div>
+</section>
+
 
 <div class="container">
-      <section class="row align-items-center padding-bottom-2x">
-       
-        <div class="col-md-12 text-md-left text-center">
-          <div class="mt-30 hidden-md-up"></div>
-          <h2>Vakantie Italie ? Ontdek nu onze unieke collectie accommodaties in Italië</h2>
-          <p class="text-sm">Wilt u proeven van la dolce vita? Italië, het land dat vanwege haar langgerekte vorm vaak ‘de laars’ wordt genoemd is het land waar u nooit op uitgekeken raakt! Ontdek de heuvelachtige landschappen, populaire meren, prachtige kusten en culturele steden rijk aan geschiedenis. Met tal van interessante en schitterende regio’s heeft italië u veel te bieden. Op zoek naar mooie groene landschappen waarin u volledig tot rust kunt komen? Denk dan aan regio’s als Umbrië, ook wel ‘het groene hart van Italië’ genoemd. Daarnaast biedt Nice2stay u ook een scala aan accommodaties in bijzondere regio’s als Toscane, Le Marche, Puglia, Amalfi kust, Noord-Italië en Sicilië. Authentieke steden, zoals Rome, Florence, Venetië met een rijke historie zijn perfect voor cultuurliefhebbers. Of toch liever shoppen in Milaan, de Europese hoofdstad van mode & design? Geniet ook van de verrukkelijke Italiaanse keuken in combinatie met de Italiaanse gastvrijheid. Kortom, een vakantie in Italië is het helemaal!</p>
+ 
+  
     
-        </div>
-        
-      </section>
-
-      <section class="fw-section padding-top-4x padding-bottom-4x" style="background-image: url(https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg);">
-      <br>
-       <br>
-        <br>
-         <br>
-          <br>
-           <br>
-            <br>
-             <br>
-              <br>
-               <br>
-                <br>
-      </section>
       <div class="row mt-30">
         <div class="col-md-4 mb-4">
           <div class="card border-default">
@@ -204,8 +424,40 @@
       </div>
    
 
+    </div>
+ 
+
+<div class="container padding-bottom-3x pt-5 mb-1">
+
+<div class="row pt-2">
+        <div class="col-md-6">
+          <h3>Vakantie in <%= @country.name.capitalize %></h3>
+          <p class="text-sm mb-4">Wilt u proeven van la dolce vita? Italië, het land dat vanwege haar langgerekte vorm vaak ‘de laars’ wordt genoemd is het land waar u nooit op uitgekeken raakt! Ontdek de heuvelachtige landschappen, populaire meren, prachtige kusten en culturele steden rijk aan geschiedenis. Met tal van interessante en schitterende regio’s heeft italië u veel te bieden. Op zoek naar mooie groene landschappen waarin u volledig tot rust kunt komen? Denk dan aan regio’s als Umbrië, ook wel ‘het groene hart van Italië’ genoemd. Daarnaast biedt Nice2stay u ook een scala aan accommodaties in bijzondere regio’s als Toscane, Le Marche, Puglia, Amalfi kust, Noord-Italië en Sicilië. Authentieke steden, zoals Rome, Florence, Venetië met een rijke historie zijn perfect voor cultuurliefhebbers. Of toch liever shoppen in Milaan, de Europese hoofdstad van mode & design? Geniet ook van de verrukkelijke Italiaanse keuken in combinatie met de Italiaanse gastvrijheid. Kortom, een vakantie in Italië is het helemaal!</p>
+         
         </div>
-     
+        <div class="col-md-6">
+          <h3>Wilt u advies voor uw vakantie in <%= @country.name.capitalize %>?</h3>
+          <div class="form-group row">
+            <label class="col-2 col-form-label text-muted" for="email-input">Email</label>
+            <div class="col-10">
+              <input class="form-control" type="email" id="email-input" value="email@example.com">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-2 col-form-label text-muted" for="email-input">Email</label>
+            <div class="col-10">
+              <input class="form-control" type="email" id="email-input" value="email@example.com">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-2 col-form-label text-muted" for="email-input">Email</label>
+            <div class="col-10">
+              <input class="form-control" type="email" id="email-input" value="email@example.com">
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>     
 <section class="container padding-top-3x pb-5">
   <h3 class="text-center mb-30">Just added in  <%= @country.name.capitalize %></h3>
 
