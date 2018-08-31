@@ -66,8 +66,13 @@ class LodgingsController < ApplicationController
 
   def price_details
     results = @lodging.price_details(params[:values].split(','))
-    @rates = results[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }
-    @search_params = results[:search_params]
+    if @lodging.flexible_search
+      @rates = results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }}
+      @search_params = results.map{ |result| result[:search_params] }
+    else
+      @rates = results[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }
+      @search_params = results[:search_params]
+    end
     @discount = @lodging.discount_details(params[:values].split(','))
   end
 
