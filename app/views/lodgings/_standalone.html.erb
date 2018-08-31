@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <!-- Product Gallery-->
-    <div class="col-md-8 mb-30">
+    <div class="col-md-8">
       <div class="gallery-control">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -13,9 +13,9 @@
         </figure>
       </div>
 
-      <div class="lodging-gallery scrollable-gallery" itemscope>
+      <div class="lodging-gallery" itemscope>
         <% lodging.images.each_with_index do |image_url, index| %>
-          <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index >= 4 %>">
+          <figure itemprop="associatedMedia" itemscope class="d-none">
             <a href="<%= image_url %>" itemprop="contentUrl">
               <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= lodging.name %>" class="img-fluid img-thumbnail" />
             </a>
@@ -31,10 +31,11 @@
   <div class="container">
     <div class="card-body col-md-8">
       <h3 class="card-title"><%= lodging.h1 %></h3>
-      <h6 class="card-title"><%= lodging.h2 %></h6>
+     
       <p class="text-sm col-md-4">
         <div id="lodging-description">
           <%= lodging.summary.try(:html_safe) %>
+          
         </div>
       </p>
     </div>

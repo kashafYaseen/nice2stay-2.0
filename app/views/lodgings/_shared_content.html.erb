@@ -1,32 +1,3 @@
-<div class="container">
-  <div class="col-md-8 padding-top-2x mb-30">
-    <div class="col-md-12 margin-bottom-2x">
-      <h3 class="card-title">Location</h3>
-      <hr class="margin-bottom-1x">
-      <div class="google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
-    </div>
-  </div>
-</div>
-
-<div class="bg-white padding-bottom-3x pt-5 mb-1">
-  <div class="container">
-    <div class="card-body col-md-8">
-      <h3 class="card-title">Reviews</h3>
-      <%= render 'reviews/rating', lodging: lodging %>
-
-      <div class="padding-top-2x"></div>
-
-      <% if @reviews.present? %>
-        <%= render @reviews %>
-        <%= paginate @reviews %>
-        <a class="btn btn-outline-secondary btn-block" href="#">View All Reviews</a>
-      <% else %>
-        <p>Lodging does not have any review yet.</p>
-      <% end %>
-    </div>
-  </div>
-</div>
-
 <div class="padding-top-1x pb-5 homepage">
   <div class="container">
     <div class="col-md-8 padding-top-2x mb-30">
@@ -52,6 +23,38 @@
             </a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white padding-bottom-1x pt-5 mb-1">
+  <div class="container">
+    <div class="row">
+      <div class="card-body col-md-3">
+        <h3 class="card-title">Rating & Reviews</h3>
+        <%= render 'reviews/rating', lodging: lodging %>
+      </div>
+
+      <div class="col-md-5 padding-top-3x">
+        <% if @reviews.present? %>
+          <%= render @reviews %>
+          <%= paginate @reviews %>
+          <a class="btn btn-outline-secondary btn-block" href="#">View All Reviews</a>
+        <% end %>
+      </div>
+      <div class="padding-top-2x"></div>
+    </div>
+  </div>
+</div>
+
+<div class="padding-bottom-3x pt-5 mb-1">
+  <div class="container">
+    <div class="col-md-8 mb-30">
+      <div class="col-md-12 margin-bottom-2x">
+        <h3 class="card-title">Location</h3>
+        <hr class="margin-bottom-1x">
+        <div class="google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
       </div>
     </div>
   </div>

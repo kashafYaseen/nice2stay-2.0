@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <!-- Product Gallery-->
-    <div class="col-md-8 mb-30">
+    <div class="col-md-8">
       <div class="gallery-control">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -13,9 +13,9 @@
         </figure>
       </div>
 
-      <div class="lodging-gallery scrollable-gallery" itemscope>
+      <div class="lodging-gallery" itemscope>
         <% lodging.images.each_with_index do |image_url, index| %>
-          <figure itemprop="associatedMedia" itemscope class="<%= 'd-none' if index >= 4 %>">
+          <figure itemprop="associatedMedia" itemscope class="d-none">
             <a href="<%= image_url %>" itemprop="contentUrl">
               <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= lodging.name %>" class="img-fluid img-thumbnail" />
             </a>
@@ -55,6 +55,8 @@
 </div>
 
 <%= render 'shared_content', lodging: lodging %>
+
+
 
 <div class="col-md-4 d-none d-md-block fixed">
   <div class="reservation-parent-form-1">

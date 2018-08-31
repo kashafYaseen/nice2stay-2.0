@@ -10,7 +10,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search query, where: conditions, aggs: [:beds, :baths, :lodging_type], per_page: 24, page: params[:page], order: order, includes: [:translations]
+    Lodging.search query, where: conditions, aggs: [:beds, :baths, :lodging_type], per_page: 18, page: params[:page], order: order, includes: [:translations]
   end
 
   private

@@ -34,4 +34,4 @@ en:
   helpers:
     page_entries_info:
       more_pages:
-        display_entries: "Showing <b>%{last}</b> of <b>%{total}</b>"
+        display_entries: "<b>%{last}</b> of <b>%{total}</b>"

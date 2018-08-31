@@ -2,8 +2,8 @@
   window.InfiniteScroll or (window.InfiniteScroll = {})
 
   InfiniteScroll.init = ->
-    $('.lodgings-list').scroll ->
-      ele = document.getElementById('lodgings-list')
+    $(window).scroll ->
+      ele = $('html').get(0)
       if ele.scrollHeight - (ele.scrollTop) == (ele.clientHeight)
         url = $('.pagination .next-page').attr('href')
         if url
