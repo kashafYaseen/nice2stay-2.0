@@ -1,4 +1,10 @@
 <div class="card border-default bg-white pt-2 box-shadow">
+  <ul class="nav nav-tabs margin-bottom-1x" role="tablist">
+            <li class="nav-item"><a class="nav-link active show" href="#right" data-toggle="tab" role="tab" aria-selected="true">Gallary</a></li>
+            <li class="nav-item"><a class="nav-link" href="#top" data-toggle="tab" role="tab" aria-selected="false">Location</a></li>
+            <li class="nav-item"><a class="nav-link" href="#bottom" data-toggle="tab" role="tab" aria-selected="false">Reviews</a></li>
+            <li class="nav-item"><a class="nav-link" href="#flip" data-toggle="tab" role="tab" aria-selected="false">Description</a></li>
+          </ul>
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
        data-url="<%= price_details_lodging_path(lodging) %>"
@@ -7,6 +13,7 @@
   <div class="card-body">
     <div class="reservation-form-errors-<%= lodging.id %>">
       <%= render 'reservations/errors', resource: reservation %>
+
     </div>
 
     <div class="row">
