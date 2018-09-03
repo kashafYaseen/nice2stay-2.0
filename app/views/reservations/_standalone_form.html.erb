@@ -30,7 +30,7 @@
 
           <label class="mb-0 text-xs">Guests</label>
           <div class="dropdown guests-dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn-sm btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title">Guest</span>
             </button>
 
@@ -77,7 +77,7 @@
         </div>
       </div>
 
-      <%= f.submit 'Add to Cart', class: "btn btn-primary btn-sm col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
+      <%= f.submit 'Add to Cart', class: "btn btn-primary btn col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
     <% end %>
 
     <%= render 'wishlists/form', lodging: lodging %>
