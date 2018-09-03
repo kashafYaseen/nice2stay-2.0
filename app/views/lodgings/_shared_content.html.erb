@@ -24,12 +24,12 @@
 <div class="bg-white padding-bottom-3x pt-5 mb-1">
   <div class="container">
     <div class="col-md-8 mb-30">
-      <div class="col-md-12 margin-bottom-2x">
+      <div class="col-md-12">
         <h3 class="card-title">Location</h3>
          
         <hr class="margin-bottom-1x">
-        <div class="google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
-        <div class="margin-top-2x">
+       
+     
           <%= lodging.location_description.try(:html_safe) %>
 
           
@@ -37,7 +37,9 @@
       </div>
     </div>
   </div>
-</div>
+
+
+<div class="google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
 
 
 <div class="leads_homepage padding-bottom-1x pt-5 mb-1">
@@ -109,7 +111,6 @@
     <div class="row">
       <div class="card-body col-md-8">
         <h3 class="card-title">Description</h3>
-         <hr class="margin-bottom-1x">
         <div id="lodging-description">
           <%= lodging.description.try(:html_safe) %>
           <a class="btn btn-outline-secondary btn-block" href="#">More information</a>

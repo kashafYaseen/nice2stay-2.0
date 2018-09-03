@@ -2484,7 +2484,7 @@ button:focus {
   height: 36px;
   padding: 0 18px;
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 32px;
 }
 
@@ -2536,6 +2536,7 @@ button:focus {
 .btn-danger:active,
 .btn-danger:focus {
   color: #ffffff;
+  font-weight: 600;
 }
 
 .btn-primary {
