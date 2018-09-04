@@ -15,7 +15,7 @@ class SearchFlexibleDates
 
   def call
     required_dates = (params[:check_in]..params[:check_out]).to_a.map(&:to_s)
-    available_dates = lodging.availabilities.for_range(params[:check_in], params[:check_out]).pluck(:available_on).map(&:to_s)
+    available_dates = available_days(params[:check_in], params[:check_out])
     unavailable_dates = required_dates - available_dates
 
     if unavailable_dates.count == 0 || unavailable_dates.count > FLEXIBILITY
@@ -56,18 +56,20 @@ class SearchFlexibleDates
 
   private
     def search_price_with_defaults
+      lodging.flexible_search = false
       price_list = SearchPrices.call(params).sort.uniq(&:available_on).pluck(:amount)
       price_list = price_list + [lodging.price] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
-      return { rates: price_list, search_params: params }
+      return { rates: price_list, search_params: params, valid: valid?(params) }
     end
 
     def search_price_with(params)
       price_list = SearchPrices.call(params).sort.uniq(&:available_on).pluck(:amount)
       price_list = price_list + [lodging.price] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
-      return { rates: price_list, search_params: params }
+      return { rates: price_list, search_params: params, valid: valid?(params) }
     end
 
     def available_for?(check_in, check_out)
+      return false unless check_in.present? && check_out.present?
       required_dates = (check_in..check_out).to_a.map(&:to_s)
       availabilities = lodging.availabilities.for_range(check_in, check_out)
       return false unless availabilities.check_out_only.pluck(:available_on).map(&:to_s) == [check_out] || availabilities.check_out_only.pluck(:available_on).map(&:to_s).blank?
@@ -78,5 +80,16 @@ class SearchFlexibleDates
 
     def minimum_stay(check_in, check_out)
       (check_out.to_date - check_in.to_date).to_i
+    end
+
+    def available_days(check_in, check_out)
+      availabilities = lodging.availabilities.for_range(params[:check_in], params[:check_out])
+      all = availabilities.pluck(:available_on).map(&:to_s)
+      check_out_only = availabilities.check_out_only.pluck(:available_on).map(&:to_s)
+      all - (check_out_only - [check_out])
+    end
+
+    def valid?(params)
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging).valid?
     end
 end

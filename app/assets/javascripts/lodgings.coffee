@@ -28,7 +28,8 @@
               total += (key * value)
               nights += value
 
-            if nights >= 2
+            if nights >= 2 && data.valid[index]
+              $("#cart-#{lodging_id}").removeClass('disabled');
               $("#flexible-search-#{lodging_id}").append("<input type='radio' name='flexible_search' class='flexible_search_radio' value='flexible-search-#{index}' data-id='#{lodging_id}' data-check-in='#{values[0]}' data-check-out='#{values[1]}' #{if index == 0 then 'checked'}> #{values[0]} - #{values[1]} - $#{total}<br>")
               if data.discount
                 discount = total * data.discount/100
@@ -40,8 +41,8 @@
                 $("#bill-#{lodging_id}").append(result)
               else
                 $("#bill-#{lodging_id}").text('Lodging not available.')
-
-              validate(values)
+            else
+              $("#lbl-error-#{lodging_id}").html('Lodging is not available.')
             index += 1
         else
           validate(values)
@@ -94,7 +95,6 @@
         $("#bill-#{lodging_id}").text('')
       else
         display_bill(values, lodging_id)
-      break #FIXME: temporary for testing
 
   Lodging.init_bill_calculation = ->
     $('.btn-calculate-bill').click (e) ->
@@ -109,8 +109,13 @@
         lodging_id = $(this).data('id')
         $("#check_in_#{lodging_id}").val($(this).data('check-in'))
         $("#check_out_#{lodging_id}").val($(this).data('check-out'))
+        values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
+                  $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
+                  $("#infants_#{lodging_id}").val(), lodging_id]
+
         $('.search-results').addClass 'd-none'
         $(".#{$(this).val()}").removeClass 'd-none'
+        validate(values)
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->

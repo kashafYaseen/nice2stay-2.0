@@ -4,7 +4,7 @@
   <% if @lodging.as_standalone? %>
     <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
   <% else %>
-    <%= render 'parent', lodging: @lodging, reservation: @reservation %>
+    <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
   <% end %>
 </div>
 

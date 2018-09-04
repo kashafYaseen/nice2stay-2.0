@@ -59,7 +59,7 @@ class Lodging < ApplicationRecord
   def children_not_available_on
     return not_available_on unless lodging_children.present?
     _availabilities = []
-    lodging_children.each do |lodging_child|
+    lodging_children.includes(:availabilities).each do |lodging_child|
       _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
     end
     (Date.today..2.years.from_now).map(&:to_s) - _availabilities
