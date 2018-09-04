@@ -75,7 +75,7 @@
       },
       apply() {
         if ($('#standalone').val()) {
-          Lodging.calculate_bill([this.lodging_id])
+          Invoice.calculate([this.lodging_id])
         }
       },
       get_yesterday() {

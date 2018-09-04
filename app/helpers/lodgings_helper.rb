@@ -21,15 +21,15 @@ module LodgingsHelper
     0
   end
 
-  def truncated_description(description)
+  def truncated_description(description, break_point)
     return unless description.present?
-    return description.truncate(300) if truncate_description?(description)
+    return description.truncate(break_point) if truncate_description?(description, break_point)
     description
   end
 
-  def truncate_description?(description)
+  def truncate_description?(description, break_point)
     return false unless description.present?
-    description.split(' ').length > 300
+    description.length > break_point
   end
 
   def no_of_adults(adults)

@@ -9,6 +9,7 @@ class Availability < ApplicationRecord
 
   scope :with_in, -> (from, to) { where('available_on > ? and available_on < ?', from, to) }
   scope :for_range, -> (from, to) { where('available_on >= ? and available_on <= ?', from, to) }
+  scope :check_out_only, -> { where(check_out_only: true) }
 
   def reindex_lodging
     lodging.reindex
