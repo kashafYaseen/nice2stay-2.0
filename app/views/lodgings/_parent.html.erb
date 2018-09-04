@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <!-- Product Gallery-->
-    <div class="col-md-8">
+    <div class="col-md-8 margin-bottom-1x">
       <div class="gallery-control">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -31,7 +31,13 @@
   <div class="container">
     <div class="card-body col-md-8">
       <h3 class="card-title"><%= lodging.h1 %></h3>
-      <h5 class="card-title"><%= lodging.h2 %></h5>
+      <div class="margin-top-1x">
+              
+              <ul class="list-icon">
+                <h6><i class="material-icons md-24 check text-success"></i><%= lodging.highlight_1 %><i class="material-icons md-24 check text-success"></i><%= lodging.highlight_2 %> <i class="material-icons md-24 check text-success"></i><%= lodging.highlight_3 %></h6>
+               
+              </ul>
+            </div>
       <p class="text-sm col-md-4">
         <div id="lodging-description">
           <%= lodging.summary.try(:html_safe) %>
