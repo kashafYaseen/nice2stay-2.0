@@ -1,4 +1,4 @@
-class SearchFlexibleDates
+class SearchPriceWithFlexibleDates
   attr_reader :params
   attr_reader :lodging
 
@@ -14,6 +14,11 @@ class SearchFlexibleDates
   end
 
   def call
+    return search_price_with_defaults unless lodging.as_child?
+    flexible_search
+  end
+
+  def flexible_search
     required_dates = (params[:check_in]..params[:check_out]).to_a.map(&:to_s)
     available_dates = available_days(params[:check_in], params[:check_out])
     unavailable_dates = required_dates - available_dates
@@ -69,7 +74,7 @@ class SearchFlexibleDates
     end
 
     def available_for?(check_in, check_out)
-      return false unless check_in.present? && check_out.present?
+      return false unless check_in.present? && check_out.present? && minimum_stay(check_in, check_out) > 1
       required_dates = (check_in..check_out).to_a.map(&:to_s)
       availabilities = lodging.availabilities.for_range(check_in, check_out)
       return false unless availabilities.check_out_only.pluck(:available_on).map(&:to_s) == [check_out] || availabilities.check_out_only.pluck(:available_on).map(&:to_s).blank?
