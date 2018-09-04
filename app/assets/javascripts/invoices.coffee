@@ -38,6 +38,9 @@
     url = $('.persisted-data').data('url')
     $("#lbl-error-#{lodging_id}").html('')
     $("#bill-#{lodging_id}").html('')
+    $(".anternative-heading").html('')
+    $(".child-form-errors").html('')
+
     $.ajax
       url: "#{url}?values=#{values}"
       type: 'GET'
@@ -63,7 +66,7 @@
 
       if data.valid[index]
         $("#cart-#{lodging_id}").removeClass('disabled');
-        $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, lodging_id, index))
+        $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
         if data.discount
           discount = total * data.discount/100
@@ -72,6 +75,7 @@
 
         if total > 0
           result += total_html(total, index)
+          $("#anternative-heading-#{lodging_id}").html('Selected period is not fully available. See alternatives')
           $("#bill-#{lodging_id}").append(result)
         else
           show_unavailable(lodging_id)
@@ -100,6 +104,8 @@
         result += total_html(total, -1)
         $('.sm-total').text("Price: $#{total}")
         $("#bill-#{lodging_id}").html(result)
+        $("#anternative-heading-#{lodging_id}").html('Good news selected period is fully available.')
+        $("#flexible-search-#{lodging_id}").html("#{values[0]} - #{values[1]}")
       else
         show_unavailable(lodging_id)
     else
@@ -128,8 +134,8 @@
               <span class='float-right'><b>€#{total}</b></span>
             </p>"
 
-  radio_buttom_html = (check_in, check_out, price, lodging_id, index) ->
+  radio_buttom_html = (check_in, check_out, price, nights, lodging_id, index) ->
     return "<input type='radio' name='flexible_search' class='flexible_search_radio' value='flexible-search-#{index}' data-id='#{lodging_id}' data-check-in='#{check_in}' data-check-out='#{check_out}' #{if index == 0 then 'checked'}>
-           #{check_in} - #{check_out} - <b>$#{price}</b><br>"
+           #{check_in} - #{check_out} - #{nights} nights - <b>$#{price}</b><br>"
 
 ).call this

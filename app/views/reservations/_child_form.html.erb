@@ -6,7 +6,7 @@
        data-validate-url="<%= validate_reservations_path %>"></div>
 
   <div class="card-body">
-    <div class="reservation-form-errors-<%= lodging.id %>">
+    <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
       <%= render 'reservations/errors', resource: lodging.reservations.build %>
     </div>
 
@@ -16,25 +16,34 @@
         <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
           <div class="row">
-            <div class="col-md-4">
-              <%= render_image_tag lodging %>
-              <figcaption itemprop="caption description">
-                <input type="button" name="view-more-info" value="more information" class="btn btn-white btn-sm" data-toggle="modal" data-target="#child-details-modal-<%= lodging.id %>">
-              </figcaption>
+            <div class="col-md-7">
+              <%= render_image_tag lodging, class: 'max-height-200 min-width-300' %>
             </div>
 
-            <div class="col-md-4 lodging">
+            <div class="col-md-5 lodging">
               <h5><%= lodging.child_name %></h5>
+
+              <div id="lodging-description" class="max-height-200">
+                <%= truncated_description(lodging.short_desc, 150).try(:html_safe) %>
+              </div>
+
+              <input type="button" name="view-more-info" value="More information & images" class="btn btn-white btn-sm" data-toggle="modal" data-target="#child-details-modal-<%= lodging.id %>">
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-7">
+              <p class="text-dark text-bold mb-1">Please select option or booking</p>
               <% [:prebooking, :option].each do |status| %>
                 <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                 <label><%= status %></label>
               <% end %>
-              <br><br>
-              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data text-xs"></div>
+              <p class="text-dark text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
+              <p id="lbl-error-<%= lodging.id %>"></p>
             </div>
 
             <div class="col-md-4">
-              <p id="lbl-error-<%= lodging.id %>"></p><br>
               <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
 
               <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
@@ -43,7 +52,6 @@
               <%= f.hidden_field :children, id: "children_#{lodging.id}", class: 'children' %>
               <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
               <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
-
 
               <div class="text-dark line-height-2" id="bill-<%= lodging.id %>"></div>
 
