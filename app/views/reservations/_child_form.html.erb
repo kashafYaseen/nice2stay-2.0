@@ -27,20 +27,21 @@
                 <%= truncated_description(lodging.short_desc, 150).try(:html_safe) %>
               </div>
 
-              <input type="button" name="view-more-info" value="More information & images" class="btn btn-white btn-sm" data-toggle="modal" data-target="#child-details-modal-<%= lodging.id %>">
+              <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more information</a>
             </div>
           </div>
 
-          <div class="row mt-2">
+          <div class="row mt-4">
             <div class="col-md-7">
+              <p class="text-dark text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
+              <p id="lbl-error-<%= lodging.id %>"></p>
+
               <p class="text-dark text-bold mb-1">Please select option or booking</p>
               <% [:prebooking, :option].each do |status| %>
                 <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                 <label><%= status %></label>
               <% end %>
-              <p class="text-dark text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
-              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
-              <p id="lbl-error-<%= lodging.id %>"></p>
             </div>
 
             <div class="col-md-4">
