@@ -23,7 +23,7 @@
     <% end %>
 
     <%= link_to dashboard_reservations_path, class: "list-group-item with-badge #{active_class(dashboard_reservations_path)}" do %>
-      <i class="icon-bag"></i>Orders<span class="badge badge-default badge-pill">6</span>
+      <i class="icon-bag"></i>Orders<span class="badge badge-default badge-pill"><%= reservations_count %></span>
     <% end %>
 
     <a class="list-group-item" href="#">
