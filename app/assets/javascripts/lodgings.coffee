@@ -23,6 +23,11 @@
     $('.submit-filters').click ->
       $('#loader').show();
 
+  Lodging.child_form = ->
+    $('.btn-booking').click ->
+      if $(this).data('form-id')
+        Rails.fire($($(this).data('form-id')).get(0), 'submit')
+
   Lodging.read_more = ->
     $('.btn-read-more').click ->
       $target = $($(this).data('target'))
