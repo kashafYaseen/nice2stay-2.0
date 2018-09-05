@@ -6,12 +6,22 @@
 
   <body class="<%= yield (:body_class) %>">
     <%= render 'shared/navbar' %>
+
     <div id="flash-messages">
       <%= render 'shared/notices' %>
     </div>
-   
-    <%= yield %>
-   
+
+    <%= render 'layouts/dashboard/breadcrumbs' %>
+
+    <div class="container padding-bottom-3x mb-2">
+      <div class="row">
+        <%= render 'layouts/dashboard/sidebar' %>
+        <div class="col-lg-8">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+
     <%= render 'shared/footer' %>
 
     <script type="text/javascript">
