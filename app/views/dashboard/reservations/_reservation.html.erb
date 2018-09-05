@@ -1,11 +1,15 @@
 <tr>
-  <td><%= link_to reservation.lodging_name, reservation.lodging %></td>
-  <td><%= reservation.check_in %></td>
-  <td><%= reservation.check_out %></td>
-  <td><%= reservation.booking_status %></td>
-  <% if reservation.can_review?(current_user) %>
-    <td><%= link_to 'review', new_dashboard_reservation_review_path(reservation) %></td>
-  <% else %>
-    <td><%= link_to 'review', edit_dashboard_reservation_review_path(reservation, reservation.review) %></td>
-  <% end %>
+  <td class="align-middle">
+    <a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">
+      <%= reservation.id %>
+    </a>
+  </td>
+
+  <td class="align-middle"><%= link_to reservation.lodging_name, reservation.lodging %></td>
+  <td class="align-middle"><%= render_date reservation.created_at %></td>
+  <td class="align-middle">
+    <%= render_request_status reservation.request_status %>
+  </td>
+
+  <td class="align-middle"><span class="text-medium">$<%= reservation.total_price %></span></td>
 </tr>

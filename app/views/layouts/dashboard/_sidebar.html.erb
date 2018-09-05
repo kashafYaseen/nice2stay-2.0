@@ -1,0 +1,45 @@
+<div class="col-lg-4">
+  <aside class="user-info-wrapper">
+    <div class="user-cover cover-img">
+      <div class="info-label" data-toggle="tooltip" title="" data-original-title="You currently have 622 Reward Points to spend">
+        <i class="material-icons redeem"></i>622 points
+      </div>
+    </div>
+
+    <div class="user-info">
+      <div class="user-data">
+        <div class="user-avatar">
+          <a class="edit-avatar" href="#"><i class="material-icons edit"></i>Edit</a>
+        </div>
+
+        <h5><%= current_user.full_name.humanize %></h5><span>Joined <%= render_date(current_user.created_at) %></span>
+      </div>
+    </div>
+  </aside>
+
+  <nav class="list-group">
+    <%= link_to dashboard_path, class: "list-group-item #{active_class(dashboard_path)}" do %>
+      <i class="icon-home"></i>Dashboard Home
+    <% end %>
+
+    <%= link_to dashboard_reservations_path, class: "list-group-item with-badge #{active_class(dashboard_reservations_path)}" do %>
+      <i class="icon-bag"></i>Orders<span class="badge badge-default badge-pill"><%= reservations_count %></span>
+    <% end %>
+
+    <a class="list-group-item" href="#">
+      <i class="icon-head"></i>Profile
+    </a>
+
+    <a class="list-group-item" href="#">
+      <i class="icon-map"></i>Addresses
+    </a>
+
+    <a class="list-group-item with-badge" href="#">
+      <i class="icon-heart"></i>Wishlist<span class="badge badge-default badge-pill">3</span>
+    </a>
+
+    <a class="list-group-item with-badge" href="#">
+      <i class="icon-tag"></i>My Tickets<span class="badge badge-default badge-pill">4</span>
+    </a>
+  </nav>
+</div>
