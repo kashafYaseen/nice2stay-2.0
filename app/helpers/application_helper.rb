@@ -11,4 +11,8 @@ module ApplicationHelper
   def rendom_id object, key=''
     "#{dom_id(object, key)}_#{rand}"
   end
+
+  def render_date(date)
+    date.strftime("%d/%m/%Y") if date.present?
+  end
 end

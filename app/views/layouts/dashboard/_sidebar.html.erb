@@ -18,23 +18,27 @@
   </aside>
 
   <nav class="list-group">
-    <a class="list-group-item with-badge active" href="account-orders.html">
-      <i class="icon-bag"></i>Orders<span class="badge badge-default badge-pill">6</span>
-    </a>
+    <%= link_to dashboard_path, class: "list-group-item #{active_class(dashboard_path)}" do %>
+      <i class="icon-home"></i>Dashboard Home
+    <% end %>
 
-    <a class="list-group-item" href="account-profile.html">
+    <%= link_to dashboard_reservations_path, class: "list-group-item with-badge #{active_class(dashboard_reservations_path)}" do %>
+      <i class="icon-bag"></i>Orders<span class="badge badge-default badge-pill">6</span>
+    <% end %>
+
+    <a class="list-group-item" href="#">
       <i class="icon-head"></i>Profile
     </a>
 
-    <a class="list-group-item" href="account-address.html">
+    <a class="list-group-item" href="#">
       <i class="icon-map"></i>Addresses
     </a>
 
-    <a class="list-group-item with-badge" href="account-wishlist.html">
+    <a class="list-group-item with-badge" href="#">
       <i class="icon-heart"></i>Wishlist<span class="badge badge-default badge-pill">3</span>
     </a>
 
-    <a class="list-group-item with-badge" href="account-tickets.html">
+    <a class="list-group-item with-badge" href="#">
       <i class="icon-tag"></i>My Tickets<span class="badge badge-default badge-pill">4</span>
     </a>
   </nav>

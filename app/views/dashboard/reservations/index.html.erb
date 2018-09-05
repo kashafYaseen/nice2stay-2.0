@@ -1,17 +1,21 @@
-<h2>My Reservations</h2>
+<div class="padding-top-2x mt-2 hidden-lg-up"></div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Lodging</th>
-      <th>Check in</th>
-      <th>Check out</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+<div class="table-responsive text-sm">
+  <table class="table table-hover margin-bottom-none">
+    <thead>
+      <tr>
+        <th>Booking</th>
+        <th>Lodging</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Price</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <%= render @reservations %>
-  </tbody>
-</table>
+    <tbody>
+      <%= render @reservations %>
+    </tbody>
+  </table>
+</div>
+
+<hr class="mb-3">
