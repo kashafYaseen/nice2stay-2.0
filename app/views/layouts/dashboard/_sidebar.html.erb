@@ -12,7 +12,7 @@
           <a class="edit-avatar" href="#"><i class="material-icons edit"></i>Edit</a>
         </div>
 
-        <h5>Daniel Adams</h5><span>Joined February 06, 2017</span>
+        <h5><%= current_user.full_name.humanize %></h5><span>Joined <%= render_date(current_user.created_at) %></span>
       </div>
     </div>
   </aside>
