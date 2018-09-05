@@ -59,6 +59,11 @@
       nights = 0
       values[0] = search_param['check_in']
       values[1] = search_param['check_out']
+
+      if index == 0
+        $("#check_in_#{lodging_id}").val(values[0])
+        $("#check_out_#{lodging_id}").val(values[1])
+
       $.each data.rates[index], (key, value) ->
         result += rates_html(key, value, index)
         total += (key * value)
