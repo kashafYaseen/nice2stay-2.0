@@ -4,22 +4,19 @@
     <%= render 'shared/head' %>
   </head>
 
-  <body>
+  <body class="<%= yield (:body_class) %>">
     <%= render 'shared/navbar' %>
-    <%= render 'shared/notices' %>
-
-    <div class="row">
-      <%= render 'shared/sidebar' %>
-      <div class="col-md-9">
-        <%= yield %>
-      </div>
+    <div id="flash-messages">
+      <%= render 'shared/notices' %>
     </div>
-
+   
+    <%= yield %>
+   
     <%= render 'shared/footer' %>
 
     <script type="text/javascript">
+      Custom.init();
       <%= yield :js_init %>
     </script>
-
   </body>
 </html>
