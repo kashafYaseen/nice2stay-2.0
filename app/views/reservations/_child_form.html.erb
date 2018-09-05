@@ -11,58 +11,58 @@
     </div>
 
     <div class="row">
-
       <div class="col-md-12">
-        <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
-
-          <div class="row">
-            <div class="col-md-7">
-              <%= render_image_tag lodging, class: 'max-height-200 w-100' %>
-            </div>
-
-            <div class="col-md-5 lodging">
-              <h5><%= lodging.child_name %></h5>
-
-              <div id="lodging-description" class="max-height-200">
-                <%= truncated_description(lodging.short_desc, 150).try(:html_safe) %>
-              </div>
-
-              <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more information</a>
-            </div>
+        <div class="row">
+          <div class="col-md-7">
+            <%= render_image_tag lodging, class: 'max-height-200 w-100' %>
           </div>
 
-          <div class="row mt-4">
-            <div class="col-md-7">
-              <p class="text-dark text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
-              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
-              <p id="lbl-error-<%= lodging.id %>"></p>
+          <div class="col-md-5 lodging">
+            <h5><%= lodging.child_name %></h5>
 
-              <p class="text-dark text-bold mb-1">Please select option or booking</p>
-              <% [:prebooking, :option].each do |status| %>
-                <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-                <label><%= status %></label>
-              <% end %>
+            <div id="lodging-description" class="max-height-200">
+              <%= truncated_description(lodging.short_desc, 150).try(:html_safe) %>
             </div>
 
-            <div class="col-md-4">
-              <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
+            <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more information</a>
+          </div>
+        </div>
 
-              <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
-              <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
-              <%= f.hidden_field :adults, value: no_of_adults(f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
-              <%= f.hidden_field :children, id: "children_#{lodging.id}", class: 'children' %>
-              <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
-              <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-7">
+                <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
-              <div class="text-dark line-height-2" id="bill-<%= lodging.id %>"></div>
+                <p class="text-dark text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+                <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
+                <p id="lbl-error-<%= lodging.id %>"></p>
 
-              <%= f.submit 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
-              <% end %>
-              <%= render 'wishlists/form', lodging: lodging %>
+                <p class="text-dark text-bold mb-1">Please select option or booking</p>
+                <% [:prebooking, :option].each do |status| %>
+                  <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+                  <label><%= status %></label>
+                <% end %>
+
+                <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
+                <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
+                <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
+                <%= f.hidden_field :adults, value: no_of_adults(f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
+                <%= f.hidden_field :children, id: "children_#{lodging.id}", class: 'children' %>
+                <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
+                <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
+                <% end %>
+              </div>
+
+              <div class="col-md-4">
+                <div class="text-dark line-height-2" id="bill-<%= lodging.id %>"></div>
+                <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
+                <%= render 'wishlists/form', lodging: lodging %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-<!-- </div> -->
+</div>

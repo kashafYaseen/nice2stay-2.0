@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   localized do
-    resources :lodgings do
+    resources :lodgings, path: :accommodations do
       get :price_details, on: :member
       collection do
         get :autocomplete
@@ -45,7 +45,6 @@ Rails.application.routes.draw do
   end
 
   root to: 'pages#home'
-
   get "dashboard", to: "dashboard#index"
 
   namespace :dashboard do
