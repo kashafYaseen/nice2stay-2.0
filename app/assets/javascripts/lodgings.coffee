@@ -28,6 +28,14 @@
       if $(this).data('form-id')
         Rails.fire($($(this).data('form-id')).get(0), 'submit')
 
+  Lodging.highlight_menu = ->
+    $(window).scroll ->
+      $('.target-section').each ->
+        if $(window).scrollTop() >= $(this).position().top - $('.navbar').height()
+          id = $(this).attr('id')
+          $('#details-navbar .nav-link').removeClass 'active'
+          $("a[href='##{id}']").addClass 'active'
+
   Lodging.read_more = ->
     $('.btn-read-more').click ->
       $target = $($(this).data('target'))
