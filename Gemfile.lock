@@ -90,6 +90,7 @@ GEM
     bootstrap4-kaminari-views (1.0.0)
       kaminari (>= 0.13)
       rails (>= 3.1)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     bulk_insert (1.6.0)
       activerecord (>= 4.1.0)
@@ -373,6 +374,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.beta)
   bootstrap-typeahead-rails
   bootstrap4-kaminari-views
+  breadcrumbs_on_rails
   bulk_insert
   byebug
   capistrano
