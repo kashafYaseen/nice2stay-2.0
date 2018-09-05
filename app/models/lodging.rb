@@ -20,6 +20,8 @@ class Lodging < ApplicationRecord
   after_validation :geocode, if: :address_changed?
 
   searchkick locations: [:location], word_start: [:name]
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
