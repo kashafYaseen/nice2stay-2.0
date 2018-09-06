@@ -634,7 +634,7 @@
 </section>
 
 <%= content_for :js_init do %>
-  Lodging.autocomplete();
+  Lodging.autocomplete("<%= autocomplete_lodgings_path(locale: locale) %>");
   initDatePicker();
   GuestDropdown.init();
 <% end %>
