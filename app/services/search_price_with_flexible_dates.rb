@@ -14,7 +14,7 @@ class SearchPriceWithFlexibleDates
   end
 
   def call
-    return search_price_with_defaults unless lodging.as_child?
+    return search_price_with_defaults unless lodging.as_child? && params[:flexible]
     flexible_search
   end
 
