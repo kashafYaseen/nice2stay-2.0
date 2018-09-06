@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     I18n.locale
   end
 
-  def set_countries 
+  def set_countries
     @countries = Country.all
   end
 end
