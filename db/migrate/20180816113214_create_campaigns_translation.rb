@@ -3,7 +3,8 @@ class CreateCampaignsTranslation < ActiveRecord::Migration[5.2]
     Campaign.create_translation_table!({
       title: :string,
       description: :text,
-      url: :string
+      url: :string,
+      crm_urls: :string,
     },{
       migrate_data: true
     })

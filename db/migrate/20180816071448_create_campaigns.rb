@@ -3,6 +3,7 @@ class CreateCampaigns < ActiveRecord::Migration[5.2]
     create_table :campaigns do |t|
       t.string :title
       t.string :slug
+      t.string :crm_urls
       t.string :url
       t.string :article_spotlight
       t.text :publish, default: [], array: true
