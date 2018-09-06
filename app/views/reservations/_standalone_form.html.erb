@@ -24,16 +24,13 @@
        data-months="1"></div>
 
   <div class="card-body">
-
     <div class="reservation-form-errors-<%= lodging.id %>">
       <%= render 'reservations/errors', resource: reservation %>
-
     </div>
 
     <%= form_for reservation, url: reservations_path, remote: true do |f| %>
       <div class="row">
         <div class="col-md-12">
-          
           <div data-lodging-id="<%= lodging.id %>"
                data-disabled-dates="<%= lodging.not_available_on %>">
             <label class="mb-0 text-xs">Dates</label>

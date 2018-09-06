@@ -64,6 +64,46 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 
+  create_table "campaign_translations", force: :cascade do |t|
+    t.integer "campaign_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "description"
+    t.string "url"
+    t.string "crm_urls"
+    t.index ["campaign_id"], name: "index_campaign_translations_on_campaign_id"
+    t.index ["locale"], name: "index_campaign_translations_on_locale"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "title"
+    t.string "slug"
+    t.string "crm_urls"
+    t.string "url"
+    t.string "article_spotlight"
+    t.text "publish", default: [], array: true
+    t.text "images", default: [], array: true
+    t.text "description"
+    t.text "slider_desc"
+    t.integer "price"
+    t.boolean "slider"
+    t.boolean "spotlight"
+    t.boolean "popular_search"
+    t.boolean "popular_homepage"
+    t.boolean "collection"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "campaigns_regions", force: :cascade do |t|
+    t.bigint "campaign_id"
+    t.bigint "region_id"
+    t.index ["campaign_id"], name: "index_campaigns_regions_on_campaign_id"
+    t.index ["region_id"], name: "index_campaigns_regions_on_region_id"
+  end
+
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.text "content"
@@ -336,6 +376,8 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
   end
 
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
+  add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
+  add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade

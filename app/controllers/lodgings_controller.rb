@@ -86,13 +86,23 @@ class LodgingsController < ApplicationController
   end
 
  def autocomplete
-    render json: Lodging.search(params[:query], {
+    search_data = Lodging.search(params[:query], {
       fields: ["name"],
       match: :word_start,
       limit: 10,
       load: false,
       misspellings: {below: 5}
-    }).map{ |lodging| { name: lodging.name, id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
+    }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
+
+    search_data += Campaign.search(params[:query], {
+      fields: ["title"],
+      match: :word_start,
+      limit: 10,
+      load: false,
+      misspellings: {below: 5}
+    }).map{ |campaign| { name: campaign.title, id: campaign.id, type: 'campaign', url: campaign.url } }
+
+    render json: search_data
   end
 
   private
