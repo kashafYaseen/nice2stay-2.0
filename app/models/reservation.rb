@@ -53,11 +53,11 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants])[:rates].sum
+    self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum
   end
 
   def calculate_discount
-    discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
+    self.discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
   end
 
   private
