@@ -8,6 +8,8 @@ class Availability < ApplicationRecord
   accepts_nested_attributes_for :prices, allow_destroy: true
 
   scope :with_in, -> (from, to) { where('available_on > ? and available_on < ?', from, to) }
+  scope :for_range, -> (from, to) { where('available_on >= ? and available_on <= ?', from, to) }
+  scope :check_out_only, -> { where(check_out_only: true) }
 
   def reindex_lodging
     lodging.reindex
@@ -23,5 +25,9 @@ class Availability < ApplicationRecord
     days = where(available_on: [check_out +1.day, check_out]).order(:available_on)
     return if days.size == 2
     days.take.try(:delete)
+  end
+
+  def price_with(adults, children, amount, days)
+    prices.find_by(adults: adults, children: children, amount: amount, minimum_stay: days)
   end
 end

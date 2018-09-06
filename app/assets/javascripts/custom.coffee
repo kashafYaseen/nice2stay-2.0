@@ -29,4 +29,20 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
+    $(window).resize ->
+      check_standalone_form()
+      set_top_position()
+    check_standalone_form()
+    set_top_position()
+
+  check_standalone_form = ->
+    if $('.standalone-modal-btn').is(':visible')
+      $('.reservation-standalone-form').remove()
+    else
+      $('.reservation-standalone-form-modal').remove()
+
+  set_top_position = ->
+    $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
+    $('#map').css("top", "#{$('.fixed-filters').height()-10}px");
+
 ).call this

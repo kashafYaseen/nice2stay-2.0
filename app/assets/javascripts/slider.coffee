@@ -34,4 +34,7 @@
           sp.innerHTML = Math.round(value)
           bar.value = Math.round(value)
 
+      elem.noUiSlider.on 'end', (_meta, index) ->
+        $('.lodgings-filters').submit()
+
 ).call this

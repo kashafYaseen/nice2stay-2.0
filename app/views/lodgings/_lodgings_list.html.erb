@@ -1,23 +1,2 @@
-<div class="row">
-  <!-- Content-->
-  <%= render 'filters', regions: regions, lodgings: lodgings %>
-
-  <div class="col-lg-9 col-md-8">
-     <div class="d-flex flex-wrap-reverse flex-md-nowrap justify-content-center justify-content-sm-between align-items-center mb-30">
-      <div class="pt-3 pb-1 pb-sm-3 text-sm text-center text-sm-left"><span class="text-muted mr-2"><b>Found</b></span><%= lodgings.total_count %></div>
-    </div>
-
-    <div class="row mb-2 lodgings">
-      <%= tag.div id: "lodgings-list", data: { lodgings: lodgings.to_json(methods: [:address]), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
-      <%= render lodgings %>
-    </div>
-
-    <nav class="pagination">
-      <%= paginate lodgings, remote: true %>
-    </nav>
-  </div>
-</div>
-
-<% content_for :js_init do %>
-  ChosenSelect.init();
-<% end %>
+<%= tag.div class: "lodgings-list-json", data: { lodgings: lodgings.to_json(methods: [:address]), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
+<%= render lodgings %>

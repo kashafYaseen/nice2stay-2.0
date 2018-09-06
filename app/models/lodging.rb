@@ -14,11 +14,14 @@ class Lodging < ApplicationRecord
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
 
   attr_accessor :check_in_day
+  attr_accessor :flexible_search
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
   searchkick locations: [:location], word_start: [:name]
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   accepts_nested_attributes_for :availabilities, allow_destroy: true
   accepts_nested_attributes_for :rules, allow_destroy: true
@@ -30,7 +33,7 @@ class Lodging < ApplicationRecord
   delegate :active, to: :discounts, allow_nil: true, prefix: true
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
   delegate :country, to: :region, allow_nil: true
-  delegate :with_in, to: :availabilities, allow_nil: true, prefix: true
+  delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
 
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
 
@@ -55,10 +58,10 @@ class Lodging < ApplicationRecord
     (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
   end
 
-  def childs_not_available_on
+  def children_not_available_on
     return not_available_on unless lodging_children.present?
     _availabilities = []
-    lodging_children.each do |lodging_child|
+    lodging_children.includes(:availabilities).each do |lodging_child|
       _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
     end
     (Date.today..2.years.from_now).map(&:to_s) - _availabilities
@@ -87,8 +90,8 @@ class Lodging < ApplicationRecord
     adults.to_i + children.to_i
   end
 
-  def price_details(values)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4] })
+  def price_details(values, flexible = true)
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible })
   end
 
   def discount_details(values)
@@ -97,7 +100,7 @@ class Lodging < ApplicationRecord
 
   def cumulative_price(params)
     return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
-    total_price = price_list(params).sum
+    total_price = price_list(params.merge(flexible: false))[:rates].sum
     total_discount = discount(params)
     total_price -= total_price * (total_discount/100) if total_discount.present?
     "$#{total_price} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
@@ -134,6 +137,15 @@ class Lodging < ApplicationRecord
     images.first
   end
 
+  def child_name
+    return unless as_child? && name.include?('-')
+    name.split('-').last.strip
+  end
+
+  def flexible_search
+    @flexible_search || false
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|
@@ -145,9 +157,7 @@ class Lodging < ApplicationRecord
 
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      price_list = SearchPrices.call(params.merge(lodging_id: id, minimum_stay: total_nights)).sort.uniq(&:available_on).pluck(:amount)
-      price_list = price_list + [price] * (total_nights - price_list.size) if price_list.size < total_nights
-      price_list
+      SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights), self)
     end
 
     def discount(params)

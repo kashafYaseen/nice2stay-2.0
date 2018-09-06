@@ -1,23 +1,44 @@
-<div class="row ml-1">
+<% content_for :body_class, "p-3" %>
+
+<nav class="navbar navbar-sticky fixed-filters">
+  <div class="col-sm-12">
+    <%= render 'filters', lodgings: @lodgings %>
+  </div>
+</nav>
+
+<div class="row">
   <div id="loader">
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-lg-8 col-sm-8 lodgings-list scrollable-content">
-    <%= render "lodgings_list", lodgings: @lodgings, regions: @regions %>
+  <div class="col-lg-8 col-sm-8">
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="row mb-2 lodgings-list" id="lodgings-list">
+          <%= render 'lodgings_list', lodgings: @lodgings %>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="col-lg-4 col-sm-4">
+  <div class="col-lg-4 col-sm-4 fixed-map d-none d-sm-block">
     <%= tag.div nil, id: 'map' %>
   </div>
+</div>
+
+<div class="pagination d-none">
+  <%= paginate @lodgings, remote: true %>
 </div>
 
 <%= content_for :js_init do %>
   Lodging.init();
   Map.init();
-  $("input[type='number']").InputSpinner();
+  GuestDropdown.init();
   initDatePicker();
   $('#loader').hide();
+  InfiniteScroll.init();
+  ChosenSelect.init();
+  OwlCarousel.init();
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>

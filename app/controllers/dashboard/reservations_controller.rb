@@ -1,6 +1,7 @@
 class Dashboard::ReservationsController < DashboardController
-
   def index
-    @reservations = current_user.reservations
+    @title = 'Reservations'
+    add_breadcrumb @title, dashboard_reservations_path
+    @reservations = current_user.reservations_requests
   end
 end

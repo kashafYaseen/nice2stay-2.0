@@ -1,38 +1,50 @@
-<div class="row">
-  <!-- Product Gallery-->
-  <div class="col-md-12 mb-30">
-    <div class="gallery-control">
-      <figure itemprop="associatedMedia" itemscope>
-        <a itemprop="contentUrl">
-          <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
-        </a>
-        <figcaption itemprop="caption description">
-          <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="lodging-gallery" itemscope>
-      <% @lodging.images.each_with_index do |image_url, index| %>
-        <figure itemprop="associatedMedia" itemscope class="d-none">
-          <a href="<%= image_url %>" itemprop="contentUrl">
-            <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
-          </a>
-          <figcaption itemprop="caption description"><%= index %></figcaption>
-        </figure>
-      <% end %>
+<div class="container">
+  <div class="col-md-8 padding-top-2x mb-30">
+    <div class="mb-30">
+      <div class="lodging-children">
+        <h3 class="card-title">Available</h3>
+        <%= render partial: 'reservations/child_form', collection: lodging_children, as: :lodging %>
+        <%= render partial: 'child_details_modal', collection: lodging_children, as: :lodging  %>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="col-md-12 mb-30">
-    <div class="reservation-parent-form">
-      <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation %>
+<%= render 'shared_content', lodging: lodging %>
+
+<div class="col-md-4 d-none d-md-block fixed">
+  <div class="reservation-parent-form-1">
+    <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
+  </div>
+</div>
+
+<div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
+  <div class="card bg-white p-1">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <label class="sm-check-in-out text-center text-dark w-100"></label>
+        </div>
+        <div class="col-md-12">
+          <input type="button" name="view-more-info" value="Check Availability" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#parent-form-modal">
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="col-md-12 mb-30">
-    <div class="lodging-children">
-      <%= render partial: 'reservations/child_form', collection: @lodging.lodging_children, as: :lodging %>
+<div class="modal fade" id="parent-form-modal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-white pb-0">
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="reservation-parent-form-2">
+          <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '_modal' %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

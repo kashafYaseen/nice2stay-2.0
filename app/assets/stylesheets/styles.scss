@@ -16,6 +16,17 @@
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
 
+.homepage-actions-row {
+  padding-left: 3%;
+  padding-top: 1%;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+
 .sub-menu > li {
   display: block;
   position: relative;
@@ -25,16 +36,19 @@
   background: #E8F3EC;
 }
 
+.leads_homepage {
+  background: #E2EFF8;
+}
+
 .homepage_image {
-  background: url(explorer.png);
+  background: asset-url('explorer.png');
   background-size: cover;
   color: #fff;
 }
+
 .centered-form .panel{
   background: #ccc;
 }
-
-
 
 .sub-menu > li > a {
   display: block;
@@ -2470,7 +2484,7 @@ button:focus {
   height: 36px;
   padding: 0 18px;
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 32px;
 }
 
@@ -2522,6 +2536,7 @@ button:focus {
 .btn-danger:active,
 .btn-danger:focus {
   color: #ffffff;
+  font-weight: 600;
 }
 
 .btn-primary {
@@ -3548,6 +3563,7 @@ button:focus {
 .card-img-top,
 .card-img-bottom {
   border-radius: 0;
+  max-height: 200px;
 }
 
 .card-text {
@@ -3837,7 +3853,7 @@ button:focus {
 .comment .comment-body {
   position: relative;
   padding: 24px;
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 .comment .comment-title {
@@ -5804,7 +5820,8 @@ video {
 }
 
 .price-range-slider {
-  padding-top: 9px;
+  padding-top: 25px;
+  padding-right: 25px
 }
 
 .price-range-slider .ui-range-slider-footer {
@@ -7475,7 +7492,7 @@ video {
 }
 
 #map {
-  height: 100%;
+  height: calc(100vh - 135px);
   min-height: 400px;
 }
 

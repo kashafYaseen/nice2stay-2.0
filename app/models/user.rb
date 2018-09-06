@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :wishlists
   has_many :favourite_lodgings, through: :wishlists, source: :lodging
 
-  delegate :in_cart, to: :reservations, allow_nil: true, prefix: true
+  delegate :in_cart, :requests, to: :reservations, allow_nil: true, prefix: true
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
 
   enum creation_status: {

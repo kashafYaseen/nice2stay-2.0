@@ -19,6 +19,7 @@ class Reservation < ApplicationRecord
   delegate :email, to: :user, prefix: true
 
   scope :in_cart, -> { where(in_cart: true) }
+  scope :requests, -> { where(in_cart: false) }
 
   attr_accessor :skip_data_posting
 
@@ -36,6 +37,12 @@ class Reservation < ApplicationRecord
     canceled: 10,
   }
 
+  enum request_status: {
+    pending: 0,
+    confirmed: 1,
+    rejected: 2,
+  }
+
   def can_review? user
     user == self.user && review.blank?
   end
@@ -46,11 +53,11 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants]).sum
+    self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum
   end
 
   def calculate_discount
-    discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
+    self.discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
   end
 
   private

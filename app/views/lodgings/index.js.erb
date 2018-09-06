@@ -1,8 +1,19 @@
-$('.lodgings-list').html("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
-$("input[type='number']").InputSpinner();
-Lodging.init();
-initDatePicker();
+<% if params[:page].blank? %>
+  $('.lodgings-list').html("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
+<% else %>
+  $('.lodgings-list').append("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
+<% end  %>
+
+<% if @lodgings.next_page %>
+  $('.pagination').replaceWith('<%= j paginate @lodgings %>');
+  $('.pagination').addClass('d-none');
+<% else %>
+  $('.pagination').remove();
+<% end %>
+
 Map.add_markers();
 Map.highlight_lodgings();
-Url.update();
+Url.update("<%= lodgings_path(locale: locale) %>");
+OwlCarousel.init();
 $('#loader').hide();
+$('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");

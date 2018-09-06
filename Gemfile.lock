@@ -90,6 +90,7 @@ GEM
     bootstrap4-kaminari-views (1.0.0)
       kaminari (>= 0.13)
       rails (>= 3.1)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.3)
     bulk_insert (1.6.0)
       activerecord (>= 4.1.0)
@@ -172,6 +173,8 @@ GEM
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
+    friendly_id (5.2.4)
+      activerecord (>= 4.0.0)
     geocoder (1.4.9)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -371,6 +374,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.beta)
   bootstrap-typeahead-rails
   bootstrap4-kaminari-views
+  breadcrumbs_on_rails
   bulk_insert
   byebug
   capistrano
@@ -388,6 +392,7 @@ DEPENDENCIES
   dotenv-rails
   exception_notification
   foreman (~> 0.84.0)
+  friendly_id
   geocoder
   globalize!
   jbuilder (~> 2.5)

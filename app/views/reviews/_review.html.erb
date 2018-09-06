@@ -2,15 +2,12 @@
 <div class="comment">
   <div class="comment-body">
     <div class="comment-header d-flex flex-wrap justify-content-between">
-      <h4 class="comment-title"></h4>
-
+      <h4 class="comment-title"><%= review.title %></h4>
       <div class="mb-2">
         <div class="product-rating text-warning">
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
-          <i class="material-icons star"></i>
+          <% review.stars.times do |star| %>
+            <i class="material-icons star"></i>
+          <% end %>
         </div>
       </div>
     </div>
@@ -19,4 +16,3 @@
     <div class="comment-footer"><span class="comment-meta"><%= review.user_full_name %></span></div>
   </div>
 </div>
-<!-- Review-->

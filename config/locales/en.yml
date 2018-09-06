@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "<b>%{last}</b> of <b>%{total}</b>"

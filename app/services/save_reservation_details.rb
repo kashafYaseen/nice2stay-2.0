@@ -49,6 +49,7 @@ class SaveReservationDetails
         :crm_booking_id,
         :skip_data_posting,
         :booking_status,
+        :request_status,
       )
     end
 

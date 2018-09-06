@@ -4,14 +4,13 @@
     <%= render 'shared/head' %>
   </head>
 
-  <body>
+  <body class="<%= yield (:body_class) %>">
     <%= render 'shared/navbar' %>
     <div id="flash-messages">
       <%= render 'shared/notices' %>
     </div>
-
    
-      <%= yield %>
+    <%= yield %>
    
     <%= render 'shared/footer' %>
 
@@ -19,6 +18,5 @@
       Custom.init();
       <%= yield :js_init %>
     </script>
-
   </body>
 </html>

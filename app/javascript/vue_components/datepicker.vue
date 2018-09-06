@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary btn-sm" id="trigger-range">Dates {{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary btn-sm" id="trigger-range">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
         :trigger-element-id="'trigger-range'"
         :date-one="check_in"
@@ -11,8 +11,8 @@
         @apply="onApplyMethod"
         :min-date="this.yesterday"
       ></airbnb-style-datepicker>
-      <input type="hidden" name="check_in" :value="check_in">
-      <input type="hidden" name="check_out" :value="check_out">
+      <input type="hidden" name="check_in" class="check-in" :value="check_in">
+      <input type="hidden" name="check_out" class="check-out" :value="check_out">
     </div>
   </div>
 </template>
@@ -40,6 +40,9 @@
         if (dateTwo) {
           formattedDates += ' - ' + format(dateTwo, this.dateFormat)
         }
+        if (!dateTwo && !dateOne)
+          return 'Dates'
+
         return formattedDates
       },
       onApplyMethod(e) {
