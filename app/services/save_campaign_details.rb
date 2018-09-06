@@ -67,6 +67,7 @@ class SaveCampaignDetails
 
     def translation_params(translation)
       translation.permit(
+        :url,
         :crm_urls,
         :locale,
         :title,
