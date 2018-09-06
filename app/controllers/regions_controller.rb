@@ -1,6 +1,6 @@
 class RegionsController < ApplicationController
   def show
-    @region = Country.find(params[:country_id]).regions.find(params[:id])
+    @region = Country.friendly.find(params[:country_id]).regions.friendly.find(params[:id])
     @reservation = Reservation.new
   end
 end

@@ -3,6 +3,9 @@ class Region < ApplicationRecord
   has_many :lodgings
   has_and_belongs_to_many :campaigns
 
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   validates :name, presence: true
 
   delegate :name, :regions, to: :country, prefix: true
