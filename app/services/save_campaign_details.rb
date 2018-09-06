@@ -59,6 +59,7 @@ class SaveCampaignDetails
         :popular_search,
         :popular_homepage,
         :collection,
+        :crm_urls,
         { images: [] },
         { publish: [] },
       )
@@ -66,7 +67,7 @@ class SaveCampaignDetails
 
     def translation_params(translation)
       translation.permit(
-        :url,
+        :crm_urls,
         :locale,
         :title,
         :description,
