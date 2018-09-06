@@ -85,10 +85,6 @@ class LodgingsController < ApplicationController
     params.require(:lodging).permit(:street, :city, :zip, :state, :beds, :baths, :sq__ft, :sale_date, :price, :latitude, :longitude)
   end
 
-  
-
-  
-
  def autocomplete
     render json: Lodging.search(params[:query], {
       fields: ["name"],
@@ -96,9 +92,8 @@ class LodgingsController < ApplicationController
       limit: 10,
       load: false,
       misspellings: {below: 5}
-    }).map{ |lodging| { name: lodging.name, id: lodging.id } }
+    }).map{ |lodging| { name: lodging.name, id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

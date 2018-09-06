@@ -1,7 +1,7 @@
 (->
   window.Url or (window.Url = {})
 
-  Url.update = ->
+  Url.update = (base_url) ->
     params = ""
     if $('#bounds').val()    then params += "&bounds=#{$('#bounds').val()}"
     if $('.check-in').val()  then params += "&check_in=#{$('.check-in').val()}"
@@ -17,6 +17,6 @@
     if $('#lodging_type_apartment').is(':checked')    then params += "&lodging_type_in[]=#{$('#lodging_type_apartment').val()}"
     if $('#lodging_type_bnb').is(':checked')          then params += "&lodging_type_in[]=#{$('#lodging_type_bnb').val()}"
 
-    window.history.pushState({}, null, "/lodgings?#{params}");
+    window.history.pushState({}, null, "#{base_url}?#{params}");
 
 ).call this

@@ -100,7 +100,7 @@ class Lodging < ApplicationRecord
 
   def cumulative_price(params)
     return "$#{price} per night" unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
-    total_price = price_list(params).sum
+    total_price = price_list(params.merge(flexible: false))[:rates].sum
     total_discount = discount(params)
     total_price -= total_price * (total_discount/100) if total_discount.present?
     "$#{total_price} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
