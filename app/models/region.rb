@@ -6,6 +6,8 @@ class Region < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  searchkick word_start: [:name]
+
   validates :name, presence: true
 
   delegate :name, :regions, to: :country, prefix: true
