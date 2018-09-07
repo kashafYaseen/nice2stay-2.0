@@ -42,12 +42,14 @@ Rails.application.routes.draw do
       post :checkout
     end
 
-    resources :countries, only: [:index, :show] do
-      resources :regions, only: [:show]
-    end
+    resources :countries, only: [:index]
+
+    get '/:id', to: 'countries#show', as: :country
+    get '/:country_id/:id', to: 'regions#show', as: :country_region
+    get '/', to: 'pages#home', as: :root
   end
 
-  root to: 'pages#home'
+  root 'pages#home'
   get "dashboard", to: "dashboard#index"
 
   namespace :dashboard do
