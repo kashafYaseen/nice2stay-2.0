@@ -53,7 +53,7 @@
       remote:
         url: "#{url}?query=%QUERY"
         wildcard: '%QUERY')
-    $('.autocomplete').typeahead null, displayKey: 'name', source: lodgings
+    $('.autocomplete').typeahead null, displayKey: 'name', source: lodgings, limit: 10
 
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'lodging'
