@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :lodgings
       resources :reservations
       resources :campaigns
+      resources :amenities, only: [:create]
     end
 
     namespace :v2 do

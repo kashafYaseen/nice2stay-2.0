@@ -1,5 +1,5 @@
 class Amenity < ApplicationRecord
-  has_and_belongs_to_many :lodgings
+  has_and_belongs_to_many :lodgings, join_table: 'lodgings_amenities'
 
   extend FriendlyId
   friendly_id :name, use: :slugged
