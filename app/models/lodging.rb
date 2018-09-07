@@ -9,6 +9,8 @@ class Lodging < ApplicationRecord
   has_many :reviews
   has_many :specifications
   has_many :wishlists
+  has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
+  has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
 
   belongs_to :parent, class_name: 'Lodging', optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id

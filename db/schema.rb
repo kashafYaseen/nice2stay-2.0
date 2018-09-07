@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_05_073257) do
+ActiveRecord::Schema.define(version: 2018_09_07_113922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,26 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "amenities", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.boolean "filter_enabled"
+    t.boolean "hot"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "amenity_translations", force: :cascade do |t|
+    t.integer "amenity_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "slug"
+    t.index ["amenity_id"], name: "index_amenity_translations_on_amenity_id"
+    t.index ["locale"], name: "index_amenity_translations_on_locale"
   end
 
   create_table "announcements", force: :cascade do |t|
@@ -120,6 +140,20 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "country_translations", force: :cascade do |t|
+    t.integer "country_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "content"
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.index ["country_id"], name: "index_country_translations_on_country_id"
+    t.index ["locale"], name: "index_country_translations_on_locale"
+  end
+
   create_table "discounts", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -129,6 +163,27 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
+  end
+
+  create_table "experience_translations", force: :cascade do |t|
+    t.integer "experience_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "slug"
+    t.index ["experience_id"], name: "index_experience_translations_on_experience_id"
+    t.index ["locale"], name: "index_experience_translations_on_locale"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.string "name"
+    t.string "tag"
+    t.string "slug"
+    t.text "short_desc"
+    t.boolean "publish"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -224,6 +279,20 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
     t.index ["region_id"], name: "index_lodgings_on_region_id"
   end
 
+  create_table "lodgings_amenities", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "amenity_id"
+    t.index ["amenity_id"], name: "index_lodgings_amenities_on_amenity_id"
+    t.index ["lodging_id"], name: "index_lodgings_amenities_on_lodging_id"
+  end
+
+  create_table "lodgings_experiences", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "experience_id"
+    t.index ["experience_id"], name: "index_lodgings_experiences_on_experience_id"
+    t.index ["lodging_id"], name: "index_lodgings_experiences_on_lodging_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -255,6 +324,20 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.index ["availability_id"], name: "index_prices_on_availability_id"
+  end
+
+  create_table "region_translations", force: :cascade do |t|
+    t.integer "region_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "content"
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.index ["locale"], name: "index_region_translations_on_locale"
+    t.index ["region_id"], name: "index_region_translations_on_region_id"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -381,6 +464,10 @@ ActiveRecord::Schema.define(version: 2018_09_05_073257) do
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
+  add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
+  add_foreign_key "lodgings_amenities", "lodgings", on_delete: :cascade
+  add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
+  add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade

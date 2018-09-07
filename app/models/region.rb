@@ -5,6 +5,7 @@ class Region < ApplicationRecord
 
   extend FriendlyId
   friendly_id :name, use: :slugged
+  translates :name, :content, :slug, :title, :meta_title, :short_desc
 
   searchkick word_start: [:name]
 
