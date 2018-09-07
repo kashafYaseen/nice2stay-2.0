@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_104006) do
+ActiveRecord::Schema.define(version: 2018_09_07_110810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,6 +233,13 @@ ActiveRecord::Schema.define(version: 2018_09_07_104006) do
     t.index ["region_id"], name: "index_lodgings_on_region_id"
   end
 
+  create_table "lodgings_amenities", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "amenity_id"
+    t.index ["amenity_id"], name: "index_lodgings_amenities_on_amenity_id"
+    t.index ["lodging_id"], name: "index_lodgings_amenities_on_lodging_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -390,6 +397,8 @@ ActiveRecord::Schema.define(version: 2018_09_07_104006) do
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
+  add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
+  add_foreign_key "lodgings_amenities", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
