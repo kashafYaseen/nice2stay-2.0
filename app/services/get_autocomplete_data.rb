@@ -16,6 +16,8 @@ class GetAutocompleteData
   def call
     return lodgings if params[:type] == 'lodgings'
     return campaigns if params[:type] == 'campaigns'
+    return countries if params[:type] == 'countries'
+    return regions if params[:type] == 'regions'
   end
 
   private
@@ -37,5 +39,25 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5}
       }).map{ |campaign| { name: campaign.title, id: campaign.id, type: 'campaign', url: campaign.url } }
+    end
+
+    def countries
+      Country.search(params[:query], {
+        fields: ["name"],
+        match: :word_start,
+        limit: 5,
+        load: false,
+        misspellings: {below: 5}
+      }).map{ |country| { name: country.name, id: country.id, type: 'country', url: country_path(country.slug, locale: locale) } }
+    end
+
+    def regions
+      Region.search(params[:query], {
+        fields: ["name"],
+        match: :word_start,
+        limit: 5,
+        load: false,
+        misspellings: {below: 5}
+      }).map{ |region| { name: region.name, id: region.id, type: 'region', url: country_region_path(region.country_slug, region.slug, locale: locale) } }
     end
 end

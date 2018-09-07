@@ -3,6 +3,18 @@
 
   Autocomplete.init = (url) ->
     $('.autocomplete').typeahead { highlight: true }, {
+      name: 'countries'
+      displayKey: 'name'
+      limit: 4
+      source: source(url, 'countries')
+      templates: header: '<h4 class="category-name">Countries</h4>'
+    }, {
+      name: 'regions'
+      displayKey: 'name'
+      limit: 4
+      source: source(url, 'regions')
+      templates: header: '<h4 class="category-name">Regions</h4>'
+    }, {
       name: 'collections'
       display: 'name'
       limit: 4
@@ -19,7 +31,7 @@
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'lodging'
         window.location.href = "#{datum.url}?check_in=#{$('.check-in').val()}&check_out=#{$('.check-out').val()}"
-      else if datum.type == 'campaign'
+      else
         window.location.href = datum.url
 
   source = (url, type) ->
