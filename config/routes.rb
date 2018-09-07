@@ -42,9 +42,9 @@ Rails.application.routes.draw do
       post :checkout
     end
 
-    resources :countries, only: [:index, :show] do
-      resources :regions, only: [:show]
-    end
+    resources :countries, only: [:index]
+    get '/:id', to: 'countries#show', as: :country
+    get '/:country_id/:id', to: 'regions#show', as: :country_region
   end
 
   root to: 'pages#home'
