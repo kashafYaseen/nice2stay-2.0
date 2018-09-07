@@ -43,11 +43,13 @@ Rails.application.routes.draw do
     end
 
     resources :countries, only: [:index]
+
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
+    get '/', to: 'pages#home', as: :root
   end
 
-  root to: 'pages#home'
+  root 'pages#home'
   get "dashboard", to: "dashboard#index"
 
   namespace :dashboard do
