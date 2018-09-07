@@ -30,11 +30,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   localized do
+    resources :autocompletes, only: [:index]
     resources :lodgings, path: :accommodations do
       get :price_details, on: :member
-      collection do
-        get :autocomplete
-      end
     end
     resource :carts do
       get :remove, on: :member

@@ -80,6 +80,8 @@
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    max-height: 250px;
+    overflow-y: auto;
   }
 
   .tt-suggestion {
@@ -94,6 +96,12 @@
   .tt-cursor {
     color: #fff;
     background-color: #dc9814;
+  }
+
+  .category-name {
+    margin: 0 20px 5px 20px;
+    padding: 3px 0;
+    border-bottom: 1px solid #ccc;
   }
 }
 
