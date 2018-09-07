@@ -15,10 +15,10 @@
         <% end %>
       </li>
 
-      <li><a href="blog.html"><span>Advies</span></a>
+      <li><a href="#"><span>Language</span></a>
         <ul class="sub-menu">
-          <li><a href="blog.html">Blog List</a></li>
-          <li><a href="blog-single.html">Single Post</a></li>
+          <li><%= link_to 'English', root_en_path %></li>
+          <li><%= link_to 'Dutch', root_nl_path %></li>
         </ul>
       </li>
 
@@ -128,6 +128,12 @@
               <ul class="slideable-submenu">
                   <li><a href="index.html">Hero Slider</a></li>
                   <li><a href="home-featured-categories.html">Categories Grid</a></li>
+              </ul>
+            </li>
+            <li class="has-children"><span><a href="#"><span>Languages</span></a><span class="sub-menu-toggle"></span></span>
+              <ul class="slideable-submenu">
+                  <li><%= link_to 'English', root_en_path %></li>
+                  <li><%= link_to 'Dutch', root_nl_path %></li>
               </ul>
             </li>
             <li class="has-children active"><span><a href="shop-boxed-ls.html"><span>Shop</span></a><span class="sub-menu-toggle"></span></span>
