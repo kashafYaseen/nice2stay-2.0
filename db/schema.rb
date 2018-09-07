@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_112839) do
+ActiveRecord::Schema.define(version: 2018_09_07_113922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,17 @@ ActiveRecord::Schema.define(version: 2018_09_07_112839) do
     t.boolean "hot"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "amenity_translations", force: :cascade do |t|
+    t.integer "amenity_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "slug"
+    t.index ["amenity_id"], name: "index_amenity_translations_on_amenity_id"
+    t.index ["locale"], name: "index_amenity_translations_on_locale"
   end
 
   create_table "announcements", force: :cascade do |t|
@@ -129,6 +140,20 @@ ActiveRecord::Schema.define(version: 2018_09_07_112839) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "country_translations", force: :cascade do |t|
+    t.integer "country_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "content"
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.index ["country_id"], name: "index_country_translations_on_country_id"
+    t.index ["locale"], name: "index_country_translations_on_locale"
+  end
+
   create_table "discounts", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -138,6 +163,17 @@ ActiveRecord::Schema.define(version: 2018_09_07_112839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
+  end
+
+  create_table "experience_translations", force: :cascade do |t|
+    t.integer "experience_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "slug"
+    t.index ["experience_id"], name: "index_experience_translations_on_experience_id"
+    t.index ["locale"], name: "index_experience_translations_on_locale"
   end
 
   create_table "experiences", force: :cascade do |t|
@@ -288,6 +324,20 @@ ActiveRecord::Schema.define(version: 2018_09_07_112839) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.index ["availability_id"], name: "index_prices_on_availability_id"
+  end
+
+  create_table "region_translations", force: :cascade do |t|
+    t.integer "region_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "content"
+    t.string "slug"
+    t.string "title"
+    t.string "meta_title"
+    t.index ["locale"], name: "index_region_translations_on_locale"
+    t.index ["region_id"], name: "index_region_translations_on_region_id"
   end
 
   create_table "regions", force: :cascade do |t|
