@@ -37,10 +37,10 @@
        <li><a href="#"><span>Landen & regio's</span></a>
         <ul class="mega-menu">
           <% @countries.each do |country| %>
-            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
+            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country, locale: locale) %> </span>
               <ul>
                 <% country.regions.each do | region | %>
-                  <li><%= link_to region.name, country_region_path(country, region) %></li>
+                  <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
                 <% end %>
               </ul>
             </li>
@@ -51,10 +51,10 @@
       <li><a href="#"><span>collecties</span></a>
         <ul class="mega-menu">
           <% @countries.each do |country| %>
-            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country)%> </span>
+            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country, locale: locale) %> </span>
               <ul>
                 <% country.regions.each do | region | %>
-                  <li><%= link_to region.name, country_region_path(country, region) %></li>
+                  <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
                 <% end %>
               </ul>
             </li>

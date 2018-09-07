@@ -41,6 +41,10 @@ Rails.application.routes.draw do
       get :remove, on: :member
       post :checkout
     end
+
+    resources :countries, only: [:index, :show] do
+      resources :regions, only: [:show]
+    end
   end
 
   root to: 'pages#home'
@@ -54,9 +58,5 @@ Rails.application.routes.draw do
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection
-  end
-
-  resources :countries, only: [:index, :show] do
-    resources :regions, only: [:show]
   end
 end
