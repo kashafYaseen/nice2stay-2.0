@@ -7,25 +7,25 @@
       displayKey: 'name'
       limit: 4
       source: source(url, 'countries')
-      templates: header: '<h4 class="category-name">Countries</h4>'
+      templates: header: '<p class="category-name">Countries</p>'
     }, {
       name: 'regions'
       displayKey: 'name'
       limit: 4
       source: source(url, 'regions')
-      templates: header: '<h4 class="category-name">Regions</h4>'
+      templates: header: '<p class="category-name">Regions</p>'
     }, {
       name: 'collections'
       display: 'name'
       limit: 4
       source: source(url, 'campaigns')
-      templates: header: '<h4 class="category-name">Collections</h4>'
+      templates: header: '<p class="category-name">Collections</p>'
     }, {
       name: 'accommodations'
       displayKey: 'name'
       limit: 4
       source: source(url, 'lodgings')
-      templates: header: '<h4 class="category-name">Accommodations</h4>'
+      templates: header: '<p class="category-name">Accommodations</p>'
     }
 
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
