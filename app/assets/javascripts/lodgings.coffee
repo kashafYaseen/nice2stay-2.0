@@ -46,19 +46,4 @@
         $target.html($(this).data('truncated'))
         $(this).text('Read more')
 
-  Lodging.autocomplete = (url) ->
-    lodgings = new Bloodhound(
-      datumTokenizer: Bloodhound.tokenizers.whitespace
-      queryTokenizer: Bloodhound.tokenizers.whitespace
-      remote:
-        url: "#{url}?query=%QUERY"
-        wildcard: '%QUERY')
-    $('.autocomplete').typeahead null, displayKey: 'name', source: lodgings
-
-    $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
-      if datum.type == 'lodging'
-        window.location.href = "#{datum.url}?check_in=#{$('.check-in').val()}&check_out=#{$('.check-out').val()}"
-      else if datum.type == 'campaign'
-        window.location.href = datum.url
-
 ).call this

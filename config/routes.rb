@@ -30,11 +30,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   localized do
+    resources :autocompletes, only: [:index]
     resources :lodgings, path: :accommodations do
       get :price_details, on: :member
-      collection do
-        get :autocomplete
-      end
     end
     resource :carts do
       get :remove, on: :member
@@ -42,6 +40,10 @@ Rails.application.routes.draw do
     resource :wishlists do
       get :remove, on: :member
       post :checkout
+    end
+
+    resources :countries, only: [:index, :show] do
+      resources :regions, only: [:show]
     end
   end
 
@@ -56,9 +58,5 @@ Rails.application.routes.draw do
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection
-  end
-
-  resources :countries, only: [:index, :show] do
-    resources :regions, only: [:show]
   end
 end

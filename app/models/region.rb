@@ -6,9 +6,17 @@ class Region < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  searchkick word_start: [:name]
+
   validates :name, presence: true
 
-  delegate :name, :regions, to: :country, prefix: true
+  delegate :name, :regions, :slug, to: :country, prefix: true
+
+  def search_data
+    attributes.merge(
+      country_slug: country_slug,
+    )
+  end
 
   def self.names_with_country
     includes(:country).collect{ |region| ["#{region.name}, #{region.country_name}"] }
