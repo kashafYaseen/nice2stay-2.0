@@ -7,6 +7,7 @@ class LodgingsController < ApplicationController
   def index
     @lodgings = SearchLodgings.call(params)
     @amenities = Amenity.includes(:translations).all
+    @experiences = Experience.includes(:translations).all
   end
 
   # GET /lodgings/1
