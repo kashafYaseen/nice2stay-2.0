@@ -21,6 +21,26 @@ module LodgingsHelper
     0
   end
 
+  def count_amenities(lodgings, type)
+    buckets = lodgings.aggregations['amenities']['buckets']
+    buckets = lodgings.aggregations['amenities']['amenities']['buckets'] unless buckets.present?
+
+    buckets.each do |bucket|
+      return bucket['doc_count'] if bucket['key'] == type
+    end if buckets.present?
+    0
+  end
+
+  def count_experiences(lodgings, type)
+    buckets = lodgings.aggregations['experiences']['buckets']
+    buckets = lodgings.aggregations['experiences']['experiences']['buckets'] unless buckets.present?
+
+    buckets.each do |bucket|
+      return bucket['doc_count'] if bucket['key'] == type
+    end if buckets.present?
+    0
+  end
+
   def truncated_description(description, break_point)
     return unless description.present?
     return description.truncate(break_point) if truncate_description?(description, break_point)

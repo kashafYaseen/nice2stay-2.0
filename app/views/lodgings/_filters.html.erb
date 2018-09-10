@@ -92,7 +92,7 @@
                       <div class="col-md-6">
                         <label>
                           <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                          <span><%= amenity.name %></span>
+                          <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
                         </label>
                       </div>
                     <% end %>
@@ -106,7 +106,7 @@
                       <div class="col-md-6">
                         <label>
                           <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
-                          <span><%= experience.name %></span>
+                          <span><%= experience.name %> (<%= count_experiences(lodgings, experience.name) %>)</span>
                         </label>
                       </div>
                     <% end %>
@@ -114,6 +114,7 @@
 
                   <a href="#" class="show-all-filters text-decoration-none" data-target=".experiences-list" data-name="amenities">show all amenities</a><i class="experiences-list-icon material-icons text-primary">keyboard_arrow_down</i>
                 </div>
+
                 <div class="modal-footer">
                   <%= submit_tag 'Apply', class: 'btn btn-sm btn-primary submit-filters float-right' %>
                 </div>
