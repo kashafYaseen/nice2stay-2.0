@@ -200,6 +200,11 @@ input.autocomplete-field {
   z-index: 1;
 }
 
+div.filters-show-less {
+  max-height: 100px;
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 600px) {
   div.homepage-actions-row {
     margin: 0;
