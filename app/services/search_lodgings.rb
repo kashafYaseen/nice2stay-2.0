@@ -33,6 +33,8 @@ class SearchLodgings
       conditions[:region]       = params[:region].split(', ').first if params[:region].present?
       conditions[:availability_price] = price_range if params[:min_price].present? && params[:max_price].present?
       conditions[:presentation] = ['as_parent', 'as_standalone']
+      conditions[:amenities]    = params[:amenities_in] if params[:amenities_in].present?
+      conditions[:experiences]  = params[:experiences_in] if params[:experiences_in].present?
       conditions
     end
 
