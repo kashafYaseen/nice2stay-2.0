@@ -1,6 +1,6 @@
 module LodgingsHelper
-  def is_checked?(value)
-    params[:lodging_type_in].present? && params[:lodging_type_in].include?(value.to_s)
+  def is_checked?(value, symbol)
+    params[symbol].present? && params[symbol].include?(value.to_s)
   end
 
   def render_min_price(price)

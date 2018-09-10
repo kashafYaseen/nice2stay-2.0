@@ -6,6 +6,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings.json
   def index
     @lodgings = SearchLodgings.call(params)
+    @amenities = Amenity.includes(:translations).all
   end
 
   # GET /lodgings/1

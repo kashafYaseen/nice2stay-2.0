@@ -22,6 +22,18 @@
 
     $('.submit-filters').click ->
       $('#loader').show();
+      $('#more-filters-modal').modal('hide')
+
+    $('.show-all-filters').click (e) ->
+      e.stopPropagation()
+      if $(this).text().includes("show all")
+        $($(this).data('target')).removeClass 'filters-show-less'
+        $(this).text("close #{$(this).data('name')}")
+        $("#{$(this).data('target')}-icon").text('keyboard_arrow_up')
+      else
+        $($(this).data('target')).addClass 'filters-show-less'
+        $(this).text("show all #{$(this).data('name')}")
+        $("#{$(this).data('target')}-icon").text('keyboard_arrow_down')
 
   Lodging.child_form = ->
     $('.btn-booking').click ->
