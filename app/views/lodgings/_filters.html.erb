@@ -79,34 +79,18 @@
           <input type="button" name="more-filters" id="more-filters-btn" value="More Filters" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#more-filters-modal" data-backdrop="false">
 
           <div class="modal fade" id="more-filters-modal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xlg">
               <div class="modal-content">
                 <div class="modal-header bg-white pb-0">
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
-                  <% if amenities.present? %>
-                    <div class="row filters-show-less amenities-list">
-                      <h5 class="col-md-12">Amenities</h5>
-                      <% amenities.each do |amenity| %>
-                        <div class="col-md-6">
-                          <label>
-                            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                            <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
-                          </label>
-                        </div>
-                      <% end %>
-                    </div>
-
-                    <a href="#" class="show-all-filters text-decoration-none" data-target=".amenities-list" data-name="amenities">show all amenities</a><i class="amenities-list-icon material-icons text-primary">keyboard_arrow_down</i>
-                  <% end %>
-
                   <% if experiences.present? %>
-                    <div class="row filters-show-less experiences-list">
-                      <h5 class="col-md-12">Tags</h5>
+                    <div class="row experiences-list">
+                      <p class="col-md-12 text-bold">Themes</p>
                       <% experiences.each do |experience| %>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <label>
                             <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
                             <span><%= experience.name %> (<%= count_experiences(lodgings, experience.name) %>)</span>
@@ -114,8 +98,34 @@
                         </div>
                       <% end %>
                     </div>
+                  <% end %>
 
-                    <a href="#" class="show-all-filters text-decoration-none" data-target=".experiences-list" data-name="amenities">show all amenities</a><i class="experiences-list-icon material-icons text-primary">keyboard_arrow_down</i>
+                  <% if amenities.hot.present? %>
+                    <div class="row amenities-list">
+                      <p class="col-md-12 text-bold">Amenities - Popular</p>
+                      <% amenities.hot.each do |amenity| %>
+                        <div class="col-md-4">
+                          <label>
+                            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
+                            <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
+                          </label>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% end %>
+
+                  <% if amenities.regular.present? %>
+                    <div class="row amenities-list">
+                      <p class="col-md-12 text-bold">Amenities</p>
+                      <% amenities.regular.each do |amenity| %>
+                        <div class="col-md-4">
+                          <label>
+                            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
+                            <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
+                          </label>
+                        </div>
+                      <% end %>
+                    </div>
                   <% end %>
                 </div>
 
