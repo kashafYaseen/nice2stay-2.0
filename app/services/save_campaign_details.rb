@@ -62,6 +62,7 @@ class SaveCampaignDetails
         :crm_urls,
         { images: [] },
         { publish: [] },
+        { thumbnails: [] },
       )
     end
 

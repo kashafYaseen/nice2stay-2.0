@@ -1,6 +1,8 @@
 class Campaign < ApplicationRecord
   has_and_belongs_to_many :regions
 
+  include ImageHelper
+
   searchkick word_start: [:title]
 
   validates :title, :description, presence: true
