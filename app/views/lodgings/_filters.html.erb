@@ -69,7 +69,7 @@
                 <div class="dropdown-item">
                   <label>
                     <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "lodging_type" %>
-                    <span><%= key %> (<%= count_lodging_type(lodgings, key) %>)</span>
+                    <span><%= key %> (<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
                   </label>
                 </div>
               <% end %>
@@ -100,7 +100,7 @@
                     <div class="col-md-4">
                       <label>
                         <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
-                        <span><%= experience.name %> (<%= count_experiences(lodgings, experience.name) %>)</span>
+                        <span><%= experience.name %> (<%= render_lodgings_count_for(lodgings, experience.name, 'experiences') %>)</span>
                       </label>
                     </div>
                   <% end %>
@@ -114,7 +114,7 @@
                     <div class="col-md-4">
                       <label>
                         <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                        <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
+                        <span><%= amenity.name %> (<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
                       </label>
                     </div>
                   <% end %>
@@ -128,7 +128,7 @@
                     <div class="col-md-4">
                       <label>
                         <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                        <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
+                        <span><%= amenity.name %> (<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
                       </label>
                     </div>
                   <% end %>

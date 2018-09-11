@@ -11,32 +11,12 @@ module LodgingsHelper
     price || 100000
   end
 
-  def count_lodging_type(lodgings, type)
-    buckets = lodgings.aggregations['lodging_type']['buckets']
-    buckets = lodgings.aggregations['lodging_type']['lodging_type']['buckets'] unless buckets.present?
+  def render_lodgings_count_for (lodgings, key, filter_name)
+    buckets = lodgings.aggregations[filter_name]['buckets']
+    buckets = lodgings.aggregations[filter_name][filter_name]['buckets'] unless buckets.present?
 
     buckets.each do |bucket|
-      return bucket['doc_count'] if bucket['key'] == type
-    end if buckets.present?
-    0
-  end
-
-  def count_amenities(lodgings, type)
-    buckets = lodgings.aggregations['amenities']['buckets']
-    buckets = lodgings.aggregations['amenities']['amenities']['buckets'] unless buckets.present?
-
-    buckets.each do |bucket|
-      return bucket['doc_count'] if bucket['key'] == type
-    end if buckets.present?
-    0
-  end
-
-  def count_experiences(lodgings, type)
-    buckets = lodgings.aggregations['experiences']['buckets']
-    buckets = lodgings.aggregations['experiences']['experiences']['buckets'] unless buckets.present?
-
-    buckets.each do |bucket|
-      return bucket['doc_count'] if bucket['key'] == type
+      return bucket['doc_count'] if bucket['key'] == key
     end if buckets.present?
     0
   end
