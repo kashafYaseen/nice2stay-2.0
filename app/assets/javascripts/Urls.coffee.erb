@@ -13,9 +13,18 @@
     if $('#max_price').val() then params += "&max_price=#{$('#max_price').val()}"
     if $('#order').val()     then params += "&order=#{$('#order').val()}"
     if $('#region').val()    then params += "&region=#{$('#region').val()}"
-    if $('#lodging_type_villa').is(':checked')        then params += "&lodging_type_in[]=#{$('#lodging_type_villa').val()}"
-    if $('#lodging_type_apartment').is(':checked')    then params += "&lodging_type_in[]=#{$('#lodging_type_apartment').val()}"
-    if $('#lodging_type_bnb').is(':checked')          then params += "&lodging_type_in[]=#{$('#lodging_type_bnb').val()}"
+
+    <% Lodging.lodging_types.each do |key, value| %>
+    if $("#lodging_type_<%= key %>").is(':checked') then params += "&lodging_type_in[]=#{$('#lodging_type_<%= key %>').val()}"
+    <% end %>
+
+    <% Amenity.all.each do |amenity| %>
+    if $('#amenity_<%= amenity.slug %>').is(':checked') then params += "&amenities_in[]=#{$('#amenity_<%= amenity.slug %>').val()}"
+    <% end %>
+
+    <% Experience.all.each do |experience| %>
+    if $('#experience_<%= experience.slug %>').is(':checked') then params += "&experiences_in[]=#{$('#experience_<%= experience.slug %>').val()}"
+    <% end %>
 
     window.history.pushState({}, null, "#{base_url}?#{params}");
 

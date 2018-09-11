@@ -7,6 +7,9 @@ class Amenity < ApplicationRecord
 
   before_save :name_downcase
 
+  scope :hot, -> { where(hot: true) }
+  scope :regular, -> { where(hot: false) }
+
   def name_downcase
     self.name.downcase!
   end
