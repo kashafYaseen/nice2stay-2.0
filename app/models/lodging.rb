@@ -23,7 +23,7 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-  searchkick locations: [:location], word_start: [:name]
+  searchkick locations: [:location], word_start: [:name, :h1]
   extend FriendlyId
   friendly_id :name, use: :slugged
 
