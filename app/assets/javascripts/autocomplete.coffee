@@ -29,7 +29,7 @@
     }, {
       name: 'accommodations'
       displayKey: 'name'
-      limit: 10
+      limit: 5
       source: source(url, 'lodgings')
       templates:
         header: '<p class="category-name">Accommodations</p>'
