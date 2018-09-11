@@ -3,6 +3,8 @@ class Region < ApplicationRecord
   has_many :lodgings
   has_and_belongs_to_many :campaigns
 
+  include ImageHelper
+
   extend FriendlyId
   friendly_id :name, use: :slugged
   translates :name, :content, :slug, :title, :meta_title, :short_desc

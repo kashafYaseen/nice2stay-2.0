@@ -15,6 +15,8 @@ class Lodging < ApplicationRecord
   belongs_to :parent, class_name: 'Lodging', optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
 
+  include ImageHelper
+
   attr_accessor :check_in_day
   attr_accessor :flexible_search
 
@@ -135,10 +137,6 @@ class Lodging < ApplicationRecord
 
   def total_rules
     rules.count
-  end
-
-  def image
-    images.first
   end
 
   def child_name
