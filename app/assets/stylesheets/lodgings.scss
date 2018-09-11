@@ -223,6 +223,12 @@ div.filters-show-less {
   overflow: hidden;
 }
 
+.homepage-actions-row {
+  .btn-sm {
+    height: 46px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   div.homepage-actions-row {
     margin: 0;
