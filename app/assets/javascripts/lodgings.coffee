@@ -75,4 +75,10 @@
     else
       $('.more-filter-dropdown-menu, .more-filter-dropdown').toggleClass 'show'
 
+    checked = $('.more-filter-dropdown input:checkbox:checked')
+    if checked.length == 0
+      $('#more-filters-btn').val('More Filters')
+    else
+      $('#more-filters-btn').val("#{checked.length}. Filters")
+
 ).call this
