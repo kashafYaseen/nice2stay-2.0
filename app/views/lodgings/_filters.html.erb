@@ -68,13 +68,15 @@
               <% Lodging.lodging_types.each do |key, value| %>
                 <div class="dropdown-item">
                   <label>
-                    <%= check_box_tag "lodging_type_in[]", key, is_checked?(key), id: "lodging_type_#{key}", class: "lodging_type" %>
-                    <span><%= key %> (<%= count_lodging_type(lodgings, key) %>)</span>
+                    <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "lodging_type" %>
+                    <span><%= key %> (<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
                   </label>
                 </div>
               <% end %>
             </div>
           </div>
+
+          <input type="button" name="more-filters" id="more-filters-btn" value="More Filters" class="btn btn-outline-primary btn-sm">
 
           <div class="price-range-slider col-md-2" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
             <div class="ui-range-slider"></div>
@@ -85,6 +87,56 @@
 
               <div class="ui-range-value-max">$<span></span>
                 <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown more-filter-dropdown w-100">
+            <div class="dropdown-menu more-filter-dropdown-menu p-2">
+              <% if experiences.present? %>
+                <div class="row experiences-list">
+                  <p class="col-md-12 text-bold">Themes</p>
+                  <% experiences.each do |experience| %>
+                    <div class="col-md-4">
+                      <label>
+                        <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
+                        <span><%= experience.name %> (<%= render_lodgings_count_for(lodgings, experience.name, 'experiences') %>)</span>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if amenities.hot.present? %>
+                <div class="row amenities-list">
+                  <p class="col-md-12 text-bold">Amenities - Popular</p>
+                  <% amenities.hot.each do |amenity| %>
+                    <div class="col-md-4">
+                      <label>
+                        <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
+                        <span><%= amenity.name %> (<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if amenities.regular.present? %>
+                <div class="row amenities-list">
+                  <p class="col-md-12 text-bold">Amenities</p>
+                  <% amenities.regular.each do |amenity| %>
+                    <div class="col-md-4">
+                      <label>
+                        <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
+                        <span><%= amenity.name %> (<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="w-100 bg-white">
+                <%= submit_tag 'Apply', class: 'btn btn-sm btn-primary submit-filters float-right' %>
               </div>
             </div>
           </div>

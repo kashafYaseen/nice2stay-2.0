@@ -10,7 +10,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search query, where: conditions, aggs: [:beds, :baths, :lodging_type], per_page: 18, page: params[:page], order: order, includes: [:translations]
+    Lodging.search query, where: conditions, aggs: [:beds, :baths, :lodging_type, :amenities, :experiences], per_page: 18, page: params[:page], order: order, includes: [:translations]
   end
 
   private
@@ -33,6 +33,8 @@ class SearchLodgings
       conditions[:region]       = params[:region].split(', ').first if params[:region].present?
       conditions[:availability_price] = price_range if params[:min_price].present? && params[:max_price].present?
       conditions[:presentation] = ['as_parent', 'as_standalone']
+      conditions[:amenities]    = { all: params[:amenities_in] } if params[:amenities_in].present?
+      conditions[:experiences]  = { all: params[:experiences_in] } if params[:experiences_in].present?
       conditions
     end
 

@@ -139,6 +139,11 @@
   margin-top: 20px;
 }
 
+.more-filter-dropdown-menu {
+  overflow: auto;
+  max-height: 75vh;
+}
+
 .lodging-container {
   .lodging-selected {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -200,6 +205,11 @@ input.autocomplete-field {
   z-index: 1;
 }
 
+div.filters-show-less {
+  max-height: 100px;
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 600px) {
   div.homepage-actions-row {
     margin: 0;
@@ -214,4 +224,8 @@ input.autocomplete-field {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.modal-xlg {
+  max-width: 1000px;
 }
