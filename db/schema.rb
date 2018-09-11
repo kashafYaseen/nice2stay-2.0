@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_113922) do
+ActiveRecord::Schema.define(version: 2018_09_11_080132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_113922) do
     t.boolean "collection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "thumbnails", default: [], array: true
   end
 
   create_table "campaigns_regions", force: :cascade do |t|
@@ -138,6 +139,8 @@ ActiveRecord::Schema.define(version: 2018_09_07_113922) do
     t.boolean "sidebar", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "thumbnails", default: [], array: true
+    t.string "images", default: [], array: true
   end
 
   create_table "country_translations", force: :cascade do |t|
@@ -274,6 +277,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_113922) do
     t.datetime "crm_synced_at"
     t.bigint "parent_id"
     t.integer "presentation", default: 1
+    t.string "thumbnails", default: [], array: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
@@ -353,6 +357,8 @@ ActiveRecord::Schema.define(version: 2018_09_07_113922) do
     t.text "short_desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "thumbnails", default: [], array: true
+    t.string "images", default: [], array: true
     t.index ["country_id"], name: "index_regions_on_country_id"
   end
 
