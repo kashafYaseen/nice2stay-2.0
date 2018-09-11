@@ -76,65 +76,7 @@
             </div>
           </div>
 
-          <input type="button" name="more-filters" id="more-filters-btn" value="More Filters" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#more-filters-modal" data-backdrop="false">
-
-          <div class="modal fade" id="more-filters-modal" tabindex="-1">
-            <div class="modal-dialog modal-xlg">
-              <div class="modal-content">
-                <div class="modal-header bg-white pb-0">
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-
-                <div class="modal-body">
-                  <% if experiences.present? %>
-                    <div class="row experiences-list">
-                      <p class="col-md-12 text-bold">Themes</p>
-                      <% experiences.each do |experience| %>
-                        <div class="col-md-4">
-                          <label>
-                            <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
-                            <span><%= experience.name %> (<%= count_experiences(lodgings, experience.name) %>)</span>
-                          </label>
-                        </div>
-                      <% end %>
-                    </div>
-                  <% end %>
-
-                  <% if amenities.hot.present? %>
-                    <div class="row amenities-list">
-                      <p class="col-md-12 text-bold">Amenities - Popular</p>
-                      <% amenities.hot.each do |amenity| %>
-                        <div class="col-md-4">
-                          <label>
-                            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                            <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
-                          </label>
-                        </div>
-                      <% end %>
-                    </div>
-                  <% end %>
-
-                  <% if amenities.regular.present? %>
-                    <div class="row amenities-list">
-                      <p class="col-md-12 text-bold">Amenities</p>
-                      <% amenities.regular.each do |amenity| %>
-                        <div class="col-md-4">
-                          <label>
-                            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                            <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
-                          </label>
-                        </div>
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-
-                <div class="modal-footer">
-                  <%= submit_tag 'Apply', class: 'btn btn-sm btn-primary submit-filters float-right' %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <input type="button" name="more-filters" id="more-filters-btn" value="More Filters" class="btn btn-outline-primary btn-sm">
 
           <div class="price-range-slider col-md-2" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
             <div class="ui-range-slider"></div>
@@ -148,6 +90,57 @@
               </div>
             </div>
           </div>
+
+          <div class="dropdown more-filter-dropdown w-100">
+            <div class="dropdown-menu more-filter-dropdown-menu p-2">
+              <% if experiences.present? %>
+                <div class="row experiences-list">
+                  <p class="col-md-12 text-bold">Themes</p>
+                  <% experiences.each do |experience| %>
+                    <div class="col-md-4">
+                      <label>
+                        <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
+                        <span><%= experience.name %> (<%= count_experiences(lodgings, experience.name) %>)</span>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if amenities.hot.present? %>
+                <div class="row amenities-list">
+                  <p class="col-md-12 text-bold">Amenities - Popular</p>
+                  <% amenities.hot.each do |amenity| %>
+                    <div class="col-md-4">
+                      <label>
+                        <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
+                        <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if amenities.regular.present? %>
+                <div class="row amenities-list">
+                  <p class="col-md-12 text-bold">Amenities</p>
+                  <% amenities.regular.each do |amenity| %>
+                    <div class="col-md-4">
+                      <label>
+                        <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
+                        <span><%= amenity.name %> (<%= count_amenities(lodgings, amenity.name) %>)</span>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="w-100 bg-white">
+                <%= submit_tag 'Apply', class: 'btn btn-sm btn-primary submit-filters float-right' %>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </aside>

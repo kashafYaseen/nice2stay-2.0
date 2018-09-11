@@ -23,6 +23,17 @@
     $('.submit-filters').click ->
       $('#loader').show();
       $('#more-filters-modal').modal('hide')
+      more_filters_dropdown('close')
+
+    $('#more-filters-btn').click (e) ->
+      more_filters_dropdown('toggle')
+      e.stopPropagation();
+
+    $('.more-filter-dropdown-menu').click (e) ->
+      e.stopPropagation();
+
+    $(document).click ->
+      more_filters_dropdown('close')
 
     $('.show-all-filters').click (e) ->
       e.stopPropagation()
@@ -57,5 +68,11 @@
       else
         $target.html($(this).data('truncated'))
         $(this).text('Read more')
+
+  more_filters_dropdown = (option) ->
+    if option == 'close'
+      $('.more-filter-dropdown-menu, .more-filter-dropdown').removeClass 'show'
+    else
+      $('.more-filter-dropdown-menu, .more-filter-dropdown').toggleClass 'show'
 
 ).call this
