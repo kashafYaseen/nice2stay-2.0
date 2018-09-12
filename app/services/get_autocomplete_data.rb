@@ -27,7 +27,8 @@ class GetAutocompleteData
         match: :word_start,
         limit: 6,
         load: false,
-        misspellings: {below: 5}
+        misspellings: {below: 5},
+        where: { presentation: ['as_parent', 'as_standalone'] }
       }).map{ |lodging| { name: lodging.extended_name, title: lodging.h1, thumbnail: lodging.thumbnails.first, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
     end
 
