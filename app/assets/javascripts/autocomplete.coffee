@@ -20,7 +20,7 @@
         suggestion: (region) -> suggestion(region)
     }, {
       name: 'collections'
-      display: 'name'
+      displayKey: 'name'
       limit: 4
       source: source(url, 'campaigns')
       templates:
