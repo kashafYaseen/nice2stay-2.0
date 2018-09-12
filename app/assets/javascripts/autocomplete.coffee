@@ -60,11 +60,15 @@
         </div>
 
         <div class='col-10 p-sm-0 my-auto details'>
-          #{item.name} </br>
-          <span class='font-italic'>#{item.title}</span>
+          #{strip_tags item.name} </br>
+          <span class='font-italic'>#{strip_tags item.title}</span>
         </div>
       </div
     </div>"
 
+  strip_tags = (str) ->
+    if str
+      return str.replace(/<[^>]+>/ig,'')
+    return str
 
 ).call this
