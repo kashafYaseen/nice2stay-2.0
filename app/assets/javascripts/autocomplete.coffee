@@ -37,10 +37,7 @@
     }
 
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
-      if datum.type == 'lodging'
-        window.location.href = "#{datum.url}?check_in=#{$('.check-in').val()}&check_out=#{$('.check-out').val()}"
-      else
-        window.location.href = datum.url
+      $('#homepage_search_form').attr('action', datum.url);
 
   source = (url, type) ->
     return new Bloodhound(
