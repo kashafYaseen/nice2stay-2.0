@@ -125,23 +125,23 @@
   rates_html = (key, value, index) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} col-md-12'>
               <span class='float-left'>#{value} #{if value > 1 then 'nights' else 'night'}</span>
-              <span class='float-right'><b>€#{key}/night</b></span>
+              <span class='float-right'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
             </p>"
 
   discount_html = (key, value) ->
     return "<span class='float-left'>Discount #{key}%</span>
-            <span class='float-right'><b>$#{value}</b></span>"
+            <span class='float-right'><b>€#{value}</b></span>"
 
 
   total_html = (total, index) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} col-md-12'>
               <span class='float-left'><b>Total</b></span>
-              <span class='float-right'><b>€#{total}</b></span>
+              <span class='float-right'><b>€#{total.toFixed(2)}</b></span>
             </p>"
 
   radio_buttom_html = (check_in, check_out, price, nights, lodging_id, index) ->
     return "<input type='radio' name='flexible_search' class='flexible_search_radio' value='flexible-search-#{index}' data-id='#{lodging_id}' data-check-in='#{check_in}' data-check-out='#{check_out}' #{if index == 0 then 'checked'}>
-           #{parse_date check_in} - #{parse_date check_out} - #{nights} nights - <b>$#{price}</b><br>"
+           #{parse_date check_in} - #{parse_date check_out} - #{nights} nights - <b>€#{price}</b><br>"
 
   parse_date = (date) ->
     return "#{date.split('-')[2]}-#{date.split('-')[1]}-#{date.split('-')[0]}"
