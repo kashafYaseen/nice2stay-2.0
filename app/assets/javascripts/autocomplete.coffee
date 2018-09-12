@@ -61,7 +61,7 @@
 
         <div class='col-10 p-sm-0 my-auto details'>
           #{strip_tags item.name} </br>
-          <span class='font-italic'>#{strip_tags item.title}</span>
+          <span class='font-italic text-sm'>#{strip_tags item.title}</span>
         </div>
       </div
     </div>"
