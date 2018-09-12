@@ -20,7 +20,7 @@
         suggestion: (region) -> suggestion(region)
     }, {
       name: 'collections'
-      display: 'name'
+      displayKey: 'name'
       limit: 4
       source: source(url, 'campaigns')
       templates:
@@ -37,10 +37,7 @@
     }
 
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
-      if datum.type == 'lodging'
-        window.location.href = "#{datum.url}?check_in=#{$('.check-in').val()}&check_out=#{$('.check-out').val()}"
-      else
-        window.location.href = datum.url
+      $('#homepage_search_form').attr('action', datum.url);
 
   source = (url, type) ->
     return new Bloodhound(
@@ -60,11 +57,15 @@
         </div>
 
         <div class='col-10 p-sm-0 my-auto details'>
-          #{item.name} </br>
-          <span class='font-italic'>#{item.title}</span>
+          #{strip_tags item.name} </br>
+          <span class='font-italic text-sm'>#{strip_tags item.title}</span>
         </div>
       </div
     </div>"
 
+  strip_tags = (str) ->
+    if str
+      return str.replace(/<[^>]+>/ig,'')
+    return str
 
 ).call this

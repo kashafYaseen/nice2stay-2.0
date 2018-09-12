@@ -2,7 +2,7 @@
   <div class="container">
     <div class="col-md-12">
       <h2 class="mb-3 homepage_header">Mooie verhalen beginnen hier...</h2>
-        <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
+        <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-7 col-sm-12 pt-2">
               <%= text_field_tag :query, params[:query], placeholder: "Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...", class: 'form-control autocomplete autocomplete-field' %>

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :campaigns
       resources :amenities, only: [:create]
       resources :experiences, only: [:create]
+      resources :countries, only: [:create]
     end
 
     namespace :v2 do
