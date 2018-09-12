@@ -150,7 +150,7 @@ class Lodging < ApplicationRecord
   end
 
   def extended_name
-    "#{name} #{lodging_type} - #{country.name} #{region.name}"
+    "#{name} - #{lodging_type} - #{country.name} #{region.name}"
   end
 
   private
