@@ -23,12 +23,12 @@ class GetAutocompleteData
   private
     def lodgings
       Lodging.search(params[:query], {
-        fields: [:name, :h1],
+        fields: [:extended_name, :h1],
         match: :word_start,
         limit: 6,
         load: false,
         misspellings: {below: 5}
-      }).map{ |lodging| { name: lodging.name, title: lodging.h1, thumbnail: lodging.thumbnails.first, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
+      }).map{ |lodging| { name: lodging.extended_name, title: lodging.h1, thumbnail: lodging.thumbnails.first, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
     end
 
     def campaigns

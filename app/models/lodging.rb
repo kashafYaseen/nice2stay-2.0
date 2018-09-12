@@ -23,7 +23,7 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-  searchkick locations: [:location], word_start: [:name, :h1]
+  searchkick locations: [:location], word_start: [:extended_name, :h1]
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -84,6 +84,7 @@ class Lodging < ApplicationRecord
       location: { lat: latitude, lon: longitude },
       country: country.name,
       region: region.name,
+      extended_name: extended_name,
       available_on: availabilities.pluck(:available_on),
       availability_price: prices.pluck(:amount),
       adults_and_children: adults_plus_children,
@@ -146,6 +147,10 @@ class Lodging < ApplicationRecord
 
   def flexible_search
     @flexible_search || false
+  end
+
+  def extended_name
+    "#{name} #{lodging_type} - #{country.name} #{region.name}"
   end
 
   private
