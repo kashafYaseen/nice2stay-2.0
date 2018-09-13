@@ -10,4 +10,6 @@ class Country < ApplicationRecord
   searchkick word_start: [:name, :title]
 
   validates :name, presence: true, uniqueness: true
+
+  scope :enabled, -> { where(disable: false) }
 end
