@@ -9,6 +9,7 @@ class Campaign < ApplicationRecord
   translates :title, :url, :description, :crm_urls
 
   scope :home_page, -> { where(collection: true, popular_homepage: true) }
+  scope :menu, -> { where(slider: true) }
 
   def search_data
     attributes.merge(

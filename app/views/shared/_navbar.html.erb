@@ -51,10 +51,10 @@
       <li><a href="#"><span>collecties</span></a>
         <ul class="mega-menu">
           <% @countries.each do |country| %>
-            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country, locale: locale) %> </span>
+            <li><span class="mega-menu-title"><a><%= country.name %></a></span>
               <ul>
-                <% country.regions.each do | region | %>
-                  <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
+                <% country.campaigns_menu.each do |campaign| %>
+                  <li><%= link_to campaign.title, campaign.url %></li>
                 <% end %>
               </ul>
             </li>
@@ -154,6 +154,28 @@
                     <ul class="slideable-submenu">
                       <% country.regions.each do | region | %>
                         <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+
+            <li class="has-children">
+              <span><a href="#"><span>Collection</span></a>
+              <span class="sub-menu-toggle"></span></span>
+
+              <ul class="slideable-submenu">
+                <% @countries.each do |country| %>
+                  <li class="has-children">
+                    <span>
+                      <span><a><%= country.name %></a></span>
+                      <span class="sub-menu-toggle"></span>
+                    </span>
+
+                    <ul class="slideable-submenu">
+                      <% country.campaigns_menu.each do |campaign| %>
+                        <li><%= link_to campaign.title, campaign.url %></li>
                       <% end %>
                     </ul>
                   </li>
