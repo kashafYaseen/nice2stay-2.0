@@ -1,5 +1,6 @@
 class Country < ApplicationRecord
   has_many :regions
+  has_many :campaigns, through: :regions
 
   include ImageHelper
 
@@ -10,4 +11,8 @@ class Country < ApplicationRecord
   searchkick word_start: [:name, :title]
 
   validates :name, presence: true, uniqueness: true
+
+  scope :enabled, -> { where(disable: false) }
+
+  delegate :menu, to: :campaigns, allow_nil: true, prefix: true
 end
