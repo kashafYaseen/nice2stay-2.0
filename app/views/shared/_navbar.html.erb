@@ -136,6 +136,31 @@
                   <li><%= link_to 'Dutch', root_nl_path %></li>
               </ul>
             </li>
+
+            <li class="has-children">
+              <span><a href="#"><span>Landen & regio's</span></a>
+              <span class="sub-menu-toggle"></span></span>
+
+              <ul class="slideable-submenu">
+                <% @countries.each do |country| %>
+                  <li class="has-children">
+                    <span>
+                      <%= link_to country_path(country, locale: locale) do %>
+                        <span><%= country.name %></span>
+                      <% end %>
+                      <span class="sub-menu-toggle"></span>
+                    </span>
+
+                    <ul class="slideable-submenu">
+                      <% country.regions.each do | region | %>
+                        <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+
             <li class="has-children active"><span><a href="shop-boxed-ls.html"><span>Shop</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
                   <li><a href="shop-categories.html">Shop Categories</a></li>
