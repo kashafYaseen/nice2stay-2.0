@@ -117,17 +117,28 @@
     </div>
   </div>
 <% end %>
-<section class="container padding-top-3x pb-5">
-  <h2 class="text-center mb-30">Our collection</h2>
-<div class="gallery-wrapper isotope-grid cols-2" data-pswp-uid="3" style="position: relative; height: 741.25px;">
-            <div class="gutter-sizer"></div>
-            <div class="grid-sizer"></div>
-            <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 0px;"><a href="#" data-type="video" data-video="<div class=&quot;wrapper&quot;><div class=&quot;video-wrapper&quot;><iframe class=&quot;pswp__video&quot; width=&quot;960&quot; height=&quot;640&quot; src=&quot;https://player.vimeo.com/video/67001156?color=dc9814&amp;title=0&amp;byline=0&amp;portrait=0&quot; frameborder=&quot;0&quot; allowfullscreen></iframe></div></div>"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Image"></a><span class="caption">Chair with baloon</span></div>
-            <div class="grid-item gallery-item" style="position: absolute; left: 438px; top: 0px;"><a href="../img/gallery/07.jpg" data-size="1000x1000"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Image"></a><span class="caption">Hanging lamps</span></div>
-            <div class="grid-item gallery-item" style="position: absolute; left: 0px; top: 302px;"><a href="../img/gallery/08.jpg" data-size="1000x1000"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/10669/1000-hoofdfotoilghiottone.jpg" alt="Image"></a><span class="caption">Alarm clock</span></div>
-            <div class="grid-item gallery-item" style="position: absolute; left: 438px; top: 438px;"><a href="../img/gallery/06.jpg" data-size="1000x667"><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/17850/homepage_new.jpg" alt="Image"></a><span class="caption">Table lamp</span></div>
-          </div>
-          </section>
+
+<% if @campaigns.present? %>
+  <section class="container padding-top-3x pb-5">
+    <h2 class="text-center mb-30">Our collection</h2>
+
+    <div class="isotope-grid cols-2">
+      <div class="gutter-sizer"></div>
+      <div class="grid-sizer"></div>
+
+      <% @campaigns.each do |campaign| %>
+        <div class="grid-item gallery-item">
+          <%= link_to campaign.url do %>
+            <%= image_tag campaign.image %>
+            <h2 class="image-title-box"><%= campaign.title %></h2>
+          <% end %>
+
+          <span class="caption"><%= campaign.description.html_safe %></span>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
 
 <section class="container padding-top-3x pb-5">
   <h2 class="text-center mb-30">Recommendations</h2>
