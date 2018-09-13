@@ -227,6 +227,24 @@ div.filters-show-less {
   }
 }
 
+.grid-item {
+  .image-title-box {
+    display: block;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 50%;
+    margin-top: -10%;
+    margin-left: -24%;
+    background-color: #fff;
+    color: #404040;
+    font-size: 24px;
+    padding: 3%;
+    text-align: center;
+    box-shadow: 0 4px 15px 0 rgba(0,0,0,0.25);
+  }
+}
+
 @media only screen and (max-width: 600px) {
   div.homepage-actions-row {
     margin: 0;

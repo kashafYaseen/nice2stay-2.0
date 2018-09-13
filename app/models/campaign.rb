@@ -8,6 +8,8 @@ class Campaign < ApplicationRecord
   validates :title, :description, presence: true
   translates :title, :url, :description, :crm_urls
 
+  scope :home_page, -> { where(collection: true, popular_homepage: true) }
+
   def search_data
     attributes.merge(
       regions: regions.pluck(:name)
