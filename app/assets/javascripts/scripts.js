@@ -527,12 +527,21 @@ jQuery(document).on('turbolinks:load', function() {
               html: $(linkEl).data('video')
             };
           } else {
-            size = linkEl.getAttribute('data-size').split('x');
-            item = {
-              src: linkEl.getAttribute('href'),
-              w: parseInt(size[0], 10),
-              h: parseInt(size[1], 10)
-            };
+            if (linkEl.getAttribute('data-size') == null){
+              item = {
+                src: linkEl.getAttribute('href'),
+                w: parseInt(linkEl.childNodes[1].naturalWidth, 10),
+                h: parseInt(linkEl.childNodes[1].naturalHeight, 10)
+              };
+            }
+            else{
+              size = linkEl.getAttribute('data-size').split('x');
+              item = {
+                src: linkEl.getAttribute('href'),
+                w: parseInt(size[0], 10),
+                h: parseInt(size[1], 10)
+              };
+            }
           }
 
           if (figureEl.children.length > 1) {
