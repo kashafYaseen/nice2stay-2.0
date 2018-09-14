@@ -18,6 +18,10 @@
   </div>
 </div>
 
+<a class="toolbar-toggle search-toggle" href="#search">
+        <i class="material-icons search"></i>
+      </a>
+
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="gallery-container">
   <div class="container">
     <div class="col-md-8 mb-30">
@@ -71,7 +75,7 @@
 
         <div class="col-md-5 padding-top-3x">
           <%= render @reviews %>
-          <%= paginate @reviews %>
+          <%= paginate @reviews, pagination_class: "page" %>
         </div>
       </div>
     <% else %>
