@@ -48,22 +48,16 @@
         wildcard: '%QUERY')
 
   suggestion = (item) ->
-    if item.thumbnail then src = item.thumbnail else src = 'https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/12105/thumb_tuscany.jpg'
-
     "<div>
       <div class='row'>
-        <div class='col-2 my-auto'>
-          <img src='#{src}' class='rounded-circle' />
-        </div>
-
-        <div class='col-10 p-sm-0 my-auto details'>
-          #{strip_tags item.name} </br>
-          <span class='font-italic text-xs'>#{strip_tags item.title}</span>
+        <div class='col-12'>
+          #{remove_strip_tags item.name} </br>
+          <span class='font-italic text-xs'>#{remove_strip_tags item.title}</span>
         </div>
       </div
     </div>"
 
-  strip_tags = (str) ->
+  remove_strip_tags = (str) ->
     if str
       return str.replace(/<[^>]+>/ig,'')
     return str
