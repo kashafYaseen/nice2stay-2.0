@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :set_locale, :set_reservations, :set_wishlists, :set_countries
+  before_action :set_locale, :set_reservations, :set_wishlists, :set_countries, :set_campaigns
 
   def set_reservations
     @reservations = Reservation.where(id: cookies[:reservations].split(',')) if cookies[:reservations].present?
@@ -30,5 +30,9 @@ class ApplicationController < ActionController::Base
 
   def set_countries
     @countries = Country.enabled.includes({ regions: :translations }, :translations)
+  end
+
+  def set_campaigns
+    @campaigns = Campaign.home_page
   end
 end

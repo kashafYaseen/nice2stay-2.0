@@ -48,8 +48,16 @@
         </ul>
       </li>
 
-      <li><a href="#"><span>collecties</span></a>
+      <li><a href="#"><span>Collections</span></a>
         <ul class="mega-menu">
+          <li><span class="mega-menu-title"><a>popular collections</a></span>
+            <ul>
+              <% @campaigns.each do |campaign| %>
+                <li><%= link_to campaign.title, campaign.url %></li>
+              <% end %>
+            </ul>
+          </li>
+
           <% @countries.each do |country| %>
             <li><span class="mega-menu-title"><a><%= country.name %></a></span>
               <ul>
@@ -166,6 +174,19 @@
               <span class="sub-menu-toggle"></span></span>
 
               <ul class="slideable-submenu">
+                <li class="has-children">
+                  <span>
+                    <span><a>popular collections</a></span>
+                    <span class="sub-menu-toggle"></span>
+                  </span>
+
+                  <ul class="slideable-submenu">
+                    <% @campaigns.each do |campaign| %>
+                      <li><%= link_to campaign.title, campaign.url %></li>
+                    <% end %>
+                  </ul>
+                </li>
+
                 <% @countries.each do |country| %>
                   <li class="has-children">
                     <span>
