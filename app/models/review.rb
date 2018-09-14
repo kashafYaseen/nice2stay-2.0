@@ -5,6 +5,8 @@ class Review < ApplicationRecord
 
   validates :stars, :title, presence: true
 
+  translates :title, :suggetion, :description
+
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
 
