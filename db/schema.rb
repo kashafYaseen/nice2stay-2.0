@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_080132) do
+ActiveRecord::Schema.define(version: 2018_09_14_065544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -384,6 +384,18 @@ ActiveRecord::Schema.define(version: 2018_09_11_080132) do
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
+  create_table "review_translations", force: :cascade do |t|
+    t.integer "review_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "suggetion"
+    t.text "description"
+    t.index ["locale"], name: "index_review_translations_on_locale"
+    t.index ["review_id"], name: "index_review_translations_on_review_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "lodging_id"
     t.bigint "user_id"
@@ -399,6 +411,8 @@ ActiveRecord::Schema.define(version: 2018_09_11_080132) do
     t.text "suggetion"
     t.string "title"
     t.bigint "reservation_id"
+    t.string "thumbnails", default: [], array: true
+    t.string "images", default: [], array: true
     t.index ["lodging_id"], name: "index_reviews_on_lodging_id"
     t.index ["reservation_id"], name: "index_reviews_on_reservation_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
