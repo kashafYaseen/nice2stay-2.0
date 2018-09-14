@@ -27,7 +27,7 @@
   font-weight: 400;
   margin-top: 1%;
 }
-.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-18 { font-size: 20px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
@@ -428,6 +428,11 @@ a:focus {
 .small, small {
   font-size: 85%;
 }
+
+.extra_small {
+  font-size: 75%;
+} 
+
 
 .navi-link,
 .navi-link-light {
@@ -3324,7 +3329,7 @@ button:focus {
   border: 0;
   border-bottom: 2px solid transparent;
   color: #606060;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: .025em;
   text-transform: uppercase;
   text-decoration: none;
@@ -3351,7 +3356,7 @@ button:focus {
   margin-right: 5px;
   transition: color .3s;
   color: #999999;
-  font-size: 1.1em;
+  
 }
 
 .nav-tabs .nav-link:hover,
