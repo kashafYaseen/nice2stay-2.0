@@ -64,13 +64,18 @@
       <div class="row">
         <div class="card-body col-md-3">
           <h3 class="card-title">Rating & Reviews</h3>
-           <hr class="margin-bottom-1x">
+          <hr class="margin-bottom-1x">
           <%= render 'reviews/rating', lodging: lodging %>
         </div>
 
         <div class="col-md-5 padding-top-3x">
-          <%= render @reviews %>
-          <%= paginate @reviews %>
+          <div class="reviews-container">
+            <%= render @reviews %>
+          </div>
+
+          <div class="review-paginator">
+            <%= paginate @reviews, remote: true %>
+          </div>
         </div>
       </div>
     <% else %>
@@ -100,10 +105,8 @@
   </div>
 </div>
 
-
 <div class="padding-top-1x pb-5 homepage">
   <div class="container">
-
     <div class="col-md-8 padding-top-1x">
       <h3 class="card-title">You May Also Like</h3>
       <div class="row mb-3">
@@ -321,7 +324,6 @@
           </div>
         </div>
         <!-- Item-->
-        
         <!-- Item-->
         <div class="col-xl-4 col-lg-4 col-sm-6">
           <div class="product-card mb-30">
