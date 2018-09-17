@@ -7,8 +7,11 @@ class Review < ApplicationRecord
 
   translates :title, :suggetion, :description
 
+  scope :desc, -> { joins(:reservation).order('reservations.check_in DESC') }
+
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
+  delegate :check_in, to: :reservation, allow_nil: true
 
   before_validation :calculate_stars
   after_create :send_review_details

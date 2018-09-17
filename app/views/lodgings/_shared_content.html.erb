@@ -67,8 +67,12 @@
         </div>
 
         <div class="col-md-5 padding-top-3x">
-          <%= render @reviews %>
-          <%= paginate @reviews %>
+          <div class="reviews-container">
+            <%= render @reviews %>
+          </div>
+          <div class="review-paginator">
+            <%= paginate @reviews, remote: true %>
+          </div>
         </div>
       </div>
     <% else %>
