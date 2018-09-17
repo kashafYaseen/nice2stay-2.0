@@ -6,6 +6,10 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<span class="first">
-  <%= link_to_unless current_page.first?, t('views.pagination.first').html_safe, url, remote: remote %>
-</span>
+<div class="column text-left hidden-xs-down first">
+  <% if current_page.first? %>
+    <a class='btn btn-outline-secondary btn-sm m-0'><%= t('views.pagination.first').html_safe %></a>
+  <% else %>
+    <%= link_to_unless current_page.first?, t('views.pagination.first').html_safe, url, remote: remote, class: 'btn btn-outline-secondary btn-sm m-0' %>
+  <% end %>
+</div>
