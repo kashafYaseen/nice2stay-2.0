@@ -18,8 +18,6 @@
   </div>
 </div>
 
-
-
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="gallery-container">
   <div class="container">
     <div class="col-md-8 mb-30">
@@ -31,11 +29,10 @@
           <div class="grid-sizer"></div>
           
             <% lodging.images.each do |image| %>
-            <div class="grid-item gallery-item">
-                  <a href="<%= image %>">
-                    <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-                  </a>
-               
+              <div class="grid-item gallery-item">
+                <a href="<%= image %>">
+                  <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+                </a>
               </div>
             <% end %>
           </div>
@@ -73,7 +70,7 @@
 
         <div class="col-md-5 padding-top-3x">
           <%= render @reviews %>
-          <%= paginate @reviews, pagination_class: "page" %>
+          <%= paginate @reviews %>
         </div>
       </div>
     <% else %>
