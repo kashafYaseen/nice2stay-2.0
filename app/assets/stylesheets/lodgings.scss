@@ -215,6 +215,11 @@ div.filters-show-less {
   overflow: hidden;
 }
 
+div.review-paginator {
+  min-width: 480px;
+  margin-left: -10px
+}
+
 .homepage-actions-row {
   .btn-sm {
     height: 46px;
@@ -242,6 +247,11 @@ div.filters-show-less {
 @media only screen and (max-width: 600px) {
   div.homepage-actions-row {
     margin: 0;
+  }
+
+  div.review-paginator {
+    min-width: 100%;
+    margin-left: 0px;
   }
 }
 
