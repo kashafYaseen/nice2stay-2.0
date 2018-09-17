@@ -22,4 +22,11 @@ module ReviewsHelper
       </div>
     </div>".html_safe
   end
+
+  def remaining_star_tags(rating)
+    fraction, star_tags = (rating - rating.to_i).round(2), ''
+    star_tags += '<i class="material-icons star_half"></i>' if fraction >= 0.3
+    (5-rating.to_i).times { |star| star_tags += '<i class="material-icons star_border"></i>' }
+    star_tags.html_safe
+  end
 end

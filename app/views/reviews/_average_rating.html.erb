@@ -9,6 +9,8 @@
         <% average_rating.to_i.times do |star| %>
           <i class="material-icons star"></i>
         <% end %>
+
+        <%= remaining_star_tags(average_rating) %>
       </div>
     </div>
 
