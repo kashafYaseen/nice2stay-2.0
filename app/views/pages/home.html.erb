@@ -148,8 +148,15 @@
       <%= render 'reviews/average_rating' %>
     </div>
 
+
     <div class="col-md-8">
-      <%= render @reviews %>
+      <div class="reviews-container">
+        <%= render @reviews %>
+      </div>
+
+      <div class="homepage-review-paginator">
+        <%= paginate @reviews, remote: true %>
+      </div>
     </div>
   </div>
 </div>

@@ -13,11 +13,12 @@ class Region < ApplicationRecord
 
   validates :name, presence: true
 
-  delegate :name, :regions, :slug, to: :country, prefix: true
+  delegate :name, :regions, :disable, :slug, to: :country, prefix: true, allow_nil: true
 
   def search_data
     attributes.merge(
       country_slug: country_slug,
+      disable: country_disable,
     )
   end
 
