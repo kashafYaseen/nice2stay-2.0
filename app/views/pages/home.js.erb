@@ -1,0 +1,2 @@
+$('.reviews-container').html('<%= j render @reviews %>');
+$('.homepage-review-paginator').html('<%= j paginate @reviews, remote: true %>');

@@ -8,7 +8,7 @@ class Review < ApplicationRecord
   translates :title, :suggetion, :description
 
   scope :desc, -> { joins(:reservation).order('reservations.check_in DESC') }
-  scope :homepage, -> { limit(5).desc }
+  scope :homepage, -> { limit(50).desc }
 
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
