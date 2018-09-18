@@ -1,2 +1,4 @@
 $('.reviews-container').html('<%= j render @reviews %>');
 $('.review-paginator').html('<%= j paginate @reviews, remote: true, window: 0 %>');
+$('.you-may-like-lodgings').html('<%= j render @lodgings %>');
+OwlCarousel.init();

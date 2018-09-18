@@ -168,6 +168,11 @@
           $('.infants').val($('.parent-infants').val());
         }
       }
+      else if ($('.you-may-like-form').length > 0) {
+        $('.you-may-like-form .adults').val($('.dropdown-menu .adults').val());
+        $('.you-may-like-form .children').val($('.dropdown-menu .children').val());
+        $('.you-may-like-form .infants').val($('.dropdown-menu .infants').val());
+      }
     });
 
     element.addEventListener("touchstart", function(e) {
