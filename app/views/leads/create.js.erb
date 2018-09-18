@@ -1,0 +1,3 @@
+<% if @lead.errors.any? %>
+  $('.leads-form-errors').html('<%= j render "shared/errors", resource: @lead %>');
+<% end %>

@@ -39,8 +39,11 @@
       }
     },
     mounted() {
-      this.lodging_id = this.$el.parentElement.dataset.lodgingId
-      this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
+      if(this.$el.parentElement.dataset.lodgingId)
+        this.lodging_id = this.$el.parentElement.dataset.lodgingId
+
+      if(this.$el.parentElement.dataset.disabledDates)
+        this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
     },
     methods: {
       formatDates(dateOne, dateTwo) {

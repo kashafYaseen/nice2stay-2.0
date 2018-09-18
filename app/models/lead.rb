@@ -1,6 +1,8 @@
 class Lead < ApplicationRecord
   belongs_to :user, optional: true
 
+  accepts_nested_attributes_for :user
+
   enum generated: {
     site_user: 0,
     site: 1,
