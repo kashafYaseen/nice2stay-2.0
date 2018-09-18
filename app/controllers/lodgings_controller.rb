@@ -13,6 +13,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings/1
   # GET /lodgings/1.json
   def show
+    @lodgings = SearchSimilarLodgings.call(@lodging, params)
     @reservation = @lodging.reservations.build
     @reviews = @lodging.reviews_desc.page(params[:page]).per(2)
     @lodging_children = @lodging.lodging_children.includes(:availabilities) if @lodging.as_parent?

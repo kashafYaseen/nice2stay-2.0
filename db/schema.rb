@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_14_065544) do
+ActiveRecord::Schema.define(version: 2018_09_18_063914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,6 +199,31 @@ ActiveRecord::Schema.define(version: 2018_09_14_065544) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.date "from"
+    t.date "to"
+    t.text "extra_information"
+    t.string "slug"
+    t.integer "status", default: 0
+    t.integer "generated", default: 0
+    t.integer "lead_type", default: 0
+    t.integer "default_status", default: 0
+    t.integer "adults", default: 1
+    t.integer "childrens", default: 0
+    t.string "created_by"
+    t.text "notes"
+    t.datetime "offer_date"
+    t.string "preferred_country"
+    t.string "preferred_accommodations"
+    t.string "potential"
+    t.text "offer_text"
+    t.boolean "publish", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_leads_on_user_id"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -482,6 +507,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_065544) do
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
+  add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
