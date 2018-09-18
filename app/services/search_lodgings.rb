@@ -10,7 +10,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search query, where: conditions, aggs: [:beds, :baths, :lodging_type, :amenities, :experiences], per_page: 18, page: params[:page], order: order, includes: [:translations]
+    Lodging.search query, where: conditions, aggs: [:beds, :baths, :lodging_type, :amenities, :experiences], per_page: 18, page: params[:page], order: order, limit: params[:limit], includes: [:translations]
   end
 
   private
@@ -27,6 +27,7 @@ class SearchLodgings
       conditions[:available_on] = availability_condition if params[:check_in].present? || params[:check_out].present?
       conditions[:location]     = near_condition if params[:near].present?
       conditions[:location]     = frame_coordinates if params[:bounds].present?
+      conditions[:location]     = near_latlong_condition if params[:within].present?
       conditions[:adults]       = { gte: params[:adults] }  if params[:adults].present?
       conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
       conditions[:country]      = params[:region].split(', ').last if params[:region].present?
@@ -60,6 +61,16 @@ class SearchLodgings
           lon: location.longitude
         },
         within: "3mi"
+      }
+    end
+
+    def near_latlong_condition
+      {
+        near: {
+          lat: params[:latitude],
+          lon: params[:longitude]
+        },
+        within: params[:within]
       }
     end
 

@@ -38,6 +38,7 @@ class Lodging < ApplicationRecord
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
+  delegate :desc, to: :reviews, allow_nil: true, prefix: true
 
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
 

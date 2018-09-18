@@ -18,9 +18,6 @@
   </div>
 </div>
 
-
-
-
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="gallery-container">
   <div class="container">
     <div class="col-md-8 mb-30">
@@ -32,11 +29,10 @@
           <div class="grid-sizer"></div>
           
             <% lodging.images.each do |image| %>
-            <div class="grid-item gallery-item">
-                  <a href="<%= image %>">
-                    <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-                  </a>
-               
+              <div class="grid-item gallery-item">
+                <a href="<%= image %>">
+                  <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+                </a>
               </div>
             <% end %>
           </div>
@@ -46,8 +42,6 @@
     </div>
   </div>
 </div>
-
-
 
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="location-container">
   <div class="container">
@@ -70,13 +64,18 @@
       <div class="row">
         <div class="card-body col-md-3">
           <h3 class="card-title">Rating & Reviews</h3>
-           <hr class="margin-bottom-1x">
+          <hr class="margin-bottom-1x">
           <%= render 'reviews/rating', lodging: lodging %>
         </div>
 
         <div class="col-md-5 padding-top-3x">
-          <%= render @reviews %>
-          <%= paginate @reviews, pagination_class: "page" %>
+          <div class="reviews-container">
+            <%= render @reviews %>
+          </div>
+
+          <div class="review-paginator">
+            <%= paginate @reviews, remote: true, window: 0 %>
+          </div>
         </div>
       </div>
     <% else %>
@@ -106,244 +105,22 @@
   </div>
 </div>
 
-
-<div class="padding-top-1x pb-5 homepage">
+<div class="padding-top-1x pb-5">
   <div class="container">
-
     <div class="col-md-8 padding-top-1x">
       <h3 class="card-title">You May Also Like</h3>
-      <div class="row mb-3">
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"> <span class="product-badge text-danger">Sale</span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Storage Box</a></h3>
-              <h4 class="product-card-price">
-                <del>$49.00</del>$38.00
-              </h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"> <a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">File Cabinet</a></h3>
-              <h4 class="product-card-price">$265.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><span class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star_half"></i><i class="material-icons star_border"></i></span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Hook Basket</a></h3>
-              <h4 class="product-card-price">$112.50</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Lounge Chair</a></h3>
-              <h4 class="product-card-price">$1420.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><span class="product-badge text-muted">Out of stock</span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button><a class="btn btn-white btn-sm" hre="shop-single.html">View Details</a>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">LED Lighting</a></h3>
-              <h4 class="product-card-price">$130.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><span class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star_border"></i></span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Lounge Chair</a></h3>
-              <h4 class="product-card-price">$1099.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Tissue Holder</a></h3>
-              <h4 class="product-card-price">$76.40</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Campfire Table</a></h3>
-              <h4 class="product-card-price">$1087.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Stylish Chair</a></h3>
-              <h4 class="product-card-price">$417.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"> <span class="product-badge text-danger">Sale</span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Pendant Lamp</a></h3>
-              <h4 class="product-card-price">
-                <del>$54.00</del>$27.00
-              </h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><span class="product-rating text-warning"><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i><i class="material-icons star"></i></span><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Paper Table</a></h3>
-              <h4 class="product-card-price">$289.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Office Chair</a></h3>
-              <h4 class="product-card-price">$329.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Adjustable Table</a></h3>
-              <h4 class="product-card-price">$849.00</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Concrete Lamp</a></h3>
-              <h4 class="product-card-price">$85.90</h4>
-            </div>
-          </div>
-        </div>
-        <!-- Item-->
-        
-        <!-- Item-->
-        <div class="col-xl-4 col-lg-4 col-sm-6">
-          <div class="product-card mb-30">
-            <div class="product-card-thumb"><a class="product-card-link" href="shop-single.html"></a><img src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/24568/Aisha_Petite_Suite-1-DSD_4532ok.jpg" alt="Product">
-              <div class="product-card-buttons">
-                <button class="btn btn-white btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Wishlist"><i class="material-icons favorite_border"></i></button>
-                <button class="btn btn-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="material-icons check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
-              </div>
-            </div>
-            <div class="product-card-details">
-              <h3 class="product-card-title"><a href="shop-single.html">Desktop Light</a></h3>
-              <h4 class="product-card-price">$243.00</h4>
-            </div>
-          </div>
-        </div>
+
+      <div class="row mb-3 you-may-like-lodgings">
+        <%= render @lodgings %>
       </div>
     </div>
   </div>
 </div>
+
+<%= form_tag lodging_path(lodging), method: :get, class: 'you-may-like-form', remote: true do %>
+  <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
+  <%= hidden_field_tag :children, params[:children], class: 'children' %>
+  <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
+  <%= hidden_field_tag :check_in, params[:check_in], class: 'check_in' %>
+  <%= hidden_field_tag :check_out, params[:check_out], class: 'check_out' %>
+<% end %>

@@ -34,31 +34,33 @@ class GetAutocompleteData
 
     def campaigns
       Campaign.search(params[:query], {
-        fields: [:title, :description],
+        fields: [:title],
         match: :word_start,
         limit: 5,
         load: false,
         misspellings: {below: 5}
-      }).map{ |campaign| { name: campaign.title, title: campaign.description, type: 'campaign', url: campaign.url } }
+      }).map{ |campaign| { name: campaign.title, type: 'campaign', url: campaign.url } }
     end
 
     def countries
       Country.search(params[:query], {
-        fields: [:name, :title],
+        fields: [:name],
         match: :word_start,
         limit: 5,
         load: false,
-        misspellings: {below: 5}
-      }).map{ |country| { name: country.name, title: country.title, type: 'country', url: country_path(country.slug, locale: locale) } }
+        misspellings: {below: 5},
+        where: { disable: false }
+      }).map{ |country| { name: country.name, type: 'country', url: country_path(country.slug, locale: locale) } }
     end
 
     def regions
       Region.search(params[:query], {
-        fields: [:name, :title],
+        fields: [:name],
         match: :word_start,
         limit: 5,
         load: false,
-        misspellings: {below: 5}
-      }).map{ |region| { name: region.name, title: region.title, type: 'region', url: country_region_path(region.country_slug, region.slug, locale: locale) } }
+        misspellings: {below: 5},
+        where: { disable: false }
+      }).map{ |region| { name: region.name, type: 'region', url: country_region_path(region.country_slug, region.slug, locale: locale) } }
     end
 end
