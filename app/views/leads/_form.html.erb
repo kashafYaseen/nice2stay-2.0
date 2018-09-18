@@ -12,6 +12,7 @@
       <div class="leads-form-errors">
         <%= render 'shared/errors', resource: lead %>
       </div>
+
       <%= f.fields_for current_user || lead.build_user do |user| %>
         <fieldset <%= 'disabled' if user_signed_in? %>>
           <div class="form-group row">
@@ -110,7 +111,7 @@
         </div>
       </div>
 
-        <%= f.submit class: 'btn btn-primary margin-top-none' %>
-      <% end %>
+      <%= f.submit class: 'btn btn-primary margin-top-none' %>
+    <% end %>
   </div>
 </div>
