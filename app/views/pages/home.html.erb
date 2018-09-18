@@ -141,29 +141,32 @@
 <% end %>
 
 <div class="leads_homepage">
-<section class="container padding-top-3x pb-5">
-   <h2 class="text-center mb-30">Rating & Latest Customer Reviews</h2>
-  <div class="row mt-30">
-    <div class="col-md-4 mb-4">
-      <%= render 'reviews/average_rating' %>
-    </div>
-
-
-    <div class="col-md-8">
-      <div class="reviews-container">
-        <%= render @reviews %>
+  <section class="container padding-top-3x pb-5">
+     <h2 class="text-center mb-30">Rating & Latest Customer Reviews</h2>
+    <div class="row mt-30">
+      <div class="col-md-4 mb-4">
+        <%= render 'reviews/average_rating' %>
       </div>
 
-      <div class="homepage-review-paginator">
-        <%= paginate @reviews, remote: true %>
+
+      <div class="col-md-8">
+        <div class="reviews-container">
+          <%= render @reviews %>
+        </div>
+
+        <div class="homepage-review-paginator">
+          <%= paginate @reviews, remote: true %>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
-</section>
 
-<div class="container padding-top-3x pb-5">
-  <%= render 'leads/form', lead: @lead %>
+<div class="homepage">
+  <section class="container padding-top-3x pb-5">
+    <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
+    <%= render 'leads/form', lead: @lead %>
+  </section>
 </div>
 
 <%= content_for :js_init do %>
