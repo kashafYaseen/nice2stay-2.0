@@ -38,7 +38,8 @@ class GetAutocompleteData
         match: :word_start,
         limit: 5,
         load: false,
-        misspellings: {below: 5}
+        misspellings: {below: 5},
+        where: { collection: true, popular_homepage: true }
       }).map{ |campaign| { name: campaign.title, type: 'campaign', url: campaign.url } }
     end
 
