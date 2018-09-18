@@ -2,14 +2,14 @@ class Lead < ApplicationRecord
   belongs_to :user, optional: true
 
   enum generated: {
-    site_user: 0
+    site_user: 0,
     site: 1,
     email: 2,
     phone: 3,
   }
 
   enum lead_type: {
-    advice: 0
+    advice: 0,
     favorite: 1,
   }
 
