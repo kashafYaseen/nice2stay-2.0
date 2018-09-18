@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     end
 
     resources :countries, only: [:index]
+    resources :leads, only: [:create]
 
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region

@@ -162,94 +162,13 @@
 </div>
 </section>
 
-
-<div class="container padding-top-3x pb-5 ">
-    <div class="row homepage">
-      <div class="col-xs-12 col-sm-6 col-md-4 padding-top-1x">
-        <h3 class="mb-3">
-          Wilt u advies voor uw vakantie?
-        </h3>
-
-        <p>
-          Geen tijd, druk of geen zin? Wij denken graag met u mee bij het bepalen van uw keuze, geven u eerlijk advies op basis van uw wensen en onze kennis over de accommodaties. Elk vakantiehuis, appartement en boutique hotel is persoonlijk door ons bezocht. Wij berekenen geen kosten voor ons advies.
-        </p>
-
-       
-      </div>
-
-      
-      <div class="col-xs-12 col-sm-6 col-md-8 padding-top-1x">
-        <hr class="margin-bottom-1x">
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="text-input">Text</label>
-            <div class="col-10">
-              <input class="form-control" type="text" id="text-input" value="Artisanal kale">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="search-input">Search</label>
-            <div class="col-10">
-              <input class="form-control" type="search" id="search-input" value="How do I shoot web">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="email-input">Email</label>
-            <div class="col-10">
-              <input class="form-control" type="email" id="email-input" value="email@example.com">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="url-input">URL</label>
-            <div class="col-10">
-              <input class="form-control" type="url" id="url-input" value="https://getbootstrap.com">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="tel-input">Phone</label>
-            <div class="col-10">
-              <input class="form-control" type="tel" id="tel-input" value="1-(770)-334-2518">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="pass-input">Password</label>
-            <div class="col-10">
-              <input class="form-control" type="password" id="pass-input" value="mypasswordexample">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="textarea-input">Textarea</label>
-            <div class="col-10">
-              <textarea class="form-control text-muted" id="textarea-input" rows="5">Hello World!</textarea>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label text-muted" for="select-input">Select</label>
-            <div class="col-10">
-              <select class="form-control" id="select-input">
-                <option>Choose option...</option>
-                <option>Option item 1</option>
-                <option>Option item 2</option>
-                <option>Option item 3</option>
-              </select>
-            </div>
-          </div>
-           <button class="btn btn-primary margin-top-none" type="submit" disabled="">Submit</button>
-      
-
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
+<div class="container padding-top-3x pb-5">
+  <%= render 'leads/form', lead: @lead %>
+</div>
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
   initDatePicker();
   GuestDropdown.init();
+  Cart.init();
 <% end %>
