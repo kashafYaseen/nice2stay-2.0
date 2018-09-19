@@ -145,6 +145,11 @@ class Lodging < ApplicationRecord
     "#{name} - #{lodging_type} - #{country.name} #{region.name}"
   end
 
+  def all_reviews
+    return reviews_desc unless as_parent?
+    Review.where(lodging_id: lodging_children.ids.push(id)).includes(:translations).desc
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|

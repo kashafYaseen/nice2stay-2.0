@@ -9,8 +9,8 @@ class Review < ApplicationRecord
 
   scope :desc, -> { joins(:reservation).order('reservations.check_in DESC') }
   scope :homepage, -> { limit(50).desc }
-  scope :rating_sum, -> (type) { sum(type).round(2) }
-  scope :ratings_average, -> { average(:stars).round(2) }
+  scope :rating_sum, -> (type) { uniq.pluck(type).sum.round(2) }
+  scope :ratings_average, -> { (rating_sum(:stars) / uniq.count.to_f).round(2) }
 
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
