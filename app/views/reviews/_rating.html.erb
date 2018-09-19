@@ -1,25 +1,23 @@
+<% average_rating, total_reviews = reviews.ratings_average, reviews.count %>
+
 <div class="card border-default">
   <div class="card-body">
     <div class="text-center">
-      <div class="d-inline align-baseline display-3 mr-1"><%= lodging.avg_rating %></div>
+      <div class="d-inline align-baseline display-3 mr-1"><%= average_rating %></div>
 
       <div class="d-inline align-baseline text-sm text-warning mr-1">
-        <i class="material-icons star"></i>
-        <i class="material-icons star"></i>
-        <i class="material-icons star"></i>
-        <i class="material-icons star"></i>
-        <i class="material-icons star_half"></i>
+        <% average_rating.to_i.times do |star| %>
+          <i class="material-icons star"></i>
+        <% end %>
+
+        <%= remaining_star_tags(average_rating) %>
       </div>
     </div>
 
     <div class="pt-3">
-      <% total_reviews = lodging.reviews.count %>
-      <%= rating_tag lodging, total_reviews, 5 %>
-      <%= rating_tag lodging, total_reviews, 4 %>
-      <%= rating_tag lodging, total_reviews, 3 %>
-      <%= rating_tag lodging, total_reviews, 2 %>
-      <%= rating_tag lodging, total_reviews, 1 %>
+      <% Review::RATING_TYPE.each do |type| %>
+        <%= rating_tag(reviews.rating_sum(type), total_reviews, type) %>
+      <% end %>
     </div>
-
   </div>
 </div>

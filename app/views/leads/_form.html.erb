@@ -109,7 +109,20 @@
         </div>
       </div>
 
+      <div class="form-group row">
+        <%= f.label :countries, class: 'col-2 col-form-label text-muted' %>
+
+        <div class="col-10">
+          <%= f.select :country_ids, countries.map { |s| [s.name, s.id] }, { include_blank: false }, { multiple: true, class: 'form-control chosen-select', data: { placeholder: "Select countries" } } %>
+        </div>
+      </div>
+
       <%= f.submit class: 'btn btn-primary margin-top-none' %>
     <% end %>
   </div>
 </div>
+
+<% content_for :js_init do %>
+  ChosenSelect.init();
+  Cart.init();
+<% end %>

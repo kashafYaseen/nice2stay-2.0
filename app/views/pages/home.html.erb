@@ -145,9 +145,8 @@
      <h2 class="text-center mb-30">Rating & Latest Customer Reviews</h2>
     <div class="row mt-30">
       <div class="col-md-4 mb-4">
-        <%= render 'reviews/average_rating' %>
+        <%= render 'reviews/rating', reviews: @all_reviews %>
       </div>
-
 
       <div class="col-md-8">
         <div class="reviews-container">
@@ -165,7 +164,7 @@
 <div class="homepage">
   <section class="container padding-top-3x pb-5">
     <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
-    <%= render 'leads/form', lead: @lead %>
+    <%= render 'leads/form', lead: @lead, countries: @countries %>
   </section>
 </div>
 
@@ -173,5 +172,4 @@
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
   initDatePicker();
   GuestDropdown.init();
-  Cart.init();
 <% end %>

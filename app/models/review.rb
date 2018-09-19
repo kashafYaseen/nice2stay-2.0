@@ -9,6 +9,8 @@ class Review < ApplicationRecord
 
   scope :desc, -> { joins(:reservation).order('reservations.check_in DESC') }
   scope :homepage, -> { limit(50).desc }
+  scope :rating_sum, -> (type) { uniq.pluck(type).sum.round(2) }
+  scope :ratings_average, -> { (rating_sum(:stars) / uniq.count.to_f).round(2) }
 
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
@@ -18,15 +20,6 @@ class Review < ApplicationRecord
   after_create :send_review_details
 
   RATING_TYPE = [:quality, :interior, :service, :setting, :communication]
-
-  def self.average_rating(type = nil)
-    return (sum(type) / count).round(2) if type.present?
-    (sum(:stars).to_f / count).round(2)
-  end
-
-  def self.ratings_total
-    RATING_TYPE.inject(0) { |result, type| result + sum(type) }.round(2)
-  end
 
   def calculate_stars
     self.stars = (setting + quality + interior + communication + service) / 5
