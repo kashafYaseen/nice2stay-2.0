@@ -1,10 +1,11 @@
 module ReviewsHelper
   def rating_tag(rating, total, name)
     total = 1 if total == 0
+    name = 'Nice2stay service' if name == :communication
     average, percentage = rating / total, (rating * 100) / (total * 5)
 
     " <label class='text-medium text-sm'>
-        #{name} <span class='text-muted'>- #{average.round(2)}</span>
+        #{name.to_s.humanize} <span class='text-muted'>- #{average.round(2)}</span>
       </label>
 
     <div class='progress margin-bottom-1x'>
