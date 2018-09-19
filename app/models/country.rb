@@ -1,6 +1,7 @@
 class Country < ApplicationRecord
   has_many :regions
   has_many :campaigns, through: :regions
+  has_and_belongs_to_many :leads
 
   include ImageHelper
 

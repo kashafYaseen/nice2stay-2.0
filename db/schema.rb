@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_18_063914) do
+ActiveRecord::Schema.define(version: 2018_09_19_051502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,15 @@ ActiveRecord::Schema.define(version: 2018_09_18_063914) do
     t.datetime "updated_at", null: false
     t.string "thumbnails", default: [], array: true
     t.string "images", default: [], array: true
+  end
+
+  create_table "countries_leads", force: :cascade do |t|
+    t.bigint "lead_id"
+    t.bigint "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_countries_leads_on_country_id"
+    t.index ["lead_id"], name: "index_countries_leads_on_lead_id"
   end
 
   create_table "country_translations", force: :cascade do |t|
@@ -506,6 +515,8 @@ ActiveRecord::Schema.define(version: 2018_09_18_063914) do
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
+  add_foreign_key "countries_leads", "countries", on_delete: :cascade
+  add_foreign_key "countries_leads", "leads", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
