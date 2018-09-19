@@ -124,15 +124,6 @@ class Lodging < ApplicationRecord
     days.present? ? days : "All numbers"
   end
 
-  def avg_rating
-    return 0.0 unless reviews.present?
-    reviews.average(:stars).round(2)
-  end
-
-  def rating_for(stars)
-    reviews.where(stars: stars).count
-  end
-
   def total_prices
     prices.count
   end
