@@ -24,6 +24,6 @@ class LeadsController < ApplicationController
     end
 
     def lead_params
-      params.require(:lead).permit(:from, :to, :adults, :childrens, :extra_information)
+      params.require(:lead).permit(:from, :to, :adults, :childrens, :extra_information, { country_ids: [] })
     end
 end
