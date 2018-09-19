@@ -118,7 +118,7 @@
   </div>
 <% end %>
 
-<% if @campaigns.present? %>
+<% if @homepage_campaigns.present? %>
   <section class="container padding-top-3x pb-5">
     <h2 class="text-center mb-30">Our collection</h2>
 
@@ -126,10 +126,10 @@
       <div class="gutter-sizer"></div>
       <div class="grid-sizer"></div>
 
-      <% @campaigns.each do |campaign| %>
+      <% @homepage_campaigns.each do |campaign| %>
         <div class="grid-item gallery-item">
           <%= link_to campaign.url do %>
-            <%= image_tag campaign.image %>
+            <%= image_tag campaign.image if campaign.image.present? %>
             <h2 class="image-title-box"><%= campaign.title %></h2>
           <% end %>
 

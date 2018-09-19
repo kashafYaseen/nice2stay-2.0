@@ -33,6 +33,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_campaigns
-    @campaigns = Campaign.home_page
+    @homepage_campaigns = Campaign.home_page
   end
 end

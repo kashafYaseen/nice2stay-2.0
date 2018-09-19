@@ -52,7 +52,7 @@
         <ul class="mega-menu">
           <li><span class="mega-menu-title"><a>popular collections</a></span>
             <ul>
-              <% @campaigns.each do |campaign| %>
+              <% @homepage_campaigns.each do |campaign| %>
                 <li><%= link_to campaign.title, campaign.url %></li>
               <% end %>
             </ul>
@@ -181,7 +181,7 @@
                   </span>
 
                   <ul class="slideable-submenu">
-                    <% @campaigns.each do |campaign| %>
+                    <% @homepage_campaigns.each do |campaign| %>
                       <li><%= link_to campaign.title, campaign.url %></li>
                     <% end %>
                   </ul>
