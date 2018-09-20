@@ -37,7 +37,9 @@
     }
 
     $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
-      $('#homepage_search_form').attr('action', datum.url);
+      if datum.type == 'campaign'
+        $('#homepage_search_form').attr('method', 'post')
+      $('#homepage_search_form').attr('action', datum.url)
 
   source = (url, type) ->
     return new Bloodhound(

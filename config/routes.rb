@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   localized do
     resources :autocompletes, only: [:index]
     resources :lodgings, path: :accommodations do
+      post :index, on: :collection
       get :price_details, on: :member
     end
     resource :carts do

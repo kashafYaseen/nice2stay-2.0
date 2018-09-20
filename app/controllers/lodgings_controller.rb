@@ -1,6 +1,7 @@
 class LodgingsController < ApplicationController
   before_action :set_lodging, only: [:show, :edit, :update, :destroy]
   before_action :set_parent, only: [:show]
+  skip_before_action :verify_authenticity_token, only: [:index]
 
   # GET /lodgings
   # GET /lodgings.json
