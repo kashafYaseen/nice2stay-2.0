@@ -1,7 +1,11 @@
-<div class="col-md-4 pr-3 pr-sm-0 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
+<div class="col-md-12 pr-3 pr-sm-0 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
   <div class="card">
-    <div class="owl-carousel">
+   
+      <div class="row">
+      <div class="col-md-4">
+        <div class="owl-carousel">
       <%= render_image_tags lodging, class: "card-img-top" %>
+      </div>
     </div>
 
     <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do %>
@@ -14,4 +18,5 @@
       </div>
     <% end %>
   </div>
+</div>
 </div>
