@@ -1,18 +1,23 @@
+
+
 <div class="col-md-12 pr-3 pr-sm-0 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
-  <div class="card">
-   
-      <div class="row">
-      <div class="col-md-4 pr-0">
-        <div class="owl-carousel">
+
+<div class="border-default card-body">
+  
+  <div class="row">
+  <div class="col-md-4 col-xs-12">
+    <div class="owl-carousel">
       <%= render_image_tags lodging, class: "card-img-top" %>
       </div>
-    </div>
-    <div class="card border-default card-body">
-    <div class="col-md-8">
+  </div>
+  <div class="col-md-6 col-xs-12">
     <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do %>
      
-          <h6 class="card-title"><%= lodging.name %></h6>
-           <p class="card-text"><%= lodging.h2 %></p>
+          <h5 class="card-title"><%= lodging.name %></h6>
+          <p class="card-text">
+          <%= pluralize lodging.beds, "bedroons" %> <%= pluralize lodging.baths, "bathrooms" %>
+        </p>
+           <p class="card-text"><%= truncate(lodging.short_desc, length: 165) %></p>
          <ul class="list-icon">
             <p class="card-text">
               <i class="material-icons md-24 check text-success"></i><%= lodging.highlight_1 %>
@@ -20,20 +25,21 @@
               <i class="material-icons md-24 check text-success"></i><%= lodging.highlight_3 %>
             </p>
           </ul>
-          </div>
+          
 
-
-        <div class="col-md-2 card border-default card-body">
-          <p class="card-text">
-            <%= pluralize lodging.beds, "bed" %> <%= pluralize lodging.baths, "bath" %><br>
-            <h4><%= lodging.cumulative_price(params) %></h4> 
-          </p>
-
-      </div>
-      </div>
-      
-
-    <% end %>
+    </div>
+    <div class="col-md-6 col-xs-12">
+   
+            
+            <h3><%= lodging.cumulative_price(params) %></h3> 
+            <p class="price-text"> per nacht</p>
+            <i class="material-icons star"></i>
+           
+    </div>
   </div>
-</div>
-</div>
+  <% end %>
+  
+ </div>
+
+ </div>
+  
