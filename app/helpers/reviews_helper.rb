@@ -25,9 +25,14 @@ module ReviewsHelper
     </div>".html_safe
   end
 
-  def remaining_star_tags(rating)
+  def render_stars_tag(rating)
     fraction, star_tags, total_stars = (rating - rating.to_i).round(2), '', 5
-    star_tags, total_stars = '<i class="material-icons star_half"></i>', 4 if fraction >= 0.3
+    rating.to_i.times { |star| star_tags += "<i class='material-icons star'></i>" }
+
+    if fraction >= 0.3
+      star_tags += '<i class="material-icons star_half"></i>'
+      total_stars = 4
+    end
 
     (total_stars-rating.to_i).times { |star| star_tags += '<i class="material-icons star_border"></i>' }
     star_tags.html_safe
