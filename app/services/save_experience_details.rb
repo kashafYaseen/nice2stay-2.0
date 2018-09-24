@@ -56,8 +56,7 @@ class SaveExperienceDetails
       translation.permit(
         :slug,
         :name,
+        :locale,
       )
     end
-
 end
-
