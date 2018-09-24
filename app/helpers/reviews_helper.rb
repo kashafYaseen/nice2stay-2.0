@@ -1,18 +1,26 @@
 module ReviewsHelper
-  def rating_tag(rating, total, name)
+  def rating_tag(rating, name)
+    rating_tag_html(name, rating)
+  end
+
+  def avgerage_rating_tag(rating, total, name)
     total = 1 if total == 0
+    rating_tag_html(name, (rating / total))
+  end
+
+  def rating_tag_html(name, rating)
     name = 'Nice2stay service' if name == :communication
-    average, percentage = rating / total, (rating * 100) / (total * 5)
+    percentage = rating * (100 / 5)
 
     " <label class='text-medium text-sm'>
-        #{name.to_s.humanize} <span class='text-muted'>- #{average.round(2)}</span>
+        #{name.to_s.humanize} <span class='text-muted'>- #{rating.round(2)}</span>
       </label>
 
     <div class='progress margin-bottom-1x'>
       <div class='progress-bar bg-warning' role='progressbar'
         style='width: #{percentage}%; height: 2px;'
         aria-valuenow='#{rating}' aria-valuemin='0'
-        aria-valuemax='#{total}'>
+        aria-valuemax='5'>
       </div>
     </div>".html_safe
   end

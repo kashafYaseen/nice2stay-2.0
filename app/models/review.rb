@@ -17,6 +17,7 @@ class Review < ApplicationRecord
   delegate :check_in, to: :reservation, allow_nil: true
 
   before_validation :calculate_stars
+  after_commit :update_ratings
   after_create :send_review_details
 
   RATING_TYPE = [:quality, :interior, :service, :setting, :communication]
@@ -26,6 +27,12 @@ class Review < ApplicationRecord
   end
 
   private
+    def update_ratings
+      return unless lodging.present?
+      lodging.update_ratings
+      lodging.parent.update_ratings if lodging.parent.present?
+    end
+
     def send_review_details
       SendReviewDetailsJob.perform_later self.id
     end
