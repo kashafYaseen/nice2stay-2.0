@@ -1,7 +1,7 @@
 
 <div class="col-md-12 pr-3 pr-sm-0 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
 
-  <div class="border-default card-body">
+  <div class="border-default card-body bg-white">
     <div class="row">
       <div class="col-md-4 col-xs-12">
         <div class="owl-carousel">
@@ -32,7 +32,9 @@
           <div class="col-md-2 col-xs-12">
             <h3><%= lodging.cumulative_price(params) %></h3>
             <p class="price-text"> per night</p>
-            <i class="material-icons star"></i>
+            <div class="product-rating position-static">
+              <%= render_stars_tag lodging.average_rating %>
+            </div>
           </div>
 
         <% end %>
