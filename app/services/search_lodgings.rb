@@ -36,6 +36,7 @@ class SearchLodgings
       conditions[:presentation] = ['as_parent', 'as_standalone']
       conditions[:amenities]    = { all: params[:amenities_in] } if params[:amenities_in].present?
       conditions[:experiences]  = { all: params[:experiences_in] } if params[:experiences_in].present?
+      conditions[:id]           = { not: params[:lodging_id] } if params[:lodging_id].present?
       conditions
     end
 
@@ -87,8 +88,10 @@ class SearchLodgings
     end
 
     def order
-      return { price: :asc } if params[:order] == 'price_asc'
-      { price: :desc } if params[:order] == 'price_desc'
+      order_conditions = { average_rating: :desc }
+      return order_conditions.merge(price: :asc) if params[:order] == 'price_asc'
+      return order_conditions.merge(price: :desc) if params[:order] == 'price_desc'
+      order_conditions
     end
 
     def adults_plus_children

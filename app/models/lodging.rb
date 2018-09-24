@@ -150,6 +150,20 @@ class Lodging < ApplicationRecord
     Review.where(lodging_id: lodging_children.ids.push(id)).includes(:translations).desc
   end
 
+  def update_ratings
+    _reviews = all_reviews
+    total = _reviews.count
+
+    update_attributes(
+      setting: _reviews.rating_sum(:setting)/total,
+      quality: _reviews.rating_sum(:quality)/total,
+      interior: _reviews.rating_sum(:interior)/total,
+      service: _reviews.rating_sum(:service)/total,
+      communication: _reviews.rating_sum(:communication)/total,
+      average_rating: _reviews.ratings_average,
+    )
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|
