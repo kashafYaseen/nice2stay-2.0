@@ -65,5 +65,7 @@ module LodgingsHelper
     return 'Sort By' if params[:order].blank?
     return 'Highest to Lowest' if params[:order] == 'price_desc'
     return 'Lowest to Highest' if params[:order] == 'price_asc'
+    return 'Highest Rating' if params[:order] == 'rating_desc'
+    return 'Newest' if params[:order] == 'new_desc'
   end
 end
