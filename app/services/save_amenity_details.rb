@@ -55,8 +55,8 @@ class SaveAmenityDetails
       translation.permit(
         :slug,
         :name,
+        :locale,
       )
     end
-
 end
 

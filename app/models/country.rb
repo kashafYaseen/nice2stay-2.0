@@ -13,7 +13,8 @@ class Country < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  scope :enabled, -> { where(disable: false) }
+  default_scope { includes(:translations) }
+  scope :enabled, -> { where(disable: false).includes(:regions) }
 
   delegate :menu, to: :campaigns, allow_nil: true, prefix: true
 end

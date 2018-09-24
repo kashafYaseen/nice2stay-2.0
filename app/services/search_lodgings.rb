@@ -88,10 +88,10 @@ class SearchLodgings
     end
 
     def order
-      order_conditions = { average_rating: :desc }
-      return order_conditions.merge(price: :asc) if params[:order] == 'price_asc'
-      return order_conditions.merge(price: :desc) if params[:order] == 'price_desc'
-      order_conditions
+      return { average_rating: :desc } if params[:order] == 'rating_desc'
+      return { price: :asc } if params[:order] == 'price_asc'
+      return { price: :desc } if params[:order] == 'price_desc'
+      return { created_at: :desc } if params[:order] == 'new_desc'
     end
 
     def adults_plus_children

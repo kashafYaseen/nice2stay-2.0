@@ -52,9 +52,12 @@
               <span class="title"><%= render_sort_text %></span>
             </button>
 
-            <div class="dropdown-menu" aria-labelledby="PriceSortFilter">
+            <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
               <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
               <a class="dropdown-item highest-price" href="#">Highest Price</a>
+              <a class="dropdown-item highest-rating" href="#">Highest Rating</a>
+              <a class="dropdown-item newest" href="#">Newest</a>
+              <a class="dropdown-item default" href="#">Default</a>
               <%= hidden_field_tag :order, params[:order] %>
             </div>
           </div>

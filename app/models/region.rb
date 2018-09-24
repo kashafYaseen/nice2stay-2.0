@@ -13,6 +13,8 @@ class Region < ApplicationRecord
 
   validates :name, presence: true
 
+  default_scope { includes(:translations) }
+
   delegate :name, :regions, :disable, :slug, to: :country, prefix: true, allow_nil: true
 
   def search_data

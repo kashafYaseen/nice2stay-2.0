@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_countries
-    @countries = Country.enabled.includes({ regions: :translations }, :translations)
+    @countries = Country.enabled
   end
 
   def set_campaigns

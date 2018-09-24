@@ -8,6 +8,7 @@ class Campaign < ApplicationRecord
   validates :title, :description, presence: true
   translates :title, :url, :description, :crm_urls
 
+  default_scope { includes(:translations) }
   scope :home_page, -> { where(collection: true, popular_homepage: true) }
   scope :menu, -> { where(slider: true) }
 
