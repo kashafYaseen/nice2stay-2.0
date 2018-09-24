@@ -36,6 +36,7 @@ class SearchLodgings
       conditions[:presentation] = ['as_parent', 'as_standalone']
       conditions[:amenities]    = { all: params[:amenities_in] } if params[:amenities_in].present?
       conditions[:experiences]  = { all: params[:experiences_in] } if params[:experiences_in].present?
+      conditions[:id]           = { not: params[:lodging_id] } if params[:lodging_id].present?
       conditions
     end
 

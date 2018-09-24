@@ -20,8 +20,9 @@ class SearchSimilarLodgings
     def update_params
       params[:within] = "300km"
       params[:limit] = 6
-      params[:lodging_type] = lodging.lodging_type unless params[:lodging_type].present?
+      params[:lodging_type_in] = [lodging.lodging_type] unless params[:lodging_type_in].present?
       params[:latitude] = lodging.latitude
       params[:longitude] = lodging.longitude
+      params[:lodging_id] = lodging.id
     end
 end
