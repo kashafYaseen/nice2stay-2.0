@@ -32,7 +32,12 @@
           <div class="col-md-3 col-xs-12 text-center">
             <h3><%= lodging.cumulative_price(params) %></h3>
             <p class="price-text"> per night</p>
-            <%= render_stars_tag lodging.average_rating %>
+            <% if lodging.average_rating > 0 %>
+              <%= render_stars_tag lodging.average_rating %>
+              <p class="text-xs">(<%= pluralize( lodging.all_reviews.count, 'review' ) %>)</p>
+            <% else %>
+              <p class="text-xs">no reviews yet.</p>
+            <% end %>
           </div>
 
         <% end %>
