@@ -34,30 +34,28 @@
     <div class="container">
       <div class="card-body col-md-8">
         <h3 class="card-title margin-bottom-1x"><%= @lodging.h1 %></h3>
+
         <div class="row homepage">
-         <div class="col-md-4 margin-top-1x margin-bottom-1x">
-        <p><b><%= @lodging.adults %></b>  Adults <br>
-          <% if @lodging.children.present? %>
-          <b><%= @lodging.children %></b> Children<br>
-           <% else %>
-           <% end %>
+          <div class="col-md-4 margin-top-1x margin-bottom-1x">
+            <p><b><%= @lodging.adults %></b>  Adults <br>
 
-          <b><%= @lodging.beds %></b> Bedrooms <b><br><%= @lodging.baths %></b> Bathrooms 
+            <% if @lodging.children.present? %>
+              <b><%= @lodging.children %></b> Children<br>
+            <% end %>
+
+            <b><%= @lodging.beds %></b> Bedrooms <b><br><%= @lodging.baths %></b> Bathrooms
+          </div>
+
+          <div class="col-md-8 margin-top-1x">
+            <ul class="list-icon">
+              <p>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+              </p>
+            </ul>
+          </div>
         </div>
-        <div class="col-md-8 margin-top-1x">
-          <ul class="list-icon">
-            <p>
-              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
-              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
-              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-            </p>
-          </ul>
-        </div>
-
-
-     
-         </div>
-        
 
         <p class="text-sm col-md-4 margin-top-1x">
           <div id="lodging-description">
@@ -66,6 +64,7 @@
         </p>
       </div>
     </div>
+
     <div class="children-scroll-section"></div>
   </div>
 
