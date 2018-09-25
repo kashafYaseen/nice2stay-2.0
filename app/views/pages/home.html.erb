@@ -161,12 +161,11 @@
   </section>
 </div>
 
-<div class="homepage">
+
   <section class="container padding-top-3x pb-5">
     <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
     <%= render 'leads/form', lead: @lead, countries: @countries %>
   </section>
-</div>
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
