@@ -40,6 +40,7 @@ class UpdateLodgingTranslations
         :title,
         :description,
         :meta_desc,
+        :slug,
       )
     end
 end
