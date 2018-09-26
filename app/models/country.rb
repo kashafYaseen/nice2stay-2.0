@@ -9,7 +9,7 @@ class Country < ApplicationRecord
   friendly_id :name, use: :slugged
   translates :name, :content, :slug, :title, :meta_title
 
-  searchkick word_start: [:name_en, :name_nl]
+  searchkick text_middle: [:name_en, :name_nl]
 
   validates :name, presence: true, uniqueness: true
 

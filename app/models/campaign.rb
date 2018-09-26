@@ -3,7 +3,7 @@ class Campaign < ApplicationRecord
 
   include ImageHelper
 
-  searchkick word_start: [:title_en, :title_nl]
+  searchkick text_middle: [:title_en, :title_nl]
 
   validates :title, :description, presence: true
   translates :title, :url, :description, :crm_urls

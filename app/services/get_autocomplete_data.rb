@@ -24,7 +24,7 @@ class GetAutocompleteData
     def lodgings
       Lodging.search(params[:query], {
         fields: [:extended_name, :h1],
-        match: :word_start,
+        match: :text_middle,
         limit: 6,
         load: false,
         misspellings: {below: 5},
@@ -35,7 +35,7 @@ class GetAutocompleteData
     def campaigns
       Campaign.search(params[:query], {
         fields: ["title_#{locale}"],
-        match: :word_start,
+        match: :text_middle,
         limit: 5,
         load: false,
         misspellings: {below: 5},
@@ -46,7 +46,7 @@ class GetAutocompleteData
     def countries
       Country.search(params[:query], {
         fields: ["name_#{locale}"],
-        match: :word_start,
+        match: :text_middle,
         limit: 5,
         load: false,
         misspellings: {below: 5},
@@ -57,7 +57,7 @@ class GetAutocompleteData
     def regions
       Region.search(params[:query], {
         fields: ["name_#{locale}"],
-        match: :word_start,
+        match: :text_middle,
         limit: 5,
         load: false,
         misspellings: {below: 5},
