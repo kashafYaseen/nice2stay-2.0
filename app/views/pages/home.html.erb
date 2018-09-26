@@ -133,7 +133,7 @@
             <h2 class="image-title-box"><%= campaign.title %></h2>
           <% end %>
 
-          <span class="caption"><%= campaign.description.html_safe %></span>
+          <span class="caption"><%= campaign.description.try(:html_safe) %></span>
         </div>
       <% end %>
     </div>
