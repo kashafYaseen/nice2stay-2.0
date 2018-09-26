@@ -23,7 +23,7 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-  searchkick locations: [:location], word_start: [:extended_name, :h1]
+  searchkick locations: [:location], text_middle: [:extended_name, :h1]
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -42,7 +42,7 @@ class Lodging < ApplicationRecord
 
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
 
-  translates :title, :subtitle, :description
+  translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
   enum lodging_type: {
     villa: 1,

@@ -26,6 +26,7 @@ module ReviewsHelper
   end
 
   def render_stars_tag(rating)
+    return if rating.nan?
     fraction, star_tags, total_stars = (rating - rating.to_i).round(2), '', 5
     rating.to_i.times { |star| star_tags += "<i class='material-icons star'></i>" }
 

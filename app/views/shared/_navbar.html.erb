@@ -15,13 +15,6 @@
         <% end %>
       </li>
 
-      <li><a href="#"><span>Language</span></a>
-        <ul class="sub-menu">
-          <li><%= link_to 'English', root_en_path %></li>
-          <li><%= link_to 'Dutch', root_nl_path %></li>
-        </ul>
-      </li>
-
       <li><a href="#"><span>Nice2stay</span></a>
         <ul class="sub-menu">
           <li><a href="about.html">About Us</a></li>
@@ -69,6 +62,22 @@
           <% end %>
         </ul>
       </li>
+
+      <li>
+        <% if I18n.locale == :nl %>
+          <%= link_to root_en_path do %>
+            <span>
+              <%= image_tag('united-states-of-america-flag-icon-16.png', width: '16', height: '11', alt: 'English') %>
+            </span>
+          <% end %>
+        <% else %>
+          <%= link_to root_nl_path do %>
+            <span>
+              <%= image_tag('netherlands-flag-icon-16.png', width: '16', height: '11', alt: 'English') %>
+            </span>
+          <% end %>
+        <% end %>
+      </li>
     </ul>
   </nav>
   <!-- Toolbar-->
@@ -106,23 +115,18 @@
       <div class="toolbar-section" id="mobileMenu">
         <!-- Currency / Language Siwtcher-->
         <div class="text-center mb-4">
-          <div class="lang-currency-switcher">
-            <div class="lang-currency-toggle"><img src="" alt="English"><span>USD</span><i class="material-icons arrow_drop_down"></i>
-              <ul class="lang-currency-dropdown">
-                <li>
-                  <select class="form-control form-control-sm">
-                    <option value="usd">$ USD</option>
-                    <option value="usd">€ EUR</option>
-                    <option value="usd">£ UKP</option>
-                    <option value="usd">¥ JPY</option>
-                  </select>
-                </li>
-                <li><a href="#"><img src="" alt="Français">Français</a></li>
-                <li><a href="#"><img src="" alt="Deutsch">Deutsch</a></li>
-                <li><a href="#"><img src="" alt="Italiano">Italiano</a></li>
-              </ul>
-            </div>
-          </div>
+           <li>
+            <% if I18n.locale == :nl %>
+              <%= link_to root_en_path do %>
+               <span><%= image_tag('united-states-of-america-flag-icon-16.png', width: '16', height: '11', alt: 'English') %> </span>
+                <% end %>
+              <% else %>
+                <%= link_to root_nl_path do %>
+                 <span><%= image_tag('netherlands-flag-icon-16.png', width: '16', height: '11', alt: 'English') %> </span>
+              <% end %>
+              <% end %>
+            </li>
+
         </div>
         <!-- Search Box-->
         <form class="input-group form-group" method="get"><span class="input-group-btn">

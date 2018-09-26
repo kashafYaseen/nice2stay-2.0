@@ -24,7 +24,7 @@ class GetAutocompleteData
     def lodgings
       Lodging.search(params[:query], {
         fields: [:extended_name, :h1],
-        match: :word_start,
+        match: :text_middle,
         limit: 6,
         load: false,
         misspellings: {below: 5},
@@ -34,34 +34,34 @@ class GetAutocompleteData
 
     def campaigns
       Campaign.search(params[:query], {
-        fields: [:title],
-        match: :word_start,
+        fields: ["title_#{locale}"],
+        match: :text_middle,
         limit: 5,
         load: false,
         misspellings: {below: 5},
         where: { collection: true, popular_homepage: true }
-      }).map{ |campaign| { name: campaign.title, type: 'campaign', url: campaign.url } }
+      }).map{ |campaign| { name: campaign.send("title_#{locale}"), type: 'campaign', url: campaign.url } }
     end
 
     def countries
       Country.search(params[:query], {
-        fields: [:name],
-        match: :word_start,
+        fields: ["name_#{locale}"],
+        match: :text_middle,
         limit: 5,
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |country| { name: country.name, type: 'country', url: country_path(country.slug, locale: locale) } }
+      }).map{ |country| { name: country.send("name_#{locale}"), type: 'country', url: country_path(country.slug, locale: locale) } }
     end
 
     def regions
       Region.search(params[:query], {
-        fields: [:name],
-        match: :word_start,
+        fields: ["name_#{locale}"],
+        match: :text_middle,
         limit: 5,
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |region| { name: region.name, type: 'region', url: country_region_path(region.country_slug, region.slug, locale: locale) } }
+      }).map{ |region| { name: region.send("name_#{locale}"), type: 'region', url: country_region_path(region.country_slug, region.slug, locale: locale) } }
     end
 end

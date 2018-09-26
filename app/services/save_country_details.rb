@@ -73,6 +73,7 @@ class SaveCountryDetails
     def translation_params(translation)
       translation.permit(
         :content,
+        :name,
         :slug,
         :title,
         :meta_title,
