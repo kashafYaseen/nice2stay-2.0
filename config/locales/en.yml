@@ -30,8 +30,337 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
   helpers:
     page_entries_info:
       more_pages:
         display_entries: "<b>%{last}</b> of <b>%{total}</b>"
+  enumerize:
+    accommodation:
+      type:
+        bb: 'B&B'
+    accommodation_description:
+      locale:
+        nl: Dutch
+        en: English
+
+  activerecord:
+    errors:
+      models:
+        booking_accommodation:
+          attributes:
+            from:
+              before: "must be before chosen 'to' date. see below"
+              after: "must be after today"
+      messages:
+        date_is_not_available: "This date is not available. <a href='javascript:void(0);' target='_blank'>Look for availability</a>"
+
+  pdf_document:
+    invoice_title: "Invoice"
+    booking_confirmation: 'Booking Confirmation - %{identifier}'
+    nice2stay_accommodation: '%{names}'
+    name: "Name"
+    address: "Address"
+    city: "City"
+    country: "Country"
+    tel_number: "Telephone"
+    zip: "Zipcode"
+    email_customer: "Emailaddress:"
+    summary_of_renter: "Summary of the Renter’s stay:"
+    period: "Period:"
+    holiday_home: "Accommodation:"
+    rental_in_euro: "Rent:"
+    adults: "Adults:"
+    children: "Children:"
+    babies: "Babies:"
+    booking_conditions: "Booking conditions/remarks"
+    the_rental_payment: The Rental Payment
+    rental_payment_amount: "We require a deposit of €%{amount} to pay within 7 days of receipt of this confirmation"
+    finalpayment: 'Finalpayment'
+    prepayment: 'Prepayment'
+    company_detail: "Company details"
+    invoice_to: "Invoice to"
+    accommodation: "Accommodation"
+
+    balance_payment: Balance Payment
+    balance_payment_amount: "The remainder of the interest, being €%{amount} must be paid 6 weeks before your stay (ie before 08-06-2015.)"
+    payment: Payment
+    payment_bank: "Payment - Bank details"
+    money_transfer:
+      details: 'The details for the money transfer are:'
+      account: 'Account: 1024.51.001'
+      beneficary: 'Beneficiary: Nice2stay V.O.F'
+      booking_id_bank: "Reference bank transaction: %{identifier}"
+      bank: 'Bank: Rabobank'
+      town: 'City: Heemstede'
+      country: 'Country: The Netherlands'
+      iban: 'IBAN: NL36RABO0102451001'
+      bic: 'BIC: RABONL2U'
+    date: "Date: %{date}"
+    remco_femke: 'Femke Rozendaal and Hester André'
+    nice2stay: Nice2stay
+    email: 'Email: info@nice2stay.com'
+    phone: 'Phone: 0031(0)23-8447005'
+
+  pdf_invoice:
+    invoice_booking_id: INVOICE %{identifier}
+    invoice_date: 'Date: %{date}'
+    invoice_number: 'Invoice nr: %{number}'
+    name: Name
+    address: Address
+    zipcode: Zipcode
+    city: City
+    country: Country
+    vat_number: VAT Number
+    codice_fisc: "Codice Fisc"
+    chaimber_of_commece: Chaimber of Commece
+    iban: IBAN
+    from:
+      name_val: Nice2stay V.O.F
+      address_val: Korte Zijlweg 9
+      zipcode_val: '2011VS'
+      city_val: Haarlem
+      country_val: Netherlands
+      vat_number_val: NL852395309B01
+      chaimber_of_commece_val: '56996993'
+      iban_val: NLRABO0102451001
+    invoice_to: 'Invoice to:'
+    summary: Summary of %{full_name} - %{identifier}
+    description: Description
+    amount: Amount
+    commission: Commission Nice2Stay %{accommodation}
+    subtotal: Subtotal
+    vat_percent: 'VAT 0%'
+    vat: VAT
+    total: Total
+    total_transfer: Amount of €%{total} will be transferred to your bankaccount on %{date}
+
+  email:
+    dear: "Dear %{name},"
+    day: "Have a nice day!"
+    prepayed_recieved: "We have received your payment"
+    fullpayed_recieved: "We have received your payment"
+    prepayed_recieved_text: "We have received your payment, for which many thanks! We would like to let you know once again, that there will be no reminder for the final payment.  The balance payment should be done before %{days_before_arrival}, so six weeks before your stay at %{first_accommodation}"
+    finalpayed_recieved_text: "We have received your payment, for which many thanks! You will receive from us the further details and the travel directions at least two weeks before your arrival. If you have other questions / requirements you can always contact us."
+    finalpayed_reminder: "According to our records, we have not received the balance payment from you."
+    finalpayed_reminder_1: "We hope to see the payment of  %{seventy_percent_of_rentalprice} within 5 days on our account IBAN: NL36RABO0102451001 / BIC: RABONL2U quoting the reference number:  %{reference_number}"
+    finalpayed_reminder_2: "If the rental payment is already on their way, you can consider this reminder as not sent."
+    prepayed_reminder: "According to our records, we have not received the rental payment from you."
+    prepayed_reminder_1: " We hope to see the payment of %{thirty_percent_of_rentalprice} within 5 days on our account IBAN: NL36RABO0102451001 / BIC: RABONL2U quoting the reference number: %{reference_number}"
+    prepayed_reminder_2: "If the rental payment is already on their way, you can consider this reminder as not sent."
+    thank_you: "Thank you in advance."
+    arrival: "Arrived safely"
+    arrival_1: "We hope you have arrived safely at %{first_accommodation}"
+    stay: "We wish you a nice stay!"
+    status_received_pre_payed: "Nice2stay - Confirmation rental payment"
+    status_received_fully_payed: "Nice2stay - Confirmation ​balance ​payment"
+    status_arrival_email: "Nice2stay - Arrival at %{first_accommodation}"
+    status_reminder_pre_payed: "Nice2stay - Reminder Pre Payed Email"
+    status_reminder_fully_payed: "Nice2stay - Reminder Final Payed"
+    reminder_pre_payment_subject: "Reminder pre payment Nice2stay"
+    reminder_pre_payment_subject_text1: "Our administration has shown that we have not yet received a pre payment for your booking at Nice2stay "
+    reminder_pre_payment_subject_text2: ". The deposit must be paid within 7 days of receipt of the booking confirmation. I kindly request you to transfer the outstanding amount to our bank account NL36RABO0102451001 as soon as possible."
+    reference_number: "Reference number:"
+    outstanding_amount: "Outstanding amount:"
+    reminder_pre_payment_subject_text3: "If the payment is already transferred, this reminder can be considered as not sent."
+    warm_regards: "Warm regards,"
+    support_team_text: "If you have any further questions regarding the financial process of your booking, you can always contact us"
+    second_reminder_pre_payment_subject: "Second reminder pre payment Nice2stay"
+    second_reminder_pre_payment_subject_text1: "At this moment, we have still not received a pre payment for your booking at Nice2stay "
+    second_reminder_pre_payment_subject_text2: " I hereby send you a second reminder to pay the pre payment for your booking. I kindly request you to transfer the outstanding amount directly to our bank account NL36RABO0102451001."
+    reminder_final_payment_subject: "Reminder final payment Nice2stay"
+    reminder_final_payment_text1: "Our administration has shown that we have not received the final payment for your booking at Nice2stay "
+    reminder_final_payment_text2: " The remaining amount must be paid no later than 6 weeks before arrival. I kindly request you to transfer the outstanding amount to our bank account NL36RABO0102451001 as soon as possible."
+    second_reminder_final_payment_subject: "Second reminder final payment Nice2stay"
+    second_reminder_final_payment_text1: "At this moment, we have still not received the final payment for your booking at Nice2stay "
+    second_reminder_final_payment_text2: " I hereby send you a second reminder for the payment of the remaining amount. I kindly request you to transfer the outstanding amount directly to our bank account NL36RABO0102451001."
+    reminder_last_minute_payment_subject: "Reminder last minute payment Nice2stay"
+    reminder_last_minute_payment_text1: "Our administration has shown that we have not received the payment for your booking at Nice2stay. The payment must be paid no later than 3 days after receiving the booking confirmation. I kindly request you to transfer the outstanding amount to our bank account NL36RABO0102451001 as soon as possible."
+    security_deposit_subject: "Security deposit Nice2stay"
+    security_deposit_text1: "Thank you for your final payment. The security deposit of"
+    security_deposit_text2: " is not yet included in the received amount. I kindly request you to transfer the security deposit as soon as possible to our bank account NL36RABO0102451001. Once we have received and processed the payment of the security deposit, you will receive a confirmation email from us."
+    prebooking_accepted_subject: "Your reservation has been confirmed"
+    prebooking_accepted_tab1: "Booking request"
+    prebooking_accepted_tab2: "Booking confirmation"
+    prebooking_accepted_text1: "Good news!"
+    prebooking_accepted_text2: "I am happy to inform you that your booking has just been confirmed to us by the owner of the accommodation."
+    prebooking_accepted_text3: " The period is definitely reserved for you."
+    prebooking_accepted_text4: "We will contact you (during our opening hours) to review the final details of your definitive reservation."
+    questions: "Questions or remarks?"
+    support: "Communication & Support"
+    telephone: "Phone"
+    branding: "NICE2STAY - 600+ UNIQUE ACCOMMODATIONS "
+    houses: "VILLAS"
+    apartments: "APARTMENTS"
+    breakfasts: "BED & BREAKFASTS"
+    about: "ABOUT US"
+    send_reminder_email_text1: "We hope you have had a great time in %{country}."
+    send_reminder_email_text2: "Our team is keen to hear about your experiences and whether you enjoyed your stay. We take all feedback extremely seriously and value your opinion highly."
+    send_reminder_email_text3: "Would you like to share your feedback with us, future customers and for evaluation of the owners? We will reward your cooperation with a 50 Euro discount on your next reservation with Nice2stay."
+    send_reminder_feedback_link: "Click here to share your experiences with us"
+    send_reminder_email_text4: "Thank you in advance for taking the time to do this for us - we greatly appreciate this!"
+    feedback_reminder_email_text1: "Recently we have send you an email regarding your experiences during your stay."
+    feedback_reminder_email_text2: "W​e would really appreciate it if you can give ​us ​your feedback, so we can share this with the  owners of the accommodation and​ ​future guests. We would like to reward you for your cooperation with a 50 Euro discount on your next reservation at Nice2stay."
+    feedback_reminder_email_link: "Click here to share your feedback with Nice2stay"
+    warm_regards: "Warm regards"
+    contact: "Contact"
+    contact_text: "You can reach our multilingual team by phone from 9 AM - 5.30 PM ​on weekdays and on Saturday from 10 AM - 1 PM at 0031-238447005 or via the chat function​ on our website. ​And you can always send an email to info@nice2stay.com, we will respond as soon as possible."
+
+  route:
+    greeting: "Dear %{name},"
+    country_para: "You are almost leaving for %{country}, something to really look forward to!"
+    acco_para: "Hereby we send you all necessary information about ​"
+    regarding_acco: "regarding your stay from "
+    and: "and"
+    second_acco: "and %{acco_name} from %{from} - %{to}. "
+    pdf_acc2_para1: "We strongly advise you to read the enclosed information carefully. The instructions are essential for the owner / caretaker to welcome you in a good way."
+    body_para2: "If you have any questions or comments regarding your arrival and/ or (optional) services on location, please contact the contact person at the location. The contact details can be found in the document."
+    body_para3: "We wish you a very pleasant stay in %{country}."
+    body_para4: "Keep us posted via Social media or WhatsApp!"
+    bodypara_end: "Warm regards from the Nice2stay team."
+    subject: "Information regarding your Nice2stay booking"
+    green_box: "Information regarding your Nice2stay booking"
+    attachment_text: "Download the instructions below:"
+    from: "from"
+    and: "and"
+
+  booking:
+    not_accept: "Not Accept"
+    accept: "Accept"
+    accept_box: "When you accept the request We inform the client that the booking is confirmed"
+    alternative: "Alternative"
+    click_for_alternative: "click for show alternative"
+    click_for_hide_alternative: "click for hide alternative"
+  accommodation:
+    price_ranges: "PreiceRanges"
+    deposit: "Deposit"
+    clean_cost: "Cleaning cost"
+    price_range: "Price Range"
+    cleaning: "Schoonmaak"
+    add_more: "Add More"
+    extra_service: " Extra Service"
+    price: "Price per day"
+    from: "From"
+    to: "To"
+    managed_by_include: "Managed by nice2stay - included"
+    add_price: "Add price range"
+    price_per_day: "Price per day"
+    price_per_week: "Price per week"
+    name: "Name"
+    add_cleaning: "Add cleaning cost"
+    add_service: "Add new service"
+    description: "Description"
+    disounts: "Dicounts"
+    add_discount: "Add discount"
+    fixed_price: "Fixed Price"
+    season_text: "Season"
+    including_text: "Including"
+    pay_text: "Pay"
+    deposit_text: "Deposit"
+    options_text: "Options"
+    particularities_text: "Particularities"
+    payment_terms_text: "Payment Terms"
+  feedback:
+    subject: "Nice2stay | Reminder: share your feedback with us"
+    header_text: "Share your feedback!"
+    welcome_text: "Dear"
+    support: "Please contact us"
+    schedule: "(Monday - Friday from 9 am - 5.30 pm)"
+    remind_subject: "Nice2stay | How was your stay?"
+    publish1: "no listing on the website"
+    publish2: "anonymous listing​"
+  payment_email:
+    dear: "Dear"
+    reagrds: "Kind regards,"
+    prepayment_subject: "Pre-payment Nice2stay : %{identifier}"
+    final_payment_subject: "Final payment Nice2stay : %{identifier}"
+    full_payment_subject: "last-minute booking payment Nice2stay : %{identifier}"
+    paragraph_5 : "If there are any further questions/wishes, please don’t hesitate to contact us."
+
+  partner:
+    subject: "There is a new feedback for you!"
+    paragraph_1: "There is a new feedback for you!"
+    paragraph_2: "In the period of {@arrivaldate gast} - {@departuredate gast} the family {@refenrece number} has stayed as a guest in your holiday home {@name stay}"
+    paragraph_3: "We think it is important for you as our partner to have insight in the opinions of our customers  about {@name holiday home}."
+    paragraph_4: "Click {here} to go to the feedback of {reference number}."
+    regards: "Kind regards,"
+
+  newsletter:
+    subject: "Introduction new feedback system Nice2stay"
+    paragraph_1: "We would like to inform you about the new feedback system of Nice2stay."
+    paragraph_2: "We ask all of our customers two weeks after their departure from their holiday home to fill in a feedback about their stay. In this feedback we are asking the guests to give a rating about their opinion of  the holiday home, how they experienced the hospitality on site, if they have any tips for future guests and how they have experienced the services of Nice2stay. The guests also have an opportunity to upload some nice pictures and they can let us know whether they wish to publish the feedback on our website or not."
+    paragraph_3: "All the feedback of our customers is important to both Nice2stay as our partners. In this way we will be able to continue to improve the quality of our offerings."
+    paragraph_4: "How it works?"
+    paragraph_5: "The customer will receive a request to fill in the feedback. As soon as we receive the feedback into our system, you, as our partner, will receive an email with a link. Through this link you can find the feedback of your domain on your personal DAM profile."
+    paragraph_6: "The next few weeks our team will handle all the feedback we have received in our system. If our customers left a review for your accommodation, you will soon receive an email from us with a link to the feedback on your DAM profile."
+  ins_a_text: "Standard Cancellation Insurance"
+  ins_b_text: "All-risk Cancellation Insurance"
+  ins_c_text: "No Insurance"
+
+  request_email_complete_tab1: " Booking request confirmation"
+  request_email_complete_tab2: " Booking confirmed - complete your booking"
+  request_email_complete_tab3: " Booking confirmation + details"
+  customer_email_hello: "Dear"
+  customer_email_line1_part1: "I have good news for you! Your booking request for "
+  customer_email_line1_part2: " is confirmed by the owner."
+  customer_email_line2: "To complete your booking, we need some additional information from you."
+  customer_email_line3_part1: "We kindly ask you to click on "
+  customer_email_line3_part2: " , you will be guided to the page where you can fill in the missing details. After we have received the details, we will prepare and send you the booking confirmation within 48 hours."
+  customer_email_line4: "In case you need help please contact me, I am happy to assist you."
+  customer_email_best_regards: "Warm regards,"
+  any_doubt: "Any doubt ?"
+  support_team_text: "Our booking consultants can help you with any issue by email, phone or chat on our site"
+  booking_request_for: "Great news-Booking request for "
+  is_completed: " is confirmed."
+  send_us_email: "Send us an email"
+  accommodation: "Accommodation"
+  guests: "Guests"
+  period_request: "Period request"
+  rent: "Rent"
+
+  your_details: "Your details"
+  mobile_phone_number: "Mobile phone number"
+  booking_confirm_email: "Email"
+  price_details: "Price details"
+  rental_price: "Rental price"
+  final_cleaning_cost: "Final cleaning costs"
+  insurance: "Insurances"
+  booking_total_price: "Total price"
+  welcom_text: "Dear "
+  thanks_and_regards: "Warm regards,"
+  nice2stay_team: "Nice2stay Support Team"
+  any_doubt: "Questions ?"
+  support_team_text: "Our booking consultants can help you with any issue by email, phone or chat on our site"
+  text_for_reminder_email1: "Could you please manage the request "
+  text_for_reminder_email2: "in the Digital Accommodation Manager? This is important, as we want to inform the clients."
+  text_for_reminder_email3: "If you have any question reply to this email or use our chat in the Digital Accommodation Manager."
+  thanks_regards: "Thank you for your"
+  collaboration: "collaboration!"
+  best_regards: "Best regards,"
+  amount_paid_to_nice2stay: "To be paid to Nice2stay"
+  amount_paid_on_location: "To be paid on location"
+  included: "included"
+  option_request_email_text: "Dear"
+  option_request_email_text1: "Hereby we confirm that your option has been accepted by the owner
+of the accommodation."
+  option_request_email_text2: "The option is valid for 24 hours, until "
+  option_request_email_text3: "To complete the booking you can send me an email or you can call me during our office hours to confirm."
+  option_request_email_text4: "I will ask you for your current address details, mobile phone number and the details of the travel group (names + birth dates)."
+  option_request_email_text5: "If the ‘Time to Think’ period expires, the option will automatically be cancelled."
+  option_request_email_text6: "I hope to hear from you soon!"
+  option_request_email_text7: "Warm regards,"
+  hours_text: "h"
+  option_request_email_text2_upto_text: "The option is valid until"
+  included: "included"
+  deposit_text: "Deposit"
+  none_text: "None"
+  option_request_email_tab1: " Option request confirmation"
+  option_request_email_tab2: " Option request accepted"
+  name: "Name"
+  address: "Address"
+  phone_number: "Phone Number"
+  rentel_price: "Rental Price"
+  cleaning_cost: "Cleaning Cost"
+  total_price: "Total price"
+  deposit_text: "Security Deposit"
+  to_email_text: "to"
+  period_email_text: "Period"

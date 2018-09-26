@@ -1,0 +1,522 @@
+nl:
+  pdf_document:
+    invoice_title: "Factuur"
+    booking_confirmation: 'Reserveringsbevestiging - %{identifier}'
+    nice2stay_accommodation: '%{names}'
+    name: Naam
+    address: Adres
+    zip: Postcode
+    city: Plaats
+    country: Land
+    tel_number: "Telefoon:"
+    email_customer: "Email:"
+    summary_of_renter: "Wij hebben voor u gereserveerd:"
+    period: "Periode:"
+    holiday_home: "Naam accommodatie:"
+    rental_in_euro: "Huurprijs:"
+    adults: "Volwassenen:"
+    children: "Kinderen:"
+    babies: "Baby's"
+    booking_conditions: "Betalingsvoorwaarden en/of opmerkingen"
+    the_rental_payment: "Aanbetaling"
+    rental_payment_amount: "Bij reservering vragen wij de aanbetaling € %{amount},- te voldoen binnen 7 dagen na ontvangst van deze bevestiging"
+    finalpayment: 'Laatstebetaling'
+    prepayment: 'Aanbetaling'
+
+    company_detail: "detail van bedrijf"
+    invoice_to: "factuur aan"
+    accommodation: "Accomodatie"
+
+    balance_payment: "Restantbetaling"
+    balance_payment_amount: "Het restant van de huursom, zijnde € %{amount},-  dient te zijn voldaan voor 6 weken voor aanvang van uw verblijf (nl. voor %{date})"
+    payment: Betaling
+    payment_bank: Betalings- / bankgegevens
+    money_transfer:
+      details: 'Overmaken op ons rekening nummer:'
+      account: "Bankrekening: 1024.51.001 (Rabobank)"
+      beneficary: 'Begunstigde: Nice2stay V.O.F'
+      booking_id_bank: 'Onder vermelding van uw referentienummer: %{identifier}'
+      bank: 'Bank: Rabobank'
+      town: 'Plaats: Heemstede'
+      country: 'Land: Nederland'
+      iban: 'IBAN: NL36RABO0102451001'
+      bic: 'BIC: RABONL2U'
+    date: "Datum: %{date}"
+    remco_femke: 'Femke Rozendaal en Hester André'
+    nice2stay: Nice2stay
+    email: 'Email: info@nice2stay.com'
+    phone: 'Telefoon. 0031(0)23-8447005'
+
+
+  pdf_invoice:
+    invoice_booking_id: Factuur %{identifier}
+    invoice_date: 'Datum: %{date}'
+    invoice_number: 'Factuur nr: %{number}'
+    name: Naam
+    address: Adress
+    zipcode: Postcode
+    city: Stad
+    country: Land
+    vat_number: BTW Nummer
+    codice_fisc: "Codice Fisc"
+    chaimber_of_commece: KVK Nummer
+    iban: IBAN
+    from:
+      name_val: Nice2stay V.O.F
+      address_val: Korte Zijlweg 9
+      zipcode_val: '2011VS'
+      city_val: Haarlem
+      country_val: Nederland
+      vat_number_val: NL852395309B01
+      chaimber_of_commece_val: '56996993'
+      iban_val: NLRABO0102451001
+    invoice_to: 'Factuur naar:'
+    summary: Samenvatting van %{full_name} - %{identifier}
+    description: Omschrijving
+    amount: Bedrag
+    commission: Commissie Nice2Stay %{accommodation}
+    subtotal: Subtotaal
+    vat_percent: 'BTW 0%'
+    vat: BTW
+    total: Totaal
+    total_transfer: Bedrag €%{total} will be transferred to your bankaccount on %{date}
+
+
+
+  email:
+    dear: "Beste %{name},"
+    day: "Een fijne dag gewenst!"
+    prepayed_recieved: "Wij hebben jullie aanbetaling ontvangen"
+    fullpayed_recieved: "Wij hebben jullie betaling ontvangen"
+    prepayed_recieved_text: "Wij hebben jullie aanbetaling ontvangen, waarvoor hartelijk dank. Graag laten wij nogmaals aan jullie weten dat er geen herinnering voor het voldoen van de restantbetaling zal worden verstuurd. De restantbetaling dient voor %{days_before_arrival} te zijn voldaan aan Nice2stay. Dit is zes weken voor aanvang van jullie verblijf bij %{first_accommodation}"
+    finalpayed_recieved_text: "Wij hebben jullie betaling ontvangen, waarvoor hartelijk dank! Uiterlijk twee weken voor aankomst ontvangen jullie van ons de verdere details en de routebeschrijving. Mochten jullie verdere vragen hebben dan horen wij dit graag."
+    finalpayed_reminder: "Volgens onze administratie hebben wij de restantbetaling nog niet van jullie ontvangen"
+    finalpayed_reminder_1: "Graag zien wij de betaling van € %{seventy_percent_of_rentalprice} Euro (restantbedrag) binnen drie dagen tegemoet op IBAN NL36RABO0102451001 / BIC RABONL2U onder vermelding van het referentienummer: VERLEUR20141121 (reference_number)"
+    finalpayed_reminder_2: "If the rental payment is already on their way, you can consider this reminder as not sent."
+    prepayed_reminder: "Volgens onze administratie hebben wij nog geen aanbetaling van jullie ontvangen."
+    prepayed_reminder_1: "Graag zien wij de betaling van € %{thirty_percent_of_rentalprice} binnen vijf dagen tegemoet op IBAN: NL36RABO0102451001 / BIC: RABONL2U onder vermelding van het referentienummer: %{reference_number}"
+    prepayed_reminder_2: "Mocht jullie betaling reeds onderweg zijn, dan kunnen jullie deze herinnering als niet verzonden beschouwen. "
+    thank_you: "Alvast bedankt."
+    arrival: "Wij hopen dat jullie goed zijn aangekomen"
+    arrival_1: "Wij hopen dat jullie goed zijn aangekomen bij %{first_accommodation}"
+    stay: "Wij wensen jullie een heel fijn verblijf toe!"
+    status_received_pre_payed: "Nice2stay - Ontvangstbevestiging aanbetaling"
+    status_received_fully_payed: "Nice2stay - Ontvangstbevestiging restantbetaling"
+    status_arrival_email: "Nice2stay - Wij hopen dat jullie goed zijn aangekomen bij %{first_accommodation}"
+    status_reminder_pre_payed: "Nice2stay - Herinnering aanbetaling"
+    status_reminder_fully_payed: "Nice2stay - Herinnering restantbetaling"
+    prebooking_accepted_subject: "Uw reservering is bevestigd"
+    prebooking_accepted_tab1: "Verzoek tot reservering ontvangen"
+    prebooking_accepted_tab2: "Reservering is bevestigd"
+    prebooking_accepted_text1: "Goed nieuws!"
+    prebooking_accepted_text2: "Hierbij bevestig ik dat uw reservering zojuist aan ons is bevestigd door de eigenaar van de accommodatie."
+    prebooking_accepted_text3: "De periode is definitief voor u vastgelegd."
+    prebooking_accepted_text4: "Wij zullen z.s.m. (tijdens onze openingstijden) contact met u opnemen om te laatste details door te nemen."
+    questions: "Vragen of opmerkingen?"
+    support: "Communicatie & Support"
+    telephone: "Telefoon"
+    branding: "NICE2STAY - 600+ UNIEKE ACCOMMODATIES "
+    houses: "VAKANTIEHUIZEN"
+    apartments: "APPARTMENTEN"
+    breakfasts: "BED & BREAKFASTS"
+    about: "OVER ONS"
+    reminder_pre_payment_subject: "Herinnering aanbetaling Nice2stay"
+    reminder_pre_payment_subject_text1: "Uit onze administratie is gebleken dat wij nog geen aanbetaling voor jullie boeking bij Nice2stay "
+    reminder_pre_payment_subject_text2: " hebben mogen ontvangen. De aanbetaling dient binnen 7 dagen na ontvangst van de reserveringsbevestiging te zijn voldaan. Ik verzoek u vriendelijk het openstaande bedrag zo snel mogelijk naar onze bankrekening NL36RABO0102451001 over te maken."
+    reference_number: "Referentienummer:"
+    outstanding_amount: "Openstaand bedrag:"
+    reminder_pre_payment_subject_text3: "Mocht de betaling reeds onderweg zijn, dan kan deze herinnering als niet verzonden worden beschouwd."
+    warm_regards: "Vriendelijke groet,"
+    support_team_text: "Indien u verder nog vragen heeft betreffende de financiële afhandeling rondom uw boeking dan kunt u altijd contact met ons opnemen."
+    second_reminder_pre_payment_subject: "Tweede herinnering aanbetaling Nice2stay"
+    second_reminder_pre_payment_subject_text1: "Tot op heden hebben wij nog steeds geen aanbetaling voor jullie boeking bij Nice2stay "
+    second_reminder_pre_payment_subject_text2: " mogen ontvangen. Hierbij stuur ik u een tweede herinnering voor het voldoen van de aanbetaling voor uw boeking. Ik verzoek u vriendelijk het openstaande bedrag direct naar onze bankrekening NL36RABO0102451001 over te maken."
+    reminder_final_payment_subject: "Herinnering restantbetaling Nice2stay"
+    reminder_final_payment_text1: "Uit onze administratie is gebleken dat wij nog geen restantbetaling voor jullie boeking bij Nice2stay "
+    reminder_final_payment_text2: " hebben mogen ontvangen. De restantbetaling dient uiterlijk 6 weken voor aankomst te zijn voldaan. Ik verzoek u vriendelijk het openstaande bedrag zo snel mogelijk naar onze bankrekening NL36RABO0102451001 over te maken."
+    second_reminder_final_payment_subject: "Tweede herinnering restantbetaling Nice2stay"
+    second_reminder_final_payment_text1: "Tot op heden hebben wij nog steeds geen restantbetaling voor jullie boeking bij Nice2stay "
+    second_reminder_final_payment_text2: " mogen ontvangen. Hierbij stuur ik u een tweede herinnering voor het voldoen van de restantbetaling. Ik verzoek u vriendelijk het openstaande bedrag direct naar onze bankrekening NL36RABO0102451001 over te maken."
+    reminder_last_minute_payment_subject: "Herinnering last-minute betaling Nice2stay"
+    reminder_last_minute_payment_text1: "Uit onze administratie is gebleken dat wij nog geen betaling voor jullie boeking bij Nice2stay hebben mogen ontvangen. De betaling dient uiterlijk 3 dagen na ontvangst van de reserveringsbevestiging te zijn voldaan. Ik verzoek u vriendelijk het openstaande bedrag zo snel mogelijk naar onze bankrekening NL36RABO0102451001 over te maken."
+    security_deposit_subject: "Borgsom Nice2stay"
+    security_deposit_text1: "Bedankt voor uw restantbetaling. De borgsom van "
+    security_deposit_text2: " is echter nog niet bij het restantbedrag opgeteld. Ik verzoek u vriendelijk de borgsom zo snel mogelijk naar onze bankrekening NL36RABO0102451001 over te maken. Zodra wij de borgsom hebben ontvangen en verwerkt, ontvangt u van ons een bevestigingsmail."
+    send_reminder_email_text1: "Wij hopen dat jullie een leuke vakantie hebben gehad in %{country}."
+    send_reminder_email_text2: "Ons gehele team is super benieuwd wat jullie ervaringen zijn geweest.."
+    send_reminder_email_text3: "Zouden jullie feedback willen delen met ons, toekomstige klanten en ter evaluatie voor de eigenaren? Wij belonen uw medewerking met 50 Euro korting op uw volgende reservering bij Nice2stay."
+    send_reminder_feedback_link: "Klik hier om uw ervaringen te delen met ons"
+    send_reminder_email_text4: "Alvast hartelijk dank voor het nemen van de tijd om dit voor ons te doen - dit waarderen wij enorm!"
+    feedback_reminder_email_text1: "Recent hebben wij uw medewerking gevraagd ​voor het geven van uw feedback."
+    feedback_reminder_email_text2: "Wij stellen het zeer op prijs als u alsnog kan laten weten hoe jullie het gehad hebben! Graag belonen wij uw medewerking met 50 Euro korting op uw volgende reservering bij Nice2stay"
+    feedback_reminder_email_link: "Klik hier om uw ervaringen te delen met ons"
+    warm_regards: "Hartelijke groeten"
+    contact: "Contact"
+    contact_text: "Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat op onze website. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com"
+
+  route:
+    greeting: "Beste %{name},"
+    country_para: "Jullie vertrekken al bijna naar %{country}, een heerlijk vooruitzicht!"
+    acco_para: "Bij deze sturen wij jullie alle benodigde informatie over"
+    regarding_acco: "t.b.v. uw verblijf van"
+    and: "en"
+    second_acco: "en %{acco_name} van %{from} - %{to}. "
+    pdf_acc2_para1: "Wij raden jullie echt aan de bijgevoegde informatie goed door te lezen. De instructies zijn namelijk van essentieel belang voor de eigenaar / beheerder om jullie op een goede manier te verwelkomen."
+    pdf_acc2_para2: " De instructies zijn namelijk van essentieel belang voor de eigenaren om jullie op een goede manier te verwelkomen."
+    body_para2: "Heeft u vragen met betrekking tot uw aankomst of (optionele) services op locatie, dan verzoeken wij u direct contact op te nemen met de contactpersoon ter plaatse. De contactgegevens kunt u vinden in het document."
+    body_para3: "Wij wensen jullie een heel fijn verblijf toe in %{country}."
+    body_para4: "Houd ons tijdens uw verblijf op de hoogte via social media of WhatsApp!"
+    bodypara_end: "Hartelijke groeten van het gehele Nice2stay team."
+    subject: "Informatie over uw Nice2stay reservering"
+    green_box: "Informatie over uw Nice2stay reservering"
+    attachment_text: "Download hier de instructies:"
+    from: "van"
+    and: "en"
+
+  date:
+    abbr_day_names:
+    - zo
+    - ma
+    - di
+    - wo
+    - do
+    - vr
+    - za
+    abbr_month_names:
+    -
+    - jan
+    - feb
+    - mrt
+    - apr
+    - mei
+    - jun
+    - jul
+    - aug
+    - sep
+    - okt
+    - nov
+    - dec
+    day_names:
+    - zondag
+    - maandag
+    - dinsdag
+    - woensdag
+    - donderdag
+    - vrijdag
+    - zaterdag
+    formats:
+      default: "%d-%m-%Y"
+      long: "%e %B %Y"
+      short: "%e %b"
+    month_names:
+    -
+    - januari
+    - februari
+    - maart
+    - april
+    - mei
+    - juni
+    - juli
+    - augustus
+    - september
+    - oktober
+    - november
+    - december
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: ongeveer een uur
+        other: ongeveer %{count} uur
+      about_x_months:
+        one: ongeveer een maand
+        other: ongeveer %{count} maanden
+      about_x_years:
+        one: ongeveer een jaar
+        other: ongeveer %{count} jaar
+      almost_x_years:
+        one: bijna een jaar
+        other: bijna %{count} jaar
+      half_a_minute: een halve minuut
+      less_than_x_minutes:
+        one: minder dan een minuut
+        other: minder dan %{count} minuten
+      less_than_x_seconds:
+        one: minder dan een seconde
+        other: minder dan %{count} seconden
+      over_x_years:
+        one: meer dan een jaar
+        other: meer dan %{count} jaar
+      x_days:
+        one: 1 dag
+        other: "%{count} dagen"
+      x_minutes:
+        one: 1 minuut
+        other: "%{count} minuten"
+      x_months:
+        one: 1 maand
+        other: "%{count} maanden"
+      x_seconds:
+        one: 1 seconde
+        other: "%{count} seconden"
+    prompts:
+      day: dag
+      hour: uur
+      minute: minuut
+      month: maand
+      second: seconde
+      year: jaar
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: moet worden geaccepteerd
+      blank: moet opgegeven zijn
+      present: moet leeg zijn
+      confirmation: komt niet overeen met %{attribute}
+      empty: moet opgegeven zijn
+      equal_to: moet gelijk zijn aan %{count}
+      even: moet even zijn
+      exclusion: is niet beschikbaar
+      greater_than: moet groter zijn dan %{count}
+      greater_than_or_equal_to: moet groter dan of gelijk zijn aan %{count}
+      inclusion: is niet in de lijst opgenomen
+      invalid: is ongeldig
+      less_than: moet minder zijn dan %{count}
+      less_than_or_equal_to: moet minder dan of gelijk zijn aan %{count}
+      not_a_number: is geen getal
+      not_an_integer: moet een geheel getal zijn
+      odd: moet oneven zijn
+      record_invalid: 'Validatie mislukt: %{errors}'
+      restrict_dependent_destroy:
+        one: Kan item niet verwijderen omdat %{record} afhankelijk is
+        many: Kan item niet verwijderen omdat afhankelijke %{record} bestaan
+      taken: is al in gebruik
+      too_long:
+        one: is te lang (maximaal %{count} teken)
+        other: is te lang (maximaal %{count} tekens)
+      too_short:
+        one: is te kort (minimaal %{count} teken)
+        other: is te kort (minimaal %{count} tekens)
+      wrong_length:
+        one: heeft onjuiste lengte (moet %{count} teken lang zijn)
+        other: heeft onjuiste lengte (moet %{count} tekens lang zijn)
+      other_than: moet anders zijn dan %{count}
+    template:
+      body: 'Controleer de volgende velden:'
+      header:
+        one: "%{model} niet opgeslagen: 1 fout gevonden"
+        other: "%{model} niet opgeslagen: %{count} fouten gevonden"
+  helpers:
+    select:
+      prompt: Maak een keuze
+    submit:
+      create: "%{model} toevoegen"
+      submit: "%{model} opslaan"
+      update: "%{model} bijwerken"
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%u %n"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "€"
+    format:
+      delimiter: "."
+      precision: 2
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: miljard
+          million: miljoen
+          quadrillion: biljard
+          thousand: duizend
+          trillion: biljoen
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: byte
+            other: bytes
+          gb: GB
+          kb: kB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " en "
+      two_words_connector: " en "
+      words_connector: ", "
+  time:
+    am: "'s ochtends"
+    formats:
+      default: "%a %d %b %Y %H:%M:%S %Z"
+      long: "%d %B %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: "'s middags"
+
+  booking:
+    not_accept: "Niet accepteren"
+    accept: "aanvaarden"
+    accept_box: "Als u het verzoek te accepteren Wij informeren de klant dat de boeking is bevestigd"
+    alternative: "Alternatief"
+    click_for_alternative: "klik voor tonen alternatieve"
+    click_for_hide_alternative: "Klik voor het verbergen van alternatieve"
+  accommodation:
+    price_ranges: "Prijsklassen"
+    deposit: "Storting"
+    clean_cost: "Schoonmaakkosten"
+    price_range: "Prijsbereik"
+    cleaning: "Schoonmaak"
+    add_more: "Voeg meer toe"
+    extra_service: " Extra Service"
+    price: "Prijs per dag"
+    from: "Van"
+    to: "Naar"
+    managed_by_include: "Beheerd door nice2stay - Inclusief rent"
+    add_price: "Voeg prijsklasse"
+    price_per_day: "Prijs per dag"
+    price_per_week: "Prijs per week"
+    name: "Naam"
+    add_cleaning: "Voeg schoonmaakkosten"
+    add_service: "Voeg een nieuwe dienst"
+    description: "Beschrijving"
+    disounts: "Kortingen"
+    add_discount: "Add another discount"
+    fixed_price: "Vaste Prijs"
+    season_text: "Hoogseizoen"
+    including_text: "Inbegrepen"
+    pay_text: "Betalen"
+    deposit_text: "Waarborgsom"
+    options_text: "Opties"
+    particularities_text: "Bijzonderheden"
+    payment_terms_text: "Betalingsvoorwaarden"
+
+  feedback:
+    subject: "Nice2stay | Herinnering: Wij vinden uw mening belangrijk"
+    header_text: "Deel uw ervaringen!"
+    welcome_text: "Beste"
+    support: "neem contact op met ons!"
+    schedule: "(maandag - vrijdag van 09.00 - 17.30 uur)"
+    remind_subject: "Nice2stay | Hoe heeft u het gehad?"
+    publish1: "Niet op de Nice2stay website plaatsen"
+    publish2: "Anoniem op de Nice2stay website plaatsen"
+
+  payment_email:
+    dear: "Beste"
+    reagrds: "Vriendelijke groeten,"
+    prepayment_subject: "Aanbetaling Nice2stay : %{identifier}"
+    final_payment_subject: "restantbetaling Nice2stay : %{identifier}"
+    full_payment_subject: "Last-minute betaling Nice2stay : %{identifier}"
+    paragraph_5 : "Mocht u verder nog vragen/wensen hebben, dan kunt u altijd even contact met ons opnemen"
+
+  partner:
+    subject: "Er staat een nieuwe feedback voor u klaar!"
+    paragraph_1: "Er staat een nieuwe feedback voor u klaar!"
+    paragraph_2: "In de periode van {@aankomst datum gast} - {@vertrekdatum gast} is de familie {@referentienummer} te gast geweest bij uw verblijf {@naam verblijf}"
+    paragraph_3: "Wij vinden het belangrijk dat u als onze partner inzicht krijgt in de mening van onze klanten over {naam verblijf}."
+    paragraph_4: "Klik {hier} om de feedback van {referentienr} te bekijken."
+    regards: "Hartelijke groeten"
+
+  newsletter:
+    subject: "Introductie nieuw feedbacksysteem Nice2stay"
+    paragraph_1: "Graag willen wij u informeren over het nieuwe feedbacksysteem van Nice2stay."
+    paragraph_2: "Wij vragen al onze klanten twee weken na vertrek uit hun vakantieverblijf een feedback in te vullen. Hierin vragen wij de klanten wat zij van het verblijf vonden, hoe ze de gastvrijheid op locatie hebben ervaren, of ze nog tips hebben voor toekomstige gasten en hoe ze de service van Nice2stay hebben ervaren. Ook hebben de gasten de gelegenheid om leuke foto’s te uploaden en kunnen de gasten aangeven of zij de feedback willen laten publiceren op onze website."
+    paragraph_3: "Alle feedback die onze klanten invullen is erg belangrijk voor zowel Nice2stay als onze partners. Op deze manier kunnen we samen de kwaliteit van ons aanbod blijven verbeteren."
+    paragraph_4: "Hoe werkt het?"
+    paragraph_5: "Zodra wij de feedback binnenkrijgen in ons systeem, krijgt u als onze partner een email toegestuurd met daarin een link. Via deze link kunt u de feedback op uw DAM profiel terugvinden."
+    paragraph_6: "De aankomende weken  zal ons team alle feedback die wij hebben ontvangen verwerken in ons systeem. Indien onze klanten voor uw accommodatie een review  hebben achtergelaten, zult u binnenkort een mail van ons ontvangen met een link naar de feedback op uw DAM profiel."
+  ins_a_text: "Standaard Annulerings Verzekering"
+  ins_b_text: "Allrisk Annulerings Verzekering"
+  ins_c_text: "Geen Verzekering"
+
+  request_email_complete_tab1: " Boekingsaanvraag ontvangen"
+  request_email_complete_tab2: " Boekings aanvraag geaccepteerd - Maak boeking compleet"
+  request_email_complete_tab3: " Bevestiging boeking + details"
+  customer_email_hello: " Beste"
+  customer_email_line1_part1: "Ik heb goed nieuws voor u! Uw boekingsverzoek voor een verblijf in "
+  customer_email_line1_part2: " is bevestigd door de eigenaar."
+  customer_email_line2: "Om uw boeking compleet te maken, hebben wij nog een aantal gegevens van u nodig."
+  customer_email_line3_part1: "Wij verzoeken u vriendelijk om via "
+  customer_email_line3_part2: " uw verdere gegevens in te vullen, zodat wij de boeking voor jullie in orde kunnen maken. Na ontvangst van uw gegevens, zullen wij binnen 48 uur de reserveringsbevestiging toesturen."
+  customer_email_line4: "Mocht u hulp nodig hebben, dan help ik u graag."
+  customer_email_best_regards: "Hartelijke groet,"
+  any_doubt: "Vragen ?"
+  support_team_text: "Onze booking consultants kunnen u helpen middels e-mail, telefoon of de chat functie op onze site"
+  booking_request_for: "Goed nieuws - Boekings aanvraag voor "
+  is_completed: " is bevestigd."
+  send_us_email: "Stuur een email"
+  accommodation: "Accommodatie"
+  guests: "Gasten"
+  period_request: "Periode"
+  rent: "Huursom"
+
+  your_details: "Uw Gegevens"
+  mobile_phone_number: "Telefoon nummer"
+  booking_confirm_email: "Email"
+  price_details: "Huurprijs"
+  rental_price: "Huurprijs"
+  final_cleaning_cost: "Eindschoonmaak"
+  insurance: "Verzekeringen"
+  booking_total_price: "Totaal"
+  welcom_text: "Beste "
+  thanks_and_regards: "Hartelijke groet,"
+  nice2stay_team: "Nice2stay Support Team"
+  any_doubt: "Vragen ?"
+  support_team_text: "Onze booking consultants kunnen u helpen middels e-mail, telefoon of de chat functie op onze site"
+  send_us_email: "Stuur een email"
+  text_for_reminder_email1: "Kunt u alstublieft het verzoek beheren "
+  text_for_reminder_email2: "in de Digital Accommodation Manager? Dit is belangrijk, omdat we de klanten willen informeren. "
+  text_for_reminder_email3: "Als u een vraag heeft antwoord op deze e-mail of gebruik onze chat in de Digital Accommodation Manager."
+  thanks_regards: "Bedankt voor de "
+  collaboration: "samenwerking!"
+  best_regards: "beste wensen"
+  amount_paid_to_nice2stay: "Te betalen aan Nice2stay"
+  amount_paid_on_location: "Te betalen op locatie"
+  included: "inclusief"
+  option_request_email_text: "Beste"
+  option_request_email_text1: "Hierbij bevestig ik dat uw optie is geaccepteerd door de eigenaar van de accommodatie."
+  option_request_email_text2: "De optie is geldig voor 24 uur, tot"
+  option_request_email_text3: "Om de boeking af te ronden kunt u mij een email sturen of bellen tijdens kantooruren om dit te bevestigen."
+  option_request_email_text4: "Ik vraag u dan om uw actuele adresgegevens, mobiele telefoonnummer en de details van het reisgezelschap (namen + geboortedata)."
+  option_request_email_text5: "Zodra de bedenktijd is verlopen, wordt de optie automatisch geannuleerd."
+  option_request_email_text6: "Ik hoor graag van u!"
+  option_request_email_text7: "Hartelijke groet,"
+  hours_text: "uur"
+  option_request_email_text2_upto_text: "De optie is geldig tot"
+  option_request_email_tab1: "Optie verzoek ontvangen"
+  option_request_email_tab2: " Optie verzoek geaccepteerd"
+  included: "inclusief"
+  deposit_text: "Waarborgsom"
+  none_text: "Geen"
+  name: "Naam"
+  address: Adres
+  phone_number: "Telefoon nummer"
+  rentel_price: "Huurprijs"
+  cleaning_cost: "Schoonmaakkosten"
+  total_price: "Totaal"
+  deposit_text: "Waarborgsom"
+  to_email_text: "tot"
+  period_email_text: "Periode"
