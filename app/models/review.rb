@@ -16,15 +16,10 @@ class Review < ApplicationRecord
   delegate :slug, to: :lodging, prefix: true
   delegate :check_in, to: :reservation, allow_nil: true
 
-  before_validation :calculate_stars
   after_commit :update_ratings
   after_create :send_review_details
 
   RATING_TYPE = [:quality, :interior, :service, :setting, :communication]
-
-  def calculate_stars
-    self.stars = (setting + quality + interior + communication + service) / 5
-  end
 
   private
     def update_ratings
