@@ -29,7 +29,6 @@ class SaveReservationDetails
       return unless params[:review].present?
       review = reservation.review || reservation.build_review
       review.attributes = review_params.merge(user_id: reservation.user_id, lodging_id: reservation.lodging_id, reservation: reservation)
-      review.calculate_stars
       save_translations(params[:review], review) if review.save(validate: false)
     end
 
