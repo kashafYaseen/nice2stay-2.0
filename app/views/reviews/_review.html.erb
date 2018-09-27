@@ -5,7 +5,7 @@
       <h4 class="comment-title"><%= review.title %></h4>
       <div class="mb-2">
         <div class="product-rating text-warning">
-          <% review.stars.times do |star| %>
+          <% review.average_stars.times do |star| %>
             <i class="material-icons star"></i>
           <% end %>
         </div>
