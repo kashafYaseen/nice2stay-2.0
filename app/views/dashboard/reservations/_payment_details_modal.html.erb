@@ -1,0 +1,24 @@
+<div class="modal fade" id="payment-modal-<%= reservation.id %>" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><%= reservation.id %> - <%= render_date reservation.created_at %></h4>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <p>Total Price - £<%= render_rounded_price reservation.total_price %></p>
+            <p>Pre Payment - £<%= render_rounded_price reservation.total_price, 0.3 %></p>
+            <p>Final Payment - £<%= render_rounded_price reservation.total_price, 0.7 %></p>
+          </div>
+
+          <div class="col-md-6">
+            <%= link_to 'Pay Pre Payment', '#', class: 'btn btn-success w-100' %>
+            <%= link_to 'Pay Final Payment', '#', class: 'btn btn-info w-100' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

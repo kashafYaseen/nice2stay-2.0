@@ -20,6 +20,8 @@ class Reservation < ApplicationRecord
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
+  scope :requests_pending_or_rejected, -> { requests.where(request_status: ['pending', 'rejected']) }
+  scope :requests_confirmed, -> { requests.confirmed }
 
   attr_accessor :skip_data_posting
 

@@ -22,4 +22,14 @@ module ReservationsHelper
     status_classes = ['bg-warning', 'bg-success', 'bg-danger']
     "<span class='d-inline-block #{status_classes[Reservation.request_statuses[status]]} text-white text-xs p-1'>#{status.humanize}</span>".html_safe
   end
+
+  def render_reservation_type(type)
+    return "<span class='d-inline-block text-xs p-1 text-secondary'>Option</span>".html_safe if type == 'option'
+    "<span class='d-inline-block text-xs p-1 text-primary'>Booking</span>".html_safe
+  end
+
+  def render_rounded_price(price, multiplier = 1, round_by = 2)
+    return '--' unless price.present?
+    (price * multiplier).round(round_by)
+  end
 end
