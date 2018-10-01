@@ -5,17 +5,49 @@
         <h4 class="modal-title"><%= reservation.id %> - <%= render_date reservation.created_at %></h4>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
+
       <div class="modal-body">
         <div class="row">
           <div class="col-md-6">
-            <p>Total Price - £<%= render_rounded_price reservation.total_price %></p>
-            <p>Pre Payment - £<%= render_rounded_price reservation.total_price, 0.3 %></p>
-            <p>Final Payment - £<%= render_rounded_price reservation.total_price, 0.7 %></p>
+            <p>Total Price - £<%= render_rounded_price reservation.rent %></p>
+            <p>Pre Payment - £<%= render_rounded_price reservation.rent, 0.3 %></p>
+            <p>Final Payment - £<%= render_rounded_price reservation.rent, 0.7 %></p>
           </div>
 
           <div class="col-md-6">
-            <%= link_to 'Pay Pre Payment', '#', class: 'btn btn-success w-100' %>
-            <%= link_to 'Pay Final Payment', '#', class: 'btn btn-info w-100' %>
+
+            <%= pre_paid_link reservation.step_passed?(:pre_paid) %>
+            <%= post_paid_link reservation.step_passed?(:fully_paid) %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">Checkin</th>
+                  <th class="text-center">Checkout</th>
+                  <th class="text-center">Adults</th>
+                  <th class="text-center">Children</th>
+                  <th class="text-center">Infants</th>
+                  <th class="text-center">Price</th>
+                  <th class="text-center">Discount</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td class="text-center text-lg text-medium"><%= reservation.check_in %></td>
+                  <td class="text-center text-lg text-medium"><%= reservation.check_out %></td>
+                  <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
+                  <td class="text-center text-lg text-medium"><%= reservation.children %></td>
+                  <td class="text-center text-lg text-medium"><%= reservation.infants %></td>
+                  <td class="text-center text-lg text-medium">£<%= reservation.rent %></td>
+                  <td class="text-center text-lg text-medium">£<%= reservation.discount %></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

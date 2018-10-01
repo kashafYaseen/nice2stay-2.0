@@ -16,7 +16,5 @@
     <%= render_reservation_type reservation.booking_status %>
   </td>
 
-  <td class="align-middle"><span class="text-medium">$<%= render_rounded_price reservation.total_price %></span></td>
+  <td class="align-middle"><span class="text-medium">£<%= render_rounded_price reservation.rent %></span></td>
 </tr>
-
-<%= render 'payment_details_modal', reservation: reservation %>

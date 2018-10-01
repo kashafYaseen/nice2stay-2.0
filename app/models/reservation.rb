@@ -62,6 +62,10 @@ class Reservation < ApplicationRecord
     self.discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
   end
 
+  def step_passed?(step)
+    Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
+  end
+
   private
     def update_lodging_availability
       return if in_cart?

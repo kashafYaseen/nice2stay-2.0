@@ -32,4 +32,19 @@ module ReservationsHelper
     return '--' unless price.present?
     (price * multiplier).round(round_by)
   end
+
+  def pre_paid_link(status)
+    text = status ? 'Pre Payment Receiced' : 'Pay Pre Payment'
+    link_to text, '#', class: "btn #{status_button_class status} w-100"
+  end
+
+  def post_paid_link(status)
+    text = status ? 'Final Payment Receiced' : 'Pay Final Payment'
+    link_to text, '#', class: "btn #{status_button_class status} w-100"
+  end
+
+  def status_button_class status
+    return 'btn-success disabled' if status
+    'btn-info'
+  end
 end
