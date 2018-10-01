@@ -46,6 +46,7 @@ gem 'bulk_insert'
 gem 'jwt'
 gem 'friendly_id'
 gem "breadcrumbs_on_rails"
+gem 'mollie-api-ruby'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
