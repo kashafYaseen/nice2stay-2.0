@@ -7,7 +7,7 @@ ActiveAdmin.register Reservation do
     end
 
     def scoped_collection
-      Reservation.includes(:user, { lodging: :translations })
+      Reservation.includes(:user, { lodging: :translations }).order(created_at: :desc)
     end
   end
 
@@ -21,6 +21,7 @@ ActiveAdmin.register Reservation do
     column :booking_status
     column :request_status
     column :rent
+    column :created_at
     column :in_cart
 
     actions

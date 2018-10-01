@@ -5,7 +5,7 @@ ActiveAdmin.register Wishlist do
     end
 
     def scoped_collection
-      Wishlist.includes(:user, { lodging: :translations })
+      Wishlist.includes(:user, { lodging: :translations }).order(created_at: :desc)
     end
   end
 
@@ -19,6 +19,7 @@ ActiveAdmin.register Wishlist do
     column :adults
     column :children
     column :status
+    column :created_at
 
     actions
   end
