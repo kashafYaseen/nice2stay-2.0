@@ -20,6 +20,8 @@ class Reservation < ApplicationRecord
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
+  scope :requests_pending_or_rejected, -> { requests.where(request_status: ['pending', 'rejected']) }
+  scope :requests_confirmed, -> { requests.confirmed }
 
   attr_accessor :skip_data_posting
 
@@ -58,6 +60,10 @@ class Reservation < ApplicationRecord
 
   def calculate_discount
     self.discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
+  end
+
+  def step_passed?(step)
+    Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
   end
 
   private

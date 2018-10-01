@@ -3,7 +3,7 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :reservation
 
-  validates :stars, :title, presence: true
+  validates :title, presence: true
 
   translates :title, :suggetion, :description
 
@@ -20,6 +20,12 @@ class Review < ApplicationRecord
   after_create :send_review_details
 
   RATING_TYPE = [:quality, :interior, :service, :setting, :communication]
+
+  def average_stars
+    return stars if stars.present?
+    update_column :stars, (RATING_TYPE.sum { |type| send(type) } / 5)
+    stars
+  end
 
   private
     def update_ratings
