@@ -19,7 +19,7 @@ class ManageCart
   def checkout(signed_in)
     errors = {}
     reservations.each do |reservation|
-      if reservation.update(user: user, booking_status: :prebooking, in_cart: false)
+      if reservation.update(user: user, in_cart: false)
         remove_cookie(reservation.id) unless signed_in
       else
         errors[reservation.lodging_name] = reservation.errors

@@ -30,6 +30,8 @@ class SendReservationDetails
           customer: customer(reservation.user),
           booking_accommodations_attributes: booking_accommodation,
           by_houseowner: false,
+          created_by: 'customer',
+          status: reservation.booking_status,
           skip_data_posting: true
         }
       }
@@ -48,6 +50,7 @@ class SendReservationDetails
           discount: reservation.discount,
           cleaning_cost_price: reservation.cleaning_cost,
           status: reservation.booking_status,
+          booking_status: reservation.booking_status,
           by_houseowner: false,
           booking_request_attributes: { status: 'new' }
         }
