@@ -151,6 +151,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.6.5)
+      devise (>= 4.4)
     dotenv (2.4.0)
     dotenv-rails (2.4.0)
       dotenv (= 2.4.0)
@@ -395,6 +397,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise (~> 4.4)
   devise-bootstrapped!
+  devise-i18n
   dotenv-rails
   exception_notification
   foreman (~> 0.84.0)
