@@ -5060,7 +5060,7 @@ a.list-group-item {
   position: relative;
   width: 100%;
   min-height: 450px;
-  background-image: url(../img/preloader.gif);
+  background-image: asset-url('preloader.gif');
   background-color: transparent;
   background-position: center;
   background-size: 64px;
@@ -6060,7 +6060,7 @@ video {
 .isotope-grid:not(.filter-grid) {
   min-height: 180px;
   background-position: center;
-  background-image: url(../img/preloader.gif);
+  background-image: asset-url('preloader.gif');
   background-repeat: no-repeat;
   background-size: 64px;
 }
