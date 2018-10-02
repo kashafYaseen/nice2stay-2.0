@@ -1,4 +1,4 @@
-ActiveAdmin.register Reservation do
+ActiveAdmin.register Reservation, as: "Cart" do
   remove_filter :review, :rules, :prices, :total_price, :discount, :rent, :crm_booking, :cleaning_cost
 
   controller do
@@ -7,7 +7,7 @@ ActiveAdmin.register Reservation do
     end
 
     def scoped_collection
-      Reservation.requests.includes(:user, { lodging: :translations }).order(created_at: :desc)
+      Reservation.in_cart.includes(:user, { lodging: :translations }).order(created_at: :desc)
     end
   end
 
