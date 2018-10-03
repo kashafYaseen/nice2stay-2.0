@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
-config.webpacker.check_yarn_integrity = false
+  config.webpacker.check_yarn_integrity = false
 
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
@@ -106,7 +106,7 @@ config.webpacker.check_yarn_integrity = false
     email: {
       email_prefix: "Error",
       sender_address: %{"notifier" <notifier@nice2stay.com>},
-      exception_recipients: %w{ahmadsaleem93@gmail.com remco@nice2stay.com}
+      exception_recipients: %w{remco@nice2stay.com ahmad@thedevden.co sikandar.tariq@thedevden.co}
     }
 
   # Do not dump schema after migrations.
