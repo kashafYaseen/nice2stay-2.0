@@ -113,4 +113,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Temporary: To avoid emailing customers or partners in staging
+  Mail.register_interceptor RecipientInterceptor.new("remco.zwaan@gmail.com", subject_prefix: '[TESTING]')
 end
