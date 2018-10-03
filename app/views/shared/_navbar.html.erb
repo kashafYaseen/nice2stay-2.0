@@ -65,13 +65,13 @@
 
       <li>
         <% if I18n.locale == :nl %>
-          <%= link_to root_en_path do %>
+          <%= link_to locale: 'en' do %>
             <span>
               <%= image_tag('united-states-of-america-flag-icon-16.png', width: '16', height: '11', alt: 'English') %>
             </span>
           <% end %>
         <% else %>
-          <%= link_to root_nl_path do %>
+          <%= link_to locale: 'nl' do %>
             <span>
               <%= image_tag('netherlands-flag-icon-16.png', width: '16', height: '11', alt: 'English') %>
             </span>
