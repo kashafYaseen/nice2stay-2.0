@@ -2,8 +2,6 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   devise_for :owners
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
 
   namespace :api do
     namespace :v1 do
@@ -32,6 +30,8 @@ Rails.application.routes.draw do
 
   localized do
     devise_for :users, controllers: { registrations: 'users/registrations' }
+    devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
 
     resources :autocompletes, only: [:index]
     resources :lodgings, only: [:index, :show], path: :accommodations do
