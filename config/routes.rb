@@ -49,19 +49,19 @@ Rails.application.routes.draw do
     resources :countries, only: [:index]
     resources :leads, only: [:create]
 
+    namespace :dashboard do
+      resources :reservations, only: [:index] do
+        resources :reviews, except: [:show, :index]
+      end
+    end
+
+    get "dashboard", to: "dashboard#index"
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
     get '/', to: 'pages#home', as: :root
   end
 
   root 'pages#home'
-  get "dashboard", to: "dashboard#index"
-
-  namespace :dashboard do
-    resources :reservations, only: [:index] do
-      resources :reviews, except: [:show, :index]
-    end
-  end
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection
