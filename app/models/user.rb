@@ -14,6 +14,8 @@ class User < ApplicationRecord
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :requests_pending_or_rejected, :requests_confirmed, to: :reservations, allow_nil: true
 
+  validates :first_name, :last_name, presence: true
+
   enum creation_status: {
     with_login: 0,
     without_login: 1,
