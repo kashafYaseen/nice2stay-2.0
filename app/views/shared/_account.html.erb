@@ -1,10 +1,8 @@
 <div class="toolbar-section" id="account">
   <% if user_signed_in? %>
     <%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-primary btn-block', method: :delete %>
-    <%= link_to 'Dasboard', dashboard_path %>
-
-
-
+    <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary btn-block' %>
+    <%= link_to 'Dashboard', dashboard_path, class: 'btn btn-primary btn-block' %>
   <% else %>
     <ul class="nav nav-tabs nav-justified" role="tablist">
       <li class="nav-item"><a class="nav-link active" href="#login" data-toggle="tab" role="tab">Log In</a></li>
