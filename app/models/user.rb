@@ -10,9 +10,13 @@ class User < ApplicationRecord
   has_many :favourite_lodgings, through: :wishlists, source: :lodging
   has_many :leads
 
+  mount_uploader :image, ImageUploader
+
   delegate :in_cart, :requests, to: :reservations, allow_nil: true, prefix: true
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :requests_pending_or_rejected, :requests_confirmed, to: :reservations, allow_nil: true
+
+  validates :first_name, :last_name, presence: true
 
   enum creation_status: {
     with_login: 0,

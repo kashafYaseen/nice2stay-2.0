@@ -7,12 +7,16 @@
     </div>
 
     <div class="user-info">
-      <div class="user-data">
-        <div class="user-avatar">
-          <a class="edit-avatar" href="#"><i class="material-icons edit"></i>Edit</a>
-        </div>
+      <div class="user-avatar">
+        <%= link_to edit_user_registration_path, class: 'edit-avatar' do %>
+          <i class="material-icons edit"></i>Edit Profile
+        <% end %>
+        <%= render_user_image current_user %>
+      </div>
 
-        <h5><%= current_user.full_name.humanize %></h5><span>Joined <%= render_date(current_user.created_at) %></span>
+      <div class="user-data">
+        <h5><%= current_user.full_name.humanize %></h5>
+        <span>Joined <%= render_date(current_user.created_at) %></span>
       </div>
     </div>
   </aside>
