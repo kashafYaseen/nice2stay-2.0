@@ -296,6 +296,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    recipient_interceptor (0.2.0)
+      mail
     redis (4.0.1)
     request_store (1.4.1)
       rack (>= 1.4)
@@ -415,6 +417,7 @@ DEPENDENCIES
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.2.0)
+  recipient_interceptor
   route_translator
   sass-rails (~> 5.0)
   searchkick
