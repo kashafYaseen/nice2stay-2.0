@@ -115,5 +115,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Temporary: To avoid emailing customers or partners in staging
-  Mail.register_interceptor RecipientInterceptor.new("remco.zwaan@gmail.com", subject_prefix: '[TESTING]')
+  Mail.register_interceptor RecipientInterceptor.new("remco@nice2stay.com", subject_prefix: '[TESTING]')
 end
