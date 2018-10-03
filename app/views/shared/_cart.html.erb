@@ -5,7 +5,7 @@
         <tr>
           <th colspan="2">
             <div class="d-flex justify-content-between align-items-center">Lodgings
-              <%= link_to carts_en_path, class: "navi-link text-uppercase" do %>
+              <%= link_to carts_path, class: "navi-link text-uppercase" do %>
                 <span class="text-xxs">Expand Cart</span>
                 <i class="material-icons keyboard_arrow_right"></i>
               <% end%>
@@ -27,6 +27,6 @@
       Subtotal: <span class='text-dark text-medium cart-subtotal'><%= cart_sub_total(reservations) %></span>
     </div>
 
-    <%= link_to 'Checkout', carts_en_path, class: 'btn btn-success mb-0 mr-0' %>
+    <%= link_to 'Checkout', carts_path, class: 'btn btn-success mb-0 mr-0' %>
   </div>
 </div>

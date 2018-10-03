@@ -1,10 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  devise_for :owners
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-
   namespace :api do
     namespace :v1 do
       resources :lodgings
@@ -30,9 +26,12 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  devise_for :users, controllers: { registrations: 'users/registrations' }
-
   localized do
+    devise_for :owners
+    devise_for :users, controllers: { registrations: 'users/registrations' }
+    devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
+
     resources :autocompletes, only: [:index]
     resources :lodgings, only: [:index, :show], path: :accommodations do
       post :index, on: :collection
@@ -49,19 +48,19 @@ Rails.application.routes.draw do
     resources :countries, only: [:index]
     resources :leads, only: [:create]
 
+    namespace :dashboard do
+      resources :reservations, only: [:index] do
+        resources :reviews, except: [:show, :index]
+      end
+    end
+
+    get "dashboard", to: "dashboard#index"
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
     get '/', to: 'pages#home', as: :root
   end
 
   root 'pages#home'
-  get "dashboard", to: "dashboard#index"
-
-  namespace :dashboard do
-    resources :reservations, only: [:index] do
-      resources :reviews, except: [:show, :index]
-    end
-  end
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection

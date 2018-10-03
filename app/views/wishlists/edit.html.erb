@@ -2,7 +2,7 @@
   <div class="row mt-5">
     <div class="col-lg-12">
       <h4>Wish Lists</h4>
-      <%= form_for @wishlist, url: wishlists_en_path do |f| %>
+      <%= form_for @wishlist, url: wishlists_path do |f| %>
         <%= render 'shared/errors', resource: @wishlist %>
 
         <div class="row">
@@ -42,7 +42,7 @@
           </div>
         </div>
 
-        <%= link_to 'Back To Wishlist', wishlists_en_path, class: "btn btn-outline-secondary m-0" %>
+        <%= link_to 'Back To Wishlist', wishlists_path, class: "btn btn-outline-secondary m-0" %>
         <%= submit_tag 'Update', class: "btn btn-primary float-right" %>
       <% end %>
     </div>

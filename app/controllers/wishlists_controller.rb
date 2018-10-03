@@ -17,7 +17,7 @@ class WishlistsController < ApplicationController
 
   def update
     if @wishlist.update(wishlist_params)
-      redirect_to wishlists_en_path, notice: 'Wishlist was updated successfully.'
+      redirect_to wishlists_path, notice: 'Wishlist was updated successfully.'
     else
       render :edit
     end
@@ -26,7 +26,7 @@ class WishlistsController < ApplicationController
   def destroy
     @wishlists.delete_all
     cookies.delete(:wishlists) if cookies[:wishlists].present?
-    redirect_to wishlists_en_path, notice: 'Wishlists was cleared successfully.'
+    redirect_to wishlists_path, notice: 'Wishlists was cleared successfully.'
   end
 
   def remove
@@ -42,15 +42,15 @@ class WishlistsController < ApplicationController
     errors = ManageWishlists.new(wishlists: @wishlists, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
 
     if errors.present?
-      redirect_to wishlists_en_path, alert: errors
+      redirect_to wishlists_path, alert: errors
     else
-      redirect_to wishlists_en_path, notice: 'Wishlists were created successfully.'
+      redirect_to wishlists_path, notice: 'Wishlists were created successfully.'
     end
   end
 
   private
     def empty_wishlist
-      return redirect_to wishlists_en_path unless @wishlists.present?
+      return redirect_to wishlists_path unless @wishlists.present?
     end
 
     def wishlist_params

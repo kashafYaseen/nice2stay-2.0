@@ -4,7 +4,7 @@
     <div class="col-xl-9 col-lg-8">
       <h4>Billing Information</h4>
       <hr class="padding-bottom-1x">
-      <%= form_for @user, url: carts_en_path, method: :put do |f| %>
+      <%= form_for @user, url: carts_path, method: :put do |f| %>
         <%= render 'shared/errors', resource: @user %>
 
         <fieldset <%= 'disabled' if user_signed_in? %>>
@@ -63,7 +63,7 @@
         <% end %>
 
         <div class="d-flex justify-content-between">
-          <%= link_to 'Back To Cart', carts_en_path, class: "btn btn-outline-secondary m-0" %>
+          <%= link_to 'Back To Cart', carts_path, class: "btn btn-outline-secondary m-0" %>
           <%= f.submit 'Complete Order', class: "btn btn-primary m-0" %>
         </div>
       </div>
