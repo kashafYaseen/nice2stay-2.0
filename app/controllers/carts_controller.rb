@@ -18,21 +18,21 @@ class CartsController < ApplicationController
     errors = ManageCart.new(reservations: @reservations, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
 
     if errors.present?
-      redirect_to carts_en_path, alert: errors
+      redirect_to carts_path, alert: errors
     else
-      redirect_to carts_en_path, notice: 'Reservations was created successfully.'
+      redirect_to carts_path, notice: 'Reservations was created successfully.'
     end
   end
 
   def destroy
     @reservations.delete_all
     cookies.delete(:reservations) if cookies[:reservations].present?
-    redirect_to carts_en_path, notice: 'Cart was cleared successfully.'
+    redirect_to carts_path, notice: 'Cart was cleared successfully.'
   end
 
   private
     def empty_cart
-      return redirect_to carts_en_path unless @reservations.present?
+      return redirect_to carts_path unless @reservations.present?
     end
 
     def create_user

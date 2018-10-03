@@ -19,7 +19,7 @@
   <td class="text-center text-lg text-medium"><%= wishlist.children %></td>
 
   <td class="text-center">
-    <%= link_to remove_wishlists_en_path(wishlist_id: wishlist), class: 'remove-from-cart', remote: true do %>
+    <%= link_to remove_wishlists_path(wishlist_id: wishlist), class: 'remove-from-cart', remote: true do %>
       <i class="material-icons">close</i>
     <% end %>
 

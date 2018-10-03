@@ -117,11 +117,11 @@
         <div class="text-center mb-4">
            <li>
             <% if I18n.locale == :nl %>
-              <%= link_to root_en_path do %>
+              <%= link_to locale: 'en' do %>
                <span><%= image_tag('united-states-of-america-flag-icon-16.png', width: '16', height: '11', alt: 'English') %> </span>
                 <% end %>
               <% else %>
-                <%= link_to root_nl_path do %>
+                <%= link_to locale: 'nl' do %>
                  <span><%= image_tag('netherlands-flag-icon-16.png', width: '16', height: '11', alt: 'English') %> </span>
               <% end %>
               <% end %>
@@ -144,8 +144,8 @@
             </li>
             <li class="has-children"><span><a href="#"><span>Languages</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
-                  <li><%= link_to 'English', root_en_path %></li>
-                  <li><%= link_to 'Dutch', root_nl_path %></li>
+                  <li><%= link_to 'English', locale: 'en' %></li>
+                  <li><%= link_to 'Dutch', locale: 'nl' %></li>
               </ul>
             </li>
 

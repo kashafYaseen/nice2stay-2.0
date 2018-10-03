@@ -12,7 +12,7 @@
             <th class="text-center">Adults</th>
             <th class="text-center">Children</th>
             <th class="text-center">
-              <%= link_to 'Clear Wishlist', wishlists_en_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
+              <%= link_to 'Clear Wishlist', wishlists_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
             </th>
           </tr>
         </thead>
@@ -27,7 +27,7 @@
       <div class="col-lg-12">
         <h4>Personal Details</h4>
         <hr class="padding-bottom-1x">
-        <%= form_for @user, url: checkout_wishlists_en_path, method: :post do |f| %>
+        <%= form_for @user, url: checkout_wishlists_path, method: :post do |f| %>
           <%= render 'shared/errors', resource: @user %>
 
           <fieldset <%= 'disabled' if user_signed_in? %>>
@@ -86,7 +86,7 @@
           <% end %>
 
           <div class="d-flex justify-content-between">
-            <%= link_to lodgings_en_path, class: 'btn btn-outline-secondary' do %>
+            <%= link_to lodgings_path, class: 'btn btn-outline-secondary' do %>
               <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping
             <% end %>
 
@@ -100,7 +100,7 @@
       <div class="text-center">
         <p>WISH LIST IS EMPTY.</p>
 
-        <%= link_to lodgings_en_path, class: 'btn btn-outline-secondary' do %>
+        <%= link_to lodgings_path, class: 'btn btn-outline-secondary' do %>
           <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping
         <% end %>
       </div>
