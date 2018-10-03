@@ -35,6 +35,8 @@
 
     <%= form_for reservation, url: reservations_path, remote: true do |f| %>
       <div class="row">
+        <%= render 'shared/alert', title: 'Important:', type: 'info', description: "Prices of #{Date.current.year} are not confirmed, it may change." unless lodging.confirmed_price %>
+
         <div class="col-md-12">
           <div data-lodging-id="<%= lodging.id %>"
                data-disabled-dates="<%= lodging.not_available_on %>">
