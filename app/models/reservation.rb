@@ -15,7 +15,7 @@ class Reservation < ApplicationRecord
   after_create :update_price_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, :image, to: :lodging, prefix: true, allow_nil: true
+  delegate :slug, :name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true
 
   scope :in_cart, -> { where(in_cart: true) }

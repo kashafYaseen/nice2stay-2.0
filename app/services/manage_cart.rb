@@ -19,7 +19,7 @@ class ManageCart
   def checkout(signed_in)
     errors = {}
     reservations.each do |reservation|
-      if reservation.update(user: user, in_cart: false)
+      if reservation.update(user: user, in_cart: false, booking_status: booking_status(reservation))
         remove_cookie(reservation.id) unless signed_in
       else
         errors[reservation.lodging_name] = reservation.errors
@@ -40,5 +40,10 @@ class ManageCart
 
     def update_cookies
       cookies[:reservations] = reservations.ids.join(',') if cookies[:reservations].present?
+    end
+
+    def booking_status(reservation)
+      return 'request_price' unless reservation.lodging_confirmed_price
+      reservation.booking_status
     end
 end
