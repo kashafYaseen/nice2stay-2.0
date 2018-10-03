@@ -6,6 +6,11 @@
       <%= devise_error_messages! %>
 
       <div class="form-group">
+        <%= render_user_image resource %>
+        <%= f.file_field :image, class: 'form-control pt-2' %>
+      </div>
+
+      <div class="form-group">
         <%= f.text_field :first_name, placeholder: 'First Name', class: 'form-control' %>
       </div>
 
