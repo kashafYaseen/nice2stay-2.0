@@ -11,6 +11,7 @@
     <div class="tab-content">
       <div class="tab-pane fade show active" id="login" role="tabpanel">
         <%= render 'devise/sessions/form' %>
+        <%= link_to "Forgot your password?", new_password_path(resource_name) %>
       </div>
 
       <div class="tab-pane fade" id="signup" role="tabpanel">
