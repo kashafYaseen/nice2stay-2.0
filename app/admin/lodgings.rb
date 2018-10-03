@@ -6,6 +6,10 @@ ActiveAdmin.register Lodging do
       params.permit!
     end
 
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+
     def scoped_collection
       return Lodging.all if action_name == "index"
       Lodging.includes({availabilities: :prices}, :discounts, :rules)
