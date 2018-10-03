@@ -30,9 +30,9 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  devise_for :users, controllers: { registrations: 'users/registrations' }
-
   localized do
+    devise_for :users, controllers: { registrations: 'users/registrations' }
+
     resources :autocompletes, only: [:index]
     resources :lodgings, only: [:index, :show], path: :accommodations do
       post :index, on: :collection
