@@ -22,7 +22,7 @@
 
           <div class="dropdown guests-dropdown">
             <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title">Guest</span>
+              <span class="title"><%= t('filters.guests') %></span>
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -64,7 +64,7 @@
 
           <div class="dropdown types-dropdown">
             <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title">Accommodation Type</span>
+              <span class="title"><%= t('filters.accommodation_type') %></span>
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -79,7 +79,7 @@
             </div>
           </div>
 
-          <input type="button" name="more-filters" id="more-filters-btn" value="More Filters" class="btn btn-outline-primary btn-sm">
+          <input type="button" name="more-filters" id="more-filters-btn" value="<%= t('filters.more_filters') %>" class="btn btn-outline-primary btn-sm">
 
           <div class="price-range-slider col-md-2" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
             <div class="ui-range-slider"></div>

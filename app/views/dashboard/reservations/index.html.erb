@@ -1,70 +1,63 @@
-<div class="accordion" id="reservations_accordion" role="tablist">
-  <div class="card">
-    <div class="card-header" role="tab">
-      <h6><a href="#collapse_requests" data-toggle="collapse">Pending Requests</a></h6>
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title bg-dark text-white pt-3 pb-3">Booking Requests</h4>
+    <div class="table-responsive text-sm">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Requests</th>
+            <th>Lodging</th>
+            <th>Created At</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+
+        <tbody id="requests-table-body">
+          <% if @requests.present? %>
+            <%= render partial: 'request', collection: @requests, as: :reservation %>
+          <% else %>
+            <tr><td colspan="5" class="text-center">No Request found!</td></tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
-    <div class="collapse show" id="collapse_requests" data-parent="#reservations_accordion" role="tabpanel">
-      <div class="card-body">
-        <div class="table-responsive text-sm">
-          <table class="table table-hover table-inverse">
-            <thead>
-              <tr>
-                <th>Requests</th>
-                <th>Lodging</th>
-                <th>Created At</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% if @requests.present? %>
-                <%= render partial: 'request', collection: @requests, as: :reservation %>
-              <% else %>
-                <tr><td colspan="5" class="text-center">No Request found!</td></tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div id="requests-pagination">
+      <%= paginate @requests, param_name: :requests_page, window: 2, remote: true %>
     </div>
   </div>
+</div>
 
-  <div class="card">
-    <div class="card-header" role="tab">
-      <h6>
-        <a class="collapsed" href="#collapse_bookings" data-toggle="collapse">
-          Confirmed Bookings & Options
-        </a>
-      </h6>
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title bg-dark text-white pt-3 pb-3">Confirmed Bookings & Options</h4>
+    <div class="table-responsive text-sm">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Booking</th>
+            <th>Lodging</th>
+            <th>Created At</th>
+            <th>Payment</th>
+            <th>Type</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+
+        <tbody id="bookings-table-body">
+          <% if @bookings.present? %>
+            <%= render @bookings %>
+          <% else %>
+            <tr><td colspan="5" class="text-center">No booking or Option found!</td></tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <div class="collapse" id="collapse_bookings" data-parent="#reservations_accordion" role="tabpanel">
-      <div class="card-body">
-        <div class="table-responsive text-sm">
-          <table class="table table-hover table-inverse">
-            <thead>
-              <tr>
-                <th>Booking</th>
-                <th>Lodging</th>
-                <th>Created At</th>
-                <th>Payment</th>
-                <th>Type</th>
-                <th>Price</th>
-              </tr>
-            </thead>
 
-            <tbody>
-              <% if @bookings.present? %>
-                <%= render @bookings %>
-              <% else %>
-                <tr><td colspan="5" class="text-center">No booking or Option found!</td></tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div id="bookings-pagination">
+      <%= paginate @bookings, param_name: :bookings_page, window: 2, remote: true %>
     </div>
   </div>
 </div>

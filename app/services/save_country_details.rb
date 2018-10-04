@@ -65,6 +65,8 @@ class SaveCountryDetails
         :bb_desc,
         :dropdown,
         :sidebar,
+        :created_at,
+        :updated_at,
         { thumbnails: [] },
         { images: [] },
       )
@@ -92,6 +94,8 @@ class SaveCountryDetails
         :apartment_desc,
         :bb_desc,
         :short_desc,
+        :created_at,
+        :updated_at,
         { images: [] },
         { thumbnails: [] },
       )

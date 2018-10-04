@@ -1,0 +1,4 @@
+$('#bookings-table-body').html("<%= j render  @bookings %>");
+$('#bookings-pagination').html("<%= j paginate @bookings, param_name: :bookings_page, window: 2, remote: true %>");
+$('#requests-table-body').html("<%= j render partial: 'request', collection: @requests, as: :reservation %>");
+$('#requests-pagination').html("<%= j paginate @requests, param_name: :requests_page, window: 2, remote: true %>");

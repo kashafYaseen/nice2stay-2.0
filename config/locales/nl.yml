@@ -1,4 +1,29 @@
 nl:
+  views:
+    pagination:
+      truncate: '...'
+      next: 'Volgende'
+      first: 'Eerste'
+      last: 'Laatste'
+      previous: 'Voorgaand'
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "<b>%{last}</b> of <b>%{total}</b>"
+    select:
+      prompt: Maak een keuze
+    submit:
+      create: "%{model} toevoegen"
+      submit: "%{model} opslaan"
+      update: "%{model} bijwerken"
+
+  filters:
+    dates: 'data'
+    guests: 'gasten'
+    sort_by: 'sorteer op'
+    accommodation_type: 'Accommodatie Type'
+    more_filters: 'meer filters'
+
   pdf_document:
     invoice_title: "Factuur"
     booking_confirmation: 'Reserveringsbevestiging - %{identifier}'
@@ -309,13 +334,6 @@ nl:
       header:
         one: "%{model} niet opgeslagen: 1 fout gevonden"
         other: "%{model} niet opgeslagen: %{count} fouten gevonden"
-  helpers:
-    select:
-      prompt: Maak een keuze
-    submit:
-      create: "%{model} toevoegen"
-      submit: "%{model} opslaan"
-      update: "%{model} bijwerken"
   number:
     currency:
       format:

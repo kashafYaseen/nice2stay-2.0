@@ -62,7 +62,7 @@ module LodgingsHelper
   end
 
   def render_sort_text
-    return 'Sort By' if params[:order].blank?
+    return t('filters.sort_by') if params[:order].blank?
     return 'Highest to Lowest' if params[:order] == 'price_desc'
     return 'Lowest to Highest' if params[:order] == 'price_asc'
     return 'Highest Rating' if params[:order] == 'rating_desc'
