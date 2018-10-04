@@ -9,12 +9,14 @@ class User < ApplicationRecord
   has_many :wishlists
   has_many :favourite_lodgings, through: :wishlists, source: :lodging
   has_many :leads
+  has_many :bookings
 
   mount_uploader :image, ImageUploader
 
   delegate :in_cart, :requests, to: :reservations, allow_nil: true, prefix: true
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :requests_pending_or_rejected, :requests_confirmed, to: :reservations, allow_nil: true
+  delegate :in_cart, to: :bookings, allow_nil: true, prefix: true
 
   validates :first_name, :last_name, presence: true
 
@@ -46,6 +48,11 @@ class User < ApplicationRecord
 
   def cart_subtotal
     reservations_in_cart.sum(:total_price)
+  end
+
+  def booking_in_cart
+    bookings.create unless bookings_in_cart.present?
+    bookings_in_cart.take
   end
 
   private

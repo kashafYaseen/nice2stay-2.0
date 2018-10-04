@@ -117,6 +117,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting || in_cart?
+      #SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting || in_cart?
     end
 end

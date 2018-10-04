@@ -3,11 +3,19 @@ class ApplicationController < ActionController::Base
   before_action :set_locale, :set_reservations, :set_wishlists, :set_countries, :set_campaigns
 
   def set_reservations
-    @reservations = Reservation.where(id: cookies[:reservations].split(',')) if cookies[:reservations].present?
+    booking = Booking.find_by(id: cookies[:booking]) if cookies[:booking].present?
+    @reservations = booking.reservations if booking.present? && booking.in_cart
+
     if current_user.present?
-      @reservations.update_all(user_id: current_user.id) if cookies[:reservations].present?
-      @reservations = current_user.reservations_in_cart
-      cookies.delete(:reservations)
+      if @reservations.present? && current_user.bookings_in_cart.present?
+        @reservations.update_all(booking_id: current_user.booking_in_cart.id, user_id: current_user.id)
+        booking.delete
+        cookies.delete(:booking)
+      elsif booking.present?
+        @reservations.update_all(user_id: current_user.id) if @reservations.present?
+        booking.update_columns(user_id: current_user.id)
+      end
+      @reservations = current_user.booking_in_cart.reservations
     end
   end
 
