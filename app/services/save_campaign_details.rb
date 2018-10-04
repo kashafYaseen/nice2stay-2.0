@@ -60,6 +60,8 @@ class SaveCampaignDetails
         :popular_homepage,
         :collection,
         :crm_urls,
+        :created_at,
+        :updated_at,
         { images: [] },
         { publish: [] },
         { thumbnails: [] },

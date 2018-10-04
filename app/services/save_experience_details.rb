@@ -49,6 +49,8 @@ class SaveExperienceDetails
         :tag,
         :short_desc,
         :publish,
+        :created_at,
+        :updated_at,
       )
     end
 

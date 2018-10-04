@@ -68,6 +68,8 @@ class SaveReservationDetails
         :skip_data_posting,
         :booking_status,
         :request_status,
+        :created_at,
+        :updated_at,
       )
     end
 
@@ -89,6 +91,8 @@ class SaveReservationDetails
         :suggetion,
         :title,
         :description,
+        :created_at,
+        :updated_at,
         { images: [] },
         { thumbnails: [] },
       )

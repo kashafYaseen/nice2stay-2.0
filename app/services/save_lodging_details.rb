@@ -102,6 +102,8 @@ class SaveLodgingDetails
         :region_id,
         :check_in_day,
         :presentation,
+        :created_at,
+        :updated_at,
         { images: [] },
         { thumbnails: [] },
         specifications_attributes: [:id, :title, :description],
