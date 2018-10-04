@@ -1,4 +1,11 @@
 nl:
+  views:
+    pagination:
+      truncate: '...'
+      next: 'Volgende'
+      first: 'Eerste'
+      last: 'Laatste'
+      previous: 'Voorgaand'
   pdf_document:
     invoice_title: "Factuur"
     booking_confirmation: 'Reserveringsbevestiging - %{identifier}'
