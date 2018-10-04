@@ -42,6 +42,8 @@ en:
       locale:
         nl: Dutch
         en: English
+  filters:
+    more_filters: 'More Filters'
 
   activerecord:
     errors:
