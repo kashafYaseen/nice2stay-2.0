@@ -1,10 +1,10 @@
 class ManageCart
-  attr_reader :reservations
+  attr_reader :booking
   attr_reader :user
   attr_reader :cookies
 
-  def initialize(reservations:, user:, cookies:)
-    @reservations = reservations
+  def initialize(booking:, user:, cookies:)
+    @booking = booking
     @user = user
     @cookies = cookies
   end

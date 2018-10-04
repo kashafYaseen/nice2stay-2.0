@@ -4,18 +4,16 @@ class ApplicationController < ActionController::Base
 
   def set_reservations
     booking = Booking.find_by(id: cookies[:booking]) if cookies[:booking].present?
-    @reservations = booking.reservations if booking.present? && booking.in_cart
+    reservations = booking.reservations if booking.present? && booking.in_cart
 
     if current_user.present?
-      if @reservations.present? && current_user.bookings_in_cart.present?
-        @reservations.update_all(booking_id: current_user.booking_in_cart.id, user_id: current_user.id)
+      if reservations.present? && current_user.bookings_in_cart.present?
+        reservations.update_all(booking_id: current_user.booking_in_cart.id)
         booking.delete
         cookies.delete(:booking)
       elsif booking.present?
-        @reservations.update_all(user_id: current_user.id) if @reservations.present?
         booking.update_columns(user_id: current_user.id)
       end
-      @reservations = current_user.booking_in_cart.reservations
     end
   end
 

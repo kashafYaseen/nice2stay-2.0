@@ -2,9 +2,9 @@ class ReservationsController < ApplicationController
   before_action :set_booking, only: [:create]
 
   def create
-    @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true, user: current_user))
+    @reservation = @booking.reservations.build(reservation_params)
     if @reservation.save
-      @reservations = @booking.reservations unless current_user.present?
+      @reservations = @booking.reservations
       flash.now[:notice] = "The lodging was successfully reserved."
     else
       @lodging = @reservation.lodging

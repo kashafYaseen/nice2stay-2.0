@@ -6,7 +6,7 @@ class CartsController < ApplicationController
   end
 
   def remove
-    @reservations = ManageCart.new(reservations: @reservations, user: current_user, cookies: cookies).delete(params[:reservation_id])
+    @reservations = ManageCart.new(booking: @booking, user: current_user, cookies: cookies).delete(params[:reservation_id])
     flash.now[:notice] = 'Reservation was removed successfully.'
   end
 
@@ -15,7 +15,7 @@ class CartsController < ApplicationController
       return render :show unless create_user
     end
 
-    errors = ManageCart.new(reservations: @reservations, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
+    errors = ManageCart.new(booking: @booking, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
 
     if errors.present?
       redirect_to carts_path, alert: errors
@@ -25,14 +25,13 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    @reservations.delete_all
-    cookies.delete(:reservations) if cookies[:reservations].present?
+    @booking.delete
     redirect_to carts_path, notice: 'Cart was cleared successfully.'
   end
 
   private
     def empty_cart
-      return redirect_to carts_path unless @reservations.present?
+      return redirect_to carts_path unless @booking.present?
     end
 
     def create_user
