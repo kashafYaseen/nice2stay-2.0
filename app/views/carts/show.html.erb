@@ -1,11 +1,12 @@
 <!-- Page Content-->
 <div class="container padding-bottom-3x mb-1">
   <!-- Shopping Cart-->
-  <% if @reservations.present? %>
+  <% if @booking.reservations.present? %>
     <div class="table-responsive shopping-cart">
       <table class="table">
         <thead>
           <tr>
+            <th>ID</th>
             <th>Lodging</th>
             <th class="text-center">Nights</th>
             <th class="text-center">Dates</th>
@@ -20,7 +21,7 @@
         </thead>
 
         <tbody id="cart-body">
-          <%= render partial: 'reservation', collection: @reservations %>
+          <%= render partial: 'reservation', collection: @booking.reservations %>
         </tbody>
       </table>
     </div>
@@ -33,69 +34,79 @@
         </form>
       </div>
 
-      <div class="column text-lg">Subtotal: <span class="text-medium text-dark cart-subtotal"><%= cart_sub_total(@reservations) %></span></div>
+      <div class="column text-lg">Subtotal: <span class="text-medium text-dark cart-subtotal"><%= cart_sub_total(@booking.reservations) %></span></div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <h4>Billing Information</h4>
         <hr class="padding-bottom-1x">
-        <%= form_for @user, url: carts_path, method: :put do |f| %>
-          <%= render 'shared/errors', resource: @user %>
+        <%= form_for @booking, url: carts_path do |f| %>
+          <%= render 'shared/errors', resource: @booking %>
 
-          <fieldset <%= 'disabled' if user_signed_in? %>>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <%= f.label :first_name %>
-                  <%= f.text_field :first_name, class: "form-control" %>
+          <%= f.hidden_field :in_cart, value: false %>
+          <%= f.fields_for :user do |user_fields| %>
+            <fieldset <%= 'disabled' if user_signed_in? %>>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :first_name %>
+                    <%= user_fields.text_field :first_name, class: "form-control" %>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :last_name %>
+                    <%= user_fields.text_field :last_name, class: "form-control" %>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <%= f.label :last_name %>
-                  <%= f.text_field :last_name, class: "form-control" %>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :email %>
+                    <%= user_fields.email_field :email, class: "form-control disabled", required: true %>
+                    <%= user_fields.hidden_field :creation_status, id: :user_creation_status %>
+                  </div>
                 </div>
               </div>
-            </div>
+            </fieldset>
 
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <%= f.label :email %>
-                  <%= f.email_field :email, class: "form-control disabled", required: true %>
+            <% if user_signed_in? %>
+              <hr class="padding-bottom-1x">
+            <% else %>
+              <div class="row password-fields d-none">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :password %>
+                    <%= user_fields.password_field :password, class: "form-control" %>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :password_confirmation %>
+                    <%= user_fields.password_field :password_confirmation, class: "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-          </fieldset>
+              <hr class="padding-bottom-1x">
 
-          <% if user_signed_in? %>
-            <hr class="padding-bottom-1x">
-          <% else %>
-            <div class="row password-fields d-none">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <%= f.label :password %>
-                  <%= f.password_field :password, class: "form-control" %>
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <%= check_box_tag :create_account, nil, show_password_fields?(@booking.user), class: "custom-control-input" %>
+                  <label class="custom-control-label" for="create_account">Do you want to create an account?</label>
                 </div>
               </div>
+            <% end %>
+          <% end %>
 
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <%= f.label :password_confirmation %>
-                  <%= f.password_field :password_confirmation, class: "form-control" %>
-                </div>
-              </div>
-            </div>
-            <hr class="padding-bottom-1x">
-
-            <div class="form-group">
-              <div class="custom-control custom-checkbox">
-                <%= check_box_tag :create_account, nil, show_password_fields?(@user), class: "custom-control-input" %>
-                <label class="custom-control-label" for="create_account">Do you want to create an account?</label>
-              </div>
-            </div>
+          <%= f.fields_for :reservations do |reservation_fields| %>
+            <%= reservation_fields.hidden_field :id %>
+            <%= reservation_fields.hidden_field :booking_id %>
+            <%= reservation_fields.hidden_field :in_cart, value: false %>
           <% end %>
 
           <div class="d-flex justify-content-between">

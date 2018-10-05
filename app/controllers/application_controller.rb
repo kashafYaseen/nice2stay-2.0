@@ -1,19 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :set_locale, :set_reservations, :set_wishlists, :set_countries, :set_campaigns
+  before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_campaigns
 
-  def set_reservations
-    booking = Booking.find_by(id: cookies[:booking]) if cookies[:booking].present?
-    reservations = booking.reservations if booking.present? && booking.in_cart
+  def set_booking
+    @booking = Booking.find_by(id: cookies[:booking], in_cart: true) if cookies[:booking].present?
 
     if current_user.present?
-      if reservations.present? && current_user.bookings_in_cart.present?
-        reservations.update_all(booking_id: current_user.booking_in_cart.id)
-        booking.delete
+      if @booking.present?
+        @booking.reservations.update_all(booking_id: current_user.booking_in_cart.id) if @booking.reservations.present?
+        @booking.delete
         cookies.delete(:booking)
-      elsif booking.present?
-        booking.update_columns(user_id: current_user.id)
       end
+      @booking = current_user.booking_in_cart
     end
   end
 

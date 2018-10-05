@@ -4,12 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :reservations
   has_many :reviews
   has_many :wishlists
   has_many :favourite_lodgings, through: :wishlists, source: :lodging
   has_many :leads
   has_many :bookings
+  has_many :reservations, through: :bookings
 
   mount_uploader :image, ImageUploader
 
@@ -19,6 +19,7 @@ class User < ApplicationRecord
   delegate :in_cart, to: :bookings, allow_nil: true, prefix: true
 
   validates :first_name, :last_name, presence: true
+  before_validation :set_password
 
   enum creation_status: {
     with_login: 0,
@@ -64,5 +65,10 @@ class User < ApplicationRecord
       expire_time = Time.now.to_i + 86400
       self.update_columns token_expires_at: expire_time
       expire_time
+    end
+
+    def set_password
+      return if with_login? || password.present? || password_confirmation.present?
+      self.password = self.password_confirmation = Devise.friendly_token[0, 20]
     end
 end
