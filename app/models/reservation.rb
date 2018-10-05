@@ -18,6 +18,7 @@ class Reservation < ApplicationRecord
   delegate :slug, :name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, to: :booking, allow_nil: true
   delegate :email, to: :user, prefix: true
+  delegate :id, to: :booking, prefix: true
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }

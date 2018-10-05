@@ -3,6 +3,7 @@ class Booking < ApplicationRecord
   has_many :reservations
 
   scope :in_cart, -> { where(in_cart: true) }
+  scope :requests, -> { where(in_cart: false) }
 
   accepts_nested_attributes_for :reservations
   accepts_nested_attributes_for :user
