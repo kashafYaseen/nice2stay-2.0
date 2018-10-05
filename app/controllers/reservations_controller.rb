@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :set_booking_and_cookie
+  before_action :set_booking_and_cookie, only: [:create]
 
   def create
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
@@ -13,6 +13,7 @@ class ReservationsController < ApplicationController
   end
 
   def validate
+    @booking = @booking || Booking.new
     values = params[:values].split(',')
     @reservation = @booking.reservations.build(check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: values[5])
   end
