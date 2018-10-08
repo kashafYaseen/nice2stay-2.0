@@ -14,7 +14,7 @@ class CartsController < ApplicationController
   end
 
   def update
-    @booking.attributes = booking_params
+    @booking.attributes = booking_params.merge(uid: SecureRandom.uuid)
     if @booking.save
       redirect_to carts_path, notice: 'Booking was created successfully.'
     else
