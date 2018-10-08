@@ -8,6 +8,8 @@ class Booking < ApplicationRecord
   accepts_nested_attributes_for :reservations
   accepts_nested_attributes_for :user
 
+  attr_accessor :skip_data_posting
+
   def identifier
     "#{user_identifier}#{created_at.to_i}"
   end

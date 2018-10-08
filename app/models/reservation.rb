@@ -25,6 +25,8 @@ class Reservation < ApplicationRecord
   scope :requests_pending_or_rejected, -> { requests.where(request_status: ['pending', 'rejected']) }
   scope :requests_confirmed, -> { requests.confirmed }
 
+  accepts_nested_attributes_for :review
+
   attr_accessor :skip_data_posting
 
   enum booking_status: {
@@ -119,6 +121,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      #SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting || in_cart
+      SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
     end
 end

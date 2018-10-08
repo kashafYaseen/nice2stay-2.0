@@ -34,7 +34,7 @@ class SendBookingDetails
           created_by: 'customer',
           uid: booking.uid,
           created_at: booking.created_at,
-          skip_data_posting: true
+          skip_data_posting: true,
         }
       }
     end
@@ -58,6 +58,7 @@ class SendBookingDetails
           status: reservation.booking_status,
           booking_status: reservation.booking_status,
           by_houseowner: false,
+          skip_data_posting: true,
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end
