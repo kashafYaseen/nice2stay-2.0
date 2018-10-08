@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :amenities, only: [:create]
       resources :experiences, only: [:create]
       resources :countries, only: [:create]
+      resources :bookings, only: [:create]
     end
 
     namespace :v2 do

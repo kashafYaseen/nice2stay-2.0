@@ -1,5 +1,5 @@
 class Reservation < ApplicationRecord
-  belongs_to :user, optional: true
+  belongs_to :booking
   belongs_to :lodging
   has_many :rules, through: :lodging
   has_one :review
@@ -10,18 +10,22 @@ class Reservation < ApplicationRecord
   validate :check_out_only
   validate :accommodation_rules
 
-  after_commit :update_lodging_availability
+  after_validation :update_lodging_availability
   after_commit :send_reservation_details
   after_create :update_price_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
+  delegate :user, :identifier, to: :booking, allow_nil: true
   delegate :email, to: :user, prefix: true
+  delegate :id, to: :booking, prefix: true
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
   scope :requests_pending_or_rejected, -> { requests.where(request_status: ['pending', 'rejected']) }
   scope :requests_confirmed, -> { requests.confirmed }
+
+  accepts_nested_attributes_for :review
 
   attr_accessor :skip_data_posting
 
@@ -78,7 +82,7 @@ class Reservation < ApplicationRecord
       return unless check_in.present? && check_out.present? && lodging.present?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
       available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
-      errors.add(:base, "lodging is not available for selected dates") if available_days < (check_out - check_in).to_i || check_in < Date.today
+      errors.add("##{id}-", "lodging is not available for selected dates [#{check_in} - #{check_out}]") if available_days < (check_out - check_in).to_i || check_in < Date.today
     end
 
     def check_out_only
@@ -117,6 +121,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_details
-      SendReservationDetailsJob.perform_later(self.id) unless skip_data_posting || in_cart?
+      SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
     end
 end

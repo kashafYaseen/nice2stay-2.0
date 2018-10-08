@@ -21,6 +21,11 @@ class Availability < ApplicationRecord
     days.take.try(:delete)
   end
 
+  def revert_out_only!(check_in)
+    day = find_by(available_on: check_in -1.day)
+    day.update_columns(check_out_only: false) if day.present?
+  end
+
   def self.not_available!(check_out)
     days = where(available_on: [check_out +1.day, check_out]).order(:available_on)
     return if days.size == 2

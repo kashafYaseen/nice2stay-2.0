@@ -105,7 +105,7 @@
       <a class="toolbar-toggle toolbar-cart" href="#cart">
         <i>
           <span class="material-icons shopping_basket"></span>
-          <span class="count cart-items-count"><%= cart_items_count(@reservations) %></span>
+          <span class="count cart-items-count"><%= cart_items_count(@booking.try(:reservations)) %></span>
         </i>
       </a>
     </div>
@@ -380,7 +380,7 @@
       <!-- Account Section-->
       <%= render 'shared/account' %>
       <!-- Shopping Cart Section-->
-      <%= render 'shared/cart', reservations: @reservations %>
+      <%= render 'shared/cart', reservations: @booking.try(:reservations) %>
       <!-- Wishlist Section-->
       <%= render 'shared/wishlist', wishlists: @wishlists %>
     </div>
