@@ -23,6 +23,9 @@ class SaveBookingDetails
 
       booking.reservations.each_with_index do |reservation, index|
         reservation.lodging = Lodging.friendly.find(params[:booking][:reservations_attributes][index][:lodging_slug]) rescue nil
+        next unless reservation.review.present?
+        reservation.review.user = booking.user
+        reservation.review.lodging = reservation.lodging
       end
 
       booking.save(validate: false)
