@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header" role="tab">
+    <h6><a href="#collapse<%= reservation.id %>" data-toggle="collapse"><%= reservation.lodging_name %></a></h6>
+  </div>
+
+  <div class="collapse show" id="collapse<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body pl-0 pr-0">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-center">Checkin</th>
+            <th class="text-center">Checkout</th>
+            <th class="text-center">Adults</th>
+            <th class="text-center">Children</th>
+            <th class="text-center">Infants</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Discount</th>
+            <th class="text-center">Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="text-center text-lg text-medium"><%= reservation.check_in %></td>
+            <td class="text-center text-lg text-medium"><%= reservation.check_out %></td>
+            <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
+            <td class="text-center text-lg text-medium"><%= reservation.children %></td>
+            <td class="text-center text-lg text-medium"><%= reservation.infants %></td>
+            <td class="text-center text-lg text-medium">£<%= reservation.rent %></td>
+            <td class="text-center text-lg text-medium">£<%= reservation.discount %></td>
+            <td class="text-center text-lg text-medium"><%= render_request_status reservation.request_status %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

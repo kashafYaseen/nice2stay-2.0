@@ -1,0 +1,19 @@
+<tr>
+  <td class="align-middle">
+    <%= link_to reservation.identifier, dashboard_booking_path(reservation.booking_id), class: 'text-medium nav-link', remote: true %>
+  </td>
+
+  <td class="align-middle"><%= link_to reservation.lodging_child_name, reservation.lodging %></td>
+
+  <td class="align-middle">
+    <%= render_date reservation.created_at + 2.days %>
+  </td>
+
+
+  <td class="align-middle"><span class="text-medium">£<%= render_rounded_price reservation.rent %></span></td>
+
+  <td class="align-middle">
+    <a class="" href="#">BOOK NOW</a>
+    <a class="text-danger" href="#">REMOVE</a>
+  </td>
+</tr>

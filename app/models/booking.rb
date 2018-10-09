@@ -4,6 +4,7 @@ class Booking < ApplicationRecord
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
+  scope :confirmed, -> { requests.where(confirmed: true) }
 
   accepts_nested_attributes_for :reservations
   accepts_nested_attributes_for :user
@@ -16,5 +17,9 @@ class Booking < ApplicationRecord
 
   def user_identifier
     (user.try(:last_name) || 'By Houseowner').split(' ').join('').upcase
+  end
+
+  def have_confirmed_requests?
+    reservations.pluck(:request_status).include?('confirmed')
   end
 end

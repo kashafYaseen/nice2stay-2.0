@@ -13,10 +13,9 @@ class User < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  delegate :in_cart, :requests, to: :reservations, allow_nil: true, prefix: true
+  delegate :in_cart, :non_confirmed, :confirmed_options, :requests, to: :reservations, allow_nil: true, prefix: true
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
-  delegate :requests_pending_or_rejected, :requests_confirmed, to: :reservations, allow_nil: true
-  delegate :in_cart, to: :bookings, allow_nil: true, prefix: true
+  delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
 
   validates :first_name, :last_name, presence: true
   before_validation :set_password

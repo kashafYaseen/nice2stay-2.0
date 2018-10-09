@@ -15,15 +15,15 @@ class Reservation < ApplicationRecord
   after_create :update_price_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
+  delegate :slug, :name, :child_name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, to: :booking, allow_nil: true
   delegate :email, to: :user, prefix: true
   delegate :id, to: :booking, prefix: true
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
-  scope :requests_pending_or_rejected, -> { requests.where(request_status: ['pending', 'rejected']) }
-  scope :requests_confirmed, -> { requests.confirmed }
+  scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
+  scope :confirmed_options, -> { requests.option.joins(:booking).where(bookings: { confirmed: true }) }
 
   accepts_nested_attributes_for :review
 
@@ -40,7 +40,6 @@ class Reservation < ApplicationRecord
     arrival_email_sent: 7,
     option: 8 ,
     request_price: 9,
-    canceled: 10,
   }
 
   enum request_status: {

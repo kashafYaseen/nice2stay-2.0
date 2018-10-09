@@ -5,7 +5,7 @@ module ReservationsHelper
   end
 
   def cart_sub_total(reservations)
-    return reservations.sum(:total_price) if reservations.present?
+    return reservations.sum(:rent) if reservations.present?
     0
   end
 
