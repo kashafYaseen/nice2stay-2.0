@@ -1,4 +1,14 @@
-$('#bookings-table-body').html("<%= j render  @bookings %>");
-$('#bookings-pagination').html("<%= j paginate @bookings, param_name: :bookings_page, window: 2, remote: true %>");
-$('#requests-table-body').html("<%= j render partial: 'request', collection: @requests, as: :reservation %>");
-$('#requests-pagination').html("<%= j paginate @requests, param_name: :requests_page, window: 2, remote: true %>");
+<% if @bookings.present? %>
+  $('#bookings-table-body').html("<%= j render  @bookings %>");
+  $('#bookings-pagination').html("<%= j paginate @bookings, param_name: :bookings_page, window: 2, remote: true %>");
+<% end %>
+
+<% if @requests.present? %>
+  $('#requests-table-body').html("<%= j render partial: 'request', collection: @requests, as: :reservation %>");
+  $('#requests-pagination').html("<%= j paginate @requests, param_name: :requests_page, window: 2, remote: true %>");
+<% end %>
+
+<% if @options.present? %>
+  $('#options-table-body').html("<%= j render partial: 'option', collection: @options, as: :reservation %>");
+  $('#options-pagination').html("<%= j paginate @options, param_name: :requests_page, window: 2, remote: true %>");
+<% end %>

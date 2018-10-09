@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     resources :leads, only: [:create]
 
     namespace :dashboard do
+      resources :bookings, only: [:show]
       resources :reservations, only: [:index] do
         resources :reviews, except: [:show, :index]
       end

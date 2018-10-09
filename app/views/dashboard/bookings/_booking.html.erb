@@ -1,0 +1,13 @@
+<tr>
+  <td class="align-middle">
+    <%= link_to booking.identifier, dashboard_booking_path(booking), class: 'text-medium nav-link', remote: true %>
+  </td>
+
+  <td class="align-middle"><%= render_date booking.created_at %></td>
+
+  <td class="align-middle">
+    <%= link_to 'PAY NOW', dashboard_booking_path(booking), class: 'btn btn-primary btn-sm', remote: true %>
+  </td>
+
+  <td class="align-middle"><span class="text-medium">£<%= render_rounded_price cart_sub_total(booking.reservations) %></span></td>
+</tr>

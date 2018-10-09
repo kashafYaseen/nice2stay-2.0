@@ -70,6 +70,7 @@ class SaveBookingDetails
           :skip_data_posting,
           :booking_status,
           :request_status,
+          :in_cart,
           :created_at,
           :updated_at,
           review_attributes: [

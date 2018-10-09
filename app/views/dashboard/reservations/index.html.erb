@@ -1,14 +1,15 @@
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title bg-dark text-white pt-3 pb-3">Booking Requests</h4>
+    <h4 class="card-title bg-dark text-white pt-3 pb-3">Bookings & Option Requests</h4>
     <div class="table-responsive text-sm">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Requests</th>
+            <th>Reference #</th>
             <th>Lodging</th>
             <th>Created At</th>
-            <th>Status</th>
+            <th>Request</th>
+            <th>Booking</th>
             <th>Type</th>
             <th>Price</th>
           </tr>
@@ -32,16 +33,14 @@
 
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title bg-dark text-white pt-3 pb-3">Confirmed Bookings & Options</h4>
+    <h4 class="card-title bg-dark text-white pt-3 pb-3">Bookings</h4>
     <div class="table-responsive text-sm">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Booking</th>
-            <th>Lodging</th>
+            <th>Reference #</th>
             <th>Created At</th>
             <th>Payment</th>
-            <th>Type</th>
             <th>Price</th>
           </tr>
         </thead>
@@ -50,7 +49,7 @@
           <% if @bookings.present? %>
             <%= render @bookings %>
           <% else %>
-            <tr><td colspan="5" class="text-center">No booking or Option found!</td></tr>
+            <tr><td colspan="5" class="text-center">No booking found!</td></tr>
           <% end %>
         </tbody>
       </table>
@@ -62,5 +61,36 @@
   </div>
 </div>
 
-<%= render partial: 'payment_details_modal', collection: @bookings, as: :reservation %>
-<%= render partial: 'booking_modal', collection: @bookings_requests, as: :booking %>
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title bg-dark text-white pt-3 pb-3">Options</h4>
+    <div class="table-responsive text-sm">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Reference #</th>
+            <th>Lodging</th>
+            <th>Valid till</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="options-table-body">
+          <% if @options.present? %>
+            <%= render partial: 'option', collection: @options, as: :reservation %>
+          <% else %>
+            <tr><td colspan="5" class="text-center">No Option found!</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="options-pagination">
+      <%= paginate @options, param_name: :options_page, window: 2, remote: true %>
+    </div>
+  </div>
+</div>
+
+<div id="booking-details"></div>
+<%#= render partial: 'dashboard/bookings/details_modal', collection: @bookings, as: :booking %>
