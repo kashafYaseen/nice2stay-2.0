@@ -5,10 +5,10 @@ class Reservation < ApplicationRecord
   has_one :review
 
   validates :check_in, :check_out, presence: true
-  validate :availability
-  validate :no_of_guests
-  validate :check_out_only
-  validate :accommodation_rules
+  # validate :availability
+  # validate :no_of_guests
+  # validate :check_out_only
+  # validate :accommodation_rules
 
   after_validation :update_lodging_availability
   after_commit :send_reservation_details
