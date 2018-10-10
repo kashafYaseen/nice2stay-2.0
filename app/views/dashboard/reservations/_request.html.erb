@@ -11,7 +11,7 @@
   </td>
 
   <td class="align-middle">
-    <%= render_request_status 'pending' %>
+    <%= render_request_status(reservation.booking_confirmed ? 'confirmed' : 'pending') %>
   </td>
 
   <td class="align-middle">
