@@ -55,6 +55,7 @@ class SaveBookingDetails
         :skip_data_posting,
         :uid,
         :created_at,
+        :in_cart,
         reservations_attributes: [
           :id,
           :check_in,
