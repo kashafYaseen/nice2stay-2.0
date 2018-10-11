@@ -17,7 +17,6 @@ class Lodging < ApplicationRecord
 
   include ImageHelper
 
-  attr_accessor :check_in_day
   attr_accessor :flexible_search
 
   geocoded_by :address
