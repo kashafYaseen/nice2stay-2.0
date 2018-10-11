@@ -57,6 +57,8 @@ ActiveAdmin.register Lodging do
       f.input :children
       f.input :infants
       f.input :description
+      f.input :check_in_day, collection: Rule::DAY_OF_WEEK, as: :select
+      f.input :flexible_arrival
     end
 
     f.has_many :specifications, allow_destroy: true, new_record:  'Add Specification'  do |spec|
@@ -67,8 +69,8 @@ ActiveAdmin.register Lodging do
     f.has_many :rules, allow_destroy: true, new_record:  'Add Rule'  do |rule|
       rule.input :start_date
       rule.input :end_date
-      rule.input :days_multiplier, min: 1, step: 1
-      rule.input :check_in_days, collection: Rule::DAY_OF_WEEK, as: :select
+      rule.input :flexible_arrival
+      rule.input :minimum_stay
     end
 
     f.has_many :discounts, allow_destroy: true, new_record:  'Add Discount'  do |discount|
@@ -86,6 +88,7 @@ ActiveAdmin.register Lodging do
 
     f.has_many :availabilities, allow_destroy: true, new_record:  'Add Availability'  do |availability|
       availability.input :available_on
+      availability.input :check_out_only
       availability.has_many :prices, allow_destroy: true, new_record: 'Add Price' do |price|
         price.input :amount
         price.input :adults
@@ -123,6 +126,8 @@ ActiveAdmin.register Lodging do
       row :total_prices
       row :total_rules
       row :total_children
+      row :flexible_arrival
+      row :check_in_day
       row :created_at
       row :updated_at
     end
@@ -142,9 +147,8 @@ ActiveAdmin.register Lodging do
       table_for lodging.rules do
         column :start_date
         column :end_date
-        column :days_multiplier
-        column :check_in_days
-        column :minimal_stay
+        column :minimum_stay
+        column :flexible_arrival
 
         column 'Action' do |rule|
           link_to 'Edit', edit_admin_rule_path(rule)
@@ -178,9 +182,10 @@ ActiveAdmin.register Lodging do
     end
 
     panel "Availabilities" do
-      table_for lodging.availabilities do
+      table_for lodging.availabilities.order(:available_on) do
         column :id
         column :available_on
+        column :check_out_only
 
         column 'Prices' do |availability|
           table_for availability.prices do
