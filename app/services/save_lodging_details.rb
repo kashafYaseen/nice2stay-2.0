@@ -93,7 +93,7 @@ class SaveLodgingDetails
         :include_cleaning,
         :include_deposit,
         :checked,
-        :flexible,
+        :flexible_arrival,
         :listed_to,
         :ical_validated,
         :route_updated_at,
@@ -109,7 +109,7 @@ class SaveLodgingDetails
         specifications_attributes: [:id, :title, :description],
         reviews_attributes: [:id, :user_id, :stars, :description],
         availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],
-        rules_attributes: [:id, :start_date, :end_date, :days_multiplier, :check_in_days],
+        rules_attributes: [:id, :start_date, :end_date],
         discounts_attributes: [:id, :start_date, :end_date, :reservation_days, :discount_percentage],
       )
     end
