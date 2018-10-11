@@ -95,6 +95,6 @@ class SearchPriceWithFlexibleDates
     end
 
     def valid?(params)
-      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging).valid?
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging, booking: Booking.new).valid?
     end
 end

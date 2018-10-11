@@ -5,10 +5,9 @@ class Reservation < ApplicationRecord
   has_one :review
 
   validates :check_in, :check_out, presence: true
-  # validate :availability
-  # validate :no_of_guests
-  # validate :check_out_only
-  # validate :accommodation_rules
+  validate :availability
+  validate :no_of_guests
+  validate :accommodation_rules
 
   after_validation :update_lodging_availability
   after_commit :send_reservation_details
@@ -80,38 +79,40 @@ class Reservation < ApplicationRecord
     def availability
       return unless check_in.present? && check_out.present? && lodging.present?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      available_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: false).count
-      errors.add("##{id}-", "lodging is not available for selected dates [#{check_in} - #{check_out}]") if available_days < (check_out - check_in).to_i || check_in < Date.today
-    end
-
-    def check_out_only
-      return unless check_in.present? && check_out.present? && lodging.present?
-      check_out_days = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), check_out_only: true)
+      _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
+      check_out_days = _availabilities.where(check_out_only: true)
+      errors.add("##{id}-", "lodging is not available for selected dates [#{check_in} - #{check_out}]") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today
       errors.add(:base, "#{check_out_days.pluck(:available_on)} only available for check out") if check_out_days.present?
     end
 
     def accommodation_rules
-      return unless lodging.present?
+      return unless check_in.present? && check_out.present? && lodging.present?
       nights = (check_out - check_in).to_i
+      active_rules = rules_active(check_in, check_out)
+      errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
-      rules_active(check_in, check_out).each do |rule|
-        if rule.days_multiplier.present?
-          errors.add(:base, "Check in day should be #{rule.check_in_days}") unless check_in.strftime("%A") == rule.check_in_days.titleize
-          errors.add(:base, "The stay should be in multiple of #{rule.days_multiplier}") unless nights % rule.days_multiplier == 0
-        elsif rule.minimal_stay.present? && nights != 7 && nights < rule.minimal_stay.collect(&:to_i).max
-          errors.add(:base, "You can stay for following number of nights only: #{rule.minimal_stay.collect(&:to_i).join(', ')}") unless nights.to_s.in?(rule.minimal_stay)
+      if active_rules.present?
+        active_rules.each do |rule|
+          errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || rule.flexible_arrival
+
+          if rule.minimum_stay.present?
+            errors.add(:base, "The stay should be of #{rule.minimum_stay - 1} or more nights") if nights < rule.minimum_stay - 1
+          elsif nights % 7 != 0
+            errors.add(:base, "The stay should be in multiple of 7 nights")
+          end
         end
+      else
+        errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
+        errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0
       end
     end
 
     def no_of_guests
       return unless lodging.adults.present?
-      if lodging.adults < adults.to_i
-        errors.add(:base, "Maximum #{lodging.adults} adults are allowed")
-        return
-      end
-      children_vacancies = lodging.children.to_i + lodging.adults.to_i - adults.to_i
-      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
+      return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults
+
+      children_vacancies = lodging.children.to_i + lodging.adults - adults
+      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children
     end
 
     def update_price_details

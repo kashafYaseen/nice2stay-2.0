@@ -33,7 +33,7 @@ class UpdateLodgingPrices
             end
           end
         end
-        create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], lodging.check_in_day)
+        create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival])
       end
     end
 
@@ -45,16 +45,14 @@ class UpdateLodgingPrices
       lodging.prices.reindex
     end
 
-    def create_rule(from, to, minimal_stay, check_in_day)
+    def create_rule(from, to, minimal_stay, flexible_arrival)
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
-
-      if minimal_stay.first.present?
-        rule.minimal_stay = (rule.minimal_stay + minimal_stay).uniq
+      rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
+      if minimal_stay.map(&:to_i).min == 999
+        rule.minimum_stay = nil
       else
-        rule.days_multiplier = 7
-        rule.check_in_days = check_in_day.presence || 'Saturday'
+        rule.minimum_stay = minimal_stay.map(&:to_i).min
       end
-
       rule.save
     end
 
