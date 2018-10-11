@@ -311,7 +311,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_123009) do
     t.boolean "include_cleaning", default: false
     t.boolean "include_deposit", default: false
     t.boolean "checked", default: false
-    t.boolean "flexible", default: false
+    t.boolean "flexible_arrival", default: false
     t.boolean "listed_to", default: false
     t.boolean "ical_validated", default: false
     t.datetime "route_updated_at"
@@ -328,6 +328,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_123009) do
     t.float "communication", default: 0.0
     t.float "service", default: 0.0
     t.float "average_rating", default: 0.0
+    t.string "check_in_day"
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
@@ -472,7 +473,6 @@ ActiveRecord::Schema.define(version: 2018_10_10_123009) do
     t.bigint "lodging_id"
     t.date "start_date"
     t.date "end_date"
-    t.string "check_in_day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "flexible_arrival", default: false
