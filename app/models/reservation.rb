@@ -112,7 +112,7 @@ class Reservation < ApplicationRecord
       return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults
 
       children_vacancies = lodging.children.to_i + lodging.adults - adults
-      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children
+      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
     end
 
     def update_price_details
