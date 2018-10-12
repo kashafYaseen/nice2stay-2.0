@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_12_065522) do
+ActiveRecord::Schema.define(version: 2018_10_12_101401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -367,6 +367,21 @@ ActiveRecord::Schema.define(version: 2018_10_12_065522) do
     t.string "image"
     t.index ["email"], name: "index_owners_on_email", unique: true
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.string "meta_title"
+    t.text "short_desc"
+    t.text "content"
+    t.string "category"
+    t.string "slug"
+    t.boolean "header_dropdown", default: false
+    t.boolean "rating_box", default: false
+    t.boolean "homepage", default: false
+    t.string "images", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "prices", force: :cascade do |t|
