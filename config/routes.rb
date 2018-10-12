@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :experiences, only: [:create]
       resources :countries, only: [:create]
       resources :bookings, only: [:create]
+      resources :pages, only: [:create]
     end
 
     namespace :v2 do
