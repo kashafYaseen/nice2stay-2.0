@@ -17,13 +17,9 @@
 
       <li><a href="#"><span>Nice2stay</span></a>
         <ul class="sub-menu">
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="contacts.html">Contacts</a></li>
-          <li><a href="faq.html">Help / FAQ</a></li>
-          <li><a href="order-tracking.html">Order Tracking</a></li>
-          <li><a href="404.html">404 Not Found</a></li>
-          <li><a href="coming-soon.html">Coming Soon</a></li>
-          <li><a class="text-danger" href="docs/dev-setup.html">Documentation</a></li>
+          <% @pages.each do |page| %>
+            <li><%= link_to page.title, page_path(page) %></li>
+          <% end %>
         </ul>
       </li>
 
@@ -142,6 +138,20 @@
                   <li><a href="home-featured-categories.html">Categories Grid</a></li>
               </ul>
             </li>
+
+            <li class="has-children">
+              <span>
+                <a href="#"><span>Nice2Stay</span></a>
+                <span class="sub-menu-toggle"></span>
+              </span>
+
+              <ul class="slideable-submenu">
+                <% @pages.each do |page| %>
+                  <li><%= link_to page.title, page_path(page) %></li>
+                <% end %>
+              </ul>
+            </li>
+
             <li class="has-children"><span><a href="#"><span>Languages</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
                   <li><%= link_to 'English', locale: 'en' %></li>
