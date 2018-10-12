@@ -34,6 +34,7 @@ class SendBookingDetails
           created_by: 'customer',
           uid: booking.uid,
           created_at: booking.created_at,
+          fe_identifier: booking.identifier,
           skip_data_posting: true,
         }
       }
