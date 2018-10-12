@@ -7,14 +7,13 @@ ActiveAdmin.register Reservation do
     end
 
     def scoped_collection
-      Reservation.requests.includes(:user, { lodging: :translations }).order(created_at: :desc)
+      Reservation.requests.includes({ lodging: :translations }).order(created_at: :desc)
     end
   end
 
   index do
     selectable_column
     id_column
-    column :user
     column :lodging
     column :check_in
     column :check_out
