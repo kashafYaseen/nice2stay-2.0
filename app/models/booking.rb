@@ -12,7 +12,7 @@ class Booking < ApplicationRecord
   attr_accessor :skip_data_posting
 
   def identifier
-    "#{user_identifier}#{created_at.to_i}"
+    be_identifier || "#{user_identifier}#{created_at.to_i}"
   end
 
   def user_identifier

@@ -57,6 +57,7 @@ class SaveBookingDetails
         :created_at,
         :in_cart,
         :confirmed,
+        :be_identifier,
         reservations_attributes: [
           :id,
           :check_in,
