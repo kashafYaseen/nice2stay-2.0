@@ -4,6 +4,7 @@ class ReservationsController < ApplicationController
   def create
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
     if @reservation.save
+      @reservation = @reservation.lodging.reservations.build
       @reservations = @booking.reservations
       flash.now[:notice] = "The lodging was successfully reserved."
     else

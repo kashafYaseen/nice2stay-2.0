@@ -72,6 +72,7 @@
 
       if data.valid[index]
         $("#cart-#{lodging_id}").removeClass('disabled');
+        $(".reservation-form-errors-#{lodging_id}").html('');
         $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
         if data.discount
@@ -100,6 +101,7 @@
 
     if nights >= 2 && data.valid
       $("#cart-#{lodging_id}").removeClass('disabled');
+      $(".reservation-form-errors-#{lodging_id}").html('');
 
       if data.discount
         discount = total * data.discount/100
