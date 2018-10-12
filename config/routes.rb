@@ -57,6 +57,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :pages, only: [:show]
+
     get "dashboard", to: "dashboard#index"
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
