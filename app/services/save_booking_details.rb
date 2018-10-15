@@ -58,6 +58,9 @@ class SaveBookingDetails
         :in_cart,
         :confirmed,
         :be_identifier,
+        :pre_payment,
+        :final_payment,
+        :refund_payment,
         reservations_attributes: [
           :id,
           :check_in,
