@@ -70,7 +70,7 @@ class Reservation < ApplicationRecord
 
   private
     def update_lodging_availability
-      return if in_cart?
+      return if in_cart? || prebooking? || option?
       lodging.availabilities.check_out_only!(check_in)
       lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
@@ -115,6 +115,7 @@ class Reservation < ApplicationRecord
     end
 
     def update_price_details
+      return if skip_data_posting
       rent, discount = calculate_rent, calculate_discount
       update_columns rent: rent, discount: discount, total_price: (rent - discount)
     end
