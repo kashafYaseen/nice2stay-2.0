@@ -6,7 +6,6 @@ class ReservationsController < ApplicationController
     if @reservation.save
       @reservation = @reservation.lodging.reservations.build
       @reservations = @booking.reservations
-      flash.now[:notice] = "The lodging was successfully reserved."
     else
       @lodging = @reservation.lodging
       @reviews = @lodging.reviews.page(params[:page]).per(2)
