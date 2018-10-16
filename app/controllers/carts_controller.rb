@@ -44,14 +44,10 @@ class CartsController < ApplicationController
       @booking.user.password = @booking.user.password_confirmation = Devise.friendly_token[0, 20]
     end
 
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-    end
-
     def booking_params
       params.require(:booking).permit(
         :in_cart,
-        user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status],
+        user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone],
         reservations_attributes: [:id, :booking_id, :in_cart]
       )
     end

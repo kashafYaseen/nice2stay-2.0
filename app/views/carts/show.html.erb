@@ -71,6 +71,45 @@
                     <%= user_fields.hidden_field :creation_status, id: :user_creation_status %>
                   </div>
                 </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :phone %>
+                    <%= user_fields.text_field :phone, class: "form-control", required: true %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :city %>
+                    <%= user_fields.text_field :city, class: "form-control", required: true %>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :zipcode %>
+                    <%= user_fields.number_field :zipcode, step: 1, min: 0, class: "form-control", required: true %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <%= user_fields.label :country %>
+                    <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country) %>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= user_fields.label :address %>
+                    <%= user_fields.text_field :address, class: "form-control", required: true %>
+                  </div>
+                </div>
               </div>
             </fieldset>
 

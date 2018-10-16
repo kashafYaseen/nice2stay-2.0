@@ -10,7 +10,7 @@
         <%= f.file_field :image, class: 'form-control pt-2 image_field' %>
       </div>
 
-      <%= render 'devise/registrations/common_fields', f: f %>
+      <%= render 'devise/registrations/common_fields', f: f, countries: @countries.collect{ |country| [country.name, country.id] } %>
 
       <div class="form-group">
         <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password'  %>
