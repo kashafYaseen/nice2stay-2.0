@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  belongs_to :country
   has_many :reviews
   has_many :wishlists
   has_many :favourite_lodgings, through: :wishlists, source: :lodging
