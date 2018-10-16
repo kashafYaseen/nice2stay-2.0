@@ -12,6 +12,7 @@ class Reservation < ApplicationRecord
   after_validation :update_lodging_availability
   after_commit :send_reservation_details
   after_create :update_price_details
+  after_destroy :send_reservation_removal_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
@@ -22,7 +23,7 @@ class Reservation < ApplicationRecord
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
-  scope :confirmed_options, -> { requests.option.joins(:booking).where(bookings: { confirmed: true }) }
+  scope :confirmed_options, -> { requests.option.confirmed }
 
   accepts_nested_attributes_for :review
 
@@ -70,7 +71,7 @@ class Reservation < ApplicationRecord
 
   private
     def update_lodging_availability
-      return if in_cart?
+      return if in_cart? || prebooking? || option?
       lodging.availabilities.check_out_only!(check_in)
       lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
@@ -115,11 +116,16 @@ class Reservation < ApplicationRecord
     end
 
     def update_price_details
+      return if skip_data_posting
       rent, discount = calculate_rent, calculate_discount
       update_columns rent: rent, discount: discount, total_price: (rent - discount)
     end
 
     def send_reservation_details
       SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
+    end
+
+    def send_reservation_removal_details
+      SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking_id.in_cart
     end
 end

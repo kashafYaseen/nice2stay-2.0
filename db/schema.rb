@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_051452) do
+ActiveRecord::Schema.define(version: 2018_10_15_105357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -546,6 +546,13 @@ ActiveRecord::Schema.define(version: 2018_10_15_051452) do
     t.integer "creation_status", default: 0
     t.string "image"
     t.string "mollie_id"
+    t.string "address"
+    t.string "city"
+    t.string "zipcode"
+    t.string "phone"
+    t.string "language"
+    t.bigint "country_id"
+    t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -589,6 +596,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_051452) do
   add_foreign_key "reviews", "users", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
+  add_foreign_key "users", "countries"
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
   add_foreign_key "wishlists", "users", on_delete: :cascade
 end

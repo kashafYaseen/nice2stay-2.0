@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :countries, only: [:create]
       resources :bookings, only: [:create]
       resources :pages, only: [:create]
+      resources :users, only: [:create]
     end
 
     namespace :v2 do
@@ -52,7 +53,10 @@ Rails.application.routes.draw do
 
     namespace :dashboard do
       resources :bookings, only: [:show]
-      resources :reservations, only: [:index] do
+      resources :reservations, only: [:index, :destroy] do
+        member do
+          post :accept_option
+        end
         resources :reviews, except: [:show, :index]
       end
     end
