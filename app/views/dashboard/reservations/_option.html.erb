@@ -13,7 +13,7 @@
   <td class="align-middle"><span class="text-medium">£<%= render_rounded_price reservation.rent %></span></td>
 
   <td class="align-middle">
-    <a class="" href="#">BOOK NOW</a>
-    <a class="text-danger" href="#">REMOVE</a>
+    <%= link_to 'BOOK NOW', accept_option_dashboard_reservation_path(reservation) %>
+    <%= link_to 'REMOVE', dashboard_reservation_path(reservation), class: 'text-danger', method: :delete %>
   </td>
 </tr>
