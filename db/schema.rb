@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_105357) do
+ActiveRecord::Schema.define(version: 2018_10_16_114238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2018_10_15_105357) do
     t.boolean "refund_payment", default: false
     t.string "pre_payment_mollie_id"
     t.string "final_payment_mollie_id"
+    t.datetime "pre_payed_at"
+    t.datetime "final_payed_at"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
