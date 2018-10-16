@@ -33,18 +33,13 @@ module ReservationsHelper
     (price * multiplier).round(round_by)
   end
 
-  def pre_paid_link(status)
-    text = status ? 'Pre Payment Receiced' : 'Pay Pre Payment'
-    link_to text, '#', class: "btn #{status_button_class status} w-100"
+  def pre_paid_link(booking)
+    return link_to "Pre Payment Receiced: #{ render_date(booking.pre_payed_at) }", '#', class: "btn btn-success disabled w-100" if booking.pre_payed_at?
+    link_to 'Pay Pre Payment', dashboard_booking_payments_path(booking, payment: 'pre-payment', locale: locale), class: "btn btn-info w-100", method: :post
   end
 
-  def post_paid_link(status)
-    text = status ? 'Final Payment Receiced' : 'Pay Final Payment'
-    link_to text, '#', class: "btn #{status_button_class status} w-100"
-  end
-
-  def status_button_class status
-    return 'btn-success disabled' if status
-    'btn-info'
+  def final_paid_link(booking)
+    return link_to "Final Payment Receiced: #{ render_date(booking.final_payed_at) }", '#', class: "btn btn-success disabled w-100" if booking.final_payed_at?
+    link_to 'Pay Final Payment', dashboard_booking_payments_path(booking, payment: 'final-payment', locale: locale), class: "btn btn-info w-100", method: :post
   end
 end

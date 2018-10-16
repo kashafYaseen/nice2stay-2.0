@@ -52,7 +52,9 @@ Rails.application.routes.draw do
     resources :leads, only: [:create]
 
     namespace :dashboard do
-      resources :bookings, only: [:show]
+      resources :bookings, only: [:show] do
+        resources :payments, only: [:create]
+      end
       resources :reservations, only: [:index, :destroy] do
         member do
           post :accept_option
