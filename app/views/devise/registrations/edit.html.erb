@@ -10,47 +10,7 @@
         <%= f.file_field :image, class: 'form-control pt-2 image_field' %>
       </div>
 
-      <div class="row">
-        <div class="form-group col-md-6">
-          <%= f.text_field :first_name, placeholder: 'First Name', class: 'form-control', id: rendom_id(resource, :first_name) %>
-        </div>
-
-        <div class="form-group col-md-6">
-          <%= f.text_field :last_name, placeholder: 'Last Name', class: 'form-control', id: rendom_id(resource, :last_name) %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <%= f.email_field :email, class: 'form-control', placeholder: 'Email Address' %>
-      </div>
-
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div class="alert alert-warning">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
-
-      <div class="row">
-        <div class="form-group col-md-6">
-          <%= f.text_field :phone, placeholder: 'Phone Number', class: 'form-control', id: rendom_id(resource, :phone) %>
-        </div>
-
-        <div class="form-group col-md-6">
-          <%= f.select :country, country_names, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country) %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group col-md-6">
-          <%= f.text_field :city, placeholder: 'City', class: 'form-control', id: rendom_id(resource, :city) %>
-        </div>
-
-        <div class="form-group col-md-6">
-          <%= f.text_field :zipcode, placeholder: 'Zip Code', class: 'form-control', id: rendom_id(resource, :zipcode) %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :address, placeholder: 'Address', class: 'form-control', id: rendom_id(resource, :address) %>
-      </div>
+      <%= render 'devise/registrations/common_fields', f: f %>
 
       <div class="form-group">
         <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password'  %>

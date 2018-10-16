@@ -2,43 +2,7 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: rendom_id(resource) }) do |f| %>
   <%= render 'shared/errors', resource: resource %>
 
-  <div class="row">
-    <div class="form-group col-md-6">
-      <%= f.text_field :first_name, placeholder: 'First Name', class: 'form-control', id: rendom_id(resource, :first_name) %>
-    </div>
-
-    <div class="form-group col-md-6">
-      <%= f.text_field :last_name, placeholder: 'Last Name', class: 'form-control', id: rendom_id(resource, :last_name) %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.email_field :email, autofocus: false, class: 'form-control', placeholder: "Email Address", id: rendom_id(resource, :email) %>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-md-6">
-      <%= f.text_field :phone, placeholder: 'Phone Number', class: 'form-control', id: rendom_id(resource, :phone) %>
-    </div>
-
-    <div class="form-group col-md-6">
-      <%= f.select :country, country_names, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country) %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-md-6">
-      <%= f.text_field :city, placeholder: 'City', class: 'form-control', id: rendom_id(resource, :city) %>
-    </div>
-
-    <div class="form-group col-md-6">
-      <%= f.text_field :zipcode, placeholder: 'Zip Code', class: 'form-control', id: rendom_id(resource, :zipcode) %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.text_field :address, placeholder: 'Address', class: 'form-control', id: rendom_id(resource, :address) %>
-  </div>
+  <%= render 'devise/registrations/common_fields', f: f %>
 
   <div class="form-group">
     <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password', id: rendom_id(resource, :password) %>
