@@ -23,7 +23,7 @@
         </ul>
       </li>
 
-       <li><a href="#"><span>Landen & regio's</span></a>
+       <li><a href="#"><span><%= t 'nav.land' %></span></a>
         <ul class="mega-menu">
           <% @countries_enabled.each do |country| %>
             <li><span class="mega-menu-title"><%= link_to country.name, country_path(country, locale: locale) %> </span>
@@ -37,7 +37,7 @@
         </ul>
       </li>
 
-      <li><a href="#"><span>Collections</span></a>
+      <li><a href="#"><span><%= t 'nav.collections' %></span></a>
         <ul class="mega-menu">
           <li><span class="mega-menu-title"><a>popular collections</a></span>
             <ul>
