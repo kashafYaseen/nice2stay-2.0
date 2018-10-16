@@ -12,6 +12,7 @@ class Reservation < ApplicationRecord
   after_validation :update_lodging_availability
   after_commit :send_reservation_details
   after_create :update_price_details
+  after_destroy :send_reservation_removal_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
@@ -22,7 +23,7 @@ class Reservation < ApplicationRecord
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
-  scope :confirmed_options, -> { requests.option.joins(:booking).where(bookings: { confirmed: true }) }
+  scope :confirmed_options, -> { requests.option.confirmed }
 
   accepts_nested_attributes_for :review
 
@@ -122,5 +123,9 @@ class Reservation < ApplicationRecord
 
     def send_reservation_details
       SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
+    end
+
+    def send_reservation_removal_details
+      SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking_id.in_cart
     end
 end

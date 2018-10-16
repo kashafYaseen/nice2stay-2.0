@@ -53,7 +53,10 @@ Rails.application.routes.draw do
 
     namespace :dashboard do
       resources :bookings, only: [:show]
-      resources :reservations, only: [:index] do
+      resources :reservations, only: [:index, :destroy] do
+        member do
+          post :accept_option
+        end
         resources :reviews, except: [:show, :index]
       end
     end
