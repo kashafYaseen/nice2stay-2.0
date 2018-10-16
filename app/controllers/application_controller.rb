@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_countries
-    @countries = Country.enabled
+    @countries = Country.all.includes(:regions)
+    @countries_enabled = @countries.enabled
   end
 
   def set_campaigns
@@ -41,6 +42,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_pages
-    @pages = Page.all
+    @pages = Page.all.includes(:translations)
   end
 end

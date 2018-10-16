@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :countries, only: [:create]
       resources :bookings, only: [:create]
       resources :pages, only: [:create]
+      resources :users, only: [:create]
     end
 
     namespace :v2 do
