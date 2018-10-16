@@ -144,7 +144,7 @@ ActiveAdmin.register Lodging do
     end
 
     panel "Rules" do
-      table_for lodging.rules do
+      table_for lodging.rules.order(:start_date) do
         column :start_date
         column :end_date
         column :minimum_stay

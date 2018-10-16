@@ -51,7 +51,7 @@ class UpdateLodgingPrices
       if minimal_stay.map(&:to_i).min == 999
         rule.minimum_stay = nil
       else
-        rule.minimum_stay = minimal_stay.map(&:to_i).min
+        rule.minimum_stay = minimal_stay.map(&:to_i).min unless rule.minimum_stay.present? && rule.minimum_stay < minimal_stay.map(&:to_i).min
       end
       rule.save
     end
