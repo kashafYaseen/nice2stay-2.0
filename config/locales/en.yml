@@ -45,6 +45,21 @@ en:
   filters:
     more_filters: 'More Filters'
 
+  usp:
+    inspect: Visited & inspected
+    inspect_details: Our team has inspected every property
+    price: Transparant prices
+    price_details: Same prices as booking direct, no booking fees
+    advice: Advice & Support
+    advice_details: Expert advice and attentive service 
+    search: Search for unique holiday homes, apartments and boutique hotels and more ...
+    intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
+    intro_details: Each accommodation of Nice2stay must pass quality inspection, to ensure that it meets the high standards for comfort, quality and style.
+    
+  nav:
+    land: Countries & regions
+    collections: Collections
+
   activerecord:
     errors:
       models:
