@@ -53,7 +53,9 @@ Rails.application.routes.draw do
 
     namespace :dashboard do
       resources :bookings, only: [:show] do
-        resources :payments, only: [:create]
+        resource :payment, only: [:create, :show] do
+          post :update_status
+        end
       end
       resources :reservations, only: [:index, :destroy] do
         member do
@@ -70,8 +72,8 @@ Rails.application.routes.draw do
     get '/:country_id/:id', to: 'regions#show', as: :country_region
     get '/', to: 'pages#home', as: :root
   end
-
   root 'pages#home'
+  post '/', to: 'pages#home'
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection

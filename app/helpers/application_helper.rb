@@ -15,4 +15,8 @@ module ApplicationHelper
   def render_date(date)
     date.strftime("%d/%m/%Y") if date.present?
   end
+
+  def render_datetime(datetime)
+    datetime.strftime("%d/%m/%Y %I:%M %p") if datetime.present?
+  end
 end

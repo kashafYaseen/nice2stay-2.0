@@ -15,10 +15,10 @@ class ManageMolliePayment
 
     if booking.pre_payment_mollie_id?
       payment = find_payment(booking.pre_payment_mollie_id)
-      return payment unless payment.status == 'expired'
+      return payment if payment.status == 'open'
     end
 
-    payment = create_payment(booking.pre_payment, "PrePayment")
+    payment = create_payment(booking.pre_payment, "Pre-Payment")
     booking.update_column :pre_payment_mollie_id, payment.id
     payment
   end
@@ -28,12 +28,29 @@ class ManageMolliePayment
 
     if booking.final_payment_mollie_id?
       payment = find_payment(booking.final_payment_mollie_id)
-      return payment unless payment.status == 'expired'
+      return payment if payment.status == 'open'
     end
 
-    payment = create_payment(booking.final_payment, "FinalPayment")
+    payment = create_payment(booking.final_payment, "Final-Payment")
     booking.update_column :final_payment_mollie_id, payment.id
     payment
+  end
+
+  def update_status(payment_id)
+    payment = find_payment(payment_id)
+    return remove_rejected(payment) unless payment.status == 'paid'
+    booking.update_column(:pre_payed_at, payment.paid_at) if payment.id == booking.pre_payment_mollie_id
+    booking.update_column(:final_payed_at, payment.paid_at) if payment.id == booking.final_payment_mollie_id
+  end
+
+  def get_pre_payment
+    return unless booking.pre_payment_mollie_id?
+    find_payment(booking.pre_payment_mollie_id)
+  end
+
+  def get_final_payment
+    return unless booking.final_payment_mollie_id?
+    find_payment(booking.final_payment_mollie_id)
   end
 
   private
@@ -42,7 +59,8 @@ class ManageMolliePayment
         customer_id:  user.mollie_id,
         amount:       { value: '10.00', currency: 'EUR' },
         description:  description,
-        redirect_url: dashboard_url(host: 'localhost', port: 3000),
+        redirect_url: redirect_url,
+        webhookUrl:   webhook_url,
         metadata: [
           booking_id: booking.id,
           booking_reference: booking.identifier,
@@ -50,7 +68,23 @@ class ManageMolliePayment
       )
     end
 
+    def remove_rejected(payment)
+      return unless payment.status == 'failed' || payment.status == 'expired' || payment.status == 'canceled'
+      booking.update_column(:pre_payment_mollie_id, nil) if payment.id == booking.pre_payment_mollie_id
+      booking.update_column(:final_payment_mollie_id, nil) if payment.id == booking.final_payment_mollie_id
+    end
+
     def find_payment(id)
       Mollie::Payment.get(id)
+    end
+
+    def webhook_url
+      return update_status_dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
+      'http://6d520d52.ngrok.io'
+    end
+
+    def redirect_url
+      return dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
+      dashboard_booking_payment_url(booking_id: booking, host: 'localhost', port: 3000)
     end
 end
