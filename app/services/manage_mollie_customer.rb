@@ -9,12 +9,12 @@ class ManageMollieCustomer
 
   private
     def find_or_create
-      return Mollie::Customer.get(user.mollie_id) if user.mollie_id?
+      return Mollie::Customer.get(user.mollie_id, api_key: ENV['MOLLIE_API_KEY']) if user.mollie_id?
       create
     end
 
     def create
-      customer = Mollie::Customer.create(name: user.full_name, email: user.email)
+      customer = Mollie::Customer.create(api_key: ENV['MOLLIE_API_KEY'], name: user.full_name, email: user.email)
       user.update_column :mollie_id, customer.id
       return customer
     end
