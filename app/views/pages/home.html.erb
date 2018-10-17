@@ -1,12 +1,10 @@
 <section class="fw-section padding-top-7x padding-bottom-8x" style="background-image: url(/assets/moroseta.jpg); background-position: center;">
   <div class="container">
     <div class="col-md-12">
-      
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-7 col-sm-12 pt-2">
               <%= text_field_tag :query, params[:query], :placeholder => t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
-              
             </div>
 
             <div class="col-md-5 col-sm-12">
@@ -73,33 +71,23 @@
       <h4 class="h6 mb-2"><%= t 'usp.advice' %></h4>
       <p class="text-sm text-muted mb-0"><%= t 'usp.advice_details' %></p>
     </div>
-
-    
   </div>
 </section>
 
 <div class="container padding-top-1x pb-5 homepage">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-6">
-        <h3 class="mb-3">
-          <%= t 'usp.intro' %>
-        </h3>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6">
+      <h3 class="mb-3"><%= t 'usp.intro' %></h3>
 
-        <p>
-          <%= t 'usp.intro_details' %>
-        </p>
+      <p><%= t 'usp.intro_details' %></p>
 
-        <%= link_to 'more information', new_user_registration_path, class: 'btn btn-outline-primary' %>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-3"></div>
-      <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
+      <%= link_to 'more information', new_user_registration_path, class: 'btn btn-outline-primary' %>
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3"></div>
+    <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
   </div>
-
-
-
-
+</div>
 
 <% if @homepage_campaigns.present? %>
   <section class="container padding-top-3x pb-5">
@@ -146,8 +134,6 @@
   </div>
 <% end %>
 
-
-
 <section class="container padding-top-3x pb-5">
   <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
   <%= render 'leads/form', lead: @lead, countries: @countries_enabled %>
@@ -165,9 +151,6 @@
     </section>
   </div>
 <% end %>
-
-
-
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
