@@ -16,8 +16,8 @@
 
           <div class="col-md-6">
             <% if booking.confirmed? %>
-              <%= pre_paid_link true %>
-              <%= post_paid_link false %>
+              <%= pre_paid_link booking %>
+              <%= final_paid_link booking %>
             <% end %>
           </div>
         </div>

@@ -92,6 +92,13 @@ ActiveRecord::Schema.define(version: 2018_10_16_114238) do
     t.datetime "updated_at", null: false
     t.uuid "uid"
     t.string "be_identifier"
+    t.float "pre_payment", default: 0.0
+    t.float "final_payment", default: 0.0
+    t.boolean "refund_payment", default: false
+    t.string "pre_payment_mollie_id"
+    t.string "final_payment_mollie_id"
+    t.datetime "pre_payed_at"
+    t.datetime "final_payed_at"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 

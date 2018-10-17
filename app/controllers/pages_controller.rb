@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:home]
+
   def show
     add_breadcrumb "Home", :root_path
     @page = Page.friendly.find(params[:id])
