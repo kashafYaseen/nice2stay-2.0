@@ -55,9 +55,10 @@ class ManageMolliePayment
 
   private
     def create_payment(amount, description)
+      amount = '10.00' unless amount > 0 # FIXME
       Mollie::Customer::Payment.create(
         customer_id:  user.mollie_id,
-        amount:       { value: '10.00', currency: 'EUR' },
+        amount:       { value: amount, currency: 'EUR' },
         description:  description,
         redirect_url: redirect_url,
         webhookUrl:   webhook_url,
