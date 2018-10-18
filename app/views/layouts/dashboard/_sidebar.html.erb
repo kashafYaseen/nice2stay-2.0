@@ -14,7 +14,7 @@
         <%= render_user_image current_user %>
       </div>
 
-      <div class="user-data d-table-row">
+      <div class="user-data d-table-row text-center">
         <h5><%= current_user.full_name.humanize %></h5>
         <span>Joined <%= render_date(current_user.created_at) %></span>
       </div>
