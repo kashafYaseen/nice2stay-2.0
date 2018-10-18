@@ -1,11 +1,10 @@
-<section class="fw-section padding-top-2x padding-bottom-10x" style="background-image: url(https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/13486/IMG_9494.jpeg); background-position: center;">
+<section class="fw-section padding-top-7x padding-bottom-8x homepage-cover">
   <div class="container">
     <div class="col-md-12">
-      <h2 class="mb-3 homepage_header">Mooie verhalen beginnen hier...</h2>
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-7 col-sm-12 pt-2">
-              <%= text_field_tag :query, params[:query], placeholder: "Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...", class: 'form-control autocomplete autocomplete-field' %>
+              <%= text_field_tag :query, params[:query], :placeholder => t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
 
             <div class="col-md-5 col-sm-12">
@@ -21,6 +20,7 @@
                     <div class="dropdown-item">
                       <label>Adults</label>
                       <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
+                      <%= hidden_field_tag :molie_api_key, ENV['MOLLIE_API_KEY'] %>
                     </div>
 
                     <div class="dropdown-item">
@@ -46,47 +46,30 @@
 
 <section class="container padding-top-3x pb-5">
   <h2 class="text-center mb-30"><%= @country.title %></h2>
-  <p> <%= @country.content %></p>
+  <p> <%= raw @country.content %></p>
 </section>
 
-<% if user_signed_in? %>
-  <div class="container padding-top-1x pb-5 homepage">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-9">
-        <h2 class="mb-3">New ? signup for nice2stay account......</h2>
-        <p>Share you're favorites, get the latest deals, and much more...</p>
-        <%= link_to 'GET STARTED WITH THE ACCOUNT', new_user_registration_path, class: 'btn btn-outline-primary' %>
-        <a class="btn btn-white" href="#">Who is nice2stay?</a>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-2 homepage_image">
-      </div>
+
+<div class="container padding-top-1x pb-5 homepage">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6">
+      <h3 class="mb-3"><%= t 'usp.intro' %></h3>
+
+      <p><%= t 'usp.intro_details' %></p>
+
+      <%= link_to 'more information', over_ons_pages_path(locale: locale), class: 'btn btn-outline-primary' %>
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3"></div>
+    <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
   </div>
-<% else %>
-  <div class="container padding-top-1x pb-5 homepage">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-6">
-        <h3 class="mb-3">
-          De villa's, appartenten en B&B's in <%= @country.name %> zijn door ons bezocht en geselecteert op kwaliteit, comfort & stijl 
-        </h3>
+</div>
 
-        <p>
-          Elke accommodatie in <%= @country.name %> is door Nice2stay bezocht, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.
-        </p>
 
-        <%= link_to 'more information', new_user_registration_path, class: 'btn btn-outline-primary' %>
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-md-3"></div>
-      <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
-    </div>
-  </div>
-<% end %>
 
 <section class="container padding-top-3x pb-5">
   <h2 class="text-center mb-30">Spotlight</h2>
-<div class="owl-carousel owl-loaded owl-drag" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;loop&quot;: true, &quot;margin&quot;: 30, &quot;autoplay&quot;: true, &quot;autoplayTimeout&quot;: 4000, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;630&quot;:{&quot;items&quot;:2},&quot;991&quot;:{&quot;items&quot;:3},&quot;1200&quot;:{&quot;items&quot;:3}} }">
-  <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-2340px, 0px, 0px); transition: all 0.45s ease 0s; width: 3510px;"><div class="owl-item cloned" style="width: 262.5px; margin-right: 30px;"><img src="../img/components/img10.jpg" alt="Image"></div><div class="owl-item cloned" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img11.jpg" alt="Image"></div><div class="owl-item cloned" style="width: 262.5px; margin-right: 30px;"><img src="../img/components/img12.jpg" alt="Image"></div><div class="owl-item" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img04.jpg" alt="Image"></div><div class="owl-item" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img05.jpg" alt="Image"></div><div class="owl-item" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img06.jpg" alt="Image"></div><div class="owl-item" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img10.jpg" alt="Image"></div><div class="owl-item" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img11.jpg" alt="Image"></div><div class="owl-item active" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img12.jpg" alt="Image"></div><div class="owl-item cloned active" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img04.jpg" alt="Image"></div><div class="owl-item cloned active" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img04.jpg" alt="Image"></div><div class="owl-item cloned" style="width: 262.5px; margin-right: 30px;"><img src="http://themes.rokaux.com/unishop/v3.0/template-2/img/components/img06.jpg" alt="Image"></div></div></div><div class="owl-nav disabled"><div class="owl-prev"></div><div class="owl-next"></div></div><div class="owl-dots"><div class="owl-dot"><span></span></div><div class="owl-dot active"><span></span></div></div></div>
+
 </section>
 
 <% if @homepage_campaigns.present? %>
@@ -114,7 +97,7 @@
 <% if @all_reviews.present? %>
   <div class="leads_homepage">
     <section class="container padding-top-3x pb-5">
-       <h2 class="text-center mb-30">Rating & Latest Customer Reviews</h2>
+      <h2 class="text-center mb-30">Latest Customer Reviews in <%= @country.name %> </h2>
       <div class="row mt-30">
         <div class="col-md-4 mb-4">
           <%= render 'reviews/average_rating', reviews: @all_reviews %>
@@ -133,6 +116,20 @@
     </section>
   </div>
 <% end %>
+
+<div class="homepage padding-bottom-1x pt-5 mb-1">
+  <div class="container">
+    <div class="col-md-12 padding-top-1x">
+      <h3 class="card-title text-center ">In the spotlight</h3>
+
+      <div class="row mb-3 you-may-like-lodgings">
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
