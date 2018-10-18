@@ -55,17 +55,17 @@ class ManageMolliePayment
 
   private
     def create_payment(amount, description)
-      amount = '10.00' unless amount > 0 # FIXME
+      amount = '10.00' unless amount.present? && amount > 0 # Temporary for testing
       Mollie::Customer::Payment.create(
         customer_id:  user.mollie_id,
         amount:       { value: amount, currency: 'EUR' },
         description:  description,
         redirect_url: redirect_url,
-        webhookUrl:   webhook_url,
-        metadata: [
+        webhook_url:   webhook_url,
+        metadata: {
           booking_id: booking.id,
           booking_reference: booking.identifier,
-        ]
+        }
       )
     end
 
@@ -81,11 +81,11 @@ class ManageMolliePayment
 
     def webhook_url
       return update_status_dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      'http://6d520d52.ngrok.io'
+      'http://8b47c27b.ngrok.io'
     end
 
     def redirect_url
-      return dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      dashboard_booking_payment_url(booking_id: booking, host: 'localhost', port: 3000)
+      return dashboard_booking_url(booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
+      dashboard_booking_url(booking, host: 'localhost', port: 3000)
     end
 end

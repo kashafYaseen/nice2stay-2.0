@@ -1,0 +1,30 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title"><%= @booking.identifier %> </h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p>Total Price - £<%= render_rounded_price @booking.total_payment %></p>
+        <p>Pre Payment - £<%= render_rounded_price @booking.pre_payment %></p>
+        <p>Final Payment - £<%= render_rounded_price @booking.final_payment %></p>
+      </div>
+
+      <div class="col-md-6">
+        <% if @booking.confirmed? %>
+          <%= pre_paid_link @booking %>
+          <%= final_paid_link @booking %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="accordion" id="reservation-accordion" role="tablist">
+          <%= render partial: 'dashboard/bookings/reservation', collection: @booking.reservations %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
