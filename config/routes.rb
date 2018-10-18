@@ -53,7 +53,7 @@ Rails.application.routes.draw do
 
     namespace :dashboard do
       resources :bookings, only: [:show] do
-        resource :payment, only: [:create, :show] do
+        resource :payment, only: [:create] do
           post :update_status
         end
       end
@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     get '/', to: 'pages#home', as: :root
   end
   root 'pages#home'
-  post '/', to: 'pages#home'
+  post '/', to: 'dashboard/payments#update_status' unless Rails.env.production?
 
   resources :reservations, only: [:create] do
     get :validate, on: :collection

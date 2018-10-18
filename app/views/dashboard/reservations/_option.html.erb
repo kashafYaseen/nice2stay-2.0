@@ -1,6 +1,6 @@
 <tr>
   <td class="align-middle">
-    <%= link_to reservation.identifier, dashboard_booking_path(reservation.booking_id), class: 'text-medium nav-link', remote: true %>
+    <%= link_to booking.identifier, dashboard_booking_path(booking), class: 'text-medium nav-link' %>
   </td>
 
   <td class="align-middle"><%= link_to reservation.lodging_child_name, reservation.lodging %></td>
