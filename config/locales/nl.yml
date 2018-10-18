@@ -17,6 +17,22 @@ nl:
       submit: "%{model} opslaan"
       update: "%{model} bijwerken"
 
+  usp:
+    inspect: Bezocht & geïnspecteerd
+    inspect_details: Elke accommodatie is door ons team geïnspecteerd
+    price: Transparante prijzen
+    price_details: Transparante prijzen, geen verborgen boekingskosten
+    advice: Deskundig advies
+    advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
+    search: Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...
+    intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfort
+    intro_details: Elke accommodatie van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.
+    
+  nav:
+    land: Landen & regio's
+    collections: Collecties
+    
+
   filters:
     dates: 'data'
     guests: 'gasten'

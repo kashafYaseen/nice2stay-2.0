@@ -57,6 +57,7 @@ class ManageMolliePayment
     def create_payment(amount, description)
       amount = '10.00' unless amount.present? && amount > 0 # Temporary for testing
       Mollie::Customer::Payment.create(
+        api_key: ENV['MOLLIE_API_KEY'],
         customer_id:  user.mollie_id,
         amount:       { value: amount, currency: 'EUR' },
         description:  description,
@@ -76,7 +77,7 @@ class ManageMolliePayment
     end
 
     def find_payment(id)
-      Mollie::Payment.get(id)
+      Mollie::Payment.get(id, api_key: ENV['MOLLIE_API_KEY'])
     end
 
     def webhook_url

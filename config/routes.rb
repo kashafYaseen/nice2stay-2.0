@@ -65,7 +65,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :pages, only: [:show]
+    resources :pages, only: [:show] do
+      get :over_ons, path: 'over-ons', on: :collection
+    end
 
     get "dashboard", to: "dashboard#index"
     get '/:id', to: 'countries#show', as: :country
