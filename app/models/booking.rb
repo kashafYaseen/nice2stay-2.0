@@ -19,7 +19,15 @@ class Booking < ApplicationRecord
     (user.try(:last_name) || 'By Houseowner').split(' ').join('').upcase
   end
 
-  def have_confirmed_requests?
-    reservations.pluck(:request_status).include?('confirmed')
+  def total_payment
+    pre_payment + final_payment
+  end
+
+  def pre_payment_amount
+    reservations.sum(:rent) * 0.3
+  end
+
+  def final_payment_amount
+    reservations.sum(:rent) * 0.7
   end
 end

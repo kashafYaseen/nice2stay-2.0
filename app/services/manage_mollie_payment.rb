@@ -18,7 +18,7 @@ class ManageMolliePayment
       return payment if payment.status == 'open'
     end
 
-    payment = create_payment(booking.pre_payment, "Pre-Payment")
+    payment = create_payment((booking.pre_payment || booking.pre_payment_amount), "Pre-Payment")
     booking.update_column :pre_payment_mollie_id, payment.id
     payment
   end
@@ -31,7 +31,7 @@ class ManageMolliePayment
       return payment if payment.status == 'open'
     end
 
-    payment = create_payment(booking.final_payment, "Final-Payment")
+    payment = create_payment((booking.final_payment || booking.final_payment_amount), "Final-Payment")
     booking.update_column :final_payment_mollie_id, payment.id
     payment
   end
@@ -55,18 +55,16 @@ class ManageMolliePayment
 
   private
     def create_payment(amount, description)
-      amount = '10.00' unless amount > 0 # FIXME
       Mollie::Customer::Payment.create(
-        api_key: ENV['MOLLIE_API_KEY'],
         customer_id:  user.mollie_id,
-        amount:       { value: amount, currency: 'EUR' },
+        amount:       { value: ("%.2f" % amount.round(2)), currency: 'EUR' },
         description:  description,
         redirect_url: redirect_url,
-        webhookUrl:   webhook_url,
-        metadata: [
+        webhook_url:   webhook_url,
+        metadata: {
           booking_id: booking.id,
           booking_reference: booking.identifier,
-        ]
+        }
       )
     end
 
@@ -77,16 +75,16 @@ class ManageMolliePayment
     end
 
     def find_payment(id)
-      Mollie::Payment.get(id, api_key: ENV['MOLLIE_API_KEY'])
+      Mollie::Payment.get(id)
     end
 
     def webhook_url
       return update_status_dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      'http://6d520d52.ngrok.io'
+      'http://8b47c27b.ngrok.io'
     end
 
     def redirect_url
-      return dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      dashboard_booking_payment_url(booking_id: booking, host: 'localhost', port: 3000)
+      return dashboard_booking_url(booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
+      dashboard_booking_url(booking, host: 'localhost', port: 3000)
     end
 end
