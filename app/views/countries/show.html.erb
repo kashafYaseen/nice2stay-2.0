@@ -20,7 +20,6 @@
                     <div class="dropdown-item">
                       <label>Adults</label>
                       <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
-                      <%= hidden_field_tag :molie_api_key, ENV['MOLLIE_API_KEY'] %>
                     </div>
 
                     <div class="dropdown-item">
@@ -49,7 +48,6 @@
   <p> <%= @country.content.try(:html_safe) %></p>
 </section>
 
-
 <div class="container padding-top-1x pb-5 homepage">
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-6">
@@ -65,11 +63,8 @@
   </div>
 </div>
 
-
-
 <section class="container padding-top-3x pb-5">
   <h2 class="text-center mb-30">Spotlight</h2>
-
 </section>
 
 <% if @homepage_campaigns.present? %>
@@ -123,8 +118,6 @@
       <h3 class="card-title text-center ">In the spotlight</h3>
 
       <div class="row mb-3 you-may-like-lodgings">
-        
-
       </div>
     </div>
   </div>
