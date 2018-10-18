@@ -57,7 +57,7 @@ class ManageMolliePayment
     def create_payment(amount, description)
       Mollie::Customer::Payment.create(
         customer_id:  user.mollie_id,
-        amount:       { value: amount, currency: 'EUR' },
+        amount:       { value: ("%.2f" % amount.round(2)), currency: 'EUR' },
         description:  description,
         redirect_url: redirect_url,
         webhook_url:   webhook_url,
