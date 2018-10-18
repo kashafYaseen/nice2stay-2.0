@@ -4,7 +4,7 @@
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-7 col-sm-12 pt-2">
-              <%= text_field_tag :query, params[:query], :placeholder => t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+              <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
 
             <div class="col-md-5 col-sm-12">
@@ -46,7 +46,7 @@
 
 <section class="container padding-top-3x pb-5">
   <h2 class="text-center mb-30"><%= @region.title %></h2>
-  <p> <%= raw @region.content %></p>
+  <p> <%= @region.content.try(:html_safe) %></p>
 </section>
 
 
@@ -87,7 +87,7 @@
             <h2 class="image-title-box"><%= campaign.title %></h2>
           <% end %>
 
-          <span class="caption"><%= campaign.description.html_safe %></span>
+          <span class="caption"><%= campaign.description.try(:html_safe) %></span>
         </div>
       <% end %>
     </div>
@@ -124,7 +124,6 @@
 
       <div class="row mb-3 you-may-like-lodgings">
         <%= render @region.lodgings %>
-
       </div>
     </div>
   </div>
@@ -134,8 +133,5 @@
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
   initDatePicker();
   GuestDropdown.init();
+  OwlCarousel.init();
 <% end %>
-
-
-
-

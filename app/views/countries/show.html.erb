@@ -46,7 +46,7 @@
 
 <section class="container padding-top-3x pb-5">
   <h2 class="text-center mb-30"><%= @country.title %></h2>
-  <p> <%= raw @country.content %></p>
+  <p> <%= @country.content.try(:html_safe) %></p>
 </section>
 
 
@@ -87,7 +87,7 @@
             <h2 class="image-title-box"><%= campaign.title %></h2>
           <% end %>
 
-          <span class="caption"><%= campaign.description.html_safe %></span>
+          <span class="caption"><%= campaign.description.try(:html_safe) %></span>
         </div>
       <% end %>
     </div>
@@ -129,7 +129,6 @@
     </div>
   </div>
 </div>
-
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
