@@ -18,7 +18,7 @@ class ManageMolliePayment
       return payment if payment.status == 'open'
     end
 
-    payment = create_payment(booking.pre_payment, "Pre-Payment")
+    payment = create_payment((booking.pre_payment || booking.pre_payment_amount), "Pre-Payment")
     booking.update_column :pre_payment_mollie_id, payment.id
     payment
   end
@@ -31,7 +31,7 @@ class ManageMolliePayment
       return payment if payment.status == 'open'
     end
 
-    payment = create_payment(booking.final_payment, "Final-Payment")
+    payment = create_payment((booking.final_payment || booking.final_payment_amount), "Final-Payment")
     booking.update_column :final_payment_mollie_id, payment.id
     payment
   end
@@ -55,7 +55,6 @@ class ManageMolliePayment
 
   private
     def create_payment(amount, description)
-      amount = '10.00' unless amount.present? && amount > 0 # Temporary for testing
       Mollie::Customer::Payment.create(
         customer_id:  user.mollie_id,
         amount:       { value: amount, currency: 'EUR' },

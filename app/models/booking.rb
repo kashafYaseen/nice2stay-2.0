@@ -22,4 +22,12 @@ class Booking < ApplicationRecord
   def total_payment
     pre_payment + final_payment
   end
+
+  def pre_payment_amount
+    reservations.sum(:rent) * 0.3
+  end
+
+  def final_payment_amount
+    reservations.sum(:rent) * 0.7
+  end
 end
