@@ -1,4 +1,4 @@
-<div class="col-lg-4">
+<div class="col-lg-3">
   <aside class="user-info-wrapper">
     <div class="user-cover cover-img">
       <div class="info-label" data-toggle="tooltip" title="" data-original-title="You currently have 622 Reward Points to spend">
@@ -7,14 +7,14 @@
     </div>
 
     <div class="user-info">
-      <div class="user-avatar">
+      <div class="user-avatar w-50">
         <%= link_to edit_user_registration_path, class: 'edit-avatar' do %>
           <i class="material-icons edit"></i>Edit Profile
         <% end %>
         <%= render_user_image current_user %>
       </div>
 
-      <div class="user-data">
+      <div class="user-data d-table-row">
         <h5><%= current_user.full_name.humanize %></h5>
         <span>Joined <%= render_date(current_user.created_at) %></span>
       </div>
