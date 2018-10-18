@@ -96,7 +96,7 @@ class Reservation < ApplicationRecord
           errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || rule.flexible_arrival
 
           if rule.minimum_stay.present?
-            errors.add(:base, "The stay should be of #{rule.minimum_stay - 1} or more nights") if nights < rule.minimum_stay - 1
+            errors.add(:base, "The stay should be of #{rule.minimum_stay} or more nights") if nights < rule.minimum_stay
           elsif nights % 7 != 0
             errors.add(:base, "The stay should be in multiple of 7 nights")
           end
