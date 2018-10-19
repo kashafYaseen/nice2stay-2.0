@@ -1,6 +1,7 @@
 class Country < ApplicationRecord
   has_many :regions
   has_many :campaigns, through: :regions
+  has_many :lodgings, through: :regions
   has_and_belongs_to_many :leads
 
   include ImageHelper
@@ -18,6 +19,7 @@ class Country < ApplicationRecord
   scope :search_import, -> { enabled }
 
   delegate :menu, to: :campaigns, allow_nil: true, prefix: true
+  delegate :country_page, to: :lodgings, prefix: true, allow_nil: true
 
   def should_index?
     !disable

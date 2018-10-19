@@ -16,6 +16,7 @@ class Region < ApplicationRecord
   default_scope { includes(:translations) }
 
   delegate :name, :regions, :disable, :slug, to: :country, prefix: true, allow_nil: true
+  delegate :region_page, to: :lodgings, prefix: true, allow_nil: true
 
   def search_data
     attributes.merge(**associations_search_data, **translations_search_data)

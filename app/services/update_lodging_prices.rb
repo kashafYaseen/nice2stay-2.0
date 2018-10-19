@@ -52,7 +52,7 @@ class UpdateLodgingPrices
         rule.minimum_stay = nil
       else
         rule.minimum_stay = minimal_stay.map(&:to_i).min unless rule.minimum_stay.present? && rule.minimum_stay < minimal_stay.map(&:to_i).min
-        rule.minimal_stay = 7 if rule.minimum_stay == 8
+        rule.minimum_stay = 7 if rule.minimum_stay == 8
       end
       rule.save
     end

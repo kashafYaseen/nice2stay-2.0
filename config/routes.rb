@@ -63,6 +63,11 @@ Rails.application.routes.draw do
         end
         resources :reviews, except: [:show, :index]
       end
+
+      resource :wishlists do
+        get :remove, on: :member
+        post :checkout
+      end
     end
 
     resources :pages, only: [:show] do

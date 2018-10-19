@@ -6,8 +6,12 @@
   <td class="align-middle"><%= render_date booking.created_at %></td>
 
   <td class="align-middle">
-    <%= link_to 'PAY NOW', dashboard_booking_path(booking), class: 'btn btn-primary btn-sm' %>
+    <%= pre_paid_link booking %>
   </td>
 
-  <td class="align-middle"><span class="text-medium">£<%= render_rounded_price cart_sub_total(booking.reservations) %></span></td>
+  <td class="align-middle">
+    <%= final_paid_link booking %>
+  </td>
+
+  <td class="align-middle"><span class="text-medium">£<%= booking.total_payment %></span></td>
 </tr>
