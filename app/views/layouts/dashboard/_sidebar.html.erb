@@ -26,20 +26,12 @@
       <i class="icon-bag"></i>Bookings & Options<span class="badge badge-default badge-pill"><%= reservations_count %></span>
     <% end %>
 
-    <a class="list-group-item" href="#">
+    <%= link_to edit_user_registration_path, class: "list-group-item #{active_class(edit_user_registration_path)}" do %>
       <i class="icon-head"></i>Profile
-    </a>
+    <% end %>
 
-    <a class="list-group-item" href="#">
-      <i class="icon-map"></i>Addresses
-    </a>
-
-    <a class="list-group-item with-badge" href="#">
-      <i class="icon-heart"></i>Wishlist<span class="badge badge-default badge-pill">3</span>
-    </a>
-
-    <a class="list-group-item with-badge" href="#">
-      <i class="icon-tag"></i>My Tickets<span class="badge badge-default badge-pill">4</span>
-    </a>
+    <%= link_to dashboard_wishlists_path, class: "list-group-item with-badge #{active_class(dashboard_wishlists_path)}" do %>
+      <i class="icon-heart"></i>Wishlist<span class="badge badge-default badge-pill"><%= wishlist_items_count(@wishlists) %></span>
+    <% end %>
   </nav>
 </div>
