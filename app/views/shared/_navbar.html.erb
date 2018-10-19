@@ -2,7 +2,7 @@
   <!-- Site Branding-->
   <div class="site-branding">
     <%= link_to root_path do %>
-      <%= image_tag "https://www.nice2stay.com/assets/logo-nice2stay-png-c98849dba20f1e88951cd09afef151a1.png", class: "site-logo" %>
+      <%= image_tag "site-logo.png", class: "site-logo" %>
     <% end %>
   </div>
 
@@ -111,7 +111,7 @@
       <div class="toolbar-section" id="mobileMenu">
         <!-- Currency / Language Siwtcher-->
         <div class="text-center mb-4">
-           <li>
+          <li>
             <% if I18n.locale == :nl %>
               <%= link_to locale: 'en' do %>
                <span><%= image_tag('united-states-of-america-flag-icon-16.png', width: '16', height: '11', alt: 'English') %> </span>
@@ -120,23 +120,19 @@
                 <%= link_to locale: 'nl' do %>
                  <span><%= image_tag('netherlands-flag-icon-16.png', width: '16', height: '11', alt: 'English') %> </span>
               <% end %>
-              <% end %>
-            </li>
-
+            <% end %>
+          </li>
         </div>
-        <!-- Search Box-->
-        <form class="input-group form-group" method="get"><span class="input-group-btn">
-            <button type="submit"><i class="material-icons search"></i></button></span>
-          <input class="form-control" type="search" placeholder="Search website">
-        </form>
+
         <!-- Slideable (Mobile) Menu-->
         <nav class="slideable-menu mt-4">
           <ul class="menu">
-            <li class="has-children"><span><a href="index.html"><span>Home</span></a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                  <li><a href="index.html">Hero Slider</a></li>
-                  <li><a href="home-featured-categories.html">Categories Grid</a></li>
-              </ul>
+            <li>
+              <span>
+                <%= link_to root_path do %>
+                  <span>Home</span>
+                <% end %>
+              </span>
             </li>
 
             <li class="has-children">
@@ -154,8 +150,8 @@
 
             <li class="has-children"><span><a href="#"><span>Languages</span></a><span class="sub-menu-toggle"></span></span>
               <ul class="slideable-submenu">
-                  <li><%= link_to 'English', locale: 'en' %></li>
-                  <li><%= link_to 'Dutch', locale: 'nl' %></li>
+                <li><%= link_to 'English', locale: 'en' %></li>
+                <li><%= link_to 'Dutch', locale: 'nl' %></li>
               </ul>
             </li>
 
@@ -217,154 +213,10 @@
                 <% end %>
               </ul>
             </li>
-
-            <li class="has-children active"><span><a href="shop-boxed-ls.html"><span>Shop</span></a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                  <li><a href="shop-categories.html">Shop Categories</a></li>
-                <li class="has-children"><span><a href="shop-boxed-ls.html"><span>Shop Layout</span></a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="shop-boxed-ls.html">Boxed Left Sidebar</a></li>
-                    <li><a href="shop-boxed-rs.html">Boxed Right Sidebar</a></li>
-                    <li><a href="shop-boxed-ft.html">Boxed Filters Top</a></li>
-                    <li><a href="shop-full-ls.html">Full Width Left Sidebar</a></li>
-                    <li><a href="shop-full-rs.html">Full Width Right Sidebar</a></li>
-                    <li><a href="shop-full-ft.html">Full Width Filters Top</a></li>
-                  </ul>
-                </li>
-                  <li><a href="shop-single.html">Single Product</a></li>
-                  <li class="active"><a href="cart.html">Cart</a></li>
-                <li class="has-children"><span><a href="checkout-address.html"><span>Checkout</span></a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="checkout-address.html">Address</a></li>
-                    <li><a href="checkout-shipping.html">Shipping</a></li>
-                    <li><a href="checkout-payment.html">Payment</a></li>
-                    <li><a href="checkout-review.html">Review</a></li>
-                    <li><a href="checkout-complete.html">Complete</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="has-children"><span><a href="#">Categories</a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                <li class="has-children"><span><a href="#">Desks &amp; Benching</a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="#">Executive Desks</a></li>
-                    <li><a href="#">Standing Desks</a></li>
-                    <li><a href="#">Benching Desks</a></li>
-                    <li><a href="#">Single Desks</a></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                </li>
-                <li class="has-children"><span><a href="#">Office Furniture</a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="#">File Cabinets</a></li>
-                    <li><a href="#">Office Chairs</a></li>
-                    <li><a href="#">Adjustable Tables</a></li>
-                    <li><a href="#">Stools</a></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                </li>
-                <li class="has-children"><span><a href="#">Lounge Seating</a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="#">Benches</a></li>
-                    <li><a href="#">Chairs</a></li>
-                    <li><a href="#">Pillows</a></li>
-                    <li><a href="#">Sofas</a></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                </li>
-                <li class="has-children"><span><a href="#">Storage Units</a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="#">Bookcases</a></li>
-                    <li><a href="#">Box Seats &amp; Benches</a></li>
-                    <li><a href="#">Credenza</a></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                </li>
-                <li class="has-children"><span><a href="#">Lighting</a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="#">Ceiling Lights</a></li>
-                    <li><a href="#">Kitchen Lights</a></li>
-                    <li><a href="#">Wall Lights</a></li>
-                    <li><a href="#">Lamps</a></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                </li>
-                <li class="has-children"><span><a href="#">Furniture Accessories</a><span class="sub-menu-toggle"></span></span>
-                  <ul class="slideable-submenu">
-                    <li><a href="#">Power Management</a></li>
-                    <li><a href="#">Desk Add Ons</a></li>
-                    <li><a href="#">Lamps</a></li>
-                    <li><a href="#">Monitor Arms</a></li>
-                    <li><a href="#">Desk Risers</a></li>
-                    <li><a href="#">View All</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="has-children"><span><a href="account-orders.html"><span>Account</span></a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                  <li><a href="account-orders.html">Orders List</a></li>
-                  <li><a href="account-wishlist.html">Wishlist</a></li>
-                  <li><a href="account-profile.html">Profile Page</a></li>
-                  <li><a href="account-address.html">Contact / Shipping Address</a></li>
-                  <li><a href="account-open-ticket.html">Open Ticket</a></li>
-                  <li><a href="account-tickets.html">My Tickets</a></li>
-                  <li><a href="account-single-ticket.html">Single Ticket</a></li>
-                  <li><a href="account-password-recovery.html">Password Recovery</a></li>
-              </ul>
-            </li>
-            <li class="has-children"><span><a href="blog.html"><span>Blog List</span></a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                  <li><a href="blog.html">Blog List</a></li>
-                  <li><a href="blog-single.html">Single Post</a></li>
-              </ul>
-            </li>
-            <li class="has-children"><span><a href="#">Pages</a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="contacts.html">Contacts</a></li>
-                  <li><a href="faq.html">Help / FAQ</a></li>
-                  <li><a href="order-tracking.html">Order Tracking</a></li>
-                  <li><a href="404.html">404 Not Found</a></li>
-                  <li><a href="coming-soon.html">Coming Soon</a></li>
-                <li><a class="text-danger" href="docs/dev-setup.html">Documentation</a></li>
-              </ul>
-            </li>
-            <li class="has-children"><span><a href="components/accordion.html"><span>Components</span></a><span class="sub-menu-toggle"></span></span>
-              <ul class="slideable-submenu">
-                <li><a href="components/accordion.html">Accordion</a></li>
-                <li><a href="components/alerts.html">Alerts</a></li>
-                <li><a href="components/buttons.html">Buttons</a></li>
-                <li><a href="components/cards.html">Cards</a></li>
-                <li><a href="components/carousel.html">Carousel</a></li>
-                <li><a href="components/countdown.html">Countdown</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
-                <li><a href="components/gallery.html">Gallery</a></li>
-                <li><a href="components/google-maps.html">Google Maps</a></li>
-                <li><a href="components/images.html">Images &amp; Figures</a></li>
-                <li><a href="components/list-group.html">List Group</a></li>
-                <li><a href="components/market-social-buttons.html">Market &amp; Social Buttons</a></li>
-                <li><a href="components/media.html">Media Object</a></li>
-                <li><a href="components/modal.html">Modal</a></li>
-                <li><a href="components/pagination.html">Pagination</a></li>
-                <li><a href="components/pills.html">Pills</a></li>
-                <li><a href="components/progress-bars.html">Progress Bars</a></li>
-                <li><a href="components/shop-items.html">Shop Items</a></li>
-                <li><a href="components/steps.html">Steps</a></li>
-                <li><a href="components/tables.html">Tables</a></li>
-                <li><a href="components/tabs.html">Tabs</a></li>
-                <li><a href="components/team.html">Team</a></li>
-                <li><a href="components/toasts.html">Toast Notifications</a></li>
-                <li><a href="components/tooltips-popovers.html">Tooltips &amp; Popovers</a></li>
-                <li><a href="components/typography.html">Typography</a></li>
-                <li><a href="components/video-player.html">Video Player</a></li>
-                <li><a href="components/widgets.html">Widgets</a></li>
-              </ul>
-            </li>
           </ul>
         </nav>
       </div>
+
       <!-- Search Section-->
       <div class="toolbar-section" id="search">
         <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
