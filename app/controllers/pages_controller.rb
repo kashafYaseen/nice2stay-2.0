@@ -12,6 +12,7 @@ class PagesController < ApplicationController
     @all_reviews = Review.homepage
     @reviews = @all_reviews.includes(:user, :translations, :reservation).page(params[:page]).per(2)
     @lead = Lead.new
+    @lodgings = Lodging.home_page
   end
 
   def over_ons

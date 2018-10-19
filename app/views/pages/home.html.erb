@@ -134,6 +134,18 @@
   </div>
 <% end %>
 
+<div class="homepage padding-bottom-1x pt-5 mb-1">
+  <div class="container">
+    <div class="col-md-12 padding-top-1x">
+      <h3 class="card-title text-center ">In the spotlight</h3>
+
+      <div class="row mb-3 you-may-like-lodgings">
+        <%= render @lodgings %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="container padding-top-3x pb-5">
   <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
   <%= render 'leads/form', lead: @lead, countries: @countries_enabled %>

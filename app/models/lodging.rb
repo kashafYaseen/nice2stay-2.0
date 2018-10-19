@@ -40,6 +40,9 @@ class Lodging < ApplicationRecord
   delegate :desc, to: :reviews, allow_nil: true, prefix: true
 
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
+  scope :home_page, -> { where(home_page: true) }
+  scope :region_page, -> { where(region_page: true) }
+  scope :country_page, -> { where(country_page: true) }
 
   translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
