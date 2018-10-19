@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  skip_before_filter :verify_authenticity_token # FIXME
   protect_from_forgery with: :exception
   before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_campaigns, :set_pages
 
