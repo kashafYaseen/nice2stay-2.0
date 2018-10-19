@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery prepend: true, with: :exception
   before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_campaigns, :set_pages
 
   def set_booking
