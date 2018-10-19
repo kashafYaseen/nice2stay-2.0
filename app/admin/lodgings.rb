@@ -123,11 +123,17 @@ ActiveAdmin.register Lodging do
       row :adults
       row :children
       row :infants
+      row :minimum_adults
+      row :minimum_children
+      row :minimum_infants
       row :total_prices
       row :total_rules
       row :total_children
       row :flexible_arrival
       row :check_in_day
+      row :region_page
+      row :country_page
+      row :home_page
       row :created_at
       row :updated_at
     end

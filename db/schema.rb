@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_19_044207) do
+ActiveRecord::Schema.define(version: 2018_10_19_104157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -337,6 +337,12 @@ ActiveRecord::Schema.define(version: 2018_10_19_044207) do
     t.float "service", default: 0.0
     t.float "average_rating", default: 0.0
     t.string "check_in_day"
+    t.integer "minimum_adults", default: 1
+    t.integer "minimum_children", default: 0
+    t.integer "minimum_infants", default: 0
+    t.boolean "home_page", default: false
+    t.boolean "region_page", default: false
+    t.boolean "country_page", default: false
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
