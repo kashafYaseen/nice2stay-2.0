@@ -178,7 +178,8 @@ div.fixed-standalone {
 div.fixed-map {
   position: fixed;
   right: 0;
-}
+  padding: 0;
+ }
 
 nav.fixed-filters {
   top: 70px;
