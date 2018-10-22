@@ -3,7 +3,7 @@
 
   Lodging.init = ->
     Slider.init()
-    $('.lodging_type').change ->
+    $('.lodging_type, .amenities, .experiences').change ->
       $('#loader').show();
       Rails.fire($('.lodgings-filters').get(0), 'submit')
 
@@ -28,7 +28,7 @@
       e.stopPropagation()
       if $(this).text().includes("show all")
         $($(this).data('target')).removeClass 'filters-show-less'
-        $(this).text("close #{$(this).data('name')}")
+        $(this).text("show less #{$(this).data('name')}")
         $("#{$(this).data('target')}-icon").text('keyboard_arrow_up')
       else
         $($(this).data('target')).addClass 'filters-show-less'
