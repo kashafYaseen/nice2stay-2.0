@@ -8,7 +8,7 @@
   </div>
 
 
-<div class="col-lg-2 fixed-filter col-sm-8">
+<div class="col-md-2 fixed-filter col-sm-8">
    <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences %>
 </div>
 
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-sm-4 no-padding fixed-map d-none d-sm-block">
+  <div class="col-lg-3 col-sm-4  fixed-map d-none d-sm-block">
     <%= tag.div nil, id: 'map' %>
   </div>
 </div>
@@ -31,6 +31,8 @@
 <div class="pagination d-none">
   <%= paginate @lodgings, remote: true %>
 </div>
+
+
 
 <%= content_for :js_init do %>
   Lodging.init();
@@ -42,5 +44,7 @@
   ChosenSelect.init();
   OwlCarousel.init();
 <% end %>
+
+
 
 <%= content_for :footer_class do 'd-none' end %>
