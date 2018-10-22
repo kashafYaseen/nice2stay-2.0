@@ -1648,7 +1648,7 @@ p {
 }
 
 .text-xs {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .text-xxs {
@@ -2508,11 +2508,11 @@ button:focus {
 }
 
 .btn-sm {
-  height: 32px;
+  height: 28px;
   padding: 0 16px;
   border-radius: 3px;
   font-size: 13px;
-  line-height: 30px;
+  line-height: 20px;
   background: #fff;
 }
 
@@ -7549,7 +7549,7 @@ video {
 }
 
 #map {
-  height: calc(100vh - 135px);
+  height: calc(100vh);
   min-height: 400px;
 }
 

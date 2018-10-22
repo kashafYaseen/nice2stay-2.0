@@ -1,7 +1,6 @@
 <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
   <div class="col-lg-12 col-md-12">
-
     <div class="sidebar-toggle position-left">
       <i class="material-icons filter_list"></i>
     </div>
@@ -13,18 +12,14 @@
 
         <div class="row">
           <div class="col-md-12 p-0">
-
             <div class="pt-3 pb-1 pb-sm-3 text-sm">
               <span class="text-muted mr-2 lodgings-heading">
-                <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
               </span>
             </div>
           </div>
 
           <div id="datepicker"></div>
-
-
-
 
           <div class="dropdown guests-dropdown">
             <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,9 +63,6 @@
             </div>
           </div>
 
-
-          <input type="button" name="more-filters" id="more-filters-btn" value="<%= t('filters.more_filters') %>" class="btn btn-outline-primary btn-sm">
-
           <div class="price-range-slider col-md-12" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
             <div class="ui-range-slider"></div>
             <div class="ui-range-values pull-right">
@@ -83,134 +75,62 @@
               </div>
             </div>
           </div>
-          
 
-            <section class="widget">
-              <h3 class="widget-title">Filter by type</h3>
-               <% Lodging.lodging_types.each do |key, value| %>
-               <label>
-                    <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "lodging_type" %>
-                    <span class="text-sm"><%= key %> <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span></span>
-                  </label>
-                   <% end %>
+          <section class="widget">
+            <h3 class="widget-title">Filter by Type</h3>
+            <% Lodging.lodging_types.each do |key, value| %>
+              <div class="custom-control custom-checkbox">
+                <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
 
-               
-            </section>
-
-            <section class="widget widget-categories">
-              <h3 class="widget-title">Shop Categories</h3>
-              <ul>
-                <li class="has-children"><a href="#">Desks &amp; Benching</a><span>(1138)</span>
-                  <ul>
-                    <li><a href="#">Executive Desks</a><span>(508)</span>
-                      <ul>
-                        <li><a href="#">Standing Desks</a></li>
-                        <li><a href="#">Benching Desks</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Single Desks</a><span>(423)</span>
-                      <ul>
-                        <li><a href="#">Standing Desks</a></li>
-                        <li><a href="#">Benching Desks</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">File Cabinets</a><span>(97)</span></li>
-                    <li><a href="#">Office Chairs</a><span>(110)</span></li>
-                  </ul>
-                </li>
-                <li class="has-children expanded"><a href="#">Lighting</a><span>(2356)</span>
-                  <ul>
-                    <li><a href="#">Indoor Lights</a><span>(1032)</span>
-                      <ul>
-                        <li><a href="#">Ceiling Lights</a></li>
-                        <li><a href="#">Kitchen Lighting</a></li>
-                        <li><a href="#">Wall Lights</a></li>
-                        <li><a href="#">Lamps</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Outdoor Lights</a><span>(937)</span>
-                      <ul>
-                        <li><a href="#">Light Stands</a></li>
-                        <li><a href="#">Wall Lights</a></li>
-                        <li><a href="#">Light Bulbs</a></li>
-                        <li><a href="#">Lamps</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Dimmers &amp; Controls</a><span>(386)</span></li>
-                  </ul>
-                </li>
-                <li class="has-children"><a href="#">Storage Units</a><span>(420)</span>
-                  <ul>
-                    <li><a href="#">Bookcases</a><span>(180)</span></li>
-                    <li><a href="#">Box Seats &amp; Benches</a><span>(132)</span></li>
-                    <li><a href="#">Cupboards</a><span>(47)</span></li>
-                    <li><a href="#">Caskets</a><span>(61)</span></li>
-                  </ul>
-                </li>
-                <li class="has-children"><a href="#">Furniture Accessories</a><span>(874)</span>
-                  <ul>
-                    <li><a href="#">Cable &amp; Power Management</a><span>(211)</span></li>
-                    <li><a href="#">Desk Add Ons</a><span>(195)</span></li>
-                    <li><a href="#">Desk Risers</a><span>(159)</span></li>
-                    <li><a href="#">Lamps</a><span>(203)</span></li>
-                    <li><a href="#">Monitor Arms</a><span>(106)</span></li>
-                  </ul>
-                </li>
-              </ul>
-            </section>
-
-           
-          
-
-          <div class="dropdown more-filter-dropdown w-100">
-            <div class="dropdown-menu more-filter-dropdown-menu p-2">
-              <% if experiences.present? %>
-                <div class="row experiences-list">
-                  <p class="col-md-12 text-bold">Themes</p>
-                  <% experiences.each do |experience| %>
-                    <div class="col-md-4">
-                      <label>
-                        <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}" %>
-                        <span><%= experience.name %> (<%= render_lodgings_count_for(lodgings, experience.name, 'experiences') %>)</span>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-
-              <% if amenities.hot.present? %>
-                <div class="row amenities-list">
-                  <p class="col-md-12 text-bold">Amenities - Popular</p>
-                  <% amenities.hot.each do |amenity| %>
-                    <div class="col-md-4">
-                      <label>
-                        <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                        <span><%= amenity.name %> (<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-
-              <% if amenities.regular.present? %>
-                <div class="row amenities-list">
-                  <p class="col-md-12 text-bold">Amenities</p>
-                  <% amenities.regular.each do |amenity| %>
-                    <div class="col-md-4">
-                      <label>
-                        <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}" %>
-                        <span><%= amenity.name %> (<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
-                      </label>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-
-              <div class="w-100 bg-white">
-                <%= submit_tag 'Apply', class: 'btn btn-sm btn-primary submit-filters float-right' %>
+                <label class="custom-control-label" for="lodging_type_<%= key %>">
+                  <%= key %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
+                </label>
               </div>
+            <% end %>
+          </section>
+
+          <section class="widget">
+            <h3 class="widget-title">Filter by Theme</h3>
+            <% experiences.each do |experience| %>
+              <div class="custom-control custom-checkbox">
+                <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}", class: "custom-control-input experiences" %>
+
+                <label class="custom-control-label" for="experience_<%= experience.slug %>">
+                  <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.name, 'experiences') %>)</span>
+                </label>
+              </div>
+            <% end %>
+          </section>
+
+          <section class="widget">
+            <h3 class="widget-title">Amenities - Popular</h3>
+            <% amenities.hot.each do |amenity| %>
+              <div class="custom-control custom-checkbox">
+                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}", class: "custom-control-input amenities" %>
+
+                <label class="custom-control-label" for="amenity_<%= amenity.slug %>">
+                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
+                </label>
+              </div>
+            <% end %>
+          </section>
+
+          <section class="widget">
+            <h3 class="widget-title">Amenities</h3>
+            <div class="filters-show-less amenities-list">
+              <% amenities.regular.each do |amenity| %>
+                <div class="custom-control custom-checkbox">
+                  <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}", class: "custom-control-input amenities" %>
+
+                  <label class="custom-control-label" for="amenity_<%= amenity.slug %>">
+                    <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
+                  </label>
+                </div>
+              <% end %>
             </div>
-          </div>
+
+             <a href="#" class="show-all-filters text-decoration-none" data-target=".amenities-list" data-name="amenities">show all amenities</a><i class="amenities-list-icon material-icons text-primary">keyboard_arrow_down</i>
+          </section>
         </div>
       </div>
     </aside>
