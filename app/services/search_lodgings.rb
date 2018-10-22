@@ -29,6 +29,7 @@ class SearchLodgings
       conditions[:location]     = frame_coordinates if params[:bounds].present?
       conditions[:location]     = near_latlong_condition if params[:within].present?
       conditions[:adults]       = { gte: params[:adults] }  if params[:adults].present?
+      conditions[:minimum_adults] = { lte: params[:adults] }  if params[:adults].present?
       conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
       conditions[:country]      = params[:region].split(', ').last if params[:region].present?
       conditions[:region]       = params[:region].split(', ').first if params[:region].present?

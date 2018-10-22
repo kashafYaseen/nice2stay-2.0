@@ -38,7 +38,7 @@ class Reservation < ApplicationRecord
     fully_paid: 5,
     route_sent: 6,
     arrival_email_sent: 7,
-    option: 8 ,
+    option: 8,
     request_price: 9,
   }
 

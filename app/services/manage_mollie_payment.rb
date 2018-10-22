@@ -39,8 +39,8 @@ class ManageMolliePayment
   def update_status(payment_id)
     payment = find_payment(payment_id)
     return remove_rejected(payment) unless payment.status == 'paid'
-    booking.update_column(:pre_payed_at, payment.paid_at) if payment.id == booking.pre_payment_mollie_id
-    booking.update_column(:final_payed_at, payment.paid_at) if payment.id == booking.final_payment_mollie_id
+    booking.pre_paid_at! payment.paid_at if payment.id == booking.pre_payment_mollie_id
+    booking.final_paid_at! payment.paid_at if payment.id == booking.final_payment_mollie_id
   end
 
   def get_pre_payment
