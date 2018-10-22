@@ -61,6 +61,7 @@ class SaveBookingDetails
         :pre_payment,
         :final_payment,
         :refund_payment,
+        :booking_status,
         reservations_attributes: [
           :id,
           :check_in,
