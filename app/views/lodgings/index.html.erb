@@ -1,9 +1,11 @@
+<% content_for :body_class, "pr-3" %>
+
 <div class="row">
   <div id="loader">
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-2 homepage col-sm-8">
+  <div class="col-md-2 homepage col-sm-8 search-filters pr-0">
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences %>
   </div>
 
@@ -29,12 +31,8 @@
 <%= content_for :js_init do %>
   Lodging.init();
   Map.init();
-  GuestDropdown.init();
-  initDatePicker();
   $('#loader').hide();
   InfiniteScroll.init();
-  ChosenSelect.init();
-  OwlCarousel.init();
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>

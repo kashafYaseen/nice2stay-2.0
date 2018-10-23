@@ -3,9 +3,12 @@
 
   Lodging.init = ->
     Slider.init()
-    $('.lodging_type, .amenities, .experiences').change ->
+    GuestDropdown.init()
+    OwlCarousel.init()
+    initDatePicker();
+    $('.search-filters .lodging_type, .search-filters .amenities, .search-filters .experiences').change ->
       $('#loader').show();
-      Rails.fire($('.lodgings-filters').get(0), 'submit')
+      Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
     SortingDropdown.init()
 
