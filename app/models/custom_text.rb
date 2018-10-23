@@ -1,0 +1,2 @@
+class CustomText < ApplicationRecord
+end
