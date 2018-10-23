@@ -18,7 +18,7 @@ class User < ApplicationRecord
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
 
-  validates :first_name, :last_name, :city, :address, :country, :zipcode, :phone, presence: true
+  #validates :first_name, :last_name, :city, :address, :country, :zipcode, :phone, presence: true
   before_validation :set_password
 
   enum creation_status: {
