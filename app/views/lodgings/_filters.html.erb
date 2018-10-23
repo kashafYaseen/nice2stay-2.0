@@ -63,18 +63,26 @@
             </div>
           </div>
 
-          <div class="price-range-slider col-md-12" method="post" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
-            <div class="ui-range-slider"></div>
-            <div class="ui-range-values pull-right">
-              <div class="ui-range-value-min">$<span></span>
-                <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
-              </div>&nbsp;-&nbsp;
+          <section class="widget widget-categories col-md-12">
+            <h3 class="widget-title">Price Range</h3>
 
-              <div class="ui-range-value-max">$<span></span>
-                <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
-              </div>
+            <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
+              <div class="ui-range-slider"></div>
+              <footer class="ui-range-slider-footer pt-3">
+                <div class="column">
+                  <div class="ui-range-values">
+                    <div class="ui-range-value-min">$<span></span>
+                      <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
+                    </div>&nbsp;-&nbsp;
+
+                    <div class="ui-range-value-max">$<span></span>
+                      <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+                    </div>
+                  </div>
+                </div>
+              </footer>
             </div>
-          </div>
+          </section>
 
           <section class="widget">
             <h3 class="widget-title">Filter by Type</h3>

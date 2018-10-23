@@ -14,6 +14,7 @@
 Map.add_markers();
 Map.highlight_lodgings();
 Url.update("<%= lodgings_path(locale: locale) %>");
-OwlCarousel.init();
 $('#loader').hide();
 $('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");
+$('.search-filters').html("<%= j render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences %>");
+Lodging.init();
