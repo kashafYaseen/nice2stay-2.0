@@ -13,6 +13,7 @@ class SendBookingDetails
 
   def call
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true if Rails.env.production?
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.body = booking_details.to_json
     response = http.request(request)
