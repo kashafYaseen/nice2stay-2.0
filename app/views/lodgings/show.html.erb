@@ -1,10 +1,9 @@
 <%= render 'shared/photoswipe' %>
 
-<div class="bg-secondary pb-4 padding-top-1x" id="home-container">
-  <div class="container">
-    <div class="row">
+<div id="home-container">
+  
       <!-- Product Gallery-->
-      <div class="col-md-8 margin-bottom-1x target-section">
+      <div class="col-md-9 margin-bottom-1x  target-section">
         <div class="gallery-control">
           <figure itemprop="associatedMedia" itemscope>
             <a itemprop="contentUrl">
@@ -27,15 +26,14 @@
           <% end %>
         </div>
       </div>
-    </div>
-  </div>
+  
 
   <div class="bg-white padding-bottom-3x pt-5 mb-1">
-    <div class="container">
-      <div class="card-body col-md-8">
+    
+      <div class="card-body col-md-9">
         <h3 class="card-title margin-bottom-1x"><%= @lodging.h1 %></h3>
 
-        <div class="row homepage">
+        <div class="row bg-secondary">
           <div class="col-md-4  col-xs-6 margin-top-1x">
             <p><b><%= @lodging.adults %></b>  Adults <br>
 
@@ -63,7 +61,7 @@
           </div>
         </p>
       </div>
-    </div>
+    
 
     <div class="children-scroll-section"></div>
   </div>

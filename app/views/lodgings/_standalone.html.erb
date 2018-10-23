@@ -1,10 +1,12 @@
 <%= render 'shared_content', lodging: lodging %>
 
-<div class="col-md-4 d-none d-md-block fixed">
-  <div class="reservation-standalone-form">
+ <nav id="sidebar">
+      <div class="reservation-standalone-form">
     <%= render 'reservations/standalone_form', lodging: lodging, reservation: reservation %>
   </div>
-</div>
+  </nav>
+
+
 
 <div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
   <div class="card bg-white p-1">

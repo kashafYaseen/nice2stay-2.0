@@ -1,12 +1,12 @@
 <div class="padding-top-1x pb-5 homepage">
-  <div class="container">
+  
     <div class="col-md-8 padding-top-1x  padding-bottom-1x mb-30">
       <h3 class="mb-3">
-        <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op kwaliteit & stijl
+        <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
       </h3>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 col-lg-2">
           <div class="d-table">
             <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
           </div>
@@ -18,11 +18,11 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="gallery-container">
-  <div class="container">
-    <div class="col-md-8 mb-30">
+  
+    <div class="col-md-9 mb-30">
       <div class="col-md-12">
         <h3 class="card-title">Gallary</h3>
         <div class="gallery-wrapper">
@@ -43,11 +43,11 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="location-container">
-  <div class="container">
-    <div class="col-md-8 mb-30">
+  
+    <div class="col-md-9 mb-30">
       <div class="col-md-12">
         <h3 class="card-title">Location</h3>
 
@@ -56,12 +56,12 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <div class="google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
 
 <div class="leads_homepage padding-bottom-1x pt-5 mb-1">
-  <div class="container target-section" id="reviews-container">
+  <div class="col-md-9 mb-30 target-section" id="reviews-container">
     <% if @reviews.present? %>
       <div class="row">
         <div class="card-body col-md-3">
@@ -70,7 +70,7 @@
           <%= render 'reviews/rating', lodging: lodging %>
         </div>
 
-        <div class="col-md-5 padding-top-3x">
+        <div class="col-md-8 padding-top-3x">
           <div class="reviews-container">
             <%= render @reviews %>
           </div>
@@ -92,10 +92,11 @@
 </div>
 
 <div class="bg-white padding-bottom-1x pt-5 mb-1">
-  <div class="container target-section" id="description-container">
-    <div class="row">
-      <div class="card-body col-md-8">
-        <h3 class="card-title">Description</h3>
+  <div class="col-md-9 target-section" id="description-container">
+    
+      <div class="card-body col-md-9">
+        <h3 class="card-title margin-bottom-1x"><%= @lodging.h2 %></h3>
+
         <div id="lodging-description">
           <%= lodging.description.try(:html_safe) %>
           <a class="btn btn-outline-secondary btn-block" href="#">More information</a>
@@ -104,12 +105,12 @@
 
       <div class="padding-top-2x"></div>
     </div>
-  </div>
+
 </div>
 
 <div class="homepage padding-bottom-1x pt-5 mb-1">
-  <div class="container">
-    <div class="col-md-8 padding-top-1x">
+ 
+    <div class="col-md-9 padding-top-1x">
       <h3 class="card-title">You May Also Like</h3>
 
       <div class="row mb-3 you-may-like-lodgings">
@@ -117,7 +118,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <%= form_tag lodging_path(lodging), method: :get, class: 'you-may-like-form', remote: true do %>
   <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
