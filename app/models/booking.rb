@@ -47,6 +47,7 @@ class Booking < ApplicationRecord
   end
 
   def step_passed?(step)
+    return false unless booking_status?
     return false if option?
     Booking.booking_statuses[booking_status] >= Booking.booking_statuses[step]
   end
