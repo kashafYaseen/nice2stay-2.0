@@ -107,9 +107,9 @@ class SearchLodgings
 
     def merge_seo_filters
       return unless custom_text.present?
-      params[:experiences_in] = custom_text.experience
+      params[:experiences_in] = [custom_text.experience]
       params[:country] = custom_text.country
       params[:region] = custom_text.region
-      params[:lodging_type_in] = custom_text.category
+      params[:lodging_type_in] = [custom_text.category]
     end
 end
