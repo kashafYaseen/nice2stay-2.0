@@ -1,0 +1,4 @@
+<% content_for :meta_tags do %>
+  <meta name="title" content="<%= resource.try(:meta_title) %>">
+  <meta name="description" content="<%= resource.try(:meta_description) || resource.try(:meta_desc) %>">
+<% end %>

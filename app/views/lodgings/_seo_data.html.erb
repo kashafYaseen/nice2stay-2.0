@@ -4,8 +4,5 @@
     <%= custom_text.p_text.try(:html_safe) %>
   </div>
 
-  <% content_for :meta_tags do %>
-    <meta name="title" content="<%= custom_text.meta_title %>">
-    <meta name="description" content="<%= custom_text.meta_description %>">
-  <% end %>
+  <%= render 'shared/meta_tags', resource: custom_text %>
 <% end %>
