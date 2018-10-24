@@ -1,0 +1,8 @@
+<% if custom_text.present? %>
+  <div class="col-md-12">
+    <h3><%= custom_text.h1_text %></h3>
+    <%= custom_text.p_text.try(:html_safe) %>
+  </div>
+
+  <%= render 'shared/meta_tags', resource: custom_text %>
+<% end %>

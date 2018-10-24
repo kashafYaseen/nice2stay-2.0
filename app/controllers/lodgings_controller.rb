@@ -5,7 +5,8 @@ class LodgingsController < ApplicationController
   # GET /lodgings
   # GET /lodgings.json
   def index
-    @lodgings = SearchLodgings.call(params)
+    @custom_text = CustomText.find_by(id: params[:custom_text])
+    @lodgings = SearchLodgings.call(params, @custom_text)
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
   end
@@ -18,7 +19,6 @@ class LodgingsController < ApplicationController
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)
     @lodging_children = @lodging.lodging_children.includes(:availabilities, :translations) if @lodging.as_parent?
   end
-
 
   def price_details
     @lodging = Lodging.find(params[:values].split(',')[-1])

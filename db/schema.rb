@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_22_055958) do
+ActiveRecord::Schema.define(version: 2018_10_24_063352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,39 @@ ActiveRecord::Schema.define(version: 2018_10_22_055958) do
     t.string "meta_title"
     t.index ["country_id"], name: "index_country_translations_on_country_id"
     t.index ["locale"], name: "index_country_translations_on_locale"
+  end
+
+  create_table "custom_text_translations", force: :cascade do |t|
+    t.integer "custom_text_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "redirect_url"
+    t.text "h1_text"
+    t.text "p_text"
+    t.text "meta_title"
+    t.text "meta_description"
+    t.string "country"
+    t.string "region"
+    t.string "category"
+    t.string "experience"
+    t.index ["custom_text_id"], name: "index_custom_text_translations_on_custom_text_id"
+    t.index ["locale"], name: "index_custom_text_translations_on_locale"
+  end
+
+  create_table "custom_texts", force: :cascade do |t|
+    t.integer "crm_id"
+    t.text "h1_text"
+    t.text "p_text"
+    t.text "meta_title"
+    t.text "meta_description"
+    t.string "redirect_url"
+    t.string "country"
+    t.string "region"
+    t.string "category"
+    t.string "experience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "discounts", force: :cascade do |t|

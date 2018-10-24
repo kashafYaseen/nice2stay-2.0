@@ -1,12 +1,14 @@
 class SearchLodgings
-  attr_reader :params
+  attr_accessor :params
+  attr_reader :custom_text
 
-  def self.call(params)
-    self.new(params).call
+  def self.call(params, custom_text=nil)
+    self.new(params, custom_text).call
   end
 
-  def initialize(params)
+  def initialize(params, custom_text=nil)
     @params = params
+    @custom_text = custom_text
   end
 
   def call
@@ -20,6 +22,7 @@ class SearchLodgings
     end
 
     def conditions
+      merge_seo_filters
       conditions = {}
       conditions[:beds]         = { gte: params[:beds] } if params[:beds].present?
       conditions[:baths]        = { gte: params[:baths] } if params[:baths].present?
@@ -31,8 +34,8 @@ class SearchLodgings
       conditions[:adults]       = { gte: params[:adults] }  if params[:adults].present?
       conditions[:minimum_adults] = { lte: params[:adults] }  if params[:adults].present?
       conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
-      conditions[:country]      = params[:region].split(', ').last if params[:region].present?
-      conditions[:region]       = params[:region].split(', ').first if params[:region].present?
+      conditions[:country]      = params[:country] if params[:country].present?
+      conditions[:region]       = params[:region] if params[:region].present?
       conditions[:availability_price] = price_range if params[:min_price].present? && params[:max_price].present?
       conditions[:presentation] = ['as_parent', 'as_standalone']
       conditions[:amenities]    = { all: params[:amenities_in] } if params[:amenities_in].present?
@@ -100,5 +103,19 @@ class SearchLodgings
         { children: { gte: params[:children].to_i } },
         { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } }
       ]
+    end
+
+    def merge_seo_filters
+      return unless custom_text.present?
+      params[:experiences_in] = [custom_text.experience] if custom_text.experience?
+      params[:country] = custom_text.country if custom_text.country?
+      params[:region] = custom_text.region if custom_text.region?
+      params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
+    end
+
+    def lodging_type(type)
+      return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
+      return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
+      return 'bnb' if ["boutique-hotels", "boutique-hotels", "bnb"].include?(type)
     end
 end
