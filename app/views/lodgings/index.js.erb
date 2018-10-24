@@ -17,4 +17,5 @@ Url.update("<%= lodgings_path(locale: locale) %>");
 $('#loader').hide();
 $('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");
 $('.search-filters').html("<%= j render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences %>");
+$('.seo-data').html("<%= j render 'seo_data', custom_text: @custom_text %>");
 Lodging.init();

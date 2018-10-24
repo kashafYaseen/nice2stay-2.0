@@ -45,4 +45,8 @@ class Region < ApplicationRecord
     country = Country.find_or_create_by(name: country_name)
     country.regions.find_or_create_by(name: region_name)
   end
+
+  def translated_slugs
+    translations.pluck(:slug)
+  end
 end
