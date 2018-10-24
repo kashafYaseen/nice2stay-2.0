@@ -1,5 +1,6 @@
-
+<div class="col-md-12 ">
   <ul class="nav nav-tabs" role="tablist" id="details-navbar">
+
     <li class="nav-item">
       <a class="nav-link active show scroll-to" href="#home-container" data-toggle="tab" role="tab" aria-selected="true">Home</a>
     </li>
@@ -24,6 +25,11 @@
       <a class="nav-link scroll-to" href="#like-container" data-toggle="tab" role="tab" aria-selected="false">You alo like</a>
     </li>
   </ul>
+</div>
+
+
+
+
 
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
@@ -38,7 +44,7 @@
 
     <%= form_for reservation, url: reservations_path, remote: true do |f| %>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 ">
           <div data-lodging-id="<%= lodging.id %>"
                data-disabled-dates="<%= lodging.not_available_on %>">
             <label class="mb-0 text-xs">Dates</label>
@@ -98,11 +104,11 @@
 
       <%= f.submit 'Add to Cart', class: "btn btn-primary btn col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
     <% end %>
-    <p class="extra_small">Geen reserveringskosten of andere toeslagen bij nice2stay</p>
+    <p class="extra_small text-center">Geen reserverings of andere toeslagen bij nice2stay</p>
     <div class="row">
       <div class="col-md-6">
-        <%= link_to _back_url, class: 'btn btn-outline-secondary w-100' do %>
-          <i class="material-icons arrow_back"></i>&nbsp; GO BACK
+        <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
+          <i class="material-icons arrow_back"></i>&nbsp; BACK LISTING
         <% end %>
       </div>
 
@@ -110,5 +116,26 @@
         <%= render 'wishlists/form', lodging: lodging %>
       </div>
     </div>
+    <div class="row px-2 mt-1">
+    
+
+      <div class="col-md-12 bg-secondary ">
+     
+    
+      <button class="btn btn-sm  col-md-12 bg-white btn-outline-secondary" type="button" data-container="body" data-toggle="popover" data-placement="left" data-trigger="hover" title="" data-content="Gas / Water / Electriciteit
+Bad-, bed- en keukenlinnen
+Wifi internet
+Brandhout
+BBQ
+Welkomst mand met organische groenten
+Eindschoonmaak" data-original-title="Included">+ Included ? </button>
+      <button class="text-xxs btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button" data-container="body" data-toggle="popover" data-placement="left" data-trigger="hover" title="" data-content="Mas Basso is beschikbaar gedurende het hele jaar voor een minimaal verblijf van 7 nachten in het hoogseizoen en 2 nachten in de andere seizoenen (uitgezonderd feestdagen)
+wekelijkse verhuur van zaterdag t/m zaterdag in het hoogseizoen. Hier buiten in overleg
+we vragen u vriendelijk uw aankomsttijd te plannen na 16.00 uur. U wordt verzocht om het appartement op de dag van vertrek te verlaten voor 10.00 uur
+huisdieren zijn welkom in overleg
+Roken buiten en alleen op toegewezen plekken" data-original-title="Belangrijk informatie">+ Belangrijk informatie </button>
+      </div>
+      </div>
+
   </div>
 
