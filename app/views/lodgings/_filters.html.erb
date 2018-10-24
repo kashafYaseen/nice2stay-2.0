@@ -101,7 +101,7 @@
             <h3 class="widget-title">Filter by Theme</h3>
             <% experiences.each do |experience| %>
               <div class="custom-control custom-checkbox">
-                <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experience_in), id: "experience_#{experience.slug}", class: "custom-control-input experiences" %>
+                <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experiences_in), id: "experience_#{experience.slug}", class: "custom-control-input experiences" %>
 
                 <label class="custom-control-label" for="experience_<%= experience.slug %>">
                   <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.name, 'experiences') %>)</span>

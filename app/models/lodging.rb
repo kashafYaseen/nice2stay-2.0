@@ -93,7 +93,6 @@ class Lodging < ApplicationRecord
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
       experiences: experiences.collect(&:translated_slugs),
-      lodging_type: translated_categories(lodging_type),
     )
   end
 
@@ -174,12 +173,6 @@ class Lodging < ApplicationRecord
           availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
         end
       end
-    end
-
-    def translated_categories(lodging_type)
-      return ["vakantiehuizen", "villas", "villa"] if lodging_type == 'villa'
-      return ["boutique-hotels", "boutique-hotels", "bnb"] if lodging_type == 'bnb&'
-      return ["apartments", "appartementen", "apartment"] if lodging_type == 'apartment'
     end
 
     def price_list(params)

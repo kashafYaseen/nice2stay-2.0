@@ -107,9 +107,15 @@ class SearchLodgings
 
     def merge_seo_filters
       return unless custom_text.present?
-      params[:experiences_in] = [custom_text.experience]
-      params[:country] = custom_text.country
-      params[:region] = custom_text.region
-      params[:lodging_type_in] = [custom_text.category]
+      params[:experiences_in] = [custom_text.experience] if custom_text.experience?
+      params[:country] = custom_text.country if custom_text.country?
+      params[:region] = custom_text.region if custom_text.region?
+      params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
+    end
+
+    def lodging_type(type)
+      return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
+      return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
+      return 'bnb' if ["boutique-hotels", "boutique-hotels", "bnb"].include?(type)
     end
 end
