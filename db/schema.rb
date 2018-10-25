@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_063352) do
+ActiveRecord::Schema.define(version: 2018_10_25_115128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,7 +190,6 @@ ActiveRecord::Schema.define(version: 2018_10_24_063352) do
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "redirect_url"
     t.text "h1_text"
     t.text "p_text"
     t.text "meta_title"
@@ -209,13 +208,18 @@ ActiveRecord::Schema.define(version: 2018_10_24_063352) do
     t.text "p_text"
     t.text "meta_title"
     t.text "meta_description"
-    t.string "redirect_url"
     t.string "country"
     t.string "region"
     t.string "category"
     t.string "experience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "homepage", default: false
+    t.boolean "country_page", default: false
+    t.boolean "region_page", default: false
+    t.boolean "navigation_popular", default: false
+    t.boolean "navigation_country", default: false
+    t.string "image"
   end
 
   create_table "discounts", force: :cascade do |t|

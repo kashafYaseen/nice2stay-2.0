@@ -28,11 +28,16 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :p_text,
         :meta_title,
         :meta_description,
-        :redirect_url,
         :country,
         :region,
         :category,
         :experience,
+        :homepage,
+        :country_page,
+        :region_page,
+        :navigation_popular,
+        :navigation_country,
+        :image,
       )
     end
 
@@ -42,7 +47,6 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :p_text,
         :meta_title,
         :meta_description,
-        :redirect_url,
         :locale,
         :country,
         :region,
