@@ -34,8 +34,8 @@ class SearchLodgings
       conditions[:adults]       = { gte: params[:adults] }  if params[:adults].present?
       conditions[:minimum_adults] = { lte: params[:adults] }  if params[:adults].present?
       conditions[:_or]          = adults_plus_children if params[:adults].present? && params[:children].present?
-      conditions[:country]      = params[:country] if params[:country].present?
-      conditions[:region]       = params[:region] if params[:region].present?
+      conditions[:country]      = params[:country] if params[:country].present? && params[:bounds].blank?
+      conditions[:region]       = params[:region] if params[:region].present? && params[:bounds].blank?
       conditions[:availability_price] = price_range if params[:min_price].present? && params[:max_price].present?
       conditions[:presentation] = ['as_parent', 'as_standalone']
       conditions[:amenities]    = { all: params[:amenities_in] } if params[:amenities_in].present?
