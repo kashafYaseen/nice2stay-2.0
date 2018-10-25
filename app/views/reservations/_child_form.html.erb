@@ -6,41 +6,39 @@
        data-validate-url="<%= validate_reservations_path %>"></div>
 
   <div class="card-body">
-    <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
-      <%= render 'reservations/errors', resource: lodging.reservations.build %>
-    </div>
+   
 
     <div class="row">
       <div class="col-md-12">
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-5 col-lg-4">
             <%= render_image_tag lodging, class: 'max-height-200 w-100' %>
           </div>
 
-          <div class="col-md-5 lodging">
+          <div class="col-md-5 col-lg-3 lodging">
             <h5><%= lodging.child_name %></h5>
 
             <div id="lodging-description" class="max-height-200">
-              <%= truncated_description(lodging.short_desc, 150).try(:html_safe) %>
+              <p class="text-xs"> <%= truncated_description(lodging.short_desc, 250).try(:html_safe) %></p>
             </div>
 
             <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more information</a>
           </div>
-        </div>
+        
 
-        <div class="row mt-4">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-7">
-                <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
+         <div class="col-md-4 col-lg-5 bg-secondary">
+           <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
+              <%= render 'reservations/errors', resource: lodging.reservations.build %>
+            </div>
+            <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
-                <%= render 'shared/alert', title: 'Important:', type: 'info', description: "Prices of #{Date.current.year} are not confirmed, it may change." unless lodging.confirmed_price %>
+               
 
-                <p class="text-dark text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+                <p class="text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
                 <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
                 <p id="lbl-error-<%= lodging.id %>"></p>
 
-                <p class="text-dark text-bold mb-1">Please select option or booking</p>
+                
                 <% [:prebooking, :option].each do |status| %>
                   <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                   <label><%= status %></label>
@@ -54,17 +52,32 @@
                 <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
                 <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
                 <% end %>
-              </div>
-
-              <div class="col-md-4">
-                <div class="text-dark line-height-2" id="bill-<%= lodging.id %>"></div>
+              
+              <div class="text-dark" id="bill-<%= lodging.id %>"></div>
                 <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
                 <%= render 'wishlists/form', lodging: lodging %>
-              </div>
+
+                 <button class="btn btn-sm  col-md-6 bg-white btn-outline-secondary" type="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" title="" data-content="Gas / Water / Electriciteit
+                  Bad-, bed- en keukenlinnen
+                  Wifi internet
+                  Brandhout
+                  BBQ
+                  Welkomst mand met organische groenten
+                  Eindschoonmaak" data-original-title="Included">+ Included ? </button>
+                    <button class="text-xxs btn btn-sm col-md-5 bg-white btn-outline-secondary" type="button" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" title="" data-content="Mas Basso is beschikbaar gedurende het hele jaar voor een minimaal verblijf van 7 nachten in het hoogseizoen en 2 nachten in de andere seizoenen (uitgezonderd feestdagen)
+              wekelijkse verhuur van zaterdag t/m zaterdag in het hoogseizoen. Hier buiten in overleg
+              we vragen u vriendelijk uw aankomsttijd te plannen na 16.00 uur. U wordt verzocht om het appartement op de dag van vertrek te verlaten voor 10.00 uur
+              huisdieren zijn welkom in overleg
+              Roken buiten en alleen op toegewezen plekken" data-original-title="Belangrijk informatie">+ Informatie </button>
             </div>
+
+            
           </div>
         </div>
-      </div>
+
+
+        
+      
     </div>
   </div>
 </div>

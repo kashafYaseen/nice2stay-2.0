@@ -32,9 +32,14 @@
     
       <div class="card-body col-md-9">
         <h3 class="card-title margin-bottom-1x"><%= @lodging.h2 %></h3>
+        
+
+       
+
+
 
         <div class="row bg-secondary">
-          <div class="col-md-4  col-xs-6 margin-top-1x">
+          <div class="col-md-3  col-xs-6 margin-top-1x">
             <p><b><%= @lodging.adults %></b>  Adults <br>
 
             <% if @lodging.children.present? %>
@@ -44,7 +49,7 @@
             <b><%= @lodging.beds %></b> Bedrooms <b><br><%= @lodging.baths %></b> Bathrooms
           </div>
 
-          <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
+          <div class="col-md-5 col-xs-6 margin-top-1x margin-bottom-1x">
             <ul class="list-icon">
               <h6>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
@@ -53,7 +58,25 @@
               </h6>
             </ul>
           </div>
+          <% if @reviews.present? %>
+              <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
 
+             
+
+              <div class="text-center">
+                <div class="d-inline align-baseline display-3 mr-1"><%= @lodging.average_rating %></div>
+                <p><a class="scroll-to" href="#reviews-container" aria-selected="false">Reviews</a>
+                <div class="d-inline align-baseline text-sm text-warning mr-1">
+                  <%= render_stars_tag @lodging.average_rating %>
+
+                </div>
+
+              
+              </div>
+            </div>
+
+          <% else %>
+          <% end %>
 
 
 
@@ -62,6 +85,7 @@
 
 
         <p class="text-sm col-md-4 margin-top-1x">
+
           <div id="lodging-description">
             <%= @lodging.summary.try(:html_safe) %>
           </div>
