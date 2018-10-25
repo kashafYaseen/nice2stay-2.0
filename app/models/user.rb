@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :leads
   has_many :bookings
   has_many :reservations, through: :bookings
+  has_many :notifications
 
   mount_uploader :image, ImageUploader
 

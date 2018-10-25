@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_063352) do
+ActiveRecord::Schema.define(version: 2018_10_25_060351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,6 +396,18 @@ ActiveRecord::Schema.define(version: 2018_10_24_063352) do
     t.index ["lodging_id"], name: "index_lodgings_experiences_on_lodging_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "read_at"
+    t.string "action"
+    t.integer "notifiable_id"
+    t.string "notifiable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_id", "notifiable_type"], name: "index_notifications_on_notifiable_id_and_notifiable_type"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -634,6 +646,7 @@ ActiveRecord::Schema.define(version: 2018_10_24_063352) do
   add_foreign_key "lodgings_amenities", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
+  add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
