@@ -41,8 +41,8 @@
         <ul class="mega-menu">
           <li><span class="mega-menu-title"><a>popular collections</a></span>
             <ul>
-              <% @homepage_campaigns.each do |campaign| %>
-                <li><%= link_to campaign.title, campaign.url %></li>
+              <% @menu_custom_texts.each do |custom_text| %>
+                <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
               <% end %>
             </ul>
           </li>
@@ -50,8 +50,8 @@
           <% @countries_enabled.each do |country| %>
             <li><span class="mega-menu-title"><a><%= country.name %></a></span>
               <ul>
-                <% country.campaigns_menu.each do |campaign| %>
-                  <li><%= link_to campaign.title, campaign.url %></li>
+                <% country.custom_texts.country_menu.each do |custom_text| %>
+                  <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
                 <% end %>
               </ul>
             </li>
@@ -191,8 +191,8 @@
                   </span>
 
                   <ul class="slideable-submenu">
-                    <% @homepage_campaigns.each do |campaign| %>
-                      <li><%= link_to campaign.title, campaign.url %></li>
+                    <% @menu_custom_texts.each do |custom_text| %>
+                      <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
                     <% end %>
                   </ul>
                 </li>
@@ -205,8 +205,8 @@
                     </span>
 
                     <ul class="slideable-submenu">
-                      <% country.campaigns_menu.each do |campaign| %>
-                        <li><%= link_to campaign.title, campaign.url %></li>
+                      <% country.custom_texts.country_menu.each do |custom_text| %>
+                        <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
                       <% end %>
                     </ul>
                   </li>

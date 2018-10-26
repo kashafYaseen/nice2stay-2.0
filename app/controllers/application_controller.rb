@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true, with: :exception
-  before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_campaigns, :set_pages
+  before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_custom_texts, :set_pages
 
   def set_booking
     @booking = Booking.find_by(id: cookies[:booking], in_cart: true) if cookies[:booking].present?
@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
     @countries_enabled = @countries.enabled
   end
 
-  def set_campaigns
-    @homepage_campaigns = Campaign.home_page
+  def set_custom_texts
+    @menu_custom_texts = CustomText.menu
   end
 
   def set_pages
