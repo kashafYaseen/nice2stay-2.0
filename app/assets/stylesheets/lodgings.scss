@@ -156,8 +156,6 @@
   }
 }
 
-
-
 #loader {
   position: fixed;
   top: 50%;
@@ -165,22 +163,18 @@
   z-index: 3000;
 }
 
-
 #sidebar {
-    width: 360px;
-    position: fixed;
-    top: 70px;
-    right: 0;
-    height: 100vh;
-    z-index: 999;
-    background: #FFFFFF;
-   
-    transition: all 0.3s;
-    box-shadow: 0 7px 22px -5px rgba(54, 54, 54, 0.2);
-    border: 1px solid #eaeaea;
+  width: 360px;
+  position: fixed;
+  top: 70px;
+  right: 0;
+  height: 100vh;
+  z-index: 999;
+  background: #FFFFFF;
+  transition: all 0.3s;
+  box-shadow: 0 7px 22px -5px rgba(54, 54, 54, 0.2);
+  border: 1px solid #eaeaea;
 }
-
-
 
 .lodging {
   .short-desc {
