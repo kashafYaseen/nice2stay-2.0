@@ -1,76 +1,59 @@
-
-
-
 <div class="padding-top-1x pb-5 homepage">
-  
-    <div class="col-md-9 ml-2 padding-top-1x">
-      <h3 class="mb-3">
-        <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
-      </h3>
+  <div class="col-md-9 ml-2 padding-top-1x">
+    <h3 class="mb-3">
+      <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
+    </h3>
 
-      <div class="row">
-        <div class="col-md-3 col-lg-2">
-          <div class="d-table">
-            <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-          </div>
+    <div class="row">
+      <div class="col-md-3 col-lg-2">
+        <div class="d-table">
+          <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
         </div>
+      </div>
 
-        <div class="col-sm-9 mb-9">
-          <p>Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl. <%= lodging.name %> is bezocht door Christa Linders.</p>
-        </div>
+      <div class="col-sm-9 mb-9">
+        <p>Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl. <%= lodging.name %> is bezocht door Christa Linders.</p>
       </div>
     </div>
   </div>
-
+</div>
 
 <div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="location-container">
-  
-    <div class="col-md-9 mb-30">
-      <div class="col-md-12">
-        <h3 class="card-title">Location</h3>
+  <div class="col-md-9 mb-30">
+    <div class="col-md-12">
+      <h3 class="card-title">Location</h3>
 
-        <hr class="margin-bottom-1x">
-        <%= lodging.location_description.try(:html_safe) %>
-      </div>
+      <hr class="margin-bottom-1x">
+      <%= lodging.location_description.try(:html_safe) %>
     </div>
   </div>
-
-
-
-
+</div>
 
 <div class="col-md-10 google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
 
-
-  
 <div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
-  
-    <div class="col-md-9 mb-30">
+  <div class="col-md-9 mb-30">
+    <div class="col-md-12">
+      <h3 class="card-title">Photo gallary</h3>
+      <hr class="margin-bottom-1x">
 
-      <div class="col-md-12">
-        <h3 class="card-title">Photo gallary</h3>
-        <hr class="margin-bottom-1x">
-
-        <div class="gallery-wrapper">
+      <div class="gallery-wrapper">
         <div class="isotope-grid cols-2">
           <div class="gutter-sizer"></div>
           <div class="grid-sizer"></div>
-          
-            <% lodging.images.each do |image| %>
-              <div class="grid-item gallery-item">
-                <a href="<%= image %>">
-                  <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-                </a>
-              </div>
-            <% end %>
-          </div>
-        </div>
+
+          <% lodging.images.each do |image| %>
+            <div class="grid-item gallery-item">
+              <a href="<%= image %>">
+                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+              </a>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-
-
+</div>
 
 <div class="leads_homepage padding-bottom-1x pt-5 mb-1">
   <div class="col-md-9 ml-2 mb-30 target-section" id="reviews-container">
@@ -105,41 +88,35 @@
 </div>
 
 <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
-            <ul class="list-icon">
-              <% @lodging.amenities do |amenity| %>
-                <%= amenity.name %>
-                <% end %>
-             </ul>
-          </div>
+  <ul class="list-icon">
+    <% @lodging.amenities do |amenity| %>
+      <%= amenity.name %>
+      <% end %>
+   </ul>
+</div>
 
 <div class="bg-white padding-bottom-1x pt-1 mb-1">
   <div class="col-md-9 target-section" id="description-container">
-    
-      <div class="card-body">
-        <h3 class="card-title margin-bottom-1x"><%= @lodging.h1 %></h3>
-        <hr class="margin-bottom-1x">
+    <div class="card-body">
+      <h3 class="card-title margin-bottom-1x"><%= @lodging.h1 %></h3>
+      <hr class="margin-bottom-1x">
 
-
-        <div id="lodging-description">
-          <%= lodging.description.try(:html_safe) %>
-        </div>
-      </div>
-
-     </div>
-
-</div>
-
-<div class="homepage col-md-9 padding-bottom-1x pt-2 mb-1">
- 
-    <div class="col-md-12 padding-top-1x">
-      <h3 class="card-title">You May Also Like</h3>
-
-      <div class="row">
-        <%= render @lodgings %>
+      <div id="lodging-description">
+        <%= lodging.description.try(:html_safe) %>
       </div>
     </div>
   </div>
+</div>
 
+<div class="homepage col-md-9 padding-bottom-1x pt-2 mb-1">
+  <div class="col-md-12 padding-top-1x">
+    <h3 class="card-title">You May Also Like</h3>
+
+    <div class="row">
+      <%= render @lodgings %>
+    </div>
+  </div>
+</div>
 
 <%= form_tag lodging_path(lodging), method: :get, class: 'you-may-like-form', remote: true do %>
   <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>

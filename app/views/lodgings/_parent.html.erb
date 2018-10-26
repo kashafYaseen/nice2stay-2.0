@@ -1,24 +1,19 @@
-
-  <div class="col-md-9 bg-secondary">
-    <div class="mb-30">
-      
-      <div class="lodging-children pr-4 pt-3">
-      
-        <%= render partial: 'reservations/child_form', collection: lodging_children, as: :lodging %>
-        <%= render partial: 'child_details_modal', collection: lodging_children, as: :lodging  %>
-      </div>
+<div class="col-md-9 bg-secondary">
+  <div class="mb-30">
+    <div class="lodging-children pr-4 pt-3">
+      <%= render partial: 'reservations/child_form', collection: lodging_children, as: :lodging %>
+      <%= render partial: 'child_details_modal', collection: lodging_children, as: :lodging  %>
     </div>
   </div>
-
+</div>
 
 <%= render 'shared_content', lodging: lodging %>
 
- <nav id="sidebar">
+<nav id="sidebar">
   <div class="reservation-parent-form-1">
     <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
   </div>
-</div>
- </nav>  
+</nav>
 
 <div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
   <div class="card bg-white p-1">
