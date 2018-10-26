@@ -264,6 +264,12 @@ div.review-paginator {
   }
 }
 
+@media only screen and (max-width: 767px) {
+  #sidebar {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   div.homepage-actions-row {
     margin: 0;
