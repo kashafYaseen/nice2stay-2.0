@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  belongs_to :country
+  belongs_to :country, optional: true
   has_many :reviews
   has_many :wishlists
   has_many :favourite_lodgings, through: :wishlists, source: :lodging
@@ -18,7 +18,7 @@ class User < ApplicationRecord
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
 
-  #validates :first_name, :last_name, :city, :address, :country, :zipcode, :phone, presence: true
+  validates :first_name, :last_name, :city, :address, :country, :zipcode, :phone, presence: true, unless: :encrypted_password_changed?
   before_validation :set_password
 
   enum creation_status: {

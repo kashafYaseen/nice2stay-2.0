@@ -229,11 +229,11 @@
           <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
           <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
 
-          <% if params[:lodging_type_in].present? %>
-            <% params[:lodging_type_in].each do |lodging_type| %>
-              <%= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
-            <% end %>
-          <% end %>
+          <%# if params[:lodging_type_in].present? %>
+            <%# params[:lodging_type_in].each do |lodging_type| %>
+              <%#= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
+            <%# end %>
+          <%# end %>
 
           <%= submit_tag 'SEARCH', class: 'col-md-12 btn btn-primary btn-sm' %>
          <% end %>

@@ -120,6 +120,8 @@
   </div>
 </div>
 
+<%= render 'shared/meta_tags', resource: @country %>
+
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
   initDatePicker();

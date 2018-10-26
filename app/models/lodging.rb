@@ -85,14 +85,14 @@ class Lodging < ApplicationRecord
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
-      country: country.name,
-      region: region.name,
+      country: country.translated_slugs,
+      region: region.translated_slugs,
       extended_name: extended_name,
       available_on: availabilities.pluck(:available_on),
       availability_price: prices.pluck(:amount),
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
-      experiences: experiences.collect(&:name),
+      experiences: experiences.collect(&:translated_slugs),
     )
   end
 

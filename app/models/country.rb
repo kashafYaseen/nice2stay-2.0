@@ -43,4 +43,8 @@ class Country < ApplicationRecord
     end
     data
   end
+
+  def translated_slugs
+    translations.pluck(:slug)
+  end
 end
