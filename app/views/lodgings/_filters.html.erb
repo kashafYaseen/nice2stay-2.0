@@ -144,5 +144,7 @@
     </aside>
   </div>
 
+  <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
+  <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
 <% end %>

@@ -1,6 +1,7 @@
 class Region < ApplicationRecord
   belongs_to :country
   has_many :lodgings
+  has_many :custom_texts
   has_and_belongs_to_many :campaigns
 
   include ImageHelper

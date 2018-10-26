@@ -2,6 +2,9 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
   def create
     @custom_text = CustomText.find_or_initialize_by(crm_id: custom_text_params[:crm_id])
     @custom_text.attributes = custom_text_params
+    @custom_text.country = Country.find_by(slug: params[:custom_text][:country_slug])
+    @custom_text.region = Region.find_by(slug: params[:custom_text][:region_slug])
+    @custom_text.experience = Experience.find_by(slug: params[:custom_text][:experience_slug])
 
     if @custom_text.save(validate: false)
       update_translations(params, @custom_text)
@@ -28,11 +31,13 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :p_text,
         :meta_title,
         :meta_description,
-        :redirect_url,
-        :country,
-        :region,
         :category,
-        :experience,
+        :homepage,
+        :country_page,
+        :region_page,
+        :navigation_popular,
+        :navigation_country,
+        :image,
       )
     end
 
@@ -42,7 +47,6 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :p_text,
         :meta_title,
         :meta_description,
-        :redirect_url,
         :locale,
         :country,
         :region,

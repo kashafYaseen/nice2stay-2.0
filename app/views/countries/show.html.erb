@@ -63,7 +63,7 @@
   </div>
 </div>
 
-<% if @homepage_campaigns.present? %>
+<% if @custom_texts.present? %>
   <section class="container padding-top-3x pb-5">
     <h2 class="text-center mb-30">Our collection in <%= @country.name %></h2>
 
@@ -71,14 +71,13 @@
       <div class="gutter-sizer"></div>
       <div class="grid-sizer"></div>
 
-      <% @homepage_campaigns.each do |campaign| %>
+      <% @custom_texts.each do |custom_text| %>
         <div class="grid-item gallery-item">
-          <%= link_to campaign.url do %>
-            <%= image_tag campaign.image if campaign.image.present? %>
-            <h2 class="image-title-box"><%= campaign.title %></h2>
+          <%= link_to custom_text.seo_path(locale, true) do %>
+            <%= image_tag custom_text.image if custom_text.image.present? %>
+            <h2 class="image-title-box"><%= custom_text.h1_text %></h2>
+            <span class="caption"><%= custom_text.p_text.try(:html_safe) %></span>
           <% end %>
-
-          <span class="caption"><%= campaign.description.try(:html_safe) %></span>
         </div>
       <% end %>
     </div>

@@ -1,47 +1,15 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
-  namespace :api do
-    namespace :v1 do
-      resources :lodgings
-      resources :reservations
-      resources :campaigns
-      resources :amenities, only: [:create]
-      resources :experiences, only: [:create]
-      resources :countries, only: [:create]
-      resources :bookings, only: [:create]
-      resources :pages, only: [:create]
-      resources :users, only: [:create]
-      resources :custom_texts, only: [:create]
-    end
-
-    namespace :v2 do
-      resources :lodgings
-      resources :users
-      resource :sessions, only: [:create, :update]
-    end
-  end
-
-  get '/privacy', to: 'home#privacy'
-  get '/terms', to: 'home#terms'
-
-  resources :announcements, only: [:index]
-  authenticate :admin_user, lambda { |u| u.present? } do
-    mount Sidekiq::Web => '/sidekiq'
-  end
-
-  if ActiveRecord::Base.connection.table_exists? 'custom_text_translations'
-    CustomText.find_each do |custom_text|
-      get "en/#{custom_text.seo_path('en')}", to: "lodgings#index", defaults: { locale: :en, custom_text: custom_text.id }
-      get "nl/#{custom_text.seo_path('nl')}", to: "lodgings#index", defaults: { locale: :nl, custom_text: custom_text.id }
-    end
-  end
+  draw :api_v1
+  draw :api_v2
+  draw :seo
+  draw :sidekiq
 
   localized do
     devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations' }
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
 
+    resources :announcements, only: [:index]
     resources :autocompletes, only: [:index]
     resources :lodgings, only: [:index, :show], path: :accommodations do
       post :index, on: :collection
@@ -82,6 +50,8 @@ Rails.application.routes.draw do
     end
 
     get "dashboard", to: "dashboard#index"
+    get '/privacy', to: 'home#privacy'
+    get '/terms', to: 'home#terms'
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
     get '/', to: 'pages#home', as: :root
