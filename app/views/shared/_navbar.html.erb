@@ -42,7 +42,7 @@
           <li><span class="mega-menu-title"><a>popular collections</a></span>
             <ul>
               <% @menu_custom_texts.each do |custom_text| %>
-                <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
+                <li><%= link_to custom_text.h1_text, custom_text.seo_path %></li>
               <% end %>
             </ul>
           </li>
@@ -51,7 +51,7 @@
             <li><span class="mega-menu-title"><a><%= country.name %></a></span>
               <ul>
                 <% country.custom_texts.country_menu.each do |custom_text| %>
-                  <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
+                  <li><%= link_to custom_text.h1_text, custom_text.seo_path %></li>
                 <% end %>
               </ul>
             </li>
@@ -192,7 +192,7 @@
 
                   <ul class="slideable-submenu">
                     <% @menu_custom_texts.each do |custom_text| %>
-                      <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
+                      <li><%= link_to custom_text.h1_text, custom_text.seo_path %></li>
                     <% end %>
                   </ul>
                 </li>
@@ -206,7 +206,7 @@
 
                     <ul class="slideable-submenu">
                       <% country.custom_texts.country_menu.each do |custom_text| %>
-                        <li><%= link_to custom_text.h1_text, custom_text.seo_path(locale) %></li>
+                        <li><%= link_to custom_text.h1_text, custom_text.seo_path %></li>
                       <% end %>
                     </ul>
                   </li>

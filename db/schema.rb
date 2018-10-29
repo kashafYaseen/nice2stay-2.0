@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_115128) do
+ActiveRecord::Schema.define(version: 2018_10_29_051447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_115128) do
     t.text "meta_title"
     t.text "meta_description"
     t.string "category"
+    t.string "seo_path"
+    t.string "seo_path_without_locale"
+    t.string "seo_path_without_country"
     t.index ["custom_text_id"], name: "index_custom_text_translations_on_custom_text_id"
     t.index ["locale"], name: "index_custom_text_translations_on_locale"
   end
@@ -217,6 +220,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_115128) do
     t.boolean "navigation_popular", default: false
     t.boolean "navigation_country", default: false
     t.string "image"
+    t.string "seo_path"
+    t.string "seo_path_without_locale"
+    t.string "seo_path_without_country"
     t.index ["country_id"], name: "index_custom_texts_on_country_id"
     t.index ["experience_id"], name: "index_custom_texts_on_experience_id"
     t.index ["region_id"], name: "index_custom_texts_on_region_id"
@@ -510,9 +516,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_115128) do
     t.integer "booking_status", default: 0
     t.integer "request_status", default: 0
     t.integer "crm_booking_id"
-    t.boolean "in_cart", default: false
     t.bigint "lodging_id"
     t.bigint "booking_id"
+    t.boolean "in_cart", default: true
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
