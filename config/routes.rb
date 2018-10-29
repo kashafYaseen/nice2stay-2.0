@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   draw :api_v1
   draw :api_v2
-  #draw :seo
+  draw :seo
   draw :sidekiq
 
   localized do
