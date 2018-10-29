@@ -514,9 +514,9 @@ ActiveRecord::Schema.define(version: 2018_10_29_100819) do
     t.integer "booking_status", default: 0
     t.integer "request_status", default: 0
     t.integer "crm_booking_id"
-    t.boolean "in_cart", default: false
     t.bigint "lodging_id"
     t.bigint "booking_id"
+    t.boolean "in_cart", default: true
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
