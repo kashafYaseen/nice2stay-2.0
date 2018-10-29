@@ -38,6 +38,9 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :navigation_popular,
         :navigation_country,
         :image,
+        :seo_path,
+        :seo_path_without_locale,
+        :seo_path_without_country,
       )
     end
 
@@ -48,10 +51,11 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :meta_title,
         :meta_description,
         :locale,
-        :country,
-        :region,
         :category,
         :experience,
+        :seo_path,
+        :seo_path_without_locale,
+        :seo_path_without_country,
       )
     end
 end
