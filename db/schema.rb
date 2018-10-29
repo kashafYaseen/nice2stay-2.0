@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_29_051447) do
+ActiveRecord::Schema.define(version: 2018_10_29_100819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,8 +196,7 @@ ActiveRecord::Schema.define(version: 2018_10_29_051447) do
     t.text "meta_description"
     t.string "category"
     t.string "seo_path"
-    t.string "seo_path_without_locale"
-    t.string "seo_path_without_country"
+    t.string "menu_title"
     t.index ["custom_text_id"], name: "index_custom_text_translations_on_custom_text_id"
     t.index ["locale"], name: "index_custom_text_translations_on_locale"
   end
@@ -221,8 +220,7 @@ ActiveRecord::Schema.define(version: 2018_10_29_051447) do
     t.boolean "navigation_country", default: false
     t.string "image"
     t.string "seo_path"
-    t.string "seo_path_without_locale"
-    t.string "seo_path_without_country"
+    t.string "menu_title"
     t.index ["country_id"], name: "index_custom_texts_on_country_id"
     t.index ["experience_id"], name: "index_custom_texts_on_experience_id"
     t.index ["region_id"], name: "index_custom_texts_on_region_id"
