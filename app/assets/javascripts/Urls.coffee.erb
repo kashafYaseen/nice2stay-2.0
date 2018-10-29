@@ -13,6 +13,7 @@
     if $('#max_price').val() then params += "&max_price=#{$('#max_price').val()}"
     if $('#order').val()     then params += "&order=#{$('#order').val()}"
     if $('#region').val()    then params += "&region=#{$('#region').val()}"
+    if $('#country').val()    then params += "&country=#{$('#country').val()}"
 
     <% Lodging.lodging_types.each do |key, value| %>
     if $("#lodging_type_<%= key %>").is(':checked') then params += "&lodging_type_in[]=#{$('#lodging_type_<%= key %>').val()}"

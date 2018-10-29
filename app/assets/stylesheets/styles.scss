@@ -28,10 +28,11 @@
 
 .fixed-filter {
   background: #f5f5f5;
-
-
 }
 
+.max-image{
+  max-height: 620px;
+}
 
 .homepage_header {
   color: #fff; 
@@ -3340,12 +3341,12 @@ button:focus {
 }
 
 .nav-tabs .nav-link {
-  padding: 10px 18px;
+ 
   transition: all .3s;
   border: 0;
   border-bottom: 2px solid transparent;
   color: #606060;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: .025em;
   text-transform: uppercase;
   text-decoration: none;
@@ -4043,16 +4044,16 @@ button:focus {
 .popover-header {
   border: 0;
   border-radius: 0;
-  background-color: #333333;
-  color: #ffffff;
+  background-color: #fff;
+  color: #333;
   font-family: inherit;
   font-weight: 500;
 }
 
 .popover-body {
   border: 0;
-  background-color: #404040;
-  color: rgba(255, 255, 255, 0.75);
+  background-color: #F6F6F6;
+  color: #333;
 }
 
 .example-tooltip .tooltip {
@@ -5425,7 +5426,8 @@ video {
 }
 
 .widget-title {
-  margin-bottom: 24px;
+  margin-bottom: 14px;
+  margin-top: 24px;
   color: #404040;
   font-size: 14px;
   font-weight: normal;
@@ -5441,7 +5443,7 @@ video {
 }
 
 .widget {
-  padding: 28px 0;
+  
   border-bottom: 2px solid #eaeaea;
 }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_25_060351) do
+ActiveRecord::Schema.define(version: 2018_10_29_051447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,15 +190,14 @@ ActiveRecord::Schema.define(version: 2018_10_25_060351) do
     t.string "locale", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "redirect_url"
     t.text "h1_text"
     t.text "p_text"
     t.text "meta_title"
     t.text "meta_description"
-    t.string "country"
-    t.string "region"
     t.string "category"
-    t.string "experience"
+    t.string "seo_path"
+    t.string "seo_path_without_locale"
+    t.string "seo_path_without_country"
     t.index ["custom_text_id"], name: "index_custom_text_translations_on_custom_text_id"
     t.index ["locale"], name: "index_custom_text_translations_on_locale"
   end
@@ -209,13 +208,24 @@ ActiveRecord::Schema.define(version: 2018_10_25_060351) do
     t.text "p_text"
     t.text "meta_title"
     t.text "meta_description"
-    t.string "redirect_url"
-    t.string "country"
-    t.string "region"
     t.string "category"
-    t.string "experience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "country_id"
+    t.bigint "region_id"
+    t.bigint "experience_id"
+    t.boolean "homepage", default: false
+    t.boolean "country_page", default: false
+    t.boolean "region_page", default: false
+    t.boolean "navigation_popular", default: false
+    t.boolean "navigation_country", default: false
+    t.string "image"
+    t.string "seo_path"
+    t.string "seo_path_without_locale"
+    t.string "seo_path_without_country"
+    t.index ["country_id"], name: "index_custom_texts_on_country_id"
+    t.index ["experience_id"], name: "index_custom_texts_on_experience_id"
+    t.index ["region_id"], name: "index_custom_texts_on_region_id"
   end
 
   create_table "discounts", force: :cascade do |t|
@@ -638,6 +648,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_060351) do
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
   add_foreign_key "countries_leads", "countries", on_delete: :cascade
   add_foreign_key "countries_leads", "leads", on_delete: :cascade
+  add_foreign_key "custom_texts", "countries", on_delete: :cascade
+  add_foreign_key "custom_texts", "experiences", on_delete: :cascade
+  add_foreign_key "custom_texts", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
