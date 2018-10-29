@@ -9,11 +9,11 @@ class CustomText < ApplicationRecord
   delegate :slug, to: :region, prefix: true, allow_nil: true
   delegate :slug, to: :experience, prefix: true, allow_nil: true
 
-  scope :home_page, -> { where(homepage: true) }
-  scope :menu, -> { where(navigation_popular: true) }
-  scope :country_menu, -> { where(navigation_country: true) }
-  scope :country_page, -> { where(country_page: true) }
-  scope :region_page, -> { where(region_page: true) }
+  scope :home_page, -> { includes(:translations).where(homepage: true) }
+  scope :menu, -> { includes(:translations).where(navigation_popular: true) }
+  scope :country_menu, -> { includes(:translations).where(navigation_country: true) }
+  scope :country_page, -> { includes(:translations).where(country_page: true) }
+  scope :region_page, -> { includes(:translations).where(region_page: true) }
 
   def translation_with locale, method
     Globalize.with_locale(locale) do
