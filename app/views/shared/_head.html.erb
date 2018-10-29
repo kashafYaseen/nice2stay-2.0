@@ -1,4 +1,4 @@
-<title>GeoSearch</title>
+<title><%= render_title %></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -8,7 +8,12 @@
 <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV['GMAPS_API_KEY']}", 'application', 'data-turbolinks-track': 'reload' %>
 <%= javascript_pack_tag 'application' %>
 <%= stylesheet_pack_tag 'application', media: 'all' %>
-<%= yield :meta_tags %>
+<% if content_for? :meta_tags %>
+  <%= yield :meta_tags %>
+<% else %>
+  <meta name="title" content="<%= default_meta_title %>">
+  <meta name="description" content="<%= default_meta_description %>">
+<% end %>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-899429-9"></script>

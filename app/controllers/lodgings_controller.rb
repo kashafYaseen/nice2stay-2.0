@@ -9,6 +9,7 @@ class LodgingsController < ApplicationController
     @lodgings = SearchLodgings.call(params, @custom_text)
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
+    @title = @custom_text.try(:meta_title)
   end
 
   # GET /lodgings/1
@@ -18,6 +19,7 @@ class LodgingsController < ApplicationController
     @reservation = @lodging.reservations.build
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)
     @lodging_children = @lodging.lodging_children.includes(:availabilities, :translations) if @lodging.as_parent?
+    @title = @lodging.meta_title
   end
 
   def price_details
