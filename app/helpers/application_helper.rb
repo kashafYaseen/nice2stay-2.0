@@ -19,4 +19,19 @@ module ApplicationHelper
   def render_datetime(datetime)
     datetime.strftime("%d/%m/%Y %I:%M %p") if datetime.present?
   end
+
+  def render_title
+    return @title if @title.present?
+    default_meta_title
+  end
+
+  def default_meta_title
+    return 'Nice2stay - Hand-picked collection villas, apartments and boutique hotels' if locale == :en
+    'Nice2stay - Hand-picked collectie vakantiehuizen, appartementen en boutique hotels'
+  end
+
+  def default_meta_description
+    return 'We have selected the finest villas, holiday homes, apartments and boutique hotels. Our team offers you dependable service &amp; the best rates guaranteed. Explore our exceptional collection in Italy, France, Spain and Portugal.' if locale == :en
+    'Wij hebben de mooiste vakantiehuizen, appartementen en boutique hotels geselecteerd. Of u nu op zoek bent naar een luxe villa, stijlvolle vakantiewoning of een boutique hotel, dit is de collectie die u moet bekijken bij het plannen en boeken van uw vakantie. Ons team helpt u graag!'
+  end
 end
