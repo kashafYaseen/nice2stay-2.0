@@ -9,6 +9,7 @@ class Lodging < ApplicationRecord
   has_many :reviews
   has_many :specifications
   has_many :wishlists
+  has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
 
@@ -164,6 +165,14 @@ class Lodging < ApplicationRecord
       communication: _reviews.rating_sum(:communication)/total,
       average_rating: _reviews.ratings_average,
     )
+  end
+
+  def including_text
+    price_text.try(:including_text)
+  end
+
+  def particularities_text
+    price_text.try(:particularities_text)
   end
 
   private
