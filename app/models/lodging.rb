@@ -9,6 +9,7 @@ class Lodging < ApplicationRecord
   has_many :reviews
   has_many :specifications
   has_many :wishlists
+  has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
 

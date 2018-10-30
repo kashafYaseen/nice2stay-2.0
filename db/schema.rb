@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_29_100819) do
+ActiveRecord::Schema.define(version: 2018_10_30_045305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -454,6 +454,36 @@ ActiveRecord::Schema.define(version: 2018_10_29_100819) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "price_text_translations", force: :cascade do |t|
+    t.integer "price_text_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "season_text"
+    t.text "including_text"
+    t.text "pay_text"
+    t.text "deposit_text"
+    t.text "options_text"
+    t.text "particularities_text"
+    t.text "payment_terms_text"
+    t.index ["locale"], name: "index_price_text_translations_on_locale"
+    t.index ["price_text_id"], name: "index_price_text_translations_on_price_text_id"
+  end
+
+  create_table "price_texts", force: :cascade do |t|
+    t.text "season_text"
+    t.text "including_text"
+    t.text "pay_text"
+    t.text "deposit_text"
+    t.text "options_text"
+    t.text "particularities_text"
+    t.text "payment_terms_text"
+    t.bigint "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_price_texts_on_lodging_id"
+  end
+
   create_table "prices", force: :cascade do |t|
     t.float "amount", default: 0.0
     t.bigint "availability_id"
@@ -645,6 +675,7 @@ ActiveRecord::Schema.define(version: 2018_10_29_100819) do
   add_foreign_key "lodgings_amenities", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
+  add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
