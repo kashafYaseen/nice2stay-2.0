@@ -52,12 +52,11 @@
               <%= render 'wishlists/form', lodging: lodging %>
 
               <button class="btn btn-sm  col-md-6 bg-white btn-outline-secondary" type="button"
-                data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover"
-                title="" data-content="Gas / Water / Electriciteit Bad-, bed- en keukenlinnen Wifi internet Brandhout BBQ Welkomst mand met organische groenten Eindschoonmaak" data-original-title="Included">+ Included ?
+                data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click" data-content="<%= lodging.including_text %>" data-html="true" data-original-title="Included">+ Included ?
               </button>
+
               <button class="text-xxs btn btn-sm col-md-5 bg-white btn-outline-secondary" type="button"
-                data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover"
-                title="" data-content="Mas Basso is beschikbaar gedurende het hele jaar voor een minimaal verblijf van 7 nachten in het hoogseizoen en 2 nachten in de andere seizoenen (uitgezonderd feestdagen) wekelijkse verhuur van zaterdag t/m zaterdag in het hoogseizoen. Hier buiten in overleg we vragen u vriendelijk uw aankomsttijd te plannen na 16.00 uur. U wordt verzocht om het appartement op de dag van vertrek te verlaten voor 10.00 uur huisdieren zijn welkom in overleg Roken buiten en alleen op toegewezen plekken" data-original-title="Belangrijk informatie">+ Informatie
+                data-container="body" data-toggle="popover" data-html="true" data-placement="top" data-trigger="hover click" data-content="<%= lodging.particularities_text %>" data-original-title="Belangrijk informatie">+ Informatie
               </button>
           </div>
         </div>

@@ -3,7 +3,7 @@ class CustomText < ApplicationRecord
   belongs_to :region
   belongs_to :experience
 
-  translates :h1_text, :p_text, :meta_title, :meta_description, :category, :seo_path, :seo_path_without_locale, :seo_path_without_country
+  translates :h1_text, :p_text, :meta_title, :meta_description, :category, :seo_path, :menu_title
 
   delegate :slug, to: :country, prefix: true, allow_nil: true
   delegate :slug, to: :region, prefix: true, allow_nil: true
