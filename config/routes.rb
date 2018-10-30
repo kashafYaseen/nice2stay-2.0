@@ -43,6 +43,10 @@ Rails.application.routes.draw do
         get :remove, on: :member
         post :checkout
       end
+
+      resources :notifications, only: [:index] do
+        get :mark_as_read, on: :collection
+      end
     end
 
     resources :pages, only: [:show] do

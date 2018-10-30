@@ -22,7 +22,12 @@ class UpdateLodgingAvailabilities
     def update_availabilities
       availabilities.each do |availability|
         lodging_availabilities.with_in(availability[:from], availability[:to]).delete_all
-        lodging_availabilities.check_out_only!(availability[:from].to_date)
+        previous_day = lodging_availabilities.where(available_on: (availability[:from].to_date() -1.day))
+        if previous_day.blank? || previous_day.check_out_only
+          lodging_availabilities.where(available_on: availability[:from]).delete_all
+        else
+          lodging_availabilities.check_out_only!(availability[:from].to_date)
+        end
         lodging_availabilities.not_available!(availability[:to].to_date)
       end
     end

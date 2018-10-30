@@ -1,0 +1,22 @@
+<div class="toolbar-section p-1" id="notifications" data-index-url="<%= dashboard_notifications_path %>" data-read-url="<%= mark_as_read_dashboard_notifications_path %>">
+  <div class="table-responsive mb-0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="2">
+            <div class="d-flex justify-content-between align-items-center">
+              Notifications
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody id="notifications-body">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<% content_for :js_init do %>
+  Notification.init();
+<% end %>

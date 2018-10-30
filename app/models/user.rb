@@ -11,12 +11,14 @@ class User < ApplicationRecord
   has_many :leads
   has_many :bookings
   has_many :reservations, through: :bookings
+  has_many :notifications
 
   mount_uploader :image, ImageUploader
 
   delegate :in_cart, :non_confirmed, :confirmed_options, :requests, to: :reservations, allow_nil: true, prefix: true
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
+  delegate :recent, to: :notifications, allow_nil: true, prefix: true
 
   validates :first_name, :last_name, :city, :address, :country, :zipcode, :phone, presence: true, unless: :encrypted_password_changed?
   before_validation :set_password
