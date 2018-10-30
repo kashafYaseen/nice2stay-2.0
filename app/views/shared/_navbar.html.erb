@@ -87,9 +87,14 @@
         <i class="material-icons search"></i>
       </a>
 
-      <a class="toolbar-toggle" href="#account">
-        <i class="material-icons person"></i>
-      </a>
+      <% if user_signed_in? %>
+        <a class="toolbar-toggle toolbar-notifications" href="#notifications">
+          <i>
+            <span class="material-icons notifications"></span>
+            <span class="count unread-notifications-count">1</span>
+          </i>
+        </a>
+      <% end %>
 
       <a class="toolbar-toggle toolbar-wishlist" href="#wishlist">
         <i>
@@ -104,14 +109,10 @@
           <span class="count cart-items-count"><%= cart_items_count(@booking.try(:reservations)) %></span>
         </i>
       </a>
-      <% if user_signed_in? %>
-        <a class="toolbar-toggle toolbar-notifications" href="#notifications">
-          <i>
-            <span class="material-icons notifications"></span>
-            <span class="count unread-notifications-count">3</span>
-          </i>
-        </a>
-      <% end %>
+
+      <a class="toolbar-toggle" href="#account">
+        <i class="material-icons person"></i>
+      </a>
     </div>
 
     <!-- Toolbar Dropdown-->

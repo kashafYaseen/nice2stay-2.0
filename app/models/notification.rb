@@ -4,4 +4,8 @@ class Notification < ApplicationRecord
 
   scope :unread, -> { where(read_at: nil) }
   scope :recent, -> { order(created_at: :desc) }
+
+  def unread?
+    !read_at?
+  end
 end
