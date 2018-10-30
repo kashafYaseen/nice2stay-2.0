@@ -167,6 +167,14 @@ class Lodging < ApplicationRecord
     )
   end
 
+  def including_text
+    price_text.try(:including_text)
+  end
+
+  def particularities_text
+    price_text.try(:particularities_text)
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|
