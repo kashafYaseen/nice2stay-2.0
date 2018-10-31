@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_045305) do
+ActiveRecord::Schema.define(version: 2018_10_31_061733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,29 @@ ActiveRecord::Schema.define(version: 2018_10_30_045305) do
     t.bigint "region_id"
     t.index ["campaign_id"], name: "index_campaigns_regions_on_campaign_id"
     t.index ["region_id"], name: "index_campaigns_regions_on_region_id"
+  end
+
+  create_table "cleaning_cost_translations", force: :cascade do |t|
+    t.integer "cleaning_cost_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["cleaning_cost_id"], name: "index_cleaning_cost_translations_on_cleaning_cost_id"
+    t.index ["locale"], name: "index_cleaning_cost_translations_on_locale"
+  end
+
+  create_table "cleaning_costs", force: :cascade do |t|
+    t.string "name"
+    t.float "fixed_price", default: 0.0
+    t.float "price_per_day", default: 0.0
+    t.integer "guests"
+    t.integer "crm_id"
+    t.boolean "manage_by"
+    t.bigint "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_cleaning_costs_on_lodging_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -674,6 +697,7 @@ ActiveRecord::Schema.define(version: 2018_10_30_045305) do
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
+  add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
   add_foreign_key "countries_leads", "countries", on_delete: :cascade
   add_foreign_key "countries_leads", "leads", on_delete: :cascade
   add_foreign_key "custom_texts", "countries", on_delete: :cascade
