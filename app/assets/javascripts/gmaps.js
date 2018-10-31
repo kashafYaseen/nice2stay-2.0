@@ -888,7 +888,9 @@ GMaps.prototype.addMarker = function(options) {
     var el = $(`#lodging-${this.id} .card-body`);
     el.focus();
     $('.lodging-selected').addClass('bg-white');
+    $('.lodging-selected').removeClass('lodging-selected');
     el.removeClass('bg-white');
+    el.addClass('lodging-selected')
     el.get(0).scrollIntoView({behavior: "instant", block: "center", inline: "nearest"});
   });
 
