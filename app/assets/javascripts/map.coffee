@@ -48,7 +48,7 @@
           lat: lodging.latitude
           lng: lodging.longitude
           title: lodging.address
-          infoWindow: content: "<p><a href='/lodgings/#{lodging.id}'>#{lodging.name}</a></p>")
+          infoWindow: content: "<p><a href='accommodations/#{lodging.slug}'>#{lodging.name}</a></p>")
     set_safe_bounds document.querySelector('.lodgings-list-json')
 
   set_safe_bounds = (element) ->
