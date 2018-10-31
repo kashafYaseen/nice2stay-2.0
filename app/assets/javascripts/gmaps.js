@@ -885,13 +885,12 @@ GMaps.prototype.addMarker = function(options) {
   GMaps.fire('marker_added', marker, this);
 
   marker.addListener('click', function() {
-    var el = $(`#lodging-${this.id} .card`);
+    var el = $(`#lodging-${this.id} .card-body`);
     el.focus();
-    $('.lodging-selected').removeClass('lodging-selected border-primary');
-    el.addClass('lodging-selected border-primary');
+    $('.lodging-selected').addClass('bg-white');
+    el.removeClass('bg-white');
     el.get(0).scrollIntoView({behavior: "instant", block: "center", inline: "nearest"});
   });
-
 
   return marker;
 };

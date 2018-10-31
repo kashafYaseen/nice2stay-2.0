@@ -27,9 +27,11 @@
       <%= lodging.location_description.try(:html_safe) %>
     </div>
   </div>
-</div>
 
-<div class="col-md-10 google-map" data-height="670" data-address="<%= lodging.address %>" data-zoom="9" data-disable-controls="true" data-scrollwheel="false" data-marker-title="We are here!" style="height: 270px; position: relative; overflow: hidden;"></div>
+  <div class="col-md-10 google-map address-mark" data-address="<%= lodging.lat_long %>" data-zoom="9"
+    data-scrollwheel="false" data-marker-title="<%= lodging.name %>">
+  </div>
+</div>
 
 <div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
   <div class="col-md-9 mb-30">
