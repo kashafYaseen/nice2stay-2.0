@@ -175,6 +175,10 @@ class Lodging < ApplicationRecord
     price_text.try(:particularities_text)
   end
 
+  def lat_long
+    "#{latitude}, #{longitude}"
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|
