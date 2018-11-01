@@ -31,7 +31,7 @@
           Rails.fire($('.lodgings-filters').get(0), 'submit')
       window.bounds_changed = true
 
-  Map.add_markers = ->
+  Map.add_markers = (set_bounds = true) ->
     lodgings = $('.lodgings-list-json').map(-> JSON.parse @dataset.lodgings).get()
     ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
     remove_marker_list = []
@@ -49,7 +49,8 @@
           lng: lodging.longitude
           title: lodging.address
           infoWindow: content: "<p><a href='accommodations/#{lodging.slug}'>#{lodging.name}</a></p>")
-    set_safe_bounds document.querySelector('.lodgings-list-json')
+    if set_bounds
+      set_safe_bounds document.querySelector('.lodgings-list-json')
 
   set_safe_bounds = (element) ->
     l = element.dataset.bounds
@@ -66,6 +67,17 @@
     else
       window.bounds_changed = true
       map.fitZoom()
+
+  Map.init_with = (lat, lng, selector) ->
+    if $(selector).length > 0
+      map = window.map = new GMaps(
+        div: selector
+        lat: lat
+        lng: lng
+      )
+
+      Map.add_markers(false)
+      map.setZoom 15
 
   Map.highlight_lodgings = ->
     $('.lodgings-list').on 'mouseenter', '.lodging-container', ->

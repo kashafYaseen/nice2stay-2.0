@@ -28,9 +28,8 @@
     </div>
   </div>
 
-  <div class="col-md-10 google-map address-mark" data-address="<%= lodging.lat_long %>" data-zoom="9"
-    data-scrollwheel="false" data-marker-title="<%= lodging.name %>">
-  </div>
+  <div class="col-md-10 address-mark" id="lodging-map-location"></div>
+  <%= tag.div class: "lodgings-list-json", data: { lodgings: lodging.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), l: params[:bounds], ids: lodging.id } %>
 </div>
 
 <div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
