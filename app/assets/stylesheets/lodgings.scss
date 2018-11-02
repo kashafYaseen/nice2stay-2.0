@@ -287,3 +287,11 @@ div.review-paginator {
   position: relative;
   overflow: hidden;
 }
+
+.sub-menubar {
+  z-index: 2;
+  position: fixed;
+  background-color: white;
+  transition: top 0.3s;
+  top: 20px;
+}
