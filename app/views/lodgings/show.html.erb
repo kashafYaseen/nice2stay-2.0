@@ -32,85 +32,85 @@
 
   <!-- Product Gallery-->
   <div class="container">
-  <div class="col-md-9 target-section">
-    <div class="gallery-control">
-      <figure itemprop="associatedMedia" itemscope>
-        <a itemprop="contentUrl">
-          <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
-        </a>
-
-        <figcaption itemprop="caption description">
-          <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="lodging-gallery" itemscope>
-      <% @lodging.images.each_with_index do |image_url, index| %>
-        <figure itemprop="associatedMedia" itemscope class="d-none">
-          <a href="<%= image_url %>" itemprop="contentUrl">
-            <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+    <div class="col-md-9 target-section">
+      <div class="gallery-control">
+        <figure itemprop="associatedMedia" itemscope>
+          <a itemprop="contentUrl">
+            <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
           </a>
-          <figcaption itemprop="caption description"><%= index %></figcaption>
+
+          <figcaption itemprop="caption description">
+            <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
+          </figcaption>
         </figure>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="bg-white padding-bottom-1x pt-5 mb-1">
-    <div class="card-body col-md-9">
-      <h3 class="card-title"><%= @lodging.h1 %></h3>
-        <h5 class="card-title text-muted margin-bottom-2x"><%= @lodging.h2 %></h3>
-
-        <div class="row homepage">
-        <div class="col-md-3  col-xs-6 margin-top-1x">
-          <b><%= @lodging.adults %></b>  Adults <br>
-
-          <% if @lodging.children.present? %>
-            <b><%= @lodging.children %></b> Children<br>
-          <% end %>
-
-          <b><%= @lodging.beds %></b> Bedrooms <b><br><%= @lodging.baths %></b> Bathrooms
-        </div>
-
-        <div class="col-md-5 col-xs-6 margin-top-1x margin-bottom-1x">
-          <ul class="list-icon">
-            <h6>
-              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
-              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
-              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-            </h6>
-          </ul>
-        </div>
-
-        <% if @reviews.present? %>
-          <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
-            <div class="text-center">
-              <div class="d-inline align-baseline display-3 mr-1"><%= @lodging.average_rating %></div>
-              <p><a class="scroll-to" href="#reviews-container" aria-selected="false">Reviews</a></p>
-              <div class="d-inline align-baseline text-sm text-warning mr-1">
-                <%= render_stars_tag @lodging.average_rating %>
-              </div>
-            </div>
-          </div>
-        <% end %>
       </div>
 
-      <p class="text-sm col-md-4 margin-top-1x">
-        <div id="lodging-summary">
-          <%= @lodging.summary.try(:html_safe) %>
-        </div>
-      </p>
+      <div class="lodging-gallery" itemscope>
+        <% @lodging.images.each_with_index do |image_url, index| %>
+          <figure itemprop="associatedMedia" itemscope class="d-none">
+            <a href="<%= image_url %>" itemprop="contentUrl">
+              <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+            </a>
+            <figcaption itemprop="caption description"><%= index %></figcaption>
+          </figure>
+        <% end %>
+      </div>
     </div>
-    <div class="children-scroll-section"></div>
-  </div>
 
-  <% if @lodging.as_standalone? %>
-    <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-  <% else %>
-    <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
-  <% end %>
-</div>
+    <div class="bg-white padding-bottom-1x pt-5 mb-1">
+      <div class="card-body col-md-9">
+        <h3 class="card-title"><%= @lodging.h1 %></h3>
+          <h5 class="card-title text-muted margin-bottom-2x"><%= @lodging.h2 %></h3>
+
+          <div class="row homepage">
+          <div class="col-md-3  col-xs-6 margin-top-1x">
+            <b><%= @lodging.adults %></b>  Adults <br>
+
+            <% if @lodging.children.present? %>
+              <b><%= @lodging.children %></b> Children<br>
+            <% end %>
+
+            <b><%= @lodging.beds %></b> Bedrooms <b><br><%= @lodging.baths %></b> Bathrooms
+          </div>
+
+          <div class="col-md-5 col-xs-6 margin-top-1x margin-bottom-1x">
+            <ul class="list-icon">
+              <h6>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+              </h6>
+            </ul>
+          </div>
+
+          <% if @reviews.present? %>
+            <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
+              <div class="text-center">
+                <div class="d-inline align-baseline display-3 mr-1"><%= @lodging.average_rating %></div>
+                <p><a class="scroll-to" href="#reviews-container" aria-selected="false">Reviews</a></p>
+                <div class="d-inline align-baseline text-sm text-warning mr-1">
+                  <%= render_stars_tag @lodging.average_rating %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <p class="text-sm col-md-4 margin-top-1x">
+          <div id="lodging-summary">
+            <%= @lodging.summary.try(:html_safe) %>
+          </div>
+        </p>
+      </div>
+      <div class="children-scroll-section"></div>
+    </div>
+
+    <% if @lodging.as_standalone? %>
+      <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+    <% else %>
+      <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+    <% end %>
+  </div>
 </div>
 
 <%= render 'shared/meta_tags', resource: @lodging %>
