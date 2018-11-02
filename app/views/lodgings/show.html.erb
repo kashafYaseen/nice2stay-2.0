@@ -2,7 +2,7 @@
 
 <div id="home-container">
   <div class="col-md-12 sub-menubar">
-    <ul class="nav nav-tabs" role="tablist" id="details-navbar">
+    <ul class="nav nav-tabs ml-6 " role="tablist" id="details-navbar">
 
       <li class="nav-item">
         <a class="nav-link active show scroll-to" href="#home-container" data-toggle="tab" role="tab" aria-selected="true">Home</a>
@@ -31,6 +31,7 @@
   </div>
 
   <!-- Product Gallery-->
+  <div class="container">
   <div class="col-md-9 target-section">
     <div class="gallery-control">
       <figure itemprop="associatedMedia" itemscope>
@@ -58,8 +59,10 @@
 
   <div class="bg-white padding-bottom-1x pt-5 mb-1">
     <div class="card-body col-md-9">
-      <h3 class="card-title margin-bottom-1x"><%= @lodging.h2 %></h3>
-      <div class="row bg-secondary">
+      <h3 class="card-title"><%= @lodging.h1 %></h3>
+        <h5 class="card-title text-muted margin-bottom-2x"><%= @lodging.h2 %></h3>
+
+        <div class="row homepage">
         <div class="col-md-3  col-xs-6 margin-top-1x">
           <b><%= @lodging.adults %></b>  Adults <br>
 
@@ -107,6 +110,7 @@
   <% else %>
     <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
   <% end %>
+</div>
 </div>
 
 <%= render 'shared/meta_tags', resource: @lodging %>
