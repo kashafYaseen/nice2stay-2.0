@@ -1,90 +1,59 @@
-<div class="col-md-12 ">
-  <ul class="nav nav-tabs" role="tablist" id="details-navbar">
+<div class="persisted-data" data-check-in="<%= params[:check_in]%>"
+     data-check-out="<%= params[:check_out]%>"
+     data-url="<%= price_details_lodging_path(lodging) %>"
+     data-validate-url="<%= validate_reservations_path %>"></div>
 
-    <li class="nav-item">
-      <a class="nav-link active show scroll-to" href="#home-container" data-toggle="tab" role="tab" aria-selected="true">Home</a>
-    </li>
+<div class="card-body">
+  <div class="reservation-form-errors-<%= lodging.id %>">
+    <%= render 'reservations/errors', resource: reservation %>
+  </div>
 
-    <li class="nav-item">
-      <a class="nav-link scroll-to" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false">Gallary</a>
-
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link scroll-to" href="#location-container" data-toggle="tab" role="tab" aria-selected="false">Place</a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link scroll-to" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false">Reviews</a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link scroll-to" href="#description-container" data-toggle="tab" role="tab" aria-selected="false">Info</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link scroll-to" href="#like-container" data-toggle="tab" role="tab" aria-selected="false">You alo like</a>
-    </li>
-  </ul>
-</div>
-
-  <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
-       data-check-out="<%= params[:check_out]%>"
-       data-url="<%= price_details_lodging_path(lodging) %>"
-       data-validate-url="<%= validate_reservations_path %>"></div>
-
-  <div class="card-body">
-    <div class="reservation-form-errors-<%= lodging.id %>">
-      <%= render 'reservations/errors', resource: reservation %>
+  <div class="row">
+    <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
+         data-disabled-dates="<%= lodging.children_not_available_on %>">
+      <label class="mb-0 text-xs">Dates</label>
+      <div class="reservation-datepicker"></div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
-           data-disabled-dates="<%= lodging.children_not_available_on %>">
-        <label class="mb-0 text-xs">Dates</label>
-        <div class="reservation-datepicker"></div>
-      </div>
+    <div class="col-md-12">
+      <label class="mb-0 text-xs">Guests</label>
+      <div class="dropdown guests-dropdown" id="dropdown<%= id_sufix %>">
+        <button class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="title">Guest</span>
+        </button>
 
-      <div class="col-md-12">
-        <label class="mb-0 text-xs">Guests</label>
-        <div class="dropdown guests-dropdown" id="dropdown<%= id_sufix %>">
-          <button class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="title">Guest</span>
-          </button>
+        <%= form_for reservation, url: reservations_path, remote: true, html: {id: "new_reservation#{id_sufix}"} do |f| %>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-item">
+              <label>Adults</label>
+              <%= f.number_field "adults#{id_sufix}", value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
+            </div>
 
-          <%= form_for reservation, url: reservations_path, remote: true, html: {id: "new_reservation#{id_sufix}"} do |f| %>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <div class="dropdown-item">
-                <label>Adults</label>
-                <%= f.number_field "adults#{id_sufix}", value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
-              </div>
+            <div class="dropdown-item">
+              <label>Children</label>
+              <%= f.number_field "children#{id_sufix}", value: f.object.children, min: 0, class: 'input-spinner parent-children children' %>
+            </div>
 
-              <div class="dropdown-item">
-                <label>Children</label>
-                <%= f.number_field "children#{id_sufix}", value: f.object.children, min: 0, class: 'input-spinner parent-children children' %>
-              </div>
+            <div class="dropdown-item">
+              <label>Infants</label>
+              <%= f.number_field "infants#{id_sufix}", value: f.object.infants, min: 0, class: 'input-spinner parent-infants infants' %>
+            </div>
 
-              <div class="dropdown-item">
-                <label>Infants</label>
-                <%= f.number_field "infants#{id_sufix}", value: f.object.infants, min: 0, class: 'input-spinner parent-infants infants' %>
-              </div>
-
-              <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
-            <% end %>
-          </div>
+            <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
+          <% end %>
         </div>
       </div>
+    </div>
 
-      <div class="col-md-12">
-        <%= link_to 'Check Availability', '', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
-         
-         <p class="extra_small">Geen reserveringskosten of andere toeslagen bij nice2stay</p>
-      </div>
+    <div class="col-md-12">
+      <%= link_to 'Check Availability', '', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
+      <p class="extra_small">Geen reserveringskosten of andere toeslagen bij nice2stay</p>
+    </div>
 
-      <div class="col-md-12">
-        <%= link_to _back_url, class: 'btn btn-outline-secondary w-100' do %>
-          <i class="material-icons arrow_back"></i>&nbsp; GO BACK
-        <% end %>
-      </div>
+    <div class="col-md-12">
+      <%= link_to _back_url, class: 'btn btn-outline-secondary w-100' do %>
+        <i class="material-icons arrow_back"></i>&nbsp; GO BACK
+      <% end %>
     </div>
   </div>
 </div>

@@ -51,6 +51,11 @@
           $('#details-navbar .nav-link').removeClass 'active'
           $("a[href='##{id}']").addClass 'active'
 
+      if $(window).scrollTop() > 20
+        $('.sub-menubar').css('top': '70px')
+      else
+        $('.sub-menubar').css('top': '20px')
+
   Lodging.read_more = ->
     $('.btn-read-more').click ->
       $target = $($(this).data('target'))
