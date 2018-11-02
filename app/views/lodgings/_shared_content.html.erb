@@ -32,8 +32,6 @@
   <%= tag.div class: "lodgings-list-json", data: { lodgings: lodging.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), l: params[:bounds], ids: lodging.id } %>
 </div>
 
-
-
 <div class="leads_homepage padding-bottom-1x pt-5 mb-1">
   <div class="col-md-9 ml-2 mb-30 target-section" id="reviews-container">
     <% if @reviews.present? %>
@@ -65,7 +63,6 @@
     <% end %>
   </div>
 </div>
-
 
 <div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
   <div class="col-md-9 mb-30">
