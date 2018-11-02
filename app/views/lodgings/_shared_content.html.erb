@@ -32,30 +32,6 @@
   <%= tag.div class: "lodgings-list-json", data: { lodgings: lodging.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), l: params[:bounds], ids: lodging.id } %>
 </div>
 
-<div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
-  <div class="col-md-9 mb-30">
-    <div class="col-md-12">
-      <h3 class="card-title">Photo gallary</h3>
-      <hr class="margin-bottom-1x">
-
-      <div class="gallery-wrapper">
-        <div class="isotope-grid cols-2">
-          <div class="gutter-sizer"></div>
-          <div class="grid-sizer"></div>
-
-          <% lodging.images.each do |image| %>
-            <div class="grid-item gallery-item">
-              <a href="<%= image %>">
-                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-              </a>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="leads_homepage padding-bottom-1x pt-5 mb-1">
   <div class="col-md-9 ml-2 mb-30 target-section" id="reviews-container">
     <% if @reviews.present? %>
@@ -85,6 +61,30 @@
         </div>
       </div>
     <% end %>
+  </div>
+</div>
+
+<div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
+  <div class="col-md-9 mb-30">
+    <div class="col-md-12">
+      <h3 class="card-title">Photo gallary</h3>
+      <hr class="margin-bottom-1x">
+
+      <div class="gallery-wrapper">
+        <div class="isotope-grid cols-2">
+          <div class="gutter-sizer"></div>
+          <div class="grid-sizer"></div>
+
+          <% lodging.images.each do |image| %>
+            <div class="grid-item gallery-item">
+              <a href="<%= image %>">
+                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+              </a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
