@@ -1,24 +1,29 @@
+</div>
 <div class="padding-top-1x pb-5 homepage">
-  <div class="col-md-9 ml-2 padding-top-1x">
-    <h3 class="mb-3">
-      <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
-    </h3>
+  <div class="container">
+    <div class="col-md-9 ml-2 padding-top-1x">
+      <h3 class="mb-3">
+        <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
+      </h3>
 
-    <div class="row">
-      <div class="col-md-3 col-lg-2">
-        <div class="d-table">
-          <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
+      <div class="row">
+        <div class="col-md-3 col-lg-2">
+          <div class="d-table">
+            <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
+          </div>
         </div>
-      </div>
 
-      <div class="col-sm-9 mb-9">
-        <p>Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl. <%= lodging.name %> is bezocht door Christa Linders.</p>
+        <div class="col-sm-9 mb-9">
+          <p>Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl. <%= lodging.name %> is bezocht door Christa Linders.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="bg-white padding-bottom-3x pt-5 mb-1 target-section" id="location-container">
+<div class="container">
+
+<div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
   <div class="col-md-9 mb-30">
     <div class="col-md-12">
       <h3 class="card-title">Location</h3>
@@ -27,63 +32,72 @@
       <%= lodging.location_description.try(:html_safe) %>
     </div>
   </div>
+</div>
 
-  <div class="col-md-10 address-mark" id="lodging-map-location"></div>
+<div class="col-md-9 address-mark" id="lodging-map-location"></div>
   <%= tag.div class: "lodgings-list-json", data: { lodgings: lodging.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), l: params[:bounds], ids: lodging.id } %>
 </div>
 
-<div class="leads_homepage padding-bottom-1x pt-5 mb-1">
-  <div class="col-md-9 ml-2 mb-30 target-section" id="reviews-container">
-    <% if @reviews.present? %>
-      <div class="row">
-        <div class="card-body col-md-3">
-          <h3 class="card-title">Rating & Reviews</h3>
+<div class="leads_homepage margin-top-3x padding-bottom-1x pt-5 mb-1">
+  <div class="container">
+    <div class="col-md-9 ml-2 mb-30 target-section" id="reviews-container">
+      <% if @reviews.present? %>
+      
+      
+     
+            <h3 class="card-title">Rating & Reviews</h3>
+          
 
-          <hr class="margin-bottom-1x">
-          <%= render 'reviews/rating', lodging: lodging %>
-        </div>
-
-        <div class="col-md-8 padding-top-3x">
-          <div class="reviews-container">
-            <%= render @reviews %>
+          <div class="card-body col-md-4">
+            <hr class="margin-bottom-1x">
+            <%= render 'reviews/rating', lodging: lodging %>
           </div>
 
-          <div class="review-paginator">
-            <%= paginate @reviews, remote: true, window: 0 %>
+          <div class="col-md-8 padding-top-2x">
+            <div class="reviews-container">
+              <%= render @reviews %>
+            </div>
+
+            <div class="review-paginator">
+              <%= paginate @reviews, remote: true, window: 0 %>
+            </div>
           </div>
         </div>
-      </div>
-    <% else %>
-      <div class="row">
-        <div class="card-body col-md-12">
-          <h3 class="card-title">Rating & Reviews</h3>
-          <p>Accommodation does not have any review yet.</p>
+      <% else %>
+        <div class="row">
+          <div class="card-body col-md-12">
+            <h3 class="card-title">Rating & Reviews</h3>
+            <p>Accommodation does not have any review yet.</p>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+    </div>
+
 
 <div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
-  <div class="col-md-9 mb-30">
-    <div class="col-md-12">
-      <h3 class="card-title">Photo gallary</h3>
-      <hr class="margin-bottom-1x">
+  <div class="container">
+    <div class="col-md-9 mb-30">
+      
+        <h3 class="card-title">Photo gallary</h3>
+        <hr class="margin-bottom-1x">
 
-      <div class="gallery-wrapper">
-        <div class="isotope-grid cols-2">
-          <div class="gutter-sizer"></div>
-          <div class="grid-sizer"></div>
+        <div class="gallery-wrapper">
+          <div class="isotope-grid cols-2">
+            <div class="gutter-sizer"></div>
+            <div class="grid-sizer"></div>
 
-          <% lodging.images.each do |image| %>
-            <div class="grid-item gallery-item">
-              <a href="<%= image %>">
-                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-              </a>
-            </div>
-          <% end %>
+            <% lodging.images.each do |image| %>
+              <div class="grid-item gallery-item">
+                <a href="<%= image %>">
+                  <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+                </a>
+              </div>
+            <% end %>
+          </div>
         </div>
-      </div>
+      
     </div>
   </div>
 </div>
@@ -97,9 +111,10 @@
 </div>
 
 <div class="bg-white padding-bottom-1x pt-1 mb-1">
+   <div class="container">
   <div class="col-md-9 target-section" id="description-container">
     <div class="card-body">
-      <h3 class="card-title margin-bottom-1x"><%= @lodging.h1 %></h3>
+      <h3 class="card-title margin-bottom-1x"><%= @lodging.h3 %></h3>
       <hr class="margin-bottom-1x">
 
       <div id="lodging-description">
@@ -108,13 +123,16 @@
     </div>
   </div>
 </div>
+</div>
 
-<div class="homepage col-md-9 padding-bottom-1x pt-2 mb-1">
-  <div class="col-md-12 padding-top-1x" id="like-container">
-    <h3 class="card-title">You May Also Like</h3>
+<div class="homepage padding-bottom-1x pt-2 mb-1">
+  <div class="container">
+    <div class="col-md-9 padding-top-1x" id="like-container">
+      <h3 class="card-title"><%= t 'nav.intro' %></h3>
 
-    <div class="row">
-      <%= render @lodgings %>
+      <div class="row">
+        <%= render @lodgings %>
+      </div>
     </div>
   </div>
 </div>

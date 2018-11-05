@@ -30,8 +30,44 @@ nl:
     
   nav:
     land: Landen & regio's
-    collections: Collecties
-    
+    collections: Onze collecties
+    more_info: Meer informatie
+    also_like: Ook leuk voor u
+    reviews: Gemiddelde score & laatste reviews van Nice2stay klanten
+    home: Home
+    gallary: Foto's 
+    location: Locatie
+    reviews: Beoordelingen
+    info: Uitgebreide informatie
+    like: Ook leuk voor u 
+    back: zoekresultaat
+
+  cart:
+    shopping_cart: Voeg toe aan winkelmandje
+    nice2stay: Geen reserverings bij nice2stay
+
+  information:
+    included: + Inclusief huursom
+    informatie: + Informatie
+    included_header: Inclusief huursom
+    informatie_header: Informatie
+
+  search:
+    adults: Volwassenen (>12j)
+    children: Kinderen (4-12j)
+    babies: Babies (0-3j)
+    guests: Gezelschap
+    dates: Periode
+    search_button: Zoek
+    bedrooms: Slaapkamers
+    bathrooms: Badkamers
+
+  footer:
+    support: Wilt u direct contact? 
+    support_details: Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com
+    support_bel: Bel
+    newsletter: ONZE NIEUWSBRIEF IS GEWELDIG
+    newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
     dates: 'data'

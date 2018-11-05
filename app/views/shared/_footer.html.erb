@@ -1,10 +1,14 @@
 <footer class="site-footer <%= yield :footer_class %>">
       <div class="column text-center">
-        <p class="text-sm mb-4">Need Support? Call<span class="text-primary">&nbsp;001 (917) 555-4836</span></p><a class="social-button sb-skype" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i class="socicon-skype"></i></a><a class="social-button sb-facebook" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="socicon-facebook"></i></a><a class="social-button sb-google-plus" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google +"><i class="socicon-googleplus"></i></a><a class="social-button sb-twitter" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter"><i class="socicon-twitter"></i></a><a class="social-button sb-instagram" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram"><i class="socicon-instagram"></i></a>
-        <p class="text-xxs text-muted mb-0 mt-3">© All rights reserved. Made with <i class="material-icons favorite text-danger"></i> by rokaux</p>
+        <h3 class="widget-title text-center"><%= t 'footer.support' %>
+
+          <small><%= t 'footer.support_details' %></small></h3>
+
+        <p class="text-sm mb-4"><%= t 'footer.support_bel' %><span class="text-primary">&nbsp;0031-238447005</span></p><a class="social-button sb-skype" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i class="socicon-skype"></i></a><a class="social-button sb-facebook" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="socicon-facebook"></i></a><a class="social-button sb-google-plus" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google +"><i class="socicon-googleplus"></i></a><a class="social-button sb-twitter" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter"><i class="socicon-twitter"></i></a><a class="social-button sb-instagram" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram"><i class="socicon-instagram"></i></a>
+        <p class="text-xxs text-muted mb-0 mt-3">© All rights reserved. Made with <i class="material-icons favorite text-danger"></i> by Nice2stay</p>
       </div>
       <div class="column">
-        <h3 class="widget-title text-center">Subscription<small>To receive latest offers and discounts from the shop.</small></h3>
+        <h3 class="widget-title text-center"><%= t 'footer.newsletter' %><small><%= t 'footer.newsletter_details' %></small></h3>
         <form class="subscribe-form input-group" action="//rokaux.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;id=1194bb7544" method="post" target="_blank" novalidate=""><span class="input-group-btn">
             <button type="submit"><i class="material-icons send"></i></button></span>
           <input class="form-control" type="email" name="EMAIL" placeholder="Your e-mail">
