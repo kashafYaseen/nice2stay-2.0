@@ -10,14 +10,14 @@
   <td class="text-center text-sm"><%= reservation.adults %></td>
   <td class="text-center text-sm"><%= reservation.children %></td>
   <td class="text-center text-sm"><%= reservation.infants %></td>
-  <td class="text-center text-sm">$<%= reservation.rent %></td>
-  <td class="text-center text-sm">$<%= reservation.cleaning_cost %></td>
-  <td class="text-center text-sm">$<%= reservation.rent + reservation.cleaning_cost %></td>
+  <td class="text-center text-sm">€<%= reservation.rent %></td>
+  <td class="text-center text-sm">€<%= reservation.cleaning_cost %></td>
+  <td class="text-center text-sm">€<%= reservation.rent + reservation.cleaning_cost %></td>
   <td class="text-center text-sm"><%= reservation.booking_status %></td>
 
   <td class="text-center">
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart', remote: true do %>
       <i class="material-icons">close</i>
-    <% end %>
+    <% end unless action_name == 'details' %>
   </td>
 </tr>

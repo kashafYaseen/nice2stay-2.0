@@ -1,0 +1,74 @@
+<div class="container padding-top-1x padding-bottom-3x mb-2">
+  <div class="row">
+    <!-- Checkout Address-->
+    <div class="col-md-12">
+      <div class="steps flex-sm-nowrap mb-5">
+        <a class="step">
+          <h4 class="step-title"><i class="material-icons check_circle"></i>Contact Details</h4>
+        </a>
+
+        <a class="step active"><h4 class="step-title">Details Sent</h4></a>
+        <a class="step"><h4 class="step-title">Confirmation</h4></a>
+        <a class="step"><h4 class="step-title">Payment</h4></a>
+      </div>
+
+      <h6 class="text-small text-muted">Your bookings & options requests</h6>
+      <div class="table-responsive shopping-cart">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Name</th>
+              <th class="text-center">Checkin</th>
+              <th class="text-center">Checkout</th>
+              <th class="text-center">Adults</th>
+              <th class="text-center">Children</th>
+              <th class="text-center">Infants</th>
+              <th class="text-center">Subtotal</th>
+              <th class="text-center">Cleaning</th>
+              <th class="text-center">Total</th>
+              <th class="text-center">Type</th>
+            </tr>
+          </thead>
+
+          <tbody id="cart-body">
+            <%= render partial: 'reservation', collection: @booking_details.reservations %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="shopping-cart-footer">
+        <div class="column text-lg">Subtotal: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking_details.reservations) %></span>
+        </div>
+      </div>
+
+      <h6 class="text-small text-muted">Your billing information</h6>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">First Name</th>
+              <th class="text-center">Last Name</th>
+              <th class="text-center">Email</th>
+              <th class="text-center">Phone</th>
+              <th class="text-center">City</th>
+              <th class="text-center">Zipcode</th>
+              <th class="text-center">Country</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="text-center text-sm"><%= @user.first_name %></td>
+              <td class="text-center text-sm"><%= @user.last_name %></td>
+              <td class="text-center text-sm"><%= @user.email %></td>
+              <td class="text-center text-sm"><%= @user.phone %></td>
+              <td class="text-center text-sm"><%= @user.city %></td>
+              <td class="text-center text-sm"><%= @user.zipcode %></td>
+              <td class="text-center text-sm"><%= @user.country_name %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
