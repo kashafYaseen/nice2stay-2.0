@@ -539,19 +539,18 @@ figure figcaption {
 }
 
 /* Bootstrap Overrides */
+
+
+
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
-    max-width: 1170px;
+    width: 1270px;
+    max-width: 1270px;
   }
 }
 
-@media (max-width: 1200px) {
-  .container {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-}
+
+
 
 .container-fluid {
   max-width: 1920px;
@@ -814,7 +813,7 @@ figure figcaption {
 }
 
 .text-muted {
-  color: #999999 !important;
+  color: #606060 !important;
 }
 
 .text-primary {
@@ -2510,7 +2509,7 @@ button:focus {
 
 .btn-sm {
   height: 28px;
-  padding: 0 16px;
+  padding: 3px 16px;
   border-radius: 3px;
   font-size: 13px;
   line-height: 20px;
@@ -3335,11 +3334,20 @@ button:focus {
 .nav-tabs {
   border-bottom: 2px solid #eaeaea;
   margin-left: 15%;
+  
 }
 
 .nav-tabs .nav-item {
   margin-bottom: -2px;
+
+
 }
+
+.flexible-search-data {
+  font-size: 14px;
+  background: #fff;
+}
+  
 
 .nav-tabs .nav-link {
  
@@ -3351,6 +3359,7 @@ button:focus {
   letter-spacing: .025em;
   text-transform: uppercase;
   text-decoration: none;
+
 }
 
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
