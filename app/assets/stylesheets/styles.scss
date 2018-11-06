@@ -540,7 +540,23 @@ figure figcaption {
 
 /* Bootstrap Overrides */
 
-
+@media screen and (min-width: 1400px) {
+  .container {
+    width: 100% !important;
+    width: 1370px !important;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .container {
+    width: 100% !important;
+    width: 1570px !important;
+  }
+}
+@media screen and (min-width: 1900px) {
+  .container {
+    width: 1870px;
+  }
+}
 
 @media (min-width: 1200px) {
   .container {
@@ -548,9 +564,6 @@ figure figcaption {
     max-width: 1270px;
   }
 }
-
-
-
 
 .container-fluid {
   max-width: 1920px;
@@ -3334,20 +3347,16 @@ button:focus {
 .nav-tabs {
   border-bottom: 2px solid #eaeaea;
   margin-left: 15%;
-  
 }
 
 .nav-tabs .nav-item {
   margin-bottom: -2px;
-
-
 }
 
 .flexible-search-data {
   font-size: 14px;
   background: #fff;
 }
-  
 
 .nav-tabs .nav-link {
  

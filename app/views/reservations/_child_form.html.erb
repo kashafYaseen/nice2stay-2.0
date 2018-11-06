@@ -12,17 +12,13 @@
             <h5><%= lodging.child_name %></h5>
           </div>
 
-          <div class="col-md-4 col-lg-4">
-            <%= render_image_tag lodging, class: 'max-height-230' %>
-            <p></p>
-            <p class="text-xs"> <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">More information & photos</a>
-          </div>
-          <div class="col-md-3 col-lg-3">
-            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 300).try(:html_safe) %></p>
-          
+          <div class="col-md-5 col-lg-6">
+            <%= render_image_tag lodging, class: 'max-height-230 w-100' %>
+            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 250).try(:html_safe) %></p>
+            <p class="text-xs"> <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more information</a>
           </div>
 
-          <div class="col-md-5 col-lg-5 bg-secondary">
+          <div class="col-md-4 col-lg-6 bg-secondary">
             <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
               <%= render 'reservations/errors', resource: lodging.reservations.build %>
             </div>
@@ -33,7 +29,8 @@
                 <p id="lbl-error-<%= lodging.id %>"></p>
 
                 <div class="bg-white">
-                <p class="text-xs">Select 
+                <p class="text-xs">Select
+
                 <% [:prebooking, :option].each do |status| %>
                   <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                   <label><%= status %></label>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
     resource :carts do
       get :remove, on: :member
+      get :details, on: :member
     end
     resource :wishlists do
       get :remove, on: :member
