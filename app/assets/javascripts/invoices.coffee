@@ -126,20 +126,20 @@
     value == ''
 
   rates_html = (key, value, index) ->
-    return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} col-md-12'>
-              <span class='float-left'>#{value} #{if value > 1 then 'nights' else 'night'}</span>
-              <span class='float-right'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
+    return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
+              <span class='col-md-6'>#{value} #{if value > 1 then 'nights' else 'night'}</span>
+              <span class='col-md-6'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
             </p>"
 
   discount_html = (key, value) ->
-    return "<span class='float-left'>Discount #{key}%</span>
-            <span class='float-right'><b>€#{value}</b></span>"
+    return "<span class='col-md-6'>Discount #{key}%</span>
+            <span class='col-md-6'><b>€#{value}</b></span>"
 
 
   total_html = (total, index) ->
-    return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} col-md-12'>
-              <span class='float-left'><b>Total</b></span>
-              <span class='float-right'><b>€#{total.toFixed(2)}</b></span>
+    return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
+              <span class='col-md-6'><b>Total</b></span>
+              <span class='col-md-6'><b>€#{total.toFixed(2)}</b></span>
             </p>"
 
   radio_buttom_html = (check_in, check_out, price, nights, lodging_id, index) ->
