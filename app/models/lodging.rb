@@ -94,6 +94,7 @@ class Lodging < ApplicationRecord
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
       experiences: experiences.collect(&:translated_slugs),
+      rules: rules.collect_search_data,
     )
   end
 
