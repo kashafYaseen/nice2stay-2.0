@@ -112,7 +112,7 @@
         result += total_html(total, -1)
         $('.sm-total').text("Price: $#{total}")
         $("#bill-#{lodging_id}").html(result)
-        $("#anternative-heading-#{lodging_id}").html('Good news selected period is fully available.')
+        $("#anternative-heading-#{lodging_id}").html('Good news period is fully available.')
         $("#flexible-search-#{lodging_id}").html("#{parse_date values[0]} - #{parse_date values[1]}")
       else
         show_unavailable(lodging_id)

@@ -560,15 +560,8 @@ figure figcaption {
 
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
-    max-width: 1170px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .container {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 1270px;
+    max-width: 1270px;
   }
 }
 
@@ -3353,11 +3346,16 @@ button:focus {
 
 .nav-tabs {
   border-bottom: 2px solid #eaeaea;
-  margin-left: 30%;
+  margin-left: 15%;
 }
 
 .nav-tabs .nav-item {
   margin-bottom: -2px;
+}
+
+.flexible-search-data {
+  font-size: 14px;
+  background: #fff;
 }
 
 .nav-tabs .nav-link {
@@ -3370,6 +3368,7 @@ button:focus {
   letter-spacing: .025em;
   text-transform: uppercase;
   text-decoration: none;
+
 }
 
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {

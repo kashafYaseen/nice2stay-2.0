@@ -24,14 +24,18 @@
             </div>
             <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
-                <p class="text-bold mb-1 anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+                <p class="mb-1 mt-2 text-dark anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
                 <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
                 <p id="lbl-error-<%= lodging.id %>"></p>
+
+                <div class="bg-white">
+                <p class="text-xs">Select
 
                 <% [:prebooking, :option].each do |status| %>
                   <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                   <label><%= status %></label>
                 <% end %>
+              </p>
 
                 <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
                 <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
@@ -41,6 +45,7 @@
                 <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
                 <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
               <% end %>
+            </div>
               
               <div class="text-dark" id="bill-<%= lodging.id %>"></div>
               <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
