@@ -10,13 +10,13 @@ class SearchPrices
   end
 
   def call
-    first_attempt = Price.search query, where: first_attempt_conditions
+    first_attempt = Price.search query, where: first_attempt_conditions, order: { amount: :asc }, includes: [:availability]
     second_attempt_dates = dates_without_price(first_attempt, availability_condition)
     return first_attempt unless second_attempt_dates.present?
-    second_attempt = Price.search query, where: second_attempt_conditions(second_attempt_dates)
+    second_attempt = Price.search query, where: second_attempt_conditions(second_attempt_dates), order: { amount: :asc }, includes: [:availability]
     third_attempt_dates = dates_without_price(second_attempt, second_attempt_dates)
     return (first_attempt.results + second_attempt.results) unless third_attempt_dates.present?
-    third_attempt = Price.search query, where: third_attempt_conditions(third_attempt_dates)
+    third_attempt = Price.search query, where: third_attempt_conditions(third_attempt_dates), order: { amount: :asc }, includes: [:availability]
     (first_attempt.results + second_attempt.results + third_attempt.results)
   end
 
@@ -28,20 +28,20 @@ class SearchPrices
     def first_attempt_conditions
       conditions = {}
       conditions[:available_on] = availability_condition
-      conditions[:adults]   = [params[:adults], 999]
-      conditions[:children] = [params[:children], 999]
+      conditions[:adults]   = params[:adults]
+      conditions[:children] = params[:children]
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = [params[:minimum_stay], 999]
+      conditions[:minimum_stay] = params[:minimum_stay]
       conditions
     end
 
     def second_attempt_conditions dates
       conditions = {}
       conditions[:available_on] = dates
-      conditions[:adults]   = { gte: params[:adults] }
-      conditions[:children] = { gte: params[:children] }
+      conditions[:adults]   = params[:adults]
+      conditions[:children] = { lte: params[:children] }
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = [params[:minimum_stay], 999]
+      conditions[:minimum_stay] = params[:minimum_stay]
       conditions
     end
 
@@ -50,7 +50,7 @@ class SearchPrices
       conditions[:available_on] = dates
       conditions[:adults]  = { gte: params[:adults] }
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = [params[:minimum_stay], 999]
+      conditions[:minimum_stay] = params[:minimum_stay]
       conditions[:adults_and_children] = { gte: (params[:adults].to_i + params[:children].to_i) }
       conditions
     end

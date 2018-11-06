@@ -190,6 +190,10 @@ class Lodging < ApplicationRecord
 
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
+      if params[:children].to_i > children.to_i && params[:lodging_id].blank?
+        params[:adults] = (params[:adults].to_i + (params[:children].to_i - children.to_i)).to_s
+        params[:children] = children.to_s
+      end
       SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights), self)
     end
 
