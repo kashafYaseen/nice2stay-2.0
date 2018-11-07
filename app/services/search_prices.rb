@@ -1,5 +1,7 @@
 class SearchPrices
   attr_reader :params
+  attr_reader :first_condition
+  attr_reader :second_condition
 
   def self.call(params)
     self.new(params).call
@@ -7,17 +9,14 @@ class SearchPrices
 
   def initialize(params)
     @params = params
+    set_conditions
   end
 
   def call
-    first_attempt = Price.search query, where: first_attempt_conditions, order: { amount: :asc }, includes: [:availability]
-    second_attempt_dates = dates_without_price(first_attempt, availability_condition)
-    return first_attempt unless second_attempt_dates.present?
-    second_attempt = Price.search query, where: second_attempt_conditions(second_attempt_dates), order: { amount: :asc }, includes: [:availability]
-    third_attempt_dates = dates_without_price(second_attempt, second_attempt_dates)
-    return (first_attempt.results + second_attempt.results) unless third_attempt_dates.present?
-    third_attempt = Price.search query, where: third_attempt_conditions(third_attempt_dates), order: { amount: :asc }, includes: [:availability]
-    (first_attempt.results + second_attempt.results + third_attempt.results)
+    result = Price.search(query, where: first_condition, order: { amount: :asc }, includes: [:availability]).results
+    query_dates = dates_without_price(result, availability_condition)
+    return result unless query_dates.present?
+    result += Price.search(query, where: second_condition, order: { amount: :asc }, includes: [:availability]).results
   end
 
   private
@@ -25,33 +24,37 @@ class SearchPrices
       params[:query].presence || "*"
     end
 
-    def first_attempt_conditions
-      conditions = {}
-      conditions[:available_on] = availability_condition
-      conditions[:adults]   = params[:adults]
-      conditions[:children] = params[:children]
-      conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = params[:minimum_stay]
-      conditions
+    def set_conditions
+      @first_condition = {}
+      first_condition[:_or] = []
+
+      @second_condition = {}
+      second_condition[:_or] = []
+
+      loop do
+        first_condition[:_or] << conditions_with(availability_condition, false)
+        second_condition[:_or] << conditions_with(availability_condition, true)
+        break if params[:adults].to_i >= params[:max_adults].to_i || params[:children].to_i <= 0
+        params[:adults] = (params[:adults].to_i + 1 ).to_s
+        params[:children] = (params[:children].to_i - 1).to_s
+      end
+      second_condition[:_or] = second_condition[:_or].reverse
     end
 
-    def second_attempt_conditions dates
+    def conditions_with dates, flexible_children
       conditions = {}
+      conditions[:_or] = []
       conditions[:available_on] = dates
       conditions[:adults]   = params[:adults]
-      conditions[:children] = { lte: params[:children] }
       conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = params[:minimum_stay]
-      conditions
-    end
+      conditions[:minimum_stay] = [params[:minimum_stay], 999]
 
-    def third_attempt_conditions dates
-      conditions = {}
-      conditions[:available_on] = dates
-      conditions[:adults]  = { gte: params[:adults] }
-      conditions[:lodging_id] = params[:lodging_id]
-      conditions[:minimum_stay] = params[:minimum_stay]
-      conditions[:adults_and_children] = { gte: (params[:adults].to_i + params[:children].to_i) }
+      if flexible_children
+        conditions[:children] = { gte: params[:children] }
+      else
+        conditions[:children] = params[:children]
+      end
+
       conditions
     end
 
