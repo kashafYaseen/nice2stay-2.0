@@ -28,17 +28,17 @@
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <div class="dropdown-item">
-                <label>Adults</label>
+                <label><%= t "search.adults" %></label>
                 <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
               </div>
 
               <div class="dropdown-item">
-                <label>Children</label>
+                <label><%= t "search.children" %></label>
                 <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
               </div>
 
               <div class="dropdown-item">
-                <label>Infants</label>
+                <label><%= t "search.babies" %></label>
                 <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
               </div>
 

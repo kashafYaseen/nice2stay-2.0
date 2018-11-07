@@ -10,6 +10,8 @@ nl:
     page_entries_info:
       more_pages:
         display_entries: "<b>%{last}</b> of <b>%{total}</b>"
+      one_page:
+        display_entries: "alle <b>%{count}</b> weergeven"
     select:
       prompt: Maak een keuze
     submit:
@@ -26,12 +28,52 @@ nl:
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
     search: Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...
     intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfort
-    intro_details: Elke accommodatie van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.
+    intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. Onze buitengewone collectie is zorgvuldig door ons team samengesteld en iedere plek wordt door ons bezocht.
     
   nav:
     land: Landen & regio's
-    collections: Collecties
-    
+    collections: Onze collecties
+    more_info: Meer informatie
+    also_like: Ook leuk voor u
+    reviews: Gemiddelde score & laatste reviews van Nice2stay klanten
+    home: Home
+    gallary: Foto's 
+    location: Locatie
+    reviews: Beoordelingen
+    info: Uitgebreide informatie
+    like: Ook leuk voor u 
+    back: zoekresultaat
+
+  reservations:
+    option: Optie (24H)
+    prebooking: Reservering
+
+  cart:
+    shopping_cart: Voeg toe aan winkelmandje
+    nice2stay: Geen reserverings bij nice2stay
+
+  information:
+    included: + Inclusief huursom
+    informatie: + Informatie
+    included_header: Inclusief huursom
+    informatie_header: Informatie
+
+  search:
+    adults: Volwassenen (>12j)
+    children: Kinderen (4-12j)
+    babies: Babies (0-3j)
+    guests: Gezelschap
+    dates: Periode
+    search_button: Zoek
+    bedrooms: Slaapkamers
+    bathrooms: Badkamers
+
+  footer:
+    support: Wilt u direct contact? 
+    support_details: Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com
+    support_bel: Bel
+    newsletter: ONZE NIEUWSBRIEF IS GEWELDIG
+    newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
     dates: 'data'
@@ -87,7 +129,6 @@ nl:
     nice2stay: Nice2stay
     email: 'Email: info@nice2stay.com'
     phone: 'Telefoon. 0031(0)23-8447005'
-
 
   pdf_invoice:
     invoice_booking_id: Factuur %{identifier}

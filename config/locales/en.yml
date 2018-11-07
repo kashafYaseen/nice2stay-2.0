@@ -54,11 +54,54 @@ en:
     advice_details: Expert advice and attentive service 
     search: Search for unique holiday homes, apartments and boutique hotels and more ...
     intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
-    intro_details: Each accommodation of Nice2stay must pass quality inspection, to ensure that it meets the high standards for comfort, quality and style.
+    intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France an Greece. All accommodations have been personally selected and visited by us. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
     
   nav:
     land: Countries & regions
-    collections: Collections
+    collections: Our collections
+    more_info: More information
+    also_like: You may also like
+    reviews: Ratings & Latest Customer reviews
+    home: Home
+    gallary: Photo gallary 
+    location: Location
+    reviews: Rating & Reviews 
+    info: Detailed information
+    like: You also like
+    back: Back to listing
+
+
+  information:
+    included: + Included rent
+    informatie: + Information
+    included_header: Included rent
+    informatie_header: Information
+
+  footer:
+    support: Direct contact? 
+    support_details: You can reach our multilingual team by phone from 9 AM - 5.30 PM ​on weekdays and on Saturday from 10 AM - 1 PM at 0031-238447005 or via the chat function​. ​And you can always send an email to info@nice2stay.com
+    support_bel: Call
+    newsletter: OUR NEWSLETTER IS AWESOME
+    newsletter_details: Browse new additions, last-minute deals, and special offers right from your inbox.
+  
+    search_button: Zoek
+
+  search:
+    adults: Adults (>12j)
+    children: Children (4-12j)
+    babies: Babies (0-3j)
+    guests: Guests
+    dates: Period
+    search_button: Search
+    bedrooms: Bedrooms
+    bathrooms: Bathrooms
+
+  reservations:
+    option: Option (24H)
+    prebooking: Booking Request
+
+  cart:
+    shopping_cart: Add to cart
 
   activerecord:
     errors:
