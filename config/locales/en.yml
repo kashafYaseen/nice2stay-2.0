@@ -87,9 +87,9 @@ en:
     search_button: Zoek
 
   search:
-    adults: Adults (>12j)
-    children: Children (4-12j)
-    babies: Babies (0-3j)
+    adults: Adults (>12y)
+    children: Children (4-12y)
+    babies: Babies (0-3y)
     guests: Guests
     dates: Period
     search_button: Search
