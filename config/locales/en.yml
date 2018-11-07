@@ -96,7 +96,12 @@ en:
     bedrooms: Bedrooms
     bathrooms: Bathrooms
 
+  reservations:
+    option: Option (24H)
+    prebooking: Booking Request
 
+  cart:
+    shopping_cart: Add to cart
 
   activerecord:
     errors:

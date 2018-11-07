@@ -33,7 +33,7 @@
 
                 <% [:prebooking, :option].each do |status| %>
                   <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-                  <label><%= status %></label>
+                  <label><%= t("reservations.#{status}") %></label>
                 <% end %>
               </p>
 

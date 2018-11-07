@@ -10,6 +10,8 @@ nl:
     page_entries_info:
       more_pages:
         display_entries: "<b>%{last}</b> of <b>%{total}</b>"
+      one_page:
+        display_entries: "alle <b>%{count}</b> weergeven"
     select:
       prompt: Maak een keuze
     submit:
@@ -41,6 +43,10 @@ nl:
     info: Uitgebreide informatie
     like: Ook leuk voor u 
     back: zoekresultaat
+
+  reservations:
+    option: Optie (24H)
+    prebooking: Reservering
 
   cart:
     shopping_cart: Voeg toe aan winkelmandje
@@ -123,7 +129,6 @@ nl:
     nice2stay: Nice2stay
     email: 'Email: info@nice2stay.com'
     phone: 'Telefoon. 0031(0)23-8447005'
-
 
   pdf_invoice:
     invoice_booking_id: Factuur %{identifier}
