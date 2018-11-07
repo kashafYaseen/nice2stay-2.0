@@ -41,7 +41,6 @@ class SearchLodgings
       conditions[:amenities]    = { all: params[:amenities_in] } if params[:amenities_in].present?
       conditions[:experiences]  = { all: params[:experiences_in] } if params[:experiences_in].present?
       conditions[:id]           = { not: params[:lodging_id] } if params[:lodging_id].present?
-      conditions[:_or]          = conditions[:check_in_day]  = params[:check_in].to_date.strftime("%A").downcase if params[:check_in].present?
       conditions
     end
 
@@ -104,15 +103,6 @@ class SearchLodgings
         { children: { gte: params[:children].to_i } },
         { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } }
       ]
-    end
-
-    def rules_condition
-      nights =  nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      {
-        minimum_stay: { gte: nights },
-        start_date: { lte: params[:check_in] },
-        end_date: { gte: params[:check_in] },
-      }
     end
 
     def merge_seo_filters
