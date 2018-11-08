@@ -82,8 +82,17 @@ class SearchLodgings
     def availability_condition
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
+
+      return { all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s) } unless params[:flexible_arrival].present?
+
       {
-        all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)
+        all: [
+          (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s),
+          ((Date.parse(check_in)+ 1.day)..(Date.parse(check_out)+ 1.day)).map(&:to_s),
+          ((Date.parse(check_in)+ 2.day)..(Date.parse(check_out)+ 2.day)).map(&:to_s),
+          ((Date.parse(check_in)- 1.day)..(Date.parse(check_out)- 1.day)).map(&:to_s),
+          ((Date.parse(check_in)- 2.day)..(Date.parse(check_out)- 2.day)).map(&:to_s),
+        ]
       }
     end
 
