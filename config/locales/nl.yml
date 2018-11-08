@@ -62,11 +62,13 @@ nl:
     adults: Volwassenen (>12j)
     children: Kinderen (4-12j)
     babies: Babies (0-3j)
-    guests: Gezelschap
+    guests: Gasten
     dates: Periode
     search_button: Zoek
     bedrooms: Slaapkamers
     bathrooms: Badkamers
+    check_in: aankomst
+    check_out: vertrek
 
   footer:
     support: Wilt u direct contact? 

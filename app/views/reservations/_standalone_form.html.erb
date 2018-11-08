@@ -2,7 +2,9 @@
      data-check-out="<%= params[:check_out]%>"
      data-url="<%= price_details_lodging_path(lodging) %>"
      data-validate-url="<%= validate_reservations_path %>"
-     data-months="1"></div>
+     data-months="1"
+     data-check-in-title="<%= t('search.check_in') %>"
+     data-check-out-title="<%= t('search.check_out') %>"></div>
 
 <div class="card-body">
   <div class="reservation-form-errors-<%= lodging.id %>">

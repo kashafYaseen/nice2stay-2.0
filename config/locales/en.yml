@@ -44,6 +44,7 @@ en:
         en: English
   filters:
     more_filters: 'More Filters'
+    sort_by: Sort by
 
   usp:
     inspect: Visited & inspected
@@ -95,6 +96,8 @@ en:
     search_button: Search
     bedrooms: Bedrooms
     bathrooms: Bathrooms
+    check_in: check in
+    check_out: check out
 
   reservations:
     option: Option (24H)
