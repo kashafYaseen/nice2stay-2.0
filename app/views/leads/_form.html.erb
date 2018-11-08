@@ -34,6 +34,7 @@
 
             <div class="col-10">
               <%= user.email_field :email, class: 'form-control' %>
+              <%= user.hidden_field :skip_validations, value: true %>
             </div>
           </div>
         </fieldset>

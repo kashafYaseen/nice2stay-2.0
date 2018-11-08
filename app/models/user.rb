@@ -21,8 +21,11 @@ class User < ApplicationRecord
   delegate :recent, to: :notifications, allow_nil: true, prefix: true
   delegate :name, to: :country, allow_nil: true, prefix: true
 
-  validates :first_name, :last_name, :city, :address, :country, :zipcode, :phone, presence: true, unless: :encrypted_password_changed?
+  validates :first_name, :last_name, presence: true, unless: :encrypted_password_changed?
+  validates :city, :address, :country, :zipcode, :phone, presence: true, unless: :skip_validations?
   before_validation :set_password
+
+  attr_accessor :skip_validations
 
   enum creation_status: {
     with_login: 0,
@@ -57,6 +60,10 @@ class User < ApplicationRecord
   def booking_in_cart
     bookings.create unless bookings_in_cart.present?
     bookings_in_cart.take
+  end
+
+  def skip_validations?
+    encrypted_password_changed? || skip_validations
   end
 
   private

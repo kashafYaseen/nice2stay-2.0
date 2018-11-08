@@ -20,7 +20,7 @@ class LeadsController < ApplicationController
     end
 
     def user_params
-      params[:lead].require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params[:lead].require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :skip_validations)
     end
 
     def lead_params
