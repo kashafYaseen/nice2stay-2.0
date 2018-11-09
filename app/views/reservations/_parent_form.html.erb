@@ -28,12 +28,12 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="dropdown-item">
               <label>Adults</label>
-              <%= f.number_field "adults#{id_sufix}", value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
+              <%= f.number_field "adults#{id_sufix}", value: no_of_adults(params[:adults] || f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
             </div>
 
             <div class="dropdown-item">
               <label>Children</label>
-              <%= f.number_field "children#{id_sufix}", value: f.object.children, min: 0, class: 'input-spinner parent-children children' %>
+              <%= f.number_field "children#{id_sufix}", value: (params[:children] || f.object.children), min: 0, class: 'input-spinner parent-children children' %>
             </div>
 
             <div class="dropdown-item">

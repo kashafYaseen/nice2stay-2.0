@@ -13,7 +13,7 @@
         </div>
 
         <div class="col-md-7 col-lg-7 col-xs-12">
-          <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none row" do %>
+          <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children]), class: "text-decoration-none row" do %>
             <div class="col-md-9 col-xs-12">
               <p class="card-text"><%= truncate(lodging.short_desc, length: 200) %></p>
                <p class="card-text">

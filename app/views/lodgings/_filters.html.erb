@@ -20,7 +20,25 @@
           </div>
 
           <section class="widget widget-categories col-md-12 p-0">
+            <div class="price-dropdown dropdown">
+              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title"><%= render_sort_text %></span>
+              </button>
+
+              <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+                <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
+                <a class="dropdown-item highest-price" href="#">Highest Price</a>
+                <a class="dropdown-item highest-rating" href="#">Highest Rating</a>
+                <a class="dropdown-item newest" href="#">Newest</a>
+                <a class="dropdown-item default" href="#">Default</a>
+                <%= hidden_field_tag :order, params[:order] %>
+              </div>
+            </div>
+          </section>
+
+          <section class="widget widget-categories col-md-12 p-0 pb-2 mb-2">
             <h3 class="widget-title"><%= "#{t('search.check_in')} - #{t('search.check_out')}" %></h3>
+            <div id="datepicker"></div>
 
             <div class="custom-control custom-checkbox">
               <%= check_box_tag :flexible_arrival, true, params[:flexible_arrival], class: "custom-control-input amenities" %>
@@ -31,51 +49,36 @@
               <%= check_box_tag :flexible_stay, true, params[:flexible_stay], class: "custom-control-input amenities" %>
               <%= label_tag :flexible_stay, nil, class: 'custom-control-label' %>
             </div>
-
-            <div id="datepicker"></div>
           </section>
 
-          <div class="dropdown guests-dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title"><%= t('search.guests') %></span>
-            </button>
+          <section class="widget widget-categories col-md-12 p-0">
+            <div class="dropdown guests-dropdown">
+              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title"><%= t('search.guests') %></span>
+              </button>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <div class="dropdown-item">
-                <label><%= t "search.adults" %></label>
-                <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
-              </div>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <div class="dropdown-item">
+                  <label><%= t "search.adults" %></label>
+                  <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
+                </div>
 
-              <div class="dropdown-item">
-                <label><%= t "search.children" %></label>
-                <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
-              </div>
+                <div class="dropdown-item">
+                  <label><%= t "search.children" %></label>
+                  <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
+                </div>
 
-              <div class="dropdown-item">
-                <label><%= t "search.babies" %></label>
-                <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
-              </div>
+                <div class="dropdown-item">
+                  <label><%= t "search.babies" %></label>
+                  <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
+                </div>
 
-              <div class="dropdown-item">
-                <%= submit_tag 'Done', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
+                <div class="dropdown-item">
+                  <%= submit_tag 'Done', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="price-dropdown dropdown">
-            <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title"><%= render_sort_text %></span>
-            </button>
-
-            <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
-              <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
-              <a class="dropdown-item highest-price" href="#">Highest Price</a>
-              <a class="dropdown-item highest-rating" href="#">Highest Rating</a>
-              <a class="dropdown-item newest" href="#">Newest</a>
-              <a class="dropdown-item default" href="#">Default</a>
-              <%= hidden_field_tag :order, params[:order] %>
-            </div>
-          </div>
+          </section>
 
           <section class="widget widget-categories col-md-12">
             <h3 class="widget-title">Price Range</h3>
