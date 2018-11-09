@@ -82,9 +82,24 @@ class SearchLodgings
     def availability_condition
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
-      {
-        all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)
-      }
+
+      return { all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s) } unless params[:flexible_arrival].present? || params[:flexible_stay].present?
+
+      dates = []
+      3.times do |index|
+        if params[:flexible_arrival].present?
+          dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s)
+          dates << ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) unless index == 0
+        end
+
+        if params[:flexible_stay].present?
+          dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out))).map(&:to_s)
+          dates << ((Date.parse(check_in))..(Date.parse(check_out) - index.day)).map(&:to_s)
+          dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) if index == 1
+        end
+      end
+
+      { all: dates }
     end
 
     def price_range
