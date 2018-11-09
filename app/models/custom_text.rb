@@ -1,7 +1,7 @@
 class CustomText < ApplicationRecord
-  belongs_to :country
-  belongs_to :region
-  belongs_to :experience
+  belongs_to :country, optional: true
+  belongs_to :region, optional: true
+  belongs_to :experience, optional: true
 
   translates :h1_text, :p_text, :meta_title, :meta_description, :category, :seo_path, :menu_title
 
