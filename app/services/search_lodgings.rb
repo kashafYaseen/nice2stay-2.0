@@ -85,15 +85,13 @@ class SearchLodgings
 
       return { all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s) } unless params[:flexible_arrival].present?
 
-      {
-        all: [
-          (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s),
-          ((Date.parse(check_in)+ 1.day)..(Date.parse(check_out)+ 1.day)).map(&:to_s),
-          ((Date.parse(check_in)+ 2.day)..(Date.parse(check_out)+ 2.day)).map(&:to_s),
-          ((Date.parse(check_in)- 1.day)..(Date.parse(check_out)- 1.day)).map(&:to_s),
-          ((Date.parse(check_in)- 2.day)..(Date.parse(check_out)- 2.day)).map(&:to_s),
-        ]
-      }
+      dates = []
+      3.times do |index|
+        dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s)
+        dates << ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) unless index == 0
+      end
+
+      { all: dates }
     end
 
     def price_range
