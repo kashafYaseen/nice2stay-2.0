@@ -83,20 +83,15 @@ class SearchLodgings
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
 
-      return { all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s) } unless params[:flexible_arrival].present? || params[:flexible_stay].present?
+      return { all: (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s) } unless params[:flexible_arrival].present?
 
       dates = []
       3.times do |index|
-        if params[:flexible_arrival].present?
-          dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s)
-          dates << ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) unless index == 0
-        end
-
-        if params[:flexible_stay].present?
-          dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out))).map(&:to_s)
-          dates << ((Date.parse(check_in))..(Date.parse(check_out) - index.day)).map(&:to_s)
-          dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) if index == 1
-        end
+        dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s)
+        dates << ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) unless index == 0
+        dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out))).map(&:to_s)
+        dates << ((Date.parse(check_in))..(Date.parse(check_out) - index.day)).map(&:to_s)
+        dates << ((Date.parse(check_in) + index.day)..(Date.parse(check_out) - index.day)).map(&:to_s) if index == 1
       end
 
       { all: dates }

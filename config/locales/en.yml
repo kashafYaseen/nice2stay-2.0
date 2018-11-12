@@ -98,6 +98,7 @@ en:
     bathrooms: Bathrooms
     check_in: check in
     check_out: check out
+    flexibility_text: flexible in dates (-/+ 2 days)
 
   reservations:
     option: Option (24H)
