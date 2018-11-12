@@ -39,7 +39,7 @@
 
             <div class="dropdown-item">
               <label><%= t 'search.babies' %></label>
-              <%= f.number_field :infants, value: f.object.infants, min: 0, class: 'input-spinner infants', id: "infants_#{lodging.id}" %>
+              <%= f.number_field :infants, value: (params[:infants] || f.object.infants), min: 0, class: 'input-spinner infants', id: "infants_#{lodging.id}" %>
             </div>
 
             <div class="dropdown-item">

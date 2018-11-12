@@ -19,20 +19,21 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <div class="dropdown-item">
                       <label><%= t 'search.adults' %></label>
-                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
+                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
                     </div>
 
                     <div class="dropdown-item">
                       <label><%= t 'search.children' %></label>
-                      <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
+                      <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
                     </div>
 
                     <div class="dropdown-item">
                       <label><%= t 'search.babies' %></label>
-                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
+                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
                     </div>
                   </div>
                 </div>
+                <%= hidden_field_tag :standalone, true %>
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn-sm' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
