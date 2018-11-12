@@ -77,7 +77,7 @@
       )
 
       Map.add_markers(false)
-      map.setZoom 15
+      map.setZoom 7
 
   Map.highlight_lodgings = ->
     $('.lodgings-list').on 'mouseenter', '.lodging-container', ->
