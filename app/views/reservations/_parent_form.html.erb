@@ -38,7 +38,7 @@
 
             <div class="dropdown-item">
               <label>Infants</label>
-              <%= f.number_field "infants#{id_sufix}", value: f.object.infants, min: 0, class: 'input-spinner parent-infants infants' %>
+              <%= f.number_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), min: 0, class: 'input-spinner parent-infants infants' %>
             </div>
 
             <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>

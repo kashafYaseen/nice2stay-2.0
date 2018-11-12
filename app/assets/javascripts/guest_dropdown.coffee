@@ -37,7 +37,6 @@
         $(dropdown).children('.dropdown-toggle').addClass 'btn-primary'
         $(dropdown).children('.dropdown-toggle').removeClass 'btn-outline-primary'
 
-
   update_types_text = ->
     text = ""
     text += " Villa" if $('#lodging_type_villa').is(":checked")
