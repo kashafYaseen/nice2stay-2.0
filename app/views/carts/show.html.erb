@@ -1,4 +1,16 @@
-<div class="container padding-top-1x padding-bottom-3x mb-2">
+<div class="page-title">
+      <div class="container">
+        <h1>Checkout</h1>
+        <ul class="breadcrumbs">
+          <li>bookings & options requests
+          </li>
+          <li class="separator">&nbsp;/&nbsp;</li>
+          <li>contact details</li>
+        </ul>
+      </div>
+    </div>
+
+<div class="container homepage padding-top-1x padding-bottom-3x mb-2">
   <div class="row">
     <!-- Checkout Address-->
     <div class="col-md-12">
@@ -10,7 +22,8 @@
       </div>
 
       <% if @booking.reservations.present? %>
-        <h6 class="text-small text-muted">Your bookings & options requests</h6>
+        <h5>Your bookings & options requests</h5>
+        <hr class="padding-bottom-1x">
         <div class="table-responsive shopping-cart">
           <table class="table">
             <thead>
@@ -43,7 +56,7 @@
 
         <div class="row">
           <div class="col-md-12">
-            <h4>Billing Information</h4>
+            <h5>Billing Information</h5>
             <hr class="padding-bottom-1x">
             <%= form_for @booking, url: carts_path do |f| %>
               <%= render 'shared/errors', resource: @booking %>
@@ -176,6 +189,39 @@
     </div>
   </div>
 </div>
+
+
+
+<section class="container padding-top-2x padding-bottom-2x">
+  <div class="row pt-2">
+    <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+      <span class="d-block display-4 text-gray-light mb-4">
+        <%= image_tag("usp_visit.png", :alt => "visit") %>
+      </span>
+
+      <h4 class="h6 mb-2"><%= t 'usp.inspect' %></h4>
+      <p class="text-sm text-muted mb-0"><%= t 'usp.inspect_details' %></p>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+      <span class="d-block display-4 text-gray-light mb-4">
+         <%= image_tag("usp_support.png", :alt => "visit") %>
+      </span>
+
+      <h4 class="h6 mb-2"><%= t 'usp.price' %></h4>
+      <p class="text-sm text-muted mb-0"><%= t 'usp.price_details' %></p>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+      <span class="d-block display-4 text-gray-light mb-4">
+        <%= image_tag("usp_support.png", :alt => "visit") %>
+      </span>
+
+      <h4 class="h6 mb-2"><%= t 'usp.advice' %></h4>
+      <p class="text-sm text-muted mb-0"><%= t 'usp.advice_details' %></p>
+    </div>
+  </div>
+</section>
 
 <% content_for :js_init do %>
   Cart.init();
