@@ -17,6 +17,7 @@
         values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
                   $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
                   $("#infants_#{lodging_id}").val(), lodging_id]
+        if values[4] == '' then values[4] = 0
 
         $('.search-results').addClass 'd-none'
         $(".#{$(this).val()}").removeClass 'd-none'
@@ -28,6 +29,7 @@
       values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
                 $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),
                 $("#infants_#{lodging_id}").val(), lodging_id]
+      if values[4] == '' then values[4] = 0
 
       if values.some(check_values)
         $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
