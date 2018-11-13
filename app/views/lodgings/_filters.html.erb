@@ -76,7 +76,7 @@
           </section>
 
           <section class="widget widget-categories col-md-12">
-            <h3 class="widget-title">Price Range</h3>
+            <p class="widget-title">Price Range</p>
 
             <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
               <div class="ui-range-slider"></div>
@@ -97,7 +97,7 @@
           </section>
 
           <section class="widget">
-            <h3 class="widget-title">Filter by Type</h3>
+            <p class="widget-title">Filter by Type</p>
             <% Lodging.lodging_types.each do |key, value| %>
               <div class="custom-control custom-checkbox">
                 <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
@@ -110,7 +110,7 @@
           </section>
 
           <section class="widget">
-            <h3 class="widget-title">Filter by Theme</h3>
+            <p class="widget-title">Filter by Theme</p>
             <% experiences.each do |experience| %>
               <div class="custom-control custom-checkbox">
                 <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experiences_in), id: "experience_#{experience.slug}", class: "custom-control-input experiences" %>
@@ -123,7 +123,7 @@
           </section>
 
           <section class="widget">
-            <h3 class="widget-title">Amenities - Popular</h3>
+            <p class="widget-title">Amenities - Popular</p>
             <% amenities.hot.each do |amenity| %>
               <div class="custom-control custom-checkbox">
                 <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}", class: "custom-control-input amenities" %>
@@ -136,7 +136,7 @@
           </section>
 
           <section class="widget">
-            <h3 class="widget-title">Amenities</h3>
+            <p class="widget-title">Amenities</p>
             <div class="filters-show-less amenities-list">
               <% amenities.regular.each do |amenity| %>
                 <div class="custom-control custom-checkbox">
