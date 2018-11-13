@@ -9,7 +9,6 @@
       <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
 
       <div class="col-md-12">
-
         <div class="row">
           <div class="col-md-12 p-0">
             <div class="pt-3 pb-1 pb-sm-3 text-sm">
@@ -45,6 +44,7 @@
               <%= label_tag :flexible_arrival, t('search.flexibility_text'), class: 'text-xxxs custom-control-label' %>
             </div>
           </section>
+
           <p class="widget-title">Reisgezelschap</p>
           <section class="widget widget-categories col-md-12 p-0">
             <div class="dropdown guests-dropdown">
@@ -74,14 +74,9 @@
               </div>
             </div>
           </section>
+
           <p class="widget-title">Price Range</p>
           <section class="widget widget-categories mr-1 col-md-12">
-            
-
-
-
-
-
             <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
               <div class="ui-range-slider"></div>
               <footer class="ui-range-slider-footer pt-3">
