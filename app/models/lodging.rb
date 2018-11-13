@@ -111,11 +111,11 @@ class Lodging < ApplicationRecord
   end
 
   def cumulative_price(params)
-    return "€#{price.round(2)}" unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
+    return "<h3>€#{price.round(2)}</h3><p class='price-text'> per night</p>".html_safe unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
     total_price = price_list(params.merge(flexible: false))[:rates].sum
     total_discount = discount(params)
     total_price -= total_price * (total_discount/100) if total_discount.present?
-    "€#{total_price.round(2)} for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights"
+    "<h3>€#{total_price.round(2)}</h3><p class='price-text'> for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights</p>".html_safe
   end
 
   def allow_check_in_days
@@ -176,6 +176,10 @@ class Lodging < ApplicationRecord
     price_text.try(:particularities_text)
   end
 
+  def lat_long
+    "#{latitude}, #{longitude}"
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|
@@ -187,7 +191,7 @@ class Lodging < ApplicationRecord
 
     def price_list(params)
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights), self)
+      SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i), self)
     end
 
     def discount(params)

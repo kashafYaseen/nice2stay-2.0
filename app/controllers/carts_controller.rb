@@ -2,6 +2,7 @@ class CartsController < ApplicationController
   before_action :empty_cart, only: [:remove, :destroy, :update]
   before_action :set_booking_and_cookie, only: [:show]
   before_action :set_user, only: [:update]
+  before_action :set_booking_details, only: [:details]
 
   def show
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
@@ -16,7 +17,8 @@ class CartsController < ApplicationController
   def update
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
     if @booking.save
-      redirect_to carts_path, notice: 'Booking was created successfully.'
+      cookies[:booking_details] = @booking.id
+      redirect_to details_carts_path, notice: 'Booking was created successfully.'
     else
       render :show
     end
@@ -25,6 +27,10 @@ class CartsController < ApplicationController
   def destroy
     @booking.reservations.delete_all
     redirect_to carts_path, notice: 'Cart was cleared successfully.'
+  end
+
+  def details
+    @user = @booking_details.user
   end
 
   private
@@ -56,5 +62,10 @@ class CartsController < ApplicationController
       return if @booking.present?
       @booking = Booking.create
       cookies[:booking] = @booking.id
+    end
+
+    def set_booking_details
+      @booking_details = Booking.find_by(id: cookies[:booking_details])
+      return redirect_to carts_path unless @booking_details.present?
     end
 end

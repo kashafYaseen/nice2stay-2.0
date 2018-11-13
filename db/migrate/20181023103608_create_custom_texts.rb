@@ -6,11 +6,7 @@ class CreateCustomTexts < ActiveRecord::Migration[5.2]
       t.text :p_text
       t.text :meta_title
       t.text :meta_description
-      t.string :redirect_url
-      t.string :country
-      t.string :region
       t.string :category
-      t.string :experience
 
       t.timestamps
     end

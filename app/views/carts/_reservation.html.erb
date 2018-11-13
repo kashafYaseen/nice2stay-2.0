@@ -1,33 +1,23 @@
 <tr>
-  <td>#<%= reservation.id %></td>
-  <td>
-    <div class="product-item">
-      <%= link_to reservation.lodging, class: 'product-thumb' do %>
-        <%= image_tag reservation.lodging_image %>
-      <% end %>
-
-      <div class="product-info">
-        <h4 class="product-title">
-          <%= link_to reservation.lodging_name, reservation.lodging %>
-        </h4>
-      </div>
-    </div>
+  <td class="text-center text-sm">
+    <%= link_to reservation.lodging do %>
+      <%= link_to reservation.lodging_name, reservation.lodging %>
+    <% end %>
   </td>
 
-  <td class="text-center text-lg text-medium"><%= reservation.total_nights %></td>
-  <td class="text-center text-lg text-medium"><%= render_reservation_dates(reservation) %></td>
-  <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
-  <td class="text-center text-lg text-medium"><%= reservation.children %></td>
-  <td class="text-center text-lg text-medium">$<%= reservation.rent %></td>
-  <td class="text-center text-lg text-medium">$<%= reservation.discount %></td>
+  <td class="text-center text-sm"><%= reservation.check_in %></td>
+  <td class="text-center text-sm"><%= reservation.check_out %></td>
+  <td class="text-center text-sm"><%= reservation.adults %></td>
+  <td class="text-center text-sm"><%= reservation.children %></td>
+  <td class="text-center text-sm"><%= reservation.infants %></td>
+  <td class="text-center text-sm">€<%= reservation.rent %></td>
+  <td class="text-center text-sm">€<%= reservation.cleaning_cost %></td>
+  <td class="text-center text-sm">€<%= reservation.rent + reservation.cleaning_cost %></td>
+  <td class="text-center text-sm"><%= reservation.booking_status %></td>
 
   <td class="text-center">
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart', remote: true do %>
       <i class="material-icons">close</i>
-    <% end %>
-
-    <%= link_to reservation.lodging, class: 'remove-from-cart' do %>
-      <i class="material-icons">edit</i>
-    <% end %>
+    <% end unless action_name == 'details' %>
   </td>
 </tr>

@@ -27,11 +27,16 @@
       let check_in = $('.persisted-data').data('check-in');
       let check_out = $('.persisted-data').data('check-out');
       let months = $('.persisted-data').data('months');
-      let today = this.get_yesterday()
+      let today = this.get_yesterday();
+      let check_in_title = $('.persisted-data').data('check-in-title');
+      let check_out_title = $('.persisted-data').data('check-out-title');
+
       return {
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
+        check_in_title: check_in_title ? check_in_title : 'check in',
+        check_out_title: check_out_title ? check_out_title : 'check out',
         disabled_dates: [],
         current_date: today,
         lodging_id: '',
@@ -50,13 +55,13 @@
         let formattedDates = ''
 
         if (!dateTwo && !dateOne){
-          formattedDates = 'Check in - Check out'
+          formattedDates =  `${this.check_in_title} - ${this.check_out_title}`
           $('#datepicker-trigger').addClass('btn-outline-primary');
           $('#datepicker-trigger').removeClass('btn-primary');
         }
 
         if (dateOne) {
-          formattedDates = format(dateOne, this.dateFormat) + ' - Check out'
+          formattedDates =  `${format(dateOne, this.dateFormat)} - ${this.check_out_title}`
           $('#datepicker-trigger').removeClass('btn-outline-primary');
           $('#datepicker-trigger').addClass('btn-primary');
         }

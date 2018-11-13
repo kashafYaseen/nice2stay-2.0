@@ -62,13 +62,13 @@ class SearchPriceWithFlexibleDates
   private
     def search_price_with_defaults
       lodging.flexible_search = false
-      price_list = SearchPrices.call(params).sort.uniq(&:available_on).pluck(:amount)
+      price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
       price_list = price_list + [lodging.price] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
       return { rates: price_list, search_params: params, valid: valid?(params) }
     end
 
     def search_price_with(params)
-      price_list = SearchPrices.call(params).sort.uniq(&:available_on).pluck(:amount)
+      price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
       price_list = price_list + [lodging.price] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
       return { rates: price_list, search_params: params, valid: valid?(params) }
     end

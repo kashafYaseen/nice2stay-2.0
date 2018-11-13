@@ -23,7 +23,18 @@ window.initDatePicker = function() {
   if ($('#datepicker').length) {
     new Vue({
       el: '#datepicker',
-      render: h => h(Datepicker)
+      render(h) {
+        return h(Datepicker, { props: {monthsToShow: 2, triggerId: 'trigger-range'} })
+      }
+    })
+  }
+
+  if ($('#searchbar-datepicker').length) {
+    new Vue({
+      el: '#searchbar-datepicker',
+      render(h) {
+        return h(Datepicker, { props: {monthsToShow: 1, triggerId: 'trigger-range-searchbar', columnClass: 'col-md-12 pl-2'} })
+      }
     })
   }
 

@@ -49,7 +49,7 @@ module LodgingsHelper
   end
 
   def image_tag_with_link lodging, image_path, options = {}
-    link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out]), class: "text-decoration-none" do
+    link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants]), class: "text-decoration-none" do
       image_tag(image_path, options)
     end
   end

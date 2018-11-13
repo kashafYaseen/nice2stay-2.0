@@ -149,13 +149,6 @@
   max-height: 75vh;
 }
 
-.lodging-container {
-  .lodging-selected {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin: 3px;
-  }
-}
-
 #loader {
   position: fixed;
   top: 50%;
@@ -164,7 +157,7 @@
 }
 
 #sidebar {
-  width: 360px;
+  width: 25%;
   position: fixed;
   top: 70px;
   right: 0;
@@ -287,4 +280,20 @@ div.review-paginator {
 
 .modal-xlg {
   max-width: 1000px;
+}
+
+.address-mark {
+  height: 670px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sub-menubar {
+  z-index: 2;
+  position: fixed;
+  background-color: white;
+  transition: top 0.3s;
+  top: 20px;
+  
+
 }

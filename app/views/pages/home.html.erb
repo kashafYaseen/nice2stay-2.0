@@ -13,28 +13,29 @@
 
                 <div class="dropdown guests-dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="title">Guest</span>
+                    <span class="title"><%= t 'search.guests' %></span>
                   </button>
 
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <div class="dropdown-item">
-                      <label>Adults</label>
-                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
+                      <label><%= t 'search.adults' %></label>
+                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
                     </div>
 
                     <div class="dropdown-item">
-                      <label>Children</label>
-                      <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
+                      <label><%= t 'search.children' %></label>
+                      <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
                     </div>
 
                     <div class="dropdown-item">
-                      <label>Infants</label>
-                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
+                      <label><%= t 'search.babies' %></label>
+                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
                     </div>
                   </div>
                 </div>
-
-                <%= submit_tag 'SEARCH', class: 'btn btn-primary btn-sm' %>
+                <%= hidden_field_tag :standalone, true %>
+                <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn-sm' , data: { disable_with: t('search.search_button') }
+                %>
               </div>
           </div>
         <% end %>
@@ -81,17 +82,17 @@
 
       <p><%= t 'usp.intro_details' %></p>
 
-      <%= link_to 'more information', over_ons_pages_path(locale: locale), class: 'btn btn-outline-primary' %>
+      <%= link_to t('nav.more_info'), over_ons_pages_path(locale: locale), class: 'btn btn-outline-primary' %>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-3"></div>
-    <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
+    <div class="col-xs-12 col-sm-6 col-md-2"></div>
+    <div class="col-xs-12 col-sm-6 col-md-4  homepage_image"></div>
   </div>
 </div>
 
 <% if @custom_texts.present? %>
   <section class="container padding-top-3x pb-5">
-    <h2 class="text-center mb-30">Our collection</h2>
+    <h2 class="text-center mb-30"><%= t 'nav.collections' %></h2>
 
     <div class="isotope-grid cols-2">
       <div class="gutter-sizer"></div>
@@ -113,7 +114,7 @@
 <% if @all_reviews.present? %>
   <div class="leads_homepage">
     <section class="container padding-top-3x pb-5">
-       <h2 class="text-center mb-30">Rating & Latest Customer Reviews</h2>
+       <h2 class="text-center mb-30"><%= t 'nav.reviews' %></h2>
       <div class="row mt-30">
         <div class="col-md-4 mb-4">
           <%= render 'reviews/average_rating', reviews: @all_reviews %>
@@ -133,35 +134,24 @@
   </div>
 <% end %>
 
-<div class="padding-bottom-1x pt-5 mb-1">
   <div class="container">
-    <div class="col-md-12 padding-top-1x">
+    <div class="col-md-12 ml-0 padding-top-1x">
       <h3 class="card-title text-center ">In the spotlight</h3>
 
-      <div class="row mb-3 you-may-like-lodgings">
+      <div class="you-may-like-lodgings">
         <%= render @lodgings %>
       </div>
     </div>
   </div>
-</div>
+
+<div class="homepage">
 
 <section class="container padding-top-3x pb-5">
   <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
   <%= render 'leads/form', lead: @lead, countries: @countries_enabled %>
 </section>
+ </div>
 
-<% if not user_signed_in? %>
-  <div class="leads_homepage">
-    <section class="container padding-top-3x pb-5">
-       <h2 class="mb-3">New ? signup for nice2stay account......</h2>
-        <p>Share you're favorites, get the latest deals, and much more...</p>
-        <%= link_to 'GET STARTED WITH THE ACCOUNT', new_user_registration_path, class: 'btn btn-outline-primary' %>
-        <a class="btn btn-white" href="#">Who is nice2stay?</a>
-        </div>
-      </div>
-    </section>
-  </div>
-<% end %>
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");

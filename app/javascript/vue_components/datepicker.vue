@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div :class="this.columnClass">
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary btn-sm" id="trigger-range">{{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary btn-sm" :class="this.columnClass" :id="this.triggerId">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
-        :trigger-element-id="'trigger-range'"
+        :trigger-element-id="this.triggerId"
         :date-one="check_in"
         :date-two="check_out"
         @date-one-selected="val => { check_in = val }"
         @date-two-selected="val => { check_out = val }"
+        :months-to-show="this.monthsToShow"
         @apply="onApplyMethod"
         :min-date="this.yesterday"
       ></airbnb-style-datepicker>
@@ -21,6 +22,8 @@
   import format from 'date-fns/format'
 
   export default {
+    props: ['monthsToShow', 'triggerId', 'columnClass'],
+
     data() {
       let check_in = $('.lodgings-filters').data('check-in');
       let check_out = $('.lodgings-filters').data('check-out');
@@ -28,7 +31,7 @@
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
-        yesterday: this.getYesterday()
+        yesterday: this.getYesterday(),
       }
     },
     methods: {
@@ -46,8 +49,10 @@
         return formattedDates
       },
       onApplyMethod(e) {
-        $('#loader').show();
-        Rails.fire($('.lodgings-filters').get(0), 'submit');
+        if($('.lodgings-filters').length > 0) {
+          $('#loader').show();
+          Rails.fire($('.lodgings-filters').get(0), 'submit');
+        }
       },
       getYesterday() {
         var d = new Date();
