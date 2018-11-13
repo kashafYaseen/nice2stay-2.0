@@ -1,0 +1,41 @@
+<div class="toolbar-section" id="search">
+  <%= form_tag lodgings_path, method: :get, id: 'searchbar_search_form' do %>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 pt-2">
+        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field', id: 'searchbar_query' %>
+      </div>
+
+      <div class="col-md-12 col-sm-12">
+        <div class="row homepage-actions-row pt-0">
+          <div id="searchbar-datepicker"></div>
+
+          <div class="dropdown guests-dropdown-searchbar col-md-12 pl-2">
+            <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="searchbar-guest-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= t 'search.guests' %></span>
+            </button>
+
+            <div class="dropdown-menu" aria-labelledby="searchbar-guest-dropdown">
+              <div class="dropdown-item">
+                <label><%= t 'search.adults' %></label>
+                <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults', id: 'searchbar_adults' %>
+              </div>
+
+              <div class="dropdown-item">
+                <label><%= t 'search.children' %></label>
+                <%= number_field_tag :children, params[:children], min: 0, class: 'children', id: 'searchbar_children' %>
+              </div>
+
+              <div class="dropdown-item">
+                <label><%= t 'search.babies' %></label>
+                <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants', id: 'searchbar_infants' %>
+              </div>
+            </div>
+          </div>
+          <%= hidden_field_tag :standalone, true, id: 'searchbar_standalone', class: 'standalone' %>
+          <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn-sm col-md-12' , data: { disable_with: t('search.search_button') }
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
