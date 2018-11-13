@@ -228,27 +228,7 @@
       </div>
 
       <!-- Search Section-->
-      <div class="toolbar-section" id="search">
-        <%= form_tag lodgings_path, method: :get, id: 'dates-form', data: { check_in: params[:check_in], check_out: params[:check_out] } do %>
-          <%= text_field_tag :query, params[:query], placeholder: "Type your search query or nothing", class: 'form-control autocomplete', id: "navbar-autocomplete" %>
-          <%= hidden_field_tag :adults, params[:adults], id: :dates_adults if params[:adults].present? %>
-          <%= hidden_field_tag :children, params[:children], id: :dates_children if params[:children].present? %>
-          <%= hidden_field_tag :infants, params[:infants], id: :dates_infants if params[:infants].present? %>
-
-          <%= hidden_field_tag :min_price, params[:min_price], id: :dates_min_price if params[:min_price].present? %>
-          <%= hidden_field_tag :max_price, params[:max_price], id: :dates_max_price if params[:max_price].present? %>
-          <%= hidden_field_tag :order, params[:order], id: :dates_order if params[:order].present? %>
-
-          <%# if params[:lodging_type_in].present? %>
-            <%# params[:lodging_type_in].each do |lodging_type| %>
-              <%#= hidden_field_tag 'lodging_type_in[]', lodging_type, id: "dates_lodging_type_#{lodging_type}" %>
-            <%# end %>
-          <%# end %>
-
-          <%= submit_tag 'SEARCH', class: 'col-md-12 btn btn-primary btn-sm' %>
-         <% end %>
-        <!-- Products-->
-      </div>
+      <%= render 'shared/search' %>
       <!-- Account Section-->
       <%= render 'shared/account' %>
       <!-- Shopping Cart Section-->
