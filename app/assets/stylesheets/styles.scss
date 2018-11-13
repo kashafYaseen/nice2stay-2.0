@@ -1504,7 +1504,7 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin: 0;
   color: #404040;
-  font-family: inherit;
+  font-family: 'Playfair Display', serif;
   font-style: normal;
   text-transform: none;
 }
@@ -1650,6 +1650,9 @@ h6, .h6 {
 
 p {
   margin: 0 0 20px;
+  font-size: 14px;
+  letter-spacing: 1.1px;
+  color: #606060;
 }
 
 .lead {
@@ -1665,8 +1668,13 @@ p {
 }
 
 .text-xxs {
+  font-size: 13px;
+}
+
+.text-xxxs {
   font-size: 12px;
 }
+
 
 strong {
   font-weight: 600;
@@ -1677,6 +1685,9 @@ ul, ol {
   margin-bottom: 16px;
   padding-left: 18px;
   line-height: 1.8;
+  font-size: 14px;
+  letter-spacing: 1.1px;
+  color: #606060;
 }
 
 ul ul, ul ol, ol ul, ol ol {
@@ -1974,7 +1985,7 @@ select.form-control.form-control-sm:not([size]):not([multiple]) {
 .custom-control .custom-control-label {
   margin: 0;
   padding-left: 0;
-  font-size: 14px;
+  font-size: 13px;
   text-transform: none;
 }
 
@@ -5450,7 +5461,7 @@ video {
   color: #404040;
   font-size: 14px;
   font-weight: normal;
-  text-transform: uppercase;
+  
 }
 
 .widget-title small {
