@@ -3,12 +3,13 @@
 
   GuestDropdown.init = ->
     $(".guests-dropdown input[type='number']").InputSpinner();
+    $(".guests-dropdown-searchbar input[type='number']").InputSpinner();
     update_text($('.guests-dropdown'))
     update_types_text()
-    $('.guests-dropdown .dropdown-menu').click (e) ->
+    $('.guests-dropdown .dropdown-menu, .guests-dropdown-searchbar .dropdown-menu').click (e) ->
       e.stopPropagation()
 
-    $('.guests-dropdown').on 'hide.bs.dropdown', (e) ->
+    $('.guests-dropdown, .guests-dropdown-searchbar').on 'hide.bs.dropdown', (e) ->
       update_text($(e.target))
 
     $('.guests-dropdown .submit-filters, .guests-dropdown .btn-calculate-bill').click ->
