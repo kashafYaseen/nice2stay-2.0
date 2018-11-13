@@ -69,6 +69,7 @@ nl:
     bathrooms: Badkamers
     check_in: aankomst
     check_out: vertrek
+    filter: Aankomst en Vetrek
     flexibility_text: flexibel qua data (-/+ 2 dagen)
 
   footer:
