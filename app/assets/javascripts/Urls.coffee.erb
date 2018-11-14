@@ -4,8 +4,8 @@
   Url.update = (base_url) ->
     params = ""
     if $('#bounds').val()    then params += "&bounds=#{$('#bounds').val()}"
-    if $('.check-in').val()  then params += "&check_in=#{$('.check-in').val()}"
-    if $('.check-out').val() then params += "&check_out=#{$('.check-out').val()}"
+    if $('.lodgings-filters .check-in').val()  then params += "&check_in=#{$('.lodgings-filters .check-in').val()}"
+    if $('.lodgings-filters .check-out').val() then params += "&check_out=#{$('.lodgings-filters .check-out').val()}"
     if $('#adults').val()    then params += "&adults=#{$('#adults').val()}"
     if $('#children').val()  then params += "&children=#{$('#children').val()}"
     if $('#infants').val()   then params += "&infants=#{$('#infants').val()}"
