@@ -16,6 +16,7 @@
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
 
+
 .homepage-cover {
   background-image: asset-url('mongibello');
   background-position: center;
@@ -29,6 +30,9 @@
 .fixed-filter {
   background: #f5f5f5;
 }
+
+
+
 
 .max-image{
   max-height: 620px;
@@ -102,6 +106,15 @@
   padding: 0 !important;
 }
 
+.region-menu > ul > li > a {
+  
+  padding: 4px 20px;
+  font-size: 12px;
+  color: #999999;
+  
+}
+
+
 .mega-menu {
   display: none;
   position: absolute;
@@ -114,6 +127,8 @@
   background-color: #ffffff;
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
+
+
 
 .mega-menu > li {
   display: table-cell;
@@ -6302,7 +6317,7 @@ video {
 .navbar {
   position: relative;
   top: 0;
-  left: 0;
+  right: 0;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
@@ -6317,9 +6332,34 @@ video {
 
 .navbar.navbar-sticky {
   position: fixed;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
 }
 
 .navbar.navbar-sticky + * {
+  margin-top: 70px;
+}
+
+
+.country {
+  position: relative;
+  top: 0;
+  right: 0;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  z-index: 9000;
+}
+
+.country.country-sticky {
+  position: fixed;
+  
+}
+
+.country-sticky + * {
   margin-top: 70px;
 }
 

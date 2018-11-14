@@ -10,7 +10,9 @@
   </div>
 </div>
 
+
 <div class="container homepage padding-top-1x padding-bottom-3x mb-2">
+
   <div class="row">
     <!-- Checkout Address-->
     <div class="col-md-12">
@@ -56,7 +58,38 @@
 
         <div class="row">
           <div class="col-md-12">
-            <h5>Billing Information</h5>
+             
+              <div class="col-md-6">
+             <% if user_signed_in? %>
+              <%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-primary btn-block', method: :delete %>
+              <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary btn-block' %>
+              <%= link_to 'Dashboard', dashboard_path, class: 'btn btn-primary btn-block' %>
+            </div>
+
+
+            <% else %>
+            <div class="row">
+
+            <div class="col-md-6">
+
+            <h5>U bent niet ingelogd</h5>
+            <p>Log in met uw account. Al eerder geboekt bij nice2stay?  Activeer dan uw account. </p>
+            </div>
+
+            
+            <div class="col-md-6">
+            <%= render 'devise/sessions/form' %>
+            <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+             </div>
+            <% end %>
+             </div>
+              </div>
+              </div>
+              </div>
+
+          <div class="row">
+          <div class="col-md-12">  
+            <h5>Guest Information</h5>
             <hr class="padding-bottom-1x">
             <%= form_for @booking, url: carts_path do |f| %>
               <%= render 'shared/errors', resource: @booking %>
