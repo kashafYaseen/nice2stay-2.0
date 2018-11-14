@@ -16,7 +16,6 @@
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
 
-
 .homepage-cover {
   background-image: asset-url('mongibello');
   background-position: center;
@@ -30,9 +29,6 @@
 .fixed-filter {
   background: #f5f5f5;
 }
-
-
-
 
 .max-image{
   max-height: 620px;
@@ -48,7 +44,6 @@
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
-
 
 .sub-menu > li {
   display: block;
@@ -107,13 +102,10 @@
 }
 
 .region-menu > ul > li > a {
-  
   padding: 4px 20px;
   font-size: 12px;
   color: #999999;
-  
 }
-
 
 .mega-menu {
   display: none;
@@ -127,8 +119,6 @@
   background-color: #ffffff;
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
-
-
 
 .mega-menu > li {
   display: table-cell;
@@ -6339,7 +6329,6 @@ video {
   margin-top: 70px;
 }
 
-
 .country {
   position: relative;
   top: 0;
@@ -6356,7 +6345,6 @@ video {
 
 .country.country-sticky {
   position: fixed;
-  
 }
 
 .country-sticky + * {
