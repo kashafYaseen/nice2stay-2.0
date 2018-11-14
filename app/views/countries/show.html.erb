@@ -6,7 +6,8 @@
       <section class="padding-top-10x padding-bottom-10x homepage-cover">
       </section>
       <section class="padding-top-3x pb-5">
-        <h2 class="mb-30"><%= @country.title %></h2>
+        <h2 class="mb-3"><%= @country.title %></h2>
+        <h5 class="card-title text-muted margin-bottom-1x">Ervaar een ideale vakantie in <%= @country.name.capitalize %></h5>
         <p> <%= @country.content.try(:html_safe) %></p>
       </section>
 
