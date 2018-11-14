@@ -20,8 +20,9 @@ nl:
       update: "%{model} bijwerken"
 
   usp:
+    verhaal: Mooie verhalen beginnen hier...
     inspect: Bezocht & geïnspecteerd
-    homepage: Ontdek meer dan 1000 unieke vakantiehuizen, appartementen en ​boutique hotels
+    homepage: Unieke collectie van unieke vakantiehuizen, appartementen en ​boutique hotels
     inspect_details: Elke accommodatie is door ons team geïnspecteerd
     price: Transparante prijzen
     price_details: Transparante prijzen, geen verborgen boekingskosten
@@ -65,7 +66,7 @@ nl:
     babies: Babies (0-3j)
     guests: Gasten
     dates: Periode
-    search_button: Zoek
+    search_button: Zoek nu
     bedrooms: Slaapkamers
     bathrooms: Badkamers
     check_in: aankomst

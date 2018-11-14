@@ -3,7 +3,8 @@
     <div class="row">
 
     <div class="col-md-8 pt-4">
-      <section class="padding-top-10x padding-bottom-10x homepage-cover">
+      <section>
+        <%= image_tag @country.image %>
       </section>
       <section class="padding-top-3x pb-5">
         <h2 class="mb-3"><%= @country.title %></h2>
@@ -12,7 +13,7 @@
       </section>
 
       <div class="row">
-      <div class="p-3 homepage">
+      <div class="p-3 leads_homepage">
         
           <div class="col-md-12 ml-2 padding-top-1x">
             <h3 class="mb-3">
@@ -75,9 +76,56 @@
       <section class="padding-top-1x ">
         <h3 class="mb-20"><%= @country.name.capitalize %></h2>
           <hr class="mt-1"></hr>
+      
+       
+      </section>
+
+       <section class="padding-top-1x">
+        <div class="col-md-12 padding-top-1x padding-bottom-2x homepage">
+        <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 pt-2">
+              <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+              <div class="row homepage-actions-row pt-0">
+                <div id='datepicker'></div>
+
+                <div class="dropdown guests-dropdown">
+                  <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="title"><%= t 'search.guests' %></span>
+                  </button>
+
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <div class="dropdown-item">
+                      <label><%= t 'search.adults' %></label>
+                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
+                    </div>
+
+                    <div class="dropdown-item">
+                      <label><%= t 'search.children' %></label>
+                      <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
+                    </div>
+
+                    <div class="dropdown-item">
+                      <label><%= t 'search.babies' %></label>
+                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
+                    </div>
+                  </div>
+                </div>
+                <%= hidden_field_tag :standalone, true %>
+                <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
+                %>
+              </div>
+          </div>
+        <% end %>
+        </div>
        
        
       </section>
+
+      
 
       <section class="widget-links">
 
@@ -98,48 +146,7 @@
                 <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
 
               </section>
-      <h5 class="mt-5">Zoek</h2>
-              <hr class="mt-0"></hr>
-
-        <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
-          <div class="row">
-            <div class="col-md-12 col-sm-12 pt-2">
-              <%= text_field_tag :query, params[:query], :placeholder => t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
-            </div>
-
-            <div class="col-md-12 col-sm-12">
-              <div class="row homepage-actions-row pt-0">
-                <div id='datepicker'></div>
-
-                <div class="dropdown guests-dropdown">
-                  <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="title">Guest</span>
-                  </button>
-
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <div class="dropdown-item">
-                      <label>Adults</label>
-                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label>Children</label>
-                      <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label>Infants</label>
-                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
-                    </div>
-                  </div>
-                </div>
-
-                <%= submit_tag 'SEARCH', class: 'btn btn-primary btn-sm' %>
-              </div>
-          </div>
-        <% end %>
        </div>
-    </div>
    </div>
   </div>
   </div>

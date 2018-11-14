@@ -16,6 +16,17 @@
   box-shadow: 0 7px 22px -5px rgba(0, 0, 0, 0.2);
 }
 
+.sideNav
+{
+    padding: 10px 0;
+    position: fixed;
+    right: 1%;
+    top: 7%;
+    bottom: 0px;
+    
+    background-color: #fff;
+    z-index: 1020;
+}
 
 .homepage-cover {
   background-image: asset-url('mongibello');
@@ -2587,6 +2598,7 @@ button:focus {
 .btn-warning,
 .btn-danger {
   color: #ffffff;
+  font-weight: 600;
 }
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus,

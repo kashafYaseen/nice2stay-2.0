@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <div class="row">
 
-    <div class="col-md-7 pt-4">
+    <div class="col-md-8 pt-4">
       <section class="padding-top-10x padding-bottom-10x homepage-cover">
       </section>
       <section class="padding-top-2x pb-5 ">
@@ -81,9 +81,12 @@
 
 
 
-    <div class="col-md-5">
+
+
+
+    <div class="col-md-4">
       <section class="padding-top-1x">
-        <h2 class="mb-3">Mooie verhalen beginnen hier...</h2>
+        <h3 class="mb-3"><%= t 'usp.verhaal' %></h3>
          <hr class="mt-1"></hr>
         <div class="col-md-12 padding-top-1x padding-bottom-2x homepage">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
@@ -119,7 +122,7 @@
                   </div>
                 </div>
                 <%= hidden_field_tag :standalone, true %>
-                <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn-sm' , data: { disable_with: t('search.search_button') }
+                <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
           </div>
@@ -141,14 +144,35 @@
                 </ul>
                
               </section>
+
+       <section class="widget-tags">
+            <h5 class="mt-5 mb-10">Nice2stay</h3>
+
+              <% @pages.each do |page| %>
+                <%= link_to page.title, page_path(page), class: "tag" %>
+              <% end %>
+
+
+
+              </section>
+
       
       <section class="widget-tags">
-                <h5 class="mt-5 mb-10">Populair collections</h3>
+          <h5 class="mt-5 mb-10">Populair collections</h3>
 
-                
-                <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
-                 <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
-                  <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+          
+          <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+           <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+            <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+
+              </section>
+
+       <section class="widget-tags">
+            <h5 class="mt-5 mb-10">Countries</h3>
+
+              <% @countries_enabled.each do |country| %>
+                <%= link_to country.name, country_path(country, locale: locale), class: "tag" %> 
+              <% end %>
 
               </section>
 
