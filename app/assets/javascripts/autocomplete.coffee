@@ -8,7 +8,7 @@
       limit: 4
       source: source(url, 'countries')
       templates:
-        header: '<p class="category-name font-italic text-sm">Countries</p>',
+        header: '<p class="category-name font-italic text-xxs">Countries</p>',
         suggestion: (country) -> suggestion(country)
     }, {
       name: 'regions'
@@ -16,7 +16,7 @@
       limit: 4
       source: source(url, 'regions')
       templates:
-        header: '<p class="category-name font-italic text-sm">Regions</p>'
+        header: '<p class="category-name font-italic text-xxs">Regions</p>'
         suggestion: (region) -> suggestion(region)
     }, {
       name: 'collections'
@@ -24,7 +24,7 @@
       limit: 4
       source: source(url, 'campaigns')
       templates:
-        header: '<p class="category-name font-italic text-sm">Collections</p>'
+        header: '<p class="category-name font-italic text-xxs">Collections</p>'
         suggestion: (collection) -> suggestion(collection)
     }, {
       name: 'accommodations'
@@ -32,7 +32,7 @@
       limit: 5
       source: source(url, 'lodgings')
       templates:
-        header: '<p class="category-name font-italic text-sm">Accommodations</p>'
+        header: '<p class="category-name font-italic text-xxs">Accommodations</p>'
         suggestion: (lodging) -> suggestion(lodging)
     }
 
@@ -54,7 +54,7 @@
       <div class='row'>
         <div class='col-12'>
           #{remove_strip_tags item.name} </br>
-          #{if item.type == 'lodging' then "<span class='font-italic text-xs'>#{remove_strip_tags item.title}</span>" else ""}
+          #{if item.type == 'lodging' then "<span class='font-italic text-xxs'>#{remove_strip_tags item.title}</span>" else ""}
         </div>
       </div
     </div>"
