@@ -99,6 +99,7 @@ en:
     check_in: check in
     check_out: check out
     flexibility_text: flexible in dates (-/+ 2 days)
+    date_filter: Arrival and Departure
 
   reservations:
     option: Option (24H)

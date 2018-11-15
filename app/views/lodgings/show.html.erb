@@ -59,19 +59,21 @@
 
     <div class="bg-white padding-bottom-1x pt-5 mb-1">
       <div class="card-body col-md-9">
-        <h3 class="card-title"><%= @lodging.h1 %></h3>
+        <h2 class="card-title"><%= @lodging.h1 %></h2>
           <h5 class="card-title text-muted margin-bottom-2x"><%= @lodging.h2 %></h3>
 
           <div class="row homepage">
           <div class="col-md-3  col-xs-6 margin-top-1x">
-            <b><%= @lodging.adults %></b> <%= t 'search.adults' %> <br>
+            <h6>
+              <b><%= @lodging.adults %></b> <%= t 'search.adults' %> <br>
 
-            <% if @lodging.children.present? %>
-              <b><%= @lodging.children %></b> <%= t 'search.children' %><br>
-            <% end %>
+              <% if @lodging.children.present? %>
+                <b><%= @lodging.children %></b> <%= t 'search.children' %><br>
+              <% end %>
 
-            <b><%= @lodging.beds %></b> <%= t 'search.bedrooms' %><br>
-            <b><%= @lodging.baths %></b> <%= t 'search.bathrooms' %>
+              <b><%= @lodging.beds %></b> <%= t 'search.bedrooms' %><br>
+              <b><%= @lodging.baths %></b> <%= t 'search.bathrooms' %>
+            </h6>
           </div>
 
           <div class="col-md-5 col-xs-6 margin-top-1x margin-bottom-1x">

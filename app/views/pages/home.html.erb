@@ -1,4 +1,4 @@
-<section class="fw-section padding-top-7x padding-bottom-8x homepage-cover">
+<section class="fw-section padding-top-7x padding-bottom-4x homepage-cover">
   <div class="container">
     <div class="col-md-6 col-xs-12">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
@@ -51,8 +51,8 @@
         <%= image_tag("usp_visit.png", :alt => "visit") %>
       </span>
 
-      <h4 class="h6 mb-2"><%= t 'usp.inspect' %></h4>
-      <p class="text-sm text-muted mb-0"><%= t 'usp.inspect_details' %></p>
+      <h4 class="h5 mb-2"><%= t 'usp.inspect' %></h4>
+      <p class="text-muted mb-0"><%= t 'usp.inspect_details' %></p>
     </div>
 
     <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
@@ -60,8 +60,8 @@
          <%= image_tag("usp_support.png", :alt => "visit") %>
       </span>
 
-      <h4 class="h6 mb-2"><%= t 'usp.price' %></h4>
-      <p class="text-sm text-muted mb-0"><%= t 'usp.price_details' %></p>
+      <h4 class="h5 mb-2"><%= t 'usp.price' %></h4>
+      <p class="text-muted mb-0"><%= t 'usp.price_details' %></p>
     </div>
 
     <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
@@ -69,8 +69,8 @@
         <%= image_tag("usp_support.png", :alt => "visit") %>
       </span>
 
-      <h4 class="h6 mb-2"><%= t 'usp.advice' %></h4>
-      <p class="text-sm text-muted mb-0"><%= t 'usp.advice_details' %></p>
+      <h4 class="h5 mb-2"><%= t 'usp.advice' %></h4>
+      <p class="text-muted mb-0"><%= t 'usp.advice_details' %></p>
     </div>
   </div>
 </section>
@@ -85,14 +85,14 @@
       <%= link_to t('nav.more_info'), over_ons_pages_path(locale: locale), class: 'btn btn-outline-primary' %>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-2"></div>
-    <div class="col-xs-12 col-sm-6 col-md-4  homepage_image"></div>
+    <div class="col-xs-12 col-sm-6 col-md-3"></div>
+    <div class="col-xs-12 col-sm-6 col-md-3  homepage_image"></div>
   </div>
 </div>
 
 <% if @custom_texts.present? %>
   <section class="container padding-top-3x pb-5">
-    <h2 class="text-center mb-30"><%= t 'nav.collections' %></h2>
+    <h3 class="text-center mb-30"><%= t 'nav.collections' %></h2>
 
     <div class="isotope-grid cols-2">
       <div class="gutter-sizer"></div>
@@ -114,7 +114,7 @@
 <% if @all_reviews.present? %>
   <div class="leads_homepage">
     <section class="container padding-top-3x pb-5">
-       <h2 class="text-center mb-30"><%= t 'nav.reviews' %></h2>
+       <h3 class="text-center mb-30"><%= t 'nav.reviews' %></h2>
       <div class="row mt-30">
         <div class="col-md-4 mb-4">
           <%= render 'reviews/average_rating', reviews: @all_reviews %>
@@ -147,7 +147,7 @@
 <div class="homepage">
 
 <section class="container padding-top-3x pb-5">
-  <h3 class="text-center mb-3">Wilt u advies voor uw vakantie?</h3>
+  <h3 class="text-center">Wilt u advies voor uw vakantie?</h3>
   <%= render 'leads/form', lead: @lead, countries: @countries_enabled %>
 </section>
  </div>

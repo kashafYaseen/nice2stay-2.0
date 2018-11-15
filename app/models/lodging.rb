@@ -111,6 +111,7 @@ class Lodging < ApplicationRecord
   end
 
   def cumulative_price(params)
+    params[:children] = params[:children].presence || 0
     return "<h3>€#{price.round(2)}</h3><p class='price-text'> per night</p>".html_safe unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
     total_price = price_list(params.merge(flexible: false))[:rates].sum
     total_discount = discount(params)
