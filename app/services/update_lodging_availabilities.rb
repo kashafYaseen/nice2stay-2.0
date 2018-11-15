@@ -24,7 +24,7 @@ class UpdateLodgingAvailabilities
         lodging_availabilities.with_in(availability[:from], availability[:to]).delete_all
         previous_day = lodging_availabilities.find_by(available_on: (availability[:from].to_date() -1.day))
         if previous_day.present? && previous_day.check_out_only
-          lodging_availabilities.find_by(available_on: availability[:from]).delete
+          lodging_availabilities.find_by(available_on: availability[:from]).try(:delete)
         else
           lodging_availabilities.check_out_only!(availability[:from].to_date)
         end

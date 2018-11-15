@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
 
   def booking_in_cart
-    bookings.create unless bookings_in_cart.present?
+    bookings.build.save(validate: false) unless bookings_in_cart.present?
     bookings_in_cart.take
   end
 

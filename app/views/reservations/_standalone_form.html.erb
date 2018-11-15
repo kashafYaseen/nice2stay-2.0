@@ -50,14 +50,15 @@
             <%= hidden_field_tag :standalone, true %>
             <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
             <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
+            <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
           </div>
+        </div>
 
-          <div class="col-md-12 text-center pt-2">
-            <% [:prebooking, :option].each do |status| %>
-              <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-              <label><%= t("reservations.#{status}") %></label>
-            <% end %>
-          </div>
+        <div class="col-md-12 text-center pt-2">
+          <% [:prebooking, :option].each do |status| %>
+            <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+            <label><%= t("reservations.#{status}") %></label>
+          <% end %>
         </div>
       </div>
     </div>

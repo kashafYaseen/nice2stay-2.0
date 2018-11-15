@@ -45,7 +45,7 @@ class SearchPrices
       conditions = {}
       conditions[:_or] = []
       conditions[:available_on] = dates
-      conditions[:adults]   = params[:adults]
+      conditions[:adults]   = [params[:adults], 999]
       conditions[:lodging_id] = params[:lodging_id]
       conditions[:minimum_stay] = [params[:minimum_stay], 999]
 
