@@ -134,13 +134,16 @@
           <% end %>
         </section>
 
-      
         <section class="widget-tags">
           <h5 class="mt-5 mb-10">Populair collections</h5>
 
-          <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
-          <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
-          <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+          <% @menu_custom_texts.each do |custom_text| %>
+            <%= link_to "##{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+          <% end %>
+
+          <% @custom_texts.each do |custom_text| %>
+            <%= link_to "##{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+          <% end %>
         </section>
 
         <section class="widget-tags">
