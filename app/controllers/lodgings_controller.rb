@@ -36,6 +36,7 @@ class LodgingsController < ApplicationController
       @valid = results[:valid]
     end
     @discount = @lodging.discount_details(params[:values].split(','))
+    @cleaning_costs = @lodging.cleaning_costs
   end
 
   private
