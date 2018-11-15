@@ -45,7 +45,6 @@
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 
-
 .sub-menu > li {
   display: block;
   position: relative;
@@ -100,6 +99,12 @@
 
 .p-0.sub-menu {
   padding: 0 !important;
+}
+
+.region-menu > ul > li > a {
+  padding: 4px 20px;
+  font-size: 12px;
+  color: #999999;
 }
 
 .mega-menu {
@@ -1676,7 +1681,7 @@ p {
 }
 
 
-strong {
+.strong {
   font-weight: 600;
 }
 
@@ -6302,7 +6307,7 @@ video {
 .navbar {
   position: relative;
   top: 0;
-  left: 0;
+  right: 0;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
@@ -6317,9 +6322,32 @@ video {
 
 .navbar.navbar-sticky {
   position: fixed;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
 }
 
 .navbar.navbar-sticky + * {
+  margin-top: 70px;
+}
+
+.country {
+  position: relative;
+  top: 0;
+  right: 0;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  z-index: 9000;
+}
+
+.country.country-sticky {
+  position: fixed;
+}
+
+.country-sticky + * {
   margin-top: 70px;
 }
 

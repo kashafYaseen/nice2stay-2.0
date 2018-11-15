@@ -56,7 +56,22 @@
 
         <div class="row">
           <div class="col-md-12">
-            <h5>Billing Information</h5>
+            <% if user_signed_in? %>
+              <p>Hi <%= current_user.full_name %>!, you are logon. Your details are automaticly filled in the form</p>
+            <% else %>
+              <h5>U bent niet ingelogd</h5>
+              <p>Log in met uw account. Al eerder geboekt bij nice2stay?  Activeer dan uw account. </p>
+
+              <div class="col-md-5 mx-auto">
+                <%= render 'devise/sessions/form' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">  
+            <h5>Guest Information</h5>
             <hr class="padding-bottom-1x">
             <%= form_for @booking, url: carts_path do |f| %>
               <%= render 'shared/errors', resource: @booking %>
