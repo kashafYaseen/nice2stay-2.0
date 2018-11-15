@@ -27,6 +27,7 @@ class SaveLodgingDetails
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
+      UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs])
     end
 
     def owner

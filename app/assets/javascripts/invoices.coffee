@@ -79,6 +79,15 @@
         $(".reservation-form-errors-#{lodging_id}").html('');
         $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
+      if data.cleaning_costs
+        total_cleaning_cost = 0
+        $.each data.cleaning_costs, (i, cost) ->
+          if cost.fixed_price
+            total_cleaning_cost += cost.fixed_price
+            total += cost.fixed_price
+            result += cleaning_cost_html(cost, index)
+        $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
+
         if data.discount
           discount = total * data.discount/100
           result += discount_html(data.discount, discount)
@@ -106,6 +115,15 @@
     if nights >= 2 && data.valid
       $("#cart-#{lodging_id}").removeClass('disabled');
       $(".reservation-form-errors-#{lodging_id}").html('');
+
+      if data.cleaning_costs
+        total_cleaning_cost = 0
+        $.each data.cleaning_costs, (index, cost) ->
+          if cost.fixed_price
+            total_cleaning_cost += cost.fixed_price
+            total += cost.fixed_price
+            result += cleaning_cost_html(cost, -1)
+        $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
       if data.discount
         discount = total * data.discount/100
@@ -139,6 +157,11 @@
     return "<span class='col-md-6'>Discount #{key}%</span>
             <span class='col-md-6'><b>€#{value}</b></span>"
 
+  cleaning_cost_html = (cost, index) ->
+    return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
+              <span class='col-md-6'><b>#{cost.name}</b></span>
+              <span class='col-md-6'><b>€#{cost.fixed_price.toFixed(2)}</b></span>
+            </p>"
 
   total_html = (total, index) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
