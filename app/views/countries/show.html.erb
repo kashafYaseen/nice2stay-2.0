@@ -36,18 +36,18 @@
           </div>
         </div>
 
-        <section class="padding-top-3x pb-5">
+        <section class="padding-top-3x p-0 pb-5">
           <h3>In the spotlight</h3>
           <hr class="mt-3"></hr>
 
-          <div class="row mb-3 ml-0 you-may-like-lodgings">
+          <div class="row mb-3 you-may-like-lodgings">
             <%= render @lodgings %>
           </div>
         </section>
 
         <% if @custom_texts.present? %>
           <section class="padding-top-1x pb-5">
-            <h3 class="mb-30">Our collection in <%= @country.name.capitalize %></h2>
+            <h3 class="mb-30">Our collection in <%= @country.name.capitalize %></h3>
               <hr class="mt-3"></hr>
 
             <div class="isotope-grid cols-2">

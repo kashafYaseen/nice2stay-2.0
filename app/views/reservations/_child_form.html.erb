@@ -16,10 +16,10 @@
 
           <div class="col-md-5 col-lg-6">
             <%= render_image_tag lodging, class: 'max-height-230 w-100' %>
-            <br>
-            <br>
-            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 250).try(:html_safe) %><a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a></p>
-           
+            <br><br>
+            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 250).try(:html_safe) %>
+              <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
+            </p>
           </div>
 
           <div class="col-md-4 col-lg-6 bg-secondary">
@@ -28,18 +28,17 @@
             </div>
             <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
-                <p class="mb-1 mt-2 text-xs strong anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
-                <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
-                <p id="lbl-error-<%= lodging.id %>"></p>
+              <p class="mb-1 mt-2 text-xs strong anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
+              <p id="lbl-error-<%= lodging.id %>"></p>
 
-                <div class="bg-white">
+              <div class="bg-white">
                 <p>
-
-                <% [:prebooking, :option].each do |status| %>
-                  <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-                  <label><%= t("reservations.#{status}") %></label>
-                <% end %>
-              </p>
+                  <% [:prebooking, :option].each do |status| %>
+                    <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+                    <label><%= t("reservations.#{status}") %></label>
+                  <% end %>
+                </p>
 
                 <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
                 <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
@@ -50,22 +49,22 @@
                 <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
               <% end %>
             </div>
-              
-              <div class="text-dark" id="bill-<%= lodging.id %>"></div>
-              <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
-              <%= render 'wishlists/form', lodging: lodging %>
 
-              <div class="row">
-                <button class="btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
-                  data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click" data-content="<%= lodging.including_text %>" data-html="true" data-original-title="Included">+ Included ?
-                </button>
+            <div class="text-dark" id="bill-<%= lodging.id %>"></div>
+            <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
+            <%= render 'wishlists/form', lodging: lodging %>
 
-                <button class="text-xxs btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
-                  data-container="body" data-toggle="popover" data-html="true" data-placement="top" data-trigger="hover click" data-content="<%= lodging.particularities_text %>" data-original-title="Belangrijk informatie">+ Informatie
-                </button>
-              </div>
+            <div class="row">
+              <button class="btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
+                data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click" data-content="<%= lodging.including_text %>" data-html="true" data-original-title="Included">+ Included ?
+              </button>
+
+              <button class="text-xxs btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
+                data-container="body" data-toggle="popover" data-html="true" data-placement="top" data-trigger="hover click" data-content="<%= lodging.particularities_text %>" data-original-title="Belangrijk informatie">+ Informatie
+              </button>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
