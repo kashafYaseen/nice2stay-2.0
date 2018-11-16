@@ -1,11 +1,3 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-6 col-md-4 padding-top-1x">
-    <p>
-      Geen tijd, druk of geen zin? Wij denken graag met u mee bij het bepalen van uw keuze, geven u eerlijk advies op basis van uw wensen en onze kennis over de accommodaties. Elk vakantiehuis, appartement en boutique hotel is persoonlijk door ons bezocht. Wij berekenen geen kosten voor ons advies.
-    </p>
-  </div>
-
-  <div class="col-xs-12 col-sm-6 col-md-8 padding-top-1x">
     <%= form_for lead, remote: true do |f| %>
       <div class="leads-form-errors">
         <%= render 'shared/errors', resource: lead %>
@@ -120,8 +112,8 @@
 
       <%= f.submit class: 'btn btn-primary margin-top-none' %>
     <% end %>
-  </div>
-</div>
+ 
+
 
 <% content_for :js_init do %>
   ChosenSelect.init();
