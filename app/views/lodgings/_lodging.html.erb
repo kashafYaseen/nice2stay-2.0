@@ -16,8 +16,14 @@
           <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants]), class: "text-decoration-none row" do %>
             <div class="col-md-9 col-xs-12">
               <p class="text-xxs"><%= truncate(lodging.short_desc, length: 200) %></p>
-               <p class="text-xxs">
-                <%= pluralize lodging.beds, "bedroons" %> <%= pluralize lodging.baths, "bathrooms" %>
+
+              <p class="text-xxs">
+                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "Adult" %>
+                <% if lodging.children.present? %>
+                  , <%= lodging.minimum_children %> - <%= pluralize lodging.children, "child" %>
+                <% end %>
+                <br>
+                <%= pluralize lodging.beds, "bedroom" %> - <%= pluralize lodging.baths, "bathroom" %>
               </p>
 
               <ul class="list-icon">

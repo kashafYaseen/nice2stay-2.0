@@ -46,9 +46,15 @@ en:
     more_filters: 'More Filters'
     sort_by: Sort by
 
+  collection:
+    populair: Populair collections
+    normal: Our collections
+
   usp:
+    holiday: Experience the ideal holiday
     verhaal: Beautiful stories start here ...
     inspect: Visited & inspected
+    homepage: Unique collection of unique holiday homes, apartments and boutique hotels
     inspect_details: Our team has inspected every property
     price: Transparant prices
     price_details: Same prices as booking direct, no booking fees
@@ -58,8 +64,12 @@ en:
     intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
     intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France an Greece. All accommodations have been personally selected and visited by us. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
     
+  opens: 
+    week: Monday - Friday 9.00 am - 18.00 pm
+    weekend: Saturday 10.00 am - 13.00 pm
   nav:
     land: Countries & regions
+    landen: Countries
     collections: Our collections
     more_info: More information
     also_like: You may also like
@@ -71,7 +81,6 @@ en:
     info: Detailed information
     like: You also like
     back: Back to listing
-
 
   information:
     included: + Included rent
@@ -128,7 +137,7 @@ en:
     address: "Address"
     city: "City"
     country: "Country"
-    tel_number: "Telephone"
+    tel_number: "Telephone:"
     zip: "Zipcode"
     email_customer: "Emailaddress:"
     summary_of_renter: "Summary of the Renter’s stay:"
