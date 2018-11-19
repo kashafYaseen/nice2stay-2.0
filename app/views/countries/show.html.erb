@@ -1,26 +1,26 @@
-<div class="container">
+<div class="container-fluid">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-8 pt-4">
+      <div class="col-md-7 pt-4">
         <section>
           <%= image_tag @country.image %>
         </section>
 
-        <section class="padding-top-3x pb-5">
-          <h2 class="mb-30"><%= @country.title %></h2>
+        <section class="padding-top-2x">
+          <h2><%= @country.title %></h2>
 
           <h5 class="card-title text-muted margin-bottom-1x">
-            Ervaar een ideale vakantie in <%= @country.name.capitalize %>
+            <%= t 'holiday' %> <%= @country.name.capitalize %>
           </h5>
 
           <p><%= @country.content.try(:html_safe) %></p>
         </section>
 
         <div class="row">
-          <div class="p-3 homepage">
+          <div class="p-3 margin-top-2x leads_homepage">
             <div class="col-md-12 ml-2 padding-top-1x">
               <h3 class="mb-3">
-                "<%= @country.name.capitalize %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl"
+                "<%= @country.name.capitalize %> is het hele jaar een heerlijk vakantieland door het fijne klimaat"
               </h3>
 
               <div class="row">
@@ -47,6 +47,21 @@
           </div>
         </section>
 
+         <section class="padding-top-2x">
+          <h2>Waarom kiezen voor een vakantie in <%= @country.name.capitalize %></h2>
+        
+          <ul class="list-icon">
+                <p class="text-xxs">
+                  <i class="material-icons md-24 check text-success"></i>Spanje telt zo’n beetje de meeste zonne-uren per jaar van Europa!
+<br>
+                  <i class="material-icons md-24 check text-success"></i>Met 44 UNESCO Werelderfgoed Monumenten of parken is Spanje het 3e land op de lijst van landen met het meeste aantal UNESCO Werelderfgoed Monumenten monumenten.
+  <br>
+                  <i class="material-icons md-24 check text-success"></i>Fantastische keuken met onder anderen Paella, Tapas, Pintxos of visgerechten.
+                </p>
+              </ul>
+         
+        </section>
+
         <% if @custom_texts.present? %>
           <section class="padding-top-1x pb-5">
             <h3 class="mb-30">Our collection in <%= @country.name.capitalize %></h3>
@@ -70,14 +85,72 @@
         <% end %>
       </div>
 
-      <div class="col-md-4">
-        <section class="padding-top-1x ">
-          <h3 class="mb-20"><%= @country.name.capitalize %></h3>
-          <hr class="mt-1"></hr>
+      <div class="col-md-5">
+        <div class="menu sticky-top p-3 bg-light">
+
+           <h3 class="mb-20"><%= @country.name.capitalize %></h3>
+          <hr class="mt-1 mb-2"></hr>
+          
+            <div class="col-md-12 padding-top-1x padding-bottom-2x homepage">
+                    <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 pt-2">
+                          <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12">
+                          <div class="row homepage-actions-row pt-0">
+                            <div id='datepicker'></div>
+
+                            <div class="dropdown guests-dropdown">
+                              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="title"><%= t 'search.guests' %></span>
+                              </button>
+
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <div class="dropdown-item">
+                                  <label><%= t 'search.adults' %></label>
+                                  <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
+                                </div>
+
+                                <div class="dropdown-item">
+                                  <label><%= t 'search.children' %></label>
+                                  <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
+                                </div>
+
+                                <div class="dropdown-item">
+                                  <label><%= t 'search.babies' %></label>
+                                  <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
+                                </div>
+                              </div>
+                            </div>
+                            <%= hidden_field_tag :standalone, true %>
+                            <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
+                            %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+
+                </div>
+             
+       <section class="widget-tags">
+          <h5 class="mt-4 mb-10"><%= t 'collections' %> in <%= @country.name.capitalize %></h5>
+
+          <% @menu_custom_texts.each do |custom_text| %>
+            <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+          <% end %>
+
+          <% @custom_texts.each do |custom_text| %>
+            <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+          <% end %>
         </section>
 
+        
+
+
         <section class="widget-links">
-          <h5 class="mt-5 mb-10">Regions in <%= @country.name.capitalize %></h5>
+          <h5 class="mt-4 mb-10">Regions in <%= @country.name.capitalize %></h5>
           <hr class="mt-0"></hr>
           <ul>
             <% @country.regions.each do | region | %>
@@ -86,79 +159,27 @@
           </ul>
         </section>
 
-        <section class="widget-tags">
-          <h5 class="mt-5 mb-10">Collections in <%= @country.name.capitalize %></h5>
-          <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
+
+         <section class="widget-tags">
+          <h5 class="mt-4 mb-10"><%= t 'nav.landen' %></h5>
+
+          <% @countries_enabled.each do |country| %>
+            <%= link_to country.name, country_path(country, locale: locale), class: "tag" %>
+          <% end %>
         </section>
 
-        <h5 class="mt-5">Zoek</h5>
-        <hr class="mt-0"></hr>
-        <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
-          <div class="row">
-            <div class="col-md-12 col-sm-12 pt-2">
-              <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
-            </div>
 
-            <div class="col-md-12 col-sm-12">
-              <div class="row homepage-actions-row pt-0">
-                <div id='datepicker'></div>
 
-                <div class="dropdown guests-dropdown">
-                  <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="title"><%= t 'search.guests' %></span>
-                  </button>
 
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <div class="dropdown-item">
-                      <label><%= t 'search.adults' %></label>
-                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
-                    </div>
 
-                    <div class="dropdown-item">
-                      <label><%= t 'search.children' %></label>
-                      <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label><%= t 'search.babies' %></label>
-                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
-                    </div>
-                  </div>
-                </div>
-                <%= hidden_field_tag :standalone, true %>
-                <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
-                %>
-              </div>
-            </div>
-          </div>
-        <% end %>
+        </div>
+       
       </div>
     </div>
   </div>
 </div>
 
-<% if @all_reviews.present? %>
-  <div class="leads_homepage">
-    <section class="container padding-top-3x pb-5">
-      <h2 class="text-center mb-30">Latest Customer Reviews in <%= @country.name %> </h2>
-      <div class="row mt-30">
-        <div class="col-md-4 mb-4">
-          <%= render 'reviews/average_rating', reviews: @all_reviews %>
-        </div>
 
-        <div class="col-md-8">
-          <div class="reviews-container">
-            <%= render @reviews %>
-          </div>
-
-          <div class="homepage-review-paginator">
-            <%= paginate @reviews, remote: true %>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-<% end %>
 
 <%= render 'shared/meta_tags', resource: @country %>
 

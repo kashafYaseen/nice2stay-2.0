@@ -13,7 +13,8 @@
 
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
     <div class="row">
-      <div class="col-md-12 ">
+      <div class="col-md-12 homepage">
+
         <div data-lodging-id="<%= lodging.id %>"
              data-disabled-dates="<%= lodging.not_available_on %>">
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
@@ -89,7 +90,8 @@
   </div>
 
   <div class="row px-2 mt-1">
-    <div class="col-md-12 bg-secondary ">
+    <div class="col-md-12 bg-secondary">
+     
       <button class="btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
         data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
         data-html="true" data-content="<%= lodging.including_text %>" data-original-title="<%= t 'information.included_header' %>"><%= t 'information.included' %>

@@ -1,39 +1,13 @@
 <%= render 'shared/photoswipe' %>
 
-<div id="home-container">
-  <div class="col-md-12 sub-menubar d-none d-sm-block">
-    <ul class="nav nav-tabs ml-6 " role="tablist" id="details-navbar">
-
-      <li class="nav-item">
-        <a class="nav-link active show scroll-to" href="#home-container" data-toggle="tab" role="tab" aria-selected="true"><%= t 'nav.home' %></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link scroll-to" href="#location-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.location' %></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link scroll-to" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.reviews' %></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link scroll-to" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.gallary' %></a>
-
-      </li>      
-
-      <li class="nav-item">
-        <a class="nav-link scroll-to" href="#description-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.info' %></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link scroll-to" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
-      </li>
-    </ul>
-  </div>
-
+ 
   <!-- Product Gallery-->
-  <div class="container">
-    <div class="col-md-9 target-section">
-      <div class="gallery-control">
+
+  <div class="container-fluid">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-8 margin-top-1x">
+        <div class="gallery-control ">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
             <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
@@ -45,7 +19,7 @@
         </figure>
       </div>
 
-      <div class="lodging-gallery" itemscope>
+      <div class="lodging-gallery margin-top-1x" itemscope>
         <% @lodging.images.each_with_index do |image_url, index| %>
           <figure itemprop="associatedMedia" itemscope class="d-none">
             <a href="<%= image_url %>" itemprop="contentUrl">
@@ -54,12 +28,10 @@
             <figcaption itemprop="caption description"><%= index %></figcaption>
           </figure>
         <% end %>
-      </div>
-    </div>
+       </div>
 
-    <div class="bg-white padding-bottom-1x pt-5 mb-1">
-      <div class="card-body col-md-9">
-        <h2 class="card-title"><%= @lodging.h1 %></h2>
+
+        <h2 class="margin-top-2x card-title"><%= @lodging.h1 %></h2>
           <h5 class="card-title text-muted margin-bottom-2x"><%= @lodging.h2 %></h3>
 
           <div class="row homepage">
@@ -97,22 +69,59 @@
               </div>
             </div>
           <% end %>
+      
+
+         
         </div>
 
-        <p class="text-sm col-md-4 margin-top-1x">
+         <p class="text-sm col-md-5 margin-top-1x">
           <div id="lodging-summary">
             <%= @lodging.summary.try(:html_safe) %>
           </div>
         </p>
-      </div>
-      <div class="children-scroll-section"></div>
-    </div>
 
-    <% if @lodging.as_standalone? %>
-      <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-    <% else %>
-      <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
-    <% end %>
+        <%= render 'shared_content', lodging: @lodging %>
+       
+  
+       </div>
+       <div class="col-md-4 margin-top-2x">
+       
+          <div class="sticky-top">
+             
+             <section class="widget-tags">
+            
+              <a class="tag" href="#home-container" aria-selected="true"><%= t 'nav.home' %></a>
+              <a class="tag" href="#location-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.location' %></a>
+              <a class="tag" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.reviews' %></a>
+              <a class="tag" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.gallary' %></a>
+              <a class="tag" href="#description-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.info' %></a>
+               <a class="tag" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
+          
+        </section>
+         
+          <hr class="mt-0"></hr>
+
+          <% if @lodging.as_standalone? %>
+            <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+          <% else %>
+            <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+          <% end %>
+         </div>  
+      </div>
+    </div>
+</div>
+</div>
+
+
+
+
+  
+
+  
+   
+
+       
+
   </div>
 </div>
 
