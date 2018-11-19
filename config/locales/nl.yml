@@ -28,7 +28,7 @@ nl:
     verhaal: Mooie verhalen beginnen hier...
     holiday: Ervaar de ideale vakanties
     inspect: Bezocht & geïnspecteerd
-    homepage: Unieke collectie van unieke vakantiehuizen, appartementen en ​boutique hotels
+    homepage: Unieke collectie van vakantiehuizen, appartementen en ​boutique hotels.
     inspect_details: Elke accommodatie is door ons team geïnspecteerd
     price: Transparante prijzen
     price_details: Transparante prijzen, geen verborgen boekingskosten
@@ -64,7 +64,7 @@ nl:
 
   cart:
     shopping_cart: Voeg toe aan winkelmandje
-    nice2stay: Geen reserverings bij nice2stay
+    nice2stay: Geen reserveringskosten  bij nice2stay
 
   information:
     included: + Inclusief huursom
@@ -74,7 +74,9 @@ nl:
 
   search:
     adults: Volwassenen (>12j)
+    adutls_1: Volwassenen 
     children: Kinderen (4-12j)
+    children_1: Kinderen
     babies: Babies (0-3j)
     guests: Gasten
     dates: Periode

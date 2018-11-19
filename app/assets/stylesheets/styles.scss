@@ -26,9 +26,13 @@
 }
 
 .sticky-top {
-  top:8%;
+  top:9%;
 }
 
+.page_fixed {
+  position: fixed;
+  right: 0;
+}
 
 
 .sideNav {
@@ -42,7 +46,7 @@
 }
 
 .homepage-cover {
-  background-image: asset-url('mongibello');
+  background-image: asset-url('homepage_v10');
   background-position: center;
 }
 
@@ -596,7 +600,7 @@ figure figcaption {
 }
 
 .container-fluid {
-  max-width: 1720px;
+  max-width: 1520px;
   margin-right: auto;
   margin-left: auto;
   padding-right: 30px;
@@ -6080,7 +6084,7 @@ video {
 
 .fw-section,
 .fh-section {
-  position: relative;
+  
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;

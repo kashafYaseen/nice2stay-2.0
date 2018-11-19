@@ -18,12 +18,12 @@
               <p class="text-xxs"><%= truncate(lodging.short_desc, length: 200) %></p>
 
               <p class="text-xxs">
-                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "Adult" %>
+                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
                 <% if lodging.children.present? %>
-                  , <%= lodging.minimum_children %> - <%= pluralize lodging.children, "child" %>
+                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
                 <% end %>
                 <br>
-                <%= pluralize lodging.beds, "bedroom" %> - <%= pluralize lodging.baths, "bathroom" %>
+                <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
               </p>
 
               <ul class="list-icon">

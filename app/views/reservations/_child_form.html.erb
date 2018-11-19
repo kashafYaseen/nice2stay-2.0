@@ -1,4 +1,6 @@
-<div class="card border-default bg-white pt-2 box-shadow mt-2">
+
+<div class="bg-white">
+
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
        data-url="<%= price_details_lodging_path(lodging) %>"
@@ -6,12 +8,13 @@
        data-check-in-title="<%= t('search.check_in') %>"
        data-check-out-title="<%= t('search.check_out') %>"></div>
 
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-12">
+  
+
+   
         <div class="row">
           <div class=col-lg-12>
             <h5><%= lodging.child_name %></h5>
+            <hr class="mt-1"></hr>
           </div>
 
           <div class="col-md-5 col-lg-6">
@@ -23,6 +26,7 @@
           </div>
 
           <div class="col-md-4 col-lg-6 bg-secondary">
+
             <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
               <%= render 'reservations/errors', resource: lodging.reservations.build %>
             </div>
@@ -64,9 +68,10 @@
                 data-container="body" data-toggle="popover" data-html="true" data-placement="top" data-trigger="hover click" data-content="<%= lodging.particularities_text %>" data-original-title="Belangrijk informatie">+ Informatie
               </button>
             </div>
+
           </div>
+
         </div>
+         <hr class="mb-4"></hr>
       </div>
-    </div>
-  </div>
-</div>
+  
