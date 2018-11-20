@@ -6,7 +6,7 @@
   <div class="container-fluid">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-8 margin-top-1x">
+      <div class="col-md-12 col-xs-12 margin-top-1x">
         <div class="gallery-control ">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -29,13 +29,19 @@
           </figure>
         <% end %>
        </div>
-
-
+      
         <h2 class="margin-top-2x card-title"><%= @lodging.h1 %></h2>
-          <h5 class="card-title text-muted margin-bottom-2x"><%= @lodging.h2 %></h3>
+          <h5 class="card-title text-muted margin-bottom-1x"><%= @lodging.h2 %></h3>
 
-          <div class="row homepage">
-          <div class="col-md-3  col-xs-6 margin-top-1x">
+      </div>
+      </div>
+      <div class="row">
+        
+      
+          
+          <div class="col-md-8 col-xs-6">
+            <div class="row padding-top-1x">
+               <div class="col-md-3">
             <h6>
               <b><%= @lodging.adults %></b> <%= t 'search.adults' %> <br>
 
@@ -48,18 +54,8 @@
             </h6>
           </div>
 
-          <div class="col-md-5 col-xs-6 margin-top-1x margin-bottom-1x">
-            <ul class="list-icon">
-              <h6>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-              </h6>
-            </ul>
-          </div>
-
           <% if @reviews.present? %>
-            <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
+            <div class="col-md-3 col-xs-6">
               <div class="text-center">
                 <div class="d-inline align-baseline display-3 mr-1"><%= @lodging.average_rating %></div>
                 <p><a class="scroll-to" href="#reviews-container" aria-selected="false">Reviews</a></p>
@@ -69,37 +65,49 @@
               </div>
             </div>
           <% end %>
-      
+            <div class="col-md-6">
+        
 
-         
-        </div>
-
-         <p class="text-sm col-md-5 margin-top-1x">
+            <ul class="list-icon">
+              <h6>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
+                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+              </h6>
+            </ul>
+              </div>
+                </div>
+            <p class="text-sm col-md-5">
           <div id="lodging-summary">
             <%= @lodging.summary.try(:html_safe) %>
+           
           </div>
-        </p>
+          </p>
+            
 
-        <%= render 'shared_content', lodging: @lodging %>
-       
-  
-       </div>
-       <div class="col-md-4 margin-top-2x">
-       
-          <div class="sticky-top">
+            
+          <%= render 'shared_content', lodging: @lodging %>
+          </div>
+
+
+
+
+
+
+          <div class="col-md-4">
+            <div class="bg-secondary sticky-top">
+
              
              <section class="widget-tags">
-            
-              <a class="tag" href="#home-container" aria-selected="true"><%= t 'nav.home' %></a>
-              <a class="tag" href="#location-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.location' %></a>
-              <a class="tag" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.reviews' %></a>
-              <a class="tag" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.gallary' %></a>
-              <a class="tag" href="#description-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.info' %></a>
-               <a class="tag" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
-          
-        </section>
+                <a class="tag" href="#home-container" aria-selected="true"><%= t 'nav.home' %></a>
+                <a class="tag" href="#location-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.location' %></a>
+                <a class="tag" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.reviews' %></a>
+                <a class="tag" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.gallary' %></a>
+                <a class="tag" href="#description-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.info' %></a>
+                 <a class="tag" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
+            </section>
          
-          <hr class="mt-0"></hr>
+        
 
           <% if @lodging.as_standalone? %>
             <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
@@ -107,7 +115,22 @@
             <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
           <% end %>
          </div>  
-      </div>
+
+      
+       
+  
+       </div>
+
+
+          
+      
+
+         
+        </div>
+
+     
+    
+      
     </div>
 </div>
 </div>

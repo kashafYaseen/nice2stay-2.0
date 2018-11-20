@@ -27,7 +27,14 @@
 
 .sticky-top {
   top:9%;
+
+
 }
+
+.widget-tags {
+  padding: 8px;
+}
+
 
 .page_fixed {
   position: fixed;
@@ -60,7 +67,7 @@
 }
 
 .max-image{
-  max-height: 620px;
+  max-height: 720px;
 }
 
 .homepage_header {
@@ -574,6 +581,8 @@ figure figcaption {
 
 /* Bootstrap Overrides */
 
+
+
 @media screen and (min-width: 1400px) {
   .container {
     width: 100% !important;
@@ -967,7 +976,7 @@ figure figcaption {
 
 .bg-faded,
 .bg-secondary {
-  background-color: #f5f5f5 !important;
+  background-color: #fafafa !important;
 }
 
 .bg-secondary-2 {
@@ -5786,6 +5795,7 @@ video {
   line-height: 26px;
   text-decoration: none !important;
   white-space: nowrap;
+  background: white;
 }
 
 .tag:hover {

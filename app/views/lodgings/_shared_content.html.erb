@@ -10,7 +10,7 @@
 
 
 
-  <div class="margin-top-2x leads_homepage">
+  <div class="margin-top-2x row leads_homepage">
      <div class="col-md-12 padding-top-1x padding-bottom-1x">
       <h3 class="mb-3">
         <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
@@ -30,8 +30,7 @@
     </div>
    </div>
 
-
-<div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
+<div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
   
     <div class="col-md-12">
       <h3 class="card-title">Location</h3>
@@ -43,48 +42,14 @@
   
 </div>
 
+
 <div class="col-md-12 address-mark" id="lodging-map-location"></div>
   <%= tag.div class: "lodgings-list-json", data: { lodgings: lodging.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), l: params[:bounds], ids: lodging.id } %>
 
 
 
-<div class="leads_homepage margin-top-3x padding-bottom-1x pt-5 mb-1">
-  
-    <div class="col-md-9 ml-2 mb-30 target-section" id="reviews-container">
-      <% if @reviews.present? %>
-        <div class="row">
-          <div class="col-md-12">
-            <h3 class="card-title">Rating & Reviews</h3>
-          </div>
 
-          <div class="card-body col-md-4">
-            <hr class="margin-bottom-1x">
-            <%= render 'reviews/rating', lodging: lodging %>
-          </div>
-
-          <div class="col-md-8 padding-top-2x">
-            <div class="reviews-container">
-              <%= render @reviews %>
-            </div>
-
-            <div class="review-paginator">
-              <%= paginate @reviews, remote: true, window: 0 %>
-            </div>
-          </div>
-        </div>
-      <% else %>
-        <div class="row">
-          <div class="card-body col-md-12">
-            <h3 class="card-title">Rating & Reviews</h3>
-            <p>Accommodation does not have any review yet.</p>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  
-</div>
-
-<div class="bg-white padding-bottom-1x pt-5 mb-1 target-section" id="gallery-container">
+<div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
     <div class="col-md-12 mb-30">
       
         <h3 class="card-title">Photo gallary</h3>
@@ -110,6 +75,50 @@
    </div> 
 
 
+
+
+
+
+
+<div class="leads_homepage row margin-top-3x padding-bottom-1x pt-5 mb-1">
+  
+    <div class="col-md-11 ml-2 mb-30 target-section" id="reviews-container">
+      <% if @reviews.present? %>
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="card-title">Rating & Reviews</h3>
+          </div>
+
+          <div class="card-body col-md-12">
+            <hr class="margin-bottom-1x">
+            <%= render 'reviews/rating', lodging: lodging %>
+          </div>
+
+          <div class="col-md-12 padding-top-2x">
+            <div class="reviews-container">
+              <%= render @reviews %>
+            </div>
+
+            <div class="review-paginator">
+              <%= paginate @reviews, remote: true, window: 0 %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="row">
+          <div class="card-body col-md-12">
+            <h3 class="card-title">Rating & Reviews</h3>
+            <p>Accommodation does not have any review yet.</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  
+</div>
+
+
+
+
 <div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
   <ul class="list-icon">
     <% @lodging.amenities do |amenity| %>
@@ -118,22 +127,21 @@
    </ul>
 </div>
 
-<div class="bg-white padding-bottom-1x pt-1 mb-1">
+<div class="bg-white row padding-bottom-1x pt-1 mb-1">
    
   <div class="col-md-12 target-section" id="description-container">
-    <div class="card-body">
+    
       <h3 class="card-title margin-bottom-1x"><%= @lodging.h3 %></h3>
       <hr class="margin-bottom-1x">
 
       <div id="lodging-description">
         <%= lodging.description.try(:html_safe) %>
-      </div>
     </div>
   </div>
 
 </div>
 
-<div class="padding-bottom-1x pt-2 mb-1">
+<div class="padding-bottom-1x pt-2 mb-1 row">
   
     <div class="col-md-12 padding-top-1x" id="like-container">
       <h3 class="card-title"><%= t 'nav.also_like' %></h3>

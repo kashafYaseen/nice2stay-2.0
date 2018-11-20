@@ -8,7 +8,7 @@
       limit: 4
       source: source(url, 'countries')
       templates:
-        header: '<p class="category-name font-italic text-xxs">Countries</p>',
+        header: '<p class="category-name text-sm">Countries</p>',
         suggestion: (country) -> suggestion(country)
     }, {
       name: 'regions'
@@ -16,7 +16,7 @@
       limit: 4
       source: source(url, 'regions')
       templates:
-        header: '<p class="category-name font-italic text-xxs">Regions</p>'
+        header: '<p class="category-name text-sm">Regions</p>'
         suggestion: (region) -> suggestion(region)
     }, {
       name: 'collections'
@@ -24,7 +24,7 @@
       limit: 4
       source: source(url, 'campaigns')
       templates:
-        header: '<p class="category-name font-italic text-xxs">Collections</p>'
+        header: '<p class="category-name text-sm">Collections</p>'
         suggestion: (collection) -> suggestion(collection)
     }, {
       name: 'accommodations'
@@ -32,7 +32,7 @@
       limit: 5
       source: source(url, 'lodgings')
       templates:
-        header: '<p class="category-name font-italic text-xxs">Accommodations</p>'
+        header: '<p class="category-name text-sm">Accommodations</p>'
         suggestion: (lodging) -> suggestion(lodging)
     }
 

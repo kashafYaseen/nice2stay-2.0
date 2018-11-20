@@ -12,32 +12,29 @@
 
    
         <div class="row">
-          <div class=col-lg-12>
-            <h5><%= lodging.child_name %></h5>
-            <hr class="mt-1"></hr>
-          </div>
-
-          <div class="col-md-5 col-lg-6">
+          
+          <div class="col-md-6 col-lg-6">
             <%= render_image_tag lodging, class: 'max-height-230 w-100' %>
             <br><br>
+            <h5><%= lodging.child_name %></h5>
             <p class="text-xs"> <%= truncated_description(lodging.short_desc, 250).try(:html_safe) %>
               <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
             </p>
           </div>
 
-          <div class="col-md-4 col-lg-6 bg-secondary">
+          <div class="col-md-6 col-lg-6 bg-secondary">
 
             <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
               <%= render 'reservations/errors', resource: lodging.reservations.build %>
             </div>
             <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
-              <p class="mb-1 mt-2 text-xs strong anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
-              <div id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
+              <p class="mb-1 mt-2 text-sm strong anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+              <div class="text-sm strong" id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
               <p id="lbl-error-<%= lodging.id %>"></p>
 
               <div class="bg-white">
-                <p>
+                <p class="text-sm">
                   <% [:prebooking, :option].each do |status| %>
                     <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
                     <label><%= t("reservations.#{status}") %></label>
