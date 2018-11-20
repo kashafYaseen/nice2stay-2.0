@@ -3,10 +3,10 @@
  
   <!-- Product Gallery-->
 
-  <div class="container">
+  <div class="container-fluid">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-12 col-xs-12 margin-top-1x">
+      <div class="col-md-8 col-xs-12">
         <div class="gallery-control ">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -29,25 +29,16 @@
           </figure>
         <% end %>
        </div>
-      
-       
-      </div>
-      </div>
-      <div class="row">
-        
-      
-          
-          <div class="col-md-8 col-xs-6">
-             <h2 class="margin-top-1x card-title"><%= @lodging.h1 %></h2>
-          <h5 class="card-title text-muted margin-bottom-1x"><%= @lodging.h2 %></h3>
-
-            <div class="row padding-top-1x">
+     
+        <h2 class="margin-top-1x card-title"><%= @lodging.h1 %></h2>
+        <h5 class="card-title text-muted margin-bottom-1x"><%= @lodging.h2 %></h3>
+         <div class="row padding-top-1x">
                <div class="col-md-3">
             <h6>
-              <b><%= @lodging.adults %></b> <%= t 'search.adults' %> <br>
+              <b><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, "" %></b> <%= t 'search.adutls_1' %> <br>
 
               <% if @lodging.children.present? %>
-                <b><%= @lodging.children %></b> <%= t 'search.children' %><br>
+                <b><%= @lodging.minimum_children %> - <%= pluralize @lodging.children, "" %></b> <%= t 'search.children_1' %><br>
               <% end %>
 
               <b><%= @lodging.beds %></b> <%= t 'search.bedrooms' %><br>
@@ -76,26 +67,18 @@
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
               </h6>
             </ul>
-              </div>
-                </div>
-            <p class="text-sm col-md-5">
+          </div>
+        </div>  
+        <p class="text-sm col-md-5">
           <div id="lodging-summary">
             <%= @lodging.summary.try(:html_safe) %>
            
           </div>
           </p>
             
-
-            
           <%= render 'shared_content', lodging: @lodging %>
-          </div>
-
-
-
-
-
-
-          <div class="col-md-4 margin-top-1x">
+      </div>
+      <div class="col-md-4 margin-top-1x">
             <div class="bg-secondary sticky-top">
 
              
@@ -121,6 +104,15 @@
        
   
        </div>
+
+      </div>
+
+     
+
+
+
+
+          
 
 
           
