@@ -11,27 +11,37 @@
   
 
    
-        <div class="row">
+        <div class="row effect6">
           
           <div class="col-md-6 col-lg-6">
-            <%= render_image_tag lodging, class: 'max-height-230 w-100' %>
+            <%= render_image_tag lodging, class: 'max-height-230' %>
             <br><br>
-            <h5><%= lodging.child_name %></h5>
-            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 250).try(:html_safe) %>
+            <h5><%= lodging.child_name %></h5> 
+            <p class="text-xxs">
+                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+                <% if lodging.children.present? %>
+                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+                <% end %>
+                /
+                <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
+
+              </p>
+            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 100).try(:html_safe) %>
               <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
             </p>
           </div>
 
-          <div class="col-md-6 col-lg-6 bg-secondary">
+          <div class="col-md-6 col-lg-6 homepage">
 
             <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
               <%= render 'reservations/errors', resource: lodging.reservations.build %>
             </div>
             <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
-
+            <div class="bg-white">
               <p class="mb-1 mt-2 text-sm strong anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
               <div class="text-sm strong" id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
               <p id="lbl-error-<%= lodging.id %>"></p>
+            </div>
 
               <div class="bg-white">
                 <p class="text-sm">
