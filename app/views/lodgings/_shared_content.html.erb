@@ -1,7 +1,8 @@
 <% if @lodging.as_standalone? %>
   <% else %>
     <div class="row col-md-12 margin-top-2x">
-      <h3 class="card-title text-muted margin-bottom-1x">Accommodations & Availabilty</h3>
+      <h4 class="card-title text-muted margin-bottom-1x">
+      <%= t 'nav.price_availabiltiy' %></h4>
         <%= render partial: 'reservations/child_form', collection: @lodging_children, as: :lodging %>
         <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
       </div>
@@ -11,20 +12,21 @@
 
 
   <div class="margin-top-2x row leads_homepage">
-     <div class="col-md-12 padding-top-1x padding-bottom-1x">
-      <h3 class="mb-3">
-        <%= lodging.name %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl
-      </h3>
+     <div class="col-md-12 padding-bottom-1x">
+      <h4 class="mb-3">
+        <%= lodging.name %> <%= t 'usp.acco_show_header' %>
+      </h4>
 
       <div class="row">
         <div class="col-md-3 col-lg-2">
           <div class="d-table">
-            <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
+            <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
           </div>
         </div>
 
         <div class="col-sm-9 mb-9">
-          <p>Elke woning van Nice2stay moet een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl. <%= lodging.name %> is bezocht door Christa Linders.</p>
+          <p><%= t 'usp.acco_show_p' %> </p>
+          <p><%= lodging.name %>  <%= t 'usp.acco_show_visit' %></p>
         </div>
       </div>
     </div>
@@ -33,7 +35,7 @@
 <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
   
     <div class="col-md-12">
-      <h3 class="card-title">Location</h3>
+      <h4 class="card-title">Location</h4>
 
       <hr class="margin-bottom-1x">
       <%= lodging.location_description.try(:html_safe) %>
@@ -52,7 +54,7 @@
 <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
     <div class="col-md-12 mb-30">
       
-        <h3 class="card-title">Photo gallary</h3>
+        <h4 class="card-title">Photo gallary</h4>
         <hr class="margin-bottom-1x">
 
         <div class="gallery-wrapper">
@@ -86,7 +88,7 @@
       <% if @reviews.present? %>
         <div class="row">
           <div class="col-md-12">
-            <h3 class="card-title">Rating & Reviews</h3>
+            <h4 class="card-title">Rating & Reviews</h4>
           </div>
 
           <div class="card-body col-md-12">
@@ -107,7 +109,7 @@
       <% else %>
         <div class="row">
           <div class="card-body col-md-12">
-            <h3 class="card-title">Rating & Reviews</h3>
+            <h4 class="card-title">Rating & Reviews</h4>
             <p>Accommodation does not have any review yet.</p>
           </div>
         </div>
@@ -131,7 +133,7 @@
    
   <div class="col-md-12 target-section" id="description-container">
     
-      <h3 class="card-title margin-bottom-1x"><%= @lodging.h3 %></h3>
+      <h4 class="card-title margin-bottom-1x"><%= @lodging.h3 %></h4>
       <hr class="margin-bottom-1x">
 
       <div id="lodging-description">
@@ -144,7 +146,7 @@
 <div class="padding-bottom-1x pt-2 mb-1 row">
   
     <div class="col-md-12 padding-top-1x" id="like-container">
-      <h3 class="card-title"><%= t 'nav.also_like' %></h3>
+      <h4 class="card-title"><%= t 'nav.also_like' %></h4>
 
       <div class="row">
         <%= render @lodgings %>
