@@ -1,6 +1,4 @@
-
 <div class="bg-white">
-
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
        data-check-out="<%= params[:check_out]%>"
        data-url="<%= price_details_lodging_path(lodging) %>"
@@ -8,77 +6,69 @@
        data-check-in-title="<%= t('search.check_in') %>"
        data-check-out-title="<%= t('search.check_out') %>"></div>
 
-  
+  <div class="row effect6">
+    <div class="col-md-6 col-lg-6">
+      <%= render_image_tag lodging, class: 'max-height-230' %>
+      <br><br>
+      <h5><%= lodging.child_name %></h5>
+      <p class="text-xxs">
+          <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+          <% if lodging.children.present? %>
+            / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+          <% end %>
+          /
+          <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
 
-   
-        <div class="row effect6">
-          
-          <div class="col-md-6 col-lg-6">
-            <%= render_image_tag lodging, class: 'max-height-230' %>
-            <br><br>
-            <h5><%= lodging.child_name %></h5> 
-            <p class="text-xxs">
-                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
-                <% if lodging.children.present? %>
-                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
-                <% end %>
-                /
-                <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
+        </p>
+      <p class="text-xs"> <%= truncated_description(lodging.short_desc, 100).try(:html_safe) %>
+        <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
+      </p>
+    </div>
 
-              </p>
-            <p class="text-xs"> <%= truncated_description(lodging.short_desc, 100).try(:html_safe) %>
-              <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
-            </p>
-          </div>
-
-          <div class="col-md-6 col-lg-6 homepage">
-
-            <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
-              <%= render 'reservations/errors', resource: lodging.reservations.build %>
-            </div>
-            <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
-            <div class="bg-white">
-              <p class="mb-1 mt-2 text-sm anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
-              <div class="text-sm" id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
-              <p id="lbl-error-<%= lodging.id %>"></p>
-            </div>
-
-              <div class="bg-white">
-                <p class="text-sm">
-                  <% [:prebooking, :option].each do |status| %>
-                    <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-                    <label><%= t("reservations.#{status}") %></label>
-                  <% end %>
-                </p>
-
-                <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
-                <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
-                <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
-                <%= f.hidden_field :adults, value: no_of_adults(f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
-                <%= f.hidden_field :children, id: "children_#{lodging.id}", class: 'children' %>
-                <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
-                <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
-                <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
-              <% end %>
-            </div>
-
-            <div class="text-dark" id="bill-<%= lodging.id %>"></div>
-            <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
-            <%= render 'wishlists/form', lodging: lodging %>
-
-            <div class="row">
-              <button class="btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
-                data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click" data-content="<%= lodging.including_text %>" data-html="true" data-original-title="Included">+ Included ?
-              </button>
-
-              <button class="text-xxs btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
-                data-container="body" data-toggle="popover" data-html="true" data-placement="top" data-trigger="hover click" data-content="<%= lodging.particularities_text %>" data-original-title="Belangrijk informatie">+ Informatie
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-         <hr class="mb-4"></hr>
+    <div class="col-md-6 col-lg-6 homepage">
+      <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
+        <%= render 'reservations/errors', resource: lodging.reservations.build %>
       </div>
-  
+      <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
+      <div class="bg-white">
+        <p class="mb-1 mt-2 text-sm anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+        <div class="text-sm" id="flexible-search-<%= lodging.id %>" class="flexible-search-data"></div>
+        <p id="lbl-error-<%= lodging.id %>"></p>
+      </div>
+
+        <div class="bg-white">
+          <p class="text-sm">
+            <% [:prebooking, :option].each do |status| %>
+              <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+              <label><%= t("reservations.#{status}") %></label>
+            <% end %>
+          </p>
+
+          <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
+          <%= f.hidden_field :check_in, id: "check_in_#{lodging.id}", class: 'check_in' %>
+          <%= f.hidden_field :check_out, id: "check_out_#{lodging.id}", class: 'check_out' %>
+          <%= f.hidden_field :adults, value: no_of_adults(f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
+          <%= f.hidden_field :children, id: "children_#{lodging.id}", class: 'children' %>
+          <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
+          <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
+          <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
+        <% end %>
+      </div>
+
+      <div class="text-dark" id="bill-<%= lodging.id %>"></div>
+      <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
+      <%= render 'wishlists/form', lodging: lodging %>
+
+      <div class="row">
+        <button class="btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
+          data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click" data-content="<%= lodging.including_text %>" data-html="true" data-original-title="Included">+ Included ?
+        </button>
+
+        <button class="text-xxs btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
+          data-container="body" data-toggle="popover" data-html="true" data-placement="top" data-trigger="hover click" data-content="<%= lodging.particularities_text %>" data-original-title="Belangrijk informatie">+ Informatie
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr class="mb-4"></hr>
+</div>

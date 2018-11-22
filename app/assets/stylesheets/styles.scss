@@ -17,25 +17,23 @@
 }
 .effect6
 {
-    position:relative;
-    -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-       -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-            box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  position:relative;
+  -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+     -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+          box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
 }
 
 
 .navbar_second {
-    overflow: hidden;
-    background-color: #333;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
+  overflow: hidden;
+  background-color: #333;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
 }
 
 .sticky-top {
   top:9%;
-
-
 }
 
 
@@ -45,17 +43,14 @@
           box-shadow: 0 10px 6px -6px #777;
 }
 
-
 .widget-tags {
   padding: 8px;
 }
-
 
 .page_fixed {
   position: fixed;
   right: 0;
 }
-
 
 .sideNav {
   padding: 10px 0;
@@ -599,8 +594,6 @@ figure figcaption {
 }
 
 /* Bootstrap Overrides */
-
-
 
 @media screen and (min-width: 1400px) {
   .container {
@@ -6115,7 +6108,6 @@ video {
 
 .fw-section,
 .fh-section {
-  
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;

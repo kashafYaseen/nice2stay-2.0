@@ -1,9 +1,6 @@
 <%= render 'shared/photoswipe' %>
 
- 
-  <!-- Product Gallery-->
-
-  <div class="container-fluid">
+<div class="container-fluid">
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-8 col-xs-12">
@@ -31,9 +28,9 @@
        </div>
      
         <h3 class="margin-top-1x card-title"><%= @lodging.h1 %></h3>
-        <h5 class="card-title text-muted margin-bottom-1x"><%= @lodging.h2 %></h3>
-         <div class="row padding-top-1x">
-               <div class="col-md-3">
+        <h5 class="card-title text-muted margin-bottom-1x"><%= @lodging.h2 %></h5>
+        <div class="row padding-top-1x">
+          <div class="col-md-3">
             <h6>
               <b><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, "" %></b> <%= t 'search.adutls_1' %> <br>
 
@@ -57,9 +54,8 @@
               </div>
             </div>
           <% end %>
-            <div class="col-md-6">
-        
 
+          <div class="col-md-6">
             <ul class="list-icon">
               <h6>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
@@ -68,76 +64,35 @@
               </h6>
             </ul>
           </div>
-        </div>  
+        </div>
+
         <p class="text-sm col-md-5">
           <div id="lodging-summary">
             <%= @lodging.summary.try(:html_safe) %>
-           
           </div>
-          </p>
-            
-          <%= render 'shared_content', lodging: @lodging %>
+        </p>
+        <%= render 'shared_content', lodging: @lodging %>
       </div>
-      <div class="col-md-4 margin-top-1x">
-            <div class="bg-secondary sticky-top">
 
-             
-             <section class="widget-tags">
-                <a class="tag" href="#home-container" aria-selected="true"><%= t 'nav.home' %></a>
-                <a class="tag" href="#location-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.location' %></a>
-                <a class="tag" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.reviews' %></a>
-                <a class="tag" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.gallary' %></a>
-                <a class="tag" href="#description-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.info' %></a>
-                 <a class="tag" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
-            </section>
-         
-        
+      <div class="col-md-4 margin-top-1x">
+        <div class="bg-secondary sticky-top">
+          <section class="widget-tags">
+            <a class="tag" href="#home-container" aria-selected="true"><%= t 'nav.home' %></a>
+            <a class="tag" href="#location-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.location' %></a>
+            <a class="tag" href="#reviews-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.reviews' %></a>
+            <a class="tag" href="#gallery-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.gallary' %></a>
+            <a class="tag" href="#description-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.info' %></a>
+            <a class="tag" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
+          </section>
 
           <% if @lodging.as_standalone? %>
             <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
           <% else %>
             <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
           <% end %>
-         </div>  
-
-      
-       
-  
-       </div>
-
-      </div>
-
-     
-
-
-
-
-          
-
-
-          
-      
-
-         
         </div>
-
-     
-    
-      
+      </div>
     </div>
-</div>
-</div>
-
-
-
-
-  
-
-  
-   
-
-       
-
   </div>
 </div>
 

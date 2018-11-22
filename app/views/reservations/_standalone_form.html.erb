@@ -14,7 +14,6 @@
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
     <div class="row"> 
       <div class="col-md-12 homepage">
-
         <div data-lodging-id="<%= lodging.id %>"
              data-disabled-dates="<%= lodging.not_available_on %>">
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
@@ -78,7 +77,6 @@
   <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
 
   <div class="row">
-
     <div class="col-md-12 col-lg-6 col-xs-12">
       <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
         <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
@@ -92,7 +90,6 @@
 
   <div class="row px-2 mt-1">
     <div class="col-md-12 bg-secondary">
-     
       <button class="btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
         data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
         data-html="true" data-content="<%= lodging.including_text %>" data-original-title="<%= t 'information.included_header' %>"><%= t 'information.included' %>
