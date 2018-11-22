@@ -1,127 +1,117 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-6 col-md-4 padding-top-1x">
-    <p>
-      Geen tijd, druk of geen zin? Wij denken graag met u mee bij het bepalen van uw keuze, geven u eerlijk advies op basis van uw wensen en onze kennis over de accommodaties. Elk vakantiehuis, appartement en boutique hotel is persoonlijk door ons bezocht. Wij berekenen geen kosten voor ons advies.
-    </p>
+<%= form_for lead, remote: true do |f| %>
+  <div class="leads-form-errors">
+    <%= render 'shared/errors', resource: lead %>
   </div>
 
-  <div class="col-xs-12 col-sm-6 col-md-8 padding-top-1x">
-    <%= form_for lead, remote: true do |f| %>
-      <div class="leads-form-errors">
-        <%= render 'shared/errors', resource: lead %>
-      </div>
-
-      <%= f.fields_for current_user || lead.build_user do |user| %>
-        <fieldset <%= 'disabled' if user_signed_in? %>>
-          <div class="form-group row">
-            <%= user.label :first_name, class: 'col-2 col-form-label text-muted' %>
-
-            <div class="col-10">
-              <%= user.text_field :first_name, class: 'form-control' %>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <%= user.label :last_name, class: 'col-2 col-form-label text-muted' %>
-
-            <div class="col-10">
-              <%= user.text_field :last_name, class: 'form-control' %>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <%= user.label :email, class: 'col-2 col-form-label text-muted' %>
-
-            <div class="col-10">
-              <%= user.email_field :email, class: 'form-control' %>
-              <%= user.hidden_field :skip_validations, value: true %>
-            </div>
-          </div>
-        </fieldset>
-
-        <% unless user_signed_in? %>
-          <div class="password-fields d-none">
-            <div class="form-group row">
-              <%= user.label :password, class: 'col-2 col-form-label text-muted' %>
-
-              <div class="col-10">
-                <%= user.password_field :password, class: 'form-control' %>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <%= user.label :password_confirmation, class: 'col-2 col-form-label text-muted' %>
-
-              <div class="col-10">
-                <%= user.password_field :password_confirmation, class: 'form-control' %>
-              </div>
-            </div>
-          </div>
-          <hr class="padding-bottom-1x">
-
-          <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <%= check_box_tag :create_account, nil, show_password_fields?(user.object), class: "custom-control-input" %>
-              <label class="custom-control-label" for="create_account">Do you want to create an account?</label>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-
+  <%= f.fields_for current_user || lead.build_user do |user| %>
+    <fieldset <%= 'disabled' if user_signed_in? %>>
       <div class="form-group row">
-        <%= f.label :from, 'Dates', class: 'col-2 col-form-label text-muted' %>
+        <%= user.label :first_name, class: 'col-2 col-form-label text-muted' %>
 
         <div class="col-10">
-          <div class="reservation-datepicker"></div>
-          <%= f.hidden_field :from, class: 'check_in' %>
-          <%= f.hidden_field :to, class: 'check_out' %>
+          <%= user.text_field :first_name, class: 'form-control' %>
         </div>
       </div>
 
       <div class="form-group row">
-        <%= f.label :adults, 'Guests', class: 'col-2 col-form-label text-muted' %>
+        <%= user.label :last_name, class: 'col-2 col-form-label text-muted' %>
 
         <div class="col-10">
-          <div class="dropdown guests-dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle col-md-12" type="button" id="leads_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title">Guest</span>
-            </button>
+          <%= user.text_field :last_name, class: 'form-control' %>
+        </div>
+      </div>
 
-            <div class="dropdown-menu w-100" aria-labelledby="leads_dropdown">
-              <div class="dropdown-item">
-                <label>Adults</label>
-                <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
-              </div>
+      <div class="form-group row">
+        <%= user.label :email, class: 'col-2 col-form-label text-muted' %>
 
-              <div class="dropdown-item">
-                <label>Children</label>
-                <%= f.number_field :childrens, value: f.object.childrens, min: 0, class: 'input-spinner parent-children children' %>
-              </div>
-            </div>
+        <div class="col-10">
+          <%= user.email_field :email, class: 'form-control' %>
+          <%= user.hidden_field :skip_validations, value: true %>
+        </div>
+      </div>
+    </fieldset>
+
+    <% unless user_signed_in? %>
+      <div class="password-fields d-none">
+        <div class="form-group row">
+          <%= user.label :password, class: 'col-2 col-form-label text-muted' %>
+
+          <div class="col-10">
+            <%= user.password_field :password, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <%= user.label :password_confirmation, class: 'col-2 col-form-label text-muted' %>
+
+          <div class="col-10">
+            <%= user.password_field :password_confirmation, class: 'form-control' %>
           </div>
         </div>
       </div>
+      <hr class="padding-bottom-1x">
 
-      <div class="form-group row">
-        <%= f.label :extra_information, class: 'col-2 col-form-label text-muted' %>
-
-        <div class="col-10">
-          <%= f.text_area :extra_information, class: 'form-control' %>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <%= check_box_tag :create_account, nil, show_password_fields?(user.object), class: "custom-control-input" %>
+          <label class="custom-control-label" for="create_account">Do you want to create an account?</label>
         </div>
       </div>
-
-      <div class="form-group row">
-        <%= f.label :countries, class: 'col-2 col-form-label text-muted' %>
-
-        <div class="col-10">
-          <%= f.select :country_ids, countries.map { |s| [s.name, s.id] }, { include_blank: false }, { multiple: true, class: 'form-control chosen-select', data: { placeholder: "Select countries" } } %>
-        </div>
-      </div>
-
-      <%= f.submit class: 'btn btn-primary margin-top-none' %>
     <% end %>
+  <% end %>
+
+  <div class="form-group row">
+    <%= f.label :from, 'Dates', class: 'col-2 col-form-label text-muted' %>
+
+    <div class="col-10">
+      <div class="reservation-datepicker"></div>
+      <%= f.hidden_field :from, class: 'check_in' %>
+      <%= f.hidden_field :to, class: 'check_out' %>
+    </div>
   </div>
-</div>
+
+  <div class="form-group row">
+    <%= f.label :adults, 'Guests', class: 'col-2 col-form-label text-muted' %>
+
+    <div class="col-10">
+      <div class="dropdown guests-dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle col-md-12" type="button" id="leads_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="title">Guest</span>
+        </button>
+
+        <div class="dropdown-menu w-100" aria-labelledby="leads_dropdown">
+          <div class="dropdown-item">
+            <label>Adults</label>
+            <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
+          </div>
+
+          <div class="dropdown-item">
+            <label>Children</label>
+            <%= f.number_field :childrens, value: f.object.childrens, min: 0, class: 'input-spinner parent-children children' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :extra_information, class: 'col-2 col-form-label text-muted' %>
+
+    <div class="col-10">
+      <%= f.text_area :extra_information, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :countries, class: 'col-2 col-form-label text-muted' %>
+
+    <div class="col-10">
+      <%= f.select :country_ids, countries.map { |s| [s.name, s.id] }, { include_blank: false }, { multiple: true, class: 'form-control chosen-select', data: { placeholder: "Select countries" } } %>
+    </div>
+  </div>
+
+  <%= f.submit class: 'btn btn-primary margin-top-none' %>
+<% end %>
 
 <% content_for :js_init do %>
   ChosenSelect.init();

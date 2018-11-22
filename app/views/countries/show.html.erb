@@ -1,98 +1,27 @@
-<div class="container">
-  <div class="col-md-12">
-    <div class="row">
-      <div class="col-md-8 pt-4">
-        <section>
-          <%= image_tag @country.image %>
-        </section>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-7 margin-top-1x col-xs-12">
+      <section>
+        <%= image_tag @country.image %>
+      </section>
 
-        <section class="padding-top-3x pb-5">
-          <h2 class="mb-30"><%= @country.title %></h2>
+      <h3 class="mt-3 mb-1"><%= @country.title %></h3>
+      <h5 class="card-title text-muted margin-bottom-1x">
+        <%= t 'holiday' %> <%= @country.name.capitalize %>
+      </h5>
 
-          <h5 class="card-title text-muted margin-bottom-1x">
-            Ervaar een ideale vakantie in <%= @country.name.capitalize %>
-          </h5>
-
-          <p><%= @country.content.try(:html_safe) %></p>
-        </section>
-
-        <div class="row">
-          <div class="p-3 homepage">
-            <div class="col-md-12 ml-2 padding-top-1x">
-              <h3 class="mb-3">
-                "<%= @country.name.capitalize %> is door ons geselecteert, bezocht en geverifieerd op comfort, kwaliteit & stijl"
-              </h3>
-
-              <div class="row">
-                <div class="col-md-3 col-lg-2">
-                  <div class="d-table">
-                    <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-                  </div>
-                </div>
-
-                <div class="col-sm-9 mb-9">
-                  <p>Elke villa, vakantiewoning of bed and breakfast in <%= @country.name.capitalize %> heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio <%= @country.name.capitalize %> </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <section class="padding-top-3x p-0 pb-5">
-          <h3>In the spotlight</h3>
-          <hr class="mt-3"></hr>
-
-          <div class="row mb-3 you-may-like-lodgings">
-            <%= render @lodgings %>
-          </div>
-        </section>
-
-        <% if @custom_texts.present? %>
-          <section class="padding-top-1x pb-5">
-            <h3 class="mb-30">Our collection in <%= @country.name.capitalize %></h3>
-              <hr class="mt-3"></hr>
-
-            <div class="isotope-grid cols-2">
-              <div class="gutter-sizer"></div>
-              <div class="grid-sizer"></div>
-
-              <% @custom_texts.each do |custom_text| %>
-                <div class="grid-item gallery-item">
-                  <%= link_to seo_url custom_text.seo_path do %>
-                    <%= image_tag custom_text.image if custom_text.image.present? %>
-                    <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
-                    <span class="caption"><%= custom_text.h1_text %></span>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </section>
-        <% end %>
+      <div class="d-md-block d-sm-block d-none">
+        <p><%= @country.content.try(:html_safe) %></p>
       </div>
+    </div>
 
-      <div class="col-md-4">
-        <section class="padding-top-1x ">
-          <h3 class="mb-20"><%= @country.name.capitalize %></h3>
-          <hr class="mt-1"></hr>
-        </section>
+    <div class="col-sm-12 col-md-12 col-lg-5 margin-top-1x ">
+      <div class="d-md-block d-sm-block d-none">
+        <h3 class="mb-3"><%= @country.name.capitalize %></h3>
+      </div>
+      <hr class="mt-1"></hr>
 
-        <section class="widget-links">
-          <h5 class="mt-5 mb-10">Regions in <%= @country.name.capitalize %></h5>
-          <hr class="mt-0"></hr>
-          <ul>
-            <% @country.regions.each do | region | %>
-              <li><%= link_to region.name, country_region_path(@country, region, locale: locale) %></li>
-            <% end %>
-          </ul>
-        </section>
-
-        <section class="widget-tags">
-          <h5 class="mt-5 mb-10">Collections in <%= @country.name.capitalize %></h5>
-          <a class="tag" href="#">#furniture</a><a class="tag" href="#">#lighting</a><a class="tag" href="#">#LED</a><a class="tag" href="#">#interior</a><span class="tag">#active tag</span><a class="tag" href="#">#office supplies</a><a class="tag" href="#">#storage</a>
-        </section>
-
-        <h5 class="mt-5">Zoek</h5>
-        <hr class="mt-0"></hr>
+      <div class="col-md-12 padding-top-1x padding-bottom-2x homepage">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-12 col-sm-12 pt-2">
@@ -133,6 +62,109 @@
           </div>
         <% end %>
       </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-6">
+          <section class="widget-tags">
+           <h5 class="mt-4 mb-10"><%= t 'collections' %> in <%= @country.name.capitalize %></h5>
+
+            <% @menu_custom_texts.each do |custom_text| %>
+              <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+            <% end %>
+
+            <% @custom_texts.each do |custom_text| %>
+              <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+            <% end %>
+          </section>
+        </div>
+
+        <div class="col-sm-6 ">
+          <section class="widget-links">
+            <h5 class="mt-4 mb-10">Regions in <%= @country.name.capitalize %></h5>
+            <hr class="mt-0"></hr>
+            <ul>
+              <% @country.regions.each do | region | %>
+                <%= link_to region.name, country_region_path(@country, region, locale: locale) ,class: 'tag' %>
+              <% end %>
+            </ul>
+          </section>
+
+          <section class="widget-tags">
+            <h5 class="mt-3 mb-10"><%= t 'nav.landen' %></h5>
+
+            <% @countries_enabled.each do |country| %>
+              <%= link_to country.name, country_path(country, locale: locale), class: "tag" %>
+            <% end %>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="ccol-sm-12 col-md-12 margin-top-1x col-xs-12 col-md-7">
+      <section class="col-md-12 col-lg-7 padding-top-2x homepage padding-bottom-2x">
+        <div class="row pt-2">
+          <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30" >
+            <span class="d-block display-4 text-gray-light mb-4">
+              <%= image_tag("usp_visit.png", :alt => "visit") %>
+            </span>
+
+            <h4 class="h5 mb-2"><%= t 'usp.inspect' %></h4>
+            <p class="text-muted mb-0"><%= t 'usp.inspect_details' %></p>
+          </div>
+
+          <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+            <span class="d-block display-4 text-gray-light mb-4">
+              <%= image_tag("usp_support.png", :alt => "visit") %>
+            </span>
+
+            <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
+            <p class="text-muted mb-0"><%= t 'usp.price_details' %></p>
+          </div>
+
+          <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+            <span class="d-block display-4 text-gray-light mb-4">
+              <%= image_tag("usp_support.png", :alt => "visit") %>
+            </span>
+
+            <h4 class="h5 mb-2"><%= t 'usp.advice' %></h4>
+            <p class="text-muted mb-0"><%= t 'usp.advice_details' %></p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-12">
+      <% if @custom_texts.present? %>
+        <section class="padding-top-1x pb-5">
+          <h3 class="mb-30"><%= t 'collection.normal' %></h3>
+          <hr class="mt-3"></hr>
+
+          <div class="isotope-grid cols-4">
+            <div class="gutter-sizer"></div>
+            <div class="grid-sizer"></div>
+
+            <% @custom_texts.each do |custom_text| %>
+              <div class="grid-item gallery-item">
+                <%= link_to seo_url custom_text.seo_path do %>
+                  <%= image_tag custom_text.image if custom_text.image.present? %>
+                  <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
+                  <span class="caption"><%= custom_text.h1_text %></span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-7 margin-top-1x ">
+      <%= render @lodgings %>
     </div>
   </div>
 </div>
@@ -140,7 +172,7 @@
 <% if @all_reviews.present? %>
   <div class="leads_homepage">
     <section class="container padding-top-3x pb-5">
-      <h2 class="text-center mb-30">Latest Customer Reviews in <%= @country.name %> </h2>
+       <h3 class="text-center mb-30"><%= t 'nav.reviews' %></h3>
       <div class="row mt-30">
         <div class="col-md-4 mb-4">
           <%= render 'reviews/average_rating', reviews: @all_reviews %>
@@ -160,7 +192,13 @@
   </div>
 <% end %>
 
-<%= render 'shared/meta_tags', resource: @country %>
+<div class="container">
+  <div class="col-md-12 ml-0 padding-top-1x">
+    <h3 class="card-title text-center ">In the spotlight</h3>
+    <div class="you-may-like-lodgings">
+    </div>
+  </div>
+</div>
 
 <%= content_for :js_init do %>
   Autocomplete.init("<%= autocompletes_path(locale: locale) %>");

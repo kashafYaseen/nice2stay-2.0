@@ -8,16 +8,17 @@
 <div class="card-body">
   <div class="reservation-form-errors-<%= lodging.id %>">
     <%= render 'reservations/errors', resource: reservation %>
+    <br>
   </div>
 
   <div class="row">
-    <div class="col-md-12" data-lodging-id="<%= lodging.id %>"
+    <div class="col-md-12 homepage" data-lodging-id="<%= lodging.id %>"
          data-disabled-dates="<%= lodging.children_not_available_on %>">
       <label class="mb-0 text-xs">Dates</label>
       <div class="reservation-datepicker"></div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 homepage">
       <label class="mb-0 text-xs">Guests</label>
       <div class="dropdown guests-dropdown" id="dropdown<%= id_sufix %>">
         <button class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

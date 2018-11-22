@@ -1,25 +1,6 @@
+<div class="reservation-parent-form-1">
+  <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
 </div>
-<div class="padding-top-1x pb-5 bg-secondary">
-  <div class="container">
-  <div class="col-md-9">
-
-  <div class="mb-30">
-    <div class="lodging-children">
-      <%= render partial: 'reservations/child_form', collection: lodging_children, as: :lodging %>
-      <%= render partial: 'child_details_modal', collection: lodging_children, as: :lodging  %>
-    </div>
-  </div>
-</div>
-</div>
-
-
-<%= render 'shared_content', lodging: lodging %>
-
-<nav id="sidebar">
-  <div class="reservation-parent-form-1">
-    <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
-  </div>
-</nav>
 
 <div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
   <div class="card bg-white p-1">
