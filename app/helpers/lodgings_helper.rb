@@ -12,12 +12,16 @@ module LodgingsHelper
   end
 
   def render_lodgings_count_for (lodgings, key, filter_name)
-    buckets = lodgings.aggregations[filter_name]['buckets']
-    buckets = lodgings.aggregations[filter_name][filter_name]['buckets'] unless buckets.present?
+    begin
+      buckets = lodgings.aggregations[filter_name]['buckets']
+      buckets = lodgings.aggregations[filter_name][filter_name]['buckets'] unless buckets.present?
 
-    buckets.each do |bucket|
-      return bucket['doc_count'] if bucket['key'] == key
-    end if buckets.present?
+      buckets.each do |bucket|
+        return bucket['doc_count'] if bucket['key'] == key
+      end if buckets.present?
+    rescue
+      0
+    end
     0
   end
 
