@@ -24,7 +24,7 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-  searchkick locations: [:location], text_middle: [:extended_name, :h1]
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -84,6 +84,18 @@ class Lodging < ApplicationRecord
     street_changed? || city_changed? || zip_changed? || state_changed?
   end
 
+  searchkick locations: [:location], text_middle: [:extended_name, :h1], merge_mappings: true, mappings: {
+      lodging: {
+        properties: {
+          rules: { type: :nested }
+        }
+      }
+    }
+
+  def availability_price
+    prices.pluck(:amount)
+  end
+
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
@@ -95,6 +107,7 @@ class Lodging < ApplicationRecord
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
       experiences: experiences.collect(&:translated_slugs),
+      rules: rules.collect(&:search_data),
     )
   end
 
