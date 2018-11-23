@@ -50,7 +50,7 @@ class SearchLodgings
       conditions << { range: { baths: { gte: params[:baths] } } } if params[:baths].present?
       conditions << { range: { adults: { gte: params[:adults] } } } if params[:adults].present?
       conditions << { range: { minimum_adults: { lte: params[:adults] } } } if params[:adults].present?
-      #conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
+      conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
       conditions << flexibility_condition if params[:check_in].present?
       conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
