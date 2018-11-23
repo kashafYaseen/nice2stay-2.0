@@ -41,6 +41,8 @@ class SearchLodgings
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
 
+      conditions << { term: { id: 239 } }
+
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { terms: { presentation: ['as_parent', 'as_standalone'] } }
 
@@ -48,9 +50,10 @@ class SearchLodgings
       conditions << { range: { baths: { gte: params[:baths] } } } if params[:baths].present?
       conditions << { range: { adults: { gte: params[:adults] } } } if params[:adults].present?
       conditions << { range: { minimum_adults: { lte: params[:adults] } } } if params[:adults].present?
-      conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
+      #conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
-      conditions << rules_condition if params[:check_in].present?
+      conditions << flexibility_condition if params[:check_in].present?
+      conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
 
       conditions << frame_coordinates if params[:bounds].present?
       conditions << near_latlong_condition if params[:within].present?
@@ -130,7 +133,8 @@ class SearchLodgings
       }
     end
 
-    def rules_condition
+    def flexibility_condition
+      check_in = Date.parse(params[:check_in])
       {
         bool: {
           should: [
@@ -144,7 +148,7 @@ class SearchLodgings
                       {
                         bool: {
                           must: [
-                            { match: { "rules.dates": Date.parse(params[:check_in]) } },
+                            { match: { "rules.dates": check_in } },
                             { match: { "rules.flexible_arrival": true } },
                           ]
                         }
@@ -152,9 +156,55 @@ class SearchLodgings
                       {
                         bool: {
                           must: [
-                            { match: { "rules.dates": Date.parse(params[:check_in]) } },
+                            { match: { "rules.dates": check_in } },
                             { match: { "rules.flexible_arrival": false } },
-                            { match: { "rules.check_in_day": Date.parse(params[:check_in]).strftime("%A").downcase } }
+                            { match: { "rules.check_in_day": check_in.strftime("%A").downcase } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+              },
+            },
+            {
+              bool: {
+                must: [
+                  { match: { flexible_arrival: false } },
+                  { match: { check_in_day: check_in.strftime("%A").downcase } }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    end
+
+    def minimum_stay_condition
+      check_in, check_out = Date.parse(params[:check_in]), Date.parse(params[:check_out])
+      nights = (check_out - check_in).to_i
+      {
+        bool: {
+          filter: [
+            {
+              nested: {
+                path: :rules,
+                query: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            { range: { "rules.minimum_stay": { lte: nights } } },
+                            { match: { "rules.dates": check_in } },
+                          ]
+                        }
+                      },
+                      {
+                        bool: {
+                          must: [
+                            { match: { "rules.minimum_stay": 0 } },
+                            { match: { "rules.dates": check_in } },
                           ]
                         }
                       }
