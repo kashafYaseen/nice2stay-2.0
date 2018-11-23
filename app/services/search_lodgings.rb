@@ -38,6 +38,7 @@ class SearchLodgings
 
     def conditions
       conditions = []
+      merge_seo_filters conditions
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
 
@@ -60,7 +61,6 @@ class SearchLodgings
       all(:amenities, params[:amenities_in], conditions) if params[:amenities_in].present?
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
-      # merge_seo_filters
       # conditions = {}
       # conditions[:beds]         = { gte: params[:beds] } if params[:beds].present?
       # conditions[:baths]        = { gte: params[:baths] } if params[:baths].present?
@@ -253,19 +253,24 @@ class SearchLodgings
     #   ]
     # end
 
-    # def merge_seo_filters
-    #   return unless custom_text.present?
-    #   params[:experiences_in] = [custom_text.experience_slug] if custom_text.experience.present?
-    #   params[:country] = custom_text.country_slug if custom_text.country.present?
-    #   params[:region] = custom_text.region_slug if custom_text.region.present?
-    #   params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
-    # end
+    def merge_seo_filters conditions
+      return unless custom_text.present?
+      conditions << { term: { experiences_in: custom_text.experience_slug } } if custom_text.experience.present?
+      conditions << { term: { country: custom_text.country_slug } } if custom_text.country.present?
+      conditions << { term: { region: custom_text.region_slug } } if custom_text.region.present?
+      conditions << { term: { lodging_type_in: lodging_type(custom_text.category) } } if custom_text.category?
 
-    # def lodging_type(type)
-    #   return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
-    #   return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
-    #   return 'bnb' if ["boutique-hotels", "boutique-hotels", "bnb"].include?(type)
-    # end
+      # params[:experiences_in] = [custom_text.experience_slug] if custom_text.experience.present?
+      # params[:country] = custom_text.country_slug if custom_text.country.present?
+      # params[:region] = custom_text.region_slug if custom_text.region.present?
+      # params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
+    end
+
+    def lodging_type(type)
+      return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
+      return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
+      return 'bnb' if ["boutique-hotels", "boutique-hotels", "bnb"].include?(type)
+    end
 
     def all term, values, query
       values.each do |value|
