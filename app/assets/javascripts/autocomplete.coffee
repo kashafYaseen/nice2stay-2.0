@@ -21,15 +21,15 @@
     }, {
       name: 'collections'
       displayKey: 'name'
-      limit: 4
+      limit: 10
       source: source(url, 'campaigns')
       templates:
-        header: '<p class="category-name text-sm">Collections</p>'
+        header: '<p class="category-name text-sm darken">Collections</p>'
         suggestion: (collection) -> suggestion(collection)
     }, {
       name: 'accommodations'
       displayKey: 'name'
-      limit: 5
+      limit: 3
       source: source(url, 'lodgings')
       templates:
         header: '<p class="category-name text-sm">Accommodations</p>'

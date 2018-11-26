@@ -11,15 +11,16 @@
       <%= render 'shared/notices' %>
     </div>
 
-    <%= render 'layouts/dashboard/breadcrumbs' %>
+  <div class="bg-secondary">
 
-    <div class="container padding-bottom-3x mb-2">
+    <div class="container margin-top-2x padding-bottom-3x">
       <div class="row">
         <%= render 'layouts/dashboard/sidebar' %>
-        <div class="col-lg-9">
+        <div class="col-lg-9 margin-top-2x ">
           <%= yield %>
         </div>
       </div>
+    </div>
     </div>
 
     <%= render 'shared/footer' %>
