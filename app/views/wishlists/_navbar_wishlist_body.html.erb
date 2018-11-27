@@ -4,7 +4,7 @@
       <td>
         <div class="product-item">
           <%= link_to wishlist.lodging, class: 'product-thumb' do %>
-            <%= image_tag wishlist.lodging_image %>
+            <%= image_tag wishlist.lodging_image if wishlist.lodging_image.present? %>
           <% end %>
 
           <div class="product-info">

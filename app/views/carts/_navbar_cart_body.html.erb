@@ -4,7 +4,7 @@
       <td>
         <div class="product-item">
           <%= link_to reservation.lodging, class: 'product-thumb' do %>
-            <%= image_tag reservation.lodging_image %>
+            <%= image_tag reservation.lodging_image if reservation.lodging_image.present? %>
           <% end %>
 
           <div class="product-info">
