@@ -8,7 +8,7 @@ class Rule < ApplicationRecord
   def search_data
     attributes.merge(
       dates: (start_date..end_date).map(&:to_s), check_in_day: lodging.check_in_day,
-      minimum_stay: (minimum_stay || 1),
+      minimum_stay: (minimum_stay || 7),
     )
   end
 end

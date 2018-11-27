@@ -85,12 +85,12 @@ class Lodging < ApplicationRecord
   end
 
   searchkick locations: [:location], text_middle: [:extended_name, :h1], merge_mappings: true, mappings: {
-      lodging: {
-        properties: {
-          rules: { type: :nested }
-        }
+    lodging: {
+      properties: {
+        rules: { type: :nested }
       }
     }
+  }
 
   def availability_price
     prices.pluck(:amount)
