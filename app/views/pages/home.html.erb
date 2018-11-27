@@ -158,15 +158,6 @@
                 <% end %>
               </div>
             <% end %>
-            <% @custom_texts.each do |custom_text| %>
-              <div class="grid-item gallery-item">
-                <%= link_to seo_url custom_text.seo_path do %>
-                  <%= image_tag custom_text.image if custom_text.image.present? %>
-                  <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
-                  <span class="caption"><%= custom_text.h1_text %></span>
-                <% end %>
-              </div>
-            <% end %>
           </div>
         </section>
       <% end %>
