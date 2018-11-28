@@ -255,15 +255,11 @@ class SearchLodgings
 
     def merge_seo_filters conditions
       return unless custom_text.present?
-      conditions << { term: { experiences_in: custom_text.experience_slug } } if custom_text.experience.present?
-      conditions << { term: { country: custom_text.country_slug } } if custom_text.country.present?
-      conditions << { term: { region: custom_text.region_slug } } if custom_text.region.present?
-      conditions << { term: { lodging_type_in: lodging_type(custom_text.category) } } if custom_text.category?
 
-      # params[:experiences_in] = [custom_text.experience_slug] if custom_text.experience.present?
-      # params[:country] = custom_text.country_slug if custom_text.country.present?
-      # params[:region] = custom_text.region_slug if custom_text.region.present?
-      # params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
+      params[:experiences_in] = [custom_text.experience_slug] if custom_text.experience.present?
+      params[:country] = custom_text.country_slug if custom_text.country.present?
+      params[:region] = custom_text.region_slug if custom_text.region.present?
+      params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
     end
 
     def lodging_type(type)
