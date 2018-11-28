@@ -29,7 +29,7 @@ class UpdateLodgingPrices
 
             if price_range[:weekly_price].present?
               price.add(amount: price_range[:amount], children: price_range[:children], adults: price_range[:adults],
-                infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current) if availability.price_with(price_range[:adults], price_range[:children], price_range[:amount], ['7']).blank?
+                infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
           end
         end
@@ -46,13 +46,19 @@ class UpdateLodgingPrices
     end
 
     def create_rule(from, to, minimal_stay, flexible_arrival)
+      from = from.to_date.change(year: 2017) if from.to_date.year == 20117
+      to = to.to_date.change(year: 2017) if to.to_date.year == 20117
+
+      from = from.to_date.change(year: 2018) if from.to_date.year == 20118
+      to = to.to_date.change(year: 2018) if to.to_date.year == 20118
+
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
       if minimal_stay.map(&:to_i).min == 999
-        rule.minimum_stay = nil
+        rule.minimum_stay = 7
       else
         rule.minimum_stay = minimal_stay.map(&:to_i).min unless rule.minimum_stay.present? && rule.minimum_stay < minimal_stay.map(&:to_i).min
-        rule.minimum_stay = 7 if rule.minimum_stay == 8
+        rule.minimum_stay = 7 if rule.minimum_stay >= 8
       end
       rule.save
     end
