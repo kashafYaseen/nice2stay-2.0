@@ -51,7 +51,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |country| { name: country.send("name_#{locale}"), type: 'country', url: country_path(country.slug, locale: locale) } }
+      }).map{ |country| { name: country.send("name_#{locale}"), type: 'country', country: country.slug, url: lodgings_path(locale: locale) } }
     end
 
     def regions
@@ -62,6 +62,6 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |region| { name: region.send("name_#{locale}"), type: 'region', url: country_region_path(region.country_slug, region.slug, locale: locale) } }
+      }).map{ |region| { name: region.send("name_#{locale}"), type: 'region', country: region.country_slug, region: region.slug, url: lodgings_path(locale: locale) } }
     end
 end
