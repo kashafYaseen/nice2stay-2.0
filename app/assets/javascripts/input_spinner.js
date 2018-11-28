@@ -156,8 +156,9 @@
     element.addEventListener("mousedown", function(e) {
       e.preventDefault();
       callback(e);
-      if ($(this).parents('form').attr('id') != undefined && !$('#standalone, .standalone').val()) {
-        if ($('#dropdown_modal').is(':visible')){
+
+      if ($(this).parents('form').attr('id') != undefined && !$('#standalone').val()) {
+        if ($('#dropdown_modal').is(':visible')) {
           $('.adults').val($('#dropdown_modal .parent-adults').val());
           $('.children').val($('#dropdown_modal .parent-children').val());
           $('.infants').val($('#dropdown_modal .parent-infants').val());

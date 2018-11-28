@@ -85,6 +85,7 @@
             <a class="tag" href="#like-container" data-toggle="tab" role="tab" aria-selected="false"><%= t 'nav.like' %></a>
           </section>
 
+          <div class="children-scroll-section"></div>
           <% if @lodging.as_standalone? %>
             <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
           <% else %>
