@@ -11,11 +11,11 @@
             <h4 class="product-title">
               <%= link_to reservation.lodging_name, reservation.lodging %>
             </h4>
-            <span><em>Price:</em> $<%= reservation.total_price %></span>
-            <span><em>Nights:</em><%= reservation.total_nights %></span>
-            <span><em>From:</em> <%= reservation.check_in %></span>
-            <span><em>To:</em> <%= reservation.check_out %></span>
-            <span><em>Guests:</em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
+            <span><em><%= t "nav_cart.price" %>:</em> € <%= reservation.total_price %></span>
+            <span><em><%= t "nav_cart.nights" %>:</em><%= reservation.total_nights %></span>
+            <span><em><%= t "nav_cart.checkin" %>:</em> <%= reservation.check_in %></span>
+            <span><em><%= t "nav_cart.checkout" %>:</em> <%= reservation.check_out %></span>
+            <span><em><%= t "nav_cart.guests" %>:</em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
           </div>
         </div>
       </td>

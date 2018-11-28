@@ -62,6 +62,14 @@ nl:
     back: Terug
     price_availabiltiy: Prijzen & Beschikbaarheid
 
+  nav_cart: 
+    price: Prijs
+    nights: Nachten
+    From: From 
+    To: To
+    Guests: Gasten
+
+
   reservations:
     option: Optie (24H)
     prebooking: Reservering
@@ -71,8 +79,8 @@ nl:
     nice2stay: Geen reserveringskosten  bij nice2stay
 
   information:
-    included: + Inclusief huursom
-    informatie: + Informatie
+    included: de huurprijs is inclusief
+    informatie: belangrijke informatie
     included_header: Inclusief huursom
     informatie_header: Informatie
 
@@ -100,8 +108,13 @@ nl:
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
+    guests: Reisgezelschap
+    price: Prijs per nacht 
+    theme: Experience
+    type: Type accommodatie
+    amentities_pop: Voorzieningen populair
+    amentities: Voorzieningen
     dates: 'data'
-    guests: 'gasten'
     sort_by: 'sorteer op'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
