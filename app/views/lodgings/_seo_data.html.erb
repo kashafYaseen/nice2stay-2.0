@@ -1,3 +1,12 @@
+<% if params[:country].present? %>
+  <div class="alert alert-info alert-dismissible fade show text-center margin-bottom-1x">
+    <span class="alert-close" data-dismiss="alert"></span>
+    <i class="icon-layers"></i>&nbsp;&nbsp;<strong>Hi,</strong> you are zoomed on
+    <strong><%= "#{params[:region]}, " if params[:region].present? %><%= params[:country] %></strong>.
+    Use the plus (+) and min (-) or drag the map to see more
+  </div>
+<% end %>
+
 <% if custom_text.present? %>
   <div class="col-md-12 ml-3">
     <h4><%= custom_text.h1_text %></h4>
