@@ -8,6 +8,7 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
 
     if @custom_text.save(validate: false)
       update_translations(params, @custom_text)
+      Rails.application.reload_routes!
       render json: @custom_text, status: :created
     else
       render json: @custom_text.errors, status: :unprocessable_entity
