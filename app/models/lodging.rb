@@ -45,6 +45,7 @@ class Lodging < ApplicationRecord
   scope :home_page, -> { where(home_page: true) }
   scope :region_page, -> { where(region_page: true) }
   scope :country_page, -> { where(country_page: true) }
+  scope :search_import, -> { includes(:amenities, :experiences, :rules) }
 
   translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -92,10 +93,6 @@ class Lodging < ApplicationRecord
     }
   }
 
-  def availability_price
-    prices.pluck(:amount)
-  end
-
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
@@ -103,12 +100,18 @@ class Lodging < ApplicationRecord
       region: region.translated_slugs,
       extended_name: extended_name,
       available_on: availabilities.pluck(:available_on),
-      availability_price: prices.pluck(:amount),
+      availability_price: availability_price,
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
+      amenities_ids: amenities.ids,
       experiences: experiences.collect(&:translated_slugs),
+      experiences_ids: experiences.ids,
       rules: rules.collect(&:search_data),
     )
+  end
+
+  def availability_price
+    prices.pluck(:amount).presence || [price]
   end
 
   def adults_plus_children

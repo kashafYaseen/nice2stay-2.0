@@ -8,20 +8,16 @@ module LodgingsHelper
   end
 
   def render_max_price(price)
-    price || 100000
+    price || 1500
   end
 
   def render_lodgings_count_for (lodgings, key, filter_name)
-    begin
-      buckets = lodgings.aggregations[filter_name]['buckets']
-      buckets = lodgings.aggregations[filter_name][filter_name]['buckets'] unless buckets.present?
+    buckets = lodgings.aggregations[filter_name]['buckets']
+    return 0 unless buckets.present?
 
-      buckets.each do |bucket|
-        return bucket['doc_count'] if bucket['key'] == key
-      end if buckets.present?
-    rescue
-      0
-    end
+    buckets.each do |bucket|
+      return bucket['doc_count'] if bucket['key'] == key
+    end if buckets.present?
     0
   end
 

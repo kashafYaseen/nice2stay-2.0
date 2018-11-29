@@ -77,7 +77,7 @@
 
           <p class="widget-title"><%= t 'filters.price' %></p>
           <section class="widget widget-categories mr-1 col-md-12">
-            <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1200" data-step="1">
+            <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1500" data-step="1">
               <div class="ui-range-slider"></div>
               <footer class="ui-range-slider-footer pt-3">
                 <div class="column">
@@ -112,10 +112,10 @@
             <p class="widget-title"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>
               <div class="custom-control custom-checkbox">
-                <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experiences_in), id: "experience_#{experience.slug}", class: "custom-control-input experiences" %>
+                <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experiences_in), id: "experience_#{experience.id}", class: "custom-control-input experiences" %>
 
-                <label class="custom-control-label" for="experience_<%= experience.slug %>">
-                  <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.name, 'experiences') %>)</span>
+                <label class="custom-control-label" for="experience_<%= experience.id %>">
+                  <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.id, 'experiences') %>)</span>
                 </label>
               </div>
             <% end %>
@@ -125,10 +125,10 @@
             <p class="widget-title"><%= t 'filters.amentities_pop' %></p>
             <% amenities.hot.each do |amenity| %>
               <div class="custom-control custom-checkbox">
-                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}", class: "custom-control-input amenities" %>
+                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
-                <label class="custom-control-label" for="amenity_<%= amenity.slug %>">
-                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
+                <label class="custom-control-label" for="amenity_<%= amenity.id %>">
+                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities') %>)</span>
                 </label>
               </div>
             <% end %>
@@ -139,10 +139,10 @@
             <div class="filters-show-less amenities-list">
               <% amenities.regular.each do |amenity| %>
                 <div class="custom-control custom-checkbox">
-                  <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.slug}", class: "custom-control-input amenities" %>
+                  <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
-                  <label class="custom-control-label" for="amenity_<%= amenity.slug %>">
-                    <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.name, 'amenities') %>)</span>
+                  <label class="custom-control-label" for="amenity_<%= amenity.id %>">
+                    <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities') %>)</span>
                   </label>
                 </div>
               <% end %>
