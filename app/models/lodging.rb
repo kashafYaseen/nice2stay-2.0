@@ -92,10 +92,6 @@ class Lodging < ApplicationRecord
     }
   }
 
-  def availability_price
-    prices.pluck(:amount)
-  end
-
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
@@ -103,12 +99,16 @@ class Lodging < ApplicationRecord
       region: region.translated_slugs,
       extended_name: extended_name,
       available_on: availabilities.pluck(:available_on),
-      availability_price: prices.pluck(:amount),
+      availability_price: availability_price,
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
       experiences: experiences.collect(&:translated_slugs),
       rules: rules.collect(&:search_data),
     )
+  end
+
+  def availability_price
+    prices.pluck(:amount).presence || [price]
   end
 
   def adults_plus_children

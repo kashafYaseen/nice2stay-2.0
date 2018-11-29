@@ -236,7 +236,14 @@ class SearchLodgings
     end
 
     # def price_range
-    #   { gte: params[:min_price], lte: params[:max_price] }
+    #   {
+    #     bool: {
+    #       should: [
+    #         { range: { availability_price: { gte: params[:min_price].to_f, lte: params[:max_price].to_f } } },
+    #         { bool: { must_not: { exists: { field: :availability_price } } } }
+    #       ]
+    #     }
+    #   }
     # end
 
     def order

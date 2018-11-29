@@ -8,7 +8,7 @@ module LodgingsHelper
   end
 
   def render_max_price(price)
-    price || 100000
+    price || 1500
   end
 
   def render_lodgings_count_for (lodgings, key, filter_name)
