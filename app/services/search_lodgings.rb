@@ -85,8 +85,8 @@ class SearchLodgings
     def aggregation
       {
         lodging_type: { terms: { field: :lodging_type } },
-        amenities: { terms: { field: :amenities } },
-        experiences: { terms: { field: :experiences } },
+        amenities: { terms: { field: :amenities_ids, size: Amenity.count } },
+        experiences: { terms: { field: :experiences_ids, size: Experience.count } },
       }
     end
 
