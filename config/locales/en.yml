@@ -43,8 +43,17 @@ en:
         nl: Dutch
         en: English
   filters:
-    more_filters: 'More Filters'
-    sort_by: Sort by
+    guests: Traveling party
+    price: Price per night
+    theme: Experience
+    type: Accommodation type
+    amentities_pop: Amentities popular
+    amentities: Amentities
+    dates: 'data'
+    guests: 'Guests'
+    sort_by: 'sorteer op'
+    accommodation_type: 'Accommodatie Type'
+    more_filters: 'meer filters'
 
   collection:
     populair: Populair collections
@@ -86,6 +95,13 @@ en:
     like: You also like
     back: Back
     price_availabiltiy: Prices & Availabiltiy
+  nav_cart: 
+    price: Price
+    nights: Nights
+    From: From 
+    To: To
+    Guests: Guests
+
 
   information:
     included: + Included rent
