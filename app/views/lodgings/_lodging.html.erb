@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-md-3 col-xs-12 text-center">
-              <%= lodging.cumulative_price(params) %>
+              <%= lodging.cumulative_price(params.clone) %>
 
               <% if lodging.average_rating > 0 %>
                 <%= render_stars_tag lodging.average_rating %>
