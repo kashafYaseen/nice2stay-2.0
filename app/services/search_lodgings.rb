@@ -42,7 +42,7 @@ class SearchLodgings
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
 
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
-      conditions << { terms: { presentation: ['as_parent', 'as_standalone'] } }
+      conditions << { terms: { presentation: ['as_child', 'as_standalone'] } }
 
       conditions << { range: { beds: { gte: params[:beds] } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths] } } } if params[:baths].present?

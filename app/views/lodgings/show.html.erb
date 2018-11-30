@@ -108,5 +108,6 @@
   Lodging.child_form();
   Lodging.highlight_menu();
   OwlCarousel.init();
-  Map.init_with('<%= @lodging.latitude %>', '<%= @lodging.longitude %>', '#lodging-map-location')
+  Map.init_with('<%= @lodging.latitude %>', '<%= @lodging.longitude %>', '#lodging-map-location');
+  Lodging.scroll_to_child('#child-<%= params[:id] %>');
 <% end %>

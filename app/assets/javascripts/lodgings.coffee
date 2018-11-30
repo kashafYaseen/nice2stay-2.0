@@ -43,6 +43,11 @@
       if $(this).data('form-id')
         Rails.fire($($(this).data('form-id')).get(0), 'submit')
 
+  Lodging.scroll_to_child = (id) ->
+    child = $(id)
+    if child.length > 0
+      child.get(0).scrollIntoView({behavior: "instant", block: "center", inline: "nearest"});
+
   Lodging.highlight_menu = ->
     $(window).scroll ->
       $('.target-section').each ->
