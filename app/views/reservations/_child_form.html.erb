@@ -7,7 +7,7 @@
        data-check-out-title="<%= t('search.check_out') %>"></div>
 
   <div class="row effect6">
-    <div class="col-md-6 col-lg-6">
+    <div class="col-md-5 col-lg-5">
       <%= render_image_tag lodging, class: 'max-height-230' %>
       <br><br>
       <h5><%= lodging.child_name %></h5>
@@ -25,7 +25,7 @@
       </p>
     </div>
 
-    <div class="col-md-6 col-lg-6 homepage">
+    <div class="col-md-5 col-lg-5 homepage">
       <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
         <%= render 'reservations/errors', resource: lodging.reservations.build %>
       </div>
@@ -37,7 +37,7 @@
       </div>
 
         <div class="bg-white">
-          <p class="text-sm">
+          <p class="text-sm">Selecteer
             <% [:prebooking, :option].each do |status| %>
               <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
               <label><%= t("reservations.#{status}") %></label>
@@ -55,11 +55,10 @@
         <% end %>
       </div>
 
-      <div class="text-dark" id="bill-<%= lodging.id %>"></div>
-      <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
-      <%= render 'wishlists/form', lodging: lodging %>
+      
+     
+      <div class="row margin-top-1x">
 
-      <div class="row">
         <button class="btn btn-sm col-md-5 mx-auto bg-white btn-outline-secondary" type="button"
           data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click" data-content="<%= lodging.including_text %>" data-html="true" data-original-title="Included">+ Included ?
         </button>
@@ -69,6 +68,14 @@
         </button>
       </div>
     </div>
+    <div class="col-md-2 col-lg-2">
+       <div class="text-dark" id="bill-<%= lodging.id %>"></div>
+     
+      
+      <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
+        <%= render 'wishlists/form', lodging: lodging %>
   </div>
+  </div>
+  
   <hr class="mb-4"></hr>
 </div>
