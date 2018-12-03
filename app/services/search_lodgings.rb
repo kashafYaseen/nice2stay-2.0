@@ -12,7 +12,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations]
+    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, { parent: :translations }]
   end
 
   private

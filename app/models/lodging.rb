@@ -95,7 +95,7 @@ class Lodging < ApplicationRecord
 
   def search_data
     attributes.merge(
-      location: { lat: latitude, lon: longitude },
+      location: lat_long,
       country: country.translated_slugs,
       region: region.translated_slugs,
       extended_name: extended_name,
@@ -194,7 +194,8 @@ class Lodging < ApplicationRecord
   end
 
   def lat_long
-    "#{latitude}, #{longitude}"
+    return { lat: latitude, lon: longitude } unless as_child?
+    { lat: parent.latitude, lon: parent.longitude }
   end
 
   private

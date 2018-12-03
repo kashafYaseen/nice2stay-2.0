@@ -42,6 +42,7 @@ module LodgingsHelper
   end
 
   def render_image_tags lodging, options = {}
+    lodging = lodging.parent if lodging.as_child?
     return image_tag_with_link(lodging, image_path('default-lodging.png'), options) unless lodging.images.present?
     tags = ''
     lodging.images.take(5).each { |image_path|  tags << image_tag_with_link(lodging, image_path, options) }
@@ -67,5 +68,10 @@ module LodgingsHelper
     return 'Lowest to Highest' if params[:order] == 'price_asc'
     return 'Highest Rating' if params[:order] == 'rating_desc'
     return 'Newest' if params[:order] == 'new_desc'
+  end
+
+  def render_highlight lodging, highlight
+    return lodging.send(highlight) unless lodging.as_child?
+    lodging.parent.send(highlight)
   end
 end
