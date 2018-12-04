@@ -22,7 +22,15 @@ class SaveBookingDetails
       booking.user = user
 
       booking.reservations.each_with_index do |reservation, index|
-        reservation.lodging = Lodging.friendly.find(params[:booking][:reservations_attributes][index][:lodging_slug]) rescue nil
+        lodging = Lodging.friendly.find(params[:booking][:reservations_attributes][index][:lodging_slug]) rescue nil
+        reservation.lodging = lodging
+
+        if lodging.present?
+          lodging.availabilities.check_out_only!(reservation.check_in)
+          lodging.availabilities.where(available_on: (reservation.check_in+1.day..reservation.check_out-1.day).map(&:to_s)).destroy_all
+          lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
+        end
+
         next unless reservation.review.present?
         reservation.review.user = booking.user
         reservation.review.lodging = reservation.lodging
