@@ -54,6 +54,7 @@
           <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
         <% end %>
       </div>
+       <div class="text-dark" id="bill-<%= lodging.id %>"></div>
 
       
      
@@ -69,10 +70,12 @@
       </div>
     </div>
     <div class="col-md-2 col-lg-2">
-       <div class="text-dark" id="bill-<%= lodging.id %>"></div>
-     
       
-      <%= button_tag 'Add to Cart', class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } %>
+      
+      <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } do  %>
+       <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+      <% end %>
+
         <%= render 'wishlists/form', lodging: lodging %>
   </div>
   </div>
