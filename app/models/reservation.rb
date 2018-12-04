@@ -126,6 +126,6 @@ class Reservation < ApplicationRecord
     end
 
     def send_reservation_removal_details
-      SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking_id.in_cart
+      SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
     end
 end
