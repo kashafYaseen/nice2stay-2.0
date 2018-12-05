@@ -42,7 +42,6 @@ module LodgingsHelper
   end
 
   def render_image_tags lodging, options = {}
-    lodging = lodging.parent if lodging.as_child?
     return image_tag_with_link(lodging, image_path('default-lodging.png'), options) unless lodging.images.present?
     tags = ''
     lodging.images.take(5).each { |image_path|  tags << image_tag_with_link(lodging, image_path, options) }
