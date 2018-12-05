@@ -95,7 +95,7 @@ class Lodging < ApplicationRecord
 
   def search_data
     attributes.merge(
-      location: lat_long,
+      location: { lat: latitude, lon: longitude },
       country: country.translated_slugs,
       region: region.translated_slugs,
       extended_name: extended_name,
@@ -191,11 +191,6 @@ class Lodging < ApplicationRecord
 
   def particularities_text
     price_text.try(:particularities_text)
-  end
-
-  def lat_long
-    return { lat: latitude, lon: longitude } unless as_child?
-    { lat: parent.latitude, lon: parent.longitude }
   end
 
   private
