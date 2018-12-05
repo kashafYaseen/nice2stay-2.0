@@ -1,0 +1,7 @@
+<% if resource.errors.any? %>
+  $('#js-passwords-form').html('<%= j render "form", remote: true %>');
+<% else %>
+  $('#js-passwords-form').html('<%= j render "form", remote: true %>');
+  $('#reset-pass-form-modal').modal('hide');
+  $('#flash-messages').html('<%= j render "shared/notices" %>');
+<% end %>
