@@ -12,20 +12,19 @@
       <br><br>
       <h5><%= lodging.child_name %></h5>
       <p class="text-xxs">
-          <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
-          <% if lodging.children.present? %>
-            / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
-          <% end %>
-          /
-          <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
-
-        </p>
-      <p class="text-xs"> <%= truncated_description(lodging.short_desc, 100).try(:html_safe) %>
-        <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
+        <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+        <% if lodging.children.present? %>
+          / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+        <% end %>
+        /
+        <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
       </p>
     </div>
 
-    <div class="col-md-5 col-lg-5 homepage">
+    <div class="col-md-5 col-lg-5 homepage padding-top-1x ">
+      <p class="text-xs"> <%= truncated_description(lodging.short_desc, 100).try(:html_safe) %>
+        <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
+      </p>
       <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
         <%= render 'reservations/errors', resource: lodging.reservations.build %>
       </div>
