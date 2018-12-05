@@ -12,15 +12,13 @@
       <br><br>
       <h5><%= lodging.child_name %></h5>
       <p class="text-xxs">
-          <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
-          <% if lodging.children.present? %>
-            / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
-          <% end %>
-          /
-          <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
-
-        </p>
-      
+        <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+        <% if lodging.children.present? %>
+          / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+        <% end %>
+        /
+        <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
+      </p>
     </div>
 
     <div class="col-md-5 col-lg-5 homepage padding-top-1x ">
