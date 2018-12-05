@@ -53,7 +53,7 @@ class CartsController < ApplicationController
     def booking_params
       params.require(:booking).permit(
         :in_cart,
-        user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone],
+        user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations],
         reservations_attributes: [:id, :booking_id, :in_cart]
       )
     end

@@ -63,14 +63,14 @@
               <p>Log in met uw account. Al eerder geboekt bij nice2stay?  Activeer dan uw account. </p>
 
               <div class="col-md-5 mx-auto">
-                <%= render 'devise/sessions/form' %>
+                <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
               </div>
             <% end %>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-12">  
+          <div class="col-md-12">
             <h5>Guest Information</h5>
             <hr class="padding-bottom-1x">
             <%= form_for @booking, url: carts_path do |f| %>
@@ -83,14 +83,15 @@
                     <div class="col-sm-6">
                       <div class="form-group">
                         <%= user_fields.label :first_name %>
-                        <%= user_fields.text_field :first_name, class: "form-control" %>
+                        <%= user_fields.text_field :first_name, class: "form-control", required: true %>
+                        <%= user_fields.hidden_field :skip_validations, value: true %>
                       </div>
                     </div>
 
                     <div class="col-sm-6">
                       <div class="form-group">
                         <%= user_fields.label :last_name %>
-                        <%= user_fields.text_field :last_name, class: "form-control" %>
+                        <%= user_fields.text_field :last_name, class: "form-control", required: true %>
                       </div>
                     </div>
                   </div>
@@ -107,7 +108,7 @@
                     <div class="col-sm-6">
                       <div class="form-group">
                         <%= user_fields.label :phone %>
-                        <%= user_fields.text_field :phone, class: "form-control", required: true %>
+                        <%= user_fields.text_field :phone, class: "form-control" %>
                       </div>
                     </div>
                   </div>
@@ -116,14 +117,14 @@
                     <div class="col-sm-6">
                       <div class="form-group">
                         <%= user_fields.label :city %>
-                        <%= user_fields.text_field :city, class: "form-control", required: true %>
+                        <%= user_fields.text_field :city, class: "form-control" %>
                       </div>
                     </div>
 
                     <div class="col-sm-6">
                       <div class="form-group">
                         <%= user_fields.label :zipcode %>
-                        <%= user_fields.number_field :zipcode, step: 1, min: 0, class: "form-control", required: true %>
+                        <%= user_fields.number_field :zipcode, step: 1, min: 0, class: "form-control" %>
                       </div>
                     </div>
                   </div>
@@ -139,7 +140,7 @@
                     <div class="col-sm-6">
                       <div class="form-group">
                         <%= user_fields.label :address %>
-                        <%= user_fields.text_field :address, class: "form-control", required: true %>
+                        <%= user_fields.text_field :address, class: "form-control" %>
                       </div>
                     </div>
                   </div>
@@ -235,6 +236,11 @@
     </div>
   </div>
 </section>
+
+
+<%= render 'devise/sessions/login_modal' %>
+<%= render 'devise/passwords/reset_modal' %>
+
 
 <% content_for :js_init do %>
   Cart.init();
