@@ -16,5 +16,5 @@ json.review do
 end
 
 json.lodging do
-  json.partial! 'api/v1/lodgings/lodging', lodging: reservation.lodging
+  json.partial! 'api/v1/lodgings/lodging', lodging: reservation.lodging if reservation.lodging.present?
 end
