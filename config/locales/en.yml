@@ -54,6 +54,19 @@ en:
     sort_by: 'sorteer op'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
+    apartments: Apartments
+    villas: Villas
+    boutique: Boutique hotels
+  sorting: 
+    low_high: Lowest price
+    high_low: Highest price
+    high_rating: Highest rating
+    new: Newest
+    default: Default
+  zoomed: 
+    part_1: You are viewing accommodations in 
+    part_2: To search broader or more specific, you can use the map on the right (zoom in + out or move)
+
 
   collection:
     populair: Populair collections
@@ -101,7 +114,13 @@ en:
     From: From 
     To: To
     Guests: Guests
-
+  reviews:
+    title: Average score  & latest customer reviews
+    quality: Quality
+    interior: Interior & Style
+    service: Hospitality
+    setting: Setting & Location 
+    nice2Stay: Nice2stay service 
 
   information:
     included: + Included rent
