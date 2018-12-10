@@ -10,7 +10,7 @@ class Reservation < ApplicationRecord
   validate :accommodation_rules
 
   after_validation :update_lodging_availability
-  after_commit :send_reservation_details
+  #after_commit :send_reservation_details
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
@@ -121,9 +121,9 @@ class Reservation < ApplicationRecord
       update_columns rent: rent, discount: discount, total_price: (rent - discount)
     end
 
-    def send_reservation_details
-      SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
-    end
+    # def send_reservation_details
+    #   SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
+    # end
 
     def send_reservation_removal_details
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
