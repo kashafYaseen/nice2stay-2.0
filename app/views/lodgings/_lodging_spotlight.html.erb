@@ -1,53 +1,51 @@
 <div class="lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>">
-  
-    <div class="bg-white">
-      <div class="row">
-        <div class="col-md-12 col-xs-12">
+  <div class="bg-white">
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
         <h5 class="card-title"><%= lodging.name %></h5>
       </div>
 
-        <div class="col-md-5 col-lg-5 col-xs-12">
-          <div class="owl-carousel">
-            <%= render_image_tags lodging, class: "card-img-top" %>
-          </div>
-        </div>
-
-        <div class="col-md-7 col-lg-7 col-xs-12">
-          <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants]), class: "text-decoration-none row" do %>
-            <div class="col-md-9 col-xs-12">
-              <p class="text-xxs"><%= truncate(lodging.short_desc, length: 150) %></p>
-
-              <p class="text-xxs">
-                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
-                <% if lodging.children.present? %>
-                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
-                <% end %>
-                <br>
-                <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
-              </p>
-
-              <ul class="list-icon">
-                <p class="text-xxs">
-                  <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_1' %><br>
-                  <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_2' %><br>
-                  <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_3' %>
-                </p>
-              </ul>
-            </div>
-
-            <div class="col-md-3 col-xs-12 text-center">
-              <%= lodging.cumulative_price(params.clone) %>
-
-              <% if lodging.average_rating > 0 %>
-                <%= render_stars_tag lodging.average_rating %>
-                <p class="text-xs"><%= pluralize( lodging.all_reviews.count, 'reviews' ) %></p>
-              <% else %>
-                <p class="text-xs">no reviews yet.</p>
-              <% end %>
-            </div>
-          <% end %>
+      <div class="col-md-5 col-lg-5 col-xs-12">
+        <div class="owl-carousel">
+          <%= render_image_tags lodging, class: "card-img-top" %>
         </div>
       </div>
-   
+
+      <div class="col-md-7 col-lg-7 col-xs-12">
+        <%= link_to lodging_path(lodging, check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants]), class: "text-decoration-none row" do %>
+          <div class="col-md-9 col-xs-12">
+            <p class="text-xxs"><%= truncate(lodging.short_desc, length: 150) %></p>
+
+            <p class="text-xxs">
+              <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+              <% if lodging.children.present? %>
+                / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+              <% end %>
+              <br>
+              <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
+            </p>
+
+            <ul class="list-icon">
+              <p class="text-xxs">
+                <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_1' %><br>
+                <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_2' %><br>
+                <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_3' %>
+              </p>
+            </ul>
+          </div>
+
+          <div class="col-md-3 col-xs-12 text-center">
+            <%= lodging.cumulative_price(params.clone) %>
+
+            <% if lodging.average_rating > 0 %>
+              <%= render_stars_tag lodging.average_rating %>
+              <p class="text-xs"><%= pluralize( lodging.all_reviews.count, 'reviews' ) %></p>
+            <% else %>
+              <p class="text-xs">no reviews yet.</p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,8 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-    
     <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
-      <h1 class="mb-3"><%= @region.title %></h3>
+      <h1 class="mb-3"><%= @region.title %></h1>
 
       <hr class="mt-1"></hr>
 
@@ -54,14 +53,12 @@
       <p class="text-sm margin-top-1x"><%= @region.content.try(:html_safe) %></p>
       <h3 class="mb-30 margin-top-3x">In the spotlight</h3>
       <%= render partial: 'lodgings/lodging_spotlight', collection:  @lodgings, as: :lodging %>
-      </div>
-      
-      <div class="col-sm-12 margin-top-1x margin-bottom-2x col-xs-12 col-md-6 margin-top-1x ">
-        <section>
+    </div>
+
+    <div class="col-sm-12 margin-top-1x margin-bottom-2x col-xs-12 col-md-6 margin-top-1x ">
+      <section>
         <%= image_tag @region.image %>
       </section>
-
-     
 
       <section class="widget-tags">
         <h5 class="mt-3 mb-10"><%= t 'nav.landen' %></h5>
@@ -70,8 +67,8 @@
           <%= link_to country.name, country_path(country, locale: locale), class: "tag" %>
         <% end %>
       </section>
-      
-        <section class="widget-tags">
+
+      <section class="widget-tags">
         <h5 class="mt-1 mb-10"><%= t 'collection.normal' %> in <%= @region.name.capitalize %></h5>
 
         <% @menu_custom_texts.each do |custom_text| %>
@@ -82,45 +79,34 @@
           <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
         <% end %>
       </section>
-      <div class="row">
+    </div>
+
+    <div class="row">
       <div class="p-3 card">
-            <div class="col-md-12 ml-2 padding-top-1x">
-              <h4 class="mb-3">
-                "<%= @region.short_desc %>"
-
-              </h4>
-
-              <div class="row">
-                <div class="col-md-3 col-lg-2">
-                  <div class="d-table">
-                    <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-                  </div>
-                </div>
-
-                <div class="col-sm-9 mb-9">
-                  <p><%= t 'usp.region_part_1' %> <%= @region.name.try(:capitalize) %> <%= t 'usp.region_part_2' %> <%= @region.name.try(:capitalize) %> </p>
-                </div>
+        <div class="col-md-12 ml-2 padding-top-1x">
+          <h4 class="mb-3">"<%= @region.short_desc %>"</h4>
+          <div class="row">
+            <div class="col-md-3 col-lg-2">
+              <div class="d-table">
+                <img class="d-block w-150 mx-auto img-thumbnail rounded d-table-cell align-middle" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
               </div>
             </div>
+
+            <div class="col-sm-9 mb-9">
+              <p><%= t 'usp.region_part_1' %> <%= @region.name.try(:capitalize) %> <%= t 'usp.region_part_2' %> <%= @region.name.try(:capitalize) %> </p>
             </div>
-             </div>
-
+          </div>
+        </div>
       </div>
-      
+    </div>
+  </div>
 
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-6 margin-top-1x">
-          
-          
-          <% if @custom_texts.present? %>
+  <div class="row">
+    <div class="col-sm-6 margin-top-1x">
+      <% if @custom_texts.present? %>
         <section class="padding-top-1x pb-5">
           <h3 class="mb-30"><%= t 'collection.populair' %> in <%= @region.name.capitalize %></h3>
           <hr class="mt-3"></hr>
-
-         
 
           <div class="isotope-grid cols-2">
             <div class="gutter-sizer"></div>
@@ -135,16 +121,12 @@
                 <% end %>
               </div>
             <% end %>
-
           </div>
         </section>
       <% end %>
-     
-        </div>
-       </div>
     </div>
-
-
+  </div>
+</div>
 
 <%= render 'shared/meta_tags', resource: @region %>
 
