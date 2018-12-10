@@ -113,7 +113,8 @@
         </section>
       <% end %>
       <h3 class="mb-30">In the spotlight</h3>
-      <%= render @lodgings %> 
+     
+     <%= render partial: 'lodgings/lodging_spotlight', collection:  @lodgings, as: :lodging %>
 
         </div>
        </div>
