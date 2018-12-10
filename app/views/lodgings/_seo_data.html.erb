@@ -1,9 +1,9 @@
 <% if params[:country].present? %>
-  <div class="alert alert-info alert-dismissible fade show text-center margin-bottom-1x">
+  <div class="alert alert-primary alert-dismissible fade show text-center margin-bottom-1x">
     <span class="alert-close" data-dismiss="alert"></span>
-    <i class="icon-layers"></i>&nbsp;&nbsp;<strong>Hi,</strong> you are zoomed on
+    <i class="icon-layers"></i><%= t 'zoomed.part_1' %>
     <strong><%= "#{params[:region]}, " if params[:region].present? %><%= params[:country] %></strong>.
-    Use the plus (+) and min (-) or drag the map to see more
+    <%= t 'zoomed.part_2' %>
   </div>
 <% end %>
 

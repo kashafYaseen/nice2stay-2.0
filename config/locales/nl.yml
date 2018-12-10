@@ -22,7 +22,7 @@ nl:
   collection:
     populair: Populaire collecties
     normal: Onze collecties
-  holiday: Unieke vakantie  
+    holiday: Unieke vakantie  
 
   usp:
     verhaal: Mooie verhalen beginnen hier...
@@ -40,12 +40,22 @@ nl:
     acco_show_header: voldoet aan onze hoge standaard in kwaliteit, comfort en stijl.
     acco_show_p:  Alle accommodaties in onze unieke collectie zijn aan een kritische selectie onderworpen door ons ervaren en gepassioneerde team, om u een onbezorgde en comfortabele vakantie te kunnen garanderen.
     acco_show_visit: is bezocht door Christa Linders
+    region_part_1: Elke villa, vakantiewoning of bed and breakfast in
+    region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio 
+
 
   opens: 
     week: Maandag - vrijdag - 9.00 tot 18.00 
     weekend: Zaterdag - 10.00 - 13.00
     address: Korte Zijlweg 9, 2051 DB Overveeen 
 
+  reviews:
+    title: Gemiddelde score & laatste reviews van Nice2stay 
+    quality: Kwaliteit
+    interior: Interieur & Stijl 
+    service: Gastvrijheid
+    setting: Setting & locatie 
+    nice2Stay: Nice2stay service
   nav:
     land: Landen & regio's
     landen: Landen
@@ -101,6 +111,7 @@ nl:
     date_filter: Aankomst en Vetrek
     flexibility_text: flexibel qua data (-/+ 2 dagen)
 
+
   footer:
     support: Wilt u direct contact? 
     support_details: Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com
@@ -119,6 +130,20 @@ nl:
     sort_by: 'sorteer op'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
+    apartments: Appartementen
+    villas: Vakantiehuizen
+    boutique: Boutique hotels
+  sorting: 
+    low_high: Laagste prijs
+    high_low: Hoogste prijs
+    high_rating: Hoogste waardering
+    new: Nieuwste
+    default: Standaard
+
+  zoomed: 
+    part_1: U bekijkt het aanbod in 
+    part_2: Om breder of gerichter te zoeken kunt u de kaart rechts gebruiken (in of uitzoomen of verplaatsen).
+
 
   pdf_document:
     invoice_title: "Factuur"
