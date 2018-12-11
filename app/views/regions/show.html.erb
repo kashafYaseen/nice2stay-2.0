@@ -57,7 +57,7 @@
 
     <div class="col-sm-12 margin-top-1x margin-bottom-2x col-xs-12 col-md-6 margin-top-1x ">
       <section>
-        <%= image_tag @region.image %>
+        <%= image_tag @region.image if @region.image.present? %>
       </section>
 
       <section class="widget-tags">
