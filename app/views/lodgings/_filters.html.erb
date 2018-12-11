@@ -102,7 +102,7 @@
                 <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
 
                 <label class="custom-control-label" for="lodging_type_<%= key %>">
-                  <%= key %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
+                  <%= t("filters.#{key}") %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
                 </label>
               </div>
             <% end %>

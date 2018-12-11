@@ -130,9 +130,9 @@ nl:
     sort_by: 'sorteer op'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
-    apartments: Appartementen
-    villas: Vakantiehuizen
-    boutique: Boutique hotels
+    apartment: Appartementen
+    villa: Vakantiehuizen
+    bnb: Boutique hotels
   sorting: 
     low_high: Laagste prijs
     high_low: Hoogste prijs
