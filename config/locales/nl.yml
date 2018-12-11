@@ -52,10 +52,10 @@ nl:
   reviews:
     title: Gemiddelde score & laatste reviews van Nice2stay 
     quality: Kwaliteit
-    interior: Interieur & Stijl 
+    interior: Interieur & Stijl
     service: Gastvrijheid
-    setting: Setting & locatie 
-    nice2Stay: Nice2stay service
+    setting: Setting & Locatie
+    communication: Nice2stay Service
   nav:
     land: Landen & regio's
     landen: Landen

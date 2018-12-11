@@ -9,11 +9,10 @@ module ReviewsHelper
   end
 
   def rating_tag_html(name, rating)
-    name = 'Nice2stay service' if name == :communication
     percentage = rating * (100 / 5)
 
     " <label class='text-medium text-sm'>
-        #{name.to_s.humanize} <span class='text-muted'>- #{rating.round(2)}</span>
+        #{t("reviews.#{name}")} <span class='text-muted'>- #{rating.round(2)}</span>
       </label>
 
     <div class='progress margin-bottom-1x'>
