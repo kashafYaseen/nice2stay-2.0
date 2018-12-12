@@ -100,3 +100,4 @@ gem 'activeadmin'
 gem 'route_translator'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'chosen-rails'
+gem "skylight"
