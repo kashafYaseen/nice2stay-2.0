@@ -42,7 +42,7 @@ module LodgingsHelper
   end
 
   def render_image_tags lodging, options = {}
-    return image_tag_with_link(lodging, image_path('default-lodging.png'), options) unless lodging.images.present?
+    return image_tag_with_link(show_page_id(lodging), image_path('default-lodging.png'), options) unless lodging.images.present?
     tags = ''
     lodging.images.take(5).each { |image_path|  tags << image_tag_with_link(lodging, image_path, options) }
     tags.html_safe
@@ -77,5 +77,10 @@ module LodgingsHelper
   def calculation_ids lodging
     return [lodging.id] if lodging.as_standalone?
     lodging.lodging_children.try(:ids)
+  end
+
+  def show_page_id lodging
+    return lodging.parent if lodging.as_child?
+    lodging
   end
 end
