@@ -114,6 +114,7 @@ class SaveLodgingDetails
         :updated_at,
         { images: [] },
         { thumbnails: [] },
+        { attachments: [] },
         specifications_attributes: [:id, :title, :description],
         reviews_attributes: [:id, :user_id, :stars, :description],
         availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],
