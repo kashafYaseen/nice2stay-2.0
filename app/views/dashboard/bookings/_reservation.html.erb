@@ -1,9 +1,14 @@
+<% lodging = reservation.lodging %>
+<h3><%= link_to lodging.name, lodging_path(lodging) %></h3>
+
 <div class="card">
   <div class="card-header" role="tab">
-    <h6><a href="#collapse<%= reservation.id %>" data-toggle="collapse"><%= reservation.lodging_name %></a></h6>
+    <h5>
+      <a href="#collapse-reservation-details<%= reservation.id %>" data-toggle="collapse">Reservation Details</a>
+    </h5>
   </div>
 
-  <div class="collapse show" id="collapse<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+  <div class="collapse show" id="collapse-reservation-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
     <div class="card-body pl-0 pr-0">
       <table class="table">
         <thead>
@@ -32,6 +37,93 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" role="tab">
+    <h5>
+      <a href="#collapse-rental-details<%= reservation.id %>" data-toggle="collapse" class="collapsed">Included in rental price</a>
+    </h5>
+  </div>
+
+  <div class="collapse" id="collapse-rental-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body">
+      <%= lodging.including_text.try(:html_safe) %>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-header" role="tab">
+    <h5>
+      <a href="#collapse-checkin-details<%= reservation.id %>" data-toggle="collapse" class="collapsed">Checkin and Checkout time</a>
+    </h5>
+  </div>
+
+  <div class="collapse" id="collapse-checkin-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body">
+      <%= lodging.particularities_text.try(:html_safe) %>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" role="tab">
+    <h5>
+      <a href="#collapse-paid-locally<%= reservation.id %>" data-toggle="collapse" class="collapsed">Paid Locally</a>
+    </h5>
+  </div>
+
+  <div class="collapse" id="collapse-paid-locally<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body">
+      <%= lodging.pay_text.try(:html_safe) %>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" role="tab">
+    <h5>
+      <a href="#collapse-optional-services<%= reservation.id %>" data-toggle="collapse" class="collapsed">Optional services</a>
+    </h5>
+  </div>
+
+  <div class="collapse" id="collapse-optional-services<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body">
+      <%= lodging.options_text.try(:html_safe) %>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" role="tab">
+    <h5>
+      <a href="#collapse-polices<%= reservation.id %>" data-toggle="collapse" class="collapsed">Reservation and cancellation policies</a>
+    </h5>
+  </div>
+
+  <div class="collapse" id="collapse-polices<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body">
+      <%= lodging.payment_terms_text.try(:html_safe) %>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" role="tab">
+    <h5>
+      <a href="#collapse-arrival-info<%= reservation.id %>" data-toggle="collapse" class="collapsed">Route Description and arrival information</a>
+    </h5>
+  </div>
+
+  <div class="collapse" id="collapse-arrival-info<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+    <div class="card-body">
+      <% lodging.attachments.each do |attachment| %>
+        <%= link_to attachment, attachment, target: :_blank %>
+      <% end %>
     </div>
   </div>
 </div>

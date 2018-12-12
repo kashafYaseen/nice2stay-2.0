@@ -40,6 +40,7 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
   delegate :desc, to: :reviews, allow_nil: true, prefix: true
+  delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, to: :price_text, allow_nil: true
 
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
   scope :home_page, -> { where(home_page: true) }
@@ -183,14 +184,6 @@ class Lodging < ApplicationRecord
       communication: _reviews.rating_sum(:communication)/total,
       average_rating: _reviews.ratings_average,
     )
-  end
-
-  def including_text
-    price_text.try(:including_text)
-  end
-
-  def particularities_text
-    price_text.try(:particularities_text)
   end
 
   private
