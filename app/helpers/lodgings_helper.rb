@@ -73,4 +73,9 @@ module LodgingsHelper
     return lodging.send(highlight) unless lodging.as_child?
     lodging.parent.send(highlight)
   end
+
+  def calculation_ids lodging
+    return [lodging.id] if lodging.as_standalone?
+    lodging.lodging_children.try(:ids)
+  end
 end

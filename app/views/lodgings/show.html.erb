@@ -110,4 +110,5 @@
   OwlCarousel.init();
   Map.init_with('<%= @lodging.latitude %>', '<%= @lodging.longitude %>', '#lodging-map-location');
   Lodging.scroll_to_child('#child-<%= params[:id] %>');
+  Invoice.calculate(<%= calculation_ids @lodging %>);
 <% end %>
