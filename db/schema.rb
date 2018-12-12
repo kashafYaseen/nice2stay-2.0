@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_061733) do
+ActiveRecord::Schema.define(version: 2018_12_12_074733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -408,6 +408,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_061733) do
     t.boolean "home_page", default: false
     t.boolean "region_page", default: false
     t.boolean "country_page", default: false
+    t.string "attachments", default: [], array: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
