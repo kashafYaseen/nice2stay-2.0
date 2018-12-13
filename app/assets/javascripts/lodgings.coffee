@@ -44,17 +44,14 @@
         Rails.fire($($(this).data('form-id')).get(0), 'submit')
 
   Lodging.highlight_menu = ->
+    $('.widget-tags .tag').click (e) ->
+      e.stopPropagation()
+
     $(window).scroll ->
       $('.target-section').each ->
         if $(window).scrollTop() >= $(this).position().top - $('.navbar').height()
-          id = $(this).attr('id')
-          $('#details-navbar .nav-link').removeClass 'active'
-          $("a[href='##{id}']").addClass 'active'
-
-      if $(window).scrollTop() > 20
-        $('.sub-menubar').css('top': '70px')
-      else
-        $('.sub-menubar').css('top': '20px')
+          $('.widget-tags .tag').removeClass 'active'
+          $("a[href='##{$(this).attr('id')}']").addClass 'active'
 
   Lodging.read_more = ->
     $('.btn-read-more').click ->
