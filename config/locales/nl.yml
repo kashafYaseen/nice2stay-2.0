@@ -23,6 +23,20 @@ nl:
     populair: Populaire collecties
     normal: Onze collecties
     holiday: Unieke vakantie  
+  cart: 
+    overview:  Uw boekingen en opties aanvragen
+    name: Naam accommodatie
+    checkin: Checkin
+    check_out: Checkout
+    adults: Volwassenen
+    children: Kinderen(<12)
+    infants: Babies
+    subtotal: Huursom
+    total: Totaal
+    type: type aanvraag
+
+
+
 
   usp:
     verhaal: Mooie verhalen beginnen hier...
