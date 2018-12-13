@@ -74,15 +74,16 @@ en:
   holiday: Unique holiday  
   cart: 
     overview:  Uw boekingen en opties aanvragen
-    name: Naam accommodatie
+    name: Name accommodation
     checkin: Checkin
     check_out: Checkout
-    adults: Volwassenen
-    children: Kinderen(<12)
+    adults: Adutls
+    children: Children(<12)
     infants: Babies
-    subtotal: Huursom
-    total: Totaal
-    type: type aanvraag
+    subtotal: Rent
+    cleaning: Cleaning
+    total: Total
+    type: type request
 
   usp:
     holiday: Experience the ideal holiday

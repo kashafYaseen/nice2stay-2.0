@@ -23,7 +23,20 @@ nl:
     populair: Populaire collecties
     normal: Onze collecties
     holiday: Unieke vakantie  
-  cart: 
+  carts: 
+    overview:  Uw boekingen en opties aanvragen
+    name: Accommodatie
+    checkin: Checkin
+    check_out: Checkout
+    adults: Volwassenen
+    children: Kinderen(<12)
+    infants: Babies
+    cleaning: Schoonmaak
+    subtotal: Huursom
+    total: Totaal
+    type: Aanvraag
+
+  indicator: 
     overview:  Uw boekingen en opties aanvragen
     name: Naam accommodatie
     checkin: Checkin
@@ -31,9 +44,10 @@ nl:
     adults: Volwassenen
     children: Kinderen(<12)
     infants: Babies
+    cleaning: Schoonmaak
     subtotal: Huursom
     total: Totaal
-    type: type aanvraag
+    type: Aanvraag
 
 
 

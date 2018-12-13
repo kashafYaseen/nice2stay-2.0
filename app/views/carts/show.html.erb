@@ -22,22 +22,22 @@
       </div>
 
       <% if @booking.reservations.present? %>
-        <h5>Your bookings & options requests</h5>
+        <h5><%= t 'carts.overview' %></h5>
         <hr class="padding-bottom-1x">
         <div class="table-responsive shopping-cart">
           <table class="table">
             <thead>
               <tr>
-                <th class="text-center">Name</th>
-                <th class="text-center">Checkin</th>
-                <th class="text-center">Checkout</th>
-                <th class="text-center">Adults</th>
-                <th class="text-center">Children</th>
-                <th class="text-center">Infants</th>
-                <th class="text-center">Subtotal</th>
-                <th class="text-center">Cleaning</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Type</th>
+              <th class="text-center"><%= t 'carts.name' %></th>
+              <th class="text-center"><%= t 'carts.checkin' %></th>
+              <th class="text-center"><%= t 'carts.checkout' %></th>
+              <th class="text-center"><%= t 'carts.adults' %></th>
+              <th class="text-center"><%= t 'carts.children' %></th>
+              <th class="text-center"><%= t 'carts.infants' %></th>
+              <th class="text-center"><%= t 'carts.subtotal' %></th>
+              <th class="text-center"><%= t 'carts.cleaning' %></th>
+              <th class="text-center"><%= t 'carts.total' %></th>
+              <th class="text-center"><%= t 'carts.type' %></th>
                 <th class="text-center">
                   <%= link_to 'Clear Cart', carts_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
                 </th>
