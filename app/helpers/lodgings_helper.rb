@@ -49,7 +49,7 @@ module LodgingsHelper
   end
 
   def image_tag_with_link lodging, image_path, options = {}
-    link_to lodging_path(show_page_id(lodging), check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants]), class: "text-decoration-none" do
+    link_to render_lodging_path(lodging), class: "text-decoration-none" do
       image_tag(image_path, options)
     end
   end
@@ -79,8 +79,14 @@ module LodgingsHelper
     lodging.lodging_children.try(:ids)
   end
 
-  def show_page_id lodging
+  def lodging_id lodging
     return lodging.parent if lodging.as_child?
     lodging
+  end
+
+  def render_lodging_path lodging
+    path = lodging_path(lodging_id(lodging), check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants])
+    path += "##{lodging.slug}" if lodging.as_child?
+    path
   end
 end
