@@ -25,7 +25,13 @@ nl:
     normal: Onze collecties
     holiday: Unieke vakantie  
 
+  profile: 
+    name: Uw gegevens
+    messages: Belangrijke berichten 
+
+
   carts: 
+    full_name: Naam
     first_name: Voornaam
     last_name: Achternaam
     email: emailadres
