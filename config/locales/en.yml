@@ -67,17 +67,24 @@ en:
     part_1: You are viewing accommodations in 
     part_2: To search broader or more specific, you can use the map on the right (zoom in + out or move)
 
-
   collection:
     populair: Populair collections
     normal: Our collections
-  holiday: Unique holiday  
+  holiday: Unique holiday
+
 
   
 
   carts:
     overview:  Your bookings and options requests
     gasten:  Your personal data
+  cart:
+    overview: Youre bookings and options requests
+    gasten: Youre data
+
+  carts:
+    overview: Uw boekingen en opties aanvragen
+
     name: Name accommodation
     checkin: Checkin
     check_out: Checkout
@@ -89,6 +96,7 @@ en:
     total: Total
     type: type request
     succes:  We would like to thank you for requesting your reservation/ option request at Nice2stay. Your request has been submitted to the owner of the accommodation and we will inform you as soon as possible (within 24 hours) whether your reservation will be confirmed.You will be notified by email and you can view the status in your Nice2stay account
+
 
   indicator: 
     gasten:  Your data
@@ -109,6 +117,7 @@ en:
 
 
    
+
 
   usp:
     holiday: Experience the ideal holiday
