@@ -5,14 +5,16 @@
 
     <ul class="breadcrumbs">  
       <li><%= t 'carts.send' %></li>
-     
-    <ul class="breadcrumbs">
-      <li>Your options or bookings are send to nice2stay</li>
+      
+   
+
     </ul>
   </div>
 </div>
+<div class="container alert alert-primary alert-dismissible fade show text-center margin-bottom-1x"><span class="alert-close" data-dismiss="alert"></span><i class="icon-layers"></i><%= t 'carts.succes' %>  <%= link_to "Nice2stay account", dashboard_reservations_path %>
 
-<div class="container homepage padding-top-1x padding-bottom-3x mb-2">
+ </div>
+<div class="container homepage padding-top-1x margin-bottom-3x padding-bottom-3x mb-2">
   <div class="row">
     <!-- Checkout Address-->
     <div class="col-md-12">
@@ -32,17 +34,17 @@
           <thead>
             <tr>
 
-              <th class="text-center"><%= t 'carts.name' %></th>
-              <th class="text-center"><%= t 'carts.overview' %></th>
-              <th class="text-center"><%= t 'carts.checkin' %></th>
-              <th class="text-center"><%= t 'carts.checkout' %></th>
-              <th class="text-center"><%= t 'carts.adults' %></th>
-              <th class="text-center"><%= t 'carts.children' %></th>
-              <th class="text-center"><%= t 'carts.infants' %></th>
-              <th class="text-center"><%= t 'carts.subtotal' %></th>
-              <th class="text-center"><%= t 'carts.cleaning' %></th>
-              <th class="text-center"><%= t 'carts.total' %></th>
-              <th class="text-center"><%= t 'carts.type' %></th>
+              <th class="text-center text-xs"><%= t 'carts.name' %></th>
+              <th class="text-center text-xs"><%= t 'carts.checkin' %></th>
+              <th class="text-center text-xs"><%= t 'carts.checkout' %></th>
+              <th class="text-center text-xs"><%= t 'carts.adults' %></th>
+              <th class="text-center text-xs"><%= t 'carts.children' %></th>
+              <th class="text-center text-xs"><%= t 'carts.infants' %></th>
+              <th class="text-center text-xs"><%= t 'carts.subtotal' %></th>
+              <th class="text-center text-xs"><%= t 'carts.cleaning' %></th>
+              <th class="text-center text-xs"><%= t 'carts.total' %></th>
+              <th class="text-center text-xs"><%= t 'carts.type' %></th>
+              
             </tr>
           </thead>
 
@@ -53,7 +55,7 @@
       </div>
 
       <div class="shopping-cart-footer">
-        <div class="column text-lg">Subtotal: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking_details.reservations) %></span>
+        <div class="column text-lg">Total: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking_details.reservations) %></span>
         </div>
       </div>
 
@@ -62,13 +64,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th class="text-center">First Name</th>
-              <th class="text-center">Last Name</th>
-              <th class="text-center">Email</th>
-              <th class="text-center">Phone</th>
-              <th class="text-center">City</th>
-              <th class="text-center">Zipcode</th>
-              <th class="text-center">Country</th>
+              <th class="text-center text-xs"><%= t 'carts.first_name' %></th>
+              <th class="text-center text-xs"><%= t 'carts.last_name' %></th>
+              <th class="text-center text-xs"><%= t 'carts.email' %></th>
+              <th class="text-center text-xs"><%= t 'carts.phone' %></th>
+              <th class="text-center text-xs"><%= t 'carts.city' %></th>
+              <th class="text-center text-xs"><%= t 'carts.zip' %></th>
+              <th class="text-center text-xs"><%= t 'carts.country' %></th>
             </tr>
           </thead>
 
