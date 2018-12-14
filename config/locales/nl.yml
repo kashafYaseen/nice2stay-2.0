@@ -7,6 +7,7 @@ nl:
       last: 'Laatste'
       previous: 'Voorgaand'
   helpers:
+    label:
     page_entries_info:
       more_pages:
         display_entries: "<b>%{last}</b> of <b>%{total}</b>"
@@ -23,6 +24,48 @@ nl:
     populair: Populaire collecties
     normal: Onze collecties
     holiday: Unieke vakantie  
+
+  carts: 
+    first_name: Voornaam
+    last_name: Achternaam
+    email: emailadres
+    phone: Telefoon
+    city: Stad
+    zip: Postcode
+    country: Land
+
+    overview:  Uw boekingen en opties aanvragen
+    send: Uw boekingen of opties zijn verzonden naar nice2stay 
+    gasten:  Uw gegevens
+    name: Accommodatie
+    checkin: Checkin
+    check_out: Checkout
+    adults: Volwassenen
+    children: Kinderen(<12)
+    infants: Babies
+    cleaning: Schoonmaak
+    subtotal: Huursom
+    total: Totaal
+    type: Type
+    succes:  Graag willen wij u bedanken voor het aanvragen van een reservering/optie bij Nice2stay. Uw reserverings/optie aanvraag is ingediend bij de eigenaar van de accommodatie en wij zullen zo spoedig mogelijk (binnen 24 uur) laten weten of uw reservering bevestigd wordt. U ontvangt hiervan bericht per email en u kunt de status inzien in uw  
+
+  indicator: 
+    gasten:  Uw gegevens
+    send: Uw aanvraag is verzonden
+    confirmation: Bevestiging
+    payment: Betaling
+    overview:  Uw boekingen en opties aanvragen
+    name: Naam accommodatie
+    checkin: Checkin
+    check_out: Checkout
+    adults: Volwassenen
+    children: Kinderen(<12)
+    infants: Babies
+    cleaning: Schoonmaak
+    subtotal: Huursom
+    total: Totaal
+    type: Aanvraag
+
 
   usp:
     verhaal: Mooie verhalen beginnen hier...

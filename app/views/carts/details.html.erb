@@ -1,32 +1,48 @@
-<div class="container padding-top-1x padding-bottom-3x mb-2">
+<div class="page-title">
+  <div class="container">
+    <h1><%= t 'indicator.send' %></h1>
+
+    <ul class="breadcrumbs">  
+      <li><%= t 'carts.send' %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container alert alert-primary alert-dismissible fade show text-center margin-bottom-1x">
+  <span class="alert-close" data-dismiss="alert"></span>
+  <i class="icon-layers"></i><%= t 'carts.succes' %>
+  <%= link_to "Nice2stay account", dashboard_reservations_path %>
+</div>
+
+<div class="container homepage padding-top-1x margin-bottom-3x padding-bottom-3x mb-2">
   <div class="row">
     <!-- Checkout Address-->
     <div class="col-md-12">
       <div class="steps flex-sm-nowrap mb-5">
         <a class="step">
-          <h4 class="step-title"><i class="material-icons check_circle"></i>Contact Details</h4>
+          <h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.gasten' %></h3>
         </a>
 
-        <a class="step active"><h4 class="step-title">Details Sent</h4></a>
-        <a class="step"><h4 class="step-title">Confirmation</h4></a>
-        <a class="step"><h4 class="step-title">Payment</h4></a>
+        <a class="step active"><h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.send' %></h3></a>
+        <a class="step"><h3 class="step-title"><%= t 'indicator.confirmation' %></h3></a>
+        <a class="step"><h3 class="step-title"><%= t 'indicator.payment' %></h3></a>
       </div>
 
-      <h6 class="text-small text-muted">Your bookings & options requests</h6>
+      <h6 class="text-small"><%= t 'carts.overview' %></h6>
       <div class="table-responsive shopping-cart">
         <table class="table">
           <thead>
             <tr>
-              <th class="text-center">Name</th>
-              <th class="text-center">Checkin</th>
-              <th class="text-center">Checkout</th>
-              <th class="text-center">Adults</th>
-              <th class="text-center">Children</th>
-              <th class="text-center">Infants</th>
-              <th class="text-center">Subtotal</th>
-              <th class="text-center">Cleaning</th>
-              <th class="text-center">Total</th>
-              <th class="text-center">Type</th>
+              <th class="text-center text-xs"><%= t 'carts.name' %></th>
+              <th class="text-center text-xs"><%= t 'carts.checkin' %></th>
+              <th class="text-center text-xs"><%= t 'carts.checkout' %></th>
+              <th class="text-center text-xs"><%= t 'carts.adults' %></th>
+              <th class="text-center text-xs"><%= t 'carts.children' %></th>
+              <th class="text-center text-xs"><%= t 'carts.infants' %></th>
+              <th class="text-center text-xs"><%= t 'carts.subtotal' %></th>
+              <th class="text-center text-xs"><%= t 'carts.cleaning' %></th>
+              <th class="text-center text-xs"><%= t 'carts.total' %></th>
+              <th class="text-center text-xs"><%= t 'carts.type' %></th>
             </tr>
           </thead>
 
@@ -37,22 +53,22 @@
       </div>
 
       <div class="shopping-cart-footer">
-        <div class="column text-lg">Subtotal: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking_details.reservations) %></span>
+        <div class="column text-lg">Total: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking_details.reservations) %></span>
         </div>
       </div>
 
-      <h6 class="text-small text-muted">Your billing information</h6>
-      <div class="table-responsive">
+      <h6 class="text-small"><%= t 'carts.gasten' %></h6>
+      <div class="table-responsive shopping-cart">
         <table class="table">
           <thead>
             <tr>
-              <th class="text-center">First Name</th>
-              <th class="text-center">Last Name</th>
-              <th class="text-center">Email</th>
-              <th class="text-center">Phone</th>
-              <th class="text-center">City</th>
-              <th class="text-center">Zipcode</th>
-              <th class="text-center">Country</th>
+              <th class="text-center text-xs"><%= t 'carts.first_name' %></th>
+              <th class="text-center text-xs"><%= t 'carts.last_name' %></th>
+              <th class="text-center text-xs"><%= t 'carts.email' %></th>
+              <th class="text-center text-xs"><%= t 'carts.phone' %></th>
+              <th class="text-center text-xs"><%= t 'carts.city' %></th>
+              <th class="text-center text-xs"><%= t 'carts.zip' %></th>
+              <th class="text-center text-xs"><%= t 'carts.country' %></th>
             </tr>
           </thead>
 

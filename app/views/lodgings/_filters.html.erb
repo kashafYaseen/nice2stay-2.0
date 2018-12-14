@@ -25,11 +25,11 @@
               </button>
 
               <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
-                <a class="dropdown-item lowest-price" href="#">Lowest Price</a>
-                <a class="dropdown-item highest-price" href="#">Highest Price</a>
-                <a class="dropdown-item highest-rating" href="#">Highest Rating</a>
-                <a class="dropdown-item newest" href="#">Newest</a>
-                <a class="dropdown-item default" href="#">Default</a>
+                <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+                <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+                <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+                <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+                <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
                 <%= hidden_field_tag :order, params[:order] %>
               </div>
             </div>
