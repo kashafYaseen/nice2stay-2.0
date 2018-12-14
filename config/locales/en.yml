@@ -73,7 +73,8 @@ en:
     normal: Our collections
   holiday: Unique holiday  
   cart: 
-    overview:  Uw boekingen en opties aanvragen
+    overview:  Youre bookings and options requests
+    gasten:  Youre data
     name: Name accommodation
     checkin: Checkin
     check_out: Checkout

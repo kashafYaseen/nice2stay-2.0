@@ -7,6 +7,8 @@ nl:
       last: 'Laatste'
       previous: 'Voorgaand'
   helpers:
+    label:
+
     page_entries_info:
       more_pages:
         display_entries: "<b>%{last}</b> of <b>%{total}</b>"
@@ -24,7 +26,9 @@ nl:
     normal: Onze collecties
     holiday: Unieke vakantie  
   carts: 
+    send: Uw boekingen of opties zijn verzonden
     overview:  Uw boekingen en opties aanvragen
+    gasten:  Uw gegevens
     name: Accommodatie
     checkin: Checkin
     check_out: Checkout
@@ -37,18 +41,11 @@ nl:
     type: Aanvraag
 
   indicator: 
-    overview:  Uw boekingen en opties aanvragen
-    name: Naam accommodatie
-    checkin: Checkin
-    check_out: Checkout
-    adults: Volwassenen
-    children: Kinderen(<12)
-    infants: Babies
-    cleaning: Schoonmaak
-    subtotal: Huursom
-    total: Totaal
-    type: Aanvraag
-
+    gasten:  Uw gegevens
+    send: Uw aanvraag is verzonden
+    confirmation: Bevestiging
+    payment: Betaling
+ 
 
 
 

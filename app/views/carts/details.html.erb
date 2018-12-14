@@ -1,9 +1,9 @@
 <div class="page-title">
   <div class="container">
-    <h1>Details send</h1>
+    <h1><%= t 'indicator.send' %></h1>
 
-    <ul class="breadcrumbs">
-      <li>Your options or bookings are send to nice2stay</li>
+    <ul class="breadcrumbs">  
+      <li><%= t 'carts.send' %></li>
      
     </ul>
   </div>
@@ -15,29 +15,29 @@
     <div class="col-md-12">
       <div class="steps flex-sm-nowrap mb-5">
         <a class="step">
-          <h4 class="step-title"><i class="material-icons check_circle"></i>Contact Details</h4>
+          <h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.gasten' %></h3>
         </a>
 
-        <a class="step active"><h4 class="step-title">Details Sent</h4></a>
-        <a class="step"><h4 class="step-title">Confirmation</h4></a>
-        <a class="step"><h4 class="step-title">Payment</h4></a>
+        <a class="step active"><h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.send' %></h3></a>
+        <a class="step"><h3 class="step-title"><%= t 'indicator.confirmation' %></h3></a>
+        <a class="step"><h3 class="step-title"><%= t 'indicator.payment' %></h3></a>
       </div>
 
-      <h6 class="text-small text-muted">Your bookings & options requests</h6>
+      <h6 class="text-small"><%= t 'carts.overview' %></h6>
       <div class="table-responsive shopping-cart">
         <table class="table">
           <thead>
             <tr>
-              <th class="text-center"><%= t 'cart.overview' %></th>
-              <th class="text-center"><%= t 'cart.checkin' %></th>
-              <th class="text-center"><%= t 'cart.checkout' %></th>
-              <th class="text-center"><%= t 'cart.adults' %></th>
-              <th class="text-center"><%= t 'cart.children' %></th>
-              <th class="text-center"><%= t 'cart.infants' %></th>
-              <th class="text-center"><%= t 'cart.subtotal' %></th>
-              <th class="text-center"><%= t 'cart.cleaning' %></th>
-              <th class="text-center"><%= t 'cart.total' %></th>
-              <th class="text-center"><%= t 'cart.type' %></th>
+              <th class="text-center"><%= t 'carts.name' %></th>
+              <th class="text-center"><%= t 'carts.checkin' %></th>
+              <th class="text-center"><%= t 'carts.checkout' %></th>
+              <th class="text-center"><%= t 'carts.adults' %></th>
+              <th class="text-center"><%= t 'carts.children' %></th>
+              <th class="text-center"><%= t 'carts.infants' %></th>
+              <th class="text-center"><%= t 'carts.subtotal' %></th>
+              <th class="text-center"><%= t 'carts.cleaning' %></th>
+              <th class="text-center"><%= t 'carts.total' %></th>
+              <th class="text-center"><%= t 'carts.type' %></th>
             </tr>
           </thead>
 
@@ -52,8 +52,8 @@
         </div>
       </div>
 
-      <h6 class="text-small text-muted">Your billing information</h6>
-      <div class="table-responsive">
+      <h6 class="text-small"><%= t 'carts.gasten' %></h6>
+      <div class="table-responsive shopping-cart">
         <table class="table">
           <thead>
             <tr>

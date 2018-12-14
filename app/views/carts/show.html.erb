@@ -15,10 +15,10 @@
     <!-- Checkout Address-->
     <div class="col-md-12">
       <div class="steps flex-sm-nowrap mb-5">
-        <a class="step active"><h4 class="step-title">Contact Details</h4></a>
-        <a class="step"><h4 class="step-title">Details Sent</h4></a>
-        <a class="step"><h4 class="step-title">Confirmation</h4></a>
-        <a class="step"><h4 class="step-title">Payment</h4></a>
+        <a class="step active"><h4 class="step-title"><%= t 'indicator.gasten' %></h4></a>
+         <a class="step"><h3 class="step-title"><%= t 'indicator.send' %></h3></a>
+        <a class="step"><h3 class="step-title"><%= t 'indicator.confirmation' %></h3></a>
+        <a class="step"><h3 class="step-title"><%= t 'indicator.payment' %></h3></a>
       </div>
 
       <% if @booking.reservations.present? %>
@@ -71,7 +71,7 @@
 
         <div class="row">
           <div class="col-md-12">
-            <h5>Guest Information</h5>
+            <h5><%= t 'carts.gasten' %></h5>
             <hr class="padding-bottom-1x">
             <%= form_for @booking, url: carts_path do |f| %>
               <%= render 'shared/errors', resource: @booking %>
