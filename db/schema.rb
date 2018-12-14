@@ -230,11 +230,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_074733) do
     t.text "p_text"
     t.text "meta_title"
     t.text "meta_description"
-    t.string "redirect_url"
-    t.string "country"
-    t.string "region"
     t.string "category"
-    t.string "experience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "country_id"
@@ -584,9 +580,9 @@ ActiveRecord::Schema.define(version: 2018_12_12_074733) do
     t.integer "booking_status", default: 0
     t.integer "request_status", default: 0
     t.integer "crm_booking_id"
-    t.boolean "in_cart", default: false
     t.bigint "lodging_id"
     t.bigint "booking_id"
+    t.boolean "in_cart", default: true
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end

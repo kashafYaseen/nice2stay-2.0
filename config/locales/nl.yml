@@ -25,9 +25,11 @@ nl:
     populair: Populaire collecties
     normal: Onze collecties
     holiday: Unieke vakantie  
-  carts: 
-    send: Uw boekingen of opties zijn verzonden
+
+ 
+  carts:
     overview:  Uw boekingen en opties aanvragen
+    send: Uw boekingen of opties zijn verzonden
     gasten:  Uw gegevens
     name: Accommodatie
     checkin: Checkin
@@ -45,8 +47,17 @@ nl:
     send: Uw aanvraag is verzonden
     confirmation: Bevestiging
     payment: Betaling
- 
-
+    overview:  Uw boekingen en opties aanvragen
+    name: Naam accommodatie
+    checkin: Checkin
+    check_out: Checkout
+    adults: Volwassenen
+    children: Kinderen(<12)
+    infants: Babies
+    cleaning: Schoonmaak
+    subtotal: Huursom
+    total: Totaal
+    type: Aanvraag
 
 
   usp:
