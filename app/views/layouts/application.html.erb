@@ -15,6 +15,7 @@
     <%= render 'shared/footer' %>
 
     <script type="text/javascript">
+      Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
       Custom.init();
       <%= yield :js_init %>
     </script>

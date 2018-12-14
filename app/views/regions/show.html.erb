@@ -131,7 +131,6 @@
 <%= render 'shared/meta_tags', resource: @region %>
 
 <%= content_for :js_init do %>
-  Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
   initDatePicker();
   GuestDropdown.init();
   OwlCarousel.init();
