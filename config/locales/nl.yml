@@ -29,7 +29,6 @@ nl:
     name: Uw gegevens
     messages: Belangrijke berichten 
 
-
   carts: 
     full_name: Naam
     first_name: Voornaam
@@ -39,7 +38,6 @@ nl:
     city: Stad
     zip: Postcode
     country: Land
-
     overview:  Uw boekingen en opties aanvragen
     send: Uw boekingen of opties zijn verzonden naar nice2stay 
     gasten:  Uw gegevens

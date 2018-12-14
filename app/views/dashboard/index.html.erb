@@ -3,22 +3,26 @@
     <h4 class="card-title homepage pt-3 pb-3">Dashboard</h4>
     <div class="row">
       <div class="col-md-4">
+        <div class="bg-white text-left">
+          <h5 class="card-title pt-3 pb-3"><%= t 'profile.name' %></h5>
+          <p><%= t 'carts.full_name' %>: <%= current_user.full_name.humanize %></p>
+          <p><%= t 'carts.email' %>: <%= current_user.email %></p>
+          <p><%= t 'carts.phone' %>: <%= current_user.phone %></p>
+          <p><%= t 'carts.city' %>: <%= current_user.city %></p>
+          <p><%= t 'carts.country' %>: <%= current_user.country_name %></p>
+          <p><%= link_to "edit", edit_user_registration_path %></p>
+        </div>
+      </div>
 
-    <div class="bg-white text-left">
-       <h5 class="card-title pt-3 pb-3"><%= t 'profile.name' %></h5>
-      <p><%= t 'carts.full_name' %>: <%= current_user.full_name.humanize %></p>
-      <p><%= t 'carts.email' %>: <%= current_user.email %></p>
-      <p><%= t 'carts.phone' %>: <%= current_user.phone %></p>
-      <p><%= t 'carts.city' %>: <%= current_user.city %></p>
-      <p><%= t 'carts.country' %>: <%= current_user.country %></p>
-      <p><%= link_to "edit", edit_user_registration_path %></p>
-     
+      <div class="col-md-8">
+        <h5 class="card-title text-left pt-3 pb-3"><%= t 'profile.messages' %></h5>
+
+        <div class="alert alert-danger alert-dismissible fade show text-center margin-bottom-1x">
+          <span class="alert-close" data-dismiss="alert"></span>
+          <i class="icon-ban"></i><strong>Alert:</strong> Deserunt praesentium laboriosam quaerat mollitia.
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-md-8">
-    <h5 class="card-title text-left pt-3 pb-3"><%= t 'profile.messages' %></h5>
-    <div class="alert alert-danger alert-dismissible fade show text-center margin-bottom-1x"><span class="alert-close" data-dismiss="alert"></span><i class="icon-ban"></i>&nbsp;&nbsp;<strong>Danger alert:</strong> Deserunt praesentium laboriosam quaerat mollitia.</div>
-  </div>  
   </div>
 </div>
 
