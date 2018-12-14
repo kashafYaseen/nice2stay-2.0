@@ -8,7 +8,6 @@ nl:
       previous: 'Voorgaand'
   helpers:
     label:
-
     page_entries_info:
       more_pages:
         display_entries: "<b>%{last}</b> of <b>%{total}</b>"
@@ -49,8 +48,6 @@ nl:
     total: Totaal
     type: Type
     succes:  Graag willen wij u bedanken voor het aanvragen van een reservering/optie bij Nice2stay. Uw reserverings/optie aanvraag is ingediend bij de eigenaar van de accommodatie en wij zullen zo spoedig mogelijk (binnen 24 uur) laten weten of uw reservering bevestigd wordt. U ontvangt hiervan bericht per email en u kunt de status inzien in uw  
-    
-  
 
   indicator: 
     gasten:  Uw gegevens

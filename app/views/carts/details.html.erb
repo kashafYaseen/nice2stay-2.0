@@ -2,18 +2,18 @@
   <div class="container">
     <h1><%= t 'indicator.send' %></h1>
 
-
     <ul class="breadcrumbs">  
       <li><%= t 'carts.send' %></li>
-      
-   
-
     </ul>
   </div>
 </div>
-<div class="container alert alert-primary alert-dismissible fade show text-center margin-bottom-1x"><span class="alert-close" data-dismiss="alert"></span><i class="icon-layers"></i><%= t 'carts.succes' %>  <%= link_to "Nice2stay account", dashboard_reservations_path %>
 
- </div>
+<div class="container alert alert-primary alert-dismissible fade show text-center margin-bottom-1x">
+  <span class="alert-close" data-dismiss="alert"></span>
+  <i class="icon-layers"></i><%= t 'carts.succes' %>
+  <%= link_to "Nice2stay account", dashboard_reservations_path %>
+</div>
+
 <div class="container homepage padding-top-1x margin-bottom-3x padding-bottom-3x mb-2">
   <div class="row">
     <!-- Checkout Address-->
@@ -33,7 +33,6 @@
         <table class="table">
           <thead>
             <tr>
-
               <th class="text-center text-xs"><%= t 'carts.name' %></th>
               <th class="text-center text-xs"><%= t 'carts.checkin' %></th>
               <th class="text-center text-xs"><%= t 'carts.checkout' %></th>
@@ -44,7 +43,6 @@
               <th class="text-center text-xs"><%= t 'carts.cleaning' %></th>
               <th class="text-center text-xs"><%= t 'carts.total' %></th>
               <th class="text-center text-xs"><%= t 'carts.type' %></th>
-              
             </tr>
           </thead>
 
