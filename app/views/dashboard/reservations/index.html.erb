@@ -33,7 +33,7 @@
 
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title homepage pt-3 pb-3">Bookings</h4>
+    <h4 class="card-title homepage pt-3 pb-3">Old Bookings</h4>
     <div class="table-responsive text-xxs">
       <table class="table table-hover">
         <thead>
@@ -46,9 +46,9 @@
           </tr>
         </thead>
 
-        <tbody id="bookings-table-body">
-          <% if @bookings.present? %>
-            <%= render @bookings %>
+        <tbody id="old-bookings-table-body">
+          <% if @old_bookings.present? %>
+            <%= render @old_bookings %>
           <% else %>
             <tr><td colspan="5" class="text-center">No booking found!</td></tr>
           <% end %>
@@ -56,8 +56,39 @@
       </table>
     </div>
 
-    <div id="bookings-pagination">
-      <%= paginate @bookings, param_name: :bookings_page, window: 2, remote: true %>
+    <div id="old-bookings-pagination">
+      <%= paginate @old_bookings, param_name: :old_bookings_page, window: 2, remote: true %>
+    </div>
+  </div>
+</div>
+
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title homepage pt-3 pb-3">Upcoming Bookings</h4>
+    <div class="table-responsive text-xxs">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Reference #</th>
+            <th>Created At</th>
+            <th>Pre Payment</th>
+            <th>Final Payment</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+
+        <tbody id="upcoming-bookings-table-body">
+          <% if @upcoming_bookings.present? %>
+            <%= render @upcoming_bookings %>
+          <% else %>
+            <tr><td colspan="5" class="text-center">No booking found!</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="upcoming-bookings-pagination">
+      <%= paginate @upcoming_bookings, param_name: :upcoming_bookings_page, window: 2, remote: true %>
     </div>
   </div>
 </div>

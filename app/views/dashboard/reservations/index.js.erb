@@ -1,6 +1,11 @@
-<% if @bookings.present? %>
-  $('#bookings-table-body').html("<%= j render  @bookings %>");
-  $('#bookings-pagination').html("<%= j paginate @bookings, param_name: :bookings_page, window: 2, remote: true %>");
+<% if @old_bookings.present? %>
+  $('#old-bookings-table-body').html("<%= j render  @old_bookings %>");
+  $('#old-bookings-pagination').html("<%= j paginate @old_bookings, param_name: :old_bookings_page, window: 2, remote: true %>");
+<% end %>
+
+<% if @upcoming_bookings.present? %>
+  $('#upcoming-bookings-table-body').html("<%= j render  @upcoming_bookings %>");
+  $('#upcoming-bookings-pagination').html("<%= j paginate @upcoming_bookings, param_name: :upcoming_bookings_page, window: 2, remote: true %>");
 <% end %>
 
 <% if @requests.present? %>

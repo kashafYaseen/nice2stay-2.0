@@ -5,7 +5,8 @@ class Dashboard::ReservationsController < DashboardController
     @title = 'Reservations'
     add_breadcrumb @title, dashboard_reservations_path
 
-    @bookings = current_user.bookings_confirmed.includes(:reservations).page(params[:bookings_page]).per(5)
+    @old_bookings = current_user.bookings_confirmed.old.includes(:reservations).page(params[:old_bookings_page]).per(5)
+    @upcoming_bookings = current_user.bookings_confirmed.upcoming.includes(:reservations).page(params[:upcoming_bookings_page]).per(5)
     @requests = current_user.reservations_non_confirmed.includes(lodging: :translations).page(params[:requests_page]).per(5)
     @options = current_user.reservations_confirmed_options.includes(lodging: :translations).page(params[:options_page]).per(5)
   end

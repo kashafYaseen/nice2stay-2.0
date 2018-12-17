@@ -24,6 +24,7 @@ class Reservation < ApplicationRecord
   scope :requests, -> { where(in_cart: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
   scope :confirmed_options, -> { requests.option.confirmed }
+  scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ?', Date.today).pluck(:booking_id).uniq }
 
   accepts_nested_attributes_for :review
 
