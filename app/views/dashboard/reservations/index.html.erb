@@ -1,17 +1,19 @@
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title homepage pt-3 pb-3">Bookings & Option Requests</h4>
+    <h4 class="card-title homepage pt-3 pb-3">
+      <%= t 'profile_account.bookings_options_header' %></h4>
     <div class="table-responsive text-xxs">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Reference #</th>
-            <th>Lodging</th>
-            <th>Created At</th>
-            <th>Request</th>
-            <th>Booking</th>
-            <th>Type</th>
-            <th>Price</th>
+            <th><%= t 'profile_account.reference' %></th>
+            <th><%= t 'profile_account.accommodation' %></th>
+            <th><%= t 'profile_account.created' %></th>
+            <th><%= t 'profile_account.request' %></th>
+            <th><%= t 'profile_account.booking' %></th>
+            <th><%= t 'profile_account.type' %></th>
+            <th><%= t 'profile_account.price' %></th>
+
           </tr>
         </thead>
 
@@ -31,49 +33,20 @@
   </div>
 </div>
 
+
+
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title homepage pt-3 pb-3">Old Bookings</h4>
+    <h4 class="card-title homepage pt-3 pb-3"><%= t 'profile_account.next_bookings_header' %></h4>
     <div class="table-responsive text-xxs">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Reference #</th>
-            <th>Created At</th>
-            <th>Pre Payment</th>
-            <th>Final Payment</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-
-        <tbody id="old-bookings-table-body">
-          <% if @old_bookings.present? %>
-            <%= render @old_bookings %>
-          <% else %>
-            <tr><td colspan="5" class="text-center">No booking found!</td></tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div id="old-bookings-pagination">
-      <%= paginate @old_bookings, param_name: :old_bookings_page, window: 2, remote: true %>
-    </div>
-  </div>
-</div>
-
-<div class="card border-dark text-center mb-3">
-  <div class="card-body">
-    <h4 class="card-title homepage pt-3 pb-3">Upcoming Bookings</h4>
-    <div class="table-responsive text-xxs">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Reference #</th>
-            <th>Created At</th>
-            <th>Pre Payment</th>
-            <th>Final Payment</th>
-            <th>Total</th>
+            <th><%= t 'profile_account.reference' %></th>
+            <th><%= t 'profile_account.created' %></th>
+            <th><%= t 'profile_account.pre_payment' %></th>
+            <th><%= t 'profile_account.final_payment' %></th>
+            <th><%= t 'profile_account.total_payment' %></th>
           </tr>
         </thead>
 
@@ -95,16 +68,47 @@
 
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title homepage pt-3 pb-3">Options</h4>
+    <h4 class="card-title homepage pt-3 pb-3"><%= t 'profile_account.old_bookings_header' %></h4>
     <div class="table-responsive text-xxs">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Reference #</th>
-            <th>Lodging</th>
-            <th>Valid till</th>
-            <th>Price</th>
-            <th>Action</th>
+            <th><%= t 'profile_account.reference' %></th>
+            <th><%= t 'profile_account.created' %></th>
+            <th><%= t 'profile_account.pre_payment' %></th>
+            <th><%= t 'profile_account.final_payment' %></th>
+            <th><%= t 'profile_account.total_payment' %></th>
+          </tr>
+        </thead>
+
+        <tbody id="old-bookings-table-body">
+          <% if @old_bookings.present? %>
+            <%= render @old_bookings %>
+          <% else %>
+            <tr><td colspan="5" class="text-center">No booking found!</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="old-bookings-pagination">
+      <%= paginate @old_bookings, param_name: :old_bookings_page, window: 2, remote: true %>
+    </div>
+  </div>
+</div>
+
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title homepage pt-3 pb-3"><%= t 'profile_account.options_header' %></h4>
+    <div class="table-responsive text-xxs">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><%= t 'profile_account.reference' %></th>
+            <th><%= t 'profile_account.accommodation' %></th>
+           <th><%= t 'profile_account.valid_to' %></th>
+            <th><%= t 'profile_account.price' %></th>
+           <th><%= t 'profile_account.option_to_booking' %></th>
           </tr>
         </thead>
 

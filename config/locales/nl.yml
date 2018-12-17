@@ -29,7 +29,47 @@ nl:
     name: Uw gegevens
     messages: Belangrijke berichten 
 
-  carts: 
+  profile_account: 
+     side_nav_home: Dashboard
+     side_nav_bookings: Boekingen & opties
+     side_nav_profile: Wijzig profiel
+     side_nav_wishlist: Favorieten
+
+     account: Nice2stay account
+     new_customers: Bent u nieuw? Vul hier dan uw gegevens in. 
+     customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen
+     create_new_account: Maak direct een Nice2stay account aan
+     
+     bookings_options_header: Uw aanvraag overzicht
+     old_bookings_header: Vorige boekingen
+     next_bookings_header: Aankomende boekingen
+     options_header: Bevestigde opties
+
+     reference: Referentie
+     accommodation: Accommodatie
+     created: Aangemaakt
+     request: Aanvraag bevestigd
+     booking: Boeking bevestigd
+     type: Type aanvraag
+     price: Prijs
+     pre_payment: Aanbetaling
+     final_payment: Restantbetaling
+     total_payment: Totaal
+     valid_to: Optie geldig tot
+     option_to_booking: Zet optie om in boeking
+
+
+
+
+
+  carts:
+    empty: verwijder
+    step_3:  Aanvraag versturen
+    step_2:  
+      header: Uw aanvraag
+      header_2: Vul uw gegevens in
+    step_1: "Volgende stap: Uw gegevens"
+    acco: Accommodaties
     full_name: Naam
     first_name: Voornaam
     last_name: Achternaam
@@ -38,7 +78,7 @@ nl:
     city: Stad
     zip: Postcode
     country: Land
-    overview:  Uw boekingen en opties aanvragen
+    overview:  Uw overzicht
     send: Uw boekingen of opties zijn verzonden naar nice2stay 
     gasten:  Uw gegevens
     name: Accommodatie
@@ -51,21 +91,21 @@ nl:
     subtotal: Huursom
     total: Totaal
     type: Type
-    succes:  Graag willen wij u bedanken voor het aanvragen van een reservering/optie bij Nice2stay. Uw reserverings/optie aanvraag is ingediend bij de eigenaar van de accommodatie en wij zullen zo spoedig mogelijk (binnen 24 uur) laten weten of uw reservering bevestigd wordt. U ontvangt hiervan bericht per email en u kunt de status inzien in uw  
+    succes:  Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status. 
 
   indicator: 
     gasten:  Uw gegevens
-    send: Uw aanvraag is verzonden
+    send: Aanvraag verzonden
     confirmation: Bevestiging
-    payment: Betaling
+    payment: Betaling 
     overview:  Uw boekingen en opties aanvragen
     name: Naam accommodatie
-    checkin: Checkin
-    check_out: Checkout
+    checkin: Check-in
+    check_out: Check-out
     adults: Volwassenen
     children: Kinderen(<12)
     infants: Babies
-    cleaning: Schoonmaak
+    cleaning: Schoonmaakkosten
     subtotal: Huursom
     total: Totaal
     type: Aanvraag
@@ -92,8 +132,8 @@ nl:
 
 
   opens: 
-    week: Maandag - vrijdag - 9.00 tot 18.00 
-    weekend: Zaterdag - 10.00 - 13.00
+    week: maandag - vrijdag - 9.00 tot 18.00 
+    weekend: zaterdag - 10.00 - 13.00
     address: Korte Zijlweg 9, 2051 DB Overveeen 
 
   reviews:
@@ -120,26 +160,28 @@ nl:
     back: Terug
     price_availabiltiy: Prijzen & Beschikbaarheid
 
-  nav_cart: 
+  nav_cart:
+    type": Aanvraag 
     price: Prijs
     nights: Nachten
-    From: From 
-    To: To
-    Guests: Gasten
+    checkin: Check-in 
+    checkout: Check-out
+    guests: Gasten
+    empty: Geen accommodaties geselecteerd
 
 
   reservations:
-    option: Optie (24H)
+    option: Optie (24 uur)
     prebooking: Reservering
 
   cart:
-    shopping_cart: Winkelmandje
-    nice2stay: Geen reserveringskosten  bij nice2stay
+    shopping_cart: Vraag aan
+    nice2stay: Geen reserveringskosten bij Nice2stay
 
   information:
-    included: de huurprijs is inclusief
-    informatie: belangrijke informatie
-    included_header: Inclusief huursom
+    included: + Inclusief ?
+    informatie: + Belangrijke informatie
+    included_header: Inclusief
     informatie_header: Informatie
 
   search:

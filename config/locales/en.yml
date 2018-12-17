@@ -80,7 +80,10 @@ en:
     gasten: Youre data
 
   carts:
-    overview: Uw boekingen en opties aanvragen
+    step_3:  Send request
+    step_1: "Next step: You're details"
+    acco: Accommodations
+    overview: Your bookings and options requests
     name: Name accommodation
     checkin: Checkin
     check_out: Checkout
@@ -146,6 +149,7 @@ en:
     back: Back
     price_availabiltiy: Prices & Availabiltiy
   nav_cart: 
+    type": Request
     price: Price
     nights: Nights
     From: From 
@@ -160,8 +164,8 @@ en:
     communication: Nice2stay Service
 
   information:
-    included: + Included rent
-    informatie: + Information
+    included: Included ?
+    informatie: Important information
     included_header: Included rent
     informatie_header: Information
 
@@ -188,12 +192,42 @@ en:
     flexibility_text: flexible in dates (-/+ 2 days)
     date_filter: Arrival and Departure
 
+  profile_account: 
+     side_nav_home: Dashboard
+     side_nav_bookings: Bookings & Options
+     side_nav_profile: Edit profile
+     side_nav_wishlist: Favorites
+
+     account: Nice2stay account
+     new_customers: Are you new? Enter your details here.
+     customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
+     create_new_account: Create also a Nice2stay account 
+     
+     bookings_options_header: Your request overview
+     old_bookings_header: Previous bookings
+     next_bookings_header: Upcoming bookings
+     options_header: Confirmed options
+
+     reference: Reference
+     accommodation: Accommodation
+     created: Created
+     request: Request confirmed
+     booking: Booking confirmed
+     type: Type of request
+     price: Price
+     pre_payment: Deposit
+     final_payment: Remaining payment
+     total_payment: Total
+     valid_to: Option valid until
+     option_to_booking: Convert option to booking
+
   reservations:
     option: Option (24H)
-    prebooking: Booking Request
+    prebooking: Booking
 
   cart:
     shopping_cart: Add to cart
+    nice2stay: No booking fees at Nice2stay
 
   activerecord:
     errors:
