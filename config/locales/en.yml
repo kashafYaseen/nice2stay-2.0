@@ -84,7 +84,7 @@ en:
       header: Your request
       header_2: Enter your information
     step_3:  Send request
-    step_1: "Next step: You're details"
+    step_1: "Next step: Your details"
     acco: Accommodations
     overview: Your bookings and options requests
     name: Name accommodation
@@ -152,12 +152,14 @@ en:
     back: Back
     price_availabiltiy: Prices & Availabiltiy
   nav_cart: 
-    type": Request
+    type: Request
     price: Price
     nights: Nights
     From: From 
     To: To
-    Guests: Guests
+    guests: Guests
+    checkin: Check-in
+    checkout: Check-out
   reviews:
     title: Average score  & latest customer reviews
     quality: Quality

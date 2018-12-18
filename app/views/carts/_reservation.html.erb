@@ -11,8 +11,8 @@
   <td class="text-center text-sm"><%= reservation.children %></td>
   <td class="text-center text-sm"><%= reservation.infants %></td>
   <td class="text-center text-sm">€<%= reservation.rent %></td>
-  <td class="text-center text-sm">€<%= reservation.cleaning_cost %></td>
-  <td class="text-center text-sm">€<%= reservation.rent + reservation.cleaning_cost %></td>
+  <td class="text-center text-sm">€<%= render_rounded_price reservation.cleaning_cost %></td>
+  <td class="text-center text-sm">€<%= render_rounded_price reservation.rent + reservation.cleaning_cost %></td>
   <td class="text-center text-sm"><%= reservation.booking_status %></td>
 
   <td class="text-center">

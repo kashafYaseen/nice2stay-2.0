@@ -11,14 +11,21 @@
             <h4 class="product-title">
               <%= link_to reservation.lodging_name, reservation.lodging %>
             </h4>
-             <span><em><strong><%= t "nav_cart.type" %>:</strong></em> € <%= reservation.total_price %></span>
-            <span><em><strong><%= t "nav_cart.price" %>:</strong></em> € <%= reservation.total_price %></span>
-            <span><em><strong><%= t "nav_cart.nights" %>:</strong></em><%= reservation.total_nights %></span>
+          </div>
+        </div>
+
+        <div class="product-item ml-2">
+          <div class="product-info text-medium">
+            <span><em><strong><%= t "nav_cart.type" %>: </strong></em><%= reservation.booking_status %></span>
+            <span><em><strong><%= t "carts.cleaning" %>: </strong></em> €<%= render_rounded_price reservation.cleaning_cost %></span>
+            <span><em><strong><%= t "nav_cart.price" %>:</strong></em> €<%= render_rounded_price reservation.total_price + reservation.cleaning_cost %></span>
+            <span><em><strong><%= t "nav_cart.nights" %>:</strong></em> <%= reservation.total_nights %></span>
             <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>
             <span><em><strong><%= t "nav_cart.checkout" %>:</strong></em> <%= reservation.check_out %></span>
             <span><em><strong><%= t "nav_cart.guests" %>:</strong></em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
           </div>
         </div>
+
       </td>
 
       <td class="text-center">
