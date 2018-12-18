@@ -73,13 +73,16 @@ en:
   holiday: Unique holiday
 
   carts:
-    overview:  Your bookings and options requests
-    gasten:  Your personal data
+    overview: Your bookings and options requests
+    gasten: Your personal data
   cart:
     overview: Youre bookings and options requests
     gasten: Youre data
 
   carts:
+    step_2:
+      header: Your request
+      header_2: Enter your information
     step_3:  Send request
     step_1: "Next step: You're details"
     acco: Accommodations

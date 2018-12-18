@@ -34,17 +34,14 @@ nl:
      side_nav_bookings: Boekingen & opties
      side_nav_profile: Wijzig profiel
      side_nav_wishlist: Favorieten
-
      account: Nice2stay account
      new_customers: Bent u nieuw? Vul hier dan uw gegevens in. 
      customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen
      create_new_account: Maak direct een Nice2stay account aan
-     
      bookings_options_header: Uw aanvraag overzicht
      old_bookings_header: Vorige boekingen
      next_bookings_header: Aankomende boekingen
      options_header: Bevestigde opties
-
      reference: Referentie
      accommodation: Accommodatie
      created: Aangemaakt
@@ -58,14 +55,10 @@ nl:
      valid_to: Optie geldig tot
      option_to_booking: Zet optie om in boeking
 
-
-
-
-
   carts:
     empty: verwijder
-    step_3:  Aanvraag versturen
-    step_2:  
+    step_3: Aanvraag versturen
+    step_2:
       header: Uw aanvraag
       header_2: Vul uw gegevens in
     step_1: "Volgende stap: Uw gegevens"
@@ -91,13 +84,13 @@ nl:
     subtotal: Huursom
     total: Totaal
     type: Type
-    succes:  Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status. 
+    succes: Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status.
 
-  indicator: 
-    gasten:  Uw gegevens
+  indicator:
+    gasten: Uw gegevens
     send: Aanvraag verzonden
     confirmation: Bevestiging
-    payment: Betaling 
+    payment: Betaling
     overview:  Uw boekingen en opties aanvragen
     name: Naam accommodatie
     checkin: Check-in
@@ -109,7 +102,6 @@ nl:
     subtotal: Huursom
     total: Totaal
     type: Aanvraag
-
 
   usp:
     verhaal: Mooie verhalen beginnen hier...
@@ -130,8 +122,7 @@ nl:
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio 
 
-
-  opens: 
+  opens:
     week: maandag - vrijdag - 9.00 tot 18.00 
     weekend: zaterdag - 10.00 - 13.00
     address: Korte Zijlweg 9, 2051 DB Overveeen 
@@ -168,7 +159,6 @@ nl:
     checkout: Check-out
     guests: Gasten
     empty: Geen accommodaties geselecteerd
-
 
   reservations:
     option: Optie (24 uur)
