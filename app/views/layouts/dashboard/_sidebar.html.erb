@@ -7,19 +7,19 @@
 
   <nav class="list-group">
     <%= link_to dashboard_path, class: "list-group-item #{active_class(dashboard_path)}" do %>
-      <i class="icon-home"></i>Dashboard Home
+      <i class="icon-home"></i><%= t 'profile_account.side_nav_home' %>
     <% end %>
 
     <%= link_to dashboard_reservations_path, class: "list-group-item with-badge #{active_class(dashboard_reservations_path)}" do %>
-      <i class="icon-bag"></i>Bookings & Options<span class="badge badge-default badge-pill"><%= reservations_count %></span>
+      <i class="icon-bag"></i><%= t 'profile_account.side_nav_bookings' %><span class="badge badge-default badge-pill"><%= reservations_count %></span>
     <% end %>
 
     <%= link_to edit_user_registration_path, class: "list-group-item #{active_class(edit_user_registration_path)}" do %>
-      <i class="icon-head"></i>Profile
+      <i class="icon-head"></i><%= t 'profile_account.side_nav_profile' %>
     <% end %>
 
     <%= link_to dashboard_wishlists_path, class: "list-group-item with-badge #{active_class(dashboard_wishlists_path)}" do %>
-      <i class="icon-heart"></i>Wishlist<span class="badge badge-default badge-pill"><%= wishlist_items_count(@wishlists) %></span>
+      <i class="icon-heart"></i><%= t 'profile_account.side_nav_wishlist' %><span class="badge badge-default badge-pill"><%= wishlist_items_count(@wishlists) %></span>
     <% end %>
   </nav>
 </div>

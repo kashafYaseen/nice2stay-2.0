@@ -1,11 +1,9 @@
 <div class="page-title">
   <div class="container">
-    <h1>Checkout</h1>
+    <h1><%= t "carts.step_2.header" %></h1>
 
     <ul class="breadcrumbs">
-      <li>bookings & options requests</li>
-      <li class="separator">&nbsp;/&nbsp;</li>
-      <li>contact details</li>
+      <li><%= t "carts.step_2.header_2" %></li>
     </ul>
   </div>
 </div>
@@ -18,7 +16,6 @@
         <a class="step active"><h4 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.gasten' %></h4></a>
          <a class="step"><h3 class="step-title"><%= t 'indicator.send' %></h3></a>
         <a class="step"><h3 class="step-title"><%= t 'indicator.confirmation' %></h3></a>
-        <a class="step"><h3 class="step-title"><%= t 'indicator.payment' %></h3></a>
       </div>
 
       <% if @booking.reservations.present? %>
@@ -39,7 +36,7 @@
               <th class="text-center text-xs"><%= t 'carts.total' %></th>
               <th class="text-center text-xs"><%= t 'carts.type' %></th>
                 <th class="text-center">
-                  <%= link_to 'Clear Cart', carts_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
+                  <%= link_to t('carts.empty'), carts_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
                 </th>
               </tr>
             </thead>
@@ -51,7 +48,6 @@
         </div>
 
         <div class="shopping-cart-footer">
-          <div class="column text-lg">Subtotal: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking.reservations) %></span></div>
         </div>
 
         <div class="row">
@@ -59,19 +55,27 @@
             <% if user_signed_in? %>
               <p>Hi <%= current_user.full_name %>!, you are logon. Your details are automaticly filled in the form</p>
             <% else %>
-              <h5>U bent niet ingelogd</h5>
-              <p>Log in met uw account. Al eerder geboekt bij nice2stay?  Activeer dan uw account. </p>
-
-              <div class="col-md-5 mx-auto">
+              <h5><%= t 'profile_account.account' %></h5>
+              <p><%= t 'profile_account.customers' %><p>
+              <div class="row">
+              <div class="col-md-4">
                 <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+              </div>
+              <div class="col-md-4">
+                <input type="button" name="cart-login-form" value="Activeer uw account" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+              </div>
+              <div class="col-md-4">
+                <input type="button" name="cart-login-form" value="Reset wachtwoord" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+              </div>
               </div>
             <% end %>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 margin-top-2x">
             <h5><%= t 'carts.gasten' %></h5>
+            <p><%= t 'profile_account.new_customers' %><p>
             <hr class="padding-bottom-1x">
             <%= form_for @booking, url: carts_path do |f| %>
               <%= render 'shared/errors', resource: @booking %>
@@ -169,7 +173,7 @@
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <%= check_box_tag :create_account, nil, show_password_fields?(@booking.user), class: "custom-control-input" %>
-                      <label class="custom-control-label" for="create_account">Do you want to create an account?</label>
+                      <label class="custom-control-label" for="create_account"><%= t "profile_account.create_new_account" %></label>
                     </div>
                   </div>
                 <% end %>
@@ -182,11 +186,11 @@
               <% end %>
 
               <div class="d-flex justify-content-between">
-                <%= link_to lodgings_path, class: 'btn btn-outline-secondary' do %>
-                  <i class="icon-arrow-left material-icons">keyboard_arrow_left</i>&nbsp;Back to Shopping
+                 <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
+                  <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
                 <% end %>
 
-                <%= f.submit 'Complete Order', class: "btn btn-primary" %>
+                <%= f.submit t('carts.step_3'), class: "btn btn-success mb-0 mr-0" %>
               </div>
             </div>
           <% end %>

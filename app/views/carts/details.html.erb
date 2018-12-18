@@ -23,9 +23,13 @@
           <h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.gasten' %></h3>
         </a>
 
-        <a class="step active"><h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.send' %></h3></a>
-        <a class="step"><h3 class="step-title"><%= t 'indicator.confirmation' %></h3></a>
-        <a class="step"><h3 class="step-title"><%= t 'indicator.payment' %></h3></a>
+        <a class="step active">
+          <h3 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.send' %></h3>
+        </a>
+
+        <a class="step">
+          <h3 class="step-title"><%= t 'indicator.confirmation' %></h3>
+        </a>
       </div>
 
       <h6 class="text-small"><%= t 'carts.overview' %></h6>
@@ -53,8 +57,6 @@
       </div>
 
       <div class="shopping-cart-footer">
-        <div class="column text-lg">Total: <span class="text-medium text-dark cart-subtotal">€<%= cart_sub_total(@booking_details.reservations) %></span>
-        </div>
       </div>
 
       <h6 class="text-small"><%= t 'carts.gasten' %></h6>
