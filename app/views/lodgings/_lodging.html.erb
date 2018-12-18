@@ -15,7 +15,13 @@
         <div class="col-md-7 col-lg-7 col-xs-12">
           <%= link_to render_lodging_path(lodging), class: "text-decoration-none row" do %>
             <div class="col-md-9 col-xs-12">
-              <p class="text-xxs"><%= truncate(lodging.short_desc, length: 150) %></p>
+              <p class="text-xxs">
+                <% if lodging.as_child? %>
+                  <%= truncate(lodging.parent.short_desc, length: 150) %>
+                <% else %>
+                  <%= truncate(lodging.short_desc, length: 150) %>
+                <% end %>
+              </p>
 
               <p class="text-xxs">
                 <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
