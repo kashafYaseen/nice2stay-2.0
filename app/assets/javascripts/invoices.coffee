@@ -112,7 +112,7 @@
       total += (key * value)
       nights += value
 
-    if nights >= 2 && data.valid
+    if nights >= 1 && data.valid
       $("#cart-#{lodging_id}").removeClass('disabled');
       $(".reservation-form-errors-#{lodging_id}").html('');
 
