@@ -8,13 +8,6 @@ class LodgingsController < ApplicationController
     @custom_text = CustomText.find_by(id: params[:custom_text])
     @lodgings = SearchLodgings.call(params, @custom_text)
     @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
-
-    if params[:order] == 'price_asc'
-      @lodgings.sort_by(&:calculated_price)
-    elsif params[:order] == 'price_desc'
-      @lodgings.sort_by(&:calculated_price).reverse
-    end
-
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
     @title = @custom_text.try(:meta_title)
