@@ -30,7 +30,7 @@ module ReservationsHelper
 
   def render_rounded_price(price, multiplier = 1, round_by = 2)
     return '--' unless price.present?
-    (price * multiplier).round(round_by)
+    number_to_currency((price * multiplier), unit: '€', precision: ((price * multiplier).round == (price * multiplier)) ? 0 : round_by)
   end
 
   def pre_paid_link(booking)
