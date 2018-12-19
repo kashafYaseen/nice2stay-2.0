@@ -133,7 +133,7 @@ class Lodging < ApplicationRecord
     params[:children] = params[:children].presence || 0
     unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
       self.calculated_price = price.round(2)
-      self.dynamic_price = false
+      return self.dynamic_price = false
     end
     total_price = price_list(params.merge(flexible: false))[:rates].sum
     total_discount = discount(params)
