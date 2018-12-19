@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_100259) do
+ActiveRecord::Schema.define(version: 2018_12_19_121706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_100259) do
     t.string "image"
     t.string "seo_path"
     t.string "menu_title"
+    t.boolean "inspiration", default: false
     t.index ["country_id"], name: "index_custom_texts_on_country_id"
     t.index ["experience_id"], name: "index_custom_texts_on_experience_id"
     t.index ["region_id"], name: "index_custom_texts_on_region_id"
