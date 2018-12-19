@@ -69,7 +69,7 @@
 
       <section class="widget-tags">
         <h5 class="mt-1 mb-10"><%= t 'collection.inspiration' %> in <%= @country.name.capitalize %></h5>
-        <% @menu_custom_texts.each do |custom_text| %>
+        <% @custom_texts.inspiration.each do |custom_text| %>
           <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
         <% end %>
       </section>
@@ -78,7 +78,7 @@
 
   <div class="row">
     <div class="col-sm-6 margin-top-1x">
-      <% if @custom_texts.present? %>
+      <% if @custom_texts.popular.present? %>
         <section class="padding-top-1x pb-5">
           <h3 class="mb-30"><%= t 'collection.populair' %> in <%= @country.name.capitalize %></h3>
           <hr class="mt-3"></hr>
@@ -87,7 +87,7 @@
             <div class="gutter-sizer"></div>
             <div class="grid-sizer"></div>
 
-            <% @custom_texts.each do |custom_text| %>
+            <% @custom_texts.popular.each do |custom_text| %>
               <div class="grid-item gallery-item">
                 <%= link_to seo_url custom_text.seo_path do %>
                   <%= image_tag custom_text.image if custom_text.image.present? %>
