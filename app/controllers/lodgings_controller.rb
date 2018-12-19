@@ -7,6 +7,7 @@ class LodgingsController < ApplicationController
   def index
     @custom_text = CustomText.find_by(id: params[:custom_text])
     @lodgings = SearchLodgings.call(params, @custom_text)
+    @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
     @title = @custom_text.try(:meta_title)
@@ -16,6 +17,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings/1.json
   def show
     @lodgings = SearchSimilarLodgings.call(@lodging, params)
+    @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @reservation = @lodging.reservations.build
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)
     @lodging_children = @lodging.lodging_children.includes(:availabilities, :translations) if @lodging.as_parent?

@@ -20,6 +20,8 @@ class Lodging < ApplicationRecord
   include ImageHelper
 
   attr_accessor :flexible_search
+  attr_accessor :calculated_price
+  attr_accessor :dynamic_price
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -129,11 +131,15 @@ class Lodging < ApplicationRecord
 
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0
-    return "<div class='price-text'> From </div> <h3>€#{price.round(2)}</h3><p class='price-text'> per night</p>".html_safe unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
+    unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
+      self.calculated_price = price.round(2)
+      self.dynamic_price = false
+    end
     total_price = price_list(params.merge(flexible: false))[:rates].sum
     total_discount = discount(params)
     total_price -= total_price * (total_discount/100) if total_discount.present?
-    "<h3>€#{total_price.round(2)}</h3><p class='price-text'> for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights</p>".html_safe
+    self.calculated_price = total_price.round(2)
+    self.dynamic_price = true
   end
 
   def allow_check_in_days
