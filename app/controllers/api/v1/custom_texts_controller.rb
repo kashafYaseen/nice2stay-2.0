@@ -42,6 +42,7 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :seo_path,
         :menu_title,
         :inspiration,
+        :popular,
       )
     end
 
