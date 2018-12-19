@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="col-md-12">
     <div class="row target-section" id="home-container">
-      <div class="col-md-8 col-xs-12">
+      <div class="col-md-8 col-xs-12 margin-top-1x">
         <div class="gallery-control ">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -27,8 +27,8 @@
         <% end %>
        </div>
      
-        <h3 class="margin-top-1x card-title"><%= @lodging.h1 %></h3>
-        <h5 class="card-title text-muted margin-bottom-1x"><%= @lodging.h2 %></h5>
+        <h2 class="margin-top-1x card-title"><%= @lodging.h1 %></h2>
+        <h4 class="card-title text-muted"><%= @lodging.h2 %></h4>
         <div class="row padding-top-1x">
           <div class="col-md-3">
             <h6>
@@ -74,17 +74,8 @@
         <%= render 'shared_content', lodging: @lodging %>
       </div>
 
-      <div class="col-md-4 margin-top-1x">
+      <div class="col-md-4">
         <div class="bg-secondary sticky-top">
-          <section class="widget-tags">
-            <a class="tag col-md-4 text-center p-0" href="#home-container"><%= t 'nav.home' %></a>
-            <a class="tag col-md-3 text-center p-0" href="#location-container"><%= t 'nav.location' %></a>
-            <a class="tag col-md-4 text-center p-0" href="#reviews-container"><%= t 'nav.reviews' %></a>
-            <a class="tag col-md-4 text-center p-0" href="#description-container"><%= t 'nav.info' %></a>
-            <a class="tag col-md-3 text-center p-0" href="#gallery-container"><%= t 'nav.gallary' %></a>
-            <a class="tag col-md-4 text-center p-0" href="#like-container"><%= t 'nav.like' %></a>
-          </section>
-
           <div class="children-scroll-section"></div>
           <% if @lodging.as_standalone? %>
             <%= render 'standalone', lodging: @lodging, reservation: @reservation %>

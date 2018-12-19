@@ -7,10 +7,14 @@
        data-check-out-title="<%= t('search.check_out') %>"></div>
 
   <div class="row effect6">
+    <div class="col-md-12 padding-top-1x col-lg-12">
+      <h5><%= lodging.child_name %></h5>
+    </div>
+
     <div class="col-md-5 col-lg-5">
       <%= render_image_tag lodging, class: 'max-height-230' %>
       <br><br>
-      <h5><%= lodging.child_name %></h5>
+      
       <p class="text-xxs">
         <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
         <% if lodging.children.present? %>

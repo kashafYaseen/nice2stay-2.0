@@ -68,13 +68,8 @@
       </section>
 
       <section class="widget-tags">
-        <h5 class="mt-1 mb-10"><%= t 'collection.normal' %></h5>
-
+        <h5 class="mt-1 mb-10"><%= t 'collection.inspiration' %> in <%= @country.name.capitalize %></h5>
         <% @menu_custom_texts.each do |custom_text| %>
-          <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
-        <% end %>
-
-        <% @custom_texts.each do |custom_text| %>
           <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
         <% end %>
       </section>

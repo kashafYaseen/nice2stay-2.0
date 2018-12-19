@@ -32,7 +32,7 @@
 }
 
 .sticky-top {
-  top:9%;
+  top:7%;
 }
 
 .effect1{
@@ -1782,9 +1782,7 @@ li.media {
 }
 
 .list-icon > li {
-  position: relative;
-  margin-bottom: 6px;
-  padding-left: 22px;
+  display: inline-block;
 }
 
 .list-icon > li > i {
