@@ -224,6 +224,7 @@ class SearchLodgings
       return { price: :asc } if params[:order] == 'price_asc'
       return { price: :desc } if params[:order] == 'price_desc'
       return { created_at: :desc } if params[:order] == 'new_desc'
+      return { boost: :asc }
     end
 
     def merge_seo_filters conditions
