@@ -23,7 +23,8 @@ nl:
   collection:
     populair: Populaire collecties
     normal: Onze collecties
-    holiday: Unieke vakantie  
+    holiday: Unieke vakantie 
+    inspiration: Inspiratie collecties
 
   profile: 
     name: Uw gegevens
@@ -145,7 +146,8 @@ nl:
     home: Home
     gallary: Foto's 
     location: Locatie
-    reviews: Beoordelingen
+    reviews: Beoordelingen & Rating
+    amentities: Faciliteiten
     info: Uitgebreide informatie
     like: Ook leuk voor u 
     back: Terug

@@ -31,7 +31,7 @@
 
 <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
   <div class="col-md-12">
-    <h4 class="card-title">Location</h4>
+    <h3 class="card-title"><%= t 'nav.location' %></h3>
 
     <hr class="margin-bottom-1x">
     <%= lodging.location_description.try(:html_safe) %>
@@ -43,7 +43,7 @@
 
 <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
   <div class="col-md-12 mb-30">
-    <h4 class="card-title">Photo gallary</h4>
+    <h3 class="card-title"><%= t 'nav.gallary' %></h3>
     <hr class="margin-bottom-1x">
 
     <div class="gallery-wrapper">
@@ -63,12 +63,13 @@
   </div>
 </div>
 
-<div class="leads_homepage row margin-top-3x padding-bottom-1x pt-5 mb-1">
-  <div class="col-md-11 ml-2 mb-30 target-section" id="reviews-container">
+
+<div class="margin-top-2x row leads_homepage">
+  <div class="col-md-11 mb-30 target-section" id="reviews-container">
     <% if @reviews.present? %>
       <div class="row">
         <div class="col-md-12">
-          <h4 class="card-title">Rating & Reviews</h4>
+          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
         </div>
 
         <div class="card-body col-md-12">
@@ -89,7 +90,7 @@
     <% else %>
       <div class="row">
         <div class="card-body col-md-12">
-          <h4 class="card-title">Rating & Reviews</h4>
+          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
           <p>Accommodation does not have any review yet.</p>
         </div>
       </div>
@@ -97,17 +98,24 @@
   </div>
 </div>
 
-<div class="col-md-4 col-xs-6 margin-top-1x margin-bottom-1x">
+
+
+<div class="col-md-12 row col-xs-6 margin-top-2x margin-bottom-1x">
+  <h3 class="card-title"><%= t 'nav.amentities' %></h3>
+  <hr class="margin-bottom-1x">
   <ul class="list-icon">
-    <% @lodging.amenities do |amenity| %>
-      <%= amenity.name %>
-      <% end %>
+    <% @lodging.amenities.each do |amenity| %>
+     <li> - <%= amenity.name %></li>
+    <% end %>
    </ul>
 </div>
 
+
+
+
 <div class="bg-white row padding-bottom-1x pt-1 mb-1">
   <div class="col-md-12 target-section" id="description-container">
-    <h4 class="card-title margin-bottom-1x"><%= @lodging.h3 %></h4>
+    <h3 class="card-title"><%= @lodging.h3 %></h3>
     <hr class="margin-bottom-1x">
 
     <div id="lodging-description">
@@ -118,7 +126,8 @@
 
 <div class="padding-bottom-1x pt-2 mb-1 row">
   <div class="col-md-12 padding-top-1x target-section" id="like-container">
-    <h4 class="card-title"><%= t 'nav.also_like' %></h4>
+    <h3 class="card-title"><%= t 'nav.also_like' %></h3>
+    <hr class="margin-bottom-1x">
 
     <div class="row">
       <%= render @lodgings %>
