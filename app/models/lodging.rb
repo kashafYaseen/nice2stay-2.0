@@ -48,7 +48,7 @@ class Lodging < ApplicationRecord
   scope :home_page, -> { where(home_page: true) }
   scope :region_page, -> { where(region_page: true) }
   scope :country_page, -> { where(country_page: true) }
-  scope :search_import, -> { includes(:amenities, :experiences, :rules) }
+  scope :search_import, -> { includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
 
   translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -88,7 +88,7 @@ class Lodging < ApplicationRecord
     street_changed? || city_changed? || zip_changed? || state_changed?
   end
 
-  searchkick locations: [:location], text_middle: [:extended_name, :h1], merge_mappings: true, mappings: {
+  searchkick batch_size: 200, locations: [:location], text_middle: [:extended_name, :h1], merge_mappings: true, mappings: {
     lodging: {
       properties: {
         rules: { type: :nested }
