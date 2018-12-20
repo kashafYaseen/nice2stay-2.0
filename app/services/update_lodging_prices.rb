@@ -52,6 +52,10 @@ class UpdateLodgingPrices
       from = from.to_date.change(year: 2018) if from.to_date.year == 20118
       to = to.to_date.change(year: 2018) if to.to_date.year == 20118
 
+      from = from.to_date.change(year: 2019) if from.to_date.year == 20119
+      to = to.to_date.change(year: 2019) if to.to_date.year == 20119
+
+
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
       if minimal_stay.map(&:to_i).min == 999
