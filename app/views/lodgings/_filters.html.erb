@@ -112,7 +112,7 @@
             <p class="widget-title"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>
               <div class="custom-control custom-checkbox">
-                <%= check_box_tag "experiences_in[]", experience.name, is_checked?(experience.name, :experiences_in), id: "experience_#{experience.id}", class: "custom-control-input experiences" %>
+                <%= check_box_tag "experiences_in[]", experience.slug, is_checked?(experience.slug, :experiences_in), id: "experience_#{experience.id}", class: "custom-control-input experiences" %>
 
                 <label class="custom-control-label" for="experience_<%= experience.id %>">
                   <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.id, 'experiences') %>)</span>
