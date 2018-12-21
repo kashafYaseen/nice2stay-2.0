@@ -21,7 +21,7 @@
     }, {
       name: 'collections'
       displayKey: 'name'
-      limit: 10
+      limit: 20
       source: source(url, 'campaigns')
       templates:
         header: '<p class="category-name text-sm darken">Collections</p>'
