@@ -58,15 +58,13 @@
               <h5><%= t 'profile_account.account' %></h5>
               <p><%= t 'profile_account.customers' %><p>
               <div class="row">
-              <div class="col-md-4">
-                <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
-              </div>
-              <div class="col-md-4">
-                <input type="button" name="cart-login-form" value="Activeer uw account" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
-              </div>
-              <div class="col-md-4">
-                <input type="button" name="cart-login-form" value="Reset wachtwoord" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
-              </div>
+                <div class="col-md-5 mx-auto">
+                  <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+                </div>
+
+                <div class="col-md-5 mx-auto">
+                  <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
+                </div>
               </div>
             <% end %>
           </div>
