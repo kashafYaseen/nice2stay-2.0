@@ -7,5 +7,6 @@ class DashboardController < ApplicationController
 
   def index
     @title = 'Dashboard'
+    current_user.validate
   end
 end
