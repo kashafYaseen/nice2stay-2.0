@@ -170,7 +170,7 @@
               <span class="sub-menu-toggle"></span></span>
 
               <ul class="slideable-submenu">
-                <% @countries.each do |country| %>
+                <% @countries_enabled.each do |country| %>
                   <li class="has-children">
                     <span>
                       <%= link_to country_path(country, locale: locale) do %>

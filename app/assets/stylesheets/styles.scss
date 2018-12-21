@@ -6426,7 +6426,7 @@ video {
   text-decoration: none;
   vertical-align: middle;
   z-index: 10;
-  max-width: 80%;
+  max-width: 75%;
 }
 
 .site-logo > img {
@@ -6834,6 +6834,11 @@ video {
 }
 
 @media (max-width: 576px) {
+  .site-branding {
+    max-width: 150px;
+    padding-top: 20px;
+  }
+
   .toolbar {
     width: 200px;
   }
