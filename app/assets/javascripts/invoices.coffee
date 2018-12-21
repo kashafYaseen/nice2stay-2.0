@@ -79,14 +79,14 @@
         $(".reservation-form-errors-#{lodging_id}").html('');
         $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
-      if data.cleaning_costs
-        total_cleaning_cost = 0
-        $.each data.cleaning_costs, (i, cost) ->
-          if cost.fixed_price
-            total_cleaning_cost += cost.fixed_price
-            total += cost.fixed_price
-            result += cleaning_cost_html(cost, index)
-        $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
+        if data.cleaning_costs
+          total_cleaning_cost = 0
+          $.each data.cleaning_costs, (i, cost) ->
+            if cost.fixed_price
+              total_cleaning_cost += cost.fixed_price
+              total += cost.fixed_price
+              result += cleaning_cost_html(cost, index)
+          $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
         if data.discount
           discount = total * data.discount/100
