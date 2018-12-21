@@ -88,7 +88,7 @@ class Lodging < ApplicationRecord
     street_changed? || city_changed? || zip_changed? || state_changed?
   end
 
-  searchkick batch_size: 200, locations: [:location], text_middle: [:extended_name, :h1], merge_mappings: true, mappings: {
+  searchkick batch_size: 200, locations: [:location], text_middle: [:name], merge_mappings: true, mappings: {
     lodging: {
       properties: {
         rules: { type: :nested }

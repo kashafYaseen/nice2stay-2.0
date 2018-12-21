@@ -58,7 +58,6 @@
       <div class='row'>
         <div class='col-12'>
           #{remove_strip_tags item.name} </br>
-          #{if item.type == 'lodging' then "<span class='font-italic text-xxs'>#{remove_strip_tags item.title}</span>" else ""}
         </div>
       </div
     </div>"

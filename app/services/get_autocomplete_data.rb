@@ -23,20 +23,20 @@ class GetAutocompleteData
   private
     def lodgings
       Lodging.search(params[:query], {
-        fields: [:extended_name, :h1],
+        fields: [:name],
         match: :text_middle,
         limit: 6,
         load: false,
         misspellings: {below: 5},
         where: { presentation: ['as_parent', 'as_standalone'] }
-      }).map{ |lodging| { name: lodging.extended_name, title: lodging.h1, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
+      }).map{ |lodging| { name: lodging.name, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
     end
 
     def campaigns
       Campaign.search(params[:query], {
         fields: ["title_#{locale}"],
         match: :text_middle,
-        limit: 5,
+        limit: 10,
         load: false,
         misspellings: {below: 5},
         where: { collection: true, popular_homepage: true }
