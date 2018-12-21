@@ -18,7 +18,7 @@ class ManageMolliePayment
       return payment if payment.status == 'open'
     end
 
-    payment = create_payment((booking.pre_payment || booking.pre_payment_amount), "Pre-Payment")
+    payment = create_payment((booking.pre_payment || booking.pre_payment_amount), "#{booking.identifier} - Pre Payment")
     booking.update_column :pre_payment_mollie_id, payment.id
     payment
   end
@@ -31,7 +31,7 @@ class ManageMolliePayment
       return payment if payment.status == 'open'
     end
 
-    payment = create_payment((booking.final_payment || booking.final_payment_amount), "Final-Payment")
+    payment = create_payment((booking.final_payment || booking.final_payment_amount), "#{booking.identifier} - Final Payment")
     booking.update_column :final_payment_mollie_id, payment.id
     payment
   end
