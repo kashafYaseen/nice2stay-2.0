@@ -75,14 +75,11 @@
       </div>
 
       <div class="col-md-4">
-        <div class="bg-secondary sticky-top">
-          <div class="children-scroll-section"></div>
-          <% if @lodging.as_standalone? %>
-            <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-          <% else %>
-            <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
-          <% end %>
-        </div>
+        <% if @lodging.as_standalone? %>
+          <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+        <% else %>
+          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+        <% end %>
       </div>
     </div>
   </div>

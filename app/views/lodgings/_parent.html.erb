@@ -1,16 +1,18 @@
-<div class="reservation-parent-form-1">
-  <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
-</div>
+<div class="sticky-top bg-secondary">
+  <div class="reservation-parent-form-1">
+    <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
+  </div>
 
-<div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
-  <div class="card bg-white p-1">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-12">
-          <label class="sm-check-in-out text-center text-dark w-100"></label>
-        </div>
-        <div class="col-md-12">
-          <input type="button" name="view-more-info" value="Check Availability" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#parent-form-modal">
+  <div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
+    <div class="card bg-white p-1">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="sm-check-in-out text-center text-dark w-100"></label>
+          </div>
+          <div class="col-md-12">
+            <input type="button" name="view-more-info" value="Check Availability" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#parent-form-modal">
+          </div>
         </div>
       </div>
     </div>

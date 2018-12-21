@@ -5,7 +5,7 @@
     $('.btn-calculate-bill').click (e) ->
       e.preventDefault()
       Invoice.calculate($(this).data('lodging-ids'))
-      if !$('#standalone').val()
+      if $('.children-scroll-section').length > 0
         $('.children-scroll-section').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
         $('#parent-form-modal').modal('hide')
 
