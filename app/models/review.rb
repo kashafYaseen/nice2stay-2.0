@@ -7,6 +7,8 @@ class Review < ApplicationRecord
 
   translates :title, :suggetion, :description
 
+  attr_accessor :skip_data_posting
+
   scope :desc, -> { joins(:reservation).order('reservations.check_in DESC') }
   scope :homepage, -> { limit(50).desc }
   scope :rating_sum, -> (type) { uniq.pluck(type).sum.round(2) }
@@ -35,6 +37,6 @@ class Review < ApplicationRecord
     end
 
     def send_review_details
-      SendReviewDetailsJob.perform_later self.id
+      SendReviewDetailsJob.perform_later(self.id) unless self.skip_data_posting
     end
 end

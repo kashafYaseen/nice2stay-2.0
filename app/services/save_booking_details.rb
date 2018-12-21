@@ -13,6 +13,7 @@ class SaveBookingDetails
 
   def call
     result = save_booking
+    update_review_translations if result
     [booking, result]
   end
 
@@ -39,9 +40,16 @@ class SaveBookingDetails
       booking.save(validate: false)
     end
 
+    def update_review_translations
+      booking.reservations.each_with_index do |reservation, index|
+        next unless params[:booking][:reservations_attributes][index][:review_attributes].present?
+        save_translations(params[:booking][:reservations_attributes][index][:review_attributes][:translations], reservation.review)
+      end
+    end
+
     def save_translations(review_params, review)
-      return unless review_params[:translations].present?
-      review_params[:translations].each do |translation|
+      return unless review_params.present?
+      review_params.each do |translation|
         _translation = review.translations.find_or_initialize_by(locale: translation[:locale])
         _translation.attributes = translation_params(translation)
         _translation.save
@@ -102,6 +110,7 @@ class SaveBookingDetails
             :updated_at,
             { images: [] },
             { thumbnails: [] },
+            :skip_data_posting,
           ]
         ]
       )
