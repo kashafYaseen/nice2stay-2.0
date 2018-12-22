@@ -4,4 +4,4 @@
   $('#cart-<%= @reservation.lodging_id %>').addClass('disabled');
 <% end %>
 
-$('.reservation-form-errors-<%= @reservation.lodging_id %>').html("<%= j render 'errors', resource: @reservation %>");
+$('.reservation-form-errors-<%= @reservation.lodging_id %>').html("<%= j render 'errors', resource: @reservation, classes: nil %>");
