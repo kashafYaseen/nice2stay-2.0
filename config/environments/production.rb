@@ -86,7 +86,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  config.action_mailer.default_url_options = { host: "http://www.bestsecretplaces.com" }
+  config.action_mailer.default_url_options = { host: "http://www.nice2stay.com" }
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
@@ -108,12 +108,9 @@ Rails.application.configure do
     email: {
       email_prefix: "Error",
       sender_address: %{"notifier" <notifier@nice2stay.com>},
-      exception_recipients: %w{remco@nice2stay.com ahmad@thedevden.co sikandar.tariq@thedevden.co}
+      exception_recipients: %w{ahmad@thedevden.co sikandar.tariq@thedevden.co}
     }
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  # Temporary: To avoid emailing customers or partners in staging
-  Mail.register_interceptor RecipientInterceptor.new("remco@nice2stay.com", subject_prefix: '[TESTING]')
 end
