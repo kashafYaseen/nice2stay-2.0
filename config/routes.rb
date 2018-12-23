@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   draw :seo
   draw :sidekiq
 
+  get '404', to: 'pages#page_not_found'
+
   localized do
     devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
     devise_for :admin_users, ActiveAdmin::Devise.config
