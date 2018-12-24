@@ -6,7 +6,7 @@
   </div>
 
   <div class="col-md-2 homepage col-sm-8 search-filters pr-0">
-    <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences %>
+    <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled %>
   </div>
 
   <div class="col-lg-7 col-md-8">
@@ -33,16 +33,8 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-md-4 fixed-map">
-    <div class="sidebar-toggle-map position-right">
-      <i class="material-icons place"></i>
-    </div>
-
-    <aside class="sidebar sidebar-offcanvas-map position-right">
-      <span class="sidebar-close sidebar-close-map"><i class="material-icons icon_close"></i></span>
-
-      <%= tag.div nil, id: 'map' %>
-    </aside>
+  <div class="col-lg-3 col-sm-4 fixed-map d-none d-sm-block">
+    <%= tag.div nil, id: 'map' %>
   </div>
 </div>
 

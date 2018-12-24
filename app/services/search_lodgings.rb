@@ -41,6 +41,8 @@ class SearchLodgings
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
 
+      conditions << { terms: { country: params[:countries_in] } } if params[:countries_in].present?
+
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { terms: { presentation: ['as_child', 'as_standalone'] } }
 

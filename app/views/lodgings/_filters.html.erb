@@ -150,6 +150,21 @@
 
              <a href="#" class="show-all-filters text-decoration-none" data-target=".amenities-list" data-name="amenities">show all amenities</a><i class="amenities-list-icon material-icons text-primary">keyboard_arrow_down</i>
           </section>
+
+          <section class="widget d-block d-sm-none">
+            <p class="widget-title"><%= t 'nav.landen' %></p>
+            <div class="countries-list">
+              <% countries.each do |country| %>
+                <div class="custom-control custom-checkbox">
+                  <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), id: "country_#{country.id}", class: "custom-control-input countries" %>
+
+                  <label class="custom-control-label" for="country_<%= country.id %>">
+                    <%= country.name %>
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </section>
         </div>
       </div>
     </aside>

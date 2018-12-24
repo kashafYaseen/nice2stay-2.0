@@ -7,9 +7,8 @@
     OwlCarousel.init()
     initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
-    SidebarCanvas.init('.sidebar-toggle-map', '.sidebar-offcanvas-map', '.sidebar-close-map')
 
-    $('.search-filters .lodging_type, .search-filters .amenities, .search-filters .experiences').change ->
+    $('.search-filters .lodging_type, .search-filters .amenities, .search-filters .experiences, .countries').change ->
       $('#loader').show();
       Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
