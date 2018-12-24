@@ -110,23 +110,6 @@ jQuery(document).on('turbolinks:load', function() {
     return false;
   });
 
-
-  // Off-Canvas Sidebar
-  //-----------------------------------------------------------
-  function offcanvasSidebar(triggerOpen, target, triggerClose) {
-    $(triggerOpen).on('click', function() {
-      $(this).addClass('sidebar-open');
-      $(target).addClass('open');
-    });
-    $(triggerClose).on('click', function() {
-      $(triggerOpen).removeClass('sidebar-open');
-      $(target).removeClass('open');
-    });
-  }
-  offcanvasSidebar('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close');
-  offcanvasSidebar('.sidebar-toggle-map', '.sidebar-offcanvas-map', '.sidebar-close-map');
-
-
   // Animated Scroll to Top Button
   //-----------------------------------------------------------
   var $scrollTop = $('.scroll-to-top-btn');
