@@ -5439,14 +5439,14 @@ video {
 .sidebar {
   width: 100%;
 }
-
+.sidebar-toggle-map,
 .sidebar-toggle,
 .sidebar-close {
   display: none;
 }
 
 @media (max-width: 768px) {
-  .sidebar-offcanvas {
+  .sidebar-offcanvas, .sidebar-offcanvas-map {
     position: fixed;
     top: 0;
     width: 320px;
@@ -5458,21 +5458,24 @@ video {
     overflow-y: auto;
     -ms-overflow-style: none;
   }
-  .sidebar-offcanvas.position-right {
+  .sidebar-offcanvas-map {
+    padding: 42px 1px 0px;
+  }
+  .sidebar-offcanvas.position-right, .sidebar-offcanvas-map {
     right: -320px;
     transition: right 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s, box-shadow 0.3s 0.3s;
   }
-  .sidebar-offcanvas.position-left {
+  .sidebar-offcanvas.position-left, .sidebar-offcanvas-map.position-left {
     left: -320px;
     transition: left 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s, box-shadow 0.3s 0.3s;
   }
-  .sidebar-offcanvas.open {
+  .sidebar-offcanvas.open, .sidebar-offcanvas-map.open {
     box-shadow: 0 0 50px 3px rgba(0, 0, 0, 0.15);
   }
-  .sidebar-offcanvas.open.position-right {
+  .sidebar-offcanvas.open.position-right, .sidebar-offcanvas-map.open.position-right {
     right: 0;
   }
-  .sidebar-offcanvas.open.position-left {
+  .sidebar-offcanvas.open.position-left, .sidebar-offcanvas-map.open.position-left {
     left: 0;
   }
   .sidebar-close {
@@ -5487,7 +5490,10 @@ video {
   .sidebar-offcanvas::-webkit-scrollbar {
     display: none;
   }
-  .sidebar-toggle {
+  .sidebar-offcanvas-map::-webkit-scrollbar {
+    display: none;
+  }
+  .sidebar-toggle, .sidebar-toggle-map, {
     display: block;
     position: fixed;
     top: 50%;
@@ -5503,18 +5509,18 @@ video {
     cursor: pointer;
     z-index: 9900;
   }
-  .sidebar-toggle.position-right {
+  .sidebar-toggle.position-right, .sidebar-toggle-map.position-right {
     right: 0;
     transition: right .3s ease-in-out;
   }
-  .sidebar-toggle.position-right.sidebar-open {
+  .sidebar-toggle.position-right.sidebar-open, .sidebar-toggle-map.position-right.sidebar-open {
     right: -48px;
   }
-  .sidebar-toggle.position-left {
+  .sidebar-toggle.position-left, .sidebar-toggle-map.position-left {
     left: 0;
     transition: left .3s ease-in-out;
   }
-  .sidebar-toggle.position-left.sidebar-open {
+  .sidebar-toggle.position-left.sidebar-open, .sidebar-toggle-map.position-left.sidebar-open {
     left: -48px;
   }
 }

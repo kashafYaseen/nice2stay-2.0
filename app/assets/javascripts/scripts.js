@@ -124,6 +124,7 @@ jQuery(document).on('turbolinks:load', function() {
     });
   }
   offcanvasSidebar('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close');
+  offcanvasSidebar('.sidebar-toggle-map', '.sidebar-offcanvas-map', '.sidebar-close-map');
 
 
   // Animated Scroll to Top Button
