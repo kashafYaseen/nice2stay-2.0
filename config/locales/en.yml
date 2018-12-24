@@ -33,7 +33,7 @@ en:
   helpers:
     page_entries_info:
       more_pages:
-        display_entries: "<b>%{last}</b> of <b>%{total}</b>"
+        display_entries: "<b>%{first}</b>&mdash;<b>%{last}</b> of <b>%{total}</b>"
   enumerize:
     accommodation:
       type:

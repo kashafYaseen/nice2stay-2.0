@@ -20,6 +20,16 @@
           <%= render 'lodgings_list', lodgings: @lodgings %>
         </div>
       </div>
+
+      <div class="col-lg-12 mb-5">
+        <div class="pagination-info text-right">
+          <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+        </div>
+
+        <div class="pagination">
+          <%= paginate @lodgings, remote: true, window: 3 %>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -28,15 +38,10 @@
   </div>
 </div>
 
-<div class="pagination d-none">
-  <%= paginate @lodgings, remote: true %>
-</div>
-
 <%= content_for :js_init do %>
   Lodging.init();
   Map.init();
   $('#loader').hide();
-  InfiniteScroll.init('<%= lodgings_path(locale: locale) %>');
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>
