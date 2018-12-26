@@ -50,7 +50,8 @@
 
     <div class="col-md-12">
       <%= link_to 'Check Availability', '', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
-      <p class="extra_small">Geen reserveringskosten of andere toeslagen bij nice2stay</p>
+      <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
+      <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
     </div>
 
     <div class="col-md-12">

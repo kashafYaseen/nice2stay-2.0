@@ -30,6 +30,8 @@ nl:
     name: Uw gegevens
     messages: Belangrijke berichten 
 
+  prices_not_confirmed: De getoonde prijs van deze accommodatie is ter indicatie, deze kunnen nog wijzigen
+
   profile_account: 
      side_nav_home: Dashboard
      side_nav_bookings: Boekingen & opties

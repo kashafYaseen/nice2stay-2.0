@@ -70,10 +70,10 @@
       </div>
     </div>
 
-    <%= render 'shared/alert', title: 'Important:', type: 'info', description: "Prices of #{Date.current.year} are not confirmed, it may change." unless lodging.confirmed_price %>
-
     <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
   <% end %>
+  <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
+
   <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
 
   <div class="row">

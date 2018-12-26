@@ -73,6 +73,8 @@ en:
     holiday: Unique holiday
     inspiration: Inspiring collections 
 
+  prices_not_confirmed: The rate shown for this accommodation is an indication and might change
+
   carts:
     overview: Your bookings and options requests
     gasten: Your personal data
