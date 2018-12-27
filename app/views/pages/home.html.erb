@@ -169,13 +169,18 @@
         <%= render 'reviews/average_rating', reviews: @all_reviews %>
       </div>
     <% end %>
+  </div>
 
+  <div class="row">
     <div class="col-md-6 padding-bottom-2x margin-bottom-2x">
-      <h3 class="mb-3"><%= t('lead.title') %></h3>
-
       <section class="col-md-12 homepage padding-top-2x">
         <%= render 'leads/form', lead: @lead, countries: @countries %>
       </section>
+    </div>
+
+    <div class="col-md-6">
+      <h3 class="mb-3"><%= t('lead.title') %></h3>
+      <p><%= t('lead.description') %></p>
     </div>
   </div>
 </div>
