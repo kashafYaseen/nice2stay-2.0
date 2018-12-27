@@ -42,6 +42,7 @@
   Lodging.init();
   Map.init();
   $('#loader').hide();
+  InfiniteScroll.pagination('<%= lodgings_path(locale: locale) %>');
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>

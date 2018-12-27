@@ -10,4 +10,12 @@
           $.getScript("#{base_url}?#{url.split('?')[1]}")
           $('#loader').show();
 
+  InfiniteScroll.pagination = (base_url) ->
+    $('.pagination a').each ->
+      url = $(this).attr('href')
+      if url
+        $(this).attr('href', "#{base_url}?#{url.split('?')[1]}")
+    $('.pagination a').click ->
+      $('#loader').show();
+
 ).call this

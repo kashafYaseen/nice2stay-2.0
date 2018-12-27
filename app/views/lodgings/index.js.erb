@@ -1,12 +1,17 @@
 $('.lodgings-list').html("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
 $('.pagination').html('<%= j paginate @lodgings, window: 3, remote: true %>');
 $('.pagination-info').html('<%= j page_entries_info(@lodgings, entry_name: "Lodging" ) %>');
-Map.add_markers();
-Map.highlight_lodgings();
-Url.update("<%= lodgings_path(locale: locale, page: params[:page]) %>");
-$('#loader').hide();
 $('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");
+$('#loader').hide();
 $('.search-filters').html("<%= j render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled %>");
 $('.seo-data').html("<%= j render 'seo_data', custom_text: @custom_text %>");
-Lodging.init();
 $('html').velocity('scroll', { offset: 0, duration: 1200, easing: 'easeOutExpo', mobileHA: false });
+Lodging.init();
+Url.update("<%= lodgings_path(locale: locale, page: params[:page]) %>");
+
+<% if params[:country].present? || params[:region].present? %>
+  Map.add_markers(false);
+<% else %>
+  Map.add_markers();
+<% end %>
+Map.highlight_lodgings();
