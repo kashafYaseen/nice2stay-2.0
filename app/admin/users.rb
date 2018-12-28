@@ -63,4 +63,36 @@ ActiveAdmin.register User do
 
     active_admin_comments
   end
+
+  action_item :send_invitation, only: [:show, :edit] do
+    link_to 'Edit Password', edit_password_admin_user_path
+  end
+
+  member_action :edit_password do
+  end
+
+  member_action :update_password, method: :patch do
+    if resource.update(password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
+      redirect_to admin_user_path(resource), notice: 'Password was updated successfully'
+    else
+      render :edit_password
+    end
+  end
+
+  form do |f|
+    inputs 'Rule' do
+      f.input :first_name
+      f.input :last_name
+      f.input :email
+      f.input :phone
+      f.input :city
+      f.input :country
+      f.input :zipcode
+      f.input :confirmed_at
+    end
+
+    f.actions do
+      f.action :submit
+    end
+  end
 end
