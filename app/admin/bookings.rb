@@ -5,6 +5,14 @@ ActiveAdmin.register Booking do
     end
   end
 
+  scope :by_nice2stay, default: true do |booking|
+    booking.by_nice2stay
+  end
+
+  scope :by_partners do |booking|
+    booking.by_partner
+  end
+
   index do
     selectable_column
     id_column
