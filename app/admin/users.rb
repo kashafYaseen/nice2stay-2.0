@@ -80,6 +80,7 @@ ActiveAdmin.register User do
   end
 
   form do |f|
+    f.object.skip_validations = true
     inputs 'Rule' do
       f.input :first_name
       f.input :last_name
@@ -89,6 +90,7 @@ ActiveAdmin.register User do
       f.input :country
       f.input :zipcode
       f.input :confirmed_at
+      f.input :skip_validations, as: :hidden
     end
 
     f.actions do
