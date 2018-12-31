@@ -180,6 +180,8 @@ en:
     informatie: Important information
     included_header: Included rent
     informatie_header: Information
+    extra_service: Additional services
+    payment_conditions: Cancellation- & payment conditions
 
   footer:
     support: Direct contact? 

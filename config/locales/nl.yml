@@ -179,10 +179,13 @@ nl:
     nice2stay: Geen reserveringskosten bij Nice2stay
 
   information:
-    included: + Inclusief ?
-    informatie: + Belangrijke informatie
+    included: Inclusief ?
+    informatie: Belangrijke informatie
     included_header: Inclusief
     informatie_header: Informatie
+    extra_service: Optionele services 
+    payment_conditions:  Annulerings- & betalingsvoorwaarden
+
 
   search:
     adults: Volwassenen (>12j)
