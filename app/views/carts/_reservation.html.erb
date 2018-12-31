@@ -13,7 +13,7 @@
   <td class="text-center text-sm"><%= render_rounded_price reservation.rent %></td>
   <td class="text-center text-sm"><%= render_rounded_price reservation.cleaning_cost %></td>
   <td class="text-center text-sm"><%= render_rounded_price reservation.rent.to_f + reservation.cleaning_cost.to_f %></td>
-  <td class="text-center text-sm"><%= reservation.booking_status %></td>
+  <td class="text-center text-sm"><%= t("bookings.#{reservation.booking_status}") %></td>
 
   <td class="text-center">
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart', remote: true do %>

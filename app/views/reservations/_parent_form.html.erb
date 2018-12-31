@@ -54,6 +54,28 @@
       <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
     </div>
 
+    <div class="col-md-12 bg-secondary">
+      <button class="btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
+        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
+        data-html="true" data-content="<%= lodging.including_text %>" data-original-title="<%= t 'information.included_header' %>"><%= t 'information.included' %>
+      </button>
+
+      <button class="text-xxs btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
+        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
+        data-html="true" data-content="<%= lodging.particularities_text %>" data-original-title="<%= t 'information.informatie_header' %>"><%= t 'information.informatie' %>
+      </button>
+
+      <button class="btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
+        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
+        data-html="true" data-content="<%= lodging.options_text %>" data-original-title="<%= t 'information.informatie_header' %>"><%= t 'information.extra_service' %>
+      </button>
+
+      <button class="text-xxs btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
+        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
+        data-html="true" data-content="<%= lodging.payment_terms_text %>" data-original-title="<%= t 'information.informatie_header' %>"><%= t 'information.payment_conditions' %>
+      </button>
+    </div>
+
     <div class="col-md-12">
       <%= link_to _back_url, class: 'btn btn-outline-secondary w-100' do %>
         <i class="material-icons arrow_back"></i>&nbsp; GO BACK
