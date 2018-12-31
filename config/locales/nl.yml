@@ -750,3 +750,15 @@ nl:
   deposit_text: "Waarborgsom"
   to_email_text: "tot"
   period_email_text: "Periode"
+
+  bookings:
+    prebooking: Reserverings aanvraag
+    booked: Gereserveerd
+    customer_data_requested: Klant gegevens nodig
+    confirmation_sent: Bevestiging verstuurd
+    pre_paid: Aanbetaling
+    fully_paid: Volledig betaling
+    route_sent: Route verstuurd
+    arrival_email_sent: Aankomst email verstuurd
+    option: Optie aanvraag
+    request_price: Prijs verzoek

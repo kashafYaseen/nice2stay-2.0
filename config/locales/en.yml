@@ -564,3 +564,15 @@ of the accommodation."
   deposit_text: "Security Deposit"
   to_email_text: "to"
   period_email_text: "Period"
+
+  bookings:
+    prebooking: Bookings request
+    booked: Booked
+    customer_data_requested: Customer details requested
+    confirmation_sent: Confirmation send
+    pre_paid: Deposit payed
+    fully_paid: Full rent payed
+    route_sent: Rout send
+    arrival_email_sent: Arrival email send
+    option: Option request
+    request_price: Price request
