@@ -185,6 +185,9 @@
   </div>
 </div>
 
+<%= render 'devise/sessions/login_modal' %>
+<%= render 'devise/passwords/reset_modal' %>
+
 <%= content_for :js_init do %>
   initDatePicker();
   GuestDropdown.init();
