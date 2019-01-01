@@ -22,6 +22,14 @@
       </div>
 
       <div class="form-group row">
+        <%= user.label :phone, class: 'col-2 col-form-label text-muted' %>
+
+        <div class="col-10">
+          <%= user.text_field :phone, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group row">
         <%= user.label :email, class: 'col-2 col-form-label text-muted' %>
 
         <div class="col-10">
