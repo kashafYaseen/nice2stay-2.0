@@ -10,6 +10,7 @@ json.discount      reservation.discount
 json.total_price   reservation.total_price
 json.created_at    reservation.created_at
 json.updated_at    reservation.updated_at
+json.crm_booking_id reservation.crm_booking_id
 
 json.review do
   json.partial! 'api/v1/reviews/review', review: reservation.review if reservation.review.present?

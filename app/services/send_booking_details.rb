@@ -32,11 +32,12 @@ class SendBookingDetails
           customer: customer(booking.user),
           booking_accommodations_attributes: booking_accommodations,
           by_houseowner: false,
-          created_by: 'customer',
+          created_by: booking.created_by,
           uid: booking.uid,
           created_at: booking.created_at,
           fe_identifier: booking.identifier,
           skip_data_posting: true,
+          fe_id: booking.id,
         }
       }
     end
@@ -83,6 +84,11 @@ class SendBookingDetails
 
     def update_reservation_ids(response)
       crm_booking = JSON.parse response.body
-      booking.reservations.order(:id).each_with_index { |r, i| r.update_column :crm_booking_id, crm_booking['booking_accommodation'][i]['id'] }
+      booking.update_column :crm_id, crm_booking['id']
+      crm_booking['booking_accommodation'].each do |booking_accommodation|
+        reservation = booking.reservations.find_by(id: booking_accommodation['front_end_id'])
+        next unless reservation.present?
+        reservation.update_column :crm_booking_id, booking_accommodation['id']
+      end
     end
 end

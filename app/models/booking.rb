@@ -28,6 +28,12 @@ class Booking < ApplicationRecord
     request_price: 9,
   }
 
+  enum created_by: {
+    customer: 0,
+    houseowner: 1,
+    nice2stay: 2,
+  }
+
   attr_accessor :skip_data_posting
 
   def identifier
