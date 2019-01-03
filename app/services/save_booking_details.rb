@@ -9,7 +9,7 @@ class SaveBookingDetails
   def initialize(params)
     @params = params
     bookings = Booking.where(uid: params[:booking][:uid])
-    bookings.destroy_all if bookings.count >= 1
+    bookings.destroy_all if bookings.count > 1
     @booking = Booking.find_or_initialize_by(crm_id: params[:booking][:id])
   end
 
