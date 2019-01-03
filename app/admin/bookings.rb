@@ -42,6 +42,30 @@ ActiveAdmin.register Booking do
       row :final_paid_at
       row :created_at
       row :updated_at
+
+      row :customer_name do |booking|
+        booking.user_full_name
+      end
+
+      row :customer_email do |booking|
+        booking.user_email
+      end
+
+      row :customer_phone do |booking|
+        booking.user_phone
+      end
+
+      row :customer_city do |booking|
+        booking.user_city
+      end
+
+      row :customer_zipcode do |booking|
+        booking.user_zipcode
+      end
+
+      row :customer_country do |booking|
+        booking.user_country_name
+      end
     end
 
     panel "Reservations" do
