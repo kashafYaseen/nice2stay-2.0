@@ -15,6 +15,8 @@ class Booking < ApplicationRecord
 
   after_update :send_details
 
+  delegate :full_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
+
   enum booking_status: {
     prebooking: 0,
     booked: 1,
