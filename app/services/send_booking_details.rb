@@ -72,7 +72,11 @@ class SendBookingDetails
       {
         email: user.email,
         name: user.first_name,
-        surname: user.last_name
+        surname: user.last_name,
+        address: user.address,
+        city: user.city,
+        country_slug: user.country_slug,
+        phone: user.phone,
       }
     end
 
