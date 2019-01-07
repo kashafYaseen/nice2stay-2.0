@@ -1,2 +1,3 @@
 <% flash.now[:alert] = I18n.t("devise.sessions.invalid") %>
+$('#login-form-modal').modal('show');
 $('#modal-flash-messages').html('<%= j render "shared/notices" %>');

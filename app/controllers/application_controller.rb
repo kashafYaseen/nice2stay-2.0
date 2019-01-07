@@ -16,12 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_wishlists
-    @wishlists = Wishlist.where(id: cookies[:wishlists].split(',')).includes(:lodging) if cookies[:wishlists].present?
-    if current_user.present?
-      @wishlists.update_all(user_id: current_user.id) if cookies[:wishlists].present?
-      @wishlists = current_user.wishlists_active.includes(:lodging)
-      cookies.delete(:wishlists)
-    end
+    @wishlists = current_user.wishlists_active.includes(:lodging) if current_user.present?
   end
 
   def set_locale
