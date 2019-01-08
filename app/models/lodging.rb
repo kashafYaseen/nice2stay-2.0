@@ -44,10 +44,11 @@ class Lodging < ApplicationRecord
   delegate :desc, to: :reviews, allow_nil: true, prefix: true
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, to: :price_text, allow_nil: true
 
+  scope :published, -> { where(published: true) }
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
-  scope :home_page, -> { where(home_page: true) }
-  scope :region_page, -> { where(region_page: true) }
-  scope :country_page, -> { where(country_page: true) }
+  scope :home_page, -> { published.where(home_page: true) }
+  scope :region_page, -> { published.where(region_page: true) }
+  scope :country_page, -> { published.where(country_page: true) }
   scope :search_import, -> { includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
 
   translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description

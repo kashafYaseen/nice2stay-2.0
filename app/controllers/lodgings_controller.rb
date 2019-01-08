@@ -44,7 +44,7 @@ class LodgingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lodging
-      @lodging = Lodging.friendly.find(params[:id])
+      @lodging = Lodging.published.friendly.find(params[:id])
       @lodging = @lodging.parent if @lodging.parent.present?
     end
 end
