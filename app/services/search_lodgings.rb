@@ -38,6 +38,7 @@ class SearchLodgings
     def conditions
       conditions = []
       merge_seo_filters conditions
+      conditions << { term: { published: true } }
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
 
