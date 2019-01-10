@@ -193,6 +193,14 @@ class Lodging < ApplicationRecord
     )
   end
 
+  def add_availabilities_for dates
+    Availability.bulk_insert do |availability|
+      dates.each do |date|
+        availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
+      end
+    end
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|

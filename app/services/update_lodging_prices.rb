@@ -13,6 +13,7 @@ class UpdateLodgingPrices
 
   def call
     return unless prices.present?
+    add_missing_availabilities
     clear_prices
     update_prices
     reindex_prices
@@ -35,6 +36,11 @@ class UpdateLodgingPrices
         end
         create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival])
       end
+    end
+
+    def add_missing_availabilities
+      missing_dates = (Date.today..365.days.from_now).map(&:to_s) - lodging.availabilities.pluck(:available_on)
+      lodging.add_availabilities_for missing_dates
     end
 
     def clear_prices

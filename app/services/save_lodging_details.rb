@@ -116,11 +116,6 @@ class SaveLodgingDetails
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },
-        specifications_attributes: [:id, :title, :description],
-        reviews_attributes: [:id, :user_id, :stars, :description],
-        availabilities_attributes: [:id, :available_on, :check_out_only, prices_attributes: [:id, :amount, :adults, :infants, :children]],
-        rules_attributes: [:id, :start_date, :end_date],
-        discounts_attributes: [:id, :start_date, :end_date, :reservation_days, :discount_percentage],
       )
     end
 
