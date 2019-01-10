@@ -39,6 +39,7 @@ class UpdateLodgingPrices
     end
 
     def add_missing_availabilities
+      lodging.availabilities.check_out_only.destroy_all
       missing_dates = (Date.today..365.days.from_now).map(&:to_s) - lodging.availabilities.pluck(:available_on).map(&:to_s)
       lodging.add_availabilities_for missing_dates
     end
