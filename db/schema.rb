@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_28_185416) do
+ActiveRecord::Schema.define(version: 2019_01_09_111238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2018_12_28_185416) do
     t.integer "booking_status", default: 0
     t.integer "crm_id"
     t.integer "created_by", default: 0
+    t.boolean "canceled", default: false
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -588,6 +589,7 @@ ActiveRecord::Schema.define(version: 2018_12_28_185416) do
     t.bigint "lodging_id"
     t.bigint "booking_id"
     t.boolean "in_cart", default: true
+    t.boolean "canceled", default: false
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
