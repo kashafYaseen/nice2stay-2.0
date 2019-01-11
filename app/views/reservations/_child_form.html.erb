@@ -50,9 +50,9 @@
         <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
         <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}", class: 'check_in' %>
         <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}", class: 'check_out' %>
-        <%= f.hidden_field :adults, value: no_of_adults(f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
-        <%= f.hidden_field :children, id: "children_#{lodging.id}", class: 'children' %>
-        <%= f.hidden_field :infants, id: "infants_#{lodging.id}", class: 'infants' %>
+        <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
+        <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
+        <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
         <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
         <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
         <% end %>
