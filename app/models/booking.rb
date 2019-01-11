@@ -3,7 +3,7 @@ class Booking < ApplicationRecord
   has_many :reservations
 
   scope :in_cart, -> { where(in_cart: true) }
-  scope :requests, -> { where(in_cart: false) }
+  scope :requests, -> { where(in_cart: false, canceled: false) }
   scope :confirmed, -> { requests.where(confirmed: true) }
   scope :upcoming, -> { where(id: Reservation.future_booking_ids(ids)) }
   scope :old, -> { where.not(id: Reservation.future_booking_ids(ids)) }

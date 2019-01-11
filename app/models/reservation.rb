@@ -21,10 +21,10 @@ class Reservation < ApplicationRecord
   delegate :id, :confirmed, to: :booking, prefix: true
 
   scope :in_cart, -> { where(in_cart: true) }
-  scope :requests, -> { where(in_cart: false) }
+  scope :requests, -> { where(in_cart: false, canceled: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
   scope :confirmed_options, -> { requests.option.confirmed }
-  scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ?', Date.today).pluck(:booking_id).uniq }
+  scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ? and canceled = ?', Date.today, false).pluck(:booking_id).uniq }
 
   accepts_nested_attributes_for :review
 
