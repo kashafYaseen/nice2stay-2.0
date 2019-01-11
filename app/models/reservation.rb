@@ -47,6 +47,7 @@ class Reservation < ApplicationRecord
     pending: 0,
     confirmed: 1,
     rejected: 2,
+    canceled: 3,
   }
 
   def can_review? user

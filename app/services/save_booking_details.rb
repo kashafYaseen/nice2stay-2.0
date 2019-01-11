@@ -35,7 +35,7 @@ class SaveBookingDetails
         lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
         reservation.lodging = lodging
 
-        if lodging.present? & reservation.save(validate: false)
+        if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled?
           lodging.availabilities.check_out_only!(reservation.check_in)
           lodging.availabilities.where(available_on: (reservation.check_in+1.day..reservation.check_out-1.day).map(&:to_s)).destroy_all
           lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
@@ -79,6 +79,7 @@ class SaveBookingDetails
         :refund_payment,
         :booking_status,
         :crm_id,
+        :canceled,
       )
     end
 
@@ -98,6 +99,7 @@ class SaveBookingDetails
         :booking_status,
         :request_status,
         :in_cart,
+        :canceled,
         :created_at,
         :updated_at,
       )
