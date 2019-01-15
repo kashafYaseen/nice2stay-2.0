@@ -27,7 +27,7 @@ class SaveBookingDetails
 
       return unless params[:booking][:reservations_attributes].present?
 
-      booking.reservations.where.not(id: params[:booking][:reservation_ids]).destroy_all
+      booking.reservations.where.not(id: params[:booking][:reservation_ids]).update_all(canceled: true)
 
       params[:booking][:reservations_attributes].each do |reservations_attribute|
         reservation = booking.reservations.find_by(id: reservations_attribute[:id]) || booking.reservations.build
