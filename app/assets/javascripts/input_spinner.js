@@ -156,30 +156,34 @@
     element.addEventListener("mousedown", function(e) {
       e.preventDefault();
       callback(e);
-
-      if ($(this).parents('form').attr('id') != undefined && !$('#standalone').val()) {
-        if ($('#dropdown_modal').is(':visible')) {
-          $('.adults').val($('#dropdown_modal .parent-adults').val());
-          $('.children').val($('#dropdown_modal .parent-children').val());
-          $('.infants').val($('#dropdown_modal .parent-infants').val());
-        }
-        else {
-          $('.adults').val($('.parent-adults').val());
-          $('.children').val($('.parent-children').val());
-          $('.infants').val($('.parent-infants').val());
-        }
-      }
-      else if ($('.you-may-like-form').length > 0) {
-        $('.you-may-like-form .adults').val($('.dropdown-menu .adults').val());
-        $('.you-may-like-form .children').val($('.dropdown-menu .children').val());
-        $('.you-may-like-form .infants').val($('.dropdown-menu .infants').val());
-      }
+      handleValue(this);
     });
 
     element.addEventListener("touchstart", function(e) {
       e.preventDefault();
       callback(e);
+      handleValue(this);
     });
+  }
+
+  function handleValue(element) {
+    if ($(element).parents('form').attr('id') != undefined && !$('#standalone').val()) {
+      if ($('#dropdown_modal').is(':visible')) {
+        $('.adults').val($('#dropdown_modal .parent-adults').val());
+        $('.children').val($('#dropdown_modal .parent-children').val());
+        $('.infants').val($('#dropdown_modal .parent-infants').val());
+      }
+      else {
+        $('.adults').val($('.parent-adults').val());
+        $('.children').val($('.parent-children').val());
+        $('.infants').val($('.parent-infants').val());
+      }
+    }
+    else if ($('.you-may-like-form').length > 0) {
+      $('.you-may-like-form .adults').val($('.dropdown-menu .adults').val());
+      $('.you-may-like-form .children').val($('.dropdown-menu .children').val());
+      $('.you-may-like-form .infants').val($('.dropdown-menu .infants').val());
+    }
   }
 
 }(jQuery));
