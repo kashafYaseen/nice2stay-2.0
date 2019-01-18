@@ -1,0 +1,9 @@
+<div class="persisted-data" data-months="<%= params[:months] %>"></div>
+
+<div data-lodging-id="<%= @lodging.id %>" data-disabled-dates="<%= @lodging.not_available_on %>">
+  <div id="calendar"></div>
+</div>
+
+<%= content_for :js_init do %>
+  initDatePicker();
+<% end %>

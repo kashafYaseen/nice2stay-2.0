@@ -1,6 +1,7 @@
 class LodgingsController < ApplicationController
   before_action :set_lodging, only: [:show]
   skip_before_action :verify_authenticity_token, only: [:index]
+  layout 'calendar', only: :calendar
 
   # GET /lodgings
   # GET /lodgings.json
@@ -39,6 +40,11 @@ class LodgingsController < ApplicationController
     end
     @discount = @lodging.discount_details(params[:values].split(','))
     @cleaning_costs = @lodging.cleaning_costs.for_guests(params[:values].split(',')[2].to_i + params[:values].split(',')[3].to_i)
+  end
+
+  def calendar
+    @lodging = Lodging.published.friendly.find(params[:id])
+    response.headers.delete "X-Frame-Options"
   end
 
   private

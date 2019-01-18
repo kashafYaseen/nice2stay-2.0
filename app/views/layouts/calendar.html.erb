@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'shared/head' %>
+  </head>
+
+  <body>
+    <%= yield %>
+
+    <script type="text/javascript">
+      <%= yield :js_init %>
+    </script>
+  </body>
+</html>
