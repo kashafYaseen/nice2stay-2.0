@@ -16,9 +16,6 @@ class PagesController < ApplicationController
     @custom_texts = CustomText.home_page
   end
 
-  def over_ons
-  end
-
   def page_not_found
   end
 end

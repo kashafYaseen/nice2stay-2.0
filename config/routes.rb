@@ -53,9 +53,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :pages, only: [:show] do
-      get :over_ons, path: 'over-ons', on: :collection
-    end
+    resources :pages, only: [:show]
 
     get "dashboard", to: "dashboard#index"
     get '/privacy', to: 'home#privacy'
