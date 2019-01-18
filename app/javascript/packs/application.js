@@ -11,6 +11,7 @@ import Vue from 'vue'
 import Datepicker from '../vue_components/datepicker.vue'
 import HomeDatepicker from '../vue_components/home_datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
+import Calendar from '../vue_components/calendar.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
@@ -42,6 +43,13 @@ window.initDatePicker = function() {
     new Vue({
       el: '#home-datepicker',
       render: h => h(HomeDatepicker)
+    })
+  }
+
+  if ($('#calendar').length) {
+    new Vue({
+      el: '#calendar',
+      render: h => h(Calendar)
     })
   }
 

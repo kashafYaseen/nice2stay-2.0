@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :lodgings, only: [:index, :show], path: :accommodations do
       post :index, on: :collection
       get :price_details, on: :member
+      get :calendar, on: :member
     end
     resource :carts do
       get :remove, on: :member
