@@ -97,7 +97,7 @@ class Reservation < ApplicationRecord
         active_rules.each do |rule|
           errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || rule.flexible_arrival
           errors.add(:base, "The stay should be of #{rule.minimum_stay} or more nights") if rule.minimum_stay.present? && nights < rule.minimum_stay
-          errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || rule.flexible_arrival
+          errors.add(:check_in, "and checkout must be on #{lodging.check_in_day.try(:titleize)}") unless nights % 7 == 0 || rule.flexible_arrival
         end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
