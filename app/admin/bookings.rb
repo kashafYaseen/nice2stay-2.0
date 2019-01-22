@@ -13,6 +13,19 @@ ActiveAdmin.register Booking do
     booking.by_partner
   end
 
+  form do |f|
+    inputs 'Booking' do
+      f.input :booking_status
+      f.input :pre_payment
+      f.input :final_payment
+      f.input :confirmed
+    end
+
+    f.actions do
+      f.action :submit
+    end
+  end
+
   index do
     selectable_column
     id_column
