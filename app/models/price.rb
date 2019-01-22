@@ -11,7 +11,7 @@ class Price < ApplicationRecord
 
   def search_data
     attributes.merge(
-      available_on: availability.available_on,
+      available_on: availability.try(:available_on),
       lodging_id: lodging.id,
       adults_and_children: adults_and_children
     )
