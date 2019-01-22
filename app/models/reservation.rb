@@ -20,6 +20,7 @@ class Reservation < ApplicationRecord
   delegate :email, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
 
+  scope :not_canceled, -> { where(canceled: false) }
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false, canceled: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
