@@ -3,7 +3,7 @@ class Price < ApplicationRecord
   has_one :lodging, through: :availability
 
   scope :of_child, -> (child_id) { joins(:availability).where('lodging_id = ?', child_id) }
-  scope :search_import, -> { includes(:lodging) }
+  scope :search_import, -> { includes(:lodging).where.not(availability_id: nil) }
 
   delegate :available_on, to: :availability
 
@@ -11,10 +11,14 @@ class Price < ApplicationRecord
 
   def search_data
     attributes.merge(
-      available_on: availability.try(:available_on),
+      available_on: availability.available_on,
       lodging_id: lodging.id,
       adults_and_children: adults_and_children
     )
+  end
+
+  def should_index?
+    availability_id.present?
   end
 
   def adults_and_children
