@@ -140,6 +140,7 @@ ActiveAdmin.register Lodging do
 
     panel "Cleaning Costs" do
       table_for lodging.cleaning_costs do
+        column :crm_id
         column :name
         column :fixed_price
         column :price_per_day
