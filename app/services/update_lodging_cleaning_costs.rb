@@ -1,14 +1,16 @@
 class UpdateLodgingCleaningCosts
   attr_reader :lodging
   attr_reader :cleaning_costs
+  attr_reader :crm_ids
 
-  def self.call(lodging, cleaning_costs)
-    self.new(lodging, cleaning_costs).call
+  def self.call(lodging, cleaning_costs, crm_ids)
+    self.new(lodging, cleaning_costs, crm_ids).call
   end
 
-  def initialize(lodging, cleaning_costs)
+  def initialize(lodging, cleaning_costs, crm_ids)
     @lodging = lodging
     @cleaning_costs = cleaning_costs
+    @crm_ids = crm_ids
   end
 
   def call
@@ -18,6 +20,7 @@ class UpdateLodgingCleaningCosts
 
   private
     def update_cleaning_costs
+      lodging.cleaning_costs.where.not(crm_id: crm_ids).destroy_all
       cleaning_costs.each do |cost_params|
         cleaning_cost = lodging.cleaning_costs.find_or_initialize_by(crm_id: cost_params[:crm_id])
         cleaning_cost.attributes = cleaning_costs_params(cost_params)
