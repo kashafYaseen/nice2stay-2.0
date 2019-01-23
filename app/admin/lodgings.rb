@@ -138,14 +138,13 @@ ActiveAdmin.register Lodging do
       row :updated_at
     end
 
-    panel "Specifications" do
-      table_for lodging.specifications do
-        column :title
-        column :description
-
-        column 'Action' do |specification|
-          link_to 'Edit', edit_admin_specification_path(specification)
-        end
+    panel "Cleaning Costs" do
+      table_for lodging.cleaning_costs do
+        column :name
+        column :fixed_price
+        column :price_per_day
+        column :guests
+        column :manage_by
       end
     end
 
