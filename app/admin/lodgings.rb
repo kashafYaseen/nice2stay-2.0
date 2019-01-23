@@ -146,6 +146,10 @@ ActiveAdmin.register Lodging do
         column :price_per_day
         column :guests
         column :manage_by
+
+        column 'Actions' do |cleaning_cost|
+          link_to 'details', admin_cleaning_cost_path(cleaning_cost)
+        end
       end
     end
 
