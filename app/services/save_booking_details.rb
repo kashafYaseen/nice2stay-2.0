@@ -117,6 +117,8 @@ class SaveBookingDetails
         :description,
         :created_at,
         :updated_at,
+        :published,
+        :perfect,
         { images: [] },
         { thumbnails: [] },
         :skip_data_posting,
