@@ -119,6 +119,7 @@ class SaveBookingDetails
         :updated_at,
         :published,
         :perfect,
+        :anonymous,
         { images: [] },
         { thumbnails: [] },
         :skip_data_posting,
