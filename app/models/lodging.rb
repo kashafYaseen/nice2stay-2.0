@@ -41,7 +41,7 @@ class Lodging < ApplicationRecord
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
-  delegate :desc, to: :reviews, allow_nil: true, prefix: true
+  delegate :desc, :published, to: :reviews, allow_nil: true, prefix: true
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, to: :price_text, allow_nil: true
 
   scope :published, -> { where(published: true) }
@@ -175,8 +175,8 @@ class Lodging < ApplicationRecord
   end
 
   def all_reviews
-    return reviews_desc unless as_parent?
-    Review.where(lodging_id: lodging_children.ids.push(id)).includes(:translations).desc
+    return reviews_published.desc unless as_parent?
+    Review.published.where(lodging_id: lodging_children.ids.push(id)).includes(:translations).desc
   end
 
   def update_ratings
