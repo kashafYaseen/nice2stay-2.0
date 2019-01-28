@@ -181,6 +181,7 @@ class Lodging < ApplicationRecord
 
   def update_ratings
     _reviews = all_reviews
+    return unless _reviews.present?
     total = _reviews.count
 
     update_attributes(
