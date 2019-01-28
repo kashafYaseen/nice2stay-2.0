@@ -10,6 +10,7 @@ ActiveAdmin.register Review do
     column :stars
     column :reservation
     column :published
+    column :anonymous
     actions
   end
 
