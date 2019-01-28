@@ -50,6 +50,7 @@
                 <br>
                 <div class="d-inline align-baseline text-sm text-warning mr-1">
                   <%= render_stars_tag @lodging.average_rating %>
+                  <p>(<%= pluralize(@lodging.all_reviews.count, 'review' ) %>)</p>
                 </div>
               </div>
             </div>
