@@ -21,7 +21,7 @@ class LodgingsController < ApplicationController
     @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @reservation = @lodging.reservations.build
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)
-    @lodging_children = @lodging.lodging_children.includes(:availabilities, :translations) if @lodging.as_parent?
+    @lodging_children = @lodging.lodging_children.published.includes(:availabilities, :translations) if @lodging.as_parent?
     @title = @lodging.meta_title
   end
 
