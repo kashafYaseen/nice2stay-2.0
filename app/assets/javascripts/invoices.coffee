@@ -85,11 +85,11 @@
             if cost.fixed_price > 0
               total_cleaning_cost += cost.fixed_price
               total += cost.fixed_price
-              result += cleaning_cost_html(cost, index)
+              result += cleaning_cost_html(cost, index, nights)
             else if cost.price_per_day > 0
               total_cleaning_cost += (cost.price_per_day * nights)
               total += (cost.price_per_day * nights)
-              result += cleaning_cost_html(cost, -1)
+              result += cleaning_cost_html(cost, -1, nights)
 
           $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
@@ -128,11 +128,11 @@
           if cost.fixed_price > 0
             total_cleaning_cost += cost.fixed_price
             total += cost.fixed_price
-            result += cleaning_cost_html(cost, -1)
+            result += cleaning_cost_html(cost, -1, nights)
           else if cost.price_per_day > 0
             total_cleaning_cost += (cost.price_per_day * nights)
             total += (cost.price_per_day * nights)
-            result += cleaning_cost_html(cost, -1)
+            result += cleaning_cost_html(cost, -1, nights)
         $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
       if data.discount
@@ -167,10 +167,10 @@
     return "<span class='col-6'>Discount #{key}%</span>
             <span class='col-6'><b>€#{value}</b></span>"
 
-  cleaning_cost_html = (cost, index) ->
+  cleaning_cost_html = (cost, index, nights) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
               <span class='col-6'><b>#{cost.name}</b></span>
-              <span class='col-6'><b>€#{if cost.fixed_price > 0 then cost.fixed_price.toFixed(2) else cost.price_per_day.toFixed(2)+'/night'}</b></span>
+              <span class='col-6'><b>€#{if cost.fixed_price > 0 then cost.fixed_price.toFixed(2) else (cost.price_per_day * nights).toFixed(2)}</b></span>
             </p>"
 
   total_html = (total, index) ->
