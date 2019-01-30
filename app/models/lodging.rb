@@ -175,8 +175,9 @@ class Lodging < ApplicationRecord
   end
 
   def all_reviews
-    return reviews_published.desc unless as_parent?
-    Review.published.where(lodging_id: lodging_children.ids.push(id)).includes(:translations).desc
+    return reviews_published.desc if as_standalone?
+    _parent = parent.presence || self
+    Review.published.where(lodging_id: _parent.lodging_children.ids.push(id)).includes(:translations).desc
   end
 
   def update_ratings
