@@ -82,10 +82,15 @@
         if data.cleaning_costs
           total_cleaning_cost = 0
           $.each data.cleaning_costs, (i, cost) ->
-            if cost.fixed_price
+            if cost.fixed_price > 0
               total_cleaning_cost += cost.fixed_price
               total += cost.fixed_price
               result += cleaning_cost_html(cost, index)
+            else if cost.price_per_day > 0
+              total_cleaning_cost += (cost.price_per_day * nights)
+              total += (cost.price_per_day * nights)
+              result += cleaning_cost_html(cost, -1)
+
           $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
         if data.discount
@@ -119,9 +124,14 @@
       if data.cleaning_costs
         total_cleaning_cost = 0
         $.each data.cleaning_costs, (index, cost) ->
-          if cost.fixed_price
+
+          if cost.fixed_price > 0
             total_cleaning_cost += cost.fixed_price
             total += cost.fixed_price
+            result += cleaning_cost_html(cost, -1)
+          else if cost.price_per_day > 0
+            total_cleaning_cost += (cost.price_per_day * nights)
+            total += (cost.price_per_day * nights)
             result += cleaning_cost_html(cost, -1)
         $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
@@ -160,7 +170,7 @@
   cleaning_cost_html = (cost, index) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
               <span class='col-6'><b>#{cost.name}</b></span>
-              <span class='col-6'><b>€#{cost.fixed_price.toFixed(2)}</b></span>
+              <span class='col-6'><b>€#{if cost.fixed_price > 0 then cost.fixed_price.toFixed(2) else cost.price_per_day.toFixed(2)+'/night'}</b></span>
             </p>"
 
   total_html = (total, index) ->
