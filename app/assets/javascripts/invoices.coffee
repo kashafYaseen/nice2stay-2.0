@@ -155,7 +155,7 @@
     $("#bill-#{lodging_id}").text('Lodging is not available.')
 
   check_values = (value) ->
-    value == ''
+    value == '' || value == undefined
 
   rates_html = (key, value, index) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
