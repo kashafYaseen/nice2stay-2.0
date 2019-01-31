@@ -22,9 +22,10 @@ class SaveLodgingDetails
       lodging.region = region(params[:lodging][:country_name], params[:lodging][:region_name])
       lodging.parent = parent
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
-      return unless lodging.save && lodging.published?
-      UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
+      return unless lodging.save
       UpdateLodgingTranslations.call(lodging, params[:translations])
+      return unless lodging.published?
+      UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
       UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs], params[:cleaning_cost_ids])
