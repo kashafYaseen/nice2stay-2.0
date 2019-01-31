@@ -1,5 +1,5 @@
 class Lodging < ApplicationRecord
-  belongs_to :owner
+  belongs_to :owner, optional: true
   belongs_to :region
   has_many :reservations
   has_many :availabilities
@@ -26,7 +26,6 @@ class Lodging < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -49,7 +48,7 @@ class Lodging < ApplicationRecord
   scope :home_page, -> { published.where(home_page: true) }
   scope :region_page, -> { published.where(region_page: true) }
   scope :country_page, -> { published.where(country_page: true) }
-  scope :search_import, -> { includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
+  scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
 
   translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -65,7 +64,7 @@ class Lodging < ApplicationRecord
     as_child: 3,
   }
 
-  after_create :add_availabilities
+  after_create :add_availabilities, if: :published?
   after_create :reindex_prices
 
   def not_available_on
@@ -112,6 +111,10 @@ class Lodging < ApplicationRecord
       experiences_ids: experiences.ids,
       rules: rules.collect(&:search_data),
     )
+  end
+
+  def should_index?
+    published?
   end
 
   def availability_price

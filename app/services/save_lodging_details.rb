@@ -22,7 +22,7 @@ class SaveLodgingDetails
       lodging.region = region(params[:lodging][:country_name], params[:lodging][:region_name])
       lodging.parent = parent
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
-      return unless lodging.save
+      return unless lodging.save && lodging.published?
       UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
@@ -31,6 +31,7 @@ class SaveLodgingDetails
     end
 
     def owner
+      return unless params[:owner].present?
       password = Devise.friendly_token[0, 20]
       Owner.where(email: owner_params[:email]).first_or_create(owner_params.merge(password: password, password_confirmation: password))
     end
