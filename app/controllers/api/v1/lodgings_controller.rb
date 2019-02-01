@@ -9,6 +9,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     @lodging = SaveLodgingDetails.call(params)
 
     if @lodging.valid?
+      @lodging.reindex
       render status: :created
     else
       render json: @lodging.errors, status: :unprocessable_entity
