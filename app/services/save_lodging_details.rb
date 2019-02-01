@@ -24,10 +24,10 @@ class SaveLodgingDetails
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
       UpdateLodgingTranslations.call(lodging, params[:translations])
+      UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?
       UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
       UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
-      UpdateLodgingPriceText.call(lodging, params[:price_text])
       UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs], params[:cleaning_cost_ids])
     end
 
