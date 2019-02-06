@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_25_102009) do
+ActiveRecord::Schema.define(version: 2019_02_06_065628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,10 +258,17 @@ ActiveRecord::Schema.define(version: 2019_01_25_102009) do
     t.bigint "lodging_id"
     t.date "start_date"
     t.date "end_date"
-    t.integer "reservation_days"
-    t.float "discount_percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
+    t.string "short_desc"
+    t.boolean "publish", default: false
+    t.string "discount_type", default: "percentage"
+    t.datetime "valid_to"
+    t.integer "minimum_days", default: [], array: true
+    t.integer "value"
+    t.integer "crm_id"
+    t.integer "guests"
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
   end
 
