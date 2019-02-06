@@ -136,7 +136,7 @@ class Lodging < ApplicationRecord
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0
     unless params.values_at(:check_in, :check_out, :adults, :children).all?(&:present?)
-      self.calculated_price = price.round(2)
+      self.calculated_price = price.to_f.round(2)
       return self.dynamic_price = false
     end
     total_price = price_list(params.merge(flexible: false))[:rates].sum
