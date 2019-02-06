@@ -76,8 +76,8 @@ ActiveAdmin.register Lodging do
     f.has_many :discounts, allow_destroy: true, new_record:  'Add Discount'  do |discount|
       discount.input :start_date
       discount.input :end_date
-      discount.input :reservation_days, min: 1, step: 1
-      discount.input :discount_percentage
+      discount.input :value
+      discount.input :discount_type
     end
 
     f.has_many :reviews, allow_destroy: true, new_record:  'Add Review'  do |review|
