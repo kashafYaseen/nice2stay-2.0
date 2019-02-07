@@ -221,6 +221,7 @@ class Lodging < ApplicationRecord
     end
 
     def discount(params)
+      return nil
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
       discount = discounts_active.where('reservation_days <= ?', total_nights).order(:reservation_days).last
       discount.discount_percentage if discount.present?
