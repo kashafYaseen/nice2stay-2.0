@@ -73,13 +73,6 @@ ActiveAdmin.register Lodging do
       rule.input :minimum_stay
     end
 
-    f.has_many :discounts, allow_destroy: true, new_record:  'Add Discount'  do |discount|
-      discount.input :start_date
-      discount.input :end_date
-      discount.input :value
-      discount.input :discount_type
-    end
-
     f.has_many :reviews, allow_destroy: true, new_record:  'Add Review'  do |review|
       review.input :user
       review.input :stars, min: 1, max: 5, step: 1
@@ -170,8 +163,9 @@ ActiveAdmin.register Lodging do
       table_for lodging.discounts do
         column :start_date
         column :end_date
-        column :reservation_days
-        column :discount_percentage
+        column :discount_type
+        column :minimum_days
+        column :value
 
         column 'Action' do |discount|
           link_to 'Edit', edit_admin_discount_path(discount)

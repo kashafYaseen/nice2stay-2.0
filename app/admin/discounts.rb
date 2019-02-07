@@ -1,13 +1,14 @@
 ActiveAdmin.register Discount do
   menu false
   actions :all, except: [:index, :new, :create]
-  permit_params :start_date, :end_date, :value, :guests, { minimum_days: [] }
+  permit_params :start_date, :end_date, :value, :guests, :publish, :description, :short_desc, :discount_type
 
   form do |f|
     inputs 'Rule' do
       f.input :lodging_id, input_html: { disabled: true }
       f.input :start_date
       f.input :end_date
+      f.input :valid_to, as: :date_time_picker
       f.input :publish
       f.input :discount_type
       f.input :minimum_days
