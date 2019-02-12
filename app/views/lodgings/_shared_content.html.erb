@@ -30,6 +30,13 @@
   </div>
 </div>
 
+<div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section">
+  <div class="col-md-12">
+    <h3 class="card-title">Special Offers</h3>
+    <%= render 'discounts/discounts', discounts: lodging.discounts %>
+  </div>
+</div>
+
 <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
   <div class="col-md-12">
     <h3 class="card-title"><%= t 'nav.location' %></h3>

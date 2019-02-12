@@ -130,7 +130,7 @@ class Lodging < ApplicationRecord
   end
 
   def discount_details(values)
-    discount({ check_in: values[0], check_out: values[1] })
+    discount({ check_in: values[0], check_out: values[1], lodging_id: id })
   end
 
   def cumulative_price(params)
@@ -140,8 +140,8 @@ class Lodging < ApplicationRecord
       return self.dynamic_price = false
     end
     total_price = price_list(params.merge(flexible: false))[:rates].sum
-    total_discount = discount(params)
-    total_price -= total_price * (total_discount/100) if total_discount.present?
+    total_discount = calculate_discount(discount(params), total_price)
+    total_price -= total_discount if total_discount.present?
     self.calculated_price = total_price.round(2)
     self.dynamic_price = true
   end
@@ -221,10 +221,18 @@ class Lodging < ApplicationRecord
     end
 
     def discount(params)
-      return nil
-      total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      discount = discounts_active.where('reservation_days <= ?', total_nights).order(:reservation_days).last
-      discount.discount_percentage if discount.present?
+      return unless params[:check_in].present? && params[:check_out].present?
+      SearchDiscounts.call(params.merge(lodging_id: self.id))
+    end
+
+    def calculate_discount(discounts, total_price)
+      return unless discounts.present?
+      amount = 0
+      discounts.each do |dis|
+        amount += (total_price * (dis.value/100)) if dis.discount_type == 'percentage'
+        amount += dis.value if dis.discount_type == 'amount' || dis.discount_type == 'incentive'
+      end
+      amount
     end
 
     def reindex_prices
