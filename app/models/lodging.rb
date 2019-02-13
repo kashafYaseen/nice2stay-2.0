@@ -110,7 +110,7 @@ class Lodging < ApplicationRecord
       experiences: experiences.collect(&:translated_slugs),
       experiences_ids: experiences.ids,
       rules: rules.collect(&:search_data),
-      discounts: discounts.present?,
+      discounts: discounts.active.present?,
     )
   end
 
@@ -176,6 +176,12 @@ class Lodging < ApplicationRecord
 
   def extended_name
     "#{name} - #{lodging_type} - #{country.name} #{region.name}"
+  end
+
+  def all_discounts
+    return discounts.active if as_standalone?
+    _parent = parent.presence || self
+    Discount.active.where(lodging_id: _parent.lodging_children.ids.push(_parent.id))
   end
 
   def all_reviews

@@ -1,6 +1,9 @@
 <table class="table">
   <thead>
     <tr>
+      <% if parent %>
+        <th>lodging</th>
+      <% end %>
       <th>Offer</th>
       <th>From</th>
       <th>To</th>
@@ -10,6 +13,6 @@
   </thead>
 
   <tbody>
-    <%= render discounts %>
+    <%= render discounts, parent: parent %>
   </tbody>
 </table>

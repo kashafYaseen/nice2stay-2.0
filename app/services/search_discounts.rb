@@ -18,8 +18,10 @@ class SearchDiscounts
       conditions = {}
       conditions[:start_date] = { lte: params[:check_in] }
       conditions[:end_date] = { gte: params[:check_out] }
+      conditions[:valid_to] = { gte: Date.today }
       conditions[:lodging_id] = params[:lodging_id]
       conditions[:minimum_days] = [total_nights, nil]
+      conditions[:publish] = true
 
       conditions
     end

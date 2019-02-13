@@ -1,4 +1,7 @@
 <tr>
+  <% if parent %>
+    <th><%= discount.lodging_name %></th>
+  <% end %>
   <th scope="row"><%= discount.value %></th>
   <td><%= render_date discount.start_date %></td>
   <td><%= render_date discount.end_date %></td>
