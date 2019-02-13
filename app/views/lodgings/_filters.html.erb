@@ -95,6 +95,16 @@
             </div>
           </section>
 
+          <section class="widget widget-categories col-md-12 p-0 pb-2 mb-2">
+            <p class="widget-title"><%= "#{t('search.special_offer')}" %></h3>
+            <div id="datepicker"></div>
+
+            <div class="custom-control custom-checkbox">
+              <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input amenities" %>
+              <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
+            </div>
+          </section>
+
           <section class="widget">
             <p class="widget-title"><%= t 'filters.type' %></p>
             <% Lodging.lodging_types.each do |key, value| %>

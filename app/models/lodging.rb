@@ -110,6 +110,7 @@ class Lodging < ApplicationRecord
       experiences: experiences.collect(&:translated_slugs),
       experiences_ids: experiences.ids,
       rules: rules.collect(&:search_data),
+      discounts: discounts.present?,
     )
   end
 
