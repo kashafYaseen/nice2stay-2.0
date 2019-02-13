@@ -73,6 +73,7 @@ class SearchLodgings
         lodging_type: { terms: { field: :lodging_type } },
         amenities: { terms: { field: :amenities_ids, size: Amenity.count } },
         experiences: { terms: { field: :experiences_ids, size: Experience.count } },
+        discounts: { terms: { field: :discounts } },
       }
     end
 
