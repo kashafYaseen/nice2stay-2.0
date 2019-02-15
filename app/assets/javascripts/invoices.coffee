@@ -93,15 +93,15 @@
 
           $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
-        if data.discount
+        if data.discounts[index]
           total_discount = 0
-          $.each data.discount, (i, discount) ->
+          $.each data.discounts[index], (i, discount) ->
             if discount.discount_type == "percentage"
               total_discount += (total * discount.value/100)
             else
               total_discount += discount.value
 
-          result += discount_html("Discount", total_discount, -1)
+          result += discount_html("Discount", total_discount, index)
           total -= total_discount
           $("#discount_#{lodging_id}").val(total_discount)
 
@@ -142,9 +142,9 @@
             result += cleaning_cost_html(cost, -1, nights)
         $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
-      if data.discount
+      if data.discounts
         total_discount = 0
-        $.each data.discount, (i, discount) ->
+        $.each data.discounts, (i, discount) ->
           if discount.discount_type == "percentage"
             total_discount += (total * discount.value/100)
           else
