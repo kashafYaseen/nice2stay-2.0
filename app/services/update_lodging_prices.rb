@@ -21,7 +21,7 @@ class UpdateLodgingPrices
 
   private
     def update_prices
-      prices.reload.each do |price_range|
+      prices.each do |price_range|
         Price.bulk_insert do |price|
           update_arrays(price_range)
           lodging.availabilities_for_range(price_range[:from], price_range[:to]).each do |availability|
