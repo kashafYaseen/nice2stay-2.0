@@ -3,54 +3,72 @@
 
   Map.init = ->
     if $('#map').length
-      map = window.map = new GMaps(
-        div: '#map'
-        lat: 38.5816
-        lng: -121.4944)
+      L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
+      map = window.map = L.mapbox.map 'map', 'mapbox.streets'
+      map.setView [38.5816, -121.4944], 12
 
-      bounds_changed = window.bounds_changed = false
+      # bounds_changed = window.bounds_changed = false
       Map.add_markers()
-      Map.highlight_lodgings()
+      # Map.highlight_lodgings()
 
-      map.addListener 'dragend', ->
-        $('#loader').show()
-        bounds = map.getBounds()
-        location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
-        $('#bounds').val(location)
-        Rails.fire($('.lodgings-filters').get(0), 'submit')
+      # map.addListener 'dragend', ->
+      #   $('#loader').show()
+      #   bounds = map.getBounds()
+      #   location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
+      #   $('#bounds').val(location)
+      #   Rails.fire($('.lodgings-filters').get(0), 'submit')
 
-      map.addListener 'zoom_changed', ->
-        bounds = map.getBounds()
-        if window.bounds_changed
-          window.bounds_changed = false
-        else
-          $('#loader').show();
-          location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
-          $('#bounds').val(location)
-          window.bounds_changed = true
-          Rails.fire($('.lodgings-filters').get(0), 'submit')
-      window.bounds_changed = true
+      # map.addListener 'zoom_changed', ->
+      #   bounds = map.getBounds()
+      #   if window.bounds_changed
+      #     window.bounds_changed = false
+      #   else
+      #     $('#loader').show();
+      #     location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
+      #     $('#bounds').val(location)
+      #     window.bounds_changed = true
+      #     Rails.fire($('.lodgings-filters').get(0), 'submit')
+      # window.bounds_changed = true
 
   Map.add_markers = (set_bounds = true) ->
     lodgings = $('.lodgings-list-json').map(-> JSON.parse @dataset.lodgings).get()
     ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
-    remove_marker_list = []
-    for marker in map.markers
-      if marker && ids.includes(marker.id)
-        continue
-      remove_marker_list.push marker
-    map.removeMarkers(remove_marker_list)
+    jeo_json = $('.lodgings-list-json').map(-> JSON.parse @dataset.markers).get()
+    markers_layer = L.mapbox.featureLayer().addTo(map)
 
-    for lodging in lodgings
-      if lodging.latitude and lodging.longitude
-        marker = map.addMarker(
-          id: lodging.id
-          lat: lodging.latitude
-          lng: lodging.longitude
-          title: lodging.address
-          infoWindow: content: "<p><a href='accommodations/#{lodging.slug}'>#{lodging.name}</a></p>")
+    markers_layer.on 'layeradd', (e) ->
+      marker = e.layer
+      feature = marker.feature
+      popupContent = "<a target='_blank' class='popup' href='#{feature.properties.url}'>
+                        <img src='#{feature.properties.image}' />#{feature.properties.title}
+                      </a>"
+      marker.bindPopup popupContent,
+        closeButton: true
+        minWidth: 320
+
+    markers_layer.setGeoJSON(jeo_json)
+
+    # remove_marker_list = []
+    # for marker in map.markers
+    #   if marker && ids.includes(marker.id)
+    #     continue
+    #   remove_marker_list.push marker
+    # map.removeMarkers(remove_marker_list)
+
+    # for lodging in lodgings
+    #   if lodging.latitude and lodging.longitude
+    #     marker = L.marker([lodging.longitude, lodging.latitude]).addTo(map)
+    #     marker.setPopupContent("<p><a href='accommodations/#{lodging.slug}'>#{lodging.name}</a></p>")
+
+    #     marker = map.addMarker(
+    #       id: lodging.id
+    #       lat: lodging.latitude
+    #       lng: lodging.longitude
+    #       title: lodging.address
+    #       infoWindow: content: "<p><a href='accommodations/#{lodging.slug}'>#{lodging.name}</a></p>")
     if set_bounds
-      set_safe_bounds document.querySelector('.lodgings-list-json')
+      map.fitBounds markers_layer.getBounds()
+    #   set_safe_bounds document.querySelector('.lodgings-list-json')
 
   set_safe_bounds = (element) ->
     l = element.dataset.bounds
