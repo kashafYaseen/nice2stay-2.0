@@ -7,28 +7,28 @@
       map = window.map = L.mapbox.map 'map', 'mapbox.streets'
       map.setView [38.5816, -121.4944], 12
 
-      # bounds_changed = window.bounds_changed = false
+      bounds_changed = window.bounds_changed = false
       Map.add_markers()
       # Map.highlight_lodgings()
 
-      # map.addListener 'dragend', ->
-      #   $('#loader').show()
-      #   bounds = map.getBounds()
-      #   location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
-      #   $('#bounds').val(location)
-      #   Rails.fire($('.lodgings-filters').get(0), 'submit')
+      map.on 'dragend', ->
+        $('#loader').show()
+        bounds = map.getBounds()
+        location = "#{bounds.toBBoxString()}"
+        $('#bounds').val(location)
+        Rails.fire($('.lodgings-filters').get(0), 'submit')
 
-      # map.addListener 'zoom_changed', ->
-      #   bounds = map.getBounds()
-      #   if window.bounds_changed
-      #     window.bounds_changed = false
-      #   else
-      #     $('#loader').show();
-      #     location = "#{bounds.getSouthWest().toUrlValue()}, #{bounds.getNorthEast().toUrlValue()}"
-      #     $('#bounds').val(location)
-      #     window.bounds_changed = true
-      #     Rails.fire($('.lodgings-filters').get(0), 'submit')
-      # window.bounds_changed = true
+      map.on 'zoomend', ->
+        bounds = map.getBounds()
+        if window.bounds_changed
+          window.bounds_changed = false
+        else
+          $('#loader').show();
+          location = "#{bounds.toBBoxString()}"
+          $('#bounds').val(location)
+          window.bounds_changed = true
+          Rails.fire($('.lodgings-filters').get(0), 'submit')
+      window.bounds_changed = true
 
   Map.add_markers = (set_bounds = true) ->
     lodgings = $('.lodgings-list-json').map(-> JSON.parse @dataset.lodgings).get()
@@ -67,16 +67,16 @@
     #       title: lodging.address
     #       infoWindow: content: "<p><a href='accommodations/#{lodging.slug}'>#{lodging.name}</a></p>")
     if set_bounds
-      map.fitBounds markers_layer.getBounds()
-    #   set_safe_bounds document.querySelector('.lodgings-list-json')
+      #map.fitBounds markers_layer.getBounds()
+      set_safe_bounds document.querySelector('.lodgings-list-json'), markers_layer.getBounds()
 
-  set_safe_bounds = (element) ->
+  set_safe_bounds = (element, bounds_box) ->
     l = element.dataset.bounds
     if l
       latlngs = l.split(',')
-      southWest = new (google.maps.LatLng)(latlngs[0], latlngs[1])
-      northEast = new (google.maps.LatLng)(latlngs[2], latlngs[3])
-      bounds = new (google.maps.LatLngBounds)(southWest, northEast)
+      southWest = new L.latLng(latlngs[1], latlngs[0])
+      northEast = new L.latLng(latlngs[3], latlngs[2])
+      bounds = new L.latLngBounds(southWest, northEast)
       zoom = map.getZoom()
       window.bounds_changed = true
       map.fitBounds bounds, 0
@@ -84,7 +84,8 @@
       map.setZoom zoom
     else
       window.bounds_changed = true
-      map.fitZoom()
+      #map.fitZoom()
+      map.fitBounds bounds_box
 
   Map.init_with = (lat, lng, selector) ->
     if $(selector).length > 0
