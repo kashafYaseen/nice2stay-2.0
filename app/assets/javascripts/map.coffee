@@ -6,7 +6,7 @@
       L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
       map = window.map = L.mapbox.map 'map', 'mapbox.streets'
       map.setView [38.5816, -121.4944], 12
-
+      window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
       bounds_changed = window.bounds_changed = false
       Map.add_markers()
       # Map.highlight_lodgings()
@@ -34,7 +34,7 @@
     lodgings = $('.lodgings-list-json').map(-> JSON.parse @dataset.lodgings).get()
     ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
     jeo_json = $('.lodgings-list-json').map(-> JSON.parse @dataset.markers).get()
-    markers_layer = L.mapbox.featureLayer().addTo(map)
+    markers_layer = map._layers[markers]
 
     markers_layer.on 'layeradd', (e) ->
       marker = e.layer
@@ -43,8 +43,8 @@
                         <img src='#{feature.properties.image}' />#{feature.properties.title}
                       </a>"
       marker.bindPopup popupContent,
-        closeButton: true
-        minWidth: 320
+        closeButton: false
+        minWidth: 200
 
     markers_layer.setGeoJSON(jeo_json)
 
