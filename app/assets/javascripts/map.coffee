@@ -31,11 +31,9 @@
       window.bounds_changed = true
 
   Map.add_markers = (set_bounds = true) ->
-    lodgings = $('.lodgings-list-json').map(-> JSON.parse @dataset.lodgings).get()
-    ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
-    jeo_json = $('.lodgings-list-json').map(-> JSON.parse @dataset.markers).get()
+    features = $('.lodgings-list-json').map(-> JSON.parse @dataset.features).get()
+    #ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
     markers_layer = map._layers[markers]
-
     markers_layer.on 'layeradd', (e) ->
       marker = e.layer
       feature = marker.feature
@@ -44,9 +42,10 @@
                       </a>"
       marker.bindPopup popupContent,
         closeButton: false
+        maxWidth: 200
         minWidth: 200
 
-    markers_layer.setGeoJSON(jeo_json)
+    markers_layer.setGeoJSON(features)
 
     # remove_marker_list = []
     # for marker in map.markers

@@ -1,2 +1,2 @@
-<%= tag.div class: "lodgings-list-json", data: { lodgings: lodgings.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), bounds: params[:bounds], ids: lodgings.pluck(:id), markers: jeo_json(lodgings) } %>
+<%= tag.div class: "lodgings-list-json", data: { features: lodgings.collect(&:feature), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
 <%= render lodgings %>

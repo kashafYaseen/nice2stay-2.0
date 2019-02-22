@@ -94,33 +94,4 @@ module LodgingsHelper
     return "<h3>#{render_rounded_price price}</h3><p class='price-text'> for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} nights</p>".html_safe if dynamic
     "<div class='price-text'> From </div> <h3>#{render_rounded_price price}</h3><p class='price-text'> per night</p>".html_safe
   end
-
-  def jeo_json lodgings
-    markers = []
-    lodgings.each do |lodging|
-      markers << {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [lodging.longitude, lodging.latitude]
-        },
-        properties: {
-          id: lodging.id,
-          title: lodging.name,
-          url: "#{lodging_path(lodging)}",
-          image: (lodging.images.try(:first) || image_path('default-lodging.png')),
-          'marker-color': marker_color(lodging),
-          'marker-size': 'large',
-          'marker-symbol': lodging.lodging_type[0],
-        }
-      }
-    end
-    markers.to_json
-  end
-
-  def marker_color(lodging)
-    return '#1F618D' if lodging.villa?
-    return '#7D3C98' if lodging.apartment?
-    '#dc9813'
-  end
 end
