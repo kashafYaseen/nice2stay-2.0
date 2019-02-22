@@ -97,6 +97,6 @@
   Lodging.child_form();
   Lodging.highlight_menu();
   OwlCarousel.init();
-  Map.init_with('<%= @lodging.latitude %>', '<%= @lodging.longitude %>', '#lodging-map-location');
+  Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
   Invoice.calculate(<%= calculation_ids @lodging %>);
 <% end %>

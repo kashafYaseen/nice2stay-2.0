@@ -86,16 +86,13 @@
       #map.fitZoom()
       map.fitBounds bounds_box
 
-  Map.init_with = (lat, lng, selector) ->
-    if $(selector).length > 0
-      map = window.map = new GMaps(
-        div: selector
-        lat: lat
-        lng: lng
-      )
-
-      Map.add_markers(false)
-      map.setZoom 7
+  Map.init_with = (feature, selector) ->
+    L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
+    features = $('.lodgings-list-json').map(-> JSON.parse @dataset.feature).get()
+    map = window.map = L.mapbox.map selector, 'mapbox.streets'
+    marker = L.mapbox.featureLayer().setGeoJSON(features).addTo(map);
+    set_safe_bounds document.querySelector('.lodgings-list-json'), marker.getBounds()
+    map.setZoom 9
 
   Map.highlight_lodgings = ->
     $('.lodgings-list').on 'mouseenter', '.lodging-container', ->
