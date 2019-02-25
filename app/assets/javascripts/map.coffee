@@ -35,9 +35,10 @@
     markers_layer.on 'layeradd', (e) ->
       marker = e.layer
       feature = marker.feature
-      popupContent = "<a target='_blank' class='popup' href='#{feature.properties.url}'>
+      popupContent = "<a class='popup' href='#{feature.properties.url}'>
                         <img src='#{feature.properties.image}' />#{feature.properties.title}
-                      </a>"
+                      </a>
+                      <p>#{feature.properties.description}</p>"
       marker.bindPopup popupContent,
         closeButton: false
         maxWidth: 200

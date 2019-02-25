@@ -1,18 +1,23 @@
 .lodgings-map .leaflet-popup-content-wrapper {
-  background:#2c3e50;
-  color:#fff;
-  font-size:16px;
-  line-height:24px;
+  background: #E8F3EC;
+  color: #333;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 10px;
 }
 .lodgings-map .leaflet-popup-content-wrapper a {
-  color:rgba(255,255,255,0.5);
+  color: #333;
+  text-align: center;
+}
+.lodgings-map .leaflet-popup-content-wrapper p {
+  font-size: small;
 }
 .lodgings-map .leaflet-popup-tip-container {
-  width:30px;
-  height:15px;
+  width: 30px;
+  height: 15px;
 }
 .lodgings-map .leaflet-popup-tip {
-  border-left:15px solid transparent;
-  border-right:15px solid transparent;
-  border-top:15px solid #2c3e50;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #2c3e50;
 }

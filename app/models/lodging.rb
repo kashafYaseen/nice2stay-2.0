@@ -216,6 +216,7 @@ class Lodging < ApplicationRecord
       properties: {
         id: id,
         title: name,
+        description: feature_description,
         url: Rails.application.routes.url_helpers.lodging_path(self),
         image: images.try(:first),
         'marker-color': marker_color,
@@ -223,6 +224,12 @@ class Lodging < ApplicationRecord
         'marker-symbol': lodging_type[0],
       }
     }
+  end
+
+  def feature_description
+    description = "#{minimum_adults} - #{adults} adults <br>"
+    description += "#{minimum_children} - #{children} children <br>" if children.present?
+    description += "#{beds} beds - #{baths} bathrooms <br>"
   end
 
   def marker_color
