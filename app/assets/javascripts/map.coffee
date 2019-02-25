@@ -9,6 +9,7 @@
       window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
       bounds_changed = window.bounds_changed = false
       Map.add_markers()
+      Map.highlight_lodgings()
 
       map.on 'dragend', ->
         $('#loader').show()
@@ -72,15 +73,17 @@
 
   Map.highlight_lodgings = ->
     $('.lodgings-list').on 'mouseenter', '.lodging-container', ->
-        markers = map.markers
-        for marker in markers
-          if marker.id == $(this).data('lodging-id')
-            marker.setAnimation 1
+      markers_layer = map._layers[markers]
+      lodging_id = $(this).data('lodging-id')
+      markers_layer.eachLayer (marker) ->
+        if marker.feature.properties.id == lodging_id
+          marker.openPopup()
 
     $('.lodgings-list').on 'mouseleave', '.lodging-container', ->
-        markers = map.markers
-        for marker in markers
-          if marker.id == $(this).data('lodging-id')
-            marker.setAnimation(null)
+      markers_layer = map._layers[markers]
+      lodging_id = $(this).data('lodging-id')
+      markers_layer.eachLayer (marker) ->
+        if marker.feature.properties.id == lodging_id
+          marker.closePopup()
 
 ).call this
