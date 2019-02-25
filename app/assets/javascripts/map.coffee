@@ -76,11 +76,11 @@
       southWest = new L.latLng(latlngs[1], latlngs[0])
       northEast = new L.latLng(latlngs[3], latlngs[2])
       bounds = new L.latLngBounds(southWest, northEast)
-      zoom = map.getZoom()
+      # zoom = map.getZoom()
+      # window.bounds_changed = true
+      map.fitBounds bounds
       window.bounds_changed = true
-      map.fitBounds bounds, 0
-      window.bounds_changed = true
-      map.setZoom zoom
+      #map.setZoom zoom
     else
       window.bounds_changed = true
       #map.fitZoom()
