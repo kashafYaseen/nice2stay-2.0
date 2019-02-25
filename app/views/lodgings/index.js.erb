@@ -8,10 +8,5 @@ $('.seo-data').html("<%= j render 'seo_data', custom_text: @custom_text %>");
 $('html').velocity('scroll', { offset: 0, duration: 1200, easing: 'easeOutExpo', mobileHA: false });
 Lodging.init();
 Url.update("<%= lodgings_path(locale: locale, page: params[:page]) %>");
-
-<% if params[:country].present? || params[:region].present? %>
-  Map.add_markers(false);
-<% else %>
-  Map.add_markers();
-<% end %>
+Map.add_markers();
 //Map.highlight_lodgings();
