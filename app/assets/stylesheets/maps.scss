@@ -1,9 +1,8 @@
 .lodgings-map .leaflet-popup-content-wrapper {
-  background: #E8F3EC;
+  background: white;
   color: #333;
   font-size: 16px;
   line-height: 24px;
-  border-radius: 10px;
 }
 .lodgings-map .leaflet-popup-content-wrapper a {
   color: #333;
@@ -19,5 +18,5 @@
 .lodgings-map .leaflet-popup-tip {
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-top: 15px solid #E8F3EC;
+  border-top: 15px solid white;
 }
