@@ -39,11 +39,14 @@
       popupContent = "<a class='popup' href='#{feature.properties.url}'>
                         <img src='#{feature.properties.image}' />#{feature.properties.title}
                       </a>
-                      <p>#{feature.properties.description}</p>"
+                      <p>#{feature.properties.description}</p>
+                      <p id='feature-price-#{feature.properties.id}' class='feature-price'></p>"
       marker.bindPopup popupContent,
         closeButton: false
         maxWidth: 200
         minWidth: 200
+    markers_layer.on 'click', (e) ->
+      update_popup(e.layer.feature)
 
     markers_layer.setGeoJSON(features)
 
@@ -78,6 +81,7 @@
       markers_layer.eachLayer (marker) ->
         if marker.feature.properties.id == lodging_id
           marker.openPopup()
+          update_popup(marker.feature)
 
     $('.lodgings-list').on 'mouseleave', '.lodging-container', ->
       markers_layer = map._layers[markers]
@@ -85,5 +89,8 @@
       markers_layer.eachLayer (marker) ->
         if marker.feature.properties.id == lodging_id
           marker.closePopup()
+
+  update_popup = (feature) ->
+    $("#feature-price-#{feature.properties.id}").html($(".price-review-box-#{feature.properties.id}").html())
 
 ).call this
