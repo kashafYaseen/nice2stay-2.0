@@ -20,14 +20,11 @@
 
       map.on 'zoomend', ->
         bounds = map.getBounds()
-        if window.bounds_changed
-          window.bounds_changed = false
-        else
-          $('#loader').show();
-          location = "#{bounds.toBBoxString()}"
-          $('#bounds').val(location)
-          window.bounds_changed = true
-          Rails.fire($('.lodgings-filters').get(0), 'submit')
+        $('#loader').show();
+        location = "#{bounds.toBBoxString()}"
+        $('#bounds').val(location)
+        window.bounds_changed = true
+        Rails.fire($('.lodgings-filters').get(0), 'submit')
       window.bounds_changed = true
 
   Map.add_markers = (set_bounds = true) ->
