@@ -88,6 +88,8 @@
           marker.closePopup()
 
   update_popup = (feature) ->
-    $("#feature-price-#{feature.properties.id}").html($(".price-review-box-#{feature.properties.id}").html())
+    html = $(".price-review-box-#{feature.properties.id} .review-box").html()
+    html += "<span class='price'>#{$(".price-review-box-#{feature.properties.id} .price").html()}</span> - #{$(".price-review-box-#{feature.properties.id} .nights-text").html()}"
+    $("#feature-price-#{feature.properties.id}").html(html)
 
 ).call this

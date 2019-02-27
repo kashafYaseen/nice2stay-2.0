@@ -17,10 +17,10 @@
 }
 .lodgings-map .feature-price {
   line-height: 0.5;
-  text-align: center;
 }
-.lodgings-map .feature-price h3 {
-  margin: 2px;
+.lodgings-map .feature-price .price{
+  font-size: large;
+  color: #dc9814;
 }
 .lodgings-map .leaflet-popup-tip {
   border-left: 15px solid transparent;
