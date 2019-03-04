@@ -227,9 +227,9 @@ class Lodging < ApplicationRecord
   end
 
   def feature_description
-    description = "#{minimum_adults} - #{adults} adults <br>"
-    description += "#{minimum_children} - #{children} children <br>" if children.present?
-    description += "#{beds} beds - #{baths} bathrooms <br>"
+    description = "#{minimum_adults} - #{adults} #{I18n.t('search.adutls_1')} <br>"
+    description += "#{minimum_children} - #{children} #{I18n.t('search.children_1')} <br>" if children.present?
+    description += "#{beds} #{I18n.t('search.bedrooms')} - #{baths} #{I18n.t('search.bathrooms')} <br>"
   end
 
   def marker_color

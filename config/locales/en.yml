@@ -194,6 +194,8 @@ en:
 
   search:
     adults: Adults (>12y)
+    adutls_1: Adults
+    children_1: Children
     children: Children (4-12y)
     babies: Babies (0-3y)
     guests: Guests
