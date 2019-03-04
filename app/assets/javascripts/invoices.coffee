@@ -100,8 +100,8 @@
               total_discount += (total * discount.value/100)
             else
               total_discount += discount.value
-
-          result += discount_html("Discount", total_discount, index)
+          if total_discount > 0
+            result += discount_html("Discount", total_discount, index)
           total -= total_discount
           $("#discount_#{lodging_id}").val(total_discount)
 
@@ -150,7 +150,8 @@
           else
             total_discount += discount.value
 
-        result += discount_html("Discount", total_discount, -1)
+        if total_discount > 0
+          result += discount_html("Discount", total_discount, -1)
         total -= total_discount
         $("#discount_#{lodging_id}").val(total_discount)
 
