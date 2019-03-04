@@ -40,8 +40,8 @@
                       <p id='feature-price-#{feature.properties.id}' class='feature-price'></p>"
       marker.bindPopup popupContent,
         closeButton: false
-        maxWidth: 200
-        minWidth: 200
+        maxWidth: 220
+        minWidth: 210
     markers_layer.on 'click', (e) ->
       update_popup(e.layer.feature)
 
