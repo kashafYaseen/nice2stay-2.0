@@ -206,6 +206,38 @@ class Lodging < ApplicationRecord
     end
   end
 
+  def feature
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      },
+      properties: {
+        id: id,
+        title: name,
+        description: feature_description,
+        url: Rails.application.routes.url_helpers.lodging_path(self),
+        image: images.try(:first),
+        'marker-color': marker_color,
+        'marker-size': 'large',
+        'marker-symbol': lodging_type[0],
+      }
+    }
+  end
+
+  def feature_description
+    description = "#{minimum_adults} - #{adults} adults <br>"
+    description += "#{minimum_children} - #{children} children <br>" if children.present?
+    description += "#{beds} beds - #{baths} bathrooms <br>"
+  end
+
+  def marker_color
+    return '#1F618D' if villa?
+    return '#7D3C98' if apartment?
+    '#dc9813'
+  end
+
   private
     def add_availabilities
       Availability.bulk_insert do |availability|

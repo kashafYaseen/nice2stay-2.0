@@ -40,7 +40,7 @@
 </div>
 
 <div class="col-md-12 address-mark" id="lodging-map-location"></div>
-  <%= tag.div class: "lodgings-list-json", data: { lodgings: lodging.to_json(methods: [:address], only: [:id, :latitude, :longitude, :name, :slug]), l: params[:bounds], ids: lodging.id } %>
+  <%= tag.div class: "lodgings-list-json", data: { feature: lodging.feature} %>
 
 <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
   <div class="col-md-12 mb-30">
