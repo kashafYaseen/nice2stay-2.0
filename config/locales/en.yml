@@ -208,6 +208,7 @@ en:
     flexibility_text: flexible in dates (-/+ 2 days)
     date_filter: Arrival and Departure
     special_offer: Special Offer
+    night: night
 
   profile_account: 
      side_nav_home: Dashboard
