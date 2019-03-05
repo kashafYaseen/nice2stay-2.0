@@ -1,0 +1,29 @@
+.lodgings-map .leaflet-popup-content-wrapper {
+  background: white;
+  color: #333;
+  font-size: 16px;
+  line-height: 24px;
+}
+.lodgings-map .leaflet-popup-content-wrapper a {
+  color: #333;
+  text-align: center;
+}
+.lodgings-map .leaflet-popup-content-wrapper p {
+  font-size: small;
+}
+.lodgings-map .leaflet-popup-tip-container {
+  width: 30px;
+  height: 15px;
+}
+.lodgings-map .feature-price {
+  line-height: 0.5;
+}
+.lodgings-map .feature-price .price{
+  font-size: large;
+  color: #dc9814;
+}
+.lodgings-map .leaflet-popup-tip {
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid white;
+}
