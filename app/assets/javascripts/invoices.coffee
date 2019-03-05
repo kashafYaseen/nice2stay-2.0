@@ -93,10 +93,17 @@
 
           $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
-        if data.discount
-          discount = total * data.discount/100
-          result += discount_html(data.discount, discount)
-          total -= discount
+        if data.discounts[index]
+          total_discount = 0
+          $.each data.discounts[index], (i, discount) ->
+            if discount.discount_type == "percentage"
+              total_discount += (total * discount.value/100)
+            else
+              total_discount += discount.value
+          if total_discount > 0
+            result += discount_html("Discount", total_discount, index)
+          total -= total_discount
+          $("#discount_#{lodging_id}").val(total_discount)
 
         if total > 0
           result += total_html(total, index)
@@ -135,10 +142,18 @@
             result += cleaning_cost_html(cost, -1, nights)
         $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
-      if data.discount
-        discount = total * data.discount/100
-        result += discount_html(data.discount, discount)
-        total -= discount
+      if data.discounts
+        total_discount = 0
+        $.each data.discounts, (i, discount) ->
+          if discount.discount_type == "percentage"
+            total_discount += (total * discount.value/100)
+          else
+            total_discount += discount.value
+
+        if total_discount > 0
+          result += discount_html("Discount", total_discount, -1)
+        total -= total_discount
+        $("#discount_#{lodging_id}").val(total_discount)
 
       if total > 0
         result += total_html(total, -1)
@@ -163,9 +178,11 @@
               <span class='col-6'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
             </p>"
 
-  discount_html = (key, value) ->
-    return "<span class='col-6'>Discount #{key}%</span>
-            <span class='col-6'><b>€#{value}</b></span>"
+  discount_html = (key, value, index) ->
+   return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
+            <span class='col-6'>Discount</span>
+            <span class='col-6'><b>€#{value.toFixed(2)}</b></span>
+          </p>"
 
   cleaning_cost_html = (cost, index, nights) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
