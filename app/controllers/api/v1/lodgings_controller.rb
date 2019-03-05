@@ -7,9 +7,9 @@ class Api::V1::LodgingsController < Api::V1::ApiController
 
   def create
     @lodging = SaveLodgingDetails.call(params)
+    @lodging.reindex
 
     if @lodging.valid?
-      @lodging.reindex
       render status: :created
     else
       render json: @lodging.errors, status: :unprocessable_entity

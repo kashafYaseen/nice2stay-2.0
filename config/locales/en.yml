@@ -194,6 +194,8 @@ en:
 
   search:
     adults: Adults (>12y)
+    adutls_1: Adults
+    children_1: Children
     children: Children (4-12y)
     babies: Babies (0-3y)
     guests: Guests
@@ -206,6 +208,7 @@ en:
     flexibility_text: flexible in dates (-/+ 2 days)
     date_filter: Arrival and Departure
     special_offer: Special Offer
+    night: night
 
   profile_account: 
      side_nav_home: Dashboard

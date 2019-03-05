@@ -50,7 +50,7 @@ class Lodging < ApplicationRecord
   scope :country_page, -> { published.where(country_page: true) }
   scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
 
-  translates :title, :subtitle, :description, :meta_desc, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
+  translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
   enum lodging_type: {
     villa: 1,
@@ -211,6 +211,38 @@ class Lodging < ApplicationRecord
         availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
       end
     end
+  end
+
+  def feature
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      },
+      properties: {
+        id: id,
+        title: name,
+        description: feature_description,
+        url: Rails.application.routes.url_helpers.lodging_path(self),
+        image: images.try(:first),
+        'marker-color': marker_color,
+        'marker-size': 'large',
+        'marker-symbol': lodging_type[0],
+      }
+    }
+  end
+
+  def feature_description
+    description = "#{minimum_adults} - #{adults} #{I18n.t('search.adutls_1')} <br>"
+    description += "#{minimum_children} - #{children} #{I18n.t('search.children_1')} <br>" if children.present?
+    description += "#{beds} #{I18n.t('search.bedrooms')} - #{baths} #{I18n.t('search.bathrooms')} <br>"
+  end
+
+  def marker_color
+    return '#1F618D' if villa?
+    return '#7D3C98' if apartment?
+    '#dc9813'
   end
 
   private

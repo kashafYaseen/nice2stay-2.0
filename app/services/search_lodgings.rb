@@ -78,7 +78,7 @@ class SearchLodgings
     end
 
     def frame_coordinates
-      sw_lat, sw_lng, ne_lat, ne_lng = params[:bounds].split(",")
+      sw_lng, sw_lat, ne_lng, ne_lat = params[:bounds].split(",")
       return if sw_lng == ne_lng || sw_lat == ne_lat
       {
         geo_bounding_box: {
