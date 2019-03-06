@@ -113,7 +113,7 @@ class Reservation < ApplicationRecord
     def update_price_details
       return if skip_data_posting
       rent = calculate_rent
-      update_columns rent: rent, total_price: (rent - discount)
+      update_columns rent: rent, total_price: (rent - discount.to_f)
     end
 
     # def send_reservation_details
