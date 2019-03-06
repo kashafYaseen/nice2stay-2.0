@@ -55,7 +55,6 @@
         <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
         <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
         <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
-        <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
         <% end %>
       </div>
 
