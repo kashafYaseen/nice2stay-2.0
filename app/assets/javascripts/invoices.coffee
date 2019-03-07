@@ -85,7 +85,7 @@
             if discount.discount_type == "percentage"
               total_discount += (total * discount.value/100)
             else
-              total_discount += discount.value
+              total_discount += (discount.value * nights)
           if total_discount > 0
             result += discount_html("Discount", total_discount, index)
           total -= total_discount
@@ -134,7 +134,7 @@
           if discount.discount_type == "percentage"
             total_discount += (total * discount.value/100)
           else
-            total_discount += discount.value
+            total_discount += (discount.value * nights)
 
       if data.cleaning_costs
         total_cleaning_cost = 0
