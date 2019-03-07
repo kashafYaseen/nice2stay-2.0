@@ -79,6 +79,18 @@
         $(".reservation-form-errors-#{lodging_id}").html('');
         $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
+        if data.discounts[index]
+          total_discount = 0
+          $.each data.discounts[index], (i, discount) ->
+            if discount.discount_type == "percentage"
+              total_discount += (total * discount.value/100)
+            else
+              total_discount += discount.value
+          if total_discount > 0
+            result += discount_html("Discount", total_discount, index)
+          total -= total_discount
+          $("#discount_#{lodging_id}").val(total_discount)
+
         if data.cleaning_costs
           total_cleaning_cost = 0
           $.each data.cleaning_costs, (i, cost) ->
@@ -92,18 +104,6 @@
               result += cleaning_cost_html(cost, -1, nights)
 
           $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
-
-        if data.discounts[index]
-          total_discount = 0
-          $.each data.discounts[index], (i, discount) ->
-            if discount.discount_type == "percentage"
-              total_discount += (total * discount.value/100)
-            else
-              total_discount += discount.value
-          if total_discount > 0
-            result += discount_html("Discount", total_discount, index)
-          total -= total_discount
-          $("#discount_#{lodging_id}").val(total_discount)
 
         if total > 0
           result += total_html(total, index)
@@ -128,6 +128,14 @@
       $("#cart-#{lodging_id}").removeClass('disabled');
       $(".reservation-form-errors-#{lodging_id}").html('');
 
+      if data.discounts
+        total_discount = 0
+        $.each data.discounts, (i, discount) ->
+          if discount.discount_type == "percentage"
+            total_discount += (total * discount.value/100)
+          else
+            total_discount += discount.value
+
       if data.cleaning_costs
         total_cleaning_cost = 0
         $.each data.cleaning_costs, (index, cost) ->
@@ -141,14 +149,6 @@
             total += (cost.price_per_day * nights)
             result += cleaning_cost_html(cost, -1, nights)
         $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
-
-      if data.discounts
-        total_discount = 0
-        $.each data.discounts, (i, discount) ->
-          if discount.discount_type == "percentage"
-            total_discount += (total * discount.value/100)
-          else
-            total_discount += discount.value
 
         if total_discount > 0
           result += discount_html("Discount", total_discount, -1)
