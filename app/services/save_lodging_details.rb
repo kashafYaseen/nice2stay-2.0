@@ -30,6 +30,20 @@ class SaveLodgingDetails
       UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
       UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs], params[:cleaning_cost_ids])
       UpdateLodgingDiscounts.call(lodging, params[:discounts], params[:discount_ids])
+      update_amenities
+      update_experiences
+    end
+
+    def update_amenities
+      return unless params[:amenities].present?
+      amenities = Amenity.where(slug: params[:amenities])
+      lodging.amenities |= amenities
+    end
+
+    def update_experiences
+      return unless params[:experiences].present?
+      experiences = Experience.where(slug: params[:experiences])
+      lodging.experiences |= experiences
     end
 
     def owner
