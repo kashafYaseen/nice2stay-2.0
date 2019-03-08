@@ -3,14 +3,10 @@
     <div class="card-body bg-white">
       <div class="row">
         <div class="col-md-12 col-xs-12">
-          <h5 class="card-title"><%= lodging.name %></h5>
-        </div>
+        <h5 class="card-title"><%= lodging.name %></h5>
+      </div>
 
         <div class="col-md-5 col-lg-5 col-xs-12">
-          <% if lodging.all_discounts.present? %>
-            <span class="product-badge text-danger">Special offer</span>
-          <% end %>
-
           <div class="owl-carousel">
             <%= render_image_tags lodging, class: "card-img-top" %>
           </div>

@@ -32,17 +32,13 @@ class LodgingsController < ApplicationController
     if @lodging.flexible_search
       @rates = results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }}
       @search_params = results.map{ |result| result[:search_params] }
-      @discounts = []
-      @search_params.each do |param|
-        @discounts << @lodging.discount_details([param[:check_in], param[:check_out]])
-      end
       @valid = results.map{ |result| result[:valid] }
     else
       @rates = results[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }
       @search_params = results[:search_params]
       @valid = results[:valid]
-      @discounts = @lodging.discount_details(params[:values].split(','))
     end
+    @discount = @lodging.discount_details(params[:values].split(','))
     @cleaning_costs = @lodging.cleaning_costs.for_guests(params[:values].split(',')[2].to_i + params[:values].split(',')[3].to_i)
   end
 

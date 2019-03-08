@@ -64,10 +64,6 @@ class Reservation < ApplicationRecord
     self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum
   end
 
-  def calculate_discount
-    self.discount = ((lodging.discount_details([check_in, check_out]) || 0) / 100) * rent
-  end
-
   def step_passed?(step)
     Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
   end
@@ -116,8 +112,8 @@ class Reservation < ApplicationRecord
 
     def update_price_details
       return if skip_data_posting
-      rent, discount = calculate_rent, calculate_discount
-      update_columns rent: rent, discount: discount, total_price: (rent - discount)
+      rent = calculate_rent
+      update_columns rent: rent, total_price: (rent - discount.to_f)
     end
 
     # def send_reservation_details

@@ -85,7 +85,7 @@
             if discount.discount_type == "percentage"
               total_discount += (total * discount.value/100)
             else
-              total_discount += discount.value
+              total_discount += (discount.value * (nights-1))
           if total_discount > 0
             result += discount_html("Discount", total_discount, index)
           total -= total_discount
@@ -134,7 +134,12 @@
           if discount.discount_type == "percentage"
             total_discount += (total * discount.value/100)
           else
-            total_discount += discount.value
+            total_discount += (discount.value * (nights-1))
+
+        if total_discount > 0
+          result += discount_html("Discount", total_discount, -1)
+        total -= total_discount
+        $("#discount_#{lodging_id}").val(total_discount)
 
       if data.cleaning_costs
         total_cleaning_cost = 0
@@ -149,11 +154,6 @@
             total += (cost.price_per_day * nights)
             result += cleaning_cost_html(cost, -1, nights)
         $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
-
-        if total_discount > 0
-          result += discount_html("Discount", total_discount, -1)
-        total -= total_discount
-        $("#discount_#{lodging_id}").val(total_discount)
 
       if total > 0
         result += total_html(total, -1)
@@ -178,11 +178,9 @@
               <span class='col-6'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
             </p>"
 
-  discount_html = (key, value, index) ->
-   return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
-            <span class='col-6'>Discount</span>
-            <span class='col-6'><b>€#{value.toFixed(2)}</b></span>
-          </p>"
+  discount_html = (key, value) ->
+    return "<span class='col-6'>Discount #{key}%</span>
+            <span class='col-6'><b>€#{value}</b></span>"
 
   cleaning_cost_html = (cost, index, nights) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
