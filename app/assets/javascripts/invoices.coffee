@@ -178,9 +178,11 @@
               <span class='col-6'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
             </p>"
 
-  discount_html = (key, value) ->
-    return "<span class='col-6'>Discount #{key}%</span>
-            <span class='col-6'><b>€#{value}</b></span>"
+  discount_html = (key, value, index) ->
+   return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
+            <span class='col-6'>Discount</span>
+            <span class='col-6'><b>€#{value.toFixed(2)}</b></span>
+          </p>"
 
   cleaning_cost_html = (cost, index, nights) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
