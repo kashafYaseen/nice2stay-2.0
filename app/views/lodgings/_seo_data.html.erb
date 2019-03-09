@@ -1,12 +1,3 @@
-<% if params[:country].present? %>
-  <div class="alert alert-primary alert-dismissible fade show text-center margin-bottom-1x">
-    <span class="alert-close" data-dismiss="alert"></span>
-    <i class="icon-layers"></i><%= t 'zoomed.part_1' %>
-    <strong><%= "#{params[:region]}, " if params[:region].present? %><%= params[:country] %></strong>.
-    <%= t 'zoomed.part_2' %>
-  </div>
-<% end %>
-
 <% if custom_text.present? %>
   <div class="col-md-12 ml-3">
     <h4><%= custom_text.h1_text %></h4>
