@@ -33,7 +33,7 @@ en:
   helpers:
     page_entries_info:
       more_pages:
-        display_entries: "<b>%{first}</b>&mdash;<b>%{last}</b> of <b>%{total}</b>"
+        display_entries: "%{first}&mdash;%{last}(%{total})"
   enumerize:
     accommodation:
       type:
@@ -51,7 +51,7 @@ en:
     amentities: Amentities
     dates: 'data'
     guests: 'Guests'
-    sort_by: 'sorteer op'
+    sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
     apartment: Apartments

@@ -9,17 +9,18 @@
     <aside class="sidebar sidebar-offcanvas position-left">
       <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
 
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="row">
-          <div class="col-md-2 pr-2 ">
+          
             <div class="pt-2 pb-sm-3 text-xxs">
               <span class="text-muted mr-2 lodgings-heading">
+                
                 <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
               </span>
             </div>
-          </div>
+          
 
-          <section class="col-md-2 mr-1 p-0">
+          <section class="mr-1 p-0">
             <div class="price-dropdown dropdown">
               <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= render_sort_text %></span>
@@ -36,13 +37,13 @@
             </div>
           </section>
 
-          <section class="col-md-2 p-0">
+          <section class="p-0">
             <div id="datepicker"></div>
 
           </section>
 
         
-          <section class="col-md-2 p-0">
+          <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= t('search.guests') %></span>
@@ -71,7 +72,7 @@
             </div>
           </section>
 
-          <section class="col-md-2 p-0">
+          <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Type</span>
@@ -93,7 +94,7 @@
             </div>
           </section>
 
-          <section class="col-md-2 p-0">
+          <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Prijs</span>
@@ -122,7 +123,7 @@
           </section>
 
 
-           <section class="col-md-2 p-0 mr-2">
+           <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Experience</span>
@@ -145,7 +146,7 @@
           </section>
 
 
-          <section class="col-md-2 p-0">
+          <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Amentities</span>
