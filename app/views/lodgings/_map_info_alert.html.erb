@@ -1,0 +1,29 @@
+
+<% if params[:country].present? %>
+<div class="col-lg-12">
+<div class="card">
+	
+    <div class="card-body bg-white">
+   	<div class="row">
+   	<div class="col-lg-10">
+      
+    <h5 class="card-title"><%= t 'zoomed.part_1' %> 
+    	
+    	<%= "#{params[:country].capitalize }"%>
+    	
+	</h5>
+    <p class="text-xxs">
+    <%= t 'zoomed.part_2' %>
+  </p>
+        
+    </div>
+   
+ 
+   <div class="col-lg-2">
+   	<%= image_tag("map_info_icon.jpg", :alt => "visit") %>
+   	 </div>
+   </div>
+    </div>
+      </div>
+   </div>
+ <% end %>
