@@ -35,15 +35,13 @@ class SaveLodgingDetails
     end
 
     def update_amenities
-      return unless params[:amenities].present?
       amenities = Amenity.where(slug: params[:amenities])
-      lodging.amenities |= amenities
+      lodging.amenities = amenities
     end
 
     def update_experiences
-      return unless params[:experiences].present?
       experiences = Experience.where(slug: params[:experiences])
-      lodging.experiences |= experiences
+      lodging.experiences = experiences
     end
 
     def owner

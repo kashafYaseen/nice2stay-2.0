@@ -25,12 +25,8 @@ class SaveExperienceDetails
     end
 
     def save_lodgings
-      return unless params[:lodgings].present?
-      params[:lodgings].each do |lodging_params|
-        lodging = Lodging.find_by(slug: lodging_params[:slug])
-        next unless lodging.present?
-        experience.lodgings << lodging unless experience.lodgings.find_by(id: lodging.id).present?
-      end
+      lodgings = Lodging.where(slug: params[:lodgings])
+      experience.lodgings = lodgings
     end
 
     def update_translations
