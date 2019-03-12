@@ -41,6 +41,7 @@ class SearchLodgings
       conditions << { term: { published: true } }
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
+      conditions << { term: { discounts: true } } if params[:discounts].present?
 
       conditions << { terms: { country: params[:countries_in] } } if params[:countries_in].present?
 
@@ -72,6 +73,7 @@ class SearchLodgings
         lodging_type: { terms: { field: :lodging_type } },
         amenities: { terms: { field: :amenities_ids, size: Amenity.count } },
         experiences: { terms: { field: :experiences_ids, size: Experience.count } },
+        discounts: { terms: { field: :discounts } },
       }
     end
 
