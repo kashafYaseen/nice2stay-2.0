@@ -202,6 +202,7 @@ nl:
     check_out: vertrek
     date_filter: Aankomst en Vetrek
     flexibility_text: flexibel qua data (-/+ 2 dagen)
+    special_offer: Speciale Aanbieding
     night: nacht
 
   footer:

@@ -8,22 +8,13 @@
   
     <aside class="sidebar sidebar-offcanvas position-left">
       <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
-
       <div class="col-md-12">
-        <div class="row">
-          
-          
-            
-
-       
-           <section class="mr-1 p-0 ml-1">
-              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
-              </button>
-                
-               
-            </section>
-          
+        <div class="row">       
+          <section class="mr-1 p-0 ml-1">
+            <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
+            </button>
+          </section>
 
           <section class="mr-1 p-0">
             <div class="price-dropdown dropdown">
@@ -44,10 +35,8 @@
 
           <section class="p-0">
             <div id="datepicker"></div>
-
           </section>
 
-        
           <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -124,11 +113,20 @@
                       </div>
                     </footer>
                   </div>
+                </div>
+
+                <div class="dropdown-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input amenities" %>
+                    <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
+                      &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
-
-           <section class="p-0">
+          <section class="p-0">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Experience</span>
@@ -146,10 +144,10 @@
                       </label>
                     </div>
                   <% end %>
+                </div>
               </div>
             </div>
           </section>
-
 
           <section class="p-0">
             <div class="dropdown guests-dropdown">
@@ -181,19 +179,6 @@
               </div>
             </div>
           </section>
-
-         
-         
-
-          
-
-         
-
-         
-
-         
-
-           
 
           <section class="widget d-block d-sm-none">
             <p class="widget-title"><%= t 'nav.landen' %></p>
