@@ -37,7 +37,6 @@
 
           <section class="p-0">
             <div id="datepicker"></div>
-
           </section>
 
         
@@ -117,8 +116,16 @@
                       </div>
                     </footer>
                   </div>
-            </div>
-          </section>
+
+                  <div class="dropdown-item pl-0">
+                    <div class="custom-control custom-checkbox">
+                      <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input amenities" %>
+                      <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
+                      &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
 
            <section class="p-0">
             <div class="dropdown guests-dropdown">
