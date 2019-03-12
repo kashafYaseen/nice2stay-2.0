@@ -18,7 +18,8 @@
           <div class="product-info text-medium">
             <span><em><strong><%= t "nav_cart.type" %>: </strong></em><%= t("bookings.#{reservation.booking_status}") %></span>
             <span><em><strong><%= t "carts.cleaning" %>: </strong></em> <%= render_rounded_price reservation.cleaning_cost %></span>
-            <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price reservation.rent.to_f + reservation.cleaning_cost.to_f %></span>
+            <span><em><strong>Discount:</strong></em> <%= render_rounded_price reservation.discount.to_f %></span>
+            <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span>
             <span><em><strong><%= t "nav_cart.nights" %>:</strong></em> <%= reservation.total_nights %></span>
             <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>
             <span><em><strong><%= t "nav_cart.checkout" %>:</strong></em> <%= reservation.check_out %></span>

@@ -20,7 +20,7 @@ class ReservationsController < ApplicationController
 
   private
     def reservation_params
-      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :booking_status, :cleaning_cost)
+      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :booking_status, :cleaning_cost, :discount)
     end
 
     def set_booking_and_cookie
