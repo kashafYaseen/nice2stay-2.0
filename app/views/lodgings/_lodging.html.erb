@@ -6,13 +6,13 @@
         <h5 class="card-title"><%= lodging.name %></h5>
       </div>
 
-        <div class="col-md-6 col-lg-6 col-xs-12">
+        <div class="col-md-6 col-lg-5 col-xs-12">
           <div class="owl-carousel">
             <%= render_image_tags lodging, class: "card-img-top" %>
           </div>
         </div>
 
-        <div class="col-md-6 col-lg-6 col-xs-12">
+        <div class="col-md-6 col-lg-7 col-xs-12">
           <%= link_to render_lodging_path(lodging), class: "text-decoration-none row" do %>
             <div class="col-md-9 col-xs-12">
               <p class="text-xxs">
