@@ -18,8 +18,9 @@
             <th class="text-center">Adults</th>
             <th class="text-center">Children</th>
             <th class="text-center">Infants</th>
-            <th class="text-center">Price</th>
+            <th class="text-center">Cleaning Cost</th>
             <th class="text-center">Discount</th>
+            <th class="text-center">Price</th>
             <th class="text-center">Status</th>
           </tr>
         </thead>
@@ -31,8 +32,9 @@
             <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
             <td class="text-center text-lg text-medium"><%= reservation.children %></td>
             <td class="text-center text-lg text-medium"><%= reservation.infants %></td>
-            <td class="text-center text-lg text-medium">€<%= reservation.rent %></td>
-            <td class="text-center text-lg text-medium">€<%= reservation.discount %></td>
+            <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.cleaning_cost %></td>
+            <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.discount %></td>
+            <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
             <td class="text-center text-lg text-medium"><%= render_request_status reservation.request_status %></td>
           </tr>
         </tbody>
