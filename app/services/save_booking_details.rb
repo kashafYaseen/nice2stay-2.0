@@ -100,6 +100,7 @@ class SaveBookingDetails
         :request_status,
         :in_cart,
         :canceled,
+        :booked_by,
         :created_at,
         :updated_at,
       )
