@@ -2,6 +2,10 @@
   window.SortingDropdown or (window.SortingDropdown = {})
 
   SortingDropdown.init = ->
+    if $('.price-dropdown .dropdown-toggle .title').text() != "Sort"
+      $('.price-dropdown .dropdown-toggle').addClass 'btn-primary'
+      $('.price-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'
+
     $('.sorting-dropdown-menu .dropdown-item').click ->
       $('.price-dropdown .dropdown-toggle').addClass 'btn-primary'
       $('.price-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'

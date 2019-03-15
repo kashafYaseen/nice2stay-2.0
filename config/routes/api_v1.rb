@@ -1,6 +1,8 @@
 namespace :api do
   namespace :v1 do
-    resources :lodgings
+    resources :lodgings do
+      get :reindex, on: :collection
+    end
     resources :reservations
     resources :campaigns
     resources :amenities, only: [:create]

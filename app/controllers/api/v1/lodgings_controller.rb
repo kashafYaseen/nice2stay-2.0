@@ -24,6 +24,11 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     end
   end
 
+  def reindex
+    Lodging.reindex
+    render json: { reindex: true }, status: :ok
+  end
+
   private
     def set_lodging
       @lodging = Lodging.find_by(id: params[:id])
