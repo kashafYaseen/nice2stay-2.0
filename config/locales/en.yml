@@ -209,6 +209,7 @@ en:
     date_filter: Arrival and Departure
     special_offer: Special Offer
     night: night
+    updated_availability: Updated Availability
 
   profile_account: 
      side_nav_home: Dashboard
