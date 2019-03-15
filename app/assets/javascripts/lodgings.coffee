@@ -8,37 +8,12 @@
     initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
 
-    $('.search-filters .lodging_type, .countries').change ->
+    $('.countries').change ->
       $('#loader').show();
       Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
     SortingDropdown.init()
-
-    $('.amenities, .experiences').change ->
-      checked = $(".amenities-list input:checked, .experiences-list input:checked").length
-      if checked > 0
-        $('.more-filters-btn').addClass 'btn-primary'
-        $('.more-filters-btn').removeClass 'btn-outline-primary'
-        $('.more-filters-btn').text("More Filters .#{checked}")
-      else
-        $('.more-filters-btn').addClass 'btn-outline-primary'
-        $('.more-filters-btn').removeClass 'btn-primary'
-        $('.more-filters-btn').text("More Filters")
-
-    $('.submit-filters').click ->
-      $('#loader').show();
-      Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
-      $('#more-filters').modal('hide');
-
-    $('#more-filters-btn').click (e) ->
-      more_filters_dropdown('toggle')
-      e.stopPropagation();
-
-    $('.more-filter-dropdown-menu').click (e) ->
-      e.stopPropagation();
-
-    $(document).click ->
-      more_filters_dropdown('close')
+    Filters.init()
 
     $('.show-all-filters').click (e) ->
       e.stopPropagation()
