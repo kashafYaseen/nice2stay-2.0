@@ -178,11 +178,16 @@ div.fixed-standalone {
   right: 4%;
 }
 
+div.top-50 {
+  top: 50px;
+}
+
 div.fixed-map {
   position: fixed;
   right: 0;
   padding: 0;
- }
+  top: 130px;
+}
 
 nav.fixed-filters {
   top: 70px;
@@ -295,6 +300,12 @@ div.review-paginator {
   background-color: white;
   transition: top 0.3s;
   top: 20px;
-  
+}
 
+.search-filters {
+  position: fixed;
+  z-index: 2;
+  max-height: 57px;
+  min-height: 60px;
+  margin-left: 15px;
 }
