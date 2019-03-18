@@ -1,15 +1,10 @@
 <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
   <div class="col-lg-12 col-md-12">
-    <div class="sidebar-toggle position-left">
-      <i class="material-icons filter_list"></i>
-    </div>
-
-    <aside class="sidebar sidebar-offcanvas position-left">
-      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+    <aside class="sidebar">
       <div class="col-md-12">
-        <div class="row">
-          <section class="mr-1 p-0 ml-1">
+        <div class="row">       
+          <section class="mr-1 p-0 ml-1 d-none d-sm-block">
             <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
             </button>
@@ -116,7 +111,7 @@
 
                 <div class="dropdown-item">
                   <div class="custom-control custom-checkbox">
-                    <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input amenities" %>
+                    <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input discounts" %>
                     <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
                       &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
                   </div>
@@ -125,16 +120,26 @@
             </div>
           </section>
 
-          <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal" data-target="#more-filters">More Filters</button>
+          <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal">More Filters</button>
         </div>
       </div>
     </aside>
   </div>
 
-  <div class="modal fade" id="more-filters" tabindex="-1" role="dialog">
+  <div class="modal fade" id="more-filters" tabindex="-1" role="dialog" style="z-index: 100">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-5">
+          <section class="experiences-list row mb-4">
+            <p class="widget-title"><%= t('search.updated_availability') %></h3>
+
+            <div class="custom-control custom-checkbox col-md-12">
+              <%= check_box_tag :checked, true, params[:checked], class: "custom-control-input amenities" %>
+              <%= label_tag :checked, t('search.updated_availability'), class: 'text-xxxs custom-control-label' %>
+              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked') %>)</span>
+            </div>
+          </section>
+
           <section class="row experiences-list">
             <p class="p-0 col-md-12"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>
@@ -173,6 +178,7 @@
         </div>
 
         <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
           <button class="btn btn-white btn-sm submit-filters" type="button">Apply</button>
         </div>
       </div>

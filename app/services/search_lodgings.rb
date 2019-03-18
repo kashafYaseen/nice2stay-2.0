@@ -39,6 +39,7 @@ class SearchLodgings
       conditions = []
       merge_seo_filters conditions
       conditions << { term: { published: true } }
+      conditions << { term: { checked: params[:checked] } } if params[:checked].present?
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
       conditions << { term: { discounts: true } } if params[:discounts].present?
@@ -74,6 +75,7 @@ class SearchLodgings
         amenities: { terms: { field: :amenities_ids, size: Amenity.count } },
         experiences: { terms: { field: :experiences_ids, size: Experience.count } },
         discounts: { terms: { field: :discounts } },
+        checked: { terms: { field: :checked } },
       }
     end
 

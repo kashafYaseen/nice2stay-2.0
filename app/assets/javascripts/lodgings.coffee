@@ -8,7 +8,7 @@
     initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
 
-    $('.countries').change ->
+    $('.countries, .discounts').change ->
       $('#loader').show();
       Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 

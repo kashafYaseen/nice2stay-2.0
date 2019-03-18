@@ -5,6 +5,10 @@
     updated_amenities_and_experiences()
     update_lodging_types()
 
+    $('.more-filters-btn').click ->
+      $('#more-filters').modal('toggle')
+      $('.modal-backdrop').css('z-index', 1);
+
     $('.amenities, .experiences').change ->
       updated_amenities_and_experiences()
 
