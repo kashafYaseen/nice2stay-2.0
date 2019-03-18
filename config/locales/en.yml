@@ -210,6 +210,7 @@ en:
     special_offer: Special Offer
     night: night
     updated_availability: Updated Availability
+    price: Price
 
   profile_account: 
      side_nav_home: Dashboard

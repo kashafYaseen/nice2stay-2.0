@@ -4,6 +4,7 @@
   Filters.init = ->
     updated_amenities_and_experiences()
     update_lodging_types()
+    Filters.update_prices()
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
@@ -12,15 +13,24 @@
     $('.amenities, .experiences').change ->
       updated_amenities_and_experiences()
 
+    $('.discounts').change ->
+      Filters.update_prices()
+      Filters.submit()
+
+    $('.countries').change ->
+      Filters.submit()
+
     $('.submit-filters').click ->
-      $('#loader').show();
-      Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
+      Filters.submit()
       $('#more-filters').modal('hide');
 
     $('.search-filters .lodging_type').change ->
       update_lodging_types()
-      $('#loader').show()
-      Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
+      Filters.submit()
+
+  Filters.submit = ->
+    $('#loader').show()
+    Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
   updated_amenities_and_experiences = ->
     checked = $(".amenities-list input:checked, .experiences-list input:checked").length
@@ -37,5 +47,13 @@
     if $('.lodging-types-list input:checked').length > 0
       $('#dropdownMenuButton3').addClass 'btn-primary'
       $('#dropdownMenuButton3').removeClass 'btn-outline-primary'
+
+  Filters.update_prices = ->
+    if $('.price-range-slider #min_price').val() == "0" && $('.price-range-slider #max_price').val() == "1500" && $('.discounts:checked').length == 0
+      $('#dropdownMenuButton4').removeClass 'btn-primary'
+      $('#dropdownMenuButton4').addClass 'btn-outline-primary'
+    else
+      $('#dropdownMenuButton4').addClass 'btn-primary'
+      $('#dropdownMenuButton4').removeClass 'btn-outline-primary'
 
 ).call this

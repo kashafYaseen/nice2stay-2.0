@@ -7,11 +7,6 @@
     OwlCarousel.init()
     initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
-
-    $('.countries, .discounts').change ->
-      $('#loader').show();
-      Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
-
     SortingDropdown.init()
     Filters.init()
 
