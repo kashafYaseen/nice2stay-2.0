@@ -35,6 +35,7 @@
           bar.value = Math.round(value)
 
       elem.noUiSlider.on 'end', (_meta, index) ->
+        Filters.update_prices()
         $('.lodgings-filters').submit()
 
 ).call this
