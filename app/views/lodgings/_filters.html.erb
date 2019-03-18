@@ -135,6 +135,17 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-5">
+
+          <section class="experiences-list row mb-4">
+            <p class="widget-title"><%= t('search.updated_availability') %></h3>
+
+            <div class="custom-control custom-checkbox col-md-12">
+              <%= check_box_tag :checked, true, params[:checked], class: "custom-control-input amenities" %>
+              <%= label_tag :checked, t('search.updated_availability'), class: 'text-xxxs custom-control-label' %>
+              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked') %>)</span>
+            </div>
+          </section>
+
           <section class="row experiences-list">
             <p class="p-0 col-md-12"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>

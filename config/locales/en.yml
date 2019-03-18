@@ -209,6 +209,7 @@ en:
     date_filter: Arrival and Departure
     special_offer: Special Offer
     night: night
+    updated_availability: Updated Availability
 
   profile_account: 
      side_nav_home: Dashboard
@@ -580,3 +581,12 @@ of the accommodation."
     arrival_email_sent: Arrival email send
     option: Option request
     request_price: Price request
+
+  not_live_standalone:
+    The availability of this property is not (always) up to date!
+    Our <a href="mailto:support@nice2stay.com">Booking Consultants</a> will contact you a.s.a.p. after your request.
+
+  not_live_parent:
+    The availability of this property is not (always) up to date!
+    Select the desired period and accommodation.
+    Our <a href="mailto:support@nice2stay.com">Booking Consultants</a> will contact you immediately after your request.

@@ -204,6 +204,7 @@ nl:
     flexibility_text: flexibel qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     night: nacht
+    updated_availability: Bijgewerkte Beschikbaarheid
 
   footer:
     support: Wilt u direct contact? 
@@ -763,3 +764,11 @@ nl:
     arrival_email_sent: Aankomst email verstuurd
     option: Optie aanvraag
     request_price: Prijs verzoek
+
+  not_live_standalone:
+    De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!
+    Onze <a href="mailto:support@nice2stay.com">Booking Consultants</a> nemen z.s.m. na uw aanvraag contact met u op.
+
+  not_live_parent:
+    De beschikbaarheid van deze accommodatie is niet (altijd) up to date!
+    Selecteer de gewenste periode en accommodatie, onze <a href="mailto:support@nice2stay.com">Booking Consultants</a> nemen z.s.m. na uw aanvraag contact met u op.
