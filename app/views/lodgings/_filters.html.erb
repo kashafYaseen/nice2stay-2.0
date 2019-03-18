@@ -120,17 +120,16 @@
             </div>
           </section>
 
-          <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal" data-target="#more-filters">More Filters</button>
+          <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal">More Filters</button>
         </div>
       </div>
     </aside>
   </div>
 
-  <div class="modal fade" id="more-filters" tabindex="-1" role="dialog">
+  <div class="modal fade" id="more-filters" tabindex="-1" role="dialog" style="z-index: 100">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-5">
-
           <section class="experiences-list row mb-4">
             <p class="widget-title"><%= t('search.updated_availability') %></h3>
 
@@ -179,6 +178,7 @@
         </div>
 
         <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
           <button class="btn btn-white btn-sm submit-filters" type="button">Apply</button>
         </div>
       </div>
