@@ -186,7 +186,6 @@ div.fixed-map {
   position: fixed;
   right: 0;
   padding: 0;
-  top: 130px;
 }
 
 nav.fixed-filters {
@@ -311,9 +310,7 @@ div.review-paginator {
 }
 
 .search-filters #more-filters.modal {
-  top: 100px;
-  right: auto;
-  left: 10px;
+  top: 50px;
 }
 .search-filters #more-filters .modal-body {
   max-height: 74vh;
