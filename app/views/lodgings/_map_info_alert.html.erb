@@ -1,29 +1,21 @@
+<% if params[:country].present? || params[:region].present? %>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body bg-white">
+        <div class="row">
+          <div class="col-lg-10">
+            <h5 class="card-title"><%= t 'collection.inspiration' %> in <%= @custom_text.collection_name %></h5>
 
-<% if params[:country].present? %>
-<div class="col-lg-12">
-<div class="card">
-	
-    <div class="card-body bg-white">
-   	<div class="row">
-   	<div class="col-lg-10">
-      
-    <h5 class="card-title"><%= t 'zoomed.part_1' %> 
-    	
-    	<%= "#{params[:country].capitalize }"%>
-    	
-	</h5>
-    <p class="text-xxs">
-    <%= t 'zoomed.part_2' %>
-  </p>
-        
-    </div>
-   
+            <% @custom_text.collections.each do |custom_text| %>
+              <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
+            <% end %>
+          </div>
  
-   <div class="col-lg-2">
-   	<%= image_tag("map_info_icon.jpg", :alt => "visit") %>
-   	 </div>
-   </div>
-    </div>
+          <div class="col-lg-2">
+            <%= image_tag("inspiration_icon.jpg", alt: "visit") %>
+          </div>
+        </div>
       </div>
-   </div>
- <% end %>
+    </div>
+  </div>
+<% end %>
