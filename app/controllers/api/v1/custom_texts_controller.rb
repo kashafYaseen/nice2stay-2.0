@@ -43,6 +43,7 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :menu_title,
         :inspiration,
         :popular,
+        :show_page,
       )
     end
 
