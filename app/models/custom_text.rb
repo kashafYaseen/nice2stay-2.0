@@ -22,4 +22,15 @@ class CustomText < ApplicationRecord
       return send(method)
     end
   end
+
+  def collection_name
+    return region.name.capitalize if region.present?
+    return country.name.capitalize if country.present?
+  end
+
+  def collections
+    return region.custom_texts.region_page if region.present?
+    return country.custom_texts.country_page if country.present?
+    []
+  end
 end
