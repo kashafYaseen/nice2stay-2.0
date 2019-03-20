@@ -1,8 +1,14 @@
 <% if custom_text.present? %>
-  <div class="col-md-12 ml-3">
-    <h4><%= custom_text.h1_text %></h4>
-    <p class="text-xs mt-2"><%= custom_text.p_text.try(:html_safe) %></p>
-  </div>
+  <div class="ml-3 pt-2 pl-3 pr-3">
+    <div class="card">
+      <div class="card-body bg-white">
+        <div class="col-md-12">
+          <h4><%= custom_text.h1_text %></h4>
+          <p class="text-xs mt-2"><%= custom_text.p_text.try(:html_safe) %></p>
+        </div>
 
-  <%= render 'shared/meta_tags', resource: custom_text %>
+        <%= render 'shared/meta_tags', resource: custom_text %>
+      </div>
+    </div>
+  </div>
 <% end %>

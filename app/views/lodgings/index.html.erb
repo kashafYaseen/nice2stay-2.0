@@ -11,27 +11,30 @@
 
   <div class="col-lg-7 col-md-8 top-50">
     <div class="row">
-      <div class="seo-data">
+      <div class="seo-data bg-secondary">
         <%= render 'seo_data', custom_text: @custom_text %>
       </div>
 
-      <div class="col-md-12 ">
-        <div class="row mb-2 lodgings-list bg-secondary" id="lodgings-list">
-          
-          <%= render 'map_info_alert' %>
+      <div class="col-md-12">
+        <div class="row pl-3 lodgings-list bg-secondary" id="lodgings-list">
+          <%= render 'map_info_alert', custom_text: @custom_text %>
           <%= render 'lodgings_list', lodgings: @lodgings %>
         </div>
       </div>
 
       <%= render 'login_info_alert' %>
-      <div class="col-lg-12 mb-5">
-        <div class="pagination-info text-right">
-          <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
-        </div>
 
+      <div class="col-lg-12 mb-5 bg-secondary">
+        <div class="card ml-3 bg-white">
+          <div class="card-body">
+            <div class="pagination-info text-right">
+              <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+            </div>
 
-        <div class="pagination">
-          <%= paginate @lodgings, remote: true, window: 3 %>
+            <div class="pagination">
+              <%= paginate @lodgings, remote: true, window: 3 %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
