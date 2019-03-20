@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_19_124821) do
+ActiveRecord::Schema.define(version: 2019_03_20_114836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,15 @@ ActiveRecord::Schema.define(version: 2019_03_19_124821) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_cleaning_costs_on_lodging_id"
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.bigint "parent_id"
+    t.bigint "relative_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_collections_on_parent_id"
+    t.index ["relative_id"], name: "index_collections_on_relative_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -719,6 +728,8 @@ ActiveRecord::Schema.define(version: 2019_03_19_124821) do
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
   add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
+  add_foreign_key "collections", "custom_texts", column: "parent_id", on_delete: :cascade
+  add_foreign_key "collections", "custom_texts", column: "relative_id", on_delete: :cascade
   add_foreign_key "countries_leads", "countries", on_delete: :cascade
   add_foreign_key "countries_leads", "leads", on_delete: :cascade
   add_foreign_key "custom_texts", "countries", on_delete: :cascade

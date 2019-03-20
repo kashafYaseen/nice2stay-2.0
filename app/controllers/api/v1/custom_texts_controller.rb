@@ -8,6 +8,7 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
 
     if @custom_text.save(validate: false)
       update_translations(params, @custom_text)
+      update_relatives(params, @custom_text)
       Rails.application.reload_routes!
       render json: @custom_text, status: :created
     else
@@ -22,6 +23,12 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
       _translation.attributes = translation_params(translation)
       _translation.save
     end
+  end
+
+  def update_relatives(params, custom_text)
+    return unless params[:custom_text][:relatives].present?
+    relatives = CustomText.where(crm_id: params[:custom_text][:relatives])
+    custom_text.relatives = relatives
   end
 
   private

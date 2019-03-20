@@ -3,6 +3,9 @@ class CustomText < ApplicationRecord
   belongs_to :region, optional: true
   belongs_to :experience, optional: true
 
+  has_many :collections, foreign_key: 'parent_id'
+  has_many :relatives, through: :collections
+
   translates :h1_text, :p_text, :meta_title, :meta_description, :category, :seo_path, :menu_title
 
   delegate :slug, to: :country, prefix: true, allow_nil: true
