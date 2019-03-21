@@ -9,6 +9,7 @@
         @date-one-selected="val => { check_in = val }"
         @date-two-selected="val => { check_out = val }"
         :months-to-show="this.monthsToShow"
+        :fullscreenMobile="true"
         @apply="onApplyMethod"
         :min-date="this.yesterday"
       ></airbnb-style-datepicker>
@@ -68,3 +69,9 @@
     }
   }
 </script>
+
+<style scoped>
+.asd__wrapper--full-screen {
+  top: 74px;
+}
+</style>
