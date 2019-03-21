@@ -7,7 +7,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings.json
   def index
     @custom_text = CustomText.find_by(id: params[:custom_text])
-    @custom_texts = CustomText.home_page unless @custom_text.present?
+    @collection = @custom_text.present? ? @custom_text.relatives : CustomText.home_page
     @lodgings = SearchLodgings.call(params, @custom_text)
     @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @amenities = Amenity.includes(:translations).all

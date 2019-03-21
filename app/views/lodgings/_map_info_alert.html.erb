@@ -1,24 +1,4 @@
-<% if custom_text.present? && custom_text.show_page? %>
-  <div class="col-lg-12 p-3">
-    <div class="card">
-      <div class="card-body bg-white">
-        <div class="row">
-          <div class="col-10 my-auto">
-            <h5 class="card-title"><%= t 'collection.inspiration' %> in <%= custom_text.collection_name %></h5>
-
-            <% custom_text.collections.each do |collection| %>
-              <%= link_to "#{collection.menu_title}", seo_url(collection.seo_path), class: 'tag' %>
-            <% end %>
-          </div>
-
-          <div class="col-2 my-auto">
-            <%= image_tag("inspiration_icon.png", alt: "visit") %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<% elsif @custom_texts.present? %>
+<% if collection.present? %>
   <div class="col-lg-12 p-3">
     <div class="card">
       <div class="card-body bg-white">
@@ -26,11 +6,11 @@
           <div class="col-10 my-auto">
             <h5 class="card-title"><%= t 'collection.inspiration' %></h5>
 
-            <% @custom_texts.each do |collection| %>
-              <%= link_to "#{collection.menu_title}", seo_url(collection.seo_path), class: 'tag' %>
+            <% collection.each do |custom_text| %>
+              <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path, query_params.to_query), class: 'tag' %>
             <% end %>
           </div>
- 
+
           <div class="col-2 my-auto">
             <%= image_tag("inspiration_icon.png", alt: "visit") %>
           </div>
