@@ -4,13 +4,13 @@
     <aside class="sidebar">
       <div class="col-md-12">
         <div class="row">       
-          <section class="mr-1 p-0 ml-1 d-none d-sm-block">
+          <section class="d-none d-sm-block">
             <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
             </button>
           </section>
 
-          <section class="mr-1 p-0">
+          <section>
             <div class="price-dropdown dropdown">
               <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= render_sort_text %></span>
@@ -27,11 +27,11 @@
             </div>
           </section>
 
-          <section class="p-0">
+          <section>
             <div id="datepicker"></div>
           </section>
 
-          <section class="p-0">
+          <section>
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= t('search.guests') %></span>
@@ -60,7 +60,7 @@
             </div>
           </section>
 
-          <section class="p-0 lodging-types-list">
+          <section class="lodging-types-list">
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Type</span>
@@ -82,7 +82,7 @@
             </div>
           </section>
 
-          <section class="p-0">
+          <section>
             <div class="dropdown guests-dropdown">
               <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= t('search.price') %></span>
