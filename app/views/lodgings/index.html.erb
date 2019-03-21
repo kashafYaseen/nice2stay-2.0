@@ -11,13 +11,16 @@
 
   <div class="col-lg-7 col-md-8 top-50">
     <div class="row">
-      <div class="seo-data bg-secondary">
+      <div class="seo-data bg-secondary w-100">
         <%= render 'seo_data', custom_text: @custom_text %>
+      </div>
+
+      <div class="map-info-data pl-3 bg-secondary w-100">
+        <%= render 'map_info_alert', collection: @collection %>
       </div>
 
       <div class="col-md-12">
         <div class="row pl-3 lodgings-list bg-secondary" id="lodgings-list">
-          <%= render 'map_info_alert', custom_text: @custom_text %>
           <%= render 'lodgings_list', lodgings: @lodgings %>
         </div>
       </div>
