@@ -1,5 +1,5 @@
 module CustomTextsHelper
-  def seo_url(path)
-    "#{request.base_url}/#{path}"
+  def seo_url(path, query_params=nil)
+    "#{request.base_url}/#{path}?#{query_params}"
   end
 end

@@ -1,24 +1,16 @@
 <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
   <div class="col-lg-12 col-md-12">
-    <div class="sidebar-toggle position-left">
-      <i class="material-icons filter_list"></i>
-    </div>
-
-    <aside class="sidebar sidebar-offcanvas position-left">
-      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
-
+    <aside class="sidebar">
       <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-12 p-0">
-            <div class="pt-3 pb-1 pb-sm-3 text-sm">
-              <span class="text-muted mr-2 lodgings-heading">
-                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
-              </span>
-            </div>
-          </div>
+        <div class="row">       
+          <section class="d-none d-sm-block">
+            <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
+            </button>
+          </section>
 
-          <section class="widget widget-categories col-md-12 p-0">
+          <section>
             <div class="price-dropdown dropdown">
               <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= render_sort_text %></span>
@@ -35,24 +27,17 @@
             </div>
           </section>
 
-          <section class="widget widget-categories col-md-12 p-0 pb-2 mb-2">
-            <p class="widget-title"><%= "#{t('search.date_filter')}" %></h3>
+          <section>
             <div id="datepicker"></div>
-
-            <div class="custom-control custom-checkbox">
-              <%= check_box_tag :flexible_arrival, true, params[:flexible_arrival], class: "custom-control-input amenities" %>
-              <%= label_tag :flexible_arrival, t('search.flexibility_text'), class: 'text-xxxs custom-control-label' %>
-            </div>
           </section>
 
-          <p class="widget-title"><%= t 'filters.guests' %></p>
-          <section class="widget widget-categories col-md-12 p-0">
+          <section>
             <div class="dropdown guests-dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= t('search.guests') %></span>
               </button>
 
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                 <div class="dropdown-item">
                   <label><%= t "search.adults" %></label>
                   <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
@@ -75,65 +60,90 @@
             </div>
           </section>
 
-          <p class="widget-title"><%= t 'filters.price' %></p>
-          <section class="widget widget-categories mr-1 col-md-12">
-            <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1500" data-step="1">
-              <div class="ui-range-slider"></div>
-              <footer class="ui-range-slider-footer pt-3">
-                <div class="column">
-                  <div class="ui-range-values">
-                    <div class="ui-range-value-min">€<span></span>
-                      <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
-                    </div>&nbsp;-&nbsp;
+          <section class="lodging-types-list">
+            <div class="dropdown guests-dropdown">
+              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title">Type</span>
+              </button>
 
-                    <div class="ui-range-value-max">€<span></span>
-                      <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                <div class="dropdown-item">
+                  <p class="widget-title"><%= t 'filters.type' %></p>
+                  <% Lodging.lodging_types.each do |key, value| %>
+                    <div class="custom-control custom-checkbox">
+                      <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
+
+                      <label class="custom-control-label" for="lodging_type_<%= key %>">
+                        <%= t("filters.#{key}") %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
+                      </label>
                     </div>
+                  <% end %>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="dropdown guests-dropdown">
+              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title"><%= t('search.price') %></span>
+              </button>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                <div class="dropdown-item">
+                  <p class="widget-title"><%= t 'filters.price' %></p>
+                  <div class="price-range-slider p-1" data-start-min="<%= render_min_price params[:min_price] %>" data-start-max="<%= render_max_price params[:max_price] %>" data-min="0" data-max="1500" data-step="1">
+                    <div class="ui-range-slider"></div>
+                    <footer class="ui-range-slider-footer pt-3">
+                      <div class="column">
+                        <div class="ui-range-values">
+                          <div class="ui-range-value-min">€<span></span>
+                            <%= hidden_field_tag :min_price, render_min_price(params[:min_price]) %>
+                          </div>&nbsp;-&nbsp;
+
+                          <div class="ui-range-value-max">€<span></span>
+                            <%= hidden_field_tag :max_price, render_max_price(params[:max_price]) %>
+                          </div>
+                        </div>
+                      </div>
+                    </footer>
                   </div>
                 </div>
-              </footer>
+
+                <div class="dropdown-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input discounts" %>
+                    <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
+                      &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section class="widget widget-categories col-md-12 p-0 pb-2 mb-2">
-            <p class="widget-title"><%= "#{t('search.special_offer')}" %></h3>
-            <div id="datepicker"></div>
+          <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal">More Filters</button>
+        </div>
+      </div>
+    </aside>
+  </div>
 
-            <div class="custom-control custom-checkbox">
-              <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input amenities" %>
-              <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
-              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
-            </div>
-          </section>
-
-          <section class="widget widget-categories col-md-12 p-0 pb-2 mb-2">
+  <div class="modal fade" id="more-filters" tabindex="-1" role="dialog" style="z-index: 100">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-5">
+          <section class="experiences-list row mb-4">
             <p class="widget-title"><%= t('search.updated_availability') %></h3>
-            <div id="datepicker"></div>
 
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-checkbox col-md-12">
               <%= check_box_tag :checked, true, params[:checked], class: "custom-control-input amenities" %>
               <%= label_tag :checked, t('search.updated_availability'), class: 'text-xxxs custom-control-label' %>
               &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked') %>)</span>
             </div>
           </section>
 
-          <section class="widget">
-            <p class="widget-title"><%= t 'filters.type' %></p>
-            <% Lodging.lodging_types.each do |key, value| %>
-              <div class="custom-control custom-checkbox">
-                <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
-
-                <label class="custom-control-label" for="lodging_type_<%= key %>">
-                  <%= t("filters.#{key}") %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
-                </label>
-              </div>
-            <% end %>
-          </section>
-
-          <section class="widget">
-            <p class="widget-title"><%= t 'filters.theme' %> </p>
+          <section class="row experiences-list">
+            <p class="p-0 col-md-12"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>
-              <div class="custom-control custom-checkbox">
+              <div class="custom-control custom-checkbox col-md-6">
                 <%= check_box_tag "experiences_in[]", experience.slug, is_checked?(experience.slug, :experiences_in), id: "experience_#{experience.id}", class: "custom-control-input experiences" %>
 
                 <label class="custom-control-label" for="experience_<%= experience.id %>">
@@ -143,10 +153,20 @@
             <% end %>
           </section>
 
-          <section class="widget">
-            <p class="widget-title"><%= t 'filters.amentities_pop' %></p>
+          <section class="row pt-5 amenities-list">
+            <p class="p-0 col-md-12"><%= t 'filters.amentities_pop' %></p>
             <% amenities.hot.each do |amenity| %>
-              <div class="custom-control custom-checkbox">
+              <div class="custom-control custom-checkbox col-md-6">
+                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
+
+                <label class="custom-control-label" for="amenity_<%= amenity.id %>">
+                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities') %>)</span>
+                </label>
+              </div>
+            <% end %>
+
+            <% amenities.regular.each do |amenity| %>
+              <div class="custom-control custom-checkbox col-md-6">
                 <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
@@ -155,41 +175,14 @@
               </div>
             <% end %>
           </section>
+        </div>
 
-          <section class="widget">
-            <p class="widget-title"><%= t 'filters.amentities' %></p>
-            <div class="filters-show-less amenities-list">
-              <% amenities.regular.each do |amenity| %>
-                <div class="custom-control custom-checkbox">
-                  <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
-
-                  <label class="custom-control-label" for="amenity_<%= amenity.id %>">
-                    <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities') %>)</span>
-                  </label>
-                </div>
-              <% end %>
-            </div>
-
-             <a href="#" class="show-all-filters text-decoration-none" data-target=".amenities-list" data-name="amenities">show all amenities</a><i class="amenities-list-icon material-icons text-primary">keyboard_arrow_down</i>
-          </section>
-
-          <section class="widget d-block d-sm-none">
-            <p class="widget-title"><%= t 'nav.landen' %></p>
-            <div class="countries-list">
-              <% countries.each do |country| %>
-                <div class="custom-control custom-checkbox">
-                  <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), id: "country_#{country.id}", class: "custom-control-input countries" %>
-
-                  <label class="custom-control-label" for="country_<%= country.id %>">
-                    <%= country.name %>
-                  </label>
-                </div>
-              <% end %>
-            </div>
-          </section>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-white btn-sm submit-filters" type="button">Apply</button>
         </div>
       </div>
-    </aside>
+    </div>
   </div>
 
   <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>

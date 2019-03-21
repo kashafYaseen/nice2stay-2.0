@@ -7,27 +7,8 @@
     OwlCarousel.init()
     initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
-
-    $('.search-filters .lodging_type, .search-filters .amenities, .search-filters .experiences, .countries').change ->
-      $('#loader').show();
-      Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
-
     SortingDropdown.init()
-
-    $('.submit-filters').click ->
-      $('#loader').show();
-      $('#more-filters-modal').modal('hide')
-      more_filters_dropdown('close')
-
-    $('#more-filters-btn').click (e) ->
-      more_filters_dropdown('toggle')
-      e.stopPropagation();
-
-    $('.more-filter-dropdown-menu').click (e) ->
-      e.stopPropagation();
-
-    $(document).click ->
-      more_filters_dropdown('close')
+    Filters.init()
 
     $('.show-all-filters').click (e) ->
       e.stopPropagation()

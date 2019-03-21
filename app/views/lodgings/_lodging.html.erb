@@ -6,7 +6,7 @@
           <h5 class="card-title"><%= lodging.name %></h5>
         </div>
 
-        <div class="col-md-5 col-lg-5 col-xs-12">
+        <div class="col-md-6 col-lg-5 col-xs-12">
           <% if lodging.all_discounts.present? %>
             <span class="product-badge text-danger">Special offer</span>
           <% end %>
@@ -16,14 +16,14 @@
           </div>
         </div>
 
-        <div class="col-md-7 col-lg-7 col-xs-12">
+        <div class="col-md-6 col-lg-7 col-xs-12">
           <%= link_to render_lodging_path(lodging), class: "text-decoration-none row" do %>
             <div class="col-md-9 col-xs-12">
               <p class="text-xxs">
                 <% if lodging.as_child? %>
-                  <%= truncate(lodging.parent.short_desc, length: 150) %>
+                  <%= truncate(lodging.parent.short_desc, length: 100) %>
                 <% else %>
-                  <%= truncate(lodging.short_desc, length: 150) %>
+                  <%= truncate(lodging.short_desc, length: 100) %>
                 <% end %>
               </p>
 
@@ -35,12 +35,12 @@
                 <br>
                 <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
               </p>
-
+              
               <ul class="list-icon">
                 <p class="text-xxs">
-                  <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_1' %><br>
-                  <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_2' %><br>
-                  <i class="material-icons md-24 check text-success"></i><%= render_highlight lodging, 'highlight_3' %>
+                  <i class="material-icons md-18 check text-success"></i><%= render_highlight lodging, 'highlight_1' %><br>
+                  <i class="material-icons md-18 check text-success"></i><%= render_highlight lodging, 'highlight_2' %><br>
+                  <i class="material-icons md-18 check text-success"></i><%= render_highlight lodging, 'highlight_3' %>
                 </p>
               </ul>
             </div>

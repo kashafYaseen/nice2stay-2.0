@@ -85,9 +85,13 @@ module LodgingsHelper
   end
 
   def render_lodging_path lodging
-    path = lodging_path(lodging_id(lodging), check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants])
+    path = lodging_path(lodging_id(lodging), query_params)
     path += "##{lodging.slug}" if lodging.as_child?
     path
+  end
+
+  def query_params
+    { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], infants: params[:infants] }
   end
 
   def render_price price, dynamic

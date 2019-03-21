@@ -5,35 +5,45 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-2 homepage col-sm-8 search-filters pr-0">
+  <div class="col-lg-7 col-md-8 bg-secondary search-filters pt-2">
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled %>
   </div>
 
-  <div class="col-lg-7 col-md-8">
+  <div class="col-lg-7 col-md-8 top-50">
     <div class="row">
-      <div class="seo-data">
+      <div class="seo-data bg-secondary w-100">
         <%= render 'seo_data', custom_text: @custom_text %>
       </div>
 
-      <div class="col-md-12 ">
-        <div class="row mb-2 lodgings-list" id="lodgings-list">
+      <div class="map-info-data pl-3 bg-secondary w-100">
+        <%= render 'map_info_alert', collection: @collection %>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row pl-3 lodgings-list bg-secondary" id="lodgings-list">
           <%= render 'lodgings_list', lodgings: @lodgings %>
         </div>
       </div>
 
-      <div class="col-lg-12 mb-5">
-        <div class="pagination-info text-right">
-          <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
-        </div>
+      <%= render 'login_info_alert' %>
 
-        <div class="pagination">
-          <%= paginate @lodgings, remote: true, window: 3 %>
+      <div class="col-lg-12 mb-5 bg-secondary">
+        <div class="card ml-3 bg-white">
+          <div class="card-body">
+            <div class="pagination-info text-right">
+              <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+            </div>
+
+            <div class="pagination">
+              <%= paginate @lodgings, remote: true, window: 3 %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-lg-3 col-sm-4 fixed-map d-none d-sm-block">
+  <div class="col-lg-5 col-sm-4 fixed-map d-none d-sm-block">
     <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
   </div>
 </div>
