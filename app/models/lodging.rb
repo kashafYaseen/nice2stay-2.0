@@ -268,8 +268,8 @@ class Lodging < ApplicationRecord
       return unless discounts.present?
       amount = 0
       discounts.each do |dis|
-        amount += (total_price * (dis.value/100)) if dis.discount_type == 'percentage'
-        amount += dis.value if dis.discount_type == 'amount' || dis.discount_type == 'incentive'
+        amount += (total_price * (dis.value.to_i/100)) if dis.discount_type == 'percentage'
+        amount += dis.value.to_i if dis.discount_type == 'amount' || dis.discount_type == 'incentive'
       end
       amount
     end
