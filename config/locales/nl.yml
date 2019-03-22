@@ -206,6 +206,8 @@ nl:
     night: nacht
     updated_availability: Bijgewerkte Beschikbaarheid
     price: Prijs
+    for: voor
+    from: Vanaf
 
   footer:
     support: Wilt u direct contact? 

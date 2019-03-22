@@ -211,6 +211,8 @@ en:
     night: night
     updated_availability: Updated Availability
     price: Price
+    for: for
+    from: From
 
   profile_account: 
      side_nav_home: Dashboard
