@@ -1,13 +1,12 @@
 class LodgingsController < ApplicationController
   before_action :set_lodging, only: [:show]
+  before_action :set_collection, only: [:index]
   skip_before_action :verify_authenticity_token, only: [:index]
   layout 'calendar', only: :calendar
 
   # GET /lodgings
   # GET /lodgings.json
   def index
-    @custom_text = CustomText.find_by(id: params[:custom_text])
-    @collection = @custom_text.present? ? @custom_text.relatives : CustomText.home_page
     @lodgings = SearchLodgings.call(params, @custom_text)
     @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @amenities = Amenity.includes(:translations).all
@@ -53,9 +52,14 @@ class LodgingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_lodging
       @lodging = Lodging.published.friendly.find(params[:id])
       @lodging = @lodging.parent if @lodging.parent.present?
+    end
+
+    def set_collection
+      @custom_text = CustomText.find_by(id: params[:custom_text])
+      return @collection = @custom_text.relatives if @custom_text.present?
+      @collection = CustomText.home_page unless params[:country].present? || params[:region].present? || params[:bounds].present?
     end
 end
