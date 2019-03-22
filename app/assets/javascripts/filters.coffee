@@ -34,14 +34,15 @@
 
   updated_amenities_and_experiences = ->
     checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+    title = $('.more-filters-btn').data('title')
     if checked > 0
       $('.more-filters-btn').addClass 'btn-primary'
       $('.more-filters-btn').removeClass 'btn-outline-primary'
-      $('.more-filters-btn').text("More Filters .#{checked}")
+      $('.more-filters-btn').text("#{title} .#{checked}")
     else
       $('.more-filters-btn').addClass 'btn-outline-primary'
       $('.more-filters-btn').removeClass 'btn-primary'
-      $('.more-filters-btn').text("More Filters")
+      $('.more-filters-btn').text(title)
 
   update_lodging_types = ->
     if $('.lodging-types-list input:checked').length > 0

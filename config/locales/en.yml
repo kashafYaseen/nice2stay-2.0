@@ -53,7 +53,7 @@ en:
     guests: 'Guests'
     sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'
-    more_filters: 'meer filters'
+    more_filters: 'more filters'
     apartment: Apartments
     villa: Villas
     bnb: Boutique hotels
@@ -195,14 +195,18 @@ en:
   search:
     adults: Adults (>12y)
     adutls_1: Adults
+    child: Child
     children_1: Children
     children: Children (4-12y)
     babies: Babies (0-3y)
     guests: Guests
+    guest: Guest
     dates: Period
     search_button: Search
     bedrooms: Bedrooms
+    bedroom: Bedroom
     bathrooms: Bathrooms
+    bathroom: Bathroom
     check_in: check in
     check_out: check out
     flexibility_text: flexible in dates (-/+ 2 days)

@@ -32,14 +32,15 @@
         <div class="row padding-top-1x">
           <div class="col-md-3">
             <h6>
-              <b><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, "" %></b> <%= t 'search.adutls_1' %> <br>
-
+              <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
+              <br>
               <% if @lodging.children.present? %>
-                <b><%= @lodging.minimum_children %> - <%= pluralize @lodging.children, "" %></b> <%= t 'search.children_1' %><br>
+                <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %>
+                <br>
               <% end %>
 
-              <b><%= @lodging.beds %></b> <%= t 'search.bedrooms' %><br>
-              <b><%= @lodging.baths %></b> <%= t 'search.bathrooms' %>
+              <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %><br>
+              <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
             </h6>
           </div>
 

@@ -10,7 +10,7 @@ nl:
     label:
     page_entries_info:
       more_pages:
-        display_entries: "<b>%{first}</b>&mdash;<b>%{last}</b> of <b>%{total}</b>"
+        display_entries: "<b>%{first}</b>&mdash;<b>%{last}</b> van <b>%{total}</b>"
       one_page:
         display_entries: "alle <b>%{count}</b> weergeven"
     select:
@@ -191,13 +191,17 @@ nl:
     adults: Volwassenen (>12j)
     adutls_1: Personen 
     children: Kinderen (4-12j)
+    child: Kind
     children_1: Kinderen
     babies: Babies (0-3j)
     guests: Gasten
+    guest: Gast
     dates: Periode
     search_button: Zoek nu
     bedrooms: Slaapkamers
+    bedroom: Slaapkamer
     bathrooms: Badkamers
+    bathroom: Badkamer
     check_in: aankomst
     check_out: vertrek
     date_filter: Aankomst en Vetrek
@@ -221,10 +225,10 @@ nl:
     price: Prijs per nacht 
     theme: Experience
     type: Type accommodatie
-    amentities_pop: Voorzieningen populair
-    amentities: Voorzieningen
+    amentities_pop: Faciliteiten populair
+    amentities: Faciliteiten
     dates: 'data'
-    sort_by: 'Sort'
+    sort_by: 'Sorteer'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
     apartment: Appartementen

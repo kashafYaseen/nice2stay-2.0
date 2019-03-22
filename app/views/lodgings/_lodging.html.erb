@@ -28,14 +28,14 @@
               </p>
 
               <p class="text-xxs">
-                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
                 <% if lodging.children.present? %>
-                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
                 <% end %>
                 <br>
-                <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
+                <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
               </p>
-              
+
               <ul class="list-icon">
                 <p class="text-xxs">
                   <i class="material-icons md-18 check text-success"></i><%= render_highlight lodging, 'highlight_1' %><br>
