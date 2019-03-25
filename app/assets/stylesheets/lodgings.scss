@@ -265,6 +265,15 @@ div.review-paginator {
     top: 70px;
   }
 
+  div.search-filters {
+    min-height: 1px;
+    position: inherit;
+  }
+
+  div.top-50 {
+    top: 1px;
+  }
+
   .lodgings-filters section, .lodgings-filters button {
     width: 100%;
   }
