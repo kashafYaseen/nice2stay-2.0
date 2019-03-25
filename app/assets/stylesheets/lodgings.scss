@@ -260,6 +260,22 @@ div.review-paginator {
   div.fixed-map {
     position: relative;
   }
+
+  .lodgings-filters .sidebar {
+    top: 70px;
+  }
+
+  .lodgings-filters section, .lodgings-filters button {
+    width: 100%;
+  }
+
+  .lodgings-filters .more-filters-btn {
+    margin-right: 0;
+  }
+
+  .lodgings-filters #more-filters {
+    z-index: 9999 !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
