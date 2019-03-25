@@ -5,6 +5,7 @@
     updated_amenities_and_experiences()
     update_lodging_types()
     Filters.update_prices()
+    update_country_filter()
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
@@ -18,6 +19,12 @@
       Filters.submit()
 
     $('.countries').change ->
+      Filters.submit()
+
+    $('.country-filters').click ->
+      $('.search-filters #country').val($(this).data('title'));
+      $('.search-filters #bounds').val('');
+      update_country_filter()
       Filters.submit()
 
     $('.submit-filters').click ->
@@ -56,5 +63,11 @@
     else
       $('#dropdownMenuButton4').addClass 'btn-primary'
       $('#dropdownMenuButton4').removeClass 'btn-outline-primary'
+
+
+  update_country_filter = ->
+    if $('.country-dropdown .dropdown-toggle .title').text() != "Country" && $('.country-dropdown .dropdown-toggle .title').text() != "Land"
+      $('#CountryFilter').addClass 'btn-primary'
+      $('#CountryFilter').removeClass 'btn-outline-primary'
 
 ).call this

@@ -9,7 +9,7 @@
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
       <div class="col-md-12">
         <div class="row">       
-          <section class="d-none d-sm-block">
+          <section>
             <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
             </button>
@@ -121,6 +121,20 @@
                       &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
                   </div>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="d-md-none d-block">
+            <div class="country-dropdown dropdown">
+              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="CountryFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title"><%= render_country_text %></span>
+              </button>
+
+              <div class="dropdown-menu country-dropdown-menu" aria-labelledby="CountryFilter">
+                <% countries.each do |country| %>
+                  <a class="dropdown-item country-filters" href="#" data-title="<%= country.slug %>"><%= country.name %></a>
+                <% end %>
               </div>
             </div>
           </section>
