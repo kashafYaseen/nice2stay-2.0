@@ -5,7 +5,6 @@
     updated_amenities_and_experiences()
     update_lodging_types()
     Filters.update_prices()
-    update_country_filter()
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
@@ -33,6 +32,7 @@
   updated_amenities_and_experiences = ->
     if $('.countries-list').css('display') == 'none'
       checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+      $('.countries:checked').prop('checked', false)
     else
       checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
 
@@ -58,11 +58,5 @@
     else
       $('#dropdownMenuButton4').addClass 'btn-primary'
       $('#dropdownMenuButton4').removeClass 'btn-outline-primary'
-
-
-  update_country_filter = ->
-    if $('.country-dropdown .dropdown-toggle .title').text() != "Country" && $('.country-dropdown .dropdown-toggle .title').text() != "Land"
-      $('#CountryFilter').addClass 'btn-primary'
-      $('#CountryFilter').removeClass 'btn-outline-primary'
 
 ).call this
