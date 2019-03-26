@@ -141,7 +141,7 @@
             <p class="widget-title"><%= t('nav.landen') %></h3>
             <% countries.each do |country| %>
               <div class="custom-control custom-checkbox col-md-12">
-                <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), class: "custom-control-input countries", id: "country_#{country.id}" %>
+                <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in) || is_checked?(country.slug, :country), class: "custom-control-input countries", id: "country_#{country.id}" %>
 
                 <label class="custom-control-label" for="country_<%= country.id %>">
                   <%= country.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, country.id, 'countries') %>)</span>

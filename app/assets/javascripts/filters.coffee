@@ -31,7 +31,11 @@
     Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
   updated_amenities_and_experiences = ->
-    checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
+    if $('.countries-list').css('display') == 'none'
+      checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+    else
+      checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
+
     title = $('.more-filters-btn').data('title')
     if checked > 0
       $('.more-filters-btn').addClass 'btn-primary'
