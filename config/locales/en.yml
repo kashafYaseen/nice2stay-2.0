@@ -214,7 +214,8 @@ en:
     date_filter: Arrival and Departure
     special_offer: Special Offer
     night: night
-    updated_availability: Updated Availability
+    updated_availability: Show only accommodations with up to date availability
+    availability: Availabiltiy
     price: Price
     for: for
     from: From

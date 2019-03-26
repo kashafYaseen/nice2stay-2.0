@@ -208,7 +208,8 @@ nl:
     flexibility_text: flexibel qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     night: nacht
-    updated_availability: Bijgewerkte Beschikbaarheid
+    updated_availability: Toon enkel accommodaties met up to date beschikbaarheid
+    availability: Beschikbaarheid
     price: Prijs
     for: voor
     from: Vanaf
