@@ -11,20 +11,11 @@
       $('#more-filters').modal('toggle')
       $('.modal-backdrop').css('z-index', 1);
 
-    $('.amenities, .experiences').change ->
+    $('.amenities, .experiences, .countries').change ->
       updated_amenities_and_experiences()
 
     $('.discounts').change ->
       Filters.update_prices()
-      Filters.submit()
-
-    $('.countries').change ->
-      Filters.submit()
-
-    $('.country-filters').click ->
-      $('.search-filters #country').val($(this).data('title'));
-      $('.search-filters #bounds').val('');
-      update_country_filter()
       Filters.submit()
 
     $('.submit-filters').click ->
@@ -40,7 +31,7 @@
     Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
   updated_amenities_and_experiences = ->
-    checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+    checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
     title = $('.more-filters-btn').data('title')
     if checked > 0
       $('.more-filters-btn').addClass 'btn-primary'

@@ -125,20 +125,6 @@
             </div>
           </section>
 
-          <section class="d-md-none d-block">
-            <div class="country-dropdown dropdown">
-              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="CountryFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="title"><%= render_country_text %></span>
-              </button>
-
-              <div class="dropdown-menu country-dropdown-menu" aria-labelledby="CountryFilter">
-                <% countries.each do |country| %>
-                  <a class="dropdown-item country-filters" href="#" data-title="<%= country.slug %>"><%= country.name %></a>
-                <% end %>
-              </div>
-            </div>
-          </section>
-
           <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal" data-title="<%= t('filters.more_filters') %>">
             <%= t('filters.more_filters') %>
           </button>
@@ -151,6 +137,19 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-5">
+          <section class="countries-list row mb-4 d-md-none d-block">
+            <p class="widget-title"><%= t('nav.landen') %></h3>
+            <% countries.each do |country| %>
+              <div class="custom-control custom-checkbox col-md-12">
+                <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), class: "custom-control-input countries", id: "country_#{country.id}" %>
+
+                <label class="custom-control-label" for="country_<%= country.id %>">
+                  <%= country.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, country.id, 'countries') %>)</span>
+                </label>
+              </div>
+            <% end %>
+          </section>
+
           <section class="experiences-list row mb-4">
             <p class="widget-title"><%= t('search.updated_availability') %></h3>
 

@@ -99,6 +99,7 @@ class Lodging < ApplicationRecord
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
+      country_id: country.id,
       country: country.translated_slugs,
       region: region.translated_slugs,
       extended_name: extended_name,

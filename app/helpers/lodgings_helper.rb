@@ -69,11 +69,6 @@ module LodgingsHelper
     return 'Newest' if params[:order] == 'new_desc'
   end
 
-  def render_country_text
-    return params[:country] if params[:country].present?
-    t('carts.country')
-  end
-
   def render_highlight lodging, highlight
     return lodging.send(highlight) unless lodging.as_child?
     lodging.parent.send(highlight)
