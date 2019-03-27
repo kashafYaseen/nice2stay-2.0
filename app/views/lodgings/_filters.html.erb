@@ -79,7 +79,7 @@
                       <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
 
                       <label class="custom-control-label" for="lodging_type_<%= key %>">
-                        <%= t("filters.#{key}") %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type') %>)</span>
+                        <%= t("filters.#{key}") %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type', total_lodgings) %>)</span>
                       </label>
                     </div>
                   <% end %>
@@ -118,7 +118,7 @@
                   <div class="custom-control custom-checkbox">
                     <%= check_box_tag :discounts, true, params[:discounts], class: "custom-control-input discounts" %>
                     <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
-                      &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts') %>)</span>
+                      &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts', total_lodgings) %>)</span>
                   </div>
                 </div>
               </div>
@@ -144,7 +144,7 @@
                 <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in) || is_checked?(country.slug, :country), class: "custom-control-input countries", id: "country_#{country.id}" %>
 
                 <label class="custom-control-label" for="country_<%= country.id %>">
-                  <%= country.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, country.id, 'countries') %>)</span>
+                  <%= country.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, country.id, 'countries', total_lodgings) %>)</span>
                 </label>
               </div>
             <% end %>
@@ -156,7 +156,7 @@
             <div class="custom-control custom-checkbox col-md-12">
               <%= check_box_tag :checked, true, params[:checked], class: "custom-control-input amenities" %>
               <%= label_tag :checked, t('search.updated_availability'), class: 'text-xxxs custom-control-label' %>
-              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked') %>)</span>
+              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked', total_lodgings) %>)</span>
             </div>
           </section>
 
@@ -167,7 +167,7 @@
                 <%= check_box_tag "experiences_in[]", experience.slug, is_checked?(experience.slug, :experiences_in), id: "experience_#{experience.id}", class: "custom-control-input experiences" %>
 
                 <label class="custom-control-label" for="experience_<%= experience.id %>">
-                  <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.id, 'experiences') %>)</span>
+                  <%= experience.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, experience.id, 'experiences', total_lodgings) %>)</span>
                 </label>
               </div>
             <% end %>
@@ -180,7 +180,7 @@
                 <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
-                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities') %>)</span>
+                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
                 </label>
               </div>
             <% end %>
@@ -190,7 +190,7 @@
                 <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
-                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities') %>)</span>
+                  <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
                 </label>
               </div>
             <% end %>

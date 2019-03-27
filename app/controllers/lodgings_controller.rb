@@ -8,6 +8,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings.json
   def index
     @lodgings = SearchLodgings.call(params, @custom_text)
+    @total_lodgings = CountTotalLodgings.call()
     @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all

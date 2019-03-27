@@ -213,6 +213,7 @@ nl:
     price: Prijs
     for: voor
     from: Vanaf
+    of: van
 
   footer:
     support: Wilt u direct contact? 

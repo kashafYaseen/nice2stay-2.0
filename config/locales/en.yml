@@ -219,6 +219,7 @@ en:
     price: Price
     for: for
     from: From
+    of: of
 
   profile_account: 
      side_nav_home: Dashboard
