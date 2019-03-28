@@ -102,6 +102,6 @@ module LodgingsHelper
 
   def render_price price, dynamic
     return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
-    "<div class='price-text'> #{t('search.from')} </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
+    "<div class='price-text-from price-text'> #{t('search.from')} </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
   end
 end
