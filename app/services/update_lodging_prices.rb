@@ -51,6 +51,7 @@ class UpdateLodgingPrices
 
     def clear_prices
       Price.of_child(lodging.id).delete_all
+      lodging.rules.destroy_all
     end
 
     def reindex_prices
