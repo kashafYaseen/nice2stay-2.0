@@ -42,6 +42,11 @@ en:
       locale:
         nl: Dutch
         en: English
+
+  locale:
+    nl: Dutch
+    en: English
+
   filters:
     guests: Traveling party
     price: Price per night
@@ -106,6 +111,7 @@ en:
     type: type request
     succes:  We would like to thank you for requesting your reservation/ option request at Nice2stay. Your request has been submitted to the owner of the accommodation and we will inform you as soon as possible (within 24 hours) whether your reservation will be confirmed.You will be notified by email and you can view the status in your Nice2stay account
     country: Country
+    preferred_language: Preferred Language
 
   indicator: 
     gasten:  Your data

@@ -26,6 +26,10 @@ nl:
     holiday: Unieke vakantie 
     inspiration: Inspiratie collecties
 
+  locale:
+    nl: Nederlands
+    en: Engels
+
   lead:
     title: Wilt u advies voor uw vakantie?
     description: Onze bookings consultants Geralda Visscher en Julia van Baal luisteren graag naar u. Vertel ons alstublieft zoveel mogelijk over wat u belangrijk vindt, over uzelf en de mensen die met u reizen, de gewenste periode en uw budget.
@@ -94,6 +98,7 @@ nl:
     total: Totaal
     type: Type
     succes: Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status.
+    preferred_language: Voorkeur taal
 
   indicator:
     gasten: Uw gegevens

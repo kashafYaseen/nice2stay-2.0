@@ -81,6 +81,15 @@
 
               <%= f.hidden_field :in_cart, value: false %>
               <%= f.fields_for :user do |user_fields| %>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= user_fields.label :language, t('carts.preferred_language'), class: 'col-2 text-bold pt-1' %>
+                    <%= user_fields.select :language, languages, {}, class: 'form-control col-3', id: rendom_id(resource, :language) %>
+                  </div>
+                </div>
+              </div>
+
                 <fieldset <%= 'disabled' if user_signed_in? %>>
                   <div class="row">
                     <div class="col-sm-6">
