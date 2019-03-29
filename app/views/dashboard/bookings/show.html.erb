@@ -15,6 +15,7 @@
         <% if @booking.confirmed? %>
           <%= pre_paid_link @booking %>
           <%= final_paid_link @booking %>
+          <%= "<p class='xxs'>#{t('cart.prepayment_not_payed')}</p>".html_safe unless @booking.step_passed?(:pre_paid) %>
         <% end %>
       </div>
     </div>

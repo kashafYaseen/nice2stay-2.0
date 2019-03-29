@@ -182,6 +182,7 @@ nl:
   cart:
     shopping_cart: Vraag aan
     nice2stay: Geen reserveringskosten bij Nice2stay
+    prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
 
   information:
     included: Inclusief ?

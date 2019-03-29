@@ -263,6 +263,7 @@ en:
   cart:
     shopping_cart: Add to cart
     nice2stay: No booking fees at Nice2stay
+    prepayment_not_payed: When prepayment is done, then the final payment can be transferred
 
   activerecord:
     errors:
