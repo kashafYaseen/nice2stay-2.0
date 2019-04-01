@@ -19,5 +19,17 @@
       Custom.init();
       <%= yield :js_init %>
     </script>
+
+    <script src="https://chat-assets.frontapp.com/v1/chat.bundle.js"></script>
+    <script>
+      window.FCSP = 'd6c603b98d7255302bd1b5e029489495';
+
+      <% if user_signed_in? %>
+        FrontChat('identity', {
+            email: "<%= current_user.email %>",
+            userHash: "<%= current_user.front_chat_hash %>"
+          });
+      <% end %>
+    </script>
   </body>
 </html>
