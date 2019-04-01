@@ -2,6 +2,7 @@ class LodgingsController < ApplicationController
   before_action :set_lodging, only: [:show]
   before_action :set_collection, only: [:index]
   skip_before_action :verify_authenticity_token, only: [:index]
+  after_action :track_action, only: [:index, :show]
   layout 'calendar', only: :calendar
 
   # GET /lodgings
@@ -62,5 +63,9 @@ class LodgingsController < ApplicationController
       @custom_text = CustomText.find_by(id: params[:custom_text])
       return @collection = @custom_text.relatives if @custom_text.present?
       @collection = CustomText.home_page unless params[:country].present? || params[:region].present? || params[:bounds].present?
+    end
+
+    def track_action
+      ahoy.track "Lodgings Search", request.parameters.except('utf8')
     end
 end
