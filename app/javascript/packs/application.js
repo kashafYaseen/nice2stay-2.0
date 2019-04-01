@@ -15,7 +15,7 @@ import Calendar from '../vue_components/calendar.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
-import 'vue-airbnb-style-datepicker/dist/styles.css'
+import 'vue-airbnb-style-datepicker/dist/vue-airbnb-style-datepicker.min.css'
 
 Vue.use(TurbolinksAdapter)
 Vue.use(AirbnbStyleDatepicker, { colors: { disabled: '#e2dede' } })
