@@ -67,6 +67,13 @@ class User < ApplicationRecord
     encrypted_password_changed? || skip_validations
   end
 
+  def front_chat_hash
+    hash = Digest::SHA2.new(256)
+    hash << ENV['FRONT_CHAT_SECRET']
+    hash << email
+    hash.hexdigest
+  end
+
   private
     def auth_expires_at
       self.token_expires_at || update_token_expire_time
