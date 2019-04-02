@@ -128,6 +128,7 @@ class SaveLodgingDetails
         :created_at,
         :updated_at,
         :boost,
+        :optimize_at,
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },
