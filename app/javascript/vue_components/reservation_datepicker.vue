@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary w-100" id="datepicker-trigger">{{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary w-100 d-none" id="datepicker-trigger">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
         :trigger-element-id="'datepicker-trigger'"
         :date-one="check_in"
