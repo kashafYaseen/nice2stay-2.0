@@ -50,7 +50,9 @@
 
       if(this.$el.parentElement.dataset.disabledDates)
         this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
+      if (this.$el.parentElement.dataset.customizedDates) {
         this.customized_class = JSON.parse(this.$el.parentElement.dataset.customizedDates)
+      }
     },
     methods: {
       formatDates(dateOne, dateTwo) {

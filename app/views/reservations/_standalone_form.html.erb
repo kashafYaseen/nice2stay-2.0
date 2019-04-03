@@ -16,7 +16,7 @@
       <div class="col-md-12 homepage">
         <div data-lodging-id="<%= lodging.id %>"
              data-disabled-dates="<%= lodging.not_available_on %>"
-             data-customized-dates="<%= lodging.customized_dates(lodging.not_available_on) %>"
+             data-customized-dates="<%= lodging.customized_dates %>"
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
           <div class='reservation-datepicker'></div>
         </div>
