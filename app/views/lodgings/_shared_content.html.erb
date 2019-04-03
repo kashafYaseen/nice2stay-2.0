@@ -20,9 +20,9 @@
 
 <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
   <div class="col-md-12">
-    <h3 class="card-title"><%= t 'nav.location' %></h3>
+    <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
+    <h5 class="card-title"><%= @lodging.h2 %></h5>
 
-    <hr class="margin-bottom-1x">
     <%= lodging.location_description.try(:html_safe) %>
 </div>
 
