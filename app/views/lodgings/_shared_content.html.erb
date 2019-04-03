@@ -9,27 +9,6 @@
   </div>
 <% end %>
 
-<div class="margin-top-2x row leads_homepage">
-  <div class="col-md-12 padding-bottom-1x">
-    <h4 class="mb-3">
-      <%= lodging.name %> <%= t 'usp.acco_show_header' %>
-    </h4>
-
-    <div class="row">
-      <div class="col-md-3 col-lg-2">
-        <div class="d-table">
-          <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-        </div>
-      </div>
-
-      <div class="col-sm-9 mb-9">
-        <p><%= t 'usp.acco_show_p' %> </p>
-        <p><%= lodging.name %>  <%= t 'usp.acco_show_visit' %></p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <% if lodging.all_discounts.present? %>
   <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section">
     <div class="col-md-12">
@@ -45,11 +24,35 @@
 
     <hr class="margin-bottom-1x">
     <%= lodging.location_description.try(:html_safe) %>
-  </div>
 </div>
 
 <div class="col-md-12 address-mark" id="lodging-map-location"></div>
   <%= tag.div class: "lodgings-list-json", data: { feature: lodging.feature} %>
+
+</div>
+
+<div class="row">
+  <div class="col-md-6 target-section" id="description-container">
+    <h3 class="card-title"><%= @lodging.h3 %></h3>
+    <hr class="margin-bottom-1x">
+
+    <div id="lodging-description">
+      <%= lodging.description.try(:html_safe) %>
+    </div>
+  </div>
+
+<div class="col-md-6 col-xs-6">
+  <h3 class="card-title"><%= t 'nav.amentities' %></h3>
+  <hr class="margin-bottom-1x">
+  <ul class="list-icon">
+    <% @lodging.amenities.each do |amenity| %>
+      <i class="material-icons md-14 check_circle text-success"></i> <%= amenity.name %>
+    <% end %>
+   </ul>
+</div>
+
+
+</div>
 
 <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
   <div class="col-md-12 mb-30">
@@ -105,27 +108,6 @@
         </div>
       </div>
     <% end %>
-  </div>
-</div>
-
-<div class="col-md-12 row col-xs-6 margin-top-2x margin-bottom-1x">
-  <h3 class="card-title"><%= t 'nav.amentities' %></h3>
-  <hr class="margin-bottom-1x">
-  <ul class="list-icon">
-    <% @lodging.amenities.each do |amenity| %>
-     <li> - <%= amenity.name %></li>
-    <% end %>
-   </ul>
-</div>
-
-<div class="bg-white row padding-bottom-1x pt-1 mb-1">
-  <div class="col-md-12 target-section" id="description-container">
-    <h3 class="card-title"><%= @lodging.h3 %></h3>
-    <hr class="margin-bottom-1x">
-
-    <div id="lodging-description">
-      <%= lodging.description.try(:html_safe) %>
-    </div>
   </div>
 </div>
 

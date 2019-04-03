@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="col-md-12">
     <div class="row target-section" id="home-container">
-      <div class="col-md-8 col-xs-12 margin-top-1x">
+      <div class="col-md-12 col-xs-12 margin-top-1x">
         <div class="gallery-control ">
         <figure itemprop="associatedMedia" itemscope>
           <a itemprop="contentUrl">
@@ -27,61 +27,125 @@
         <% end %>
        </div>
      
-        <h2 class="margin-top-1x card-title"><%= @lodging.h1 %></h2>
-        <h4 class="card-title text-muted"><%= @lodging.h2 %></h4>
-        <div class="row padding-top-1x">
-          <div class="col-md-3">
-            <h6>
-              <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
-              <br>
-              <% if @lodging.children.present? %>
-                <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %>
-                <br>
-              <% end %>
+        <h2 class="margin-top-2x"><%= @lodging.h1 %></h2>
+        <h4 class="card-title margin-bottom-2x "><%= @lodging.h2 %></h4>
 
-              <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %><br>
-              <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
-            </h6>
+        <div class="row margin-top-1x">
+          <div class="col-md-6 margin-bottom-1x">
+            <div id="lodging-summary">
+              <%= @lodging.summary.truncate(1000).try(:html_safe) %>
+            </div>
           </div>
+          <div class="col-md-6">
+             <p><%= image_tag("guest") %> <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>  <%= image_tag("bedroom") %> <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %> <%= image_tag("bathroom") %> <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %></p>
 
+            <h5>
+        <i class="material-icons md-24 stars text-success"></i><%= @lodging.highlight_1 %><br>
+                <i class="material-icons md-24 stars text-success"></i><%= @lodging.highlight_2 %><br>
+                <i class="material-icons md-24 stars text-success"></i><%= @lodging.highlight_3 %>
+        </h5>
           <% if @reviews.present? %>
-            <div class="col-md-3 col-xs-6">
-              <div class="text-center">
+           
+              <div class="text-left">
                 <div class="d-inline align-baseline display-3 mr-1"><%= @lodging.average_rating %></div>
                 <br>
-                <div class="d-inline align-baseline text-sm text-warning mr-1">
+                <div class="d-inline align-baseline text-sm text-warning">
                   <%= render_stars_tag @lodging.average_rating %>
                   <p>(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
-                </div>
+                
               </div>
             </div>
           <% end %>
-
-          <div class="col-md-6">
-            <ul class="list-icon">
-              <h6>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-              </h6>
-            </ul>
           </div>
         </div>
 
-        <p class="text-sm col-md-5">
-          <div id="lodging-summary">
-            <%= @lodging.summary.try(:html_safe) %>
-          </div>
-        </p>
-        <%= render 'shared_content', lodging: @lodging %>
+        <div class="row">
+        <div class="col-md-12">
+        <div class="infobox mt-2 ">
+            <div class="infobox-header bg-secondary">
+              <h4 class="card-title">Beschikbaardeid & Prijzen</h4>
+              
+                <h5 class="margin-bottom-1x">Wanneer wil jij verblijven bij <%= @lodging.name %>?</h5>
+           
+            </div>
+            <div class="infobox-content">
+               <% if @lodging.as_standalone? %>
+                <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+              <% else %>
+                <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+              <% end %>
+        </div>
       </div>
+        <div class="col-md-4">
+      </div>
+      </div>
+       </div>
 
-      <div class="col-md-4">
-        <% if @lodging.as_standalone? %>
-          <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-        <% else %>
-          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
-        <% end %>
+      <div class="row">
+            <div class="col-md-6 homepage">
+              <h4 class="mb-3">
+                <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ? 
+              </h4>
+
+              <div class="row">
+                <div class="col-md-3 col-lg-2">
+                  <div class="d-table">
+                    <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
+                  </div>
+                </div>
+
+                <div class="col-sm-9 mb-9">
+                  <p><%= @lodging.name %>  <%= t 'usp.acco_show_visit' %></p>
+                  <p><%= t 'email.contact_text' %></p> 
+               
+                    <%= link_to _back_url, class: 'btn btn-white' do %>
+                      <i class="material-icons email"></i>&nbsp; Click hier om een vraag te stellen
+                    <% end %>
+                 
+
+                </div>
+              </div>
+
+             </div>
+
+       <div class="col-lg-6">
+          <div class="accordion" id="accordion2" role="tablist">
+           
+              <div class="card-header" role="tab">
+                <h6><a href="#collapseFour" data-toggle="collapse"><i class="material-icons drafts"></i><%= t 'information.included_header' %></a></h6>
+              </div>
+
+              <div class="collapse" id="collapseFour" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body"><%= @lodging.including_text.try(:html_safe) %></div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6><a class="collapsed" href="#collapseFive" data-toggle="collapse"><i class="material-icons person"></i><%= t 'information.informatie_header' %></a></h6>
+              </div>
+              <div class="collapse" id="collapseFive" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body"><%= @lodging.particularities_text.try(:html_safe) %></div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6><a class="collapsed" href="#collapseSeven" data-toggle="collapse"><i class="material-icons person"></i><%= t 'information.extra_service' %></a></h6>
+              </div>
+              <div class="collapse" id="collapseSeven" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body"><%= @lodging.options_text.try(:html_safe) %></div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6><a class="collapsed" href="#collapseSix" data-toggle="collapse"><i class="material-icons monetization_on"></i><%= t 'information.payment_conditions' %></a></h6>
+              </div>
+              <div class="collapse" id="collapseSix" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body"><%= @lodging.payment_terms_text.try(:html_safe) %></div>
+              </div>
+          </div>
+           </div>
+            </div>
+          </div>
+        </div>
+
+        <%= render 'shared_content', lodging: @lodging %>
       </div>
     </div>
   </div>

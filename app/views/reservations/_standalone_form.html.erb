@@ -13,16 +13,30 @@
 
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
     <div class="row"> 
-      <div class="col-md-12 homepage">
+      <div class="col-md-6">
         <div data-lodging-id="<%= lodging.id %>"
              data-disabled-dates="<%= lodging.not_available_on %>">
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
           <div class='reservation-datepicker'></div>
+         
         </div>
+      </div>
 
-        <div class="bg-white">
+      <div class="col-md-2">
+
+         <p><label class="mb-0 text-xs">&nbsp;</label></p>
+         <p><%= image_tag("icon_calendar_free") %> Available </p>
+         <p> <%= image_tag("icon_calendar_free") %> Not available</p> 
+         <p> <%= image_tag("icon_calendar_free") %> Under option </p>
+         <p> <%= image_tag("icon_calendar_free") %> Special offer </p>
+      </div>
+       
+      <div class="bg-white">
           <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
         </div>
+      
+      <div class="col-md-4">
+        
 
         <label class="mb-0 text-xs"><%= t 'search.guests' %></label>
         <div class="dropdown guests-dropdown">
@@ -49,6 +63,11 @@
             <div class="dropdown-item">
               <%= link_to 'Done', '#', class: 'btn btn-sm btn-secondary btn-calculate-bill float-right', data: { lodging_ids: [lodging.id] } %>
             </div>
+          </div>
+
+
+
+      <div class="col-md-3">
 
             <%= f.hidden_field :lodging_id, value: lodging.id %>
             <%= hidden_field_tag :standalone, true %>
@@ -56,7 +75,7 @@
             <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}", class: 'check_out' %>
             <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
             <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
-          </div>
+          
         </div>
 
         <div class="col-md-12 text-center pt-2">
@@ -64,56 +83,27 @@
             <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
             <label><%= t("reservations.#{status}") %></label>
           <% end %>
+        <p id="lbl-error-<%= lodging.id %>"></p>
+        <div class="text-dark text-left line-height-2" id="bill-<%= lodging.id %>"></div>
+        <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
+        <%= render 'wishlists/form',  lodging: lodging %>
+        <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
+        <% end %>
+
+        <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <p id="lbl-error-<%= lodging.id %>"></p>
-        <div class="text-dark line-height-2" id="bill-<%= lodging.id %>"></div>
-      </div>
-    </div>
+    
 
-    <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
-  <% end %>
+  
   <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
 
-  <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
+ 
 
-  <div class="row">
-    <div class="col-md-12 col-lg-6 col-xs-12">
-      <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
-        <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
-      <% end %>
-    </div>
+ 
 
-    <div class="col-md-12 col-lg-6 col-xs-12">
-      <%= render 'wishlists/form', lodging: lodging %>
-    </div>
-  </div>
 
-  <div class="row px-2 mt-1">
-    <div class="col-md-12 bg-secondary">
-      <button class="btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
-        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
-        data-html="true" data-content="<%= lodging.including_text %>" data-original-title="<%= t 'information.included_header' %>"><%= t 'information.included' %>
-      </button>
-
-      <button class="text-xxs btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
-        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
-        data-html="true" data-content="<%= lodging.particularities_text %>" data-original-title="<%= t 'information.informatie_header' %>"><%= t 'information.informatie' %>
-      </button>
-
-      <button class="btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
-        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
-        data-html="true" data-content="<%= lodging.options_text %>" data-original-title="<%= t 'information.informatie_header' %>"><%= t 'information.extra_service' %>
-      </button>
-
-      <button class="text-xxs btn btn-sm col-md-12 bg-white btn-outline-secondary" type="button"
-        data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover click"
-        data-html="true" data-content="<%= lodging.payment_terms_text %>" data-original-title="<%= t 'information.informatie_header' %>"><%= t 'information.payment_conditions' %>
-      </button>
-    </div>
-  </div>
+  
 </div>

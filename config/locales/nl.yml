@@ -131,8 +131,10 @@ nl:
     intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfort
     intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. Onze buitengewone collectie is zorgvuldig door ons team samengesteld en iedere plek wordt door ons bezocht. 
     acco_show_header: voldoet aan onze hoge standaard in kwaliteit, comfort en stijl.
+    vragen_show_header: Heeft u vragen over 
     acco_show_p:  Alle accommodaties in onze unieke collectie zijn aan een kritische selectie onderworpen door ons ervaren en gepassioneerde team, om u een onbezorgde en comfortabele vakantie te kunnen garanderen.
     acco_show_visit: is bezocht door Christa Linders
+    help_acco_show: Wij geven graag antwoord op uw vraag of helpen u bij het reserveren..
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio 
 
@@ -203,6 +205,7 @@ nl:
     guests: Gasten
     guest: Gast
     dates: Periode
+    legenda: 
     search_button: Zoek nu
     bedrooms: Slaapkamers
     bedroom: Slaapkamer
