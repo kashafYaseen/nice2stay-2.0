@@ -71,6 +71,18 @@ class Lodging < ApplicationRecord
     (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
   end
 
+  def discount_dates
+    all_discounts.active.collect { |discount| (discount.start_date..discount.end_date).map(&:to_s) }.flatten
+  end
+
+  def option_dates
+    reservations.option.collect { |resv| (resv.check_in..resv.check_out).map(&:to_s) }.flatten
+  end
+
+  def customized_dates
+    [{ "cssClass": "discount" , "dates": discount_dates }, { "cssClass": "option" , "dates": option_dates } ].to_json
+  end
+
   def children_not_available_on
     return not_available_on unless lodging_children.present?
     _availabilities = []
