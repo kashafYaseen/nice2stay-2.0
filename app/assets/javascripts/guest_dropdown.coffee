@@ -35,8 +35,6 @@
       if infants then guests += "#{if children || adults then ', ' else ' '} #{infants} #{if infants > 1 then 'infants' else 'infant'}"
       if guests
         $(dropdown).children().find('.title').text(guests)
-        $(dropdown).children('.dropdown-toggle').addClass 'btn-primary'
-        $(dropdown).children('.dropdown-toggle').removeClass 'btn-outline-primary'
 
   update_types_text = ->
     text = ""
