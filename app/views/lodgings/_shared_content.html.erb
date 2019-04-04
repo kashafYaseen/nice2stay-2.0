@@ -1,131 +1,130 @@
-<% if @lodging.as_standalone? %>
-<% else %>
-  <div class="row col-md-12 margin-top-2x">
-    <h4 class="card-title text-muted margin-bottom-1x">
-    <%= t 'nav.price_availabiltiy' %></h4>
-    <div class="children-scroll-section"></div>
-    <%= render partial: 'reservations/child_form', collection: @lodging_children, as: :lodging %>
-    <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
-  </div>
-<% end %>
+<div>
+  <% if @lodging.as_standalone? %>
+  <% else %>
+    <div class="row col-md-12 margin-top-2x">
+      <h4 class="card-title text-muted margin-bottom-1x">
+      <%= t 'nav.price_availabiltiy' %></h4>
+      <div class="children-scroll-section"></div>
+      <%= render partial: 'reservations/child_form', collection: @lodging_children, as: :lodging %>
+      <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
+    </div>
+  <% end %>
 
-<% if lodging.all_discounts.present? %>
-  <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section">
+  <% if lodging.all_discounts.present? %>
+    <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section">
+      <div class="col-md-12">
+        <h3 class="card-title">Special Offers</h3>
+        <%= render 'discounts/discounts', discounts: lodging.all_discounts, parent: lodging.as_parent? %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
     <div class="col-md-12">
-      <h3 class="card-title">Special Offers</h3>
-      <%= render 'discounts/discounts', discounts: lodging.all_discounts, parent: lodging.as_parent? %>
+      <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
+      <h5 class="card-title"><%= @lodging.h2 %></h5>
+
+      <%= lodging.location_description.try(:html_safe) %>
     </div>
-  </div>
-<% end %>
 
-<div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
-  <div class="col-md-12">
-    <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
-    <h5 class="card-title"><%= @lodging.h2 %></h5>
-
-    <%= lodging.location_description.try(:html_safe) %>
-</div>
-
-<div class="col-md-12 address-mark" id="lodging-map-location"></div>
-  <%= tag.div class: "lodgings-list-json", data: { feature: lodging.feature} %>
-
-</div>
-
-<div class="row">
-  <div class="col-md-6 target-section" id="description-container">
-    <h3 class="card-title"><%= @lodging.h3 %></h3>
-    <hr class="margin-bottom-1x">
-
-    <div id="lodging-description">
-      <%= lodging.description.try(:html_safe) %>
-    </div>
+    <div class="col-md-12 address-mark" id="lodging-map-location"></div>
+    <%= tag.div class: "lodgings-list-json", data: { feature: lodging.feature} %>
   </div>
 
-<div class="col-md-6 col-xs-6">
-  <h3 class="card-title"><%= t 'nav.amentities' %></h3>
-  <hr class="margin-bottom-1x">
-  <ul class="list-icon">
-    <% @lodging.amenities.each do |amenity| %>
-      <i class="material-icons md-14 check_circle text-success"></i> <%= amenity.name %>
-    <% end %>
-   </ul>
-</div>
+  <div class="row">
+    <div class="col-md-6 target-section" id="description-container">
+      <h3 class="card-title"><%= @lodging.h3 %></h3>
+      <hr class="margin-bottom-1x">
 
+      <div id="lodging-description">
+        <%= lodging.description.try(:html_safe) %>
+      </div>
+    </div>
 
-</div>
-
-<div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
-  <div class="col-md-12 mb-30">
-    <h3 class="card-title"><%= t 'nav.gallary' %></h3>
-    <hr class="margin-bottom-1x">
-
-    <div class="gallery-wrapper">
-      <div class="isotope-grid cols-3">
-        <div class="gutter-sizer"></div>
-        <div class="grid-sizer"></div>
-
-        <% lodging.images.each do |image| %>
-          <div class="grid-item gallery-item">
-            <a href="<%= image %>">
-              <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-            </a>
-          </div>
+    <div class="col-md-6 col-xs-6">
+      <h3 class="card-title"><%= t 'nav.amentities' %></h3>
+      <hr class="margin-bottom-1x">
+      <ul class="list-icon">
+        <% @lodging.amenities.each do |amenity| %>
+          <i class="material-icons md-14 check_circle text-success"></i> <%= amenity.name %>
         <% end %>
+       </ul>
+    </div>
+  </div>
+
+  <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
+    <div class="col-md-12 mb-30">
+      <h3 class="card-title"><%= t 'nav.gallary' %></h3>
+      <hr class="margin-bottom-1x">
+
+      <div class="gallery-wrapper">
+        <div class="isotope-grid cols-3">
+          <div class="gutter-sizer"></div>
+          <div class="grid-sizer"></div>
+
+          <% lodging.images.each do |image| %>
+            <div class="grid-item gallery-item">
+              <a href="<%= image %>">
+                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+              </a>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<div class="margin-top-2x row leads_homepage">
-  <div class="col-md-11 mb-30 target-section" id="reviews-container">
-    <% if @reviews.present? %>
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
-        </div>
-
-        <div class="card-body col-md-12">
-          <hr class="margin-bottom-1x">
-          <%= render 'reviews/rating', lodging: lodging %>
-        </div>
-
-        <div class="col-md-12 padding-top-2x">
-          <div class="reviews-container">
-            <%= render @reviews %>
+  <div class="margin-top-2x row leads_homepage">
+    <div class="col-md-11 mb-30 target-section" id="reviews-container">
+      <% if @reviews.present? %>
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="card-title"><%= t 'nav.reviews' %></h3>
           </div>
 
-          <div class="review-paginator">
-            <%= paginate @reviews, remote: true, window: 0 %>
+          <div class="card-body col-md-12">
+            <hr class="margin-bottom-1x">
+            <%= render 'reviews/rating', lodging: lodging %>
+          </div>
+
+          <div class="col-md-12 padding-top-2x">
+            <div class="reviews-container">
+              <%= render @reviews %>
+            </div>
+
+            <div class="review-paginator">
+              <%= paginate @reviews, remote: true, window: 0 %>
+            </div>
           </div>
         </div>
-      </div>
-    <% else %>
-      <div class="row">
-        <div class="card-body col-md-12">
-          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
-          <p>Accommodation does not have any review yet.</p>
+      <% else %>
+        <div class="row">
+          <div class="card-body col-md-12">
+            <h3 class="card-title"><%= t 'nav.reviews' %></h3>
+            <p>Accommodation does not have any review yet.</p>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="padding-bottom-1x pt-2 mb-1 row">
-  <div class="col-md-12 padding-top-1x target-section" id="like-container">
-    <h3 class="card-title"><%= t 'nav.also_like' %></h3>
-    <hr class="margin-bottom-1x">
-
-    <div class="row">
-      <%= render @lodgings %>
+      <% end %>
     </div>
   </div>
-</div>
 
-<%= form_tag lodging_path(lodging), method: :get, class: 'you-may-like-form', remote: true do %>
-  <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
-  <%= hidden_field_tag :children, params[:children], class: 'children' %>
-  <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
-  <%= hidden_field_tag :check_in, params[:check_in], class: 'check_in' %>
-  <%= hidden_field_tag :check_out, params[:check_out], class: 'check_out' %>
-<% end %>
+  <div class="padding-bottom-1x pt-2 mb-1 row">
+    <div class="col-md-12 padding-top-1x target-section" id="like-container">
+      <h3 class="card-title"><%= t 'nav.also_like' %></h3>
+      <hr class="margin-bottom-1x">
+
+      <div class="row">
+        <%= render @lodgings %>
+      </div>
+    </div>
+  </div>
+
+  <%= form_tag lodging_path(lodging), method: :get, class: 'you-may-like-form', remote: true do %>
+    <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
+    <%= hidden_field_tag :children, params[:children], class: 'children' %>
+    <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
+    <%= hidden_field_tag :check_in, params[:check_in], class: 'check_in' %>
+    <%= hidden_field_tag :check_out, params[:check_out], class: 'check_out' %>
+  <% end %>
+</div>
