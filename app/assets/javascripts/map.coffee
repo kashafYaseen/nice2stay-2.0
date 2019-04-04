@@ -70,6 +70,8 @@
     marker = L.mapbox.featureLayer().setGeoJSON(features).addTo(map);
     set_safe_bounds document.querySelector('.lodgings-list-json'), marker.getBounds()
     map.setZoom 9
+    if map.scrollWheelZoom
+      map.scrollWheelZoom.disable()
 
   Map.highlight_lodgings = ->
     $('.lodgings-list').on 'mouseenter', '.lodging-container', ->
