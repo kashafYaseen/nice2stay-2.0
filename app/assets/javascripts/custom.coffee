@@ -29,17 +29,11 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
-    $(window).resize ->
-      check_standalone_form()
-      set_top_position()
-    check_standalone_form()
-    set_top_position()
 
-  check_standalone_form = ->
-    if $('.standalone-modal-btn').is(':visible')
-      $('.reservation-standalone-form').remove()
-    else
-      $('.reservation-standalone-form-modal').remove()
+  $ ->
+    $(".standalone-modal-btn").click ->
+      $('html, body').animate { scrollTop: $('#infobox').offset().top }, 'slow'
+
 
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
