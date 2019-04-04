@@ -16,15 +16,15 @@
                     <%= render_image_tag lodging, class: 'max-height-230' %>
 
                   </th>
-                  <td><p class="text-xxxs">
-                    <%= image_tag("guest") %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>
-                    <% if lodging.children.present? %>
-                      <%= image_tag("guest") %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
-                    <% end %>
+                  <td><p>
+                    <%= image_tag("guest",  class: 'img-small' ) %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>  </p>
+                    <p><% if lodging.children.present? %>
+                      <%= image_tag("guest", class: 'img-small') %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
+                    <% end %></p>
                     
-                    <%= image_tag("bedroom") %><%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> <br>
+                    <p><%= image_tag("bedroom", class: 'img-small') %><%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> </p>
 
-                    <%= image_tag("bathroom") %> <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %> 
+                    <p><%= image_tag("bathroom", class: 'img-small') %> <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %> </p>
 
                   </p>
                   </td>
