@@ -1,3 +1,4 @@
+
 <div class="table-responsive">
             <table class="table table-bordered">
               <thead class="bg-secondary">
@@ -15,7 +16,7 @@
                     <%= render_image_tag lodging, class: 'max-height-230' %>
 
                   </th>
-                  <td><p class="text-xxs">
+                  <td><p class="text-xxxs">
                     <%= image_tag("guest") %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>
                     <% if lodging.children.present? %>
                       <%= image_tag("guest") %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
@@ -29,7 +30,7 @@
                   </td>
 
                   <td>
-                    
+
                     <%= lodging.including_text.try(:html_safe) %>
                     
                 </td>
