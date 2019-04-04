@@ -3817,8 +3817,8 @@ button:focus {
 
 .accordion .card-header {
   padding: 0;
-  border-top: 2px solid #eaeaea;
-  border-bottom: 2px solid #eaeaea;
+  
+  border-bottom: 1px solid #eaeaea;
   background-color: transparent;
 }
 
@@ -3828,7 +3828,7 @@ button:focus {
   padding: 15px 1.2rem;
   padding-right: 40px;
   transition: background-color .25s;
-  background-color: #fafafa;
+  
   color: #606060;
   font-size: 14px;
   font-weight: 400;

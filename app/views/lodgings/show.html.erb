@@ -64,7 +64,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12 ml-2">
+          <div class="col-md-12 margin-bottom-3x">
             <div class="infobox">
               <div class="infobox-header bg-secondary">
                 <h4>Beschikbaardeid & Prijzen</h4>
@@ -86,31 +86,29 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-6 homepage">
-            <h4 class="mb-3">
-              <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
+          <div class="col-md-12 margin-bottom-1x">
+            <div class="infobox">
+              <div class="infobox-header bg-secondary">
+                 <h4 class="mb-3">
+              <%= t 'information.payment_conditions' %>
             </h4>
 
-            <div class="row">
-              <div class="col-md-3 col-lg-2">
-                <div class="d-table">
-                  <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-                </div>
               </div>
 
-              <div class="col-sm-9 mb-9">
-                <p><%= @lodging.name %><%= t 'usp.acco_show_visit' %></p>
-                <p><%= t 'email.contact_text' %></p>
-
-                  <%= link_to _back_url, class: 'btn btn-white' do %>
+              <div class="infobox-content">
+                <div class="row">
+                 <div class="col-md-6">
+                  <div class="col-md-12"> 
+                  <p class="margin-top-1x"><%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?</p>
+                   <p><%= t 'email.contact_text' %></p>
+                   <%= link_to _back_url, class: 'btn btn-white' do %>
                     <i class="material-icons email"></i>&nbsp; Click hier om een vraag te stellen
                   <% end %>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="accordion" id="accordion2" role="tablist">
+                </div>
+                </div>
+                <div class="col-md-6">
+                  
+                  <div class="accordion" id="accordion2" role="tablist">
                 <div class="card-header" role="tab">
                   <h6><a href="#collapseFour" data-toggle="collapse"><i class="material-icons drafts"></i><%= t 'information.included_header' %></a></h6>
                 </div>
@@ -142,9 +140,16 @@
                 <div class="collapse" id="collapseSix" data-parent="#accordion2" role="tabpanel">
                   <div class="card-body"><%= @lodging.payment_terms_text.try(:html_safe) %></div>
                 </div>
+                </div>
+
+                </div>
+                 </div>
+              </div>
             </div>
           </div>
         </div>
+
+       
 
         <%= render 'shared_content', lodging: @lodging %>
       </div>

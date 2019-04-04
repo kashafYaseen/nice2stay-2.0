@@ -19,7 +19,30 @@
     </div>
   <% end %>
 
-  <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
+ 
+
+  <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
+    <div class="col-md-12 mb-30">
+      
+      <div class="gallery-wrapper">
+        <div class="isotope-grid cols-5">
+          <div class="gutter-sizer"></div>
+          <div class="grid-sizer"></div>
+
+          <% lodging.images.each do |image| %>
+            <div class="grid-item gallery-item">
+              <a href="<%= image %>">
+                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+              </a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+ <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
     <div class="col-md-12">
       <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
       <h5 class="card-title"><%= @lodging.h2 %></h5>
@@ -51,29 +74,6 @@
        </ul>
     </div>
   </div>
-
-  <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
-    <div class="col-md-12 mb-30">
-      <h3 class="card-title"><%= t 'nav.gallary' %></h3>
-      <hr class="margin-bottom-1x">
-
-      <div class="gallery-wrapper">
-        <div class="isotope-grid cols-3">
-          <div class="gutter-sizer"></div>
-          <div class="grid-sizer"></div>
-
-          <% lodging.images.each do |image| %>
-            <div class="grid-item gallery-item">
-              <a href="<%= image %>">
-                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-              </a>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <div class="margin-top-2x row leads_homepage">
     <div class="col-md-11 mb-30 target-section" id="reviews-container">
