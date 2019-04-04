@@ -5,7 +5,8 @@
       <h4 class="card-title text-muted margin-bottom-1x">
       <%= t 'nav.price_availabiltiy' %></h4>
       <div class="children-scroll-section"></div>
-      <%= render partial: 'reservations/child_form', collection: @lodging_children, as: :lodging %>
+     
+      <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
       <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
     </div>
   <% end %>
