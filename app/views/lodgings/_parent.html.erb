@@ -3,15 +3,15 @@
     <%= render 'reservations/parent_form', lodging: lodging, reservation: reservation, id_sufix: '' %>
   </div>
 
-  <div class="col-md-12 d-block d-md-none p-0 fixed-bottom">
+  <div class="col-md-12 d-block p-0 fixed-bottom">
     <div class="card bg-white p-1">
-      <div class="card-body">
+      <div class="card-body mx-auto mt-3 p-0">
         <div class="row">
-          <div class="col-md-12">
-            <label class="sm-check-in-out text-center text-dark w-100"></label>
+          <div class="col-md-6">
+          <input type="button" name="view-more-info" value="Change dates and guests" class="btn btn-outline-primary btn-sm standalone-modal-btn">
           </div>
-          <div class="col-md-12">
-            <input type="button" name="view-more-info" value="Check Availability" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#parent-form-modal">
+          <div class="col-md-6">
+          <%= link_to 'Check Availability', '', class: "btn btn-outline-primary btn-sm btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
           </div>
         </div>
       </div>
