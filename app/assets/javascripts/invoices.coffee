@@ -76,6 +76,7 @@
 
       if data.valid[index]
         $("#cart-#{lodging_id}").removeClass('disabled');
+        $("#reservation-footer-btn-#{lodging_id}").removeClass('disabled');
         $(".reservation-form-errors-#{lodging_id}").html('');
         $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
@@ -109,6 +110,7 @@
           result += total_html(total, index)
           $("#anternative-heading-#{lodging_id}").html('Selected period is not available. See alternatives')
           $("#bill-#{lodging_id}").append(result)
+          $("#reservation-footer-#{lodging_id}").append(result)
         else
           show_unavailable(lodging_id)
       else
@@ -126,6 +128,7 @@
 
     if nights >= 1 && data.valid
       $("#cart-#{lodging_id}").removeClass('disabled');
+      $("#reservation-footer-btn-#{lodging_id}").removeClass('disabled');
       $(".reservation-form-errors-#{lodging_id}").html('');
 
       if data.discounts
@@ -159,6 +162,7 @@
         result += total_html(total, -1)
         $('.sm-total').text("Price: $#{total}")
         $("#bill-#{lodging_id}").html(result)
+        $("#reservation-footer-#{lodging_id}").html(result)
         $("#anternative-heading-#{lodging_id}").html('Good news period is fully available.')
         $("#flexible-search-#{lodging_id}").html("#{parse_date values[0]} - #{parse_date values[1]}")
       else
@@ -168,6 +172,7 @@
 
   show_unavailable = (lodging_id) ->
     $("#bill-#{lodging_id}").text('Lodging is not available.')
+    $("#reservation-footer-#{lodging_id}").text('Lodging is not available.')
 
   check_values = (value) ->
     value == '' || value == undefined

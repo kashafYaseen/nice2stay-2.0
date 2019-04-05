@@ -1,7 +1,9 @@
 <% if @reservation.validate %>
   $('#cart-<%= @reservation.lodging_id %>').removeClass('disabled');
+  $("#reservation-footer-btn-#{lodging_id}").removeClass('disabled');
 <% else %>
   $('#cart-<%= @reservation.lodging_id %>').addClass('disabled');
+  $("#reservation-footer-btn-#{lodging_id}").addClass('disabled');
 <% end %>
 
 $('.reservation-form-errors-<%= @reservation.lodging_id %>').html("<%= j render 'errors', resource: @reservation, classes: nil %>");

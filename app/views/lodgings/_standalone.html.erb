@@ -5,29 +5,17 @@
 <div class="col-md-12 d-block p-0 fixed-bottom">
   <div class="card bg-white p-0">
     <div class="card-body mx-auto mt-3 p-0">
-      <div class="row ml-5">
-        <div class="col-lg-3">
-          <input type="button" name="view-more-info" value="Check Availability" class="btn btn-outline-primary btn-sm   standalone-modal-btn">
-          <input type="button" name="view-more-info" value="Check Availability" class="btn btn-outline-primary btn-sm  standalone-modal-btn">
-        </div>
-        <div class="col-lg-5 ml-0">
-          <div class="row">
-            <label class="text-dark w-50">7 nights:</label>
-            <span class="text-right">$200.00/night</span>
-          </div>
-
-          <div class="row">
-            <label class="text-dark w-50">Cleaningcost:</label>
-            <span class="text-right">$150.00</span>
-          </div>
-
-          <div class="row">
-            <label class="text-dark w-50">Total:</label>
-            <span class="text-right">$1550.00</span>
+      <div class="row ml-5 mr-5">
+        <div class="col-md-6 my-auto ml-0">
+          <div class="text-dark text-left line-height-2" id="reservation-footer-<%= lodging.id %>">
+           <div class="price"> From: €<%= lodging.price %>/night </div>
           </div>
         </div>
-        <div class="col-lg-4 my-auto">
-          <input type="button" name="view-more-info" value="Check Availability" class="btn btn-primary btn-sm w-100 standalone-modal-btn">
+
+        <div class="col-md-6 my-auto">
+          <input type="button" name="view-more-info" value="Change dates and guests" class="btn btn-outline-primary btn-sm w-100 standalone-modal-btn">
+          <%= button_tag class: "btn btn-primary btn-sm col-md-12 btn-booking disabled", id: "reservation-footer-btn-#{lodging.id}", data: { form_id: "#new_reservation" } do %> ADD TO CART
+          <% end %>
         </div>
       </div>
     </div>
