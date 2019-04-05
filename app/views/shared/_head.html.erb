@@ -12,6 +12,8 @@
 <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
 <%= javascript_include_tag "https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js", 'application', 'data-turbolinks-track': 'reload' %>
 
+<link rel="canonical" href="<%= yield :canonical %>">
+
 <%= javascript_pack_tag 'application' %>
 <%= stylesheet_pack_tag 'application', media: 'all' %>
 <% if content_for? :meta_tags %>

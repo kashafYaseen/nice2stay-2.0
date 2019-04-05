@@ -11,4 +11,7 @@
       </div>
     </div>
   </div>
+  <% content_for :canonical do %><%= seo_url custom_text.seo_path %><% end %>
+<% else %>
+  <% content_for :canonical do %><%= lodgings_url %><% end %>
 <% end %>

@@ -5,6 +5,8 @@
   </div>
 </div>
 
+<% content_for :canonical do %><%= page_url(@page) %><% end %>
+
 <%= content_for :js_init do %>
   OwlCarousel.init();
 <% end %>
