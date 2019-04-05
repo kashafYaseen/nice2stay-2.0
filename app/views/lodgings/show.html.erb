@@ -84,7 +84,7 @@
             </div>
           </div>
         </div>
-
+        
         <div class="row">
           <div class="col-md-12 margin-bottom-1x">
             <div class="infobox">
@@ -96,18 +96,15 @@
 
               <div class="infobox-content">
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="col-md-12">
-                      <p class="margin-top-1x">
-                        <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
-                      </p>
 
-                      <p><%= t 'email.contact_text' %></p>
-                      <%= link_to _back_url, class: 'btn bg-secondary' do %>
-                        <i class="material-icons email"></i>&nbsp; Click hier om een vraag te stellen
-                      <% end %>
-                    </div>
-                  </div>
+                 <div class="col-md-6">
+                  <div class="col-md-12"> 
+                  <p class="margin-top-1x"><%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?</p>
+                   <p><%= t 'email.contact_text' %></p>
+                   
+                </div>
+                </div>
+               
 
                   <div class="col-md-6">
                     <div class="accordion" id="accordion2" role="tablist">
@@ -158,6 +155,7 @@
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>

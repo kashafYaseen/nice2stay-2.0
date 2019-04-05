@@ -1,0 +1,75 @@
+
+<div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="bg-secondary">
+                <tr>
+                  <th>Type</th>
+                  <th>Geschikt voor</th>
+                  <th>Extra informatie</th>
+                  <th>Booking of optie?</th>
+                  <th>Prijs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><%= lodging.child_name %><br>
+                    <%= render_image_tag lodging, class: 'max-height-230' %>
+
+                  </th>
+                  <td><p>
+                    <%= image_tag("guest",  class: 'img-small' ) %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>  </p>
+                    <p><% if lodging.children.present? %>
+                      <%= image_tag("guest", class: 'img-small') %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
+                    <% end %></p>
+                    
+                    <p><%= image_tag("bedroom", class: 'img-small') %><%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> </p>
+
+                    <p><%= image_tag("bathroom", class: 'img-small') %> <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %> </p>
+
+                  </p>
+                  </td>
+
+                  <td>
+
+                    <%= lodging.including_text.try(:html_safe) %>
+                    
+                </td>
+                  <td><%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
+                    
+                      <p class="mb-1 mt-2 text-sm anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
+                      <div id="flexible-search-<%= lodging.id %>" class="text-xxs flexible-search-data"></div>
+                      <p class="xxs" id="lbl-error-<%= lodging.id %>"></p>
+                    </div>
+
+                    <div class="bg-white">
+                      <p class="text-sm">
+                        <% [:prebooking, :option].each do |status| %>
+                          <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+                          <label><%= t("reservations.#{status}") %></label>
+                        <% end %>
+                      </p>
+
+                      <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
+                      <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}", class: 'check_in' %>
+                      <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}", class: 'check_out' %>
+                      <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
+                      <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
+                      <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
+                      <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
+                      <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
+                      <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
+                    </div>
+                  <% end %></td>
+                  <td><p class="text-sm text-dark" id="bill-<%= lodging.id %>"></p>
+                    <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } do %>
+                      <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+                    <% end %>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+
+
+

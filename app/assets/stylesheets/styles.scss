@@ -92,7 +92,7 @@
 }
 
 .max-image{
-  max-height: 650 px;
+  max-height: 650px;
 }
 
 .max-image-listing{
@@ -544,6 +544,10 @@ figure {
   vertical-align: middle;
 }
 
+.img-small {
+  max-width: 20%;
+  
+}
 svg {
   max-width: 100%;
 }
@@ -640,7 +644,7 @@ figure figcaption {
 }
 
 .container-fluid {
-  max-width: 1420px;
+  max-width: 1320px;
   margin-right: auto;
   margin-left: auto;
   padding-right: 30px;
@@ -7000,6 +7004,11 @@ video {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.max-height-230 {
+  height: 175px;
+}
+
 
 .user-info-wrapper .user-cover .tooltip .tooltip-inner {
   width: 230px;
