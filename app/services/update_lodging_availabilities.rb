@@ -1,7 +1,5 @@
 class UpdateLodgingAvailabilities
-  attr_reader :lodging
-  attr_reader :availabilities
-  attr_reader :lodging_availabilities
+  attr_reader :lodging, :availabilities, :lodging_availabilities
 
   def self.call(lodging, availabilities)
     self.new(lodging, availabilities).call
