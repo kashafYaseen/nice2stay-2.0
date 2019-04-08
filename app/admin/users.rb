@@ -1,5 +1,8 @@
 ActiveAdmin.register User do
-  remove_filter :reservations, :reviews, :wishlists, :leads, :admin, :image
+  filter :email
+  filter :first_name
+  filter :last_name
+  filter :country
 
   controller do
     def permitted_params
