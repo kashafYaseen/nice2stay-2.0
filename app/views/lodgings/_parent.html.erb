@@ -5,12 +5,15 @@
 
   <div class="col-md-12 d-block p-0 fixed-bottom">
     <div class="card bg-white p-1">
-      <div class="card-body mx-auto mt-3 p-0">
-        <div class="row">
-          <div class="col-md-6">
-          <input type="button" name="view-more-info" value="Change dates and guests" class="btn btn-outline-primary btn-sm standalone-modal-btn">
+      <div class="card-body mt-3 p-0">
+        <div class="row ml-5 mr-5">
+          <div class="col-md-4 my-auto ml-0">
+            <input type="button" name="view-info" value="Questions about <%= lodging.name %>" class="btn btn-outline-secondary text-danger w-75 btn-sm standalone-question-btn">
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3">
+          <input type="button" name="view-more-info" value="Change dates and guests" class="btn btn-outline-primary w-100 btn-sm standalone-modal-btn">
+          </div>
+          <div class="col-md-3">
           <%= link_to 'Check Availability', '', class: "btn btn-outline-primary btn-sm btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
           </div>
         </div>

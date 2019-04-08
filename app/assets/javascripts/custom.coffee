@@ -32,8 +32,12 @@
 
   $ ->
     $(".standalone-modal-btn").click ->
-      $('html, body').animate { scrollTop: $('#infobox').offset().top }, 'slow'
+      $('html, body').animate { scrollTop: $('#infobox').offset().top - 100 }, 'slow'
 
+
+  $ ->
+    $(".standalone-question-btn").click ->
+      $('html, body').animate { scrollTop: $('#questions').offset().top - 100 }, 'slow'
 
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
