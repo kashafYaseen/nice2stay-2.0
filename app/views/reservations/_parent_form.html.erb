@@ -18,20 +18,12 @@
          data-customized-dates="<%= lodging.customized_dates %>">
       <label class="mb-0 text-xs">Dates</label>
       <div class="reservation-datepicker"></div>
-      <div class="bg-white">
-        <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
-      </div>
+      
     </div>
 
-    <div class="col-md-2">
-      <p><label class="mb-0 text-xs">&nbsp;</label></p>
-      <p><%= image_tag("icon_calendar_free") %> Available </p>
-      <p> <%= image_tag("icon_calendar_free") %> Not available</p>
-      <p> <%= image_tag("icon_calendar_free") %> Under option </p>
-      <p> <%= image_tag("icon_calendar_free") %> Special offer </p>
-    </div>
+    
+    <div class="col-md-6">
 
-    <div class="col-md-4">
       <label class="mb-0 text-xs">Guests</label>
       <div class="dropdown guests-dropdown" id="dropdown<%= id_sufix %>">
         <button class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,14 +52,24 @@
         <% end %>
         <%= link_to 'Check Availability', '', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
         <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
-        <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
+        
+      </div>
+      
+      <p class="text-xxs"><%= image_tag("icon_calendar_free",  class: 'img-small') %> Available
+      <%= image_tag("icon_calendar_free",  class: 'img-small') %> Not available
+      <%= image_tag("icon_calendar_free",  class: 'img-small') %> Under option 
+      <%= image_tag("icon_calendar_free",  class: 'img-small') %> Special offer </p>
+      <div class="bg-white">
+        <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
       </div>
     </div>
 
-    <div class="col-md-12">
-      <%= link_to _back_url, class: 'btn btn-outline-secondary w-100' do %>
-        <i class="material-icons arrow_back"></i>&nbsp; GO BACK
-      <% end %>
-    </div>
+    
   </div>
+  <h5 class="margin-top-3x">
+                  Beschikbaar bij <%= @lodging.name %>
+  </h5>
+  <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
+  <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
+    
 </div>

@@ -180,7 +180,7 @@
   rates_html = (key, value, index) ->
     return "<p class='flexible-search-#{index} #{if index < 0 then '' else 'search-results'} #{if index > 0 then 'd-none' else ''} row mb-0'>
               <span class='col-6'>#{value} #{if value > 1 then 'nights' else 'night'}</span>
-              <span class='col-6'><b>€#{parseFloat(key).toFixed(2)}/night</b></span>
+              <span class='col-6'><b>€#{parseFloat(key).toFixed(2)}</b></span>
             </p>"
 
   discount_html = (key, value, index) ->

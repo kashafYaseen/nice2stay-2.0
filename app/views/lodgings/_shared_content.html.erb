@@ -1,27 +1,7 @@
 <div>
   <% if @lodging.as_standalone? %>
   <% else %>
-    <div class="row col-md-12 margin-top-2x">
-    
-    
-      <div class="children-scroll-section"></div>
-
-
-     <div class="infobox">
-        <div class="infobox-header bg-secondary">
-      <h4>Beschikbaardeid & Prijzen</h4>
-
-                <h5 class="margin-bottom-1x">
-                  Wanneer wil jij verblijven bij <%= @lodging.name %>?
-                </h5>
-              </div>
-       <div class="infobox-content">
-      <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
-      <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
-    </div>
-    </div>
-     </div>
-      </div>
+   
   <% end %>
 
   <% if lodging.all_discounts.present? %>

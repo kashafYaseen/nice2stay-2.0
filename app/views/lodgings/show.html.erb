@@ -38,7 +38,7 @@
         <div class="row margin-top-1x">
           <div class="col-md-8 margin-bottom-1x">
             <div id="lodging-summary">
-              <%= @lodging.summary.try(:html_safe) %>
+              <%= @lodging.summary.truncate(1000).try(:html_safe)  %>
             </div>
           </div>
           <div class="col-md-4">
@@ -64,9 +64,9 @@
         </div>
 
         <div id="infobox" class="row">
-          <div class="col-md-12 margin-bottom-3x">
-            <div class="infobox">
-              <div class="infobox-header bg-secondary">
+          <div class="col-md-12 ">
+            <div class="inobox">
+              <div class="infobox-header homepage">
                 <h4>Beschikbaardeid & Prijzen</h4>
 
                 <h5 class="margin-bottom-1x">
@@ -161,6 +161,8 @@
             </div>
           </div>
         </div>
+
+
 
         <%= render 'shared_content', lodging: @lodging %>
       </div>
