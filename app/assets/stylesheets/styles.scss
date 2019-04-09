@@ -93,8 +93,15 @@
 
 .homepage-cover {
   background-image: asset-url('homepage_v10');
+  background-size: cover;
   background-position: center;
 }
+
+.homepage-campaign-cover {
+  background-size: cover;
+  background-position: center;
+}
+
 
 .homepage-actions-row {
   padding-left: 3%;

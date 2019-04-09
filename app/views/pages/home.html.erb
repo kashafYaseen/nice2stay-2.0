@@ -1,9 +1,28 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
-      <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
-      <hr class="mt-1"></hr>
+  <div class="row homepage-slider">
+    <div class="col-sm-12 col-xs-12 col-md-12">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <% @campaigns.each do |campaign| %>
+            <div class="swiper-slide">
+              <a href="<%= campaign.crm_urls %>">
+                <%= image_tag campaign.image %>
+                <% if campaign.title.present? %>
+                  <h2 class="image-title-box"><%= campaign.title %></h2>
+                <% end %>
+              </a>
+            </div>
+          <% end %>
+        </div>
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-button-next swiper-button-white"></div>
+      </div>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col-sm-6 margin-top-1x">
       <div class="col-md-12 padding-top-1x padding-bottom-3x homepage">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
@@ -48,12 +67,11 @@
           </div>
         <% end %>
       </div>
-
-      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
     </div>
-      
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
-      <section class="padding-top-10x padding-bottom-10x homepage-cover"></section>
+    <div class="col-sm-6 margin-top-1x">
+      <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
+      <hr class="mt-1"></hr>
+      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
     </div>
   </div>
 
@@ -189,4 +207,5 @@
   initDatePicker();
   GuestDropdown.init();
   OwlCarousel.init();
+  HomePageSlider.init();
 <% end %>

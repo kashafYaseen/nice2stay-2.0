@@ -16,6 +16,7 @@
 //= require gmap3.min
 //= require modernizr.min
 //= require popper.min
+//= require swiper.min
 //= require bootstrap.min
 //= require downCount.min
 //= require imagesloaded.pkgd.min
