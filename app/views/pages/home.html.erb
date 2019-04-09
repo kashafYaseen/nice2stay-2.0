@@ -5,10 +5,12 @@
         <div class="swiper-wrapper">
           <% @campaigns.each do |campaign| %>
             <div class="swiper-slide">
-              <%= image_tag campaign.image %>
-              <% if campaign.title.present? %>
-                <h2 class="image-title-box"><%= campaign.title %></h2>
-              <% end %>
+              <a href="<%= campaign.crm_urls %>">
+                <%= image_tag campaign.image %>
+                <% if campaign.title.present? %>
+                  <h2 class="image-title-box"><%= campaign.title %></h2>
+                <% end %>
+              </a>
             </div>
           <% end %>
         </div>
