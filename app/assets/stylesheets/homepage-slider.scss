@@ -1,0 +1,31 @@
+.homepage-slider {
+  .swiper-container {
+    width: 100%;
+    height: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .swiper-slide {
+    font-size: 18px;
+    background: #fff;
+
+    img {
+      width: 100%;
+    }
+
+    .image-title-box {
+      display: block;
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      width: 50%;
+      margin-top: -10%;
+      margin-left: -24%;
+      color: white;
+      font-size: 28px;
+      padding: 3%;
+      text-align: center;
+      box-shadow: 0 4px 15px 0 rgba(0,0,0,0.25);
+    }
+  }
+}
