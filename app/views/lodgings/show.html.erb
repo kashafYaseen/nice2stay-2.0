@@ -1,13 +1,13 @@
 <%= render 'shared/photoswipe' %>
 
-<div class="container-fluid">
-  <div class="col-md-12">
+<div class="row no-gutters">
+  <div class="col-md-8">
     <div class="row target-section" id="home-container">
-      <div class="col-md-12 col-xs-12 margin-top-1x">
+      <div class="col-md-12 col-xs-12">
         <div class="gallery-control ">
           <figure itemprop="associatedMedia" itemscope>
             <a itemprop="contentUrl">
-              <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
+              <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
             </a>
 
             <figcaption itemprop="caption description">
@@ -26,23 +26,19 @@
             </figure>
           <% end %>
         </div>
-
-        <h2 class="margin-top-2x"><%= @lodging.h1 %></h2>
-
-        <h5>
-          <i class="material-icons md-24 stars text-success"></i>&nbsp;<%= @lodging.highlight_1 %>
-          <i class="material-icons md-24 stars text-success"></i>&nbsp;<%= @lodging.highlight_2 %>
-          <i class="material-icons md-24 stars text-success"></i>&nbsp;<%= @lodging.highlight_3 %>
+        </div>
+        </div>
+        </div>
+        <div class="col-md-4 margin-bottom-1x homepage">
+          <div class="col-12-md px-3">
+          
+          <h2 class="margin-top-2x margin-bottom-2x"><%= @lodging.h1 %></h2>
+          <h5 class="margin-top-2x margin-bottom-2x">
+          <i class="material-icons md-24 stars "></i>&nbsp;<%= @lodging.highlight_1 %><br>
+          <i class="material-icons md-24 stars "></i>&nbsp;<%= @lodging.highlight_2 %><br>
+          <i class="material-icons md-24 stars "></i>&nbsp;<%= @lodging.highlight_3 %>
         </h5>
-
-        <div class="row margin-top-1x">
-          <div class="col-md-8 margin-bottom-1x">
-            <div id="lodging-summary">
-              <%= @lodging.summary.truncate(1000).try(:html_safe)  %>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <p><%= image_tag("guest") %> <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>  </p>
+         <p><%= image_tag("guest") %> <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>  </p>
             <p><%= image_tag("bedroom") %> <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %></p>
 
             <p>
@@ -61,12 +57,30 @@
               </div>
             <% end %>
           </div>
+      </div>
+     </div>
+
+
+<div class="container-fluid">
+  <div class="col-md-12">
+
+
+       
+
+        <div class="row margin-top-1x">
+          <div class="col-md-12 margin-bottom-1x">
+            <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
+            <div id="lodging-summary">
+              <%= @lodging.summary.try(:html_safe)  %>
+            </div>
+          </div>
+         
         </div>
 
         <div id="infobox" class="row">
           <div class="col-md-12 ">
-            <div class="inobox">
-              <div class="infobox-header homepage">
+            <div class="infobox">
+              <div class="infobox-header bg-secondary">
                 <h4>Beschikbaardeid & Prijzen</h4>
 
                 <h5 class="margin-bottom-1x">
