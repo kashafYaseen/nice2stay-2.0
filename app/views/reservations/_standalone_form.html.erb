@@ -4,7 +4,8 @@
      data-validate-url="<%= validate_reservations_path %>"
      data-months="1"
      data-check-in-title="<%= t('search.check_in') %>"
-     data-check-out-title="<%= t('search.check_out') %>"></div>
+     data-check-out-title="<%= t('search.check_out') %>">
+</div>
 
 <div class="card-body">
   <div class="reservation-form-errors-<%= lodging.id %>">
@@ -19,26 +20,22 @@
              data-customized-dates="<%= lodging.customized_dates %>"
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
           <div class='reservation-datepicker'></div>
-         
         </div>
       </div>
 
       <div class="col-md-2">
-
-         <p><label class="mb-0 text-xs">&nbsp;</label></p>
-         <p><%= image_tag("icon_calendar_free") %> Available </p>
-         <p> <%= image_tag("icon_calendar_free") %> Not available</p> 
-         <p> <%= image_tag("icon_calendar_free") %> Under option </p>
-         <p> <%= image_tag("icon_calendar_free") %> Special offer </p>
+        <p><label class="mb-0 text-xs">&nbsp;</label></p>
+        <p><%= image_tag("icon_calendar_free") %> Available </p>
+        <p> <%= image_tag("icon_calendar_free") %> Not available</p>
+        <p> <%= image_tag("icon_calendar_free") %> Under option </p>
+        <p> <%= image_tag("icon_calendar_free") %> Special offer </p>
       </div>
-       
-      <div class="bg-white">
-          <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
-        </div>
-      
-      <div class="col-md-4">
-        
 
+      <div class="bg-white">
+        <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
+      </div>
+
+      <div class="col-md-4">
         <label class="mb-0 text-xs"><%= t 'search.guests' %></label>
         <div class="dropdown guests-dropdown">
           <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,45 +63,30 @@
             </div>
           </div>
 
-
-
-      <div class="col-md-3">
-
+          <div class="col-md-3">
             <%= f.hidden_field :lodging_id, value: lodging.id %>
             <%= hidden_field_tag :standalone, true %>
             <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}", class: 'check_in' %>
             <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}", class: 'check_out' %>
             <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
             <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
-          
-        </div>
+          </div>
 
-        <div class="col-md-12 text-center pt-2">
-          <% [:prebooking, :option].each do |status| %>
+          <div class="col-md-12 text-center pt-2">
+            <% [:prebooking, :option].each do |status| %>
             <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-            <label><%= t("reservations.#{status}") %></label>
-          <% end %>
-        <p id="lbl-error-<%= lodging.id %>"></p>
-        <div class="text-dark text-left line-height-2" id="bill-<%= lodging.id %>"></div>
-        <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
-        <%= render 'wishlists/form',  lodging: lodging %>
-        <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
-        <% end %>
-
-        <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
+              <label><%= t("reservations.#{status}") %></label>
+            <% end %>
+            <p id="lbl-error-<%= lodging.id %>"></p>
+            <div class="text-dark text-left line-height-2" id="bill-<%= lodging.id %>"></div>
+            <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
+              <%= render 'wishlists/form',  lodging: lodging %>
+              <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
+            <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
+          </div>
         </div>
       </div>
     </div>
-
-    
-
-  
-  <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
-
- 
-
- 
-
-
-  
+  <% end %>
+    <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
 </div>
