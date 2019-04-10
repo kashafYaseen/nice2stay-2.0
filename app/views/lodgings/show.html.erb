@@ -49,36 +49,38 @@
 <div class="container-fluid">
   <div class="col-md-12">
     <div class="row margin-top-1x">
-      <div class="col-md-8 margin-bottom-1x">
+      <div class="col-sm-12 col-md-7 col-lg-8 margin-bottom-1x">
         <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
         <div id="lodging-summary">
-          <%= @lodging.summary.try(:html_safe)  %>
+          <%= @lodging.summary.try(:html_safe) %>
         </div>
       </div>
 
-      <div class="col-md-4 px-5">
-        <p>
-          <%= image_tag("guest") %>
-          <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
-        </p>
+      <div class="col-sm-12 col-md-5 col-lg-4 px-5 text-center">
+        <div class="row">
+          <div class="col-sm-4 col-md-12">
+            <%= image_tag("guest") %>
+            <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
+          </div>
 
-        <p>
-          <%= image_tag("bedroom") %>
-          <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
-        </p>
+          <div class="col-sm-4 col-md-12">
+            <%= image_tag("bedroom") %>
+            <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
+          </div>
 
-        <p>
-          <%= image_tag("bathroom") %>
-          <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
-        </p>
+          <div class="col-sm-4 col-md-12">
+            <%= image_tag("bathroom") %>
+            <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+          </div>
+        </div>
 
         <% if @reviews.present? %>
-          <div class="text-left">
-            <div class="d-inline align-baseline display-3 mr-1">
+          <div class="row col-md-12 mt-2">
+            <div class="d-inline align-baseline display-3 ml-auto mr-1">
               <%= @lodging.average_rating %><br>
             </div>
 
-            <div class="d-inline align-baseline text-sm text-warning">
+            <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2">
               <%= render_stars_tag @lodging.average_rating %>
               <p>(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
             </div>
@@ -99,7 +101,7 @@
           </div>
 
           <div class="infobox-content">
-             <% if @lodging.as_standalone? %>
+            <% if @lodging.as_standalone? %>
               <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
             <% else %>
               <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
