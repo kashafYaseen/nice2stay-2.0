@@ -7,7 +7,6 @@
       Invoice.calculate($(this).data('lodging-ids'))
       if $('.children-scroll-section').length > 0
         $('.children-scroll-section').get(0).scrollIntoView({behavior: "instant", block: "start", inline: "nearest"})
-        $('#parent-form-modal').modal('hide')
 
     $('.flexible-search-data').on 'change', '.flexible_search_radio', ->
       if $(this).is(':checked')
