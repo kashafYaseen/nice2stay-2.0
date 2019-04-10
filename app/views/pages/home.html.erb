@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
   <div class="row">
     <div class="col-sm-5 margin-top-1x">
       <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
@@ -10,11 +9,9 @@
             <div class="col-md-12 col-sm-12 pt-2">
               <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
-
             <div class="col-md-12 col-sm-12">
               <div class="row homepage-actions-row pt-0">
                 <div id='datepicker'></div>
-
                 <div class="dropdown guests-dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="title"><%= t 'search.guests' %></span>
@@ -40,7 +37,6 @@
                 <%= hidden_field_tag :standalone, true %>
                 <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
                 <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
-
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
@@ -51,32 +47,24 @@
     </div>
     <div class="col-sm-7 margin-top-1x">
       <div class="homepage-slider">
-        
         <div class="swiper-container">
           <div class="swiper-wrapper">
-          <% @campaigns.each do |campaign| %>
-            <div class="swiper-slide">
-              <a href="<%= campaign.crm_urls %>">
-                <%= image_tag campaign.image %>
-                <% if campaign.title.present? %>
-                  <h2 class="image-title-box"><%= campaign.title %></h2>
-                <% end %>
-              </a>
-            </div>
-          <% end %>
-        </div>
-        
-        <div class="swiper-pagination swiper-pagination-white"></div>
-        <div class="swiper-button-prev swiper-button-white"></div>
-        <div class="swiper-button-next swiper-button-white"></div>
-        
+            <% @campaigns.each do |campaign| %>
+              <div class="swiper-slide">
+                <a href="<%= campaign.crm_urls %>">
+                  <%= image_tag campaign.image %>
+                  <% if campaign.title.present? %>
+                    <h2 class="image-title-box"><%= campaign.title %></h2>
+                  <% end %>
+                </a>
+              </div>
+            <% end %>
+          </div>
+          <div class="swiper-pagination swiper-pagination-white"></div>
+          <div class="swiper-button-prev swiper-button-white"></div>
+          <div class="swiper-button-next swiper-button-white"></div>
         </div>
       </div>
-     
-
-
-      
-    
     </div>
   </div>
 
