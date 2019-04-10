@@ -8,7 +8,7 @@
     </div>
   <div class="col-md-2 col-border">
     <p class="text-dark"><%= lodging.child_name %></p>
-    <p class="text-xxs"><%= lodging.short_desc.truncate(100) %></p>
+    <p class="text-xxs"><%= truncate(lodging.short_desc, length: 100) %></p>
 
     </div>
 
