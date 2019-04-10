@@ -22,6 +22,9 @@
         $("#{$(this).data('target')}-icon").text('keyboard_arrow_down')
 
   Lodging.child_form = ->
+    $('.navbar.navbar-sticky').css('position', 'relative');
+    $('.navbar.navbar-sticky + *').css('margin-top', '0');
+
     $('.btn-booking').click ->
       if $(this).data('form-id')
         Rails.fire($($(this).data('form-id')).get(0), 'submit')
