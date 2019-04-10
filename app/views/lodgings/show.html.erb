@@ -7,7 +7,7 @@
         <div class="gallery-control ">
           <figure itemprop="associatedMedia" itemscope>
             <a itemprop="contentUrl">
-              <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100" />
+              <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
             </a>
 
             <figcaption itemprop="caption description">
@@ -38,6 +38,8 @@
           <i class="material-icons md-24 stars text-white"></i>&nbsp;<%= @lodging.highlight_2 %><br>
           <i class="material-icons md-24 stars text-white"></i>&nbsp;<%= @lodging.highlight_3 %>
         </h5>
+
+
          
           </div>
       </div>
