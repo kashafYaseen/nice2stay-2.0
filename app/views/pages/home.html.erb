@@ -48,8 +48,12 @@
     <div class="col-sm-7 margin-top-1x">
       <div class="homepage-slider">
         <div class="owl-carousel">
+
           <% @campaigns.each do |campaign| %>
-            <%= image_tag campaign.image, class: 'item' %>
+            <a href="<%= campaign.crm_urls %>">
+              <%= image_tag campaign.image, class: 'item' %>
+              <h2 class="image-title-box"><%= campaign.title %></h2>
+            </a>
           <% end %>
         </div>
       </div>
