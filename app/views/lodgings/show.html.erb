@@ -1,6 +1,7 @@
 <%= render 'shared/photoswipe' %>
 
 <div class="row no-gutters">
+  
   <div class="col-md-6 col-sm-12 col-lg-8">
     <div class="row target-section" id="home-container">
       <div class="col-md-12 col-xs-12">
@@ -32,7 +33,7 @@
 
   <div class="col-md-6 col-sm-12 col-lg-4 margin-bottom-1x homepage gallery-banner">
     <div class="col-12-md px-5">
-      <h5 class="margin-top-1x"><%= @lodging.country.name.capitalize  %> - <%= @lodging.region.name.capitalize  %></h5>
+      <h5 class="margin-top-1x "><%= @lodging.country.name.capitalize  %> - <%= @lodging.region.name.capitalize  %></h5>
       <h2 class="margin-top-1x"><%= @lodging.h1 %></h2>
 
       <h5 class="mt-lg-5">
@@ -44,9 +45,7 @@
         <%= @lodging.highlight_3 %>
       </h5>
     <br>
-       <input type="button" name="view-more-info" value="Check availabilty and pricing" class="btn btn-outline-primary w-100 text-gray-dark btn-sm standalone-modal-btn">
-
-      <input type="button" name="view-info" value="Questions about <%= @lodging.name %>" class="btn btn-outline-primary w-100 text-gray-dark btn-sm standalone-question-btn">
+       <input type="button" name="view-more-info" value="Check availabilty and pricing" class="btn btn-outline-primary w-100 text-gray-dark btn standalone-modal-btn">
 
      
       
@@ -78,24 +77,24 @@
             <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
           </div>
 
-          <div class="col-sm-4 col-md-12">
+          <div class="col-sm-4 col-md-12 pb-3">
             <%= image_tag("bathroom") %>
             <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
           </div>
-        </div>
 
-        <% if @reviews.present? %>
-          <div class="row col-md-12 mt-2">
-            <div class="d-inline align-baseline display-3 ml-auto mr-1">
+          <% if @reviews.present? %>
+            <div class="d-inline align-baseline display-3 ml-auto px-3">
               <%= @lodging.average_rating %><br>
             </div>
 
-            <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2">
+            <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2  px-3">
               <%= render_stars_tag @lodging.average_rating %>
-              <p>(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
+              (<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)
             </div>
-          </div>
         <% end %>
+        </div>
+
+       
       </div>
   
 
