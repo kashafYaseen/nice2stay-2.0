@@ -190,9 +190,10 @@ nl:
     included: Inclusief ?
     informatie: Belangrijke informatie
     included_header: Inclusief
-    informatie_header: Informatie
+    informatie_header: Extra Informatie
     extra_service: Optionele services 
     payment_conditions:  Annulerings- & betalingsvoorwaarden
+    deposit:  Waarborgsom
 
 
   search:
