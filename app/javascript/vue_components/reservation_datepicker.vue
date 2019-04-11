@@ -32,8 +32,7 @@
     "checkOutTitle",
     "lodgingId",
     "disabledDates",
-    "customizedDates",
-    "url"
+    "customizedDates"
     ],
     data() {
       let check_in = this.checkIn
@@ -82,7 +81,7 @@
       },
       apply() {
         if ($('#standalone').val()) {
-          Invoice.calculate([this.lodgingId], this.url)
+          Invoice.calculate([this.lodgingId])
         }
       },
       get_yesterday() {

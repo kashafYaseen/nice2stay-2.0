@@ -24,7 +24,7 @@
         $(".#{$(this).val()}").removeClass 'd-none'
         Reservation.validate(values)
 
-  Invoice.calculate = (lodging_ids, url) ->
+  Invoice.calculate = (lodging_ids) ->
     Rails.fire($('.you-may-like-form').get(0), 'submit')
     for lodging_id in lodging_ids
       values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
@@ -36,9 +36,10 @@
         $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
         $("#bill-#{lodging_id}").text('')
       else
-        Invoice.print(values, lodging_id, url)
+        Invoice.print(values, lodging_id)
 
-  Invoice.print = (values, lodging_id, url) ->
+  Invoice.print = (values, lodging_id) ->
+    url = $('.persisted-data').data('url')
     $("#lbl-error-#{lodging_id}").html('')
     $("#bill-#{lodging_id}").html('')
     $(".anternative-heading").html('')
