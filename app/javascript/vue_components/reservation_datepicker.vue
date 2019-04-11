@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary w-100" id="datepicker-trigger">{{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary w-100 d-none" id="datepicker-trigger">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
         :trigger-element-id="'datepicker-trigger'"
         :date-one="check_in"
@@ -9,9 +9,10 @@
         @date-one-selected="date_one_selected"
         @date-two-selected="date_two_selected"
         @apply="apply"
-        :inline="false"
-        :months-to-show="1"
+        :inline="true"
+        :months-to-show="2"
         :disabled-dates="disabled_dates"
+        :customized-dates= "customized_class"
         :min-date="this.current_date.toString()"
         :show-action-buttons="true"
       ></airbnb-style-datepicker>
@@ -21,7 +22,6 @@
 
 <script>
   import format from 'date-fns/format'
-
   export default {
     data() {
       let check_in = $('.persisted-data').data('check-in');
@@ -38,6 +38,7 @@
         check_in_title: check_in_title ? check_in_title : 'check in',
         check_out_title: check_out_title ? check_out_title : 'check out',
         disabled_dates: [],
+        customized_class: [],
         current_date: today,
         lodging_id: '',
         months: months ? months : 1,
@@ -49,6 +50,9 @@
 
       if(this.$el.parentElement.dataset.disabledDates)
         this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
+      if (this.$el.parentElement.dataset.customizedDates) {
+        this.customized_class = JSON.parse(this.$el.parentElement.dataset.customizedDates)
+      }
     },
     methods: {
       formatDates(dateOne, dateTwo) {

@@ -10,7 +10,7 @@ nl:
     label:
     page_entries_info:
       more_pages:
-        display_entries: "<b>%{first}</b>&mdash;<b>%{last}</b> of <b>%{total}</b>"
+        display_entries: "<b>%{first}</b>&mdash;<b>%{last}</b> van <b>%{total}</b>"
       one_page:
         display_entries: "alle <b>%{count}</b> weergeven"
     select:
@@ -25,6 +25,10 @@ nl:
     normal: Onze collecties
     holiday: Unieke vakantie 
     inspiration: Inspiratie collecties
+
+  locale:
+    nl: Nederlands
+    en: Engels
 
   lead:
     title: Wilt u advies voor uw vakantie?
@@ -94,6 +98,7 @@ nl:
     total: Totaal
     type: Type
     succes: Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status.
+    preferred_language: Voorkeur taal
 
   indicator:
     gasten: Uw gegevens
@@ -115,19 +120,21 @@ nl:
   usp:
     verhaal: Mooie verhalen beginnen hier...
     holiday: Ervaar de ideale vakanties
-    inspect: Bezocht & geïnspecteerd
+    inspect: Bezocht
     homepage: Ontdek onze unieke collectie van vakantiehuizen, appartementen en ​boutique hotels.
-    inspect_details: Elke accommodatie is door ons team geïnspecteerd
-    price: Transparante prijzen
+    inspect_details: is door ons team bezocht & geïnspecteerd
+    price: Transparant
     price_details: Transparante prijzen, geen verborgen boekingskosten
-    advice: Deskundig advies
+    advice: Deskundig
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
     search: Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...
     intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfort
-    intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. Onze buitengewone collectie is zorgvuldig door ons team samengesteld en iedere plek wordt door ons bezocht. 
+    intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. 
     acco_show_header: voldoet aan onze hoge standaard in kwaliteit, comfort en stijl.
+    vragen_show_header: Heeft u vragen over 
     acco_show_p:  Alle accommodaties in onze unieke collectie zijn aan een kritische selectie onderworpen door ons ervaren en gepassioneerde team, om u een onbezorgde en comfortabele vakantie te kunnen garanderen.
     acco_show_visit: is bezocht door Christa Linders
+    help_acco_show: Wij geven graag antwoord op uw vraag of helpen u bij het reserveren..
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio 
 
@@ -153,7 +160,7 @@ nl:
     reviews: Gemiddelde score & laatste reviews van Nice2stay klanten
     home: Home
     gallary: Foto's 
-    location: Locatie
+    location: Locatie van 
     reviews: Beoordelingen & Rating
     amentities: Faciliteiten
     info: Uitgebreide informatie
@@ -177,35 +184,46 @@ nl:
   cart:
     shopping_cart: Vraag aan
     nice2stay: Geen reserveringskosten bij Nice2stay
+    prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
 
   information:
     included: Inclusief ?
     informatie: Belangrijke informatie
     included_header: Inclusief
-    informatie_header: Informatie
+    informatie_header: Extra Informatie
     extra_service: Optionele services 
     payment_conditions:  Annulerings- & betalingsvoorwaarden
+    deposit:  Waarborgsom
 
 
   search:
     adults: Volwassenen (>12j)
     adutls_1: Personen 
     children: Kinderen (4-12j)
+    child: Kind
     children_1: Kinderen
     babies: Babies (0-3j)
     guests: Gasten
+    guest: Gast
     dates: Periode
+    legenda: 
     search_button: Zoek nu
     bedrooms: Slaapkamers
+    bedroom: Slaapkamer
     bathrooms: Badkamers
+    bathroom: Badkamer
     check_in: aankomst
     check_out: vertrek
     date_filter: Aankomst en Vetrek
     flexibility_text: flexibel qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     night: nacht
-    updated_availability: Bijgewerkte Beschikbaarheid
+    updated_availability: Toon enkel accommodaties met up to date beschikbaarheid
+    availability: Beschikbaarheid
     price: Prijs
+    for: voor
+    from: Vanaf
+    of: van
 
   footer:
     support: Wilt u direct contact? 
@@ -219,10 +237,10 @@ nl:
     price: Prijs per nacht 
     theme: Experience
     type: Type accommodatie
-    amentities_pop: Voorzieningen populair
-    amentities: Voorzieningen
+    amentities_pop: Faciliteiten populair
+    amentities: Faciliteiten
     dates: 'data'
-    sort_by: 'Sort'
+    sort_by: 'Sorteer'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'meer filters'
     apartment: Appartementen

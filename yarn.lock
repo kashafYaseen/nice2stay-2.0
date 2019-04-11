@@ -6201,6 +6201,10 @@ uuid@^3.0.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
+v-click-outside@^2.0.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-2.1.1.tgz#5af80b68a1c82eac89c597890434fa3994b42ed1"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
@@ -6238,9 +6242,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-airbnb-style-datepicker@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/vue-airbnb-style-datepicker/-/vue-airbnb-style-datepicker-1.9.0.tgz#c670813279787201d5497f74c5f75d4b6b5d4ca9"
+vue-airbnb-style-datepicker@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/vue-airbnb-style-datepicker/-/vue-airbnb-style-datepicker-2.6.1.tgz#4e01187818913596d6693c35c71fb49f0173d5c7"
+  dependencies:
+    v-click-outside "^2.0.1"
 
 vue-hot-reload-api@^2.2.0:
   version "2.3.0"

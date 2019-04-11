@@ -77,6 +77,7 @@ class SendBookingDetails
         city: user.city,
         country_slug: user.country_slug,
         phone: user.phone,
+        language: user.language,
       }
     end
 

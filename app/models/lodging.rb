@@ -41,7 +41,8 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
   delegate :desc, :published, to: :reviews, allow_nil: true, prefix: true
-  delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, to: :price_text, allow_nil: true
+  delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
+  delegate :admin_user, to: :owner, allow_nil: true
 
   scope :published, -> { where(published: true) }
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
@@ -69,6 +70,18 @@ class Lodging < ApplicationRecord
 
   def not_available_on
     (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+  end
+
+  def discount_dates
+    all_discounts.active.collect { |discount| (discount.start_date..discount.end_date).map(&:to_s) }.flatten
+  end
+
+  def option_dates
+    reservations.option.collect { |resv| (resv.check_in..resv.check_out).map(&:to_s) }.flatten
+  end
+
+  def customized_dates
+    [{ "cssClass": "discount" , "dates": discount_dates }, { "cssClass": "option" , "dates": option_dates } ].to_json
   end
 
   def children_not_available_on
@@ -99,6 +112,7 @@ class Lodging < ApplicationRecord
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },
+      country_id: country.id,
       country: country.translated_slugs,
       region: region.translated_slugs,
       extended_name: extended_name,
@@ -268,8 +282,8 @@ class Lodging < ApplicationRecord
       return unless discounts.present?
       amount = 0
       discounts.each do |dis|
-        amount += (total_price * (dis.value/100)) if dis.discount_type == 'percentage'
-        amount += dis.value if dis.discount_type == 'amount' || dis.discount_type == 'incentive'
+        amount += (total_price * (dis.value.to_i/100)) if dis.discount_type == 'percentage'
+        amount += dis.value.to_i if dis.discount_type == 'amount' || dis.discount_type == 'incentive'
       end
       amount
     end

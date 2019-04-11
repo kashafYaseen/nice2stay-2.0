@@ -5,8 +5,8 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-7 bg-secondary p-2 col-sm-8 search-filters pr-0">
-    <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled %>
+  <div class="col-lg-7 col-md-8 bg-secondary search-filters pt-2">
+    <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>
   </div>
 
   <div class="col-lg-7 col-md-8 top-50">

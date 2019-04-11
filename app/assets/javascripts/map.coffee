@@ -70,6 +70,8 @@
     marker = L.mapbox.featureLayer().setGeoJSON(features).addTo(map);
     set_safe_bounds document.querySelector('.lodgings-list-json'), marker.getBounds()
     map.setZoom 9
+    if map.scrollWheelZoom
+      map.scrollWheelZoom.disable()
 
   Map.highlight_lodgings = ->
     $('.lodgings-list').on 'mouseenter', '.lodging-container', ->
@@ -89,7 +91,7 @@
 
   update_popup = (feature) ->
     html = $(".price-review-box-#{feature.properties.id} .review-box").html()
-    html += "<span class='price'>#{$(".price-review-box-#{feature.properties.id} .price").html()}</span> - #{$(".price-review-box-#{feature.properties.id} .nights-text").html()}"
+    html += "#{ $(".price-review-box-#{feature.properties.id} .price-text-from").html() || '' } <span class='price'>#{$(".price-review-box-#{feature.properties.id} .price").html()}</span> - #{$(".price-review-box-#{feature.properties.id} .nights-text").html()}"
     $("#feature-price-#{feature.properties.id}").html(html)
 
 ).call this

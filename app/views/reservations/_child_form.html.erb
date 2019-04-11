@@ -1,10 +1,48 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Position</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>John</td>
+        <td>Doe</td>
+        <td>CEO, Founder</td>
+        <td>+3 555 68 70</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Anna</td>
+        <td>Cabana</td>
+        <td>Designer</td>
+        <td>+3 434 65 93</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Kale</td>
+        <td>Thornton</td>
+        <td>Developer</td>
+        <td>+3 285 42 88</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <div class="bg-white" id="<%= lodging.slug %>">
   <div class="persisted-data" data-check-in="<%= params[:check_in]%>"
-       data-check-out="<%= params[:check_out]%>"
-       data-url="<%= price_details_lodging_path(lodging) %>"
-       data-validate-url="<%= validate_reservations_path %>"
-       data-check-in-title="<%= t('search.check_in') %>"
-       data-check-out-title="<%= t('search.check_out') %>"></div>
+    data-check-out="<%= params[:check_out]%>"
+    data-url="<%= price_details_lodging_path(lodging) %>"
+    data-validate-url="<%= validate_reservations_path %>"
+    data-check-in-title="<%= t('search.check_in') %>"
+    data-check-out-title="<%= t('search.check_out') %>">
+  </div>
 
   <div class="row effect6">
     <div class="col-md-12 padding-top-1x col-lg-12">
@@ -14,50 +52,54 @@
     <div class="col-md-5 col-lg-5">
       <%= render_image_tag lodging, class: 'max-height-230' %>
       <br><br>
-      
+
       <p class="text-xxs">
-        <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, "" %> <%= t 'search.adutls_1' %>
+        <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
         <% if lodging.children.present? %>
-          / <%= lodging.minimum_children %> - <%= pluralize lodging.children, "" %> <%= t 'search.children_1' %>
+          / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
         <% end %>
         /
-        <%= pluralize lodging.beds, "" %> <%= t 'search.bedrooms' %> - <%= pluralize lodging.baths, "" %> <%= t 'search.bathrooms' %>
+        <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
       </p>
     </div>
 
     <div class="col-md-5 col-lg-5 homepage padding-top-1x ">
       <p class="text-xs"> <%= truncated_description(lodging.short_desc, 100).try(:html_safe) %>
-        <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more</a>
+        <a data-toggle="modal" class="cursor-pointer" data-target="#child-details-modal-<%= lodging.id %>">more
+        </a>
       </p>
+
       <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
         <%= render 'reservations/errors', resource: lodging.reservations.build %>
       </div>
+
       <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
-      <div class="bg-white">
-        <p class="mb-1 mt-2 text-sm anternative-heading" id="anternative-heading-<%= lodging.id %>"></p>
-        <div id="flexible-search-<%= lodging.id %>" class="text-xxs flexible-search-data"></div>
-        <p class="xxs" id="lbl-error-<%= lodging.id %>"></p>
-      </div>
+        <div class="bg-white">
+          <p class="mb-1 mt-2 text-sm anternative-heading" id="anternative-heading-<%= lodging.id %>">
+          </p>
+          <div id="flexible-search-<%= lodging.id %>" class="text-xxs flexible-search-data"></div>
+          <p class="xxs" id="lbl-error-<%= lodging.id %>"></p>
+        </div>
 
-      <div class="bg-white">
-        <p class="text-sm">
-          <% [:prebooking, :option].each do |status| %>
-            <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-            <label><%= t("reservations.#{status}") %></label>
-          <% end %>
-        </p>
+        <div class="bg-white">
+          <p class="text-sm">
+            <% [:prebooking, :option].each do |status| %>
+              <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+              <label><%= t("reservations.#{status}") %></label>
+            <% end %>
+          </p>
 
-        <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
-        <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}", class: 'check_in' %>
-        <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}", class: 'check_out' %>
-        <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
-        <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
-        <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
-        <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
-        <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
-        <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
-        <% end %>
-      </div>
+          <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
+          <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}", class: 'check_in' %>
+          <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}", class: 'check_out' %>
+          <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
+          <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
+          <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
+          <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
+          <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
+          <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
+        </div>
+      <% end %>
 
       <p class="text-sm text-dark" id="bill-<%= lodging.id %>"></p>
     </div>
@@ -70,6 +112,5 @@
       <%= render 'wishlists/form', lodging: lodging %>
     </div>
   </div>
-
   <hr class="mb-4"></hr>
 </div>

@@ -34,4 +34,8 @@ module ApplicationHelper
     return 'We have selected the finest villas, holiday homes, apartments and boutique hotels. Our team offers you dependable service &amp; the best rates guaranteed. Explore our exceptional collection in Italy, France, Spain and Portugal.' if locale == :en
     'Wij hebben de mooiste vakantiehuizen, appartementen en boutique hotels geselecteerd. Of u nu op zoek bent naar een luxe villa, stijlvolle vakantiewoning of een boutique hotel, dit is de collectie die u moet bekijken bij het plannen en boeken van uw vakantie. Ons team helpt u graag!'
   end
+
+  def languages
+    [[t('locale.en'),'en'], [t('locale.nl'),'nl']]
+  end
 end

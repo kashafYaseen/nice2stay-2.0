@@ -10,14 +10,11 @@
       $('#more-filters').modal('toggle')
       $('.modal-backdrop').css('z-index', 1);
 
-    $('.amenities, .experiences').change ->
+    $('.amenities, .experiences, .countries').change ->
       updated_amenities_and_experiences()
 
     $('.discounts').change ->
       Filters.update_prices()
-      Filters.submit()
-
-    $('.countries').change ->
       Filters.submit()
 
     $('.submit-filters').click ->
@@ -33,15 +30,21 @@
     Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
 
   updated_amenities_and_experiences = ->
-    checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+    if $('.countries-list').css('display') == 'none'
+      checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+      $('.countries:checked').prop('checked', false)
+    else
+      checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
+
+    title = $('.more-filters-btn').data('title')
     if checked > 0
       $('.more-filters-btn').addClass 'btn-primary'
       $('.more-filters-btn').removeClass 'btn-outline-primary'
-      $('.more-filters-btn').text("More Filters .#{checked}")
+      $('.more-filters-btn').text("#{title} .#{checked}")
     else
       $('.more-filters-btn').addClass 'btn-outline-primary'
       $('.more-filters-btn').removeClass 'btn-primary'
-      $('.more-filters-btn').text("More Filters")
+      $('.more-filters-btn').text(title)
 
   update_lodging_types = ->
     if $('.lodging-types-list input:checked').length > 0

@@ -42,6 +42,6 @@ module ReservationsHelper
   def final_paid_link(booking)
     title_prefix = action_name == "show" ? "Final Payment" : "€#{booking.final_payment}"
     return link_to "#{title_prefix} Receiced: #{ render_date(booking.final_payed_at) }", '#', class: "btn btn-success disabled w-100" if booking.step_passed?(:fully_paid)
-    link_to "Pay #{title_prefix}", dashboard_booking_payment_path(booking, payment: 'final-payment', locale: locale), class: "btn btn-info w-100", method: :post
+    link_to "Pay #{title_prefix}", dashboard_booking_payment_path(booking, payment: 'final-payment', locale: locale), class: "btn btn-info w-100 #{ 'disabled' unless booking.step_passed?(:pre_paid) }", method: :post
   end
 end

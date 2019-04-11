@@ -1,6 +1,12 @@
 ActiveAdmin.register Lodging do
   config.per_page = 15
 
+  filter :name
+  filter :slug
+  filter :owner, label: 'Partner'
+  filter :region
+  filter :presentation, as: :select
+
   controller do
     def permitted_params
       params.permit!
@@ -11,7 +17,7 @@ ActiveAdmin.register Lodging do
     end
 
     def scoped_collection
-      return Lodging.all if action_name == "index"
+      return Lodging.includes(:translations) if action_name == "index"
       Lodging.includes({availabilities: :prices}, :discounts, :rules)
     end
   end

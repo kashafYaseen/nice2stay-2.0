@@ -46,8 +46,18 @@ class SaveLodgingDetails
 
     def owner
       return unless params[:owner].present?
-      password = Devise.friendly_token[0, 20]
-      Owner.where(email: owner_params[:email]).first_or_create(owner_params.merge(password: password, password_confirmation: password))
+      house_owner = Owner.find_or_initialize_by(email: owner_params[:email])
+      house_owner.attributes = owner_params.merge(admin_user: admin_user)
+      house_owner.save(validate: false)
+      house_owner
+    end
+
+    def admin_user
+      return unless params[:admin_user].present?
+      admin = AdminUser.find_or_initialize_by(email: admin_user_params[:email])
+      admin.attributes = admin_user_params
+      admin.save(validate: false)
+      admin
     end
 
     def region(country_name, region_name)
@@ -128,6 +138,7 @@ class SaveLodgingDetails
         :created_at,
         :updated_at,
         :boost,
+        :optimize_at,
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },
@@ -138,6 +149,15 @@ class SaveLodgingDetails
       params.require(:owner).permit(
         :first_name,
         :last_name,
+        :email
+      )
+    end
+
+    def admin_user_params
+      params.require(:admin_user).permit(
+        :first_name,
+        :last_name,
+        :image,
         :email
       )
     end

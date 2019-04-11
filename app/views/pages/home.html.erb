@@ -1,20 +1,17 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
+    <div class="col-sm-5 margin-top-1x">
       <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
-      <hr class="mt-1"></hr>
-
-      <div class="col-md-12 padding-top-1x padding-bottom-3x homepage">
+      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
+      <div class="col-md-12 padding-top-1x padding-bottom-1x homepage">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-12 col-sm-12 pt-2">
               <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
-
             <div class="col-md-12 col-sm-12">
               <div class="row homepage-actions-row pt-0">
                 <div id='datepicker'></div>
-
                 <div class="dropdown guests-dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="title"><%= t 'search.guests' %></span>
@@ -40,7 +37,6 @@
                 <%= hidden_field_tag :standalone, true %>
                 <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
                 <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
-
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
@@ -48,17 +44,24 @@
           </div>
         <% end %>
       </div>
-
-      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
     </div>
-      
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
-      <section class="padding-top-10x padding-bottom-10x homepage-cover"></section>
+    <div class="col-sm-7 margin-top-1x">
+      <div class="homepage-slider">
+        <div class="owl-carousel">
+
+          <% @campaigns.each do |campaign| %>
+            <a href="<%= campaign.crm_urls %>">
+              <%= image_tag campaign.image, class: 'item' %>
+              <h2 class="image-title-box"><%= campaign.title %></h2>
+            </a>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-6 margin-top-1x">
+    <div class="col-sm-5 margin-top-1x">
       <div class="card margin-bottom-1x">
         <div class="card-body">
           <div class="row pt-2">
@@ -114,7 +117,7 @@
         </section>
       <% end %>
     </div>
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6">
+    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-7">
       <section class="widget-tags">
         <h5 class="mb-10">Nice2stay</h5>
         <% @pages.each do |page| %>
@@ -185,8 +188,12 @@
   </div>
 </div>
 
+<% content_for :canonical do %><%= root_url %><% end %>
+
 <%= content_for :js_init do %>
   initDatePicker();
   GuestDropdown.init();
-  OwlCarousel.init();
+  OwlCarousel.init({ items: 1, loop: true, dots: true, nav: true, navText: false, autoHeight: true
+  });
+  HomePageSlider.init();
 <% end %>

@@ -68,3 +68,9 @@
     }
   }
 </script>
+
+<style scoped>
+.asd__wrapper--full-screen {
+  top: 74px;
+}
+</style>

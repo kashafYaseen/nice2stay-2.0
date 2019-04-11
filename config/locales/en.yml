@@ -42,6 +42,11 @@ en:
       locale:
         nl: Dutch
         en: English
+
+  locale:
+    nl: Dutch
+    en: English
+
   filters:
     guests: Traveling party
     price: Price per night
@@ -53,7 +58,7 @@ en:
     guests: 'Guests'
     sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'
-    more_filters: 'meer filters'
+    more_filters: 'more filters'
     apartment: Apartments
     villa: Villas
     bnb: Boutique hotels
@@ -105,6 +110,8 @@ en:
     total: Total
     type: type request
     succes:  We would like to thank you for requesting your reservation/ option request at Nice2stay. Your request has been submitted to the owner of the accommodation and we will inform you as soon as possible (within 24 hours) whether your reservation will be confirmed.You will be notified by email and you can view the status in your Nice2stay account
+    country: Country
+    preferred_language: Preferred Language
 
   indicator: 
     gasten:  Your data
@@ -138,7 +145,7 @@ en:
     intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France an Greece. All accommodations have been personally selected and visited by us. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
     acco_show_header: meets our high standards for quality, comfort & style
     acco_show_p:  To ensure you of a care-free and comfortable holiday, all accommodations in our unique collection are carefully selected by our experienced and passionate team
-    acco_show_visit: is visited by Christa Linders.
+    acco_show_visit: is visited by %{admin_name}.
 
   opens: 
     week: Monday - Friday 9.00 am - 18.00 pm
@@ -195,22 +202,30 @@ en:
   search:
     adults: Adults (>12y)
     adutls_1: Adults
+    child: Child
     children_1: Children
     children: Children (4-12y)
     babies: Babies (0-3y)
     guests: Guests
+    guest: Guest
     dates: Period
     search_button: Search
     bedrooms: Bedrooms
+    bedroom: Bedroom
     bathrooms: Bathrooms
+    bathroom: Bathroom
     check_in: check in
     check_out: check out
     flexibility_text: flexible in dates (-/+ 2 days)
     date_filter: Arrival and Departure
     special_offer: Special Offer
     night: night
-    updated_availability: Updated Availability
+    updated_availability: Show only accommodations with up to date availability
+    availability: Availabiltiy
     price: Price
+    for: for
+    from: From
+    of: of
 
   profile_account: 
      side_nav_home: Dashboard
@@ -248,6 +263,7 @@ en:
   cart:
     shopping_cart: Add to cart
     nice2stay: No booking fees at Nice2stay
+    prepayment_not_payed: When prepayment is done, then the final payment can be transferred
 
   activerecord:
     errors:

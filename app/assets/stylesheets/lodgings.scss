@@ -201,7 +201,7 @@ div.fixed {
 
 div.fixed-bottom {
   position: fixed;
-  bottom: 0;
+  bottom: -12px;
   left: 0;
 }
 
@@ -252,13 +252,38 @@ div.review-paginator {
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
   #sidebar {
     display: none;
   }
 
   div.fixed-map {
     position: relative;
+  }
+
+  .lodgings-filters .sidebar {
+    top: 70px;
+  }
+
+  div.search-filters {
+    min-height: 1px;
+    position: inherit;
+  }
+
+  div.top-50 {
+    top: 1px;
+  }
+
+  .lodgings-filters section, .lodgings-filters button {
+    width: 100%;
+  }
+
+  .lodgings-filters .more-filters-btn {
+    margin-right: 0;
+  }
+
+  .lodgings-filters #more-filters {
+    z-index: 9999 !important;
   }
 }
 
@@ -306,7 +331,6 @@ div.review-paginator {
   z-index: 2;
   max-height: 57px;
   min-height: 60px;
-  margin-left: 15px;
 }
 
 .search-filters #more-filters.modal {
@@ -319,4 +343,9 @@ div.review-paginator {
 
 header.navbar.navbar-sticky {
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.05);
+}
+
+p.color-box {
+  height: 35px;
+  width: 35px;
 }

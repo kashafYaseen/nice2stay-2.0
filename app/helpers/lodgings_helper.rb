@@ -11,14 +11,20 @@ module LodgingsHelper
     price || 1500
   end
 
-  def render_lodgings_count_for (lodgings, key, filter_name)
+  def render_lodgings_count_for (lodgings, key, filter_name, total_lodgings)
     buckets = lodgings.aggregations[filter_name]['buckets']
-    return 0 unless buckets.present?
+    all_buckets = total_lodgings.aggregations[filter_name]['buckets']
+    total, actual = 0, 0
 
     buckets.each do |bucket|
-      return bucket['doc_count'] if bucket['key'] == key
+      actual = bucket['doc_count'] if bucket['key'] == key
     end if buckets.present?
-    0
+
+    all_buckets.each do |bucket|
+      total = bucket['doc_count'] if bucket['key'] == key
+    end if all_buckets.present?
+
+    "#{actual} #{t('search.of')} #{total}"
   end
 
   def truncated_description(description, break_point)
@@ -95,7 +101,7 @@ module LodgingsHelper
   end
 
   def render_price price, dynamic
-    return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> for #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
-    "<div class='price-text'> From </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
+    return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
+    "<div class='price-text-from price-text'> #{t('search.from')} </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
   end
 end
