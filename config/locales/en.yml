@@ -145,7 +145,7 @@ en:
     intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France an Greece. All accommodations have been personally selected and visited by us. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
     acco_show_header: meets our high standards for quality, comfort & style
     acco_show_p:  To ensure you of a care-free and comfortable holiday, all accommodations in our unique collection are carefully selected by our experienced and passionate team
-    acco_show_visit: is visited by Christa Linders.
+    acco_show_visit: is visited by %{admin_name}.
 
   opens: 
     week: Monday - Friday 9.00 am - 18.00 pm

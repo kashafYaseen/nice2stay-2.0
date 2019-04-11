@@ -33,7 +33,7 @@
 
   <div class="col-md-6 col-sm-12 col-lg-4 margin-bottom-1x homepage gallery-banner">
     <div class="col-12-md px-5">
-      <h5 class="margin-top-1x "><%= @lodging.country.name.capitalize  %> - <%= @lodging.region.name.capitalize  %></h5>
+      <h5 class="margin-top-1x "><%= @lodging.country.name.try(:capitalize)  %> - <%= @lodging.region.name.try(:capitalize)  %></h5>
       <h2 class="margin-top-1x"><%= @lodging.h1 %></h2>
 
       <h5 class="mt-lg-5">
