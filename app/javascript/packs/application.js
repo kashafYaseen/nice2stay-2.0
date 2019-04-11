@@ -7,13 +7,12 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.esm.js'
 import Datepicker from '../vue_components/datepicker.vue'
 import HomeDatepicker from '../vue_components/home_datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
 import Calendar from '../vue_components/calendar.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
-
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
 import 'vue-airbnb-style-datepicker/dist/vue-airbnb-style-datepicker.min.css'
 
@@ -21,6 +20,16 @@ Vue.use(TurbolinksAdapter)
 Vue.use(AirbnbStyleDatepicker, { colors: { disabled: '#e2dede' } })
 
 window.initDatePicker = function() {
+  if ($('#vue-app').length) {
+    window.app = new Vue({
+      el: '#vue-app',
+      components: {
+        Calendar,
+        ReservationDatepicker,
+      }
+    })
+  }
+
   if ($('#datepicker').length) {
     new Vue({
       el: '#datepicker',
