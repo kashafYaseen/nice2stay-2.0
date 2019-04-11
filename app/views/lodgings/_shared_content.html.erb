@@ -12,19 +12,21 @@
 <div class="margin-top-2x row leads_homepage">
   <div class="col-md-12 padding-bottom-1x">
     <h4 class="mb-3">
-      <%= lodging.name %> <%= t 'usp.acco_show_header' %>
+      <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
     </h4>
 
     <div class="row">
       <div class="col-md-3 col-lg-2">
         <div class="d-table">
-          <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
+          <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="<%= lodging.admin_user.try(:image) || 'https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg' %>" alt="Team">
         </div>
       </div>
 
       <div class="col-sm-9 mb-9">
-        <p><%= t 'usp.acco_show_p' %> </p>
-        <p><%= lodging.name %>  <%= t 'usp.acco_show_visit' %></p>
+        <p>
+          <%= t 'usp.acco_show_p' %><br>
+          <%= t('usp.acco_show_visit', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa').html_safe %>
+        </p>
       </div>
     </div>
   </div>
