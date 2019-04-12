@@ -10,10 +10,10 @@
         @date-two-selected="date_two_selected"
         @apply="apply"
         :inline="true"
-        :months-to-show="2"
-        :disabled-dates="disabled_dates"
-        :customized-dates= "customized_class"
-        :min-date="this.current_date.toString()"
+        :months-to-show="this.months"
+        :disabled-dates="this.disabledDates"
+        :customized-dates= "this.customizedDates"
+        :min-date="this.minDate"
         :show-action-buttons="true"
       ></airbnb-style-datepicker>
     </div>
@@ -23,49 +23,43 @@
 <script>
   import format from 'date-fns/format'
   export default {
+    name: "reservation-datepicker",
+    props: [
+      "checkIn",
+      "checkOut",
+      "months" ,
+      "checkInTitle",
+      "checkOutTitle",
+      "lodgingId",
+      "disabledDates",
+      "customizedDates",
+      "minDate",
+    ],
     data() {
-      let check_in = $('.persisted-data').data('check-in');
-      let check_out = $('.persisted-data').data('check-out');
-      let months = $('.persisted-data').data('months');
-      let today = this.get_yesterday();
-      let check_in_title = $('.persisted-data').data('check-in-title');
-      let check_out_title = $('.persisted-data').data('check-out-title');
+      let check_in = this.checkIn
+      let check_out = this.checkOut
 
       return {
-        dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
-        check_in_title: check_in_title ? check_in_title : 'check in',
-        check_out_title: check_out_title ? check_out_title : 'check out',
-        disabled_dates: [],
-        customized_class: [],
-        current_date: today,
-        lodging_id: '',
-        months: months ? months : 1,
+        dateFormat: 'D MMM',
       }
     },
     mounted() {
-      if(this.$el.parentElement.dataset.lodgingId)
-        this.lodging_id = this.$el.parentElement.dataset.lodgingId
 
-      if(this.$el.parentElement.dataset.disabledDates)
-        this.disabled_dates = JSON.parse(this.$el.parentElement.dataset.disabledDates)
-      if (this.$el.parentElement.dataset.customizedDates) {
-        this.customized_class = JSON.parse(this.$el.parentElement.dataset.customizedDates)
-      }
     },
     methods: {
       formatDates(dateOne, dateTwo) {
         let formattedDates = ''
 
         if (!dateTwo && !dateOne){
-          formattedDates =  `${this.check_in_title} - ${this.check_out_title}`
+          formattedDates =  `${this.checkInTitle} - ${this.checkOutTitle}`
           $('#datepicker-trigger').addClass('btn-outline-primary');
           $('#datepicker-trigger').removeClass('btn-primary');
         }
 
         if (dateOne) {
-          formattedDates =  `${format(dateOne, this.dateFormat)} - ${this.check_out_title}`
+          formattedDates =  `${format(dateOne, this.dateFormat)} - ${this.checkOutTitle}`
           $('#datepicker-trigger').removeClass('btn-outline-primary');
           $('#datepicker-trigger').addClass('btn-primary');
         }
@@ -87,7 +81,7 @@
       },
       apply() {
         if ($('#standalone').val()) {
-          Invoice.calculate([this.lodging_id])
+          Invoice.calculate([this.lodgingId])
         }
       },
       get_yesterday() {

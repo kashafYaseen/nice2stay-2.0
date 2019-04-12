@@ -128,12 +128,12 @@ nl:
     advice: Deskundig
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
     search: Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...
-    intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfort
-    intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. 
-    acco_show_header: voldoet aan onze hoge standaard in kwaliteit, comfort en stijl.
-    vragen_show_header: Heeft u vragen over 
-    acco_show_p:  Alle accommodaties in onze unieke collectie zijn aan een kritische selectie onderworpen door ons ervaren en gepassioneerde team, om u een onbezorgde en comfortabele vakantie te kunnen garanderen.
-    acco_show_visit: is bezocht door Christa Linders
+    intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfortzocht.
+    intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. Onze buitengewone collectie is zorgvuldig door ons team samengesteld en iedere plek wordt door ons bezocht.
+    acco_show_header: "%{lodging_name} is bezocht door %{admin_name}"
+    acco_show_p: Alle accommodaties in onze unieke collectie voldoen aan onze hoge standaard qua kwaliteit, comfort, stijl en setting. Wij bezichtigen, ontmoeten de eigenaren en verkennen de omgeving, zodat wij er zeker van zijn dat u hier een fijne vakantie zult hebben!
+    acco_show_visit: "Wilt u nog <a href='mailto:support@nice2stay.com'>meer weten</a> van %{admin_name} over %{lodging_name}? Ze adviseert u graag!"
+    vragen_show_header: Heeft u vragen over
     help_acco_show: Wij geven graag antwoord op uw vraag of helpen u bij het reserveren..
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio 

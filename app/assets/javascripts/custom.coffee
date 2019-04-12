@@ -29,14 +29,12 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
-
-  $ ->
-    $(".standalone-modal-btn").click ->
+    $(".reservations-details-btn").click (e) ->
+      e.stopPropagation()
       $('html, body').animate { scrollTop: $('#infobox').offset().top - 100 }, 'slow'
 
-
-  $ ->
-    $(".standalone-question-btn").click ->
+    $(".question-details-btn").click (e) ->
+      e.stopPropagation()
       $('html, body').animate { scrollTop: $('#questions').offset().top - 100 }, 'slow'
 
   set_top_position = ->

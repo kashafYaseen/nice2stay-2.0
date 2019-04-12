@@ -11,7 +11,17 @@
             </div>
             <div class="col-md-12 col-sm-12">
               <div class="row homepage-actions-row pt-0">
-                <div id='datepicker'></div>
+              <div id="vue-app">
+                <datepicker
+                :trigger-id="'trigger-range'"
+                :check-in="'<%= params[:check_in]%>'"
+                :check-out="'<%= params[:check_out]%>'"
+                :months="2"
+                :min-date="'<%= Date.yesterday %>'"
+                :action-buttons="true"
+                :full-screen="false"
+                :inline="false" />
+              </div>
                 <div class="dropdown guests-dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="title"><%= t 'search.guests' %></span>

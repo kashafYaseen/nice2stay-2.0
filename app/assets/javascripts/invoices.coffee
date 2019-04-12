@@ -31,7 +31,6 @@
                 $("#infants_#{lodging_id}").val(), lodging_id]
       if values[4] == '' then values[4] = 0
       if values[3] == '' then values[3] = 0
-
       if values.some(check_values)
         $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
         $("#bill-#{lodging_id}").text('')
