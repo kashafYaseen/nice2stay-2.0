@@ -1,16 +1,21 @@
 <template>
   <div :class="this.columnClass">
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary btn-sm" :class="this.columnClass" :id="this.triggerId">{{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary btn-sm" :class="this.triggerButton":id="this.triggerId">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
         :trigger-element-id="this.triggerId"
         :date-one="check_in"
         :date-two="check_out"
         @date-one-selected="val => { check_in = val }"
         @date-two-selected="val => { check_out = val }"
-        :months-to-show="this.monthsToShow"
+        :months-to-show="this.months"
         @apply="onApplyMethod"
-        :min-date="this.yesterday"
+        :inline="this.inline"
+        :min-date="this.minDate"
+        :disabled-dates="this.disabledDates"
+        :show-action-buttons="this.actionButtons"
+        :fullscreenMobile="this.fullScreen"
+        :mobileHeader="'Nice2Stay'"
       ></airbnb-style-datepicker>
       <input type="hidden" name="check_in" class="check-in" :value="check_in">
       <input type="hidden" name="check_out" class="check-out" :value="check_out">
@@ -22,16 +27,20 @@
   import format from 'date-fns/format'
 
   export default {
-    props: ['monthsToShow', 'triggerId', 'columnClass'],
+    name: "datepicker",
+    props: ['monthsToShow', 'triggerId', 'columnClass', 'triggerButton', "checkIn", "checkOut", "months", "disabledDates", "minDate", "actionButtons", "fullScreen", "inline" ],
 
     data() {
-      let check_in = $('.lodgings-filters').data('check-in');
-      let check_out = $('.lodgings-filters').data('check-out');
+      let check_in = this.checkIn
+      let check_out = this.checkOut
+      let months = this.months
+
+
       return {
         dateFormat: 'D MMM',
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
-        yesterday: this.getYesterday(),
+        disabled_dates: [],
       }
     },
     methods: {
@@ -59,11 +68,6 @@
           $('#loader').show();
           Rails.fire($('.lodgings-filters').get(0), 'submit');
         }
-      },
-      getYesterday() {
-        var d = new Date();
-        d.setDate(d.getDate() - 1);
-        return d.toString();
       }
     }
   }
@@ -74,3 +78,4 @@
   top: 74px;
 }
 </style>
+ 

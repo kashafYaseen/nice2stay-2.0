@@ -33,7 +33,17 @@
           </section>
 
           <section>
-            <div id="datepicker"></div>
+            <div id="vue-app">
+              <datepicker
+              :trigger-id="'trigger-range'"
+              :check-in="'<%= params[:check_in]%>'"
+              :check-out="'<%= params[:check_out]%>'"
+              :months="2"
+              :min-date="'<%= Date.yesterday %>'"
+              :action-buttons="true"
+              :full-screen="false"
+              :inline="false" />
+            </div>
           </section>
 
           <section>
