@@ -28,45 +28,12 @@ window.initDatePicker = function() {
     })
   }
 
-  // if ($('#datepicker').length) {
-  //   new Vue({
-  //     el: '#datepicker',
-  //     render(h) {
-  //       return h(Datepicker, { props: {monthsToShow: 2, triggerId: 'trigger-range'} })
-  //     }
-  //   })
-  // }
-
-  // if ($('#searchbar-datepicker').length) {
-  //   new Vue({
-  //     el: '#searchbar-datepicker',
-  //     render(h) {
-  //       return h(Datepicker, { props: {monthsToShow: 1, triggerId: 'trigger-range-searchbar', columnClass: 'col-md-12 pl-2'} })
-  //     }
-  //   })
-  // }
-
-  // if ($('#home-datepicker').length) {
-  //   new Vue({
-  //     el: '#home-datepicker',
-  //     render: h => h(HomeDatepicker)
-  //   })
-  // }
-
-  // if ($('#calendar').length) {
-  //   new Vue({
-  //     el: '#calendar',
-  //     render: h => h(Calendar)
-  //   })
-  // }
-
-  if ($('.reservation-datepicker').length) {
-    const vues = document.querySelectorAll(".reservation-datepicker");
-    Array.prototype.forEach.call(vues, (el, index) =>
-      new Vue({
-        el: el,
-        render: h => h(ReservationDatepicker)
-      })
-    )
+  if ($('#searchbar-vue-app').length) {
+    window.app = new Vue({
+      el: '#searchbar-vue-app',
+      components: {
+        Datepicker
+      }
+    })
   }
 }

@@ -72,10 +72,20 @@
     <%= f.label :from, 'Dates', class: 'col-2 col-form-label text-muted' %>
 
     <div class="col-10">
-      <div class="reservation-datepicker"></div>
-      <%= f.hidden_field :from, class: 'check_in' %>
-      <%= f.hidden_field :to, class: 'check_out' %>
+      <datepicker
+      :trigger-id="'trigger-range-2'"
+      :check-in="'<%= params[:check_in]%>'"
+      :check-out="'<%= params[:check_out]%>'"
+      :months="2"
+      :min-date="'<%= Date.yesterday %>'"
+      :action-buttons="true"
+      :full-screen="false"
+      :trigger-button="'btn btn-outline-primary w-100'"
+      :inline="false" />
     </div>
+
+    <%= f.hidden_field :from, class: 'check_in' %>
+    <%= f.hidden_field :to, class: 'check_out' %>
   </div>
 
   <div class="form-group row">
