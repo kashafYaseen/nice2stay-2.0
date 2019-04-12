@@ -3,7 +3,7 @@ class Owner < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :lodgings
-  mount_uploader :image, ImageUploader
+  belongs_to :admin_user
 
   def full_name
     "#{first_name} #{last_name}".titleize

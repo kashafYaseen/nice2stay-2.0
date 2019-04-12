@@ -8,8 +8,8 @@ class Dashboard::PaymentsController < DashboardController
     elsif params[:payment] == 'final-payment'
       payment = ManageMolliePayment.new(@payment_booking).final_payment
     end
-    return redirect_to payment._links['checkout']['href'] if payment.present?
-    redirect_to dashboard_reservation_path(locale: locale), alert: "Unable to process your request at the moment."
+    return redirect_to mollie_payment_url(payment, params[:payment]) if payment.present?
+    redirect_to dashboard_reservations_path(locale: locale), alert: "Unable to process your request at the moment."
   end
 
   def update_status
@@ -21,5 +21,12 @@ class Dashboard::PaymentsController < DashboardController
     def set_payment_booking
       return @payment_booking = Booking.find(params[:booking_id]) unless current_user.present?
       @payment_booking = current_user.bookings.find(params[:booking_id])
+    end
+
+    def mollie_payment_url(payment, type)
+      return payment._links['checkout']['href'] if payment._links['checkout'].present? && payment._links['checkout']['href'].present?
+      @payment_booking.update_columns pre_payment_mollie_id: nil if type == 'pre-payment'
+      @payment_booking.update_columns final_payment_mollie_id: nil if type == 'final-payment'
+      dashboard_reservations_path(locale: locale)
     end
 end

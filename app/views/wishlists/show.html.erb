@@ -82,6 +82,8 @@
   <% end %>
 </div>
 
+<% content_for :canonical do %><%= wishlists_url(@wishlist) %><% end %>
+
 <% content_for :js_init do %>
   Cart.init();
 <% end %>

@@ -143,11 +143,11 @@ en:
     search: Search for unique holiday homes, apartments and boutique hotels and more ...
     intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
     intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France an Greece. All accommodations have been personally selected and visited by us. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
-    acco_show_header: meets our high standards for quality, comfort & style
-    acco_show_p:  To ensure you of a care-free and comfortable holiday, all accommodations in our unique collection are carefully selected by our experienced and passionate team
-    acco_show_visit: is visited by Christa Linders.
+    acco_show_header: "%{lodging_name} is visited by %{admin_name}"
+    acco_show_p: All accommodations in our unique collection meet our high standards in quality, comfort, style and setting. We visit every place, meet the owners and explore the area, so we are sure that you will have a great holiday here!
+    acco_show_visit: "Do you want to <a href='mailto:support@nice2stay.com'>know more</a> from %{admin_name} about %{lodging_name}? She is happy to advise you!"
 
-  opens: 
+  opens:
     week: Monday - Friday 9.00 am - 18.00 pm
     weekend: Saturday 10.00 am - 13.00 pm
   nav:

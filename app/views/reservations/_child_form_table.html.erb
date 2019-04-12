@@ -10,21 +10,21 @@
 
   <div class="col-md-2 col-border">
     <p class="text-xxs">
-     <%= image_tag("guest",  class: 'img-small' ) %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>
+     <%= image_tag("guest.png", alt: "Guest", class: 'img-small' ) %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>
     </p>
 
     <p class="text-xxs">
       <% if lodging.children.present? %>
-        <%= image_tag("guest", class: 'img-small') %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
+        <%= image_tag("guest.png", alt: "Child", class: 'img-small') %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
       <% end %>
     </p>
 
     <p class="text-xxs">
-    <%= image_tag("bedroom", class: 'img-small') %><%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
+    <%= image_tag("bedroom.png", alt: "Bedroom", class: 'img-small') %><%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
     </p>
 
     <p class="text-xxs">
-    <%= image_tag("bathroom", class: 'img-small') %> <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+    <%= image_tag("bathroom.png", alt: "Bathroom", class: 'img-small') %> <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
     </p>
   </div>
 

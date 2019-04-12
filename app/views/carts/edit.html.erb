@@ -73,6 +73,8 @@
   </div>
 </div>
 
+<% content_for :canonical do %><%= carts_url %><% end %>
+
 <% content_for :js_init do %>
   Cart.init();
 <% end %>

@@ -1,9 +1,4 @@
 <div>
-  <% if @lodging.as_standalone? %>
-  <% else %>
-   
-  <% end %>
-
   <% if lodging.all_discounts.present? %>
     <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section">
       <div class="col-md-12">
@@ -32,47 +27,50 @@
     </div>
   </div>
 
+  <div class="row bg-secondary">
+    <div class="col-md-12 padding-bottom-1x">
+      <h4 class="mb-3 mt-2">
+        <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
+      </h4>
 
-<div class="row bg-secondary">
-  <div class="col-md-12 padding-bottom-1x">
-    <h4 class="mb-3 mt-2">
-      <%= lodging.name %> <%= t 'usp.acco_show_header' %>
-    </h4>
+      <div class="row">
+        <div class="col-md-2 col-lg-2">
+          <div class="d-table">
+            <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="<%= lodging.admin_user.try(:image) || 'https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg' %>" alt="Team">
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="col-md-2 col-lg-2">
-        <div class="d-table">
-          <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
+        <div class="col-md-4 mb-4">
+          <p>
+            <%= t 'usp.acco_show_p' %><br>
+            <%= t('usp.acco_show_visit', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa').html_safe %>
+          </p>
+        </div>
+
+        <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30" >
+          <span class="d-block display-4 text-gray-light mb-4">
+            <%= image_tag("usp_visit.png", alt: "visit") %>
+          </span>
+
+          <h4 class="h5 mb-2"><%= t 'usp.inspect' %></h4>
+          <p class="text-muted text-xxxs mb-0">
+            <%= @lodging.name %>  <%= t 'usp.inspect_details' %>
+          </p>
+        </div>
+
+        <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
+          <span class="d-block display-4 text-gray-light mb-4">
+            <%= image_tag("usp_support.png", alt: "visit") %>
+          </span>
+
+          <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
+          <p class="text-muted text-xxxs  mb-0"><%= t 'usp.price_details' %></p>
         </div>
       </div>
-
-      <div class="col-md-4 mb-4">
-        <p><%= t 'usp.acco_show_p' %> </p>
-        <p><%= @lodging.name %>  <%= t 'usp.acco_show_visit' %></p>
-      </div>
-
-      <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30" >
-              <span class="d-block display-4 text-gray-light mb-4">
-                <%= image_tag("usp_visit.png", :alt => "visit") %>
-              </span>
-
-              <h4 class="h5 mb-2"><%= t 'usp.inspect' %></h4>
-              <p class="text-muted text-xxxs mb-0"><%= @lodging.name %>  <%= t 'usp.inspect_details' %></p>
-            </div>
-     <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
-              <span class="d-block display-4 text-gray-light mb-4">
-                <%= image_tag("usp_support.png", :alt => "visit") %>
-              </span>
-
-              <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
-              <p class="text-muted text-xxxs  mb-0"><%= t 'usp.price_details' %></p>
-            </div>
-      
     </div>
   </div>
-</div>
 
- <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
+  <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
     <div class="col-md-6">
       <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
       <h5 class="card-title"><%= @lodging.h2 %></h5>

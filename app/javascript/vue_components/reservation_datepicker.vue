@@ -10,10 +10,10 @@
         @date-two-selected="date_two_selected"
         @apply="apply"
         :inline="true"
-        :months-to-show="2"
+        :months-to-show="this.months"
         :disabled-dates="this.disabledDates"
         :customized-dates= "this.customizedDates"
-        :min-date="this.current_date.toString()"
+        :min-date="this.minDate"
         :show-action-buttons="true"
       ></airbnb-style-datepicker>
     </div>
@@ -25,24 +25,24 @@
   export default {
     name: "reservation-datepicker",
     props: [
-    "checkIn",
-    "checkOut",
-    "months" ,
-    "checkInTitle",
-    "checkOutTitle",
-    "lodgingId",
-    "disabledDates",
-    "customizedDates"
+      "checkIn",
+      "checkOut",
+      "months" ,
+      "checkInTitle",
+      "checkOutTitle",
+      "lodgingId",
+      "disabledDates",
+      "customizedDates",
+      "minDate",
     ],
     data() {
       let check_in = this.checkIn
       let check_out = this.checkOut
-      let today = this.get_yesterday();
+
       return {
         check_in: check_in ? check_in : '',
         check_out: check_out ? check_out : '',
         dateFormat: 'D MMM',
-        current_date: today,
       }
     },
     mounted() {
