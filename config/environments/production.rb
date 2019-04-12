@@ -104,12 +104,12 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  Rails.application.config.middleware.use ExceptionNotification::Rack,
-    email: {
-      email_prefix: "[STAGING] Error: ",
-      sender_address: %{"notifier" <notifier@nice2stay.com>},
-      exception_recipients: %w{ahmad@thedevden.co sikandar.tariq@thedevden.co}
-    }
+  # Rails.application.config.middleware.use ExceptionNotification::Rack,
+  #   email: {
+  #     email_prefix: "[STAGING] Error: ",
+  #     sender_address: %{"notifier" <notifier@nice2stay.com>},
+  #     exception_recipients: %w{ahmad@thedevden.co sikandar.tariq@thedevden.co}
+  #   }
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
