@@ -6,7 +6,7 @@ class Ahoy::Event < ApplicationRecord
   belongs_to :visit
   belongs_to :user, optional: true
 
-  after_create :sent_details
+  #after_create :sent_details
 
   private
     def sent_details
