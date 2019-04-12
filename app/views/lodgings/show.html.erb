@@ -68,17 +68,17 @@
       <div class="col-sm-12 col-md-4 col-lg-4 px-5">
         
           <div class="col-sm-4 col-md-12 pb-3">
-            <%= image_tag("guest") %>
+            <%= image_tag("guest.png", alt: "Guest") %>
             <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
           </div>
 
           <div class="col-sm-4 col-md-12 pb-3">
-            <%= image_tag("bedroom") %>
+            <%= image_tag("bedroom.png", alt: "Bedroom") %>
             <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
           </div>
 
           <div class="col-sm-4 col-md-12 pb-3">
-            <%= image_tag("bathroom") %>
+            <%= image_tag("bathroom.png", alt: "Bathroom") %>
             <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
           </div>
 
