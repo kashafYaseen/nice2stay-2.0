@@ -10,7 +10,7 @@
         @date-two-selected="date_two_selected"
         @apply="apply"
         :inline="true"
-        :months-to-show="2"
+        :months-to-show="1"
         :disabled-dates="disabled_dates"
         :customized-dates= "customized_class"
         :min-date="this.current_date.toString()"
