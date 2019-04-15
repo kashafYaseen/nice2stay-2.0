@@ -10,7 +10,7 @@
 
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
     <div class="row"> 
-      <div class="col-md-4 mx-auto">
+      <div class="col-md-3">
         <div
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
           <div id="vue-app">
@@ -31,21 +31,27 @@
       <div class="col-md-2">
         <p><label class="mb-0 text-xs">&nbsp;</label></p>
         <p class="asd__day--enabled color-box mb-1"></p>
-        <p class="text-xs">Available</p>
+        <p class="text-xxxs">Available</p>
         <p class="asd__day--disabled color-box mb-1"></p>
-        <p class="text-xs">Not available</p>
+        <p class="text-xxxs">Not available</p>
         <p class="asd__day--discount color-box mb-1"></p>
-        <p class="text-xs">Special offer</p>
+        <p class="text-xxxs">Special offer</p>
         <p class="asd__day--option color-box mb-1"></p>
-        <p class="text-xs">Under option</p>
+        <p class="text-xxxs">Under option</p>
       </div>
+
+      
+
+      
+
+
 
       <div class="bg-white">
         <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
       </div>
 
-      <div class="col-md-5">
-        <label class="mb-0 text-xs"><%= t 'search.guests' %></label>
+      <div class="col-md-4">
+        <label class="mb-0 text-xs"><%= t 'nav_cart.guests' %></label>
         <div class="dropdown guests-dropdown">
           <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="title"><%= t 'search.guests' %></span>
