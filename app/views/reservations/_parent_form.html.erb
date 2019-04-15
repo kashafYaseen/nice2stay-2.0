@@ -15,7 +15,12 @@
     <div class="col-md-12 homepage" data-lodging-id="<%= lodging.id %>"
          data-disabled-dates="<%= lodging.children_not_available_on %>">
       <label class="mb-0 text-xs">Dates</label>
-      <div class="reservation-datepicker"></div>
+
+      <% if id_sufix == "_modal" %>
+        <div class="modal-reservation-datepicker"></div>
+      <% else %>
+        <div class="reservation-datepicker"></div>
+      <% end %>
 
       <div class="bg-white">
         <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>

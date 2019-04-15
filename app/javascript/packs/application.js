@@ -11,6 +11,7 @@ import Vue from 'vue'
 import Datepicker from '../vue_components/datepicker.vue'
 import HomeDatepicker from '../vue_components/home_datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
+import ModalReservationDatepicker from '../vue_components/modal_reservation_datepicker.vue'
 import Calendar from '../vue_components/calendar.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
@@ -62,4 +63,15 @@ window.initDatePicker = function() {
       })
     )
   }
+
+  if ($('.modal-reservation-datepicker').length) {
+    const vues = document.querySelectorAll(".modal-reservation-datepicker");
+    Array.prototype.forEach.call(vues, (el, index) =>
+      new Vue({
+        el: el,
+        render: h => h(ModalReservationDatepicker)
+      })
+    )
+  }
+
 }
