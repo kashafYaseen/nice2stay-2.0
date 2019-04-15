@@ -57,11 +57,11 @@
     <div class="row margin-top-1x">
       <div class="col-sm-12 col-md-12 col-lg-12 margin-bottom-1x">
         <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
-        <%= image_tag("guest") %>
+        <%= image_tag("guest.png") %>
         <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
-        <%= image_tag("bedroom") %>
+        <%= image_tag("bedroom.png") %>
         <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
-        <%= image_tag("bathroom") %>
+        <%= image_tag("bathroom.png") %>
         <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
         <% if @reviews.present? %>
           <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2  px-3">
