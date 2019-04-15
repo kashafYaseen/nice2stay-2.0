@@ -8,17 +8,13 @@
     <%= render 'reservations/errors', resource: reservation %><br>
   </div>
 
-  <h5 class="children-scroll-section">
-    Beschikbaar bij <%= @lodging.name %>
-  </h5>
-
+  
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3 col-sm-12 col-lg-3 homepage pt-2">
       <div class="row">
         <div class="col-lg-12 mx-auto" data-lodging-id="<%= lodging.id %>"
             data-disabled-dates="<%= lodging.children_not_available_on %>"
             data-customized-dates="<%= lodging.customized_dates %>">
-          <label class="mb-0 text-xs">Dates</label>
           <div id="vue-app">
             <reservation-datepicker
             :check-in="'<%= params[:check_in]%>'"
@@ -35,7 +31,7 @@
           <div class="col-md-12 p-0">
             <div class="text-xxs mt-2 row">
               <div class="col-3 text-center">
-                <p class="asd__day--enabled color-box mb-1 mx-auto"></p>
+                <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
                 <span>Available</span>
               </div>
               <div class="col-3 text-center">
@@ -91,7 +87,7 @@
       </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-9">
       <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
     </div>
   </div>
