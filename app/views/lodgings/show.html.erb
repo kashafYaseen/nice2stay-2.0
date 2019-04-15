@@ -67,7 +67,7 @@
             <%= image_tag("bathroom") %>
             <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
             <% if @reviews.present? %>
-           
+            
 
             <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2  px-3">
               <%= render_stars_tag @lodging.average_rating %>

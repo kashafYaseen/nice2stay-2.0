@@ -1,8 +1,8 @@
 <div class="container-fluid" id="vue-app">
   <div class="row">
-    <div class="col-sm-5 margin-top-1x">
+    <div class="col-sm-6 margin-top-1x">
       <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
-      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
+      
       <div class="col-md-12 padding-top-1x padding-bottom-1x homepage">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
@@ -51,12 +51,16 @@
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
+
             </div>
+
           </div>
+
         <% end %>
       </div>
+      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
     </div>
-    <div class="col-sm-7 margin-top-1x">
+    <div class="col-sm-6 margin-top-1x">
       <div class="homepage-slider">
         <div class="owl-carousel">
 
@@ -72,7 +76,7 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-5 margin-top-1x">
+    <div class="col-sm-6 margin-top-1x">
       <div class="card margin-bottom-1x">
         <div class="card-body">
           <div class="row pt-2">
@@ -128,7 +132,7 @@
         </section>
       <% end %>
     </div>
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-7">
+    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6">
       <section class="widget-tags">
         <h5 class="mb-10">Nice2stay</h5>
         <% @pages.each do |page| %>
