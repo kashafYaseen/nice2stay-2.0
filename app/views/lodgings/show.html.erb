@@ -44,13 +44,10 @@
         <i class="material-icons md-24 stars text-white"></i>&nbsp;
         <%= @lodging.highlight_3 %>
       </h5>
-    <br>
-       <input type="button" name="view-more-info" value="Check availabilty and pricing" class="btn btn-outline-primary w-100 text-gray-dark btn standalone-modal-btn">
 
-     
-      
+      <br/>
 
-
+      <input type="button" name="view-more-info" value="Check availabilty and pricing" class="btn btn-outline-primary w-100 text-gray-dark btn standalone-modal-btn">
     </div>
   </div>
 </div>
@@ -60,31 +57,30 @@
     <div class="row margin-top-1x">
       <div class="col-sm-12 col-md-12 col-lg-12 margin-bottom-1x">
         <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
-         <%= image_tag("guest") %>
-            <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
-            <%= image_tag("bedroom") %>
-            <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
-            <%= image_tag("bathroom") %>
-            <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
-            <% if @reviews.present? %>
-            
 
-            <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2  px-3">
-              <%= render_stars_tag @lodging.average_rating %>
-              (<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)
-            </div>
+         
+        <%= image_tag("guest.png") %>
+        <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
+        <%= image_tag("bedroom.png") %>
+        <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
+        <%= image_tag("bathroom.png") %>
+        <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+        <% if @reviews.present? %>
+          <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2  px-3">
+            <%= render_stars_tag @lodging.average_rating %>
+            (<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)
+          </div>
+
         <% end %>
-      <br> <br>
+
+        <br/>
+        <br/>
+
         <div id="lodging-summary">
           <%= @lodging.summary.try(:html_safe) %>
         </div>
       </div>
-
-     
-
-       
-      </div>
-  
+    </div>
 
     <div id="infobox" class="row">
       <div class="col-md-12 ">
@@ -175,8 +171,6 @@
                     </div>
                   </div>
 
-
-
                   <div class="card-header" role="tab">
                     <h6>
                       <a class="collapsed" href="#collapseSix" data-toggle="collapse">
@@ -207,8 +201,6 @@
                       <%= @lodging.deposit_text.try(:html_safe) %>
                     </div>
                   </div>
-
-
                 </div>
               </div>
             </div>
