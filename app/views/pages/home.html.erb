@@ -2,27 +2,29 @@
   <div class="row">
     <div class="col-sm-6 margin-top-1x">
       <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
-      
+
       <div class="col-md-12 padding-top-1x padding-bottom-1x homepage">
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-12 col-sm-12 pt-2">
               <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
+
             <div class="col-md-12 col-sm-12">
               <div class="row homepage-actions-row pt-0">
-              <div>
-                <datepicker
-                :trigger-id="'trigger-range'"
-                :check-in="'<%= params[:check_in]%>'"
-                :check-out="'<%= params[:check_out]%>'"
-                :months="2"
-                :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
-                :full-screen="false"
-                :trigger-button="'btn btn-outline-primary'"
-                :inline="false" />
-              </div>
+                <div>
+                  <datepicker
+                  :trigger-id="'trigger-range'"
+                  :check-in="'<%= params[:check_in]%>'"
+                  :check-out="'<%= params[:check_out]%>'"
+                  :months="2"
+                  :min-date="'<%= Date.yesterday %>'"
+                  :action-buttons="true"
+                  :full-screen="false"
+                  :trigger-button="'btn btn-outline-primary'"
+                  :inline="false" />
+                </div>
+
                 <div class="dropdown guests-dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="title"><%= t 'search.guests' %></span>
@@ -45,25 +47,23 @@
                     </div>
                   </div>
                 </div>
+
                 <%= hidden_field_tag :standalone, true %>
                 <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
                 <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
-
             </div>
-
           </div>
-
         <% end %>
       </div>
       <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
     </div>
+
     <div class="col-sm-6 margin-top-1x">
       <div class="homepage-slider">
         <div class="owl-carousel">
-
           <% @campaigns.each do |campaign| %>
             <a href="<%= campaign.crm_urls %>">
               <%= image_tag campaign.image, class: 'item' %>
@@ -132,6 +132,7 @@
         </section>
       <% end %>
     </div>
+
     <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6">
       <section class="widget-tags">
         <h5 class="mb-10">Nice2stay</h5>
