@@ -1,7 +1,6 @@
 <%= render 'shared/photoswipe' %>
 
 <div class="row no-gutters">
-  
   <div class="col-md-6 col-sm-12 col-lg-8">
     <div class="row target-section" id="home-container">
       <div class="col-md-12 col-xs-12">
@@ -58,7 +57,6 @@
       <div class="col-sm-12 col-md-12 col-lg-12 margin-bottom-1x">
         <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
 
-         
         <%= image_tag("guest.png") %>
         <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
         <%= image_tag("bedroom.png") %>
@@ -70,11 +68,9 @@
             <%= render_stars_tag @lodging.average_rating %>
             (<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)
           </div>
-
         <% end %>
 
-        <br/>
-        <br/>
+        <br/><br/>
 
         <div id="lodging-summary">
           <%= @lodging.summary.try(:html_safe) %>

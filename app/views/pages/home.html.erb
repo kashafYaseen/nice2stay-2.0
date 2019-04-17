@@ -1,10 +1,10 @@
-<div class="jumbotron ">
+<div class="jumbotron">
 
   <div class="dark-overlay-image">
 
   <div class="container-fluid" id="vue-app">
-  <div class="col-md-12 pt-5">
-        <br><br>
+      <div class="col-md-12 pt-5">
+    
         <h1 class="text-white"> Ontdek </h1>
         <h5 class="text-white margin-top-0x"><%= t 'usp.homepage' %></h5>
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
@@ -64,9 +64,7 @@
         <% end %>
         <h6 class="text-white margin-top-0x">Trending searches: </h6>
       </div>
-
-    </div>
-
+      </div>
     </div>
 </div>
 <div class="container-fluid" id="vue-app">
