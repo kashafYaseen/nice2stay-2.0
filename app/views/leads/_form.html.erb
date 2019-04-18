@@ -45,7 +45,7 @@
           <%= user.label :password, class: 'col-2 col-form-label text-muted' %>
 
           <div class="col-10">
-            <%= user.password_field :password, class: 'form-control' %>
+            <%= user.password_field :password, class: 'form-control', autocomplete: 'disabled' %>
           </div>
         </div>
 
@@ -53,7 +53,7 @@
           <%= user.label :password_confirmation, class: 'col-2 col-form-label text-muted' %>
 
           <div class="col-10">
-            <%= user.password_field :password_confirmation, class: 'form-control' %>
+            <%= user.password_field :password_confirmation, class: 'form-control', autocomplete: 'disabled' %>
           </div>
         </div>
       </div>
