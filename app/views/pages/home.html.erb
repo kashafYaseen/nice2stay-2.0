@@ -1,33 +1,31 @@
 <div class="jumbotron">
-
   <div class="dark-overlay-image">
-
-  <div class="container-fluid" id="vue-app">
+    <div class="container-fluid" id="vue-app">
       <div class="col-md-12 pt-5">
-    
         <h1 class="text-white"> Ontdek </h1>
+
         <h5 class="text-white margin-top-0x"><%= t 'usp.homepage' %></h5>
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-6 col-sm-12 pt-3">
-
               <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
-            <div class="col-md-6 col-sm-12 pt-0">
 
+            <div class="col-md-6 col-sm-12 pt-0">
               <div class="row homepage-actions-row">
-              <div>
-                <datepicker
-                :trigger-id="'trigger-range'"
-                :check-in="'<%= params[:check_in]%>'"
-                :check-out="'<%= params[:check_out]%>'"
-                :months="2"
-                :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
-                :full-screen="false"
-                :trigger-button="'btn btn-outline-primary'"
-                :inline="false" />
-              </div>
+                <div>
+                  <datepicker
+                  :trigger-id="'trigger-range'"
+                  :check-in="'<%= params[:check_in]%>'"
+                  :check-out="'<%= params[:check_out]%>'"
+                  :months="2"
+                  :min-date="'<%= Date.yesterday %>'"
+                  :action-buttons="true"
+                  :full-screen="false"
+                  :trigger-button="'btn btn-outline-primary'"
+                  :inline="false" />
+                </div>
+
                 <div class="dropdown guests-dropdown">
                   <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="title"><%= t 'search.guests' %></span>
@@ -56,22 +54,19 @@
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
-
             </div>
-
           </div>
-
         <% end %>
+
         <h6 class="text-white margin-top-0x">Trending searches: </h6>
         <% @custom_texts.inspiration.each do |custom_text| %>
           <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'trending' %>
         <% end %>
-        
-     
-      </div>
       </div>
     </div>
+  </div>
 </div>
+
 <div class="container-fluid" id="vue-app">
   <div class="row">
     <div class="col-sm-6 margin-top-1x">
@@ -153,8 +148,8 @@
         </section>
       <% end %>
     </div>
+
     <div class="col-sm-12 col-xs-12 col-md-12">
-     
       <section class="widget-tags">
         <h5 class="mt-3 mb-10"><%= t 'nav.landen' %></h5>
 
@@ -218,11 +213,9 @@
         <h2 class="mb-3">Support Team</h2>
         <p class="text-muted mb-5">People behind your awesome shopping experience.</p>
       </div>
-   </div>     
+   </div>
   </div>
 </div>
-
-
 
 <% content_for :canonical do %><%= root_url %><% end %>
 
