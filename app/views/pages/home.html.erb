@@ -63,7 +63,9 @@
 
         <% end %>
         <h6 class="text-white margin-top-0x">Trending searches: </h6>
-
+        <% @custom_texts.inspiration.each do |custom_text| %>
+          <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'trending' %>
+        <% end %>
         
      
       </div>
@@ -86,11 +88,11 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6 margin-top-1x">
+    <div class="col-sm-12 margin-top-1x">
       <div class="card margin-bottom-1x">
         <div class="card-body">
           <div class="row pt-2">
-            <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30" >
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30" >
               <span class="d-block display-4 text-gray-light mb-4">
                 <%= image_tag("usp_visit.png", :alt => "visit") %>
               </span>
@@ -99,7 +101,7 @@
               <p class="text-muted text-xxxs mb-0"><%= t 'usp.inspect_details' %></p>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
               <span class="d-block display-4 text-gray-light mb-4">
                 <%= image_tag("usp_support.png", :alt => "visit") %>
               </span>
@@ -108,7 +110,16 @@
               <p class="text-muted text-xxxs  mb-0"><%= t 'usp.price_details' %></p>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
+              <span class="d-block display-4 text-gray-light mb-4">
+                <%= image_tag("usp_support.png", :alt => "visit") %>
+              </span>
+
+              <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
+              <p class="text-muted text-xxxs  mb-0"><%= t 'usp.price_details' %></p>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
               <span class="d-block display-4 text-gray-light mb-4">
                 <%= image_tag("usp_support.png", :alt => "visit") %>
               </span>
@@ -121,11 +132,11 @@
       </div>
 
       <% if @custom_texts.popular.present? %>
-        <section class="padding-top-1x pb-5">
+        <section class="padding-top-1x pb-2">
           <h3 class="mb-30"><%= t 'collection.populair' %></h3>
           <hr class="mt-3"></hr>
 
-          <div class="isotope-grid cols-2">
+          <div class="isotope-grid cols-4">
             <div class="gutter-sizer"></div>
             <div class="grid-sizer"></div>
 
@@ -142,7 +153,7 @@
         </section>
       <% end %>
     </div>
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6">
+    <div class="col-sm-12 col-xs-12 col-md-12">
      
       <section class="widget-tags">
         <h5 class="mt-3 mb-10"><%= t 'nav.landen' %></h5>
@@ -204,28 +215,10 @@
       <h3 class="mb-3"><%= t('lead.title') %></h3>
       <p><%= t('lead.description') %></p>
       <div class="padding-top-3x mb-30">
-        <h2 class="mb-3">Our Core Team</h2>
+        <h2 class="mb-3">Support Team</h2>
         <p class="text-muted mb-5">People behind your awesome shopping experience.</p>
       </div>
-      <section class="row">
-        <div class="col-md-4 col-sm-6 mb-30 text-center"><img class="d-block w-150 mx-auto img-thumbnail rounded mb-2" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-          <h6>Grace Wright</h6>
-          <p class="text-muted mb-2">Founder, CEO</p>
-          <div class="social-bar"><a class="social-button shape-rounded sb-facebook" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="socicon-facebook"></i></a><a class="social-button shape-rounded sb-twitter" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter"><i class="socicon-twitter"></i></a><a class="social-button shape-rounded sb-google-plus" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google +"><i class="socicon-googleplus"></i></a></div>
-        </div>
-        <div class="col-md-4 col-sm-6 mb-30 text-center"><img class="d-block w-150 mx-auto img-thumbnail rounded mb-2" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-          <h6>Taylor Jackson</h6>
-          <p class="text-muted mb-2">Financial Director</p>
-          <div class="social-bar"><a class="social-button shape-rounded sb-skype" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i class="socicon-skype"></i></a><a class="social-button shape-rounded sb-facebook" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="socicon-facebook"></i></a><a class="social-button shape-rounded sb-paypal" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="PayPal"><i class="socicon-paypal"></i></a></div>
-        </div>
-       
-        <div class="col-md-4 col-sm-6 mb-30 text-center"><img class="d-block w-150 mx-auto img-thumbnail rounded mb-2" src="https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg" alt="Team">
-          <h6>Liana Mullen</h6>
-          <p class="text-muted mb-2">Lead Designer</p>
-          <div class="social-bar"><a class="social-button shape-rounded sb-behance" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Behance"><i class="socicon-behance"></i></a><a class="social-button shape-rounded sb-dribbble" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dribbble"><i class="socicon-dribbble"></i></a><a class="social-button shape-rounded sb-instagram" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram"><i class="socicon-instagram"></i></a></div>
-        </div>
-      </section>
-    </div>
+   </div>     
   </div>
 </div>
 
