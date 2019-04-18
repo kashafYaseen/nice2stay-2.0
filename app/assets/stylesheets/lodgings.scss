@@ -53,6 +53,12 @@
 }
 
 .twitter-typeahead {
+  font-size: 15px;
+
+  .tt-input {
+    margin-bottom: 0;
+  }
+
   .autocomplete {
     position: relative !important;
   }
@@ -69,7 +75,7 @@
 
   .tt-menu {
     width: 100%;
-    margin-top: 4px;
+    margin-top: 1px;
     padding: 4px 0;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -88,8 +94,7 @@
     padding: 3px 20px;
     line-height: 24px;
     &:hover{
-      color: #fff;
-      background-color: #dc9814;
+      background-color: #f0f0f0;
     }
   }
 
@@ -103,9 +108,11 @@
   }
 
   .category-name {
-    margin: 0 20px 5px 20px;
-    padding: 3px 0;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 0;
+    padding: 5px;
+    line-height: 1.1;
+    text-align: right;
+    border-top: 1px solid #ccc;
   }
 
   img {
