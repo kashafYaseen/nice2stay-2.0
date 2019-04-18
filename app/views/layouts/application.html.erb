@@ -9,12 +9,15 @@
     <div id="flash-messages">
       <%= render 'shared/notices' %>
     </div>
-   
-    <%= yield %>
-   
+
+    <div id="vue-app">
+      <%= yield %>
+    </div>
+
     <%= render 'shared/footer' %>
 
     <script type="text/javascript">
+      initDatePicker();
       Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
       Custom.init();
       <%= yield :js_init %>

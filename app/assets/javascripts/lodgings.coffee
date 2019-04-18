@@ -5,7 +5,6 @@
     Slider.init()
     GuestDropdown.init()
     OwlCarousel.init()
-    initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
     SortingDropdown.init()
     Filters.init()

@@ -11,9 +11,9 @@
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
     <div class="row"> 
       <div class="col-md-3">
-        <div
+        <div>
           <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
-          <div id="vue-app">
+          <div>
             <reservation-datepicker
             :check-in="'<%= params[:check_in]%>'"
             :check-out="'<%= params[:check_out]%>'"
