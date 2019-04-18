@@ -15,7 +15,7 @@
         <div class="col-lg-12 mx-auto" data-lodging-id="<%= lodging.id %>"
             data-disabled-dates="<%= lodging.children_not_available_on %>"
             data-customized-dates="<%= lodging.customized_dates %>">
-          <div id="vue-app">
+          <div>
             <reservation-datepicker
             :check-in="'<%= params[:check_in]%>'"
             :check-out="'<%= params[:check_out]%>'"
