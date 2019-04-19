@@ -18,22 +18,12 @@ Vue.use(TurbolinksAdapter)
 Vue.use(AirbnbStyleDatepicker, { colors: { disabled: '#e2dede' } })
 
 window.initDatePicker = function() {
-  if ($('#vue-app').length) {
-    window.app = new Vue({
-      el: '#vue-app',
-      components: {
-        ReservationDatepicker,
-        Datepicker
+  if ($('.vue-app').length) {
+    const vues = document.querySelectorAll(".vue-app");
+    vues.forEach(function(element) {
+      if(element.__vue__ == undefined) {
+        new Vue({ el: element, components: { ReservationDatepicker, Datepicker } })
       }
-    })
-  }
-
-  if ($('#searchbar-vue-app').length) {
-    window.app = new Vue({
-      el: '#searchbar-vue-app',
-      components: {
-        Datepicker
-      }
-    })
+    });
   }
 }

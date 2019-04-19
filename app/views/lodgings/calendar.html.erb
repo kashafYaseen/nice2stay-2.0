@@ -1,7 +1,7 @@
 <div class="persisted-data" data-months="<%= params[:months] %>"></div>
 
 <div data-lodging-id="<%= @lodging.id %>" data-disabled-dates="<%= @lodging.not_available_on %>">
-  <div id="vue-app">
+  <div class="vue-app">
     <datepicker
     :trigger-id="'datepicker-trigger'"
     :months="2"
