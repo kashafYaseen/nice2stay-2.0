@@ -80,19 +80,19 @@
             <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
             <%= f.hidden_field :discount, id: "discount_#{lodging.id}", class: 'discount' %>
           </div>
+        </div>
 
-          <div class="col-md-12 text-center pt-2">
-            <% [:prebooking, :option].each do |status| %>
-            <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
-              <label><%= t("reservations.#{status}") %></label>
-            <% end %>
-            <p id="lbl-error-<%= lodging.id %>"></p>
-            <div class="text-dark text-left line-height-2" id="bill-<%= lodging.id %>"></div>
-            <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
-              <%= render 'wishlists/form',  lodging: lodging %>
-              <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
-            <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
-          </div>
+        <div class="text-center pt-2">
+          <% [:prebooking, :option].each do |status| %>
+          <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
+            <label><%= t("reservations.#{status}") %></label>
+          <% end %>
+          <p id="lbl-error-<%= lodging.id %>"></p>
+          <div class="text-dark text-left line-height-2" id="bill-<%= lodging.id %>"></div>
+          <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}" %>
+            <%= render 'wishlists/form',  lodging: lodging %>
+            <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
+          <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
         </div>
       </div>
     </div>
