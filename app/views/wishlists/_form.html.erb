@@ -5,7 +5,7 @@
   <%= f.hidden_field :children, id: "wishlist_children_#{lodging.id}", class: 'children' %>
   <%= f.hidden_field :lodging_id, value: lodging.id, id: "wishlist_lodging_id_#{lodging.id}" %>
 
-  <%= f.button :submit, class: "btn btn-outline-secondary btn-sm text-danger form-control" do %>
+  <%= f.button :submit, class: "btn btn-outline-secondary btn-sm text-danger ml-0 form-control" do %>
     <i class="material-icons favorite_border"></i>&nbsp;Favorite
   <% end %>
 <% end %>
