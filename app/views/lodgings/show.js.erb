@@ -1,4 +1,7 @@
 $('.reviews-container').html('<%= j render @reviews %>');
 $('.review-paginator').html('<%= j paginate @reviews, remote: true, window: 0 %>');
 $('.you-may-like-lodgings').html('<%= j render @lodgings %>');
+$('.lodgings-list-json').replaceWith('<%= j tag.div class: "lodgings-list-json", data: { feature: (@places.collect(&:feature) + [@lodging.feature]) } %>')
 OwlCarousel.init();
+Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
+$('#loader').hide();

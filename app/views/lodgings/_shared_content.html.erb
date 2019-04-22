@@ -36,7 +36,7 @@
     </div>
 
     <div class="col-md-6 address-mark" id="lodging-map-location"></div>
-    <%= tag.div class: "lodgings-list-json", data: { feature: lodging.feature} %>
+    <%= tag.div class: "lodgings-list-json", data: { feature: (@places.collect(&:feature) + [lodging.feature]) } %>
   </div>
 
   <div class="row">
@@ -200,4 +200,5 @@
   <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
   <%= hidden_field_tag :check_in, params[:check_in], class: 'check_in' %>
   <%= hidden_field_tag :check_out, params[:check_out], class: 'check_out' %>
+  <%= hidden_field_tag :places_within, params[:places_within], class: 'within-radius' %>
 <% end %>

@@ -10,6 +10,7 @@ class Lodging < ApplicationRecord
   has_many :specifications
   has_many :wishlists
   has_many :cleaning_costs
+  has_many :places, through: :region
   has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
