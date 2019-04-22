@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_22_045337) do
+ActiveRecord::Schema.define(version: 2019_04_22_050241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -558,6 +558,19 @@ ActiveRecord::Schema.define(version: 2019_04_22_045337) do
     t.string "images", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "place_translations", force: :cascade do |t|
+    t.integer "place_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "details"
+    t.text "description"
+    t.string "name"
+    t.string "slug"
+    t.index ["locale"], name: "index_place_translations_on_locale"
+    t.index ["place_id"], name: "index_place_translations_on_place_id"
   end
 
   create_table "places", force: :cascade do |t|
