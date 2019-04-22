@@ -35,7 +35,7 @@ class SearchPlaces
     def near_latlong_condition
       {
         geo_distance: {
-          distance: (params[:within].presence || '100km' ),
+          distance: (params[:places_within].presence || '100km' ),
           location: {
             lat: params[:latitude],
             lon: params[:longitude]
