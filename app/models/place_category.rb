@@ -3,4 +3,6 @@ class PlaceCategory < ApplicationRecord
 
   extend FriendlyId
   friendly_id :name, use: :slugged
+
+  translates :name, :slug
 end
