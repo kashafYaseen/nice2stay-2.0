@@ -13,5 +13,6 @@ namespace :api do
     resources :users, only: [:create]
     resources :custom_texts, only: [:create]
     resources :reviews, only: [:create]
+    resources :places, only: [:create]
   end
 end
