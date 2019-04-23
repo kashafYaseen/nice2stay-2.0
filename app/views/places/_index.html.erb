@@ -5,11 +5,13 @@
         <tr><th style="color: <%= category.color_code %>"><b><%= category.name %></b></th></tr>
         <% places.each do |place| %>
           <tr>
-            <td data-toggle="tooltip" data-placement="right" data-original-title="<%= place.description %>">
-              <%= place.name %>
+            <td>
+              <a data-toggle="modal" class="cursor-pointer no-decoration" data-target="#place-details-modal-<%= place.id %>"><%= place.name %></a>
               <span class="float-right"><%= place.distance_from lodging %> km</span>
             </td>
           </tr>
+
+          <%= render 'places/modal', place: place %>
         <% end %>
       <% end %>
     <% else %>
