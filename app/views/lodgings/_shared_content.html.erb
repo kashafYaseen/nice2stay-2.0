@@ -39,12 +39,12 @@
       </h4>
 
       <div class="col-md-12 nearby-places mt-3">
-        <%= render 'places/index', places: places %>
+        <%= render 'places/index', grouped_places: places, lodging: lodging %>
       </div>
     </div>
 
     <div class="col-md-6 address-mark" id="lodging-map-location"></div>
-    <%= tag.div class: "lodgings-list-json", data: { feature: (places.collect(&:feature) + [lodging.feature]) } %>
+    <%= tag.div class: "lodgings-list-json", data: { feature: ( @places.collect{|key, value| value.collect(&:feature)}.flatten + [lodging.feature]) } %>
   </div>
 
   <div class="row">

@@ -35,4 +35,11 @@ class Place < ApplicationRecord
       }
     }
   end
+
+  def distance_from lodging
+    Geocoder::Calculations.distance_between(
+      [lodging.longitude, lodging.latitude],
+      [longitude, latitude]
+    ).round(2)
+  end
 end
