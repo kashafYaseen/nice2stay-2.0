@@ -370,3 +370,8 @@ p.color-box {
   text-align: center;
   cursor: pointer;
 }
+
+div.nearby-places {
+  max-height: 400px;
+  overflow: auto;
+}

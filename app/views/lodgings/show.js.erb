@@ -4,4 +4,7 @@ $('.you-may-like-lodgings').html('<%= j render @lodgings %>');
 $('.lodgings-list-json').replaceWith('<%= j tag.div class: "lodgings-list-json", data: { feature: (@places.collect(&:feature) + [@lodging.feature]) } %>')
 OwlCarousel.init();
 Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
+$('.nearby-places').html('<%= j render "places/index", places: @places %>');
+$('.nearby-places-title').text('Nearby Places Within <%= params[:places_within].presence || "100km" %>');
 $('#loader').hide();
+$('[data-toggle="tooltip"]').tooltip();
