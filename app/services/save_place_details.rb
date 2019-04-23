@@ -76,6 +76,7 @@ class SavePlaceDetails
       params.require(:place_category).permit(
         :name,
         :slug,
+        :color_code,
       )
     end
 

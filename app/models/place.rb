@@ -30,7 +30,7 @@ class Place < ApplicationRecord
         title: name,
         description: description,
         image: images.try(:first),
-        'marker-color': '#7D3C98',
+        'marker-color': place_category.color_code,
         'marker-size': 'small',
       }
     }

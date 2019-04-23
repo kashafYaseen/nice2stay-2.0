@@ -10,16 +10,17 @@ class SearchPlaces
   end
 
   def call
-    Place.search where: near_latlong_condition, includes: [:translations, :place_category], order: order
+    Place.search where: where, includes: [:translations, :place_category], order: order
   end
 
   private
-    def near_latlong_condition
+    def where
       {
         location: {
           near: { lat: params[:latitude], lon: params[:longitude] },
           within: (params[:places_within].presence || '100km' )
-        }
+        },
+        publish: true,
       }
     end
 

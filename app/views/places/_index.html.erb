@@ -2,7 +2,7 @@
   <tbody>
     <% if grouped_places.present? %>
     <% grouped_places.each do |category, places| %>
-      <tr><th><b><%= category.name %></b></th></tr>
+      <tr><th style="color: <%= category.color_code %>"><b><%= category.name %></b></th></tr>
       <% places.each do |place| %>
         <tr>
           <td data-toggle="tooltip" data-placement="right" data-original-title="<%= place.description %>">
