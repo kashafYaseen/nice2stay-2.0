@@ -10,6 +10,8 @@ class Place < ApplicationRecord
 
   translates :details, :description, :name, :slug
 
+  delegate :name, to: :place_category, allow_nil: true, prefix: true
+
   def search_data
     attributes.merge(
       location: { lat: latitude, lon: longitude },

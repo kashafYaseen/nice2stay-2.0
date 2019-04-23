@@ -1,0 +1,17 @@
+<table class="table table-bordered">
+  <tbody>
+    <% if places.present? %>
+      <% places.with_hit.each do |place, hit| %>
+        <tr>
+          <td data-toggle="tooltip" data-placement="right" data-original-title="<%= place.description %>">
+            <%= place.place_category_name %><br>
+            <%= place.name %>
+            <span class="float-right"><%= render_distance hit %></span>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td>No place found!</td></tr>
+    <% end %>
+  </tbody>
+</table>

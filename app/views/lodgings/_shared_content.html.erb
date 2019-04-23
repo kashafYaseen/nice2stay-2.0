@@ -33,10 +33,18 @@
       <h5 class="card-title"><%= @lodging.h2 %></h5>
 
       <%= lodging.location_description.try(:html_safe) %>
+
+      <h4 class="nearby-places-title">
+        Nearby Places Within <%= params[:places_within].presence || '100km' %>
+      </h4>
+
+      <div class="col-md-12 nearby-places mt-3">
+        <%= render 'places/index', places: places %>
+      </div>
     </div>
 
     <div class="col-md-6 address-mark" id="lodging-map-location"></div>
-    <%= tag.div class: "lodgings-list-json", data: { feature: (@places.collect(&:feature) + [lodging.feature]) } %>
+    <%= tag.div class: "lodgings-list-json", data: { feature: (places.collect(&:feature) + [lodging.feature]) } %>
   </div>
 
   <div class="row">
