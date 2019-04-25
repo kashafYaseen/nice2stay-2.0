@@ -28,23 +28,23 @@
   </div>
 
   <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
       <h5 class="card-title"><%= @lodging.h2 %></h5>
 
       <%= lodging.location_description.try(:html_safe) %>
-
-      <h4 class="nearby-places-title">
-        Nearby Places Within <%= params[:places_within].presence || '100km' %>
-      </h4>
-
-      <div class="col-md-12 nearby-places mt-3">
-        <%= render 'places/index', grouped_places: places, lodging: lodging %>
-      </div>
     </div>
 
-    <div class="col-md-6 address-mark" id="lodging-map-location"></div>
-    <%= tag.div class: "lodgings-list-json", data: { feature: ( @places.collect{|key, value| value.collect(&:feature)}.flatten + [lodging.feature]) } %>
+    <div class="col-md-12 address-mark" id="lodging-map-location"></div>
+    <%= render_show_page_map lodging, places %>
+
+    <h4 class="nearby-places-title">
+      Nearby Places Within <%= params[:places_within].presence || '100km' %>
+    </h4>
+
+    <div class="col-md-12 nearby-places mt-3">
+      <%= render 'places/index', grouped_places: places.group_by(&:place_category), lodging: lodging %>
+    </div>
   </div>
 
   <div class="row">
@@ -209,4 +209,5 @@
   <%= hidden_field_tag :check_in, params[:check_in], class: 'check_in' %>
   <%= hidden_field_tag :check_out, params[:check_out], class: 'check_out' %>
   <%= hidden_field_tag :places_within, params[:places_within], class: 'within-radius' %>
+  <%= hidden_field_tag :places_categories, params[:places_within], class: 'within-categories' %>
 <% end %>

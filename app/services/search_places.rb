@@ -15,13 +15,15 @@ class SearchPlaces
 
   private
     def where
-      {
+      conditions = {
         location: {
           near: { lat: params[:latitude], lon: params[:longitude] },
           within: (params[:places_within].presence || '100km' )
         },
         publish: true,
       }
+      conditions[:place_category_id] = params[:places_categories].split(',') if params[:places_categories].present?
+      conditions
     end
 
     def order

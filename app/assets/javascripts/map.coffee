@@ -66,13 +66,15 @@
   Map.init_with = (feature, selector) ->
     L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
     features = $('.lodgings-list-json').map(-> JSON.parse @dataset.feature).get()
+    categories = $('.lodgings-list-json').map(-> JSON.parse @dataset.categories).get()
 
     if window.map
       map = window.map
+      markers_layer = map._layers[window.markers]
     else
       map = window.map = L.mapbox.map selector, 'mapbox.streets'
 
-      MyControl = L.Control.extend(
+      RadiousControl = L.Control.extend(
         options: position: 'topright'
         onAdd: (map) ->
           container = L.DomUtil.create('div', 'my-custom-control bg-white p-2 leaflet-bar')
@@ -80,6 +82,7 @@
                         <input type="radio" name="within" value="50km" class="within leaflet-control mt-1" /><label>50km</label><br>
                         <input type="radio" name="within" value="100km" class="within leaflet-control mt-1" checked/><label>100km</label><br>
                         <input type="radio" name="within" value="150km" class="within leaflet-control mt-1" /><label>150km</label>'
+
           $(container).html(radiobuttons)
           L.DomEvent.addListener container, 'change', (e) ->
             $('.you-may-like-form .within-radius').val($(this).find('.within:checked').val())
@@ -87,10 +90,31 @@
             Rails.fire($('.you-may-like-form').get(0), 'submit')
           container
       )
-      map.addControl new MyControl
 
-    marker = L.mapbox.featureLayer().setGeoJSON(features).addTo(map);
-    set_safe_bounds document.querySelector('.lodgings-list-json'), marker.getBounds()
+      CategoryControl = L.Control.extend(
+        options: position: 'topright'
+        onAdd: (map) ->
+          container = L.DomUtil.create('div', 'my-custom-control bg-white p-2 leaflet-bar')
+          radiobuttons = '<h4>Place Categories</h4>'
+          for category in categories
+            radiobuttons += "<input type='checkbox' name='within_category' value='#{category[1]}' class='within_category leaflet-control mt-1' /><label>#{category[0]}</label><br>"
+
+          $(container).html(radiobuttons)
+          L.DomEvent.addListener container, 'change', (e) ->
+            categories = $.map($(this).find('.within_category:checked'), (c) -> c.value )
+            $('.you-may-like-form .within-categories').val(categories)
+            $('#loader').show()
+            Rails.fire($('.you-may-like-form').get(0), 'submit')
+          container
+      )
+
+      map.addControl new RadiousControl
+      map.addControl new CategoryControl
+      window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
+      markers_layer = map._layers[markers]
+
+    markers_layer.setGeoJSON(features)
+    set_safe_bounds document.querySelector('.lodgings-list-json'), markers_layer.getBounds()
 
     if map.scrollWheelZoom
       map.scrollWheelZoom.disable()
