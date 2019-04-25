@@ -105,6 +105,10 @@ module LodgingsHelper
     "<div class='price-text-from price-text'> #{t('search.from')} </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
   end
 
+  def render_show_page_map lodging, places
+    tag.div class: "lodgings-list-json", data: { feature: ( places.collect(&:feature) + [lodging.feature]), categories: places.collect{ |place| [place.place_category_name, place.place_category_id]}.uniq }
+  end
+
   def render_distance hit
     "#{hit['sort'].first.try(:round, 2)} km"
   end

@@ -14,7 +14,7 @@ class Place < ApplicationRecord
 
   def search_data
     attributes.merge(
-      location: { lat: latitude, lon: longitude },
+      location: { lat: latitude, lon: longitude }
     )
   end
 

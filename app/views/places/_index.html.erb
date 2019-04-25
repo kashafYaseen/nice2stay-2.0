@@ -1,21 +1,22 @@
-<table class="table table-bordered">
-  <tbody>
-    <% if grouped_places.present? %>
-      <% grouped_places.each do |category, places| %>
-        <tr><th style="color: <%= category.color_code %>"><b><%= category.name %></b></th></tr>
+<% if grouped_places.present? %>
+  <div class="row">
+    <% grouped_places.each do |category, places| %>
+      <div class="col-md-4 mt-3">
+        <span style="color: <%= category.color_code %>"><b><%= category.name %></b></span>
+
         <% places.each do |place| %>
-          <tr>
-            <td>
+          <div class="row">
+            <div class="col-md-12">
               <a data-toggle="modal" class="cursor-pointer no-decoration" data-target="#place-details-modal-<%= place.id %>"><%= place.name %></a>
               <span class="float-right"><%= place.distance_from lodging %> km</span>
-            </td>
-          </tr>
+            </div>
+          </div>
 
           <%= render 'places/modal', place: place %>
         <% end %>
-      <% end %>
-    <% else %>
-      <tr><td>No place found!</td></tr>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+<% else %>
+  <tr><td>No place found!</td></tr>
+<% end %>
