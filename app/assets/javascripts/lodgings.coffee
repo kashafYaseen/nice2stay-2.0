@@ -36,6 +36,14 @@
           $("a[href='##{$(this).attr('id')}']").addClass 'active'
 
   Lodging.read_more = ->
+    $('.btn-gallery-container').click ->
+      if $('#gallery-container').hasClass 'gallery-container-minimized'
+        $(this).text('Show Less')
+        $('#gallery-container').removeClass 'gallery-container-minimized'
+      else
+        $(this).text('Show All')
+        $('#gallery-container').addClass 'gallery-container-minimized'
+
     $('.btn-read-more').click ->
       $target = $($(this).data('target'))
       if $(this).text() == "Read more"
