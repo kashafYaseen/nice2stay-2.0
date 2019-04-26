@@ -37,6 +37,10 @@
       e.stopPropagation()
       $('html, body').animate { scrollTop: $('#questions').offset().top - 100 }, 'slow'
 
+    $(".location-details-btn").click (e) ->
+      e.stopPropagation()
+      $('html, body').animate { scrollTop: $('#location-container').offset().top - 100 }, 'slow'
+
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
     $('#map').css("top", "#{$('.fixed-filters').height()-10}px");

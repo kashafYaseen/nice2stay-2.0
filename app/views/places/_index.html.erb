@@ -7,7 +7,7 @@
         <% places.each do |place| %>
           <div class="row">
             <div class="col-md-12">
-              <a data-toggle="modal" class="cursor-pointer no-decoration" data-target="#place-details-modal-<%= place.id %>"><%= place.name %></a>
+              <a data-toggle="modal" class="cursor-pointer no-decoration text-dark" data-target="#place-details-modal-<%= place.id %>"><%= place.name %></a>
               <span class="float-right"><%= place.distance_from lodging %> km</span>
             </div>
           </div>
