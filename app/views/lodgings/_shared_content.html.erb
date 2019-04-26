@@ -8,8 +8,8 @@
     </div>
   <% end %>
 
-  <div class="bg-white padding-bottom-1x row pt-5 mb-1 target-section" id="gallery-container">
-    <div class="col-md-12 mb-30">
+  <div class="row bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
+    <div class="col-md-12">
       <div class="gallery-wrapper">
         <div class="isotope-grid cols-5">
           <div class="gutter-sizer"></div>
@@ -24,6 +24,14 @@
           <% end %>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn float-right btn-gallery-container d-block d-sm-none m-0 pr-0">
+        Show All
+      </button>
     </div>
   </div>
 
@@ -52,9 +60,11 @@
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <hr class="margin-bottom-1x">
 
-      <div id="lodging-description">
-        <%= lodging.description.try(:html_safe) %>
+      <div id="lodging-full-description">
+        <%= truncated_description(lodging.description, 1000).try(:html_safe) %>
       </div>
+
+      <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description %>" data-truncated="<%= truncated_description(lodging.description, 1000) %>">Read more</button>
     </div>
 
     <div class="col-md-6 col-xs-6">

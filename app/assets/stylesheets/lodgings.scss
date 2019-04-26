@@ -292,6 +292,11 @@ div.review-paginator {
   .lodgings-filters #more-filters {
     z-index: 9999 !important;
   }
+
+  .gallery-container-minimized {
+    max-height: 1300px;
+    overflow: hidden;
+  }
 }
 
 @media only screen and (max-width: 600px) {
