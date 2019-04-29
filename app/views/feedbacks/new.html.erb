@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row pt-5">
+    <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+      <% if @review.new_record? %>
+        <h1><%= @reservation.lodging_name %></h1>
+        <%= render 'form', review: @review %>
+      <% else %>
+        <p class="mb-5">
+          <%= t('feedback.form.thank_you').html_safe %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
