@@ -490,6 +490,21 @@ en:
     remind_subject: "Nice2stay | How was your stay?"
     publish1: "no listing on the website"
     publish2: "anonymous listing​"
+    form:
+      setting: "Setting, location, views"
+      quality: "Standard and quality (amenities, maintenance, hygiene)"
+      interior: "Interior design / style"
+      communication: "Hospitality (welcome, communication on location)"
+      service: "Would you also like to let us know how you experienced the contact with Nice2stay?"
+      description: "This we would like to share about the accommodation and surroundings with future guests (favorite places, unique experiences, facilities, interior, outdoor living, atmosphere, services)"
+      suggetion: "We would like to inform the team of Nice2stay and the owners of the accommodation about the following (improvements, adjustments for the presentation on the Nice2stay website, arrival information, suggestions)"
+      photos: "Would you like to share photos of your stay?"
+      client_published: "Our team places a selection of the reviews on the Nice2stay website. If you don’t wish your review to be made visible on our website or prefer an anonymous listing, then please indicate below"
+      no_listing: No listing on the website
+      listing: Normal Listing
+      anonymous: Anonymous listing
+      thank_you: "THANK YOU FOR YOUR TIME & EFFORT, WE WILL READ YOUR FEEDBACK WITH A LOT OF INTEREST AND SHARE IT WITH OWNERS OF THE ACCOMMODATION!<br> <b>THE NICE2STAY TEAM<b>"
+
   payment_email:
     dear: "Dear"
     reagrds: "Kind regards,"

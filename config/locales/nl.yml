@@ -671,6 +671,20 @@ nl:
     remind_subject: "Nice2stay | Hoe heeft u het gehad?"
     publish1: "Niet op de Nice2stay website plaatsen"
     publish2: "Anoniem op de Nice2stay website plaatsen"
+    form:
+      setting: "Setting, ligging, uitzicht"
+      quality: "Kwaliteit (faciliteiten, onderhoud, hygiëne)"
+      interior: "Interieur & stijl"
+      communication: "Gastvrijheid (ontvangst, communicatie op locatie)"
+      service: "Zou u ons ook willen laten weten hoe u het contact met Nice2stay heeft ervaren?"
+      description: "Dit zouden wij graag willen delen over de accommodatie en omgeving met toekomstige gasten (bijv..tips over de omgeving, unieke ervaringen, faciliteiten, sfeer, services)"
+      suggetion: "Hierover willen wij het team van Nice2stay en de eigenaren van de accommodatie informeren (verbeterpunten, aanpassingen voor de presentatie op de Nice2stay website bijv.)"
+      photos: "Heeft u leuke foto&#39;s van uw verblijf die u met ons wilt delen?"
+      client_published: "Ons team plaatst een selectie van de reviews op de website van Nice2stay. Indien jullie dit echt niet wensen of liever een anonieme vermelding willen, dan kunt u dit hieronder aangeven"
+      no_listing: Niet op de Nice2stay website plaatsen
+      listing: Normale lijst
+      anonymous: Anoniem op de Nice2stay website plaatsen
+      thank_you: "BEDANKT VOOR JULLIE MEDEWERKING, WIJ GAAN JULLIE FEEDBACK MET VEEL INTERESSE LEZEN EN DELEN MET DE EIGENAREN VAN DE ACCOMMODATIE!<br> <b>HET NICE2STAY TEAM<b>"
 
   payment_email:
     dear: "Beste"

@@ -35,9 +35,19 @@ class SendReviewDetails
           suggetion: review.suggetion,
           title: review.title,
           review: review.description,
+          further_explanation: review.nice2stay_feedback,
           customer_email: review.user_email,
-          accommodation_slug: review.lodging_slug
+          accommodation_slug: review.lodging_slug,
+          pubish_as: pubish_as,
+          front_end_id: review.id,
+          published: review.published,
+          skip_data_posting: true,
         }
       }
+    end
+
+    def pubish_as
+      return '0' if !review.client_published?
+      return '1' if review.anonymous?
     end
 end
