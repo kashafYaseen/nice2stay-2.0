@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, to: :booking, allow_nil: true
-  delegate :email, to: :user, prefix: true
+  delegate :email, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
 
   scope :not_canceled, -> { where(canceled: false) }

@@ -53,7 +53,6 @@
           removeClass(if rating >= i then @options.emptyClass else @options.fullClass).
           addClass(if rating >= i then @options.fullClass else @options.emptyClass)
 
-  # Define the plugin
   $.fn.extend starrr: (option, args...) ->
     @each ->
       data = $(@).data('starrr')

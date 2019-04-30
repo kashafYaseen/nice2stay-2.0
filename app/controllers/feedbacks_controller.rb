@@ -32,17 +32,16 @@ class FeedbacksController < ApplicationController
         :anonymous,
         :client_published,
         :nice2stay_feedback,
-        {images: []}
+        { images: [] },
       )
     end
 
     def set_reservation
-      @reservation = current_user.reservations.first
-      # id = JsonWebToken.decode(params[:id], ENV['FEEDBACK_TOKEN'])
-      # if id.present?
-      #   @reservation = Reservation.find(id['reservation_id'])
-      # else
-      #   return redirect_to page_not_found_path
-      # end
+      id = JsonWebToken.decode(params[:id], ENV['FEEDBACK_TOKEN'])
+      if id.present?
+        @reservation = Reservation.find(id['reservation_id'])
+      else
+        return redirect_to page_not_found_path
+      end
     end
 end
