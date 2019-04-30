@@ -50,6 +50,8 @@ gem 'mollie-api-ruby'
 gem 'devise-i18n'
 gem 'activeadmin_addons'
 gem 'ahoy_matey'
+gem 'rb-readline'
+gem 'starrr'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
