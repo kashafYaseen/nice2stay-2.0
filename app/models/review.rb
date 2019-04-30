@@ -5,7 +5,7 @@ class Review < ApplicationRecord
 
   mount_uploaders :images, ImageUploader
 
-  translates :suggetion, :description
+  translates :title, :suggetion, :description
 
   attr_accessor :skip_data_posting
 
