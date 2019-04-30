@@ -2,10 +2,19 @@
   <%= render 'shared/errors', resource: review %>
 
   <div class="form-group row">
+    <div class="col-12">
+      <p class="text-sm margin-top-1x">
+        <%= t('feedback.welcome_context', user_name: current_user.first_name, accommodation_name: accommodation_name).html_safe %><br>
+      </p>
+    </div>
+  </div>
+
+  <div class="form-group row">
     <%= f.label :setting, t('feedback.form.setting'), class: 'col-12 col-form-label text-muted' %>
 
     <div class="col-12">
-      <%= f.select :setting, (1..5).to_a, {}, class: 'form-control' %>
+      <%= f.hidden_field :setting, id: "setting_field" %>
+      <div id="setting" class='starrr'></div>
     </div>
   </div>
 
@@ -13,7 +22,8 @@
     <%= f.label :quality, t('feedback.form.quality'), class: 'col-12 col-form-label text-muted' %>
 
     <div class="col-12">
-      <%= f.select :quality, (1..5).to_a, {}, class: 'form-control' %>
+      <%= f.hidden_field :quality, id: "quality_field" %>
+      <div id='quality' class='starrr'></div>
     </div>
   </div>
 
@@ -21,7 +31,8 @@
     <%= f.label :interior, t('feedback.form.interior'), class: 'col-12 col-form-label text-muted' %>
 
     <div class="col-12">
-      <%= f.select :interior, (1..5).to_a, {}, class: 'form-control' %>
+      <%= f.hidden_field :interior, id: "interior_field" %>
+      <div id='interior' class='starrr'></div>
     </div>
   </div>
 
@@ -29,15 +40,8 @@
     <%= f.label :communication, t('feedback.form.communication'), class: 'col-12 col-form-label text-muted' %>
 
     <div class="col-12">
-      <%= f.select :communication, (1..5).to_a, {}, class: 'form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <%= f.label :title, class: 'col-12 col-form-label text-muted' %>
-
-    <div class="col-12">
-      <%= f.text_field :title, class: 'form-control' %>
+      <%= f.hidden_field :communication, id: "communication_field" %>
+      <div id='communication' class='starrr'></div>
     </div>
   </div>
 
@@ -69,12 +73,22 @@
     <%= f.label :client_published, t('feedback.form.client_published'), class: 'col-12 col-form-label text-muted' %>
 
     <div class="col-12">
+      <%= f.label :client_published, t('feedback.form.listing') %>
+      <%= f.radio_button :client_published, true, checked: f.object.client_published, class: "published" %>
       <%= f.label :client_published, t('feedback.form.no_listing') %>
       <%= f.radio_button :client_published, false, checked: !f.object.client_published, class: "published" %>
       <%= f.label :anonymous, t('feedback.form.anonymous') %>
       <%= f.radio_button :anonymous, true, checked: f.object.anonymous, class: "published" %>
-      <%= f.label :client_published, t('feedback.form.listing') %>
-      <%= f.radio_button :client_published, true, checked: f.object.client_published, class: "published" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :images, t('feedback.form.images'), class: 'col-12 col-form-label text-muted' %>
+    <div class="col-12 custom-file">
+      <div class="custom-file">
+        <%= f.file_field :images, multiple: true, class: 'custom-file-input image_field' %>
+        <%= f.label :images, 'Update profile picture', class: 'custom-file-label'%>
+      </div>
     </div>
   </div>
 
@@ -87,4 +101,21 @@
 
 <% content_for :js_init do %>
   Review.init();
+  $('.starrr').starrr()
+
+  $('#setting').on('starrr:change', function(e, value){
+    $("#setting_field").val(value);
+  })
+
+  $('#quality').on('starrr:change', function(e, value){
+    $("#quality_field").val(value);
+  })
+
+  $('#interior').on('starrr:change', function(e, value){
+    $("#interior_field").val(value);
+  })
+
+  $('#communication').on('starrr:change', function(e, value){
+    $("#communication_field").val(value);
+  })
 <% end %>

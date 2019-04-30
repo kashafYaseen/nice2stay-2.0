@@ -666,6 +666,7 @@ nl:
     subject: "Nice2stay | Herinnering: Wij vinden uw mening belangrijk"
     header_text: "Deel uw ervaringen!"
     welcome_text: "Beste"
+    welcome_context: "Beste %{user_name} <br> Wat fijn dat u de tijd wilt nemen om uw ervaringen te delen met ons! Hieronder kunt u de verschillende aspecten van uw verblijf bij %{accommodation_name} waarderen en daarnaast kunt u meer toelichting geven in de open tekstvelden!"
     support: "neem contact op met ons!"
     schedule: "(maandag - vrijdag van 09.00 - 17.30 uur)"
     remind_subject: "Nice2stay | Hoe heeft u het gehad?"
@@ -682,9 +683,10 @@ nl:
       photos: "Heeft u leuke foto&#39;s van uw verblijf die u met ons wilt delen?"
       client_published: "Ons team plaatst een selectie van de reviews op de website van Nice2stay. Indien jullie dit echt niet wensen of liever een anonieme vermelding willen, dan kunt u dit hieronder aangeven"
       no_listing: Niet op de Nice2stay website plaatsen
-      listing: Normale lijst
+      listing: op de Nice2stay website plaatsen
       anonymous: Anoniem op de Nice2stay website plaatsen
-      thank_you: "BEDANKT VOOR JULLIE MEDEWERKING, WIJ GAAN JULLIE FEEDBACK MET VEEL INTERESSE LEZEN EN DELEN MET DE EIGENAREN VAN DE ACCOMMODATIE!<br> <b>HET NICE2STAY TEAM<b>"
+      images: Heeft u leuke foto’s van uw verblijf die u met ons wilt delen?
+      thank_you: "BEDANKT VOOR JULLIE MEDEWERKING, WIJ GAAN JULLIE FEEDBACK MET VEEL INTERESSE LEZEN EN DELEN MET DE EIGENAREN VAN DE ACCOMMODATIE!<br><br> <b>HET NICE2STAY TEAM<b>"
 
   payment_email:
     dear: "Beste"

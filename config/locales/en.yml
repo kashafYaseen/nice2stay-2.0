@@ -485,6 +485,7 @@ en:
     subject: "Nice2stay | Reminder: share your feedback with us"
     header_text: "Share your feedback!"
     welcome_text: "Dear"
+    welcome_context: "Dear %{user_name} <br> Thank you for taking the time to share your feedback with us! Below you can rate the various aspects of your stay at %{accommodation_name} and in addition you can give more information in the open text fields!"
     support: "Please contact us"
     schedule: "(Monday - Friday from 9 am - 5.30 pm)"
     remind_subject: "Nice2stay | How was your stay?"
@@ -501,9 +502,10 @@ en:
       photos: "Would you like to share photos of your stay?"
       client_published: "Our team places a selection of the reviews on the Nice2stay website. If you don’t wish your review to be made visible on our website or prefer an anonymous listing, then please indicate below"
       no_listing: No listing on the website
-      listing: Normal Listing
+      listing: Publish on the Nice2stay website
       anonymous: Anonymous listing
-      thank_you: "THANK YOU FOR YOUR TIME & EFFORT, WE WILL READ YOUR FEEDBACK WITH A LOT OF INTEREST AND SHARE IT WITH OWNERS OF THE ACCOMMODATION!<br> <b>THE NICE2STAY TEAM<b>"
+      images: Would you like to share photos with us?
+      thank_you: "THANK YOU FOR YOUR TIME & EFFORT, WE WILL READ YOUR FEEDBACK WITH A LOT OF INTEREST AND SHARE IT WITH OWNERS OF THE ACCOMMODATION!<br><br> <b>THE NICE2STAY TEAM<b>"
 
   payment_email:
     dear: "Dear"
