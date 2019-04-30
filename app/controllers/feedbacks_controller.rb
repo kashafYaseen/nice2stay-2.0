@@ -8,7 +8,7 @@ class FeedbacksController < ApplicationController
   def create
     @review = @reservation.build_review(review_params.merge(lodging: @reservation.lodging, user: @reservation.user))
     if @review.save
-      redirect_to new_feedback_path(id: params[:id]), notice: 'Reivew was created successfully.'
+      redirect_to new_feedback_path(id: params[:id])
     else
       render :new
     end
@@ -32,6 +32,7 @@ class FeedbacksController < ApplicationController
         :anonymous,
         :client_published,
         :nice2stay_feedback,
+        { images: [] },
       )
     end
 

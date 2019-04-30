@@ -26,5 +26,6 @@
 //= require photoswipe-ui-default.min
 //= require photoswipe.min
 //= require velocity.min
+//= require starrr.js
 //= require chosen-jquery
 //= require_tree .

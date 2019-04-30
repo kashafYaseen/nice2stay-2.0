@@ -3,7 +3,7 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :reservation
 
-  validates :title, presence: true
+  mount_uploaders :images, ImageUploader
 
   translates :title, :suggetion, :description
 
