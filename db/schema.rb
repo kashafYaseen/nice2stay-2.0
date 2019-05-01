@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_105213) do
+ActiveRecord::Schema.define(version: 2019_04_29_110427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -747,6 +747,8 @@ ActiveRecord::Schema.define(version: 2019_04_23_105213) do
     t.boolean "published", default: false
     t.boolean "perfect", default: false
     t.boolean "anonymous", default: false
+    t.boolean "client_published", default: true
+    t.text "nice2stay_feedback"
     t.index ["lodging_id"], name: "index_reviews_on_lodging_id"
     t.index ["reservation_id"], name: "index_reviews_on_reservation_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"

@@ -4,8 +4,50 @@
   <%= image_tag 'loader.gif', class: 'w-50' %>
 </div>
 
-<div class="row no-gutters">
-  <div class="col-md-6 col-sm-12 col-lg-8">
+<div class="container-fluid no-gutters">
+  <div class="col-md-12 col-sm-12 col-lg-12">
+    
+
+
+    <nav class="navbar navbar-toggleable-sm bg-faded navbar-light fixed-top fixed-top-2">
+      <nav class="site-menu">
+    
+         <ul>
+            <li>
+              <%= link_to root_path do %>
+                <span>Overview</span>
+              <% end %>
+            </li>
+            <li>
+             <a class="question-details-btn">
+
+          <i>
+            <span class="material-icons help"></span>
+            dksjfhsdfg
+          </i>
+        </a>
+            </li>
+            <li>
+              <%= link_to root_path do %>
+                <span>Deals</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to root_path do %>
+                <span>Location &  Surrounding</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to root_path do %>
+                <span>Home</span>
+              <% end %>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
     <div class="row target-section" id="home-container">
       <div class="col-md-12 col-xs-12">
         <div class="gallery-control">
