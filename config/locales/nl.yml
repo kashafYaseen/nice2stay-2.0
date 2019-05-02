@@ -677,16 +677,17 @@ nl:
       quality: "Kwaliteit (faciliteiten, onderhoud, hygiëne)"
       interior: "Interieur & stijl"
       communication: "Gastvrijheid (ontvangst, communicatie op locatie)"
-      service: "Zou u ons ook willen laten weten hoe u het contact met Nice2stay heeft ervaren?"
-      description: "Dit zouden wij graag willen delen over de accommodatie en omgeving met toekomstige gasten (bijv..tips over de omgeving, unieke ervaringen, faciliteiten, sfeer, services)"
-      suggetion: "Hierover willen wij het team van Nice2stay en de eigenaren van de accommodatie informeren (verbeterpunten, aanpassingen voor de presentatie op de Nice2stay website bijv.)"
+      service: "HOE HEEFT U HET CONTACT MET HET NICE2STAY TEAM ERVAREN?"
+      description: "WAT KUNT U TOEKOMSTIGE GASTEN AANBEVELEN OVER DE ACCOMMODATIE EN OMGEVING? <br>(BIJVOORBEELD FAVORIETE PLEKKEN IN DE OMGEVING, UNIEKE ERVARINGEN, FACILITEITEN, INTERIEUR, BUITENRUIMTE, ATMOSFEER, SERVICES)"
+      suggetion: "WAT WILT U DELEN MET HET NICE2STAY TEAM EN DE EIGENAREN VAN DE ACCOMMODATIE? <br>(BIJVOORBEELD VERBETERPUNTEN, AANPASSINGEN VOOR DE PRESENTATIE OP DE NICE2STAY WEBSITE, AANKOMST INFORMATIE, SUGGESTIES)"
       photos: "Heeft u leuke foto&#39;s van uw verblijf die u met ons wilt delen?"
-      client_published: "Ons team plaatst een selectie van de reviews op de website van Nice2stay. Indien jullie dit echt niet wensen of liever een anonieme vermelding willen, dan kunt u dit hieronder aangeven"
-      no_listing: Niet op de Nice2stay website plaatsen
-      listing: op de Nice2stay website plaatsen
-      anonymous: Anoniem op de Nice2stay website plaatsen
+      client_published: "ONS TEAM ZAL EEN SELECTIE VAN REVIEWS OP DE NICE2STAY WEBSITE PLAATSEN. INDIEN U DIT ECHT NIET WENST OF GRAAG ANONIEM UW REVIEW WILT PLAATSEN, DAN KUNT U DIT HIERONDER AANGEVEN"
+      no_listing: NIET OP DE NICE2STAY WEBSITE PLAATSEN (UW FEEDBACK WORDT ALLEEN INTERN GEDEELD MET ONS TEAM EN DE ACCOMMODATIE EIGENAREN)
+      listing: PLAATS MIJN REVIEW MET NAAM OP DE NICE2STAY WEBSITE
+      anonymous: PLAATS MIJN REVIEW ANONIEM
       images: Heeft u leuke foto’s van uw verblijf die u met ons wilt delen?
       thank_you: "BEDANKT VOOR JULLIE MEDEWERKING, WIJ GAAN JULLIE FEEDBACK MET VEEL INTERESSE LEZEN EN DELEN MET DE EIGENAREN VAN DE ACCOMMODATIE!<br><br> <b>HET NICE2STAY TEAM<b>"
+      submit: FEEDBACK VERSTUREN
 
   payment_email:
     dear: "Beste"
