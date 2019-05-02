@@ -1,53 +1,8 @@
 <%= render 'shared/photoswipe' %>
 
-<div id="loader">
-  <%= image_tag 'loader.gif', class: 'w-50' %>
-</div>
-
-<div class="container-fluid no-gutters">
-  <div class="col-md-12 col-sm-12 col-lg-12">
-    
-
-
-    <nav class="navbar navbar-toggleable-sm bg-faded navbar-light fixed-top fixed-top-2">
-      <nav class="site-menu">
-    
-         <ul>
-            <li>
-              <%= link_to root_path do %>
-                <span>Overview</span>
-              <% end %>
-            </li>
-            <li>
-             <a class="question-details-btn">
-
-          <i>
-            <span class="material-icons help"></span>
-            dksjfhsdfg
-          </i>
-        </a>
-            </li>
-            <li>
-              <%= link_to root_path do %>
-                <span>Deals</span>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to root_path do %>
-                <span>Location &  Surrounding</span>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to root_path do %>
-                <span>Home</span>
-              <% end %>
-            </li>
-
-        </ul>
-    </div>
-</nav>
-
-
+<div class="row no-gutters">
+  
+  <div class="col-md-6 col-sm-12 col-lg-8">
     <div class="row target-section" id="home-container">
       <div class="col-md-12 col-xs-12">
         <div class="gallery-control">
@@ -103,6 +58,7 @@
       <div class="col-sm-12 col-md-12 col-lg-12 margin-bottom-1x">
         <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
 
+         
         <%= image_tag("guest.png") %>
         <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
         <%= image_tag("bedroom.png") %>
@@ -114,9 +70,11 @@
             <%= render_stars_tag @lodging.average_rating %>
             (<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)
           </div>
+
         <% end %>
 
-        <br/><br/>
+        <br/>
+        <br/>
 
         <div id="lodging-summary">
           <%= @lodging.summary.try(:html_safe) %>
@@ -251,7 +209,7 @@
       </div>
     </div>
 
-    <%= render 'shared_content', lodging: @lodging, places: @places %>
+    <%= render 'shared_content', lodging: @lodging %>
   </div>
 </div>
 
@@ -263,6 +221,7 @@
   GuestDropdown.init();
   Lodging.read_more()
   initPhotoSwipeFromDOM('.lodging-gallery');
+  initDatePicker();
   Invoice.init();
   Lodging.child_form();
   Lodging.highlight_menu();

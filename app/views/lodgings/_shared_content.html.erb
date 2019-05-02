@@ -44,14 +44,14 @@
     </div>
 
     <div class="col-md-12 address-mark" id="lodging-map-location"></div>
-    <%= render_show_page_map lodging, places %>
+    <%= render_show_page_map lodging, @places %>
 
     <h4 class="nearby-places-title">
       Nearby Places Within <%= params[:places_within].presence || '100km' %>
     </h4>
 
     <div class="col-md-12 nearby-places mt-3">
-      <%= render 'places/index', grouped_places: places.group_by(&:place_category), lodging: lodging %>
+      <%= render 'places/index', grouped_places: @places.group_by(&:place_category), lodging: lodging %>
     </div>
   </div>
 
