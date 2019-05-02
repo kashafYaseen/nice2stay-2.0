@@ -37,6 +37,9 @@ class FeedbacksController < ApplicationController
     end
 
     def set_reservation
+      booking = User.last.bookings.build
+      return @reservation = Lodging.first.reservations.build(booking: booking)
+
       id = JsonWebToken.decode(params[:id], ENV['FEEDBACK_TOKEN'])
       if id.present?
         @reservation = Reservation.find(id['reservation_id'])

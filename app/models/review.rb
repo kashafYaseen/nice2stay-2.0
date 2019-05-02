@@ -17,7 +17,7 @@ class Review < ApplicationRecord
 
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
-  delegate :check_in, to: :reservation, allow_nil: true
+  delegate :check_in, :booking_id, to: :reservation, allow_nil: true
 
   after_commit :update_ratings
   after_create :send_review_details
