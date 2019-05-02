@@ -43,6 +43,7 @@ class SendReviewDetails
           published: review.published,
           skip_data_posting: true,
           images: review.images.collect(&:url),
+          published: review.published,
         },
         booking_id: review.booking_id,
         booking_accommodtion_id: review.reservation_id,
@@ -52,5 +53,6 @@ class SendReviewDetails
     def pubish_as
       return '0' if !review.client_published?
       return '1' if review.anonymous?
+      '2'
     end
 end
