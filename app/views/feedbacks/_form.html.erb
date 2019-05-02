@@ -77,7 +77,7 @@
       <%= f.label :client_published, t('feedback.form.listing') %>
       <br>
       <%= f.radio_button :client_published, false, checked: !f.object.client_published, class: "published" %>
-      <%= f.label :client_published, t('feedback.form.no_listing'), class: "col-md-11 #{'align-top' if locale.eql? :nl }" %>
+      <%= f.label :client_published, t('feedback.form.no_listing'), class: "col-md-11 align-top" %>
       <br>
       <%= f.radio_button :anonymous, true, checked: f.object.anonymous, class: "published" %>
       <%= f.label :anonymous, t('feedback.form.anonymous') %>
