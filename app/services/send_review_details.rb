@@ -42,7 +42,7 @@ class SendReviewDetails
           front_end_id: review.id,
           published: review.published,
           skip_data_posting: true,
-          images: review.images.collect(&:url),
+          photos: review.photo_urls,
           published: review.published,
         },
         booking_id: review.booking_id,

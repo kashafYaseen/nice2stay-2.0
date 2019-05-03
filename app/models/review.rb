@@ -30,6 +30,10 @@ class Review < ApplicationRecord
     stars
   end
 
+  def photo_urls
+    photos.collect(&:service_url) if photos.attached? && Rails.env.production?
+  end
+
   private
     def update_ratings
       return unless lodging.present?
