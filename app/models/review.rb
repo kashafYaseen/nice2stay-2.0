@@ -3,7 +3,7 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :reservation
 
-  mount_uploaders :images, ImageUploader
+  has_many_attached :photos
 
   translates :title, :suggetion, :description
 
