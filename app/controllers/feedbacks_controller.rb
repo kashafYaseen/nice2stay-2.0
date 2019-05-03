@@ -32,7 +32,7 @@ class FeedbacksController < ApplicationController
         :anonymous,
         :client_published,
         :nice2stay_feedback,
-        { images: [] },
+        { photos: [] },
       )
     end
 

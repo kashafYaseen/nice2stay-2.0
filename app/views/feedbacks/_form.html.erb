@@ -85,11 +85,11 @@
   </div>
 
   <div class="form-group row">
-    <%= f.label :images, t('feedback.form.images'), class: 'col-12 col-form-label text-muted' %>
+    <%= f.label :photos, t('feedback.form.images'), class: 'col-12 col-form-label text-muted' %>
     <div class="col-12 custom-file feedback-images">
       <div class="custom-file">
-        <%= f.file_field :images, multiple: true, class: 'custom-file-input image_field', accept: "image/*" %>
-        <%= f.label :images, 'Choose files', class: 'custom-file-label' %>
+        <%= f.file_field :photos, multiple: true, class: 'custom-file-input image_field', accept: "image/*" %>
+        <%= f.label :photos, 'Choose files', class: 'custom-file-label' %>
       </div>
     </div>
   </div>
