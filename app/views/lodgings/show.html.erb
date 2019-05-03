@@ -52,6 +52,8 @@
   </div>
 </div>
 
+
+
 <div class="container-fluid">
   <div class="col-md-12">
     <div class="row margin-top-1x">
@@ -74,7 +76,7 @@
         <% end %>
 
         </div>
-          
+
 
         <div id="lodging-summary">
           <%= @lodging.summary.try(:html_safe) %>
@@ -208,6 +210,10 @@
         </div>
       </div>
     </div>
+</div>
+
+
+    
 
     <%= render 'shared_content', lodging: @lodging %>
   </div>
