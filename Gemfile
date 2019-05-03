@@ -15,6 +15,7 @@ gem 'pg', '~> 0.18'
 gem 'bootstrap-typeahead-rails'
 
 gem 'carrierwave'
+gem "aws-sdk-s3", require: false
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
