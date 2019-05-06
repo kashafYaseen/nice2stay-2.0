@@ -1,7 +1,25 @@
-<div class="leads_homepage">
-  <div class="container-fluid">
+
     <div class="row">
-      <div class="col-md-12 leads_homepage padding-bottom-1x">
+      <div class="container-fluid">
+        <div class="row bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
+    <div class="col-md-9">
+      <div class="gallery-wrapper">
+        <div class="isotope-grid cols-3">
+          <div class="gutter-sizer"></div>
+          <div class="grid-sizer"></div>
+
+          <% lodging.images.each do |image| %>
+            <div class="grid-item gallery-item">
+              <a href="<%= image %>">
+                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
+              </a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="col-md-9 margin-right-1x leads_homepage padding-bottom-1x">
         <h4 class="mb-3 mt-2">
           <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
         </h4>
@@ -48,10 +66,12 @@
  
 
   <div class="bg-white row padding-bottom-1x pt-5 mb-1 target-section" id="location-container">
+
+
      <div class="container-fluid">
        <div id="infobox" class="row">
 
-          <div class="col-md-12 ">
+          <div class="col-md-9">
             <div class="infobox">
               <div class="infobox-header bg-secondary">
                 <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
@@ -70,7 +90,7 @@
         </div> 
      
 
-    <div class="col-md-12 address-mark" id="lodging-map-location"></div>
+    <div class="col-md-9 address-mark" id="lodging-map-location"></div>
     <%= render_show_page_map lodging, @places %>
 
     <h4 class="nearby-places-title">
@@ -82,9 +102,12 @@
     </div>
   </div>
 
+
+
   <div class="container-fluid">
+
   <div class="row">
-    <div class="col-md-6 target-section" id="description-container">
+    <div class="col-md-9 target-section" id="description-container">
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <hr class="margin-bottom-1x">
 
@@ -95,7 +118,7 @@
       <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description %>" data-truncated="<%= truncated_description(lodging.description, 1000) %>">Read more</button>
     </div>
 
-    <div class="col-md-6 col-xs-6">
+    <div class="col-md-9 col-xs-12">
       <h3 class="card-title"><%= t 'nav.amentities' %></h3>
       <hr class="margin-bottom-1x">
       <ul class="list-icon">
@@ -106,24 +129,7 @@
     </div>
   </div>
 
-  <div class="row bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
-    <div class="col-md-12">
-      <div class="gallery-wrapper">
-        <div class="isotope-grid cols-5">
-          <div class="gutter-sizer"></div>
-          <div class="grid-sizer"></div>
-
-          <% lodging.images.each do |image| %>
-            <div class="grid-item gallery-item">
-              <a href="<%= image %>">
-                <img src="<%= image %>" itemprop="thumbnail" alt="<%= lodging.name %>" />
-              </a>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <div class="row">
     <div class="col-md-12">
@@ -219,6 +225,7 @@
     </div>
   </div>
 </div>
+
 
 
 

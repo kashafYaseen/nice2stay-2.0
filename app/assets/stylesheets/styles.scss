@@ -167,6 +167,10 @@
   background: #E8F3EC;
 }
 
+.price_box {
+  background: #EBEBE6;
+}
+
 .leads_homepage {
   background: #E2EFF8;
 }
@@ -692,7 +696,7 @@ figure figcaption {
 }
 
 .container-fluid {
-  max-width: 1240px;
+  max-width: 1340px;
   margin-right: auto;
   margin-left: auto;
   padding-right: 30px;
@@ -2699,7 +2703,7 @@ button:focus {
 .btn-info,
 .btn-warning,
 .btn-danger {
-  color: #ffffff;
+  color: #000;
   font-weight: 600;
 }
 
@@ -2716,12 +2720,12 @@ button:focus {
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger:focus {
-  color: #ffffff;
+  color: #000;
   font-weight: 600;
 }
 
 .btn-primary {
-  background-color: #dc9814;
+  background-color: #FFED00;
 }
 
 .btn-primary:hover {
@@ -2778,8 +2782,8 @@ button:focus {
 }
 
 .btn-outline-primary {
-  border-color: #dc9814;
-  color: #dc9814;
+  border-color: #ccc;
+  color: #000;
   background: #fff;
   }
 
@@ -6730,7 +6734,7 @@ video {
   position: absolute;
   top: 0;
   right: 0;
-  width: 460px;
+  width: 360px;
   height: 100%;
   z-index: 5;
 }
@@ -6748,7 +6752,7 @@ video {
   display: table-cell;
   transition: all .3s;
   border-right: 2px solid #ffffff;
-  background-color: #f5f5f5;
+  background-color: #fff;
   color: #606060;
   font-size: 20px;
   line-height: 1;
@@ -6816,8 +6820,8 @@ video {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #dc9814;
-  color: #ffffff;
+  background-color: #FFED00;
+  color: #000;
   font-size: 12px;
   line-height: 16px;
   text-align: center;
@@ -6847,7 +6851,7 @@ video {
   position: fixed;
   top: 0;
   right: 0;
-  width: 460px;
+  width: 360px;
   height: 100%;
   padding-top: 80px;
   transition: all .35s;

@@ -3,43 +3,45 @@
      data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="card-body bg-secondary">
-  <div class="reservation-form-errors-<%= lodging.id %>">
-    <%= render 'reservations/errors', resource: reservation %>
-  </div>
 
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
-    <div class="row"> 
-      <div class="col-md-8">
+    <div class="row price_box"> 
+      <div class="col-md-12">
         <div>
-          <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
+           <h4 class="margin-bottom-1x">Check Availability
+& Reserve</h4>
           <div class="vue-app">
             <reservation-datepicker
             :check-in="'<%= params[:check_in]%>'"
             :check-out="'<%= params[:check_out]%>'"
             :check-in-title="'<%= t('search.check_in') %>'"
             :check-out-title="'<%= t('search.check_out') %>'"
-            :months="2"
+            :months="1"
             :min-date="'<%= Date.yesterday %>'"
             :lodging-id="<%= lodging.id %>"
             :disabled-dates="<%= lodging.not_available_on %>"
             :customized-dates="<%= lodging.customized_dates %>" />
           </div>
         </div>
+        <div class="price_box">
+          <div class="reservation-form-errors-<%= lodging.id %>">
+            <%= render 'reservations/errors', resource: reservation %>
+          </div>
+
         <div class="text-xxs mt-3 row">
-              <div class="col-2 text-center">
+              <div class="col-3 text-center">
                 <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
                 <span>Available</span>
               </div>
-              <div class="col-2 text-center">
+              <div class="col-3 text-center">
                 <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
                 <span>Not available</span>
               </div>
-              <div class="col-2 text-center">
+              <div class="col-3 text-center">
                 <p class="asd__day--discount color-box mb-1 mx-auto"></p>
                 <span>Special offer</span>
               </div>
-              <div class="col-2 text-center">
+              <div class="col-3 text-center">
                 <p class="asd__day--option color-box mb-1 mx-auto"></p>
                 <span>Under option</span>
               </div>
@@ -49,11 +51,11 @@
 
       
 
-      <div class="bg-white">
+     
         <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
-      </div>
+   
 
-      <div class="col-md-4">
+      
         <label class="mb-0 text-xs"><%= t 'nav_cart.guests' %></label>
         <div class="dropdown guests-dropdown">
           <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

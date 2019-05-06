@@ -1,6 +1,6 @@
 <%= render 'shared/photoswipe' %>
-<div class="row no-gutters">
-  <div class="col-md-6 col-sm-12 col-lg-8">
+<div class="row container-fluid">
+  <div class="col-md-6 col-sm-12 col-lg-9 margin-top-1x">
     <div class="row target-section" id="home-container">
       <div class="col-md-12 col-xs-12">
         <div class="gallery-control">
@@ -26,77 +26,29 @@
         </div>
       </div>
     </div>
+     
+      <h2><%= @lodging.h1 %></h2>
+
+     <p><%= @lodging.summary.try(:html_safe) %>
   </div>
 
-  <div class="col-md-6 col-sm-12 col-lg-4 margin-bottom-1x homepage gallery-banner">
-    <div class="col-12-md px-5">
-      <h5 class="margin-top-1x "><%= @lodging.country.name.try(:capitalize)  %> - <%= @lodging.region.name.try(:capitalize)  %></h5>
-      <h2 class="margin-top-1x"><%= @lodging.h1 %></h2>
-
-      <h5 class="mt-lg-5">
-        <i class="material-icons md-24 stars text-white"></i>&nbsp;
-        <%= @lodging.highlight_1 %><br>
-        <i class="material-icons md-24 stars text-white"></i>&nbsp;
-        <%= @lodging.highlight_2 %><br>
-        <i class="material-icons md-24 stars text-white"></i>&nbsp;
-        <%= @lodging.highlight_3 %>
-      </h5>
-
-      <br/>
-
-      <input type="button" name="view-more-info" value="Check availabilty and pricing" class="btn btn-outline-primary w-100 text-gray-dark btn standalone-modal-btn">
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid">
-  <div class="col-md-12">
-    <div class="row margin-top-1x">
-      <div class="col-sm-12 col-md-12 col-lg-12 margin-bottom-1x">
-        <h4 class="margin-bottom-1x"><%= @lodging.h2 %></h4>
-        <%= image_tag("guest.png") %>
-        <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
-        <%= image_tag("bedroom.png") %>
-        <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
-        <%= image_tag("bathroom.png") %>
-        <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
-        <% if @reviews.present? %>
-          <div class="d-inline align-baseline text-sm text-warning mr-auto pt-2  px-3">
-            <%= render_stars_tag @lodging.average_rating %>
-            (<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)
-          </div>
-        <% end %>
-      </div>
-
-      <div id="lodging-summary">
-        <%= @lodging.summary.try(:html_safe) %>
-      </div>
-    </div>
-  </div>
-
-  <div id="infobox" class="row">
-    <div class="col-md-12 ">
-      <div class="infobox">
-        <div class="infobox-header bg-secondary">
-          <h4>Beschikbaardeid & Prijzen</h4>
-          <h5>
-            Wanneer wil jij verblijven bij <%= @lodging.name %>?
-          </h5>
-        </div>
-
-        <div class="infobox-content">
-          <% if @lodging.as_standalone? %>
+  <div class="col-md-6 col-sm-12 col-lg-3  sticky-top margin-top-1x price_box">
+   
+      <% if @lodging.as_standalone? %>
             <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
           <% else %>
             <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
           <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
+      
+
+     
+
+     
+   
+
 
   <div id ="questions" class="row">
-    <div class="col-md-12 margin-bottom-1x">
+    <div class="col-md-9 margin-bottom-1x">
       <div class="infobox">
         <div class="infobox-header bg-secondary">
           <h4 class="mb-3">
@@ -108,6 +60,7 @@
             <div class="col-md-6">
               <div class="col-md-12">
                 <p class="margin-top-1x">
+
                   <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
                 </p>
                 <p><%= t 'email.contact_text' %></p>
@@ -196,9 +149,10 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    
+  
 </div>
+
 
 <%= render 'shared_content', lodging: @lodging %>
 <%= render 'shared/meta_tags', resource: @lodging %>
