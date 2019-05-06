@@ -485,11 +485,29 @@ en:
     subject: "Nice2stay | Reminder: share your feedback with us"
     header_text: "Share your feedback!"
     welcome_text: "Dear"
+    welcome_context: "Dear %{user_name} <br> Thank you for taking the time to share your feedback with us! Below you can rate the various aspects of your stay at %{accommodation_name} and in addition you can give more information in the open text fields!"
     support: "Please contact us"
     schedule: "(Monday - Friday from 9 am - 5.30 pm)"
     remind_subject: "Nice2stay | How was your stay?"
     publish1: "no listing on the website"
     publish2: "anonymous listing​"
+    form:
+      setting: "Setting, location, views"
+      quality: "Standard and quality (amenities, maintenance, hygiene)"
+      interior: "Interior design / style"
+      communication: "Hospitality (welcome, communication on location)"
+      service: "HOW DID YOU EXPERIENCE THE CONTACT WITH THE NICE2STAY TEAM?"
+      description: "WHAT WOULD YOU LIKE TO SHARE WITH FUTURE GUESTS ABOUT THE ACCOMMODATION AND SURROUNDINGS? <br>(FOR EXAMPLE FAVORITE PLACES, UNIQUE EXPERIENCES, FACILITIES, INTERIOR, OUTDOOR LIVING, ATMOSPHERE, SERVICES)"
+      suggetion: "WHAT WOULD LIKE TO SHARE WITH THE NICE2STAY TEAM AND THE OWNERS OF THE ACCOMMODATION? <br>(FOR EXAMPLE IMPROVEMENTS, ADJUSTMENTS FOR THE PRESENTATION ON THE NICE2STAY WEBSITE, ARRIVAL INFORMATION, SUGGESTIONS)"
+      photos: "Would you like to share photos of your stay?"
+      client_published: "OUR TEAM WILL PLACE A SELECTION OF REVIEWS ON THE NICE2STAY WEBSITE. IF YOU DON’T WANT YOUR REVIEW TO BE MADE VISIBLE ON OUR WEBSITE OR PREFER AN ANONYMOUS LISTING, THEN PLEASE INDICATE BELOW"
+      no_listing: DO NOT PUBLISH MY REVIEW (REVIEW WILL BE SHARED INTERNALLY WITH NICE2STAY AND OWNER)
+      listing:  PUBLISH MY REVIEW WITH NAME ON THE NICE2STAY WEBSITE
+      anonymous: PUBLISH MY REVIEW ANONYMOUSLY
+      images: Would you like to share photos with us?
+      thank_you: "THANK YOU FOR YOUR TIME & EFFORT, WE WILL READ YOUR FEEDBACK WITH A LOT OF INTEREST AND SHARE IT WITH THE OWNERS OF THE ACCOMMODATION!<br><br> <b>THE NICE2STAY TEAM<b>"
+      submit: Send Feedback
+
   payment_email:
     dear: "Dear"
     reagrds: "Kind regards,"
