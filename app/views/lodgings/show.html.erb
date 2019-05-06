@@ -28,7 +28,6 @@
     </div>
      
       <h2><%= @lodging.h1 %></h2>
-
      <p><%= @lodging.summary.try(:html_safe) %>
   </div>
 
@@ -52,7 +51,7 @@
       <div class="infobox">
         <div class="infobox-header bg-secondary">
           <h4 class="mb-3">
-            Inclusief, optioneel & voorwaarden
+            Prices, Inclusief, optioneel & voorwaarden
           </h4>
         </div>
         <div class="infobox-content">
@@ -152,7 +151,6 @@
     
   
 </div>
-
 
 <%= render 'shared_content', lodging: @lodging %>
 <%= render 'shared/meta_tags', resource: @lodging %>
