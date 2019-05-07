@@ -29,6 +29,15 @@
      
       <h2><%= @lodging.h1 %></h2>
      <p><%= @lodging.summary.try(:html_safe) %>
+
+       <% if @lodging.as_standalone? %>
+            
+          <% else %>
+            
+              <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
+              <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
+      
+          <% end %>
   </div>
 
   <div class="col-md-6 col-sm-12 col-lg-3  sticky-top margin-top-1x price_box">
@@ -37,6 +46,7 @@
             <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
           <% else %>
             <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+
           <% end %>
       
 
@@ -58,6 +68,25 @@
           <div class="row">
             <div class="col-md-6">
               <div class="col-md-12">
+                <div class="text-xxs mt-3 row">
+              <div class="col-3 text-center">
+                <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
+                <span>Available</span>
+              </div>
+              <div class="col-3 text-center">
+                <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
+                <span>Not available</span>
+              </div>
+              <div class="col-3 text-center">
+                <p class="asd__day--discount color-box mb-1 mx-auto"></p>
+                <span>Special offer</span>
+              </div>
+              <div class="col-3 text-center">
+                <p class="asd__day--option color-box mb-1 mx-auto"></p>
+                <span>Under option</span>
+              </div>
+            </div>
+
                 <p class="margin-top-1x">
 
                   <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
@@ -67,6 +96,7 @@
             </div>
 
             <div class="col-md-6">
+
               <div class="accordion" id="accordion2" role="tablist">
                 <div class="card-header" role="tab">
                   <h6>
