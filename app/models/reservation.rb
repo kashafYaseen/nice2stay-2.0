@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
   delegate :active, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, to: :booking, allow_nil: true
-  delegate :email, to: :user, prefix: true
+  delegate :email, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
 
   scope :not_canceled, -> { where(canceled: false) }
@@ -81,7 +81,7 @@ class Reservation < ApplicationRecord
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
       _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
       check_out_days = _availabilities.where(check_out_only: true)
-      errors.add(:base, "lodging is not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
+      errors.add(:base, "Not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
     end
 
     def accommodation_rules

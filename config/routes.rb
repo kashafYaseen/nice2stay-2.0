@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       post :checkout
     end
 
+    resources :feedbacks, only: [:new, :create]
     resources :countries, only: [:index]
     resources :leads, only: [:create]
 

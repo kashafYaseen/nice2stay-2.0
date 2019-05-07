@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true, with: :exception
   before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_custom_texts, :set_pages
+  rescue_from ActionController::InvalidAuthenticityToken, with: :handle_token_authenticity
 
   def set_booking
     @booking = Booking.find_by(id: cookies[:booking], in_cart: true) if cookies[:booking].present?
@@ -38,5 +39,9 @@ class ApplicationController < ActionController::Base
 
   def set_pages
     @pages = Page.all.includes(:translations)
+  end
+
+  def handle_token_authenticity
+    redirect_back fallback_location: root_path, alert: "Unable to process your request. Please try again"
   end
 end

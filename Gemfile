@@ -15,6 +15,7 @@ gem 'pg', '~> 0.18'
 gem 'bootstrap-typeahead-rails'
 
 gem 'carrierwave'
+gem "aws-sdk-s3", require: false
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -50,6 +51,7 @@ gem 'mollie-api-ruby'
 gem 'devise-i18n'
 gem 'activeadmin_addons'
 gem 'ahoy_matey'
+gem 'starrr'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

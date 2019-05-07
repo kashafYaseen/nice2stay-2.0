@@ -3,7 +3,7 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :reservation
 
-  validates :title, presence: true
+  has_many_attached :photos
 
   translates :title, :suggetion, :description
 
@@ -17,7 +17,7 @@ class Review < ApplicationRecord
 
   delegate :full_name, :email, to: :user, prefix: true
   delegate :slug, to: :lodging, prefix: true
-  delegate :check_in, to: :reservation, allow_nil: true
+  delegate :check_in, :booking_id, to: :reservation, allow_nil: true
 
   after_commit :update_ratings
   after_create :send_review_details
@@ -28,6 +28,10 @@ class Review < ApplicationRecord
     return stars if stars.present?
     update_column :stars, (RATING_TYPE.sum { |type| send(type) } / 5)
     stars
+  end
+
+  def photo_urls
+    photos.collect(&:service_url) if photos.attached? && Rails.env.production?
   end
 
   private

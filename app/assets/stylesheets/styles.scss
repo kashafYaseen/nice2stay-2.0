@@ -31,6 +31,10 @@
   height: 600px;
  }
 
+
+
+
+
 .jumbotron{
   background-image: url("https://images.unsplash.com/photo-1506252374453-ef5237291d83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1268&q=80");
   -webkit-background-size: cover;
@@ -57,7 +61,7 @@
 }
 
 .sticky-top {
-  top:7%;
+  top:8%;
 }
 .infobox {
   border: 1px solid #ececec;
@@ -136,7 +140,7 @@
 }
 
 .max-image{
-  max-height: 650px;
+  max-height: 750px;
 }
 
 .max-image-listing{
@@ -161,6 +165,10 @@
 
 .homepage {
   background: #E8F3EC;
+}
+
+.price_box {
+  background: #EBEBE6;
 }
 
 .leads_homepage {
@@ -688,7 +696,7 @@ figure figcaption {
 }
 
 .container-fluid {
-  max-width: 1400px;
+  max-width: 1340px;
   margin-right: auto;
   margin-left: auto;
   padding-right: 30px;
@@ -2695,7 +2703,7 @@ button:focus {
 .btn-info,
 .btn-warning,
 .btn-danger {
-  color: #ffffff;
+  color: #000;
   font-weight: 600;
 }
 
@@ -2712,12 +2720,12 @@ button:focus {
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger:focus {
-  color: #ffffff;
+  color: #000;
   font-weight: 600;
 }
 
 .btn-primary {
-  background-color: #dc9814;
+  background-color: #FFED00;
 }
 
 .btn-primary:hover {
@@ -2774,8 +2782,8 @@ button:focus {
 }
 
 .btn-outline-primary {
-  border-color: #dc9814;
-  color: #dc9814;
+  border-color: #ccc;
+  color: #000;
   background: #fff;
   }
 
@@ -6744,7 +6752,7 @@ video {
   display: table-cell;
   transition: all .3s;
   border-right: 2px solid #ffffff;
-  background-color: #f5f5f5;
+  background-color: #fff;
   color: #606060;
   font-size: 20px;
   line-height: 1;
@@ -6812,8 +6820,8 @@ video {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #dc9814;
-  color: #ffffff;
+  background-color: #FFED00;
+  color: #000;
   font-size: 12px;
   line-height: 16px;
   text-align: center;

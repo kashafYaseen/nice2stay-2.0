@@ -9,11 +9,7 @@
   <!-- Main Navigation-->
   <nav class="site-menu">
     <ul>
-      <li>
-        <%= link_to root_path do %>
-          <span>Home</span>
-        <% end %>
-      </li>
+      
 
       <li><a href="#"><span>Nice2stay</span></a>
         <ul class="sub-menu">
@@ -96,27 +92,7 @@
         </a>
       <% end %>
 
-      <% if controller_name == "lodgings" && action_name == "show" %>
-        <a class="toolbar-btn question-details-btn">
-          <i>
-            <span class="material-icons help"></span>
-          </i>
-        </a>
-
-        <a class="toolbar-btn reservations-details-btn">
-          <i>
-            <span class="material-icons date_range"></span>
-            <span class="reservations-items-count"></span>
-          </i>
-        </a>
-
-        <a class="toolbar-btn location-details-btn">
-          <i>
-            <span class="material-icons location_on"></span>
-            <span class="reservations-items-count"></span>
-          </i>
-        </a>
-      <% end %>
+      
 
       <a class="toolbar-toggle toolbar-wishlist" href="#wishlist">
         <i>

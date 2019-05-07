@@ -1,0 +1,110 @@
+<%= form_for review, url: feedbacks_path do |f| %>
+  <%= render 'shared/errors', resource: review %>
+
+  <div class="form-group row">
+    <div class="col-12">
+      <p class="text-sm margin-top-1x">
+        <%= t('feedback.welcome_context', user_name: reservation.user_full_name, accommodation_name: reservation.lodging_name).html_safe %><br>
+      </p>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :setting, t('feedback.form.setting'), class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.hidden_field :setting %>
+      <div class='starrr' data-target="#review_setting"></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :quality, t('feedback.form.quality'), class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.hidden_field :quality %>
+      <div class='starrr' data-target="#review_quality"></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :interior, t('feedback.form.interior'), class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.hidden_field :interior %>
+      <div class='starrr' data-target="#review_interior"></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :communication, t('feedback.form.communication'), class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.hidden_field :communication %>
+      <div class='starrr' data-target="#review_communication"></div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :description, t('feedback.form.description').html_safe, class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.text_area :description, class: 'form-control', rows: 8 %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :suggetion, t('feedback.form.suggetion').html_safe, class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.text_area :suggetion, class: 'form-control', rows: 8 %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :nice2stay_feedback, t('feedback.form.service'), class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12">
+      <%= f.text_area :nice2stay_feedback, class: 'form-control', rows: 8 %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :client_published, t('feedback.form.client_published'), class: 'col-12 col-form-label text-muted' %>
+
+    <div class="col-12 pl-5">
+      <%= f.radio_button :client_published, true, checked: f.object.client_published, class: "published" %>
+      <%= f.label :client_published, t('feedback.form.listing') %>
+      <br>
+      <%= f.radio_button :client_published, false, checked: !f.object.client_published, class: "published" %>
+      <%= f.label :client_published, t('feedback.form.no_listing'), class: "col-md-11 align-top" %>
+      <br>
+      <%= f.radio_button :anonymous, true, checked: f.object.anonymous, class: "published" %>
+      <%= f.label :anonymous, t('feedback.form.anonymous') %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :photos, t('feedback.form.images'), class: 'col-12 col-form-label text-muted' %>
+    <div class="col-12 custom-file feedback-images">
+      <div class="custom-file">
+        <%= f.file_field :photos, multiple: true, class: 'custom-file-input image_field', accept: "image/*" %>
+        <%= f.label :photos, 'Choose files', class: 'custom-file-label' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <dir class="col-md-12" id="images_preview"></dir>
+  </div>
+
+  <%= hidden_field_tag :id, params[:id] %>
+
+  <div class="form-group">
+    <%= f.submit t("feedback.form.submit"), class: "btn btn-primary btn-block" %>
+  </div>
+<% end %>
+
+<% content_for :js_init do %>
+  Review.init();
+<% end %>

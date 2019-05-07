@@ -3,16 +3,13 @@
      data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="card-body">
-  <div class="reservation-form-errors-<%= lodging.id %>">
-    <%= render 'reservations/errors', resource: reservation %>
-  </div>
 
   <%= form_for reservation, url: reservations_path, remote: true do |f| %>
-    <div class="row"> 
-      <div class="col-md-3">
+    <div class="row price_box"> 
+      <div class="col-md-12">
         <div>
-          <label class="mb-0 text-xs"><%= t 'search.dates' %></label>
+           <h4 class="margin-bottom-1x">Check Availability
+& Reserve</h4>
           <div class="vue-app">
             <reservation-datepicker
             :check-in="'<%= params[:check_in]%>'"
@@ -26,25 +23,22 @@
             :customized-dates="<%= lodging.customized_dates %>" />
           </div>
         </div>
+        <div class="price_box">
+          <div class="reservation-form-errors-<%= lodging.id %>">
+            <%= render 'reservations/errors', resource: reservation %>
+          </div>
+
+        
+
       </div>
 
-      <div class="col-md-2">
-        <p><label class="mb-0 text-xs">&nbsp;</label></p>
-        <p class="asd__day--enabled color-box mb-1"></p>
-        <p class="text-xxxs">Available</p>
-        <p class="asd__day--disabled color-box mb-1"></p>
-        <p class="text-xxxs">Not available</p>
-        <p class="asd__day--discount color-box mb-1"></p>
-        <p class="text-xxxs">Special offer</p>
-        <p class="asd__day--option color-box mb-1"></p>
-        <p class="text-xxxs">Under option</p>
-      </div>
+      
 
-      <div class="bg-white">
+     
         <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
-      </div>
+   
 
-      <div class="col-md-4">
+      
         <label class="mb-0 text-xs"><%= t 'nav_cart.guests' %></label>
         <div class="dropdown guests-dropdown">
           <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
