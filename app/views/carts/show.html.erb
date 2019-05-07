@@ -1,14 +1,6 @@
-<div class="page-title">
-  <div class="container">
-    <h1><%= t "carts.step_2.header" %></h1>
 
-    <ul class="breadcrumbs">
-      <li><%= t "carts.step_2.header_2" %></li>
-    </ul>
-  </div>
-</div>
 
-<div class="container homepage padding-top-1x padding-bottom-3x mb-2">
+<div class="container price_box  padding-top-1x padding-bottom-3x mb-2">
   <div class="row">
     <!-- Checkout Address-->
     <div class="col-md-12">
@@ -60,11 +52,11 @@
               <p><%= t 'profile_account.customers' %><p>
               <div class="row">
                 <div class="col-md-5 mx-auto">
-                  <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+                  <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
                 </div>
 
                 <div class="col-md-5 mx-auto">
-                  <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn-sm w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
+                  <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
                 </div>
               </div>
             <% end %>
@@ -198,7 +190,7 @@
                   <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
                 <% end %>
 
-                <%= f.submit t('carts.step_3'), class: "btn btn-success mb-0 mr-0" %>
+                <%= f.submit t('carts.step_3'), class: "btn btn-primary mb-0 mr-0" %>
               </div>
             </div>
           <% end %>
