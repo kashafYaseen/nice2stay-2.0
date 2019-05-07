@@ -2129,7 +2129,7 @@ select.form-control.form-control-sm:not([size]):not([multiple]) {
 .custom-control .custom-control-input:checked ~ .custom-control-label::before {
   border: 0;
   border-color: #eaeaea;
-  background-color: #dc9814;
+  background-color: #FFED00;
 }
 
 .custom-control .custom-control-input:disabled ~ .custom-control-label::before {
@@ -6191,14 +6191,14 @@ video {
 }
 
 .steps .step.active {
-  border-color: #dc9814;
+  border-color: #ccc;
   cursor: default;
   z-index: 5;
   pointer-events: none;
 }
 
 .steps .step.active .step-title, .steps .step.active > i {
-  color: #dc9814;
+  color: #000;
 }
 
 .steps a.step:not(.active) {
