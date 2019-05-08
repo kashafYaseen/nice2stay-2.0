@@ -19,12 +19,11 @@ class Dashboard::WishlistsController < DashboardController
 
   def destroy
     @wishlists.delete_all
-    cookies.delete(:wishlists) if cookies[:wishlists].present?
     redirect_to wishlists_path, notice: 'Wishlists was cleared successfully.'
   end
 
   def remove
-    @wishlists = ManageWishlists.new(wishlists: @wishlists, user: current_user, cookies: cookies).delete(params[:wishlist_id])
+    @wishlists = ManageWishlists.new(wishlists: @wishlists, user: current_user).delete(params[:wishlist_id])
     flash.now[:notice] = 'Wishlist was removed successfully.'
   end
 
@@ -33,7 +32,7 @@ class Dashboard::WishlistsController < DashboardController
       return render :show unless create_user
     end
 
-    errors = ManageWishlists.new(wishlists: @wishlists, user: (current_user || @user), cookies: cookies).checkout(current_user.present?)
+    errors = ManageWishlists.new(wishlists: @wishlists, user: current_user).checkout(current_user.present?)
 
     if errors.present?
       redirect_to wishlists_path, alert: errors
@@ -57,15 +56,6 @@ class Dashboard::WishlistsController < DashboardController
 
     def set_wishlist
       @wishlist = @wishlists.find(params[:wishlist_id])
-    end
-
-    def save_wishlist_items
-      if cookies[:wishlists].present?
-        cookies[:wishlists] += ",#{@wishlist.id}"
-      else
-        cookies[:wishlists] = @wishlist.id.to_s
-      end
-      @wishlists = Wishlist.where(id: cookies[:wishlists].split(','))
     end
 
     def create_user
