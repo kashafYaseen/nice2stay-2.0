@@ -259,6 +259,12 @@ div.review-paginator {
   }
 }
 
+@media only screen and (min-width: 767px) {
+  #show-page-submenu {
+    background: transparent !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   #sidebar {
     display: none;
