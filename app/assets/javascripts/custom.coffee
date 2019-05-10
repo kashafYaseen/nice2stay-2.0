@@ -7,6 +7,13 @@
     toolbar_section = $('.toolbar-section')
     mobile_menu = $('.slideable-menu .menu')
 
+    $(window).scroll ->
+      if $('#show-page-submenu').length > 0
+        if $(this).scrollTop() > 200
+          $('#show-page-submenu').fadeIn 500
+        else
+          $('#show-page-submenu').fadeOut 500
+
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
@@ -29,9 +36,9 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
-    $(".reservations-details-btn").click (e) ->
+    $(".scroll-to-btn").click (e) ->
       e.stopPropagation()
-      $('html, body').animate { scrollTop: $('#infobox').offset().top - 100 }, 'slow'
+      $('html, body').animate { scrollTop: $($(this).data('target')).offset().top - 100 }, 'slow'
 
     $(".question-details-btn").click (e) ->
       e.stopPropagation()
