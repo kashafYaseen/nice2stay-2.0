@@ -1,4 +1,35 @@
 <%= render 'shared/photoswipe' %>
+
+<div id="show-page-submenu">
+  <nav class="text-center d-block d-md-none">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="btn-link btn-outline-primary btn-sm scroll-to-btn" data-target="#home-container">
+          <span>Overview</span>
+        </a>
+      </li>
+
+       <li class="nav-item">
+        <a class="btn-link btn-outline-primary btn-sm scroll-to-btn" data-target=".price_box">
+          <span>Calendar & Reserve</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="btn-link btn-outline-primary btn-sm scroll-to-btn" data-target="#gallery-container">
+          <span>Gallary</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="btn-link btn-outline-primary btn-sm scroll-to-btn" data-target="#location-container">
+          <span>Location</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 <div class="row container-fluid">
   <div class="col-md-6 col-sm-12 col-lg-9 margin-top-1x">
     <div class="row target-section" id="home-container">
@@ -27,34 +58,23 @@
       </div>
     </div>
      
-      <h2><%= @lodging.h1 %></h2>
-     <p><%= @lodging.summary.try(:html_safe) %>
+    <h2><%= @lodging.h1 %></h2>
+    <p><%= @lodging.summary.try(:html_safe) %></p>
 
-       <% if @lodging.as_standalone? %>
-            
-          <% else %>
-            
-              <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
-              <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
-      
-          <% end %>
+    <% if @lodging.as_standalone? %>
+    <% else %>
+      <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
+      <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
+    <% end %>
   </div>
 
   <div class="col-md-6 col-sm-12 col-lg-3  sticky-top margin-top-1x price_box">
-   
-      <% if @lodging.as_standalone? %>
-            <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
-          <% else %>
-            <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
-
-          <% end %>
-      
-
-     
-
-     
-   
-
+    <% if @lodging.as_standalone? %>
+      <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+    <% else %>
+      <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+    <% end %>
+  </div>
 
   <div id ="questions" class="row">
     <div class="col-md-9 margin-bottom-1x">
@@ -64,40 +84,39 @@
             Prices, Inclusief, optioneel & voorwaarden
           </h4>
         </div>
+
         <div class="infobox-content">
           <div class="row">
             <div class="col-md-6">
               <div class="col-md-12">
-                
                 <div class="text-xxs mt-3 row">
-              <div class="col-3 text-center">
-                <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
-                <span>Available</span>
-              </div>
-              <div class="col-3 text-center">
-                <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
-                <span>Not available</span>
-              </div>
-              <div class="col-3 text-center">
-                <p class="asd__day--discount color-box mb-1 mx-auto"></p>
-                <span>Special offer</span>
-              </div>
-              <div class="col-3 text-center">
-                <p class="asd__day--option color-box mb-1 mx-auto"></p>
-                <span>Under option</span>
-              </div>
-            </div>
+                  <div class="col-3 text-center">
+                    <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
+                    <span>Available</span>
+                  </div>
+                  <div class="col-3 text-center">
+                    <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
+                    <span>Not available</span>
+                  </div>
+                  <div class="col-3 text-center">
+                    <p class="asd__day--discount color-box mb-1 mx-auto"></p>
+                    <span>Special offer</span>
+                  </div>
+                  <div class="col-3 text-center">
+                    <p class="asd__day--option color-box mb-1 mx-auto"></p>
+                    <span>Under option</span>
+                  </div>
+                </div>
 
                 <p class="margin-top-1x">
-
                   <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
                 </p>
+
                 <p><%= t 'email.contact_text' %></p>
               </div>
             </div>
 
             <div class="col-md-6">
-
               <div class="accordion" id="accordion2" role="tablist">
                 <div class="card-header" role="tab">
                   <h6>
@@ -159,7 +178,6 @@
                   </div>
                 </div>
 
-
                 <div class="card-header" role="tab">
                   <h6>
                     <a class="collapsed" href="#collapseTen" data-toggle="collapse">
@@ -179,14 +197,15 @@
           </div>
         </div>
       </div>
-    
-  
+    </div>
+  </div>
 </div>
 
 <%= render 'shared_content', lodging: @lodging %>
 <%= render 'shared/meta_tags', resource: @lodging %>
 
 <% content_for :canonical do %><%= lodging_url(@lodging) %><% end %>
+
 <%= content_for :js_init do %>
   GuestDropdown.init();
   Lodging.read_more()
