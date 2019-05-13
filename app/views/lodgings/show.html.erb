@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-9 col-xs-12">
+    <div class="col-lg-9 col-md-12">
       <div class="col-md-12 margin-top-1x">
         <div class="row target-section" id="home-container">
           <div class="col-md-12 col-xs-12">
@@ -37,6 +37,14 @@
         <% if @lodging.as_parent? %>
           <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
           <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
+        <% end %>
+      </div>
+
+      <div class="col-sm-12 margin-top-1x price_box d-lg-none">
+        <% if @lodging.as_standalone? %>
+          <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+        <% else %>
+          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
         <% end %>
       </div>
 
@@ -165,7 +173,7 @@
       <%= render 'shared_content', lodging: @lodging %>
     </div>
 
-    <div class="col-md-3 sticky-top margin-top-1x price_box pr-0">
+    <div class="col-md-3 sticky-top margin-top-1x price_box pr-0 d-none d-lg-block">
       <% if @lodging.as_standalone? %>
         <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
       <% else %>
