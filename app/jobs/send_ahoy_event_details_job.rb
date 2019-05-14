@@ -4,5 +4,6 @@ class SendAhoyEventDetailsJob < ApplicationJob
   def perform(event_id)
     event = Ahoy::Event.find_by(id: event_id)
     SendAhoyEventDetails.call(event) if event.present?
+    true
   end
 end
