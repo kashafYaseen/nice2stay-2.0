@@ -27,14 +27,14 @@ module ReviewsHelper
   def render_stars_tag(rating)
     return if rating.nan?
     fraction, star_tags, total_stars = (rating - rating.to_i).round(2), '', 5
-    rating.to_i.times { |star| star_tags += "<i class='material-icons star'></i>" }
+    rating.to_i.times { |star| star_tags += "<i class='material-icons text-success star'></i>" }
 
     if fraction >= 0.3
-      star_tags += '<i class="material-icons star_half"></i>'
+      star_tags += '<i class="material-icons text-success star_half"></i>'
       total_stars = 4
     end
 
-    (total_stars-rating.to_i).times { |star| star_tags += '<i class="material-icons star_border"></i>' }
+    (total_stars-rating.to_i).times { |star| star_tags += '<i class="material-icons text-success star_border"></i>' }
     star_tags.html_safe
   end
 end
