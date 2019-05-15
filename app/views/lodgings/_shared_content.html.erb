@@ -19,8 +19,8 @@
   </div>
 </div>
 
-<div class="col-md-12 leads_homepage">
-  <h4 class="mb-3 mt-2">
+<div class="col-md-12 leads_homepage mt-2 pt-3">
+  <h4 class="mb-3">
     <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
   </h4>
 
@@ -116,7 +116,7 @@
     </div>
   </div>
 
-  <div class="margin-top-2x leads_homepage" id="reviews-container">
+  <div class="margin-top-2x leads_homepage pt-3 pl-3" id="reviews-container">
     <div class="row">
       <% if @reviews.present? %>
         <div class="col-md-12">
@@ -139,7 +139,7 @@
         </div>
       <% else %>
         <div class="row">
-          <div class="card-body col-md-12">
+          <div class="card-body col-md-12 pl-4">
             <h3 class="card-title"><%= t 'nav.reviews' %></h3>
             <p>Accommodation does not have any review yet.</p>
           </div>

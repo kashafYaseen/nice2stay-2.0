@@ -42,9 +42,9 @@
 
       <div class="col-sm-12 margin-top-1x price_box d-lg-none">
         <% if @lodging.as_standalone? %>
-          <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+          <%= render 'standalone', lodging: @lodging, reservation: @reservation, id_sufix: '_modal' %>
         <% else %>
-          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
         <% end %>
       </div>
 
@@ -175,9 +175,9 @@
 
     <div class="col-md-3 sticky-top margin-top-1x price_box pr-0 d-none d-lg-block">
       <% if @lodging.as_standalone? %>
-        <%= render 'standalone', lodging: @lodging, reservation: @reservation %>
+        <%= render 'standalone', lodging: @lodging, reservation: @reservation, id_sufix: '' %>
       <% else %>
-        <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children %>
+        <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '' %>
       <% end %>
     </div>
   </div>
