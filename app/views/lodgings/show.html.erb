@@ -35,6 +35,10 @@
         <p><%= @lodging.summary.try(:html_safe) %></p>
 
         <% if @lodging.as_parent? %>
+          <div class="col-sm-12 margin-top-1x price_box d-lg-none">
+            <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
+          </div>
+
           <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
           <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging  %>
         <% end %>
@@ -43,8 +47,6 @@
       <div class="col-sm-12 margin-top-1x price_box d-lg-none">
         <% if @lodging.as_standalone? %>
           <%= render 'standalone', lodging: @lodging, reservation: @reservation, id_sufix: '_modal' %>
-        <% else %>
-          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
         <% end %>
       </div>
 
