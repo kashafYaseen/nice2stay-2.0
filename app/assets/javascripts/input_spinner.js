@@ -174,9 +174,21 @@
         $('.infants').val($('#dropdown_modal .parent-infants').val());
       }
       else {
-        $('.adults').val($('.parent-adults').val());
-        $('.children').val($('.parent-children').val());
-        $('.infants').val($('.parent-infants').val());
+        $('.adults').val($('#dropdown .parent-adults').val());
+        $('.children').val($('#dropdown .parent-children').val());
+        $('.infants').val($('#dropdown .parent-infants').val());
+      }
+    }
+    else if ($(element).parents('form').attr('id') != undefined && $('#standalone').val()) {
+      if ($('#dropdown_modal').is(':visible')) {
+        $('.adults').val($('#modal_dropdown .adults').val());
+        $('.children').val($('#modal_dropdown .children').val());
+        $('.infants').val($('#modal_dropdown .infants').val());
+      }
+      else {
+        $('.adults').val($('#dropdown .adults').val());
+        $('.children').val($('#dropdown .children').val());
+        $('.infants').val($('#dropdown .infants').val());
       }
     }
     else if ($('.you-may-like-form').length > 0) {
