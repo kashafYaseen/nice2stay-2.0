@@ -36,6 +36,7 @@ yarn-debug.log*
 .yarn-integrity
 .DS_Store
 *.sql
+*sql.gz
 
 # Ignore redis binary dump (dump.rdb) files
 *.rdb
