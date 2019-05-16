@@ -32,15 +32,15 @@
       if values[4] == '' then values[4] = 0
       if values[3] == '' then values[3] = 0
       if values.some(check_values)
-        $("#lbl-error-#{lodging_id}").text('Please select dates & guest details')
-        $("#bill-#{lodging_id}").text('')
+        $("#lbl-error-#{lodging_id}, #modal_lbl-error-#{lodging_id}").text('Please select dates & guest details')
+        $("#bill-#{lodging_id}, #modal_bill-#{lodging_id}").text('')
       else
         Invoice.print(values, lodging_id)
 
   Invoice.print = (values, lodging_id) ->
     url = $('.persisted-data').data('url')
-    $("#lbl-error-#{lodging_id}").html('')
-    $("#bill-#{lodging_id}").html('')
+    $("#lbl-error-#{lodging_id}, #modal_lbl-error-#{lodging_id}").html('')
+    $("#bill-#{lodging_id}, #modal_bill-#{lodging_id}").html('')
     $(".anternative-heading").html('')
     $(".child-form-errors").html('')
 
@@ -48,7 +48,7 @@
       url: "#{url}?values=#{values}"
       type: 'GET'
       success: (data) ->
-        $("#flexible-search-#{lodging_id}").html('');
+        $("#flexible-search-#{lodging_id}, #modal_flexible-search-#{lodging_id}").html('');
         if data.flexible
           print_flexible(values, lodging_id, data)
         else
@@ -64,8 +64,8 @@
       values[1] = search_param['check_out']
 
       if index == 0
-        $("#check_in_#{lodging_id}").val(values[0])
-        $("#check_out_#{lodging_id}").val(values[1])
+        $("#check_in_#{lodging_id}, #modal_check_in_#{lodging_id}").val(values[0])
+        $("#check_out_#{lodging_id}, #modal_check_in_#{lodging_id}").val(values[1])
 
       $.each data.rates[index], (key, value) ->
         result += rates_html(key, value, index)
@@ -73,10 +73,10 @@
         nights += value
 
       if data.valid[index]
-        $("#cart-#{lodging_id}").removeClass('disabled');
-        $("#reservation-footer-btn-#{lodging_id}").removeClass('d-none');
+        $("#cart-#{lodging_id}, #modal_cart-#{lodging_id}").removeClass('disabled');
+        $("#reservation-footer-btn-#{lodging_id}, #modal_reservation-footer-btn-#{lodging_id}").removeClass('d-none');
         $(".reservation-form-errors-#{lodging_id}").html('');
-        $("#flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
+        $("#flexible-search-#{lodging_id}, #modal_flexible-search-#{lodging_id}").append(radio_buttom_html(values[0], values[1], total, nights, lodging_id, index))
 
         if data.discounts[index]
           total_discount = 0
@@ -88,7 +88,7 @@
           if total_discount > 0
             result += discount_html("Discount", total_discount, index)
           total -= total_discount
-          $("#discount_#{lodging_id}").val(total_discount)
+          $("#discount_#{lodging_id}, #modal_discount_#{lodging_id}").val(total_discount)
 
         if data.cleaning_costs
           total_cleaning_cost = 0
@@ -102,13 +102,13 @@
               total += (cost.price_per_day * nights)
               result += cleaning_cost_html(cost, -1, nights)
 
-          $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
+          $("#cleaning_cost_#{lodging_id}, #modal_cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
         if total > 0
           result += total_html(total, index)
-          $("#anternative-heading-#{lodging_id}").html('Selected period is not available. See alternatives')
-          $("#bill-#{lodging_id}").append(result)
-          $("#reservation-footer-#{lodging_id}").append(result)
+          $("#anternative-heading-#{lodging_id}, #modal_anternative-heading-#{lodging_id}").html('Selected period is not available. See alternatives')
+          $("#bill-#{lodging_id}, #modal_bill-#{lodging_id}").append(result)
+          $("#reservation-footer-#{lodging_id}, #modal_reservation-footer-#{lodging_id}").append(result)
         else
           show_unavailable(lodging_id)
       else
@@ -125,8 +125,8 @@
       nights += value
 
     if nights >= 1 && data.valid
-      $("#cart-#{lodging_id}").removeClass('disabled');
-      $("#reservation-footer-btn-#{lodging_id}").removeClass('d-none');
+      $("#cart-#{lodging_id}, #modal_cart-#{lodging_id}").removeClass('disabled');
+      $("#reservation-footer-btn-#{lodging_id}, #modal_reservation-footer-btn-#{lodging_id}").removeClass('d-none');
       $(".reservation-form-errors-#{lodging_id}").html('');
 
       if data.discounts
@@ -140,7 +140,7 @@
         if total_discount > 0
           result += discount_html("Discount", total_discount, -1)
         total -= total_discount
-        $("#discount_#{lodging_id}").val(total_discount)
+        $("#discount_#{lodging_id}, #modal_discount_#{lodging_id}").val(total_discount)
 
       if data.cleaning_costs
         total_cleaning_cost = 0
@@ -154,23 +154,23 @@
             total_cleaning_cost += (cost.price_per_day * nights)
             total += (cost.price_per_day * nights)
             result += cleaning_cost_html(cost, -1, nights)
-        $("#cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
+        $("#cleaning_cost_#{lodging_id}, #modal_cleaning_cost_#{lodging_id}").val(total_cleaning_cost)
 
       if total > 0
         result += total_html(total, -1)
         $('.sm-total').text("Price: $#{total}")
-        $("#bill-#{lodging_id}").html(result)
-        $("#reservation-footer-#{lodging_id}").html(result)
-        $("#anternative-heading-#{lodging_id}").html('Good news period is fully available.')
-        $("#flexible-search-#{lodging_id}").html("#{parse_date values[0]} - #{parse_date values[1]}")
+        $("#bill-#{lodging_id}, #modal_bill-#{lodging_id}").html(result)
+        $("#reservation-footer-#{lodging_id}, #modal_reservation-footer-#{lodging_id}").html(result)
+        $("#anternative-heading-#{lodging_id}, #modal_anternative-heading-#{lodging_id}").html('Good news period is fully available.')
+        $("#flexible-search-#{lodging_id}, #modal_flexible-search-#{lodging_id}").html("#{parse_date values[0]} - #{parse_date values[1]}")
       else
         show_unavailable(lodging_id)
     else
       Reservation.validate(values)
 
   show_unavailable = (lodging_id) ->
-    $("#bill-#{lodging_id}").text('Lodging is not available.')
-    $("#reservation-footer-#{lodging_id}").text('Lodging is not available.')
+    $("#bill-#{lodging_id}, #modal_bill-#{lodging_id}").text('Lodging is not available.')
+    $("#reservation-footer-#{lodging_id}, #modal_reservation-footer-#{lodging_id}").text('Lodging is not available.')
 
   check_values = (value) ->
     value == '' || value == undefined

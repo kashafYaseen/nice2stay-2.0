@@ -21,7 +21,8 @@
         :min-date="'<%= Date.yesterday %>'"
         :lodging-id="<%= lodging.id %>"
         :disabled-dates="<%= lodging.not_available_on %>"
-        :customized-dates="<%= lodging.customized_dates %>" />
+        :customized-dates="<%= lodging.customized_dates %>"
+        :invoice-on-apply= "true" />
       </div>
 
       <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
