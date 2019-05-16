@@ -68,7 +68,7 @@
     features = $('.lodgings-list-json').map(-> JSON.parse @dataset.feature).get()
     categories = $('.lodgings-list-json').map(-> JSON.parse @dataset.categories).get()
 
-    if window.map
+    if window.map && window.map._container.id == selector
       map = window.map
       markers_layer = map._layers[window.markers]
     else
@@ -109,12 +109,17 @@
       )
 
       map.addControl new RadiousControl
-      map.addControl new CategoryControl
+      if features.length > 1
+        map.addControl new CategoryControl
       window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
       markers_layer = map._layers[markers]
 
     markers_layer.setGeoJSON(features)
-    set_safe_bounds document.querySelector('.lodgings-list-json'), markers_layer.getBounds()
+    if features.length > 1
+      set_safe_bounds document.querySelector('.lodgings-list-json'), markers_layer.getBounds()
+    else
+      set_safe_bounds document.querySelector('.lodgings-list-json'), markers_layer.getBounds()
+      map.setZoom 10
 
     if map.scrollWheelZoom
       map.scrollWheelZoom.disable()
