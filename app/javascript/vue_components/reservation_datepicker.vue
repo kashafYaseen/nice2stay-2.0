@@ -34,6 +34,7 @@
       "disabledDates",
       "customizedDates",
       "minDate",
+      "invoiceOnApply",
     ],
     data() {
       let check_in = this.checkIn
@@ -80,7 +81,7 @@
         $('.check_out').val(val);
       },
       apply() {
-        if ($('#standalone').val()) {
+        if (this.invoiceOnApply ) {
           Invoice.calculate([this.lodgingId])
         }
       },
