@@ -1,9 +1,9 @@
 <% if @reservation.validate %>
-  $('#cart-<%= @reservation.lodging_id %>, #modal_cart-<%= @reservation.lodging_id %>').removeClass('disabled');
-  $("#reservation-footer-btn-<%= @reservation.lodging_id %>, #modal_reservation-footer-btn-<%= @reservation.lodging_id %>").removeClass('d-none');
+  $('#cart-<%= @reservation.lodging_id %>, #cart-<%= @reservation.lodging_id %>_modal').removeClass('disabled');
+  $("#reservation-footer-btn-<%= @reservation.lodging_id %>, #reservation-footer-btn-<%= @reservation.lodging_id %>_modal").removeClass('d-none');
 <% else %>
-  $("#reservation-footer-btn-<%= @reservation.lodging_id %>, #modal_reservation-footer-btn-<%= @reservation.lodging_id %>").addClass('d-none');
-  $('#cart-<%= @reservation.lodging_id %>, #modal_cart-<%= @reservation.lodging_id %>').addClass('disabled');
+  $("#reservation-footer-btn-<%= @reservation.lodging_id %>, #reservation-footer-btn-<%= @reservation.lodging_id %>_modal").addClass('d-none');
+  $('#cart-<%= @reservation.lodging_id %>, #cart-<%= @reservation.lodging_id %>_modal').addClass('disabled');
 <% end %>
 
 $('.reservation-form-errors-<%= @reservation.lodging_id %>').html("<%= j render 'errors', resource: @reservation, classes: nil %>");

@@ -1,10 +1,10 @@
 <template>
-  <div class="dropdown guests-dropdown">
-    <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" :id="this.dropdownID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="dropdown guests-dropdown" :id="'vue-'+this.dropdownId">
+    <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" :id="this.dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="title">{{ guests() }}</span>
     </button>
 
-    <div class="dropdown-menu w-100" :aria-labelledby="this.dropdownID">
+    <div class="dropdown-menu w-100" :aria-labelledby="this.dropdownId" @click="handleMenuClick">
       <div class="dropdown-item mt-3 mb-3">
         <div class="row">
           <label class="col-md-6 text-lg pt-2">Adults</label>
@@ -41,7 +41,7 @@
       </div>
 
       <div class="dropdown-item mt-3 mb-3" v-show="this.showApply">
-        <input type="button" name="done" class="btn btn-sm btn-secondary float-right mr-0" value="Done" />
+        <input type="button" name="done" class="btn btn-sm btn-secondary float-right mr-0" value="Done" @click="handleButtonClick" />
       </div>
     </div>
   </div>
@@ -57,18 +57,14 @@
       'adultsTarget',
       'childrenTarget',
       'infantsTarget',
-      'dropdownID',
+      'dropdownId',
       'showApply'
     ],
     data() {
-      let adults = this.adults
-      let children = this.children
-      let infants = this.infants
-
       return {
-        totalAdults: adults ? adults : 0,
-        totalChildren: children ? children : 0,
-        totalInfants: infants ? infants : 0,
+        totalAdults: this.adults ? this.adults : 0,
+        totalChildren: this.children ? this.children : 0,
+        totalInfants: this.infants ? this.infants : 0,
       }
     },
     mounted() {
@@ -88,6 +84,12 @@
       },
       guests() {
         return `${this.totalAdults} Adults, ${this.totalChildren} Children, ${this.totalInfants} Infants`
+      },
+      handleMenuClick(e) {
+        e.stopPropagation()
+      },
+      handleButtonClick() {
+        $(`#vue-${this.dropdownId}`).dropdown("toggle")
       }
     }
   }
