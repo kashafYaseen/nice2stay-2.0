@@ -16,7 +16,7 @@
             <%= lodging.short_desc.try(:html_safe) %>
           </div>
 
-          <div class="row">
+          <div class="row mt-5">
             <div class="col-md-5 vue-app">
               <reservation-datepicker
               :check-in="'<%= params[:check_in]%>'"
@@ -35,37 +35,50 @@
               <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
                  <%= render 'reservations/errors', resource: lodging.reservations.build %>
               </div>
-              <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "#{id_sufix}new_reservation_#{lodging.id}" } do |f| %>
+              <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}#{id_sufix}" } do |f| %>
 
-                <p class="mb-1 mt-2 text-xxxs text-dark anternative-heading anternative-heading-<%= lodging.id %>" id="<%= id_sufix %>anternative-heading-<%= lodging.id %>">
+                <p class="mb-1 mt-2 text-xxxs text-dark" id="anternative-heading-<%= "#{lodging.id}#{id_sufix}" %>">
                 </p>
 
-                <div id="<%= id_sufix %>flexible-search-<%= lodging.id %>" class="text-xxxs flexible-search-data flexible-search-<%= lodging.id %>"></div>
+                <div id="flexible-search-<%= "#{lodging.id}#{id_sufix}" %>" class="text-xxxs flexible-search-data"></div>
 
-                <p class="text-xxs lbl-error-<%= lodging.id %>" id="<%= id_sufix %>lbl-error-<%= lodging.id %>"></p>
+                <p class="text-xxs lbl-error-<%= lodging.id %>" id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
+
+                <div class="vue-app">
+                  <guests-dropdown
+                    :adults="<%= no_of_adults(params[:adults] || 1) %>"
+                    :children="<%= params[:children] || 0 %>"
+                    :infants="<%= params[:infants] || 0 %>"
+                    :adults-target="'.adults_<%= lodging.id %>'"
+                    :children-target="'.children_<%= lodging.id %>'"
+                    :infants-target="'.infants_<%= lodging.id %>'"
+                    :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
+                    :show-apply="false"
+                  />
+                </div>
 
                 <div class="bg-white">
                   <p class="text-xxxs bg-secondary-2">
                     <% [:prebooking, :option].each do |status| %>
-                      <%= f.radio_button :booking_status, status, id: "#{id_sufix}booking_status_#{status}_#{lodging.id}" %>
+                      <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}#{id_sufix}" %>
                       <label><%= t("reservations.#{status}") %></label>
                     <% end %>
                   </p>
 
-                  <%= hidden_field_tag "#{id_sufix}calculate_bill-#{lodging.id}", true %>
-                  <%= f.hidden_field :check_in, value: params[:check_in], id: "#{id_sufix}check_in_#{lodging.id}", class: 'check_in' %>
-                  <%= f.hidden_field :check_out, value: params[:check_out], id: "#{id_sufix}check_out_#{lodging.id}", class: 'check_out' %>
-                  <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "#{id_sufix}adults_#{lodging.id}", class: 'adults' %>
-                  <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "#{id_sufix}children_#{lodging.id}", class: 'children' %>
-                  <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "#{id_sufix}infants_#{lodging.id}", class: 'infants' %>
-                  <%= f.hidden_field :lodging_id, value: lodging.id, id: "#{id_sufix}lodging_id_#{lodging.id}" %>
-                  <%= f.hidden_field :cleaning_cost, id: "#{id_sufix}cleaning_cost_#{lodging.id}", class: 'cleaning-cost' %>
-                  <%= f.hidden_field :discount, id: "#{id_sufix}discount_#{lodging.id}", class: 'discount' %>
+                  <%= hidden_field_tag "calculate_bill-#{lodging.id}#{id_sufix}", true %>
+                  <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}#{id_sufix}", class: 'check_in' %>
+                  <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}#{id_sufix}", class: 'check_out' %>
+                  <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "adults_#{lodging.id}#{id_sufix}", class: "adults adults_#{lodging.id}" %>
+                  <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "children_#{lodging.id}#{id_sufix}", class: "children children_#{lodging.id}" %>
+                  <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}#{id_sufix}", class: "infants infants_#{lodging.id}" %>
+                  <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}#{id_sufix}" %>
+                  <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}#{id_sufix}", class: 'cleaning-cost' %>
+                  <%= f.hidden_field :discount, id: "discount_#{lodging.id}#{id_sufix}", class: 'discount' %>
                 </div>
               <% end %>
 
-              <p class="text-sm text-dark" id="<%= id_sufix %>bill-<%= lodging.id %>"></p>
-                <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "#{id_sufix}cart-#{lodging.id}", data: { form_id: "##{id_sufix}new_reservation_#{lodging.id}" } do %>
+              <p class="text-sm text-dark" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></p>
+                <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}", data: { form_id: "#new_reservation_#{lodging.id}#{id_sufix}" } do %>
                   <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
                 <% end %>
               <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
