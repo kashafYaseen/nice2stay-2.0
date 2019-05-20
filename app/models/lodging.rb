@@ -113,6 +113,7 @@ class Lodging < ApplicationRecord
       experiences_ids: experiences.ids,
       rules: rules.collect(&:search_data),
       discounts: discounts.active.present?,
+      total_reviews: all_reviews.count,
     )
   end
 
