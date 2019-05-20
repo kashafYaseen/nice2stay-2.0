@@ -137,7 +137,7 @@
     <hr class="margin-bottom-1x">
 
     <div class="row">
-      <%= render @lodgings %>
+      <%= render partial: 'lodging', collection: @lodgings, locals: { hits: @lodgings.hits } %>
     </div>
   </div>
 </div>
