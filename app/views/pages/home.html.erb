@@ -15,39 +15,35 @@
               <div class="row homepage-actions-row">
                 <div class="vue-app">
                   <datepicker
-                  :trigger-id="'trigger-range'"
-                  :check-in="'<%= params[:check_in]%>'"
-                  :check-out="'<%= params[:check_out]%>'"
-                  :months="2"
-                  :min-date="'<%= Date.yesterday %>'"
-                  :action-buttons="true"
-                  :full-screen="false"
-                  :trigger-button="'btn btn-outline-primary'"
-                  :inline="false" />
+                    :trigger-id="'trigger-range'"
+                    :check-in="'<%= params[:check_in]%>'"
+                    :check-out="'<%= params[:check_out]%>'"
+                    :months="2"
+                    :min-date="'<%= Date.yesterday %>'"
+                    :action-buttons="true"
+                    :full-screen="false"
+                    :trigger-button="'btn btn-outline-primary'"
+                    :inline="false"
+                  />
                 </div>
 
-                <div class="dropdown guests-dropdown">
-                  <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="title"><%= t 'search.guests' %></span>
-                  </button>
-
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <div class="dropdown-item">
-                      <label><%= t 'search.adults' %></label>
-                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label><%= t 'search.children' %></label>
-                      <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label><%= t 'search.babies' %></label>
-                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
-                    </div>
-                  </div>
+                <div class="vue-app">
+                  <guests-dropdown
+                    :adults="<%= params[:adults] || 0 %>"
+                    :children="<%= params[:children] || 0 %>"
+                    :infants="<%= params[:infants] || 0 %>"
+                    :adults-target="'.adults'"
+                    :children-target="'.children'"
+                    :infants-target="'.infants'"
+                    :dropdown-id="'<%= "guests-dropdown-homepage" %>'"
+                    :show-apply="false"
+                    :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
+                  />
                 </div>
+
+                <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
+                <%= hidden_field_tag :children, params[:children], class: 'children' %>
+                <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
                 <%= hidden_field_tag :standalone, true %>
                 <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
                 <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>

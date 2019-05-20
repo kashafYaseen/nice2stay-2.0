@@ -91,25 +91,21 @@
   <div class="form-group row">
     <%= f.label :adults, 'Guests', class: 'col-2 col-form-label text-muted' %>
 
-    <div class="col-10">
-      <div class="dropdown guests-dropdown">
-        <button class="btn btn-outline-primary dropdown-toggle col-md-12" type="button" id="leads_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="title">Guest</span>
-        </button>
-
-        <div class="dropdown-menu w-100" aria-labelledby="leads_dropdown">
-          <div class="dropdown-item">
-            <label>Adults</label>
-            <%= f.number_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'input-spinner parent-adults adults' %>
-          </div>
-
-          <div class="dropdown-item">
-            <label>Children</label>
-            <%= f.number_field :childrens, value: f.object.childrens, min: 0, class: 'input-spinner parent-children children' %>
-          </div>
-        </div>
-      </div>
+    <div class="vue-app col-10">
+      <guests-dropdown
+        :adults="<%= no_of_adults(f.object.adults) %>"
+        :children="<%= f.object.childrens %>"
+        :infants="<%= 0 %>"
+        :adults-target="'.lead-adults'"
+        :children-target="'.lead-children'"
+        :infants-target="'.lead-infants'"
+        :dropdown-id="'<%= "guests-dropdown-leads" %>'"
+        :show-apply="false"
+        :button-classes="'btn btn-outline-primary dropdown-toggle col-md-12'"
+      />
     </div>
+    <%= f.hidden_field :adults, value: no_of_adults(f.object.adults), min: 1, class: 'lead-adults' %>
+    <%= f.hidden_field :childrens, value: f.object.childrens, min: 0, class: 'lead-children' %>
   </div>
 
   <div class="form-group row">

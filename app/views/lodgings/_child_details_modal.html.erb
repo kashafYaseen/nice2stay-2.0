@@ -53,7 +53,9 @@
                     :children-target="'.children_<%= lodging.id %>'"
                     :infants-target="'.infants_<%= lodging.id %>'"
                     :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
-                    :show-apply="false"
+                    :show-apply="true"
+                    :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+                    :lodging-id="<%= lodging.id %>"
                   />
                 </div>
 
