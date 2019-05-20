@@ -7,7 +7,7 @@
         </div>
 
         <div class="col-md-6 col-lg-5 col-xs-12">
-          <% if lodging.all_discounts.present? %>
+          <% if hit['_source']['discounts'] %>
             <span class="product-badge text-danger">Special offer</span>
           <% end %>
 

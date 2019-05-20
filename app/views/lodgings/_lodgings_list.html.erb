@@ -1,2 +1,5 @@
 <%= tag.div class: "lodgings-list-json", data: { features: lodgings.collect(&:feature), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
-<%= render lodgings %>
+
+<% lodgings.with_hit.each do |lodging, hit| %>
+  <%= render 'lodging', lodging: lodging, hit: hit %>
+<% end %>
