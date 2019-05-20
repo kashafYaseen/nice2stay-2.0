@@ -93,8 +93,8 @@
 
     <div class="vue-app col-10">
       <guests-dropdown
-        :adults="<%= no_of_adults(f.object.adults) %>"
-        :children="<%= f.object.childrens %>"
+        :adults="<%= no_of_adults(f.object.adults).to_i %>"
+        :children="<%= f.object.childrens.to_i %>"
         :infants="<%= 0 %>"
         :adults-target="'.lead-adults'"
         :children-target="'.lead-children'"
