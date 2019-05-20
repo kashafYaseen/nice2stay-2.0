@@ -29,9 +29,9 @@
 
         <div>
           <guests-dropdown
-            :adults="<%= no_of_adults(params[:adults] || 1) %>"
-            :children="<%= params[:children] || 0 %>"
-            :infants="<%= params[:infants] || 0 %>"
+            :adults="<%= no_of_adults(params[:adults].to_i) %>"
+            :children="<%= params[:children].to_i %>"
+            :infants="<%= params[:infants].to_i %>"
             :adults-target="'.adults'"
             :children-target="'.children'"
             :infants-target="'.infants'"
