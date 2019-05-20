@@ -35,45 +35,37 @@
           <section>
             <div class="vue-app">
               <datepicker
-              :trigger-id="'trigger-range'"
-              :check-in="'<%= params[:check_in]%>'"
-              :check-out="'<%= params[:check_out]%>'"
-              :months="2"
-              :min-date="'<%= Date.yesterday %>'"
-              :action-buttons="true"
-              :full-screen="false"
-              :trigger-button="'btn btn-outline-primary btn-sm'"
-              :inline="false" />
+                :trigger-id="'trigger-range'"
+                :check-in="'<%= params[:check_in]%>'"
+                :check-out="'<%= params[:check_out]%>'"
+                :months="2"
+                :min-date="'<%= Date.yesterday %>'"
+                :action-buttons="true"
+                :full-screen="false"
+                :trigger-button="'btn btn-outline-primary btn-sm'"
+                :inline="false"
+              />
             </div>
           </section>
 
           <section>
-            <div class="dropdown guests-dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="title"><%= t('search.guests') %></span>
-              </button>
-
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                <div class="dropdown-item">
-                  <label><%= t "search.adults" %></label>
-                  <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults' %>
-                </div>
-
-                <div class="dropdown-item">
-                  <label><%= t "search.children" %></label>
-                  <%= number_field_tag :children, params[:children], min: 0, class: 'children' %>
-                </div>
-
-                <div class="dropdown-item">
-                  <label><%= t "search.babies" %></label>
-                  <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants' %>
-                </div>
-
-                <div class="dropdown-item">
-                  <%= submit_tag 'Done', class: 'btn btn-sm btn-secondary submit-filters float-right' %>
-                </div>
-              </div>
+            <div class="vue-app">
+              <guests-dropdown
+                :adults="<%= params[:adults].to_i %>"
+                :children="<%= params[:children].to_i %>"
+                :infants="<%= params[:infants].to_i %>"
+                :adults-target="'#adults'"
+                :children-target="'#children'"
+                :infants-target="'#infants'"
+                :dropdown-id="'<%= "guests-dropdown-filters" %>'"
+                :show-apply="true"
+                :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
+                :submit-target="'.lodgings-filters'"
+              />
             </div>
+            <%= hidden_field_tag :adults, params[:adults] %>
+            <%= hidden_field_tag :children, params[:children] %>
+            <%= hidden_field_tag :infants, params[:infants] %>
           </section>
 
           <section class="lodging-types-list">

@@ -1,6 +1,6 @@
 <template>
-  <div class="dropdown guests-dropdown" :id="'vue-'+this.dropdownId">
-    <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" :id="this.dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="dropdown guests-dropdown vue-guests-dropdown" :id="'vue-'+this.dropdownId">
+    <button :class="this.buttonClasses" type="button" :id="this.dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="title">{{ guests() }}</span>
     </button>
 
@@ -9,10 +9,12 @@
         <div class="row">
           <label class="col-md-6 text-lg pt-2">Adults</label>
           <number-input-spinner
-            :min="1"
+            :min="0"
+            :max="99"
             :integerOnly="true"
             :inputClass="'vnis__input'"
             :buttonClass="'vnis__button col-md-6'"
+            :value="this.totalAdults"
             @input="handleAdults"
           />
         </div>
@@ -23,8 +25,12 @@
           <label class="col-md-6 text-lg pt-2">Children</label>
           <number-input-spinner
             :min="0"
+            :max="99"
             :integerOnly="true"
             @input="handleChildren"
+            :inputClass="'vnis__input'"
+            :value="this.totalChildren"
+            :buttonClass="'vnis__button col-md-6'"
           />
         </div>
       </div>
@@ -34,8 +40,12 @@
           <label class="col-md-6 text-lg pt-2">Infants</label>
           <number-input-spinner
             :min="0"
+            :max="99"
             :integerOnly="true"
             @input="handleInfants"
+            :inputClass="'vnis__input'"
+            :value="this.totalInfants"
+            :buttonClass="'vnis__button col-md-6'"
           />
         </div>
       </div>
@@ -58,7 +68,10 @@
       'childrenTarget',
       'infantsTarget',
       'dropdownId',
-      'showApply'
+      'showApply',
+      'buttonClasses',
+      'submitTarget',
+      'lodgingId',
     ],
     data() {
       return {
@@ -83,13 +96,39 @@
         this.totalInfants = value
       },
       guests() {
-        return `${this.totalAdults} Adults, ${this.totalChildren} Children, ${this.totalInfants} Infants`
+        var guestsTitle = "";
+
+        if (this.totalAdults) {
+          guestsTitle += this.totalAdults + " " + (this.totalAdults > 1 ? 'adults' : 'adult');
+        }
+
+        if (this.totalChildren) {
+          guestsTitle += (this.totalAdults ? ', ' : ' ') + " " + this.totalChildren + " " + (this.totalChildren > 1 ? 'children' : 'child');
+        }
+
+        if (this.totalInfants) {
+          guestsTitle += (this.totalChildren || this.totalAdults ? ', ' : ' ') + " " + this.totalInfants + " " + (this.totalInfants > 1 ? 'infants' : 'infant');
+        }
+
+        if(guestsTitle == "")
+          return "Guests";
+        else
+          return guestsTitle;
       },
       handleMenuClick(e) {
         e.stopPropagation()
+        e.preventDefault()
       },
       handleButtonClick() {
-        $(`#vue-${this.dropdownId}`).dropdown("toggle")
+        $(`#vue-${this.dropdownId}`).dropdown("toggle");
+
+        if(this.submitTarget && $(this.submitTarget).length > 0) {
+          $('#loader').show();
+          Rails.fire($(this.submitTarget).get(0), 'submit');
+        }
+        else if(this.lodgingId) {
+          Invoice.calculate([this.lodgingId])
+        }
       }
     }
   }
@@ -112,5 +151,9 @@
   .vnis .vnis__input {
     width: 50px;
     border: none;
+  }
+
+  .vue-guests-dropdown .dropdown-menu {
+    min-width: 300px;
   }
 </style>
