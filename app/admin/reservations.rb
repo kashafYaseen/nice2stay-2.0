@@ -1,13 +1,16 @@
 ActiveAdmin.register Reservation do
   remove_filter :review, :rules, :prices, :total_price, :discount, :rent, :crm_booking, :cleaning_cost
 
+  scope :requests, default: true
+  scope :option
+
   controller do
     def permitted_params
       params.permit!
     end
 
     def scoped_collection
-      Reservation.requests.includes({ lodging: :translations, booking: :user }).order(created_at: :desc)
+      Reservation.includes({ lodging: :translations, booking: :user }).order(created_at: :desc)
     end
   end
 

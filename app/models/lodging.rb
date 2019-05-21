@@ -78,7 +78,7 @@ class Lodging < ApplicationRecord
   end
 
   def option_dates
-    reservations.option.collect { |resv| (resv.check_in..resv.check_out).map(&:to_s) }.flatten
+    reservations.confirmed_options.collect { |resv| (resv.check_in..resv.check_out).map(&:to_s) }.flatten
   end
 
   def customized_dates
