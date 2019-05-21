@@ -58,6 +58,9 @@
                     :show-apply="true"
                     :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
                     :lodging-id="<%= lodging.id %>"
+                    :max-adults="<%= lodging.adults.to_i %>"
+                    :max-children="<%= lodging.children.to_i %>"
+                    :max-infants="<%= lodging.infants.to_i %>"
                   />
                 </div>
 

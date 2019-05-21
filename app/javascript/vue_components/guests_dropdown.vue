@@ -10,7 +10,7 @@
           <label class="col-md-6 text-lg pt-2">Adults</label>
           <number-input-spinner
             :min="0"
-            :max="99"
+            :max="this.maxAdults"
             :integerOnly="true"
             :inputClass="'vnis__input'"
             :buttonClass="'vnis__button col-md-6'"
@@ -25,7 +25,7 @@
           <label class="col-md-6 text-lg pt-2">Children</label>
           <number-input-spinner
             :min="0"
-            :max="99"
+            :max="this.maxCalculatedChildren"
             :integerOnly="true"
             @input="handleChildren"
             :inputClass="'vnis__input'"
@@ -40,7 +40,7 @@
           <label class="col-md-6 text-lg pt-2">Infants</label>
           <number-input-spinner
             :min="0"
-            :max="99"
+            :max="this.maxInfants"
             :integerOnly="true"
             @input="handleInfants"
             :inputClass="'vnis__input'"
@@ -60,24 +60,64 @@
 <script>
   export default {
     name: "guests-dropdown",
-    props: [
-      'adults',
-      'children',
-      'infants',
-      'adultsTarget',
-      'childrenTarget',
-      'infantsTarget',
-      'dropdownId',
-      'showApply',
-      'buttonClasses',
-      'submitTarget',
-      'lodgingId',
-    ],
+    props: {
+      adults: {
+        type: Number,
+        default: 0,
+      },
+      children: {
+        type: Number,
+        default: 0,
+      },
+      infants: {
+        type: Number,
+        default: 0,
+      },
+      adultsTarget:{
+        type: String
+      },
+      childrenTarget:{
+        type: String
+      },
+      infantsTarget:{
+        type: String
+      },
+      dropdownId: {
+        type: String,
+        required: true
+      },
+      showApply: {
+        type: Boolean,
+        default: false
+      },
+      buttonClasses: {
+        type: String
+      },
+      submitTarget: {
+        type: String
+      },
+      lodgingId: {
+        type: Number
+      },
+      maxAdults: {
+        type: Number,
+        default: 30
+      },
+      maxChildren: {
+        type: Number,
+        default: 30
+      },
+      maxInfants: {
+        type: Number,
+        default: 30
+      },
+    },
     data() {
       return {
         totalAdults: this.adults ? this.adults : 0,
         totalChildren: this.children ? this.children : 0,
         totalInfants: this.infants ? this.infants : 0,
+        maxCalculatedChildren: (this.maxAdults - this.totalAdults) + this.maxChildren
       }
     },
     mounted() {
@@ -86,6 +126,9 @@
       handleAdults(value) {
         $(this.adultsTarget).val(value)
         this.totalAdults = value
+        this.maxCalculatedChildren = (this.maxAdults - this.totalAdults) + this.maxChildren
+        if(this.totalChildren > this.maxCalculatedChildren)
+          this.handleChildren(this.maxCalculatedChildren)
       },
       handleChildren(value) {
         $(this.childrenTarget).val(value)
