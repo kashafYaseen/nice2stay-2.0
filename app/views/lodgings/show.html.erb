@@ -81,6 +81,12 @@
                     </div>
                   </div>
 
+                  <div class="bg-white mt-3">
+                    <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless @lodging.confirmed_price %>
+
+                    <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless @lodging.checked? %>
+                  </div>
+
                   <p class="margin-top-1x">
                     <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
                   </p>

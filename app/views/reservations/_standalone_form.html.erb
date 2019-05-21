@@ -44,8 +44,6 @@
         </div>
       </div>
 
-      <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
-
       <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults_#{lodging.id}#{id_sufix}" %>
       <%= f.hidden_field :children, value: (params[:children] || f.object.children), class: 'children', id: "children_#{lodging.id}#{id_sufix}" %>
       <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), class: 'infants', id: "infants_#{lodging.id}#{id_sufix}" %>
@@ -66,9 +64,7 @@
         <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}" %>
           <%= render 'wishlists/form',  lodging: lodging, id_sufix: id_sufix %>
           <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
-        <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
       </div>
     <% end %>
   </div>
-  <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
 </div>
