@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="datepicker-trigger">
-      <button class="btn btn-outline-primary w-100 d-none" id="datepicker-trigger">{{ formatDates(check_in, check_out) }}</button>
+      <button class="btn btn-outline-primary w-100 d-none" :id="this.triggerId">{{ formatDates(check_in, check_out) }}</button>
       <airbnb-style-datepicker
-        :trigger-element-id="'datepicker-trigger'"
+        :trigger-element-id="this.triggerId"
         :date-one="check_in"
         :date-two="check_out"
         @date-one-selected="date_one_selected"
@@ -35,6 +35,7 @@
       "customizedDates",
       "minDate",
       "invoiceOnApply",
+      "triggerId",
     ],
     data() {
       let check_in = this.checkIn
@@ -55,14 +56,14 @@
 
         if (!dateTwo && !dateOne){
           formattedDates =  `${this.checkInTitle} - ${this.checkOutTitle}`
-          $('#datepicker-trigger').addClass('btn-outline-primary');
-          $('#datepicker-trigger').removeClass('btn-primary');
+          $(`#${this.triggerId}`).addClass('btn-outline-primary');
+          $(`#${this.triggerId}`).removeClass('btn-primary');
         }
 
         if (dateOne) {
           formattedDates =  `${format(dateOne, this.dateFormat)} - ${this.checkOutTitle}`
-          $('#datepicker-trigger').removeClass('btn-outline-primary');
-          $('#datepicker-trigger').addClass('btn-primary');
+          $(`#${this.triggerId}`).removeClass('btn-outline-primary');
+          $(`#${this.triggerId}`).addClass('btn-primary');
         }
 
         if (dateTwo) {
