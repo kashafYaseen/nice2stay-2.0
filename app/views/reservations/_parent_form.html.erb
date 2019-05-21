@@ -13,8 +13,8 @@
       <div class="vue-app">
         <div>
           <reservation-datepicker
-            :check-in="'<%= params[:check_in]%>'"
-            :check-out="'<%= params[:check_out]%>'"
+            :check-in="'<%= params[:check_in] %>'"
+            :check-out="'<%= params[:check_out] %>'"
             :check-in-title="'<%= t('search.check_in') %>'"
             :check-out-title="'<%= t('search.check_out') %>'"
             :months="1"
@@ -28,15 +28,18 @@
 
         <div>
           <guests-dropdown
-            :adults="<%= no_of_adults(params[:adults] || 1) %>"
+            :adults="<%= no_of_adults(params[:adults].to_i) %>"
             :children="<%= params[:children].to_i %>"
             :infants="<%= params[:infants].to_i %>"
             :adults-target="'.adults'"
             :children-target="'.children'"
             :infants-target="'.infants'"
-            :dropdown-id="'<%= "#{id_sufix}guests-dropdown-#{lodging.id}" %>'"
+            :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
             :show-apply="false"
             :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+            :max-adults="<%= lodging.adults.to_i %>"
+            :max-children="<%= lodging.children.to_i %>"
+            :max-infants="<%= lodging.infants.to_i %>"
           />
         </div>
       </div>
@@ -51,11 +54,6 @@
       <% end %>
 
       <%= link_to 'Check Availability', '#', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
-      <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
-
-      <div class="bg-white">
-        <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
-      </div>
     </div>
   </div>
 </div>
