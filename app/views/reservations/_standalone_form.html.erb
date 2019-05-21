@@ -23,7 +23,8 @@
             :lodging-id="<%= lodging.id %>"
             :disabled-dates="<%= lodging.not_available_on %>"
             :customized-dates="<%= lodging.customized_dates %>"
-            :invoice-on-apply= "true"
+            :invoice-on-apply="true"
+            :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
           />
         </div>
 
@@ -63,7 +64,7 @@
         <p id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
         <div class="text-dark text-left line-height-2" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></div>
         <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}" %>
-          <%= render 'wishlists/form',  lodging: lodging %>
+          <%= render 'wishlists/form',  lodging: lodging, id_sufix: id_sufix %>
           <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>
         <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
       </div>

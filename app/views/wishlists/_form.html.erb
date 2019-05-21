@@ -1,9 +1,9 @@
-<%= form_for lodging.wishlists.build, remote: true, html: { id: "new_wishlist_#{lodging.id}" } do |f| %>
-  <%= f.hidden_field :check_in, id: "wishlist_check_in_#{lodging.id}", class: 'check_in' %>
-  <%= f.hidden_field :check_out, id: "wishlist_check_out_#{lodging.id}", class: 'check_out' %>
-  <%= f.hidden_field :adults, id: "wishlist_adults_#{lodging.id}", class: 'adults' %>
-  <%= f.hidden_field :children, id: "wishlist_children_#{lodging.id}", class: 'children' %>
-  <%= f.hidden_field :lodging_id, value: lodging.id, id: "wishlist_lodging_id_#{lodging.id}" %>
+<%= form_for lodging.wishlists.build, remote: true, html: { id: "new_wishlist_#{lodging.id}#{id_sufix}" } do |f| %>
+  <%= f.hidden_field :check_in, id: "wishlist_check_in_#{lodging.id}#{id_sufix}", class: 'check_in' %>
+  <%= f.hidden_field :check_out, id: "wishlist_check_out_#{lodging.id}#{id_sufix}", class: 'check_out' %>
+  <%= f.hidden_field :adults, id: "wishlist_adults_#{lodging.id}#{id_sufix}", class: 'adults' %>
+  <%= f.hidden_field :children, id: "wishlist_children_#{lodging.id}#{id_sufix}", class: 'children' %>
+  <%= f.hidden_field :lodging_id, value: lodging.id, id: "wishlist_lodging_id_#{lodging.id}#{id_sufix}" %>
 
   <%= f.button :submit, class: "btn btn-outline-secondary btn-sm text-danger ml-0 form-control" do %>
     <i class="material-icons favorite_border"></i>&nbsp;Favorite
