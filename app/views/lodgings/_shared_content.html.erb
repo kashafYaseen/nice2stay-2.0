@@ -91,7 +91,7 @@
       <hr class="margin-bottom-1x">
 
       <div id="lodging-full-description">
-        <%= truncated_description(lodging.description, 1000).try(:html_safe) %>
+        <%= truncated_description(lodging.description, 1000) %>
       </div>
 
       <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description %>" data-truncated="<%= truncated_description(lodging.description, 1000) %>">Read more</button>
