@@ -19,16 +19,18 @@
           <div class="row mt-5">
             <div class="col-md-5 vue-app">
               <reservation-datepicker
-              :check-in="'<%= params[:check_in]%>'"
-              :check-out="'<%= params[:check_out]%>'"
-              :check-in-title="'<%= t('search.check_in') %>'"
-              :check-out-title="'<%= t('search.check_out') %>'"
-              :months="1"
-              :min-date="'<%= Date.yesterday %>'"
-              :lodging-id="<%= lodging.id %>"
-              :disabled-dates="<%= lodging.not_available_on %>"
-              :customized-dates="<%= lodging.customized_dates %>"
-              :invoice-on-apply="true" />
+                :check-in="'<%= params[:check_in] %>'"
+                :check-out="'<%= params[:check_out] %>'"
+                :check-in-title="'<%= t('search.check_in') %>'"
+                :check-out-title="'<%= t('search.check_out') %>'"
+                :months="1"
+                :min-date="'<%= Date.yesterday %>'"
+                :lodging-id="<%= lodging.id %>"
+                :disabled-dates="<%= lodging.not_available_on %>"
+                :customized-dates="<%= lodging.customized_dates %>"
+                :invoice-on-apply="true"
+                :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
+              />
             </div>
 
             <div class="col-md-7 bg-white col-border">

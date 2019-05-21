@@ -13,8 +13,8 @@
       <div class="vue-app">
         <div>
           <reservation-datepicker
-            :check-in="'<%= params[:check_in]%>'"
-            :check-out="'<%= params[:check_out]%>'"
+            :check-in="'<%= params[:check_in] %>'"
+            :check-out="'<%= params[:check_out] %>'"
             :check-in-title="'<%= t('search.check_in') %>'"
             :check-out-title="'<%= t('search.check_out') %>'"
             :months="1"
@@ -28,13 +28,13 @@
 
         <div>
           <guests-dropdown
-            :adults="<%= no_of_adults(params[:adults] || 1) %>"
+            :adults="<%= no_of_adults(params[:adults].to_i) %>"
             :children="<%= params[:children].to_i %>"
             :infants="<%= params[:infants].to_i %>"
             :adults-target="'.adults'"
             :children-target="'.children'"
             :infants-target="'.infants'"
-            :dropdown-id="'<%= "#{id_sufix}guests-dropdown-#{lodging.id}" %>'"
+            :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
             :show-apply="false"
             :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
           />
