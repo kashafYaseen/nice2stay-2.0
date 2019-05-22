@@ -14,7 +14,7 @@
         :disabled-dates="this.disabledDates"
         :customized-dates= "this.customizedDates"
         :min-date="this.minDate"
-        :show-action-buttons="true"
+        :show-action-buttons="this.showActionButtons"
       ></airbnb-style-datepicker>
     </div>
   </div>
@@ -36,6 +36,7 @@
       "minDate",
       "invoiceOnApply",
       "triggerId",
+      "showActionButtons",
     ],
     data() {
       let check_in = this.checkIn
@@ -80,6 +81,7 @@
       date_two_selected(val) {
         this.check_out = val
         $('.check_out').val(val);
+        this.apply()
       },
       apply() {
         if (this.invoiceOnApply ) {
