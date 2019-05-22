@@ -7,7 +7,7 @@
         </div>
 
         <div class="col-md-6 col-lg-5 col-xs-12">
-          <% if lodging.all_discounts.present? %>
+          <% if hits[lodging_counter]['_source']['discounts'] %>
             <span class="product-badge text-danger">Special offer</span>
           <% end %>
 
@@ -50,7 +50,7 @@
               <div class="review-box">
                 <% if lodging.average_rating > 0 %>
                   <%= render_stars_tag lodging.average_rating %>
-                  <p class="text-xs"><%= pluralize( lodging.all_reviews.count, 'reviews' ) %></p>
+                  <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review' ) %></p>
                 <% end %>
               </div>
             </div>
