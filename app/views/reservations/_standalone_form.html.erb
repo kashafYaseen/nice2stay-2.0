@@ -56,6 +56,7 @@
       <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}#{id_sufix}", class: 'check_out' %>
       <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}#{id_sufix}", class: 'cleaning-cost' %>
       <%= f.hidden_field :discount, id: "discount_#{lodging.id}#{id_sufix}", class: 'discount' %>
+      <%= hidden_field_tag :id_sufix, id_sufix, id: "id_sufix_#{lodging.id}#{id_sufix}" %>
 
       <div class="text-center pt-2">
         <% [:prebooking, :option].each do |status| %>
