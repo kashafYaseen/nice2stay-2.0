@@ -43,7 +43,6 @@ class SendReviewDetails
           published: review.published,
           skip_data_posting: true,
           photos: review.photo_urls,
-          published: review.published,
         },
         booking_id: review.booking_id,
         booking_accommodtion_id: review.reservation_id,
