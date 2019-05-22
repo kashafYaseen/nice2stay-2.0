@@ -153,8 +153,9 @@
       <h3 class="card-title"><%= t 'nav.also_like' %></h3>
       <hr class="margin-bottom-1x">
 
-    <div class="row">
-      <%= render partial: 'lodging', collection: @lodgings, locals: { hits: @lodgings.hits } %>
+      <div class="row">
+        <%= render partial: 'lodging', collection: @lodgings, locals: { hits: @lodgings.hits } %>
+      </div>
     </div>
   </div>
 
