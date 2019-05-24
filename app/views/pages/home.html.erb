@@ -1,68 +1,90 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
-      <h1 class="mb-3"><%= t 'usp.homepage' %></h1>
-      <hr class="mt-1"></hr>
+<div class="jumbotron">
+  <div class="dark-overlay-image">
+    <div class="container-fluid">
+      <div class="col-md-12 pt-5">
+        <h1 class="text-white"> <%= t 'usp.discover' %> </h1>
 
-      <div class="col-md-12 padding-top-1x padding-bottom-3x homepage">
+        <h5 class="text-white margin-top-0x"><%= t 'usp.homepage' %></h5>
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
-            <div class="col-md-12 col-sm-12 pt-2">
+            <div class="col-md-6 col-sm-12 pt-3">
               <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
             </div>
 
-            <div class="col-md-12 col-sm-12">
-              <div class="row homepage-actions-row pt-0">
-                <div id='datepicker'></div>
-
-                <div class="dropdown guests-dropdown">
-                  <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="title"><%= t 'search.guests' %></span>
-                  </button>
-
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <div class="dropdown-item">
-                      <label><%= t 'search.adults' %></label>
-                      <%= number_field_tag :adults, params[:adults], min: 0, class: 'input-spinner adults' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label><%= t 'search.children' %></label>
-                      <%= number_field_tag :children, params[:children], min: 0, class: 'input-spinner children' %>
-                    </div>
-
-                    <div class="dropdown-item">
-                      <label><%= t 'search.babies' %></label>
-                      <%= number_field_tag :infants, params[:infants], min: 0, class: 'input-spinner infants' %>
-                    </div>
-                  </div>
+            <div class="col-md-6 col-sm-12 pt-0">
+              <div class="row homepage-actions-row">
+                <div class="vue-app">
+                  <datepicker
+                    :trigger-id="'trigger-range'"
+                    :check-in="'<%= params[:check_in]%>'"
+                    :check-out="'<%= params[:check_out]%>'"
+                    :months="2"
+                    :min-date="'<%= Date.yesterday %>'"
+                    :action-buttons="true"
+                    :full-screen="false"
+                    :trigger-button="'btn btn-outline-primary'"
+                    :inline="false"
+                  />
                 </div>
+
+                <div class="vue-app">
+                  <guests-dropdown
+                    :adults="<%= params[:adults].to_i %>"
+                    :children="<%= params[:children].to_i %>"
+                    :infants="<%= params[:infants].to_i %>"
+                    :adults-target="'.adults'"
+                    :children-target="'.children'"
+                    :infants-target="'.infants'"
+                    :dropdown-id="'<%= "guests-dropdown-homepage" %>'"
+                    :show-apply="false"
+                    :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
+                  />
+                </div>
+
+                <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
+                <%= hidden_field_tag :children, params[:children], class: 'children' %>
+                <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
                 <%= hidden_field_tag :standalone, true %>
                 <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
                 <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
-
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>
               </div>
             </div>
           </div>
         <% end %>
-      </div>
 
-      <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
+        <h6 class="text-white margin-top-0x">Trending searches: </h6>
+        <% @custom_texts.inspiration.each do |custom_text| %>
+          <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'trending' %>
+        <% end %>
+      </div>
     </div>
-      
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6 margin-top-1x ">
-      <section class="padding-top-10x padding-bottom-10x homepage-cover"></section>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 margin-top-1x">
+     <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
+    </div>
+
+    <div class="col-sm-6 margin-top-1x">
+      <section class="widget-tags">
+        <h5 class="mb-10">Nice2stay</h5>
+        <% @pages.each do |page| %>
+          <%= link_to page.title, page_path(page), class: "tag" %>
+        <% end %>
+      </section>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-6 margin-top-1x">
+    <div class="col-sm-12 margin-top-1x">
       <div class="card margin-bottom-1x">
         <div class="card-body">
           <div class="row pt-2">
-            <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30" >
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30" >
               <span class="d-block display-4 text-gray-light mb-4">
                 <%= image_tag("usp_visit.png", :alt => "visit") %>
               </span>
@@ -71,33 +93,44 @@
               <p class="text-muted text-xxxs mb-0"><%= t 'usp.inspect_details' %></p>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
               <span class="d-block display-4 text-gray-light mb-4">
                 <%= image_tag("usp_support.png", :alt => "visit") %>
               </span>
 
               <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
-              <p class="text-muted text-xxxs  mb-0"><%= t 'usp.price_details' %></p>
+              <p class="text-muted text-xxxs mb-0"><%= t 'usp.price_details' %></p>
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-6 text-center mb-30">
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
               <span class="d-block display-4 text-gray-light mb-4">
-                <%= image_tag("usp_support.png", :alt => "visit") %>
+                <%= image_tag("usp_helpdesk.png", :alt => "visit") %>
               </span>
 
-              <h4 class="h5 mb-2"><%= t 'usp.advice' %></h4>
+              <h5 class="h5 mb-2"><%= t 'usp.advice' %></h5>
               <p class="text-muted text-xxxs mb-0"><%= t 'usp.advice_details' %></p>
             </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
+              <span class="d-block display-4 text-gray-light mb-4">
+                <%= image_tag("usp_secure.png", :alt => "visit") %>
+              </span>
+
+              <h5 class="h5 mb-2"><%= t 'usp.payment' %></h5>
+              <p class="text-muted text-xxxs mb-0"><%= t 'usp.payment_details' %></p>
+            </div>
+
+            
           </div>
         </div>
       </div>
 
       <% if @custom_texts.popular.present? %>
-        <section class="padding-top-1x pb-5">
+        <section class="padding-top-1x pb-2">
           <h3 class="mb-30"><%= t 'collection.populair' %></h3>
           <hr class="mt-3"></hr>
 
-          <div class="isotope-grid cols-2">
+          <div class="isotope-grid cols-4">
             <div class="gutter-sizer"></div>
             <div class="grid-sizer"></div>
 
@@ -114,14 +147,8 @@
         </section>
       <% end %>
     </div>
-    <div class="col-sm-12 margin-top-1x col-xs-12 col-md-6">
-      <section class="widget-tags">
-        <h5 class="mb-10">Nice2stay</h5>
-        <% @pages.each do |page| %>
-          <%= link_to page.title, page_path(page), class: "tag" %>
-        <% end %>
-      </section>
 
+    <div class="col-sm-6 margin-top-1x">
       <section class="widget-tags">
         <h5 class="mt-3 mb-10"><%= t 'nav.landen' %></h5>
 
@@ -129,7 +156,9 @@
           <%= link_to country.name, country_path(country, locale: locale), class: "tag" %>
         <% end %>
       </section>
+    </div>
 
+    <div class="col-sm-12 col-xs-12 col-md-12">
       <section class="widget-tags">
         <h5 class="mt-3 mb-10"><%= t 'nav.regio' %></h5>
 
@@ -188,7 +217,5 @@
 <% content_for :canonical do %><%= root_url %><% end %>
 
 <%= content_for :js_init do %>
-  initDatePicker();
   GuestDropdown.init();
-  OwlCarousel.init();
 <% end %>

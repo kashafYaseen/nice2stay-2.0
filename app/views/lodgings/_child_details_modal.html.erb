@@ -15,6 +15,84 @@
           <div id="lodging-description">
             <%= lodging.short_desc.try(:html_safe) %>
           </div>
+
+          <div class="row mt-5">
+            <div class="col-md-5 vue-app">
+              <reservation-datepicker
+                :check-in="'<%= params[:check_in] %>'"
+                :check-out="'<%= params[:check_out] %>'"
+                :check-in-title="'<%= t('search.check_in') %>'"
+                :check-out-title="'<%= t('search.check_out') %>'"
+                :months="1"
+                :min-date="'<%= Date.today %>'"
+                :lodging-id="<%= lodging.id %>"
+                :disabled-dates="<%= lodging.not_available_on %>"
+                :customized-dates="<%= lodging.customized_dates %>"
+                :invoice-on-apply="true"
+                :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
+                :show-action-buttons="false"
+              />
+            </div>
+
+            <div class="col-md-7 bg-white col-border">
+              <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
+                 <%= render 'reservations/errors', resource: lodging.reservations.build %>
+              </div>
+              <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}#{id_sufix}" } do |f| %>
+
+                <p class="mb-1 mt-2 text-xxxs text-dark" id="anternative-heading-<%= "#{lodging.id}#{id_sufix}" %>">
+                </p>
+
+                <div id="flexible-search-<%= "#{lodging.id}#{id_sufix}" %>" class="text-xxxs flexible-search-data"></div>
+
+                <p class="text-xxs lbl-error-<%= lodging.id %>" id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
+
+                <div class="vue-app">
+                  <guests-dropdown
+                    :adults="<%= no_of_adults(params[:adults].to_i) %>"
+                    :children="<%= params[:children].to_i %>"
+                    :infants="<%= params[:infants].to_i %>"
+                    :adults-target="'.adults_<%= lodging.id %>'"
+                    :children-target="'.children_<%= lodging.id %>'"
+                    :infants-target="'.infants_<%= lodging.id %>'"
+                    :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
+                    :show-apply="true"
+                    :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+                    :lodging-id="<%= lodging.id %>"
+                    :max-adults="<%= lodging.adults.to_i %>"
+                    :max-children="<%= lodging.children.to_i %>"
+                    :max-infants="<%= lodging.infants.to_i %>"
+                  />
+                </div>
+
+                <div class="bg-white">
+                  <p class="text-xxxs bg-secondary-2">
+                    <% [:prebooking, :option].each do |status| %>
+                      <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}#{id_sufix}" %>
+                      <label><%= t("reservations.#{status}") %></label>
+                    <% end %>
+                  </p>
+
+                  <%= hidden_field_tag "calculate_bill-#{lodging.id}#{id_sufix}", true %>
+                  <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}#{id_sufix}", class: 'check_in' %>
+                  <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out_#{lodging.id}#{id_sufix}", class: 'check_out' %>
+                  <%= f.hidden_field :adults, value: no_of_adults(params[:adults] || f.object.adults), id: "adults_#{lodging.id}#{id_sufix}", class: "adults adults_#{lodging.id}" %>
+                  <%= f.hidden_field :children, value: (params[:children] || f.object.children), id: "children_#{lodging.id}#{id_sufix}", class: "children children_#{lodging.id}" %>
+                  <%= f.hidden_field :infants, value: (params[:infants] || f.object.infants), id: "infants_#{lodging.id}#{id_sufix}", class: "infants infants_#{lodging.id}" %>
+                  <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}#{id_sufix}" %>
+                  <%= f.hidden_field :cleaning_cost, id: "cleaning_cost_#{lodging.id}#{id_sufix}", class: 'cleaning-cost' %>
+                  <%= f.hidden_field :discount, id: "discount_#{lodging.id}#{id_sufix}", class: 'discount' %>
+                </div>
+              <% end %>
+
+              <p class="text-sm text-dark" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></p>
+                <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}", data: { form_id: "#new_reservation_#{lodging.id}#{id_sufix}" } do %>
+                  <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+                <% end %>
+              <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
+              <%= render 'wishlists/form',  lodging: lodging, id_sufix: id_sufix %>
+            </div>
+          </div>
         </p>
       </div>
     </div>

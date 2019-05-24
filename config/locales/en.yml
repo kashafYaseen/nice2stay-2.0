@@ -131,6 +131,7 @@ en:
     type: Request
 
   usp:
+    discover: Discover
     holiday: Experience the ideal holiday
     verhaal: Beautiful stories start here ...
     inspect: Visited & inspected
@@ -139,6 +140,8 @@ en:
     price: Transparant prices
     price_details: Same prices as booking direct, no booking fees
     advice: Advice & Support
+    payment: Online secure payments
+    payment_details: With us you can pay online with Ideal, SOFORT, SEPA, Bancontact and more
     advice_details: Expert advice and attentive service 
     search: Search for unique holiday homes, apartments and boutique hotels and more ...
     intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
@@ -147,7 +150,7 @@ en:
     acco_show_p: All accommodations in our unique collection meet our high standards in quality, comfort, style and setting. We visit every place, meet the owners and explore the area, so we are sure that you will have a great holiday here!
     acco_show_visit: "Do you want to <a href='mailto:support@nice2stay.com'>know more</a> from %{admin_name} about %{lodging_name}? She is happy to advise you!"
 
-  opens: 
+  opens:
     week: Monday - Friday 9.00 am - 18.00 pm
     weekend: Saturday 10.00 am - 13.00 pm
   nav:
@@ -261,6 +264,9 @@ en:
     prebooking: Booking
 
   cart:
+    details: More nformation & availability
+    price: Included, optional, conditions & calendar information
+    availability: Availabiltiy & Reserve
     shopping_cart: Add to cart
     nice2stay: No booking fees at Nice2stay
     prepayment_not_payed: When prepayment is done, then the final payment can be transferred

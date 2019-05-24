@@ -7,30 +7,38 @@
 
       <div class="col-md-12 col-sm-12">
         <div class="row homepage-actions-row pt-0">
-          <div id="searchbar-datepicker"></div>
-
-          <div class="dropdown guests-dropdown-searchbar col-md-12 pl-2">
-            <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="searchbar-guest-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title"><%= t 'search.guests' %></span>
-            </button>
-
-            <div class="dropdown-menu" aria-labelledby="searchbar-guest-dropdown">
-              <div class="dropdown-item">
-                <label><%= t 'search.adults' %></label>
-                <%= number_field_tag :adults, params[:adults], min: 0, class: 'adults', id: 'searchbar_adults' %>
-              </div>
-
-              <div class="dropdown-item">
-                <label><%= t 'search.children' %></label>
-                <%= number_field_tag :children, params[:children], min: 0, class: 'children', id: 'searchbar_children' %>
-              </div>
-
-              <div class="dropdown-item">
-                <label><%= t 'search.babies' %></label>
-                <%= number_field_tag :infants, params[:infants], min: 0, class: 'infants', id: 'searchbar_infants' %>
-              </div>
-            </div>
+          <div class="col-md-12 pl-2 vue-app">
+            <div>
+              <datepicker
+                :trigger-id="'searchbar-trigger-range'"
+                :check-in="'<%= params[:check_in]%>'"
+                :check-out="'<%= params[:check_out]%>'"
+                :months="1"
+                :min-date="'<%= Date.yesterday %>'"
+                :action-buttons="true"
+                :full-screen="false"
+                :trigger-button="'btn btn-outline-primary w-100'"
+                :inline="false"
+              />
           </div>
+
+          <div>
+            <guests-dropdown
+              :adults="<%= params[:adults].to_i %>"
+              :children="<%= params[:children].to_i %>"
+              :infants="<%= params[:infants].to_i %>"
+              :adults-target="'#searchbar_adults'"
+              :children-target="'#searchbar_children'"
+              :infants-target="'#searchbar_infants'"
+              :dropdown-id="'<%= "guests-dropdown-searchbar" %>'"
+              :show-apply="false"
+              :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
+            />
+          </div>
+        </div>
+          <%= hidden_field_tag :adults, params[:adults], id: 'searchbar_adults' %>
+          <%= hidden_field_tag :children, params[:children], id: 'searchbar_children' %>
+          <%= hidden_field_tag :infants, params[:infants], min: 0, id: 'searchbar_infants' %>
           <%= hidden_field_tag :country, params[:country], id: 'searchbar_country', class: 'autocomplete-country' %>
           <%= hidden_field_tag :region, params[:region], id: 'searchbar_region', class: 'autocomplete-region' %>
 

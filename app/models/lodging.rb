@@ -10,6 +10,7 @@ class Lodging < ApplicationRecord
   has_many :specifications
   has_many :wishlists
   has_many :cleaning_costs
+  has_many :places, through: :region
   has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
@@ -41,7 +42,7 @@ class Lodging < ApplicationRecord
   delegate :country, to: :region, allow_nil: true
   delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
   delegate :desc, :published, to: :reviews, allow_nil: true, prefix: true
-  delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, to: :price_text, allow_nil: true
+  delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
   delegate :admin_user, to: :owner, allow_nil: true
 
   scope :published, -> { where(published: true) }
@@ -70,6 +71,18 @@ class Lodging < ApplicationRecord
 
   def not_available_on
     (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+  end
+
+  def discount_dates
+    all_discounts.active.collect { |discount| (discount.start_date..discount.end_date).map(&:to_s) }.flatten
+  end
+
+  def option_dates
+    reservations.confirmed_options.collect { |resv| (resv.check_in..resv.check_out).map(&:to_s) }.flatten
+  end
+
+  def customized_dates
+    [{ "cssClass": "discount" , "dates": discount_dates }, { "cssClass": "option" , "dates": option_dates } ].to_json
   end
 
   def children_not_available_on

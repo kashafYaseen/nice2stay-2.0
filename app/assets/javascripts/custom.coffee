@@ -7,6 +7,13 @@
     toolbar_section = $('.toolbar-section')
     mobile_menu = $('.slideable-menu .menu')
 
+    $(window).scroll ->
+      if $('#show-page-submenu').length > 0
+        if $(this).scrollTop() > 200
+          $('#show-page-submenu').fadeIn 500
+        else
+          $('#show-page-submenu').fadeOut 500
+
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
@@ -29,17 +36,17 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
-    $(window).resize ->
-      check_standalone_form()
-      set_top_position()
-    check_standalone_form()
-    set_top_position()
+    $(".scroll-to-btn").click (e) ->
+      e.stopPropagation()
+      $('html, body').animate { scrollTop: $($(this).data('target')).offset().top - 100 }, 'slow'
 
-  check_standalone_form = ->
-    if $('.standalone-modal-btn').is(':visible')
-      $('.reservation-standalone-form').remove()
-    else
-      $('.reservation-standalone-form-modal').remove()
+    $(".question-details-btn").click (e) ->
+      e.stopPropagation()
+      $('html, body').animate { scrollTop: $('#questions').offset().top - 100 }, 'slow'
+
+    $(".location-details-btn").click (e) ->
+      e.stopPropagation()
+      $('html, body').animate { scrollTop: $('#location-container').offset().top - 100 }, 'slow'
 
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");

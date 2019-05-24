@@ -1,7 +1,17 @@
 <div class="persisted-data" data-months="<%= params[:months] %>"></div>
 
 <div data-lodging-id="<%= @lodging.id %>" data-disabled-dates="<%= @lodging.not_available_on %>">
-  <div id="calendar"></div>
+  <div class="vue-app">
+    <datepicker
+    :trigger-id="'datepicker-trigger'"
+    :months="2"
+    :min-date="'<%= Date.today %>'"
+    :disabled-dates="'<%= @lodging.not_available_on %>'"
+    :action-buttons="true"
+    :full-screen="ture"
+    :inline="true"
+    :trigger-button="'d-none'" />
+  </div>
 </div>
 
 <%= content_for :js_init do %>

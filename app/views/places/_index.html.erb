@@ -1,0 +1,22 @@
+<% if grouped_places.present? %>
+  <div class="row">
+    <% grouped_places.each do |category, places| %>
+      <div class="col-md-4 mt-3">
+        <span style="color: <%= category.color_code %>"><b><%= category.name %></b></span>
+
+        <% places.each do |place| %>
+          <div class="row">
+            <div class="col-md-12">
+              <a data-toggle="modal" class="cursor-pointer no-decoration text-dark" data-target="#place-details-modal-<%= place.id %>"><%= place.name %></a>
+              <span class="float-right"><%= place.distance_from lodging %> km</span>
+            </div>
+          </div>
+
+          <%= render 'places/modal', place: place %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <tr><td>No place found!</td></tr>
+<% end %>

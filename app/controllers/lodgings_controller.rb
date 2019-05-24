@@ -20,6 +20,7 @@ class LodgingsController < ApplicationController
   # GET /lodgings/1.json
   def show
     @lodgings = SearchSimilarLodgings.call(@lodging, params)
+    @places = SearchPlaces.call(params.merge(latitude: @lodging.latitude, longitude: @lodging.longitude))
     @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @reservation = @lodging.reservations.build
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)

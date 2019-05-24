@@ -53,6 +53,12 @@
 }
 
 .twitter-typeahead {
+  font-size: 15px;
+
+  .tt-input {
+    margin-bottom: 0;
+  }
+
   .autocomplete {
     position: relative !important;
   }
@@ -69,7 +75,7 @@
 
   .tt-menu {
     width: 100%;
-    margin-top: 4px;
+    margin-top: 1px;
     padding: 4px 0;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -88,8 +94,7 @@
     padding: 3px 20px;
     line-height: 24px;
     &:hover{
-      color: #fff;
-      background-color: #dc9814;
+      background-color: #f0f0f0;
     }
   }
 
@@ -103,9 +108,11 @@
   }
 
   .category-name {
-    margin: 0 20px 5px 20px;
-    padding: 3px 0;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 0;
+    padding: 5px;
+    line-height: 1.1;
+    text-align: right;
+    border-top: 1px solid #ccc;
   }
 
   img {
@@ -201,7 +208,7 @@ div.fixed {
 
 div.fixed-bottom {
   position: fixed;
-  bottom: 0;
+  bottom: -12px;
   left: 0;
 }
 
@@ -252,6 +259,12 @@ div.review-paginator {
   }
 }
 
+@media only screen and (min-width: 767px) {
+  #show-page-submenu {
+    background: transparent !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   #sidebar {
     display: none;
@@ -284,6 +297,11 @@ div.review-paginator {
 
   .lodgings-filters #more-filters {
     z-index: 9999 !important;
+  }
+
+  .gallery-container-minimized {
+    max-height: 1300px;
+    overflow: hidden;
   }
 }
 
@@ -343,4 +361,58 @@ div.review-paginator {
 
 header.navbar.navbar-sticky {
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.05);
+}
+
+p.color-box {
+  height: 35px;
+  width: 35px;
+}
+
+.toolbar-btn {
+  display: table-cell;
+  transition: all .3s;
+  border-right: 2px solid #ffffff;
+  background-color: #f5f5f5;
+  color: #606060;
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+div.nearby-places {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+#show-page-submenu {
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  z-index: 8999;
+
+  .nav-item {
+    display: inline;
+    cursor: pointer;
+    a {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: medium;
+    }
+  }
+
+  .navbar-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    list-style: none;
+    min-height: 40px;
+  }
 }

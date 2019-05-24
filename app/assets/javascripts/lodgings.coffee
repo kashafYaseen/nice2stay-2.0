@@ -5,7 +5,6 @@
     Slider.init()
     GuestDropdown.init()
     OwlCarousel.init()
-    initDatePicker();
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
     SortingDropdown.init()
     Filters.init()
@@ -37,6 +36,18 @@
           $("a[href='##{$(this).attr('id')}']").addClass 'active'
 
   Lodging.read_more = ->
+    if $('#description-container .btn-read-more').is(":hidden")
+      $btn = $('#description-container .btn-read-more')
+      $($($btn).data('target')).html($($btn).data('actual'))
+
+    $('.btn-gallery-container').click ->
+      if $('#gallery-container').hasClass 'gallery-container-minimized'
+        $(this).text('Show Less')
+        $('#gallery-container').removeClass 'gallery-container-minimized'
+      else
+        $(this).text('Show All')
+        $('#gallery-container').addClass 'gallery-container-minimized'
+
     $('.btn-read-more').click ->
       $target = $($(this).data('target'))
       if $(this).text() == "Read more"

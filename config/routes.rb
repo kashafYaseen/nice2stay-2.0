@@ -57,8 +57,6 @@ Rails.application.routes.draw do
     resources :pages, only: [:show]
 
     get "dashboard", to: "dashboard#index"
-    get '/privacy', to: 'home#privacy'
-    get '/terms', to: 'home#terms'
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
     get '/', to: 'pages#home', as: :root

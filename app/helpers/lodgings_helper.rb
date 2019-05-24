@@ -39,8 +39,8 @@ module LodgingsHelper
   end
 
   def no_of_adults(adults)
-    return 1 if adults == 0
-    adults
+    return 1 if adults.to_i == 0
+    adults.to_i
   end
 
   def render_image_tag lodging, options = {}
@@ -103,5 +103,13 @@ module LodgingsHelper
   def render_price price, dynamic
     return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
     "<div class='price-text-from price-text'> #{t('search.from')} </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
+  end
+
+  def render_show_page_map lodging, places
+    tag.div class: "lodgings-list-json", data: { feature: ( places.collect(&:feature) + [lodging.feature]), categories: places.collect{ |place| [place.place_category_name, place.place_category_id]}.uniq }
+  end
+
+  def render_distance hit
+    "#{hit['sort'].first.try(:round, 2)} km"
   end
 end

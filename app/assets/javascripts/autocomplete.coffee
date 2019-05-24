@@ -8,7 +8,7 @@
       limit: 4
       source: source(url, 'countries')
       templates:
-        header: '<p class="category-name text-sm">Countries</p>',
+        header: '<p class="category-name">Countries</p>',
         suggestion: (country) -> suggestion(country)
     }, {
       name: 'regions'
@@ -16,23 +16,23 @@
       limit: 4
       source: source(url, 'regions')
       templates:
-        header: '<p class="category-name text-sm">Regions</p>'
+        header: '<p class="category-name">Regions</p>'
         suggestion: (region) -> suggestion(region)
     }, {
       name: 'collections'
       displayKey: 'name'
-      limit: 20
+      limit: 10
       source: source(url, 'campaigns')
       templates:
-        header: '<p class="category-name text-sm darken">Collections</p>'
+        header: '<p class="category-name darken">Collections</p>'
         suggestion: (collection) -> suggestion(collection)
     }, {
       name: 'accommodations'
       displayKey: 'name'
-      limit: 3
+      limit: 5
       source: source(url, 'lodgings')
       templates:
-        header: '<p class="category-name text-sm">Accommodations</p>'
+        header: '<p class="category-name">Accommodations</p>'
         suggestion: (lodging) -> suggestion(lodging)
     }
 

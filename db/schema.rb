@@ -581,6 +581,62 @@ ActiveRecord::Schema.define(version: 2019_05_03_090947) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "place_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "color_code", default: "#7D3C98"
+  end
+
+  create_table "place_category_translations", force: :cascade do |t|
+    t.integer "place_category_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "slug"
+    t.index ["locale"], name: "index_place_category_translations_on_locale"
+    t.index ["place_category_id"], name: "index_place_category_translations_on_place_category_id"
+  end
+
+  create_table "place_translations", force: :cascade do |t|
+    t.integer "place_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "details"
+    t.text "description"
+    t.string "name"
+    t.string "slug"
+    t.index ["locale"], name: "index_place_translations_on_locale"
+    t.index ["place_id"], name: "index_place_translations_on_place_id"
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.text "details"
+    t.text "description"
+    t.string "slug"
+    t.boolean "spotlight"
+    t.boolean "header_dropdown"
+    t.text "short_desc"
+    t.string "short_desc_nav"
+    t.string "images", default: [], array: true
+    t.float "latitude"
+    t.float "longitude"
+    t.bigint "country_id"
+    t.bigint "region_id"
+    t.bigint "place_category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "publish", default: true
+    t.index ["country_id"], name: "index_places_on_country_id"
+    t.index ["place_category_id"], name: "index_places_on_place_category_id"
+    t.index ["region_id"], name: "index_places_on_region_id"
+  end
+
   create_table "price_text_translations", force: :cascade do |t|
     t.integer "price_text_id", null: false
     t.string "locale", null: false
@@ -814,6 +870,9 @@ ActiveRecord::Schema.define(version: 2019_05_03_090947) do
   add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
   add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "owners", "admin_users"
+  add_foreign_key "places", "countries", on_delete: :cascade
+  add_foreign_key "places", "place_categories", on_delete: :cascade
+  add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
