@@ -264,6 +264,7 @@ en:
     prebooking: Booking
 
   cart:
+    details: More nformation & availability
     price: Included, optional, conditions & calendar information
     availability: Availabiltiy & Reserve
     shopping_cart: Add to cart

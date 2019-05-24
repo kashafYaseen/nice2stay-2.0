@@ -2,8 +2,7 @@
   <div class="col-md-3 col-border bg-white">
     <%= render_image_tag lodging, class: 'w-100 max-height-230' %>
    
-    <a data-toggle="modal" class="cursor-pointer text-xs" data-target="#child-details-modal-<%= lodging.id %>"><%= lodging.child_name %>
-        </a>
+   
   </div>
 
   <div class="col-md-2 col-border bg-white">
@@ -32,12 +31,12 @@
     </div>
     <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
-      <p class="mb-1 mt-2 text-xxxs text-dark anternative-heading" id="anternative-heading-<%= lodging.id %>">
+      <p class="mb-2 mt-1 text-xs text-dark-bold anternative-heading" id="anternative-heading-<%= lodging.id %>">
       </p>
 
       <div id="flexible-search-<%= lodging.id %>" class="text-xxxs flexible-search-data"></div>
 
-      <p class="text-xxs" id="lbl-error-<%= lodging.id %>"></p>
+      <p class="text-xs" id="lbl-error-<%= lodging.id %>"></p>
 
       <div class="bg-white">
         <p class="text-xxxs bg-secondary-2">
@@ -46,6 +45,8 @@
             <label><%= t("reservations.#{status}") %></label>
           <% end %>
         </p>
+        <a data-toggle="modal" class="cursor-pointer text-dark-bold text-xs" data-target="#child-details-modal-<%= lodging.id %>"><%= t 'cart.details' %>
+        </a>
 
         <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>
         <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in_#{lodging.id}", class: 'check_in' %>
