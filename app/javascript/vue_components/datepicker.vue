@@ -5,8 +5,8 @@
       :trigger-element-id="this.triggerId"
       :date-one="check_in"
       :date-two="check_out"
-      @date-one-selected="val => { check_in = val }"
-      @date-two-selected="val => { check_out = val }"
+      @date-one-selected="date_one_selected"
+      @date-two-selected="date_two_selected"
       :months-to-show="this.months"
       @apply="onApplyMethod"
       :inline="this.inline"
@@ -60,6 +60,14 @@
         }
 
         return formattedDates
+      },
+      date_one_selected(val) {
+        this.check_in = val
+        $('.check-in').val(val);
+      },
+      date_two_selected(val) {
+        this.check_out = val
+        $('.check-out').val(val);
       },
       onApplyMethod(e) {
         if($('.lodgings-filters').length > 0) {
