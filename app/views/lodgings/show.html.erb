@@ -33,20 +33,14 @@
 
         <h2><%= @lodging.h1 %></h2>
         <ul class="list-icon">
-              <h5>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-              </h5>
-            </ul>
+          <h5>
+            <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %>
+            <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %>
+            <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+          </h5>
+        </ul>
 
-        
-
-        
-       
-        <p><%= @lodging.summary.try(:html_safe) %></p>
-          <br>
-
+        <p><%= @lodging.summary.try(:html_safe) %></p><br>
 
         <% if @lodging.as_parent? %>
           <div class="col-sm-12 margin-top-1x price_box d-lg-none">
@@ -87,7 +81,7 @@
                       <i class="material-icons md-24 check text-success"></i> <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %> <i class="material-icons md-24 check text-success"></i> <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
                     </h6>
                   <% end %>
-                  
+
                   <div class="bg-white mt-3">
                     <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless @lodging.confirmed_price %>
 
@@ -99,32 +93,30 @@
                   </p>
 
                   <p><%= t 'email.contact_text' %></p>
-                   <p> Calendar Legenda</p>
+                  <p> Calendar Legenda</p>
                 </div>
 
                 <div class="text-xxs mt-3 row">
-
-                    <div class="col-3 text-center">
-                      <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
-                      <span>Available</span>
-                    </div>
-
-                    <div class="col-3 text-center">
-                      <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
-                      <span>Not available</span>
-                    </div>
-
-                    <div class="col-3 text-center">
-                      <p class="asd__day--discount color-box mb-1 mx-auto"></p>
-                      <span>Special offer</span>
-                    </div>
-
-                    <div class="col-3 text-center">
-                      <p class="asd__day--option color-box mb-1 mx-auto"></p>
-                      <span>Under option</span>
-                    </div>
+                  <div class="col-3 text-center">
+                    <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
+                    <span>Available</span>
                   </div>
 
+                  <div class="col-3 text-center">
+                    <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
+                    <span>Not available</span>
+                  </div>
+
+                  <div class="col-3 text-center">
+                    <p class="asd__day--discount color-box mb-1 mx-auto"></p>
+                    <span>Special offer</span>
+                  </div>
+
+                  <div class="col-3 text-center">
+                    <p class="asd__day--option color-box mb-1 mx-auto"></p>
+                    <span>Under option</span>
+                  </div>
+                </div>
               </div>
 
               <div class="col-md-6">
