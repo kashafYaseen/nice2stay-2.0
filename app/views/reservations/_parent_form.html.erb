@@ -20,7 +20,7 @@
             :months="1"
             :lodging-id="<%= lodging.id %>"
             :disabled-dates="<%= lodging.not_available_on %>"
-            :min-date="'<%= Date.yesterday %>'"
+            :min-date="'<%= Date.today %>'"
             :customized-dates="<%= lodging.customized_dates %>"
             :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
             :show-action-buttons="false"
