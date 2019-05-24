@@ -106,7 +106,7 @@
 
         if total > 0
           result += total_html(total, index)
-          $("#anternative-heading-#{lodging_id}, #anternative-heading-#{lodging_id}_modal").html('Selected period is not available. See alternatives')
+          $("#anternative-heading-#{lodging_id}, #anternative-heading-#{lodging_id}_modal").html('Period not available. See alternatives')
           $("#bill-#{lodging_id}, #bill-#{lodging_id}_modal").append(result)
           $("#reservation-footer-#{lodging_id}, #reservation-footer-#{lodging_id}_modal").append(result)
         else

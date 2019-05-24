@@ -550,12 +550,12 @@ body {
 }
 
 a {
-  color: #dc9814;
+  color: #808080;
   text-decoration: underline;
 }
 
 a:hover {
-  color: #dc9814;
+  color: #FFED00;
   text-decoration: none;
 }
 
@@ -983,6 +983,11 @@ figure figcaption {
   color: #808080 !important;
 }
 
+
+.text-dark-bold {
+  color: #808080 !important;
+  font-weight: 600;
+}
 .text-gray-light {
   color: #d6d6d6 !important;
 }

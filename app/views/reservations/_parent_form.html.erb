@@ -5,7 +5,7 @@
 
 <div class="row price_box">
   <div class="col-md-12 col-sm-12 col-lg-12 pr-0">
-    <h4 class="margin-bottom-1x">Check Availability & Reserve</h4>
+    <h4 class="margin-bottom-1x"><%= t 'cart.availability' %> </h4>
     <div data-lodging-id="<%= lodging.id %>"
       data-disabled-dates="<%= lodging.children_not_available_on %>"
       data-customized-dates="<%= lodging.customized_dates %>">
@@ -20,7 +20,7 @@
             :months="1"
             :lodging-id="<%= lodging.id %>"
             :disabled-dates="<%= lodging.not_available_on %>"
-            :min-date="'<%= Date.yesterday %>'"
+            :min-date="'<%= Date.today %>'"
             :customized-dates="<%= lodging.customized_dates %>"
             :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
             :show-action-buttons="false"
