@@ -9,7 +9,7 @@ class Wishlist < ApplicationRecord
    checkout: 1,
   }
 
-  after_commit :sync_with_crm
+  #after_commit :sync_with_crm
 
   private
     def sync_with_crm
