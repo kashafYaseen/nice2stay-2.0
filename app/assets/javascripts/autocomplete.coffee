@@ -21,7 +21,7 @@
     }, {
       name: 'collections'
       displayKey: 'name'
-      limit: 5
+      limit: 10
       source: source(url, 'campaigns')
       templates:
         header: '<p class="category-name darken">Collections</p>'
@@ -29,7 +29,7 @@
     }, {
       name: 'accommodations'
       displayKey: 'name'
-      limit: 3
+      limit: 5
       source: source(url, 'lodgings')
       templates:
         header: '<p class="category-name">Accommodations</p>'
