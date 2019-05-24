@@ -32,6 +32,19 @@
         </div>
 
         <h2><%= @lodging.h1 %></h2>
+        <% if @lodging.as_standalone? %>
+          <h5>
+                <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %> -
+                
+                <% if @lodging.children.present? %>
+                  <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %>
+                <% end %> 
+
+                <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - 
+                <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+              </h5>
+         <% end %>
+
         <p><%= @lodging.summary.try(:html_safe) %></p>
 
         <% if @lodging.as_parent? %>
@@ -54,7 +67,7 @@
         <div class="infobox">
           <div class="infobox-header bg-secondary">
             <h4 class="mb-3">
-              Prices, Inclusief, optioneel & voorwaarden
+              <%= t 'cart.price' %> 
             </h4>
           </div>
 

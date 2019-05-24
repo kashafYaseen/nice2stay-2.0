@@ -6,7 +6,7 @@
 <div class="row price_box">
   <div class="col-md-12 col-sm-12 col-lg-12 pr-0">
     <%= form_for reservation, url: reservations_path, remote: true, html: { id: "new_reservation#{id_sufix}" } do |f| %>
-      <h4 class="margin-bottom-1x">Check Availability & Reserve</h4>
+      <h4 class="margin-bottom-1x"><%= t 'cart.availability' %> </h4>
       <div class="reservation-form-errors-<%= lodging.id %>">
         <%= render 'reservations/errors', resource: reservation %>
       </div>

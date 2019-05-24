@@ -118,15 +118,18 @@ nl:
     type: Aanvraag
 
   usp:
+    discover: Ontdek
     verhaal: Mooie verhalen beginnen hier...
     holiday: Ervaar de ideale vakanties
-    inspect: Bezocht
+    inspect: Bezocht & Geïnspecteerd
     homepage: Unieke collectie van vakantiehuizen, appartementen en ​boutique hotels.
-    inspect_details: is door ons team bezocht & geïnspecteerd
-    price: Transparant
-    price_details: Transparante prijzen, geen verborgen boekingskosten
-    advice: Deskundig
+    inspect_details: Elke accommodatie is door ons team bezocht & geïnspecteerd
+    price: Transparant prijzen
+    price_details: Transparante prijzen, bij ons geen verborgen boekingskosten
+    advice: Deskundig advies
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
+    payment: Online beveiligd betalen
+    payment_details: Bij ons kunt u online betalen met Ideal, SOFORT, SEPA, Bancontact en meer 
     search: Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...
     intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfortzocht.
     intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. Onze buitengewone collectie is zorgvuldig door ons team samengesteld en iedere plek wordt door ons bezocht.
@@ -182,6 +185,8 @@ nl:
     prebooking: Reservering
 
   cart:
+    price: Inclusief, optioneel, voorwaarden & calendar informatie
+    availability: Beschikbaarheid & Reserveer
     shopping_cart: Vraag aan
     nice2stay: Geen reserveringskosten bij Nice2stay
     prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
