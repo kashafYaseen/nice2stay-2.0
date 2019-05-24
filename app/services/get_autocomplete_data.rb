@@ -36,7 +36,7 @@ class GetAutocompleteData
       Campaign.search(params[:query], {
         fields: ["title_#{locale}"],
         match: :text_middle,
-        limit: 10,
+        limit: 15,
         load: false,
         misspellings: {below: 5},
         where: { collection: true, popular_homepage: true }
