@@ -39,8 +39,8 @@ module LodgingsHelper
   end
 
   def no_of_adults(adults)
-    return 1 if adults == 0
-    adults
+    return 1 if adults.to_i == 0
+    adults.to_i
   end
 
   def render_image_tag lodging, options = {}
