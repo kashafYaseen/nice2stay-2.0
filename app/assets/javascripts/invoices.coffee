@@ -82,9 +82,9 @@
           total_discount = 0
           $.each data.discounts[index], (i, discount) ->
             if discount.discount_type == "percentage"
-              total_discount += (total * discount.value/100)
+              total_discount += (((total/nights)*discount.total_nights) * discount.value/100)
             else
-              total_discount += (discount.value * nights)
+              total_discount += (discount.value * discount.total_nights)
           if total_discount > 0
             result += discount_html("Discount", total_discount, index)
           total -= total_discount
@@ -133,9 +133,9 @@
         total_discount = 0
         $.each data.discounts, (i, discount) ->
           if discount.discount_type == "percentage"
-            total_discount += (total * discount.value/100)
+            total_discount += (((total/nights)*discount.total_nights) * discount.value/100)
           else
-            total_discount += (discount.value * nights)
+            total_discount += (discount.value * discount.total_nights)
 
         if total_discount > 0
           result += discount_html("Discount", total_discount, -1)
