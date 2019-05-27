@@ -177,7 +177,6 @@ en:
     reviews: Reviews
     alternative: Alternatives
 
-
   nav_cart: 
     type: Request
     price: Price
