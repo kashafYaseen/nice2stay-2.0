@@ -89,12 +89,12 @@
     <div class="col-md-12" id="description-container">
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <ul class="list-icon">
-          <h5>
-            <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %>
-            <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %>
-            <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-          </h5>
-        </ul>
+        <h5>
+          <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %>
+          <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %>
+          <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+        </h5>
+      </ul>
 
       <div id="lodging-full-description">
         <%= truncated_description(lodging.description, 1000) %>
