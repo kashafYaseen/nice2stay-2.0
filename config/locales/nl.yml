@@ -93,7 +93,7 @@ nl:
     adults: Volwassenen
     children: Kinderen(<12)
     infants: Babies
-    cleaning: Schoonmaak
+    cleaning: Schoonmaakkosten
     subtotal: Huursom
     total: Totaal
     type: Type
@@ -124,7 +124,7 @@ nl:
     inspect: Bezocht & Geïnspecteerd
     homepage: Unieke collectie van vakantiehuizen, appartementen en ​boutique hotels.
     inspect_details: Elke accommodatie is door ons team bezocht & geïnspecteerd
-    price: Transparant prijzen
+    price: Transparante prijzen
     price_details: Transparante prijzen, bij ons geen verborgen boekingskosten
     advice: Deskundig advies
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
@@ -171,13 +171,22 @@ nl:
     back: Terug
     price_availabiltiy: Prijzen & Beschikbaarheid
 
+  nav_mobile: 
+    overview: Overzicht
+    availability: Beschikbaarheid & Prijzen
+    photo: Foto’s
+    description: Omschrijving
+    location: Locatie
+    reviews: Beoordelingen
+    alternative: Alternatieven
+
   nav_cart:
-    type: aanvraag
-    price: Prijs
-    nights: Nachten
+    type: Soort aanvraag
+    price: Huurprijs
+    nights: Aantal nachten
     checkin: Check-in
     checkout: Check-out
-    guests: Gasten
+    guests: Aanal gasten
     empty: Geen accommodaties geselecteerd
 
   reservations:
@@ -796,7 +805,7 @@ nl:
   period_email_text: "Periode"
 
   bookings:
-    prebooking: Reserverings aanvraag
+    prebooking: Reservering
     booked: Gereserveerd
     customer_data_requested: Klant gegevens nodig
     confirmation_sent: Bevestiging verstuurd
