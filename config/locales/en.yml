@@ -168,6 +168,16 @@ en:
     like: You also like
     back: Back
     price_availabiltiy: Prices & Availabiltiy
+  nav_mobile: 
+    overview: Overview
+    availability:  Availability & Prices
+    photo:  Gallery
+    description: Description
+    location: Location
+    reviews: Reviews
+    alternative: Alternatives
+
+
   nav_cart: 
     type: Request
     price: Price
@@ -188,10 +198,11 @@ en:
   information:
     included: Included ?
     informatie: Important information
-    included_header: Included rent
-    informatie_header: Information
+    included_header: INCLUDED IN THE RENTAL PRICE
+    informatie_header: IMPORTANT INFORMATION
     extra_service: Additional services
-    payment_conditions: Cancellation- & payment conditions
+    payment_conditions: CANCELLATION & PAYMENT CONDITIONS
+    deposit: SECURITY DEPOSIT
 
   footer:
     support: Direct contact? 
