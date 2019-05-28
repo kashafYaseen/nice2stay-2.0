@@ -5,11 +5,11 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-lg-7 col-md-8 bg-secondary search-filters pt-2">
+  <div class="col-lg-2 col-md-2 pt-3 bg-white">
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>
   </div>
 
-  <div class="col-lg-7 col-md-8 top-50">
+  <div class="col-lg-5 col-md-5">
     <div class="row">
       <div class="seo-data bg-secondary w-100">
         <%= render 'seo_data', custom_text: @custom_text %>
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div class="col-lg-5 col-sm-4 fixed-map d-none d-sm-block">
+  <div class="col-lg-5 col-sm-5 fixed-map d-none d-sm-block">
     <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
   </div>
 </div>
