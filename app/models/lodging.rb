@@ -182,7 +182,7 @@ class Lodging < ApplicationRecord
   end
 
   def child_name
-    return unless as_child? && name.include?('-')
+    return name unless as_child? && name.include?('-')
     name.split('-').last.strip
   end
 

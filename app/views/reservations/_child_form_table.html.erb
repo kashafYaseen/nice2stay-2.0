@@ -4,7 +4,7 @@
   </div>
 
   <div class="col-md-2 col-border bg-white">
-    <p class="text-xxs"> <b><%= lodging.child_name.capitalize %></b></p>
+    <p class="text-xxs"> <b><%= lodging.child_name.try(:capitalize) %></b></p>
     <p class="text-xxxs">
      <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> 
     </p>
