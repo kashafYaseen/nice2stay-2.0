@@ -195,9 +195,8 @@ class Lodging < ApplicationRecord
   end
 
   def all_discounts
-    return discounts.active if as_standalone?
-    _parent = parent.presence || self
-    Discount.active.where(lodging_id: _parent.lodging_children.ids.push(_parent.id))
+    return discounts.active if as_standalone? || as_child?
+    Discount.active.where(lodging_id: lodging_children.ids)
   end
 
   def all_reviews
