@@ -9,6 +9,27 @@
     SortingDropdown.init()
     Filters.init()
 
+    $('#switch-views').click ->
+      if $(this).text() == 'List View'
+        $('#filters-container').removeClass 'col-lg-2 col-md-2'
+        $('#filters-container').addClass 'col-lg-3 col-md-3'
+
+        $('#lodgings-container').removeClass 'col-lg-5 col-md-5'
+        $('#lodgings-container').addClass 'col-lg-7 col-md-7'
+
+        $('#map-container').removeClass 'd-sm-block'
+        $(this).text('Map View')
+      else
+        $('#filters-container').addClass 'col-lg-2 col-md-2'
+        $('#filters-container').removeClass 'col-lg-3 col-md-3'
+
+        $('#lodgings-container').addClass 'col-lg-5 col-md-5'
+        $('#lodgings-container').removeClass 'col-lg-7 col-md-7'
+
+        $('#map-container').addClass 'd-sm-block'
+        $(this).text('List View')
+
+
     $('.show-all-filters').click (e) ->
       e.stopPropagation()
       if $(this).text().includes("show all")
