@@ -178,25 +178,25 @@
 </script>
 
 <style>
-  .vnis .vnis__button {
+  .vue-guests-dropdown .vnis .vnis__button {
     border-radius: 50%;
     background: none;
     border: 1px solid black;
     color: black;
   }
 
-  .vnis .vnis__button:hover {
+  .vue-guests-dropdown .vnis .vnis__button:hover {
     background: none;
     border: 2px solid black;
     color: black;
   }
 
-  .vnis .vnis__input {
+  .vue-guests-dropdown .vnis .vnis__input {
     width: 50px;
     border: none;
   }
 
-  .vue-guests-dropdown .dropdown-menu {
+  .vue-guests-dropdown .vue-guests-dropdown .dropdown-menu {
     min-width: 300px;
   }
 </style>

@@ -9,6 +9,11 @@
     SortingDropdown.init()
     Filters.init()
 
+    if $(this).text() == 'List View'
+      $('.vue-guests-inline .vnis').removeClass 'col-md-12'
+    else
+      $('.vue-guests-inline .vnis').addClass 'col-md-12'
+
     $('#switch-views').click ->
       if $(this).text() == 'List View'
         $('#filters-container').removeClass 'col-lg-2 col-md-2'
@@ -18,6 +23,8 @@
         $('#lodgings-container').addClass 'col-lg-7 col-md-7'
 
         $('#map-container').removeClass 'd-sm-block'
+
+        $('.vue-guests-inline .vnis').removeClass 'col-md-12'
         $(this).text('Map View')
       else
         $('#filters-container').addClass 'col-lg-2 col-md-2'
@@ -27,6 +34,8 @@
         $('#lodgings-container').removeClass 'col-lg-7 col-md-7'
 
         $('#map-container').addClass 'd-sm-block'
+
+        $('.vue-guests-inline .vnis').addClass 'col-md-12'
         $(this).text('List View')
 
 
