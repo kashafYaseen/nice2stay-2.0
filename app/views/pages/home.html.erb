@@ -2,9 +2,9 @@
   <div class="dark-overlay-image">
     <div class="container-fluid">
       <div class="col-md-12 pt-5">
-        <h1 class="text-white"> <%= t 'usp.discover' %> </h1>
+        <h2 class="text-white"> <%= t 'usp.discover' %> </h2>
 
-        <h5 class="text-white margin-top-0x"><%= t 'usp.homepage' %></h5>
+        <h5 class="text-white margin-bottom-1x"><%= t 'usp.homepage' %></h5>
         <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
           <div class="row">
             <div class="col-md-6 col-sm-12 pt-3">
@@ -54,7 +54,7 @@
           </div>
         <% end %>
 
-        <h6 class="text-white margin-top-0x">Trending searches: </h6>
+        <h6 class="text-white margin-top-1x">Trending searches: </h6>
         <% @custom_texts.inspiration.each do |custom_text| %>
           <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'trending' %>
         <% end %>
@@ -119,8 +119,6 @@
               <h5 class="h5 mb-2"><%= t 'usp.payment' %></h5>
               <p class="text-muted text-xxxs mb-0"><%= t 'usp.payment_details' %></p>
             </div>
-
-            
           </div>
         </div>
       </div>

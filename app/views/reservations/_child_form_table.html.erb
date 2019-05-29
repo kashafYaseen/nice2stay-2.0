@@ -4,22 +4,23 @@
   </div>
 
   <div class="col-md-2 col-border bg-white">
+    <p class="text-xxs"> <b><%= lodging.child_name.capitalize %></b></p>
     <p class="text-xxxs">
-     <%= image_tag("guest.png", alt: "Guest", class: 'img-small' ) %><%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> <br>
+     <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %> 
     </p>
 
     <p class="text-xxxs">
       <% if lodging.children.present? %>
-        <%= image_tag("guest.png", alt: "Child", class: 'img-small') %> <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %> <br>
+        <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
       <% end %>
     </p>
 
     <p class="text-xxxs">
-    <%= image_tag("bedroom.png", alt: "Bedroom", class: 'img-small') %><%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
+      <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
     </p>
 
     <p class="text-xxxs">
-    <%= image_tag("bathroom.png", alt: "Bathroom", class: 'img-small') %> <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+      <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
     </p>
   </div>
 
@@ -28,22 +29,21 @@
        <%= render 'reservations/errors', resource: lodging.reservations.build %>
     </div>
     <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
+      <b><p class="mb-0 mt-0 text-xxxs anternative-heading" id="anternative-heading-<%= lodging.id %>">
+      </p></b>
 
-      <p class="mb-2 mt-1 text-xs text-dark-bold anternative-heading" id="anternative-heading-<%= lodging.id %>">
-      </p>
+      <b><p class="text-xxs" id="lbl-error-<%= lodging.id %>"></p></b>
+      <div id="flexible-search-<%= lodging.id %>" class="text-xxs flexible-search-data"></div><br>
 
-      <div id="flexible-search-<%= lodging.id %>" class="text-xxxs flexible-search-data"></div>
-
-      <p class="text-xs" id="lbl-error-<%= lodging.id %>"></p>
-
-      <div class="bg-white">
+      <div class="bg-white mb-2">
         <p class="text-xxxs bg-secondary-2">
           <% [:prebooking, :option].each do |status| %>
             <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}" %>
             <label><%= t("reservations.#{status}") %></label>
           <% end %>
         </p>
-        <a data-toggle="modal" class="cursor-pointer text-dark-bold text-xs" data-target="#child-details-modal-<%= lodging.id %>"><%= t 'cart.details' %>
+        
+        <a data-toggle="modal" class="cursor-pointer text-dark-bold text-xxxs" data-target="#child-details-modal-<%= lodging.id %>"><%= t 'cart.details' %>
         </a>
 
         <%= hidden_field_tag "calculate_bill-#{lodging.id}", true %>

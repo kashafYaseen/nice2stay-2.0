@@ -9,15 +9,19 @@
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
       <div class="col-md-12">
         <div class="row">       
-          <section>
-            <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <section class="col-md-12">
+            <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
             </button>
           </section>
 
-          <section>
+          <section class="col-md-12">
+            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100" id="switch-views">List View</a>
+          </section>
+
+          <section class="col-md-12">
             <div class="price-dropdown dropdown">
-              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= render_sort_text %></span>
               </button>
 
@@ -32,7 +36,7 @@
             </div>
           </section>
 
-          <section>
+          <section class="col-md-12">
             <div class="vue-app">
               <datepicker
                 :trigger-id="'trigger-range'"
@@ -42,13 +46,13 @@
                 :min-date="'<%= Date.yesterday %>'"
                 :action-buttons="true"
                 :full-screen="false"
-                :trigger-button="'btn btn-outline-primary btn-sm'"
+                :trigger-button="'btn btn-outline-primary btn-sm w-100'"
                 :inline="false"
               />
             </div>
           </section>
 
-          <section>
+          <section class="col-md-12">
             <div class="vue-app">
               <guests-dropdown
                 :adults="<%= params[:adults].to_i %>"
@@ -59,7 +63,7 @@
                 :infants-target="'#infants'"
                 :dropdown-id="'<%= "guests-dropdown-filters" %>'"
                 :show-apply="true"
-                :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
+                :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
                 :submit-target="'.lodgings-filters'"
               />
             </div>
@@ -68,9 +72,9 @@
             <%= hidden_field_tag :infants, params[:infants] %>
           </section>
 
-          <section class="lodging-types-list">
+          <section class="lodging-types-list col-md-12">
             <div class="dropdown guests-dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">Type</span>
               </button>
 
@@ -90,9 +94,9 @@
             </div>
           </section>
 
-          <section>
+          <section class="col-md-12">
             <div class="dropdown guests-dropdown">
-              <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title"><%= t('search.price') %></span>
               </button>
 
@@ -128,9 +132,11 @@
             </div>
           </section>
 
-          <button class="btn btn-outline-primary btn-sm more-filters-btn" type="button" data-toggle="modal" data-title="<%= t('filters.more_filters') %>">
-            <%= t('filters.more_filters') %>
-          </button>
+          <section class="col-md-12">
+            <button class="btn btn-outline-primary btn-sm more-filters-btn w-100" type="button" data-toggle="modal" data-title="<%= t('filters.more_filters') %>">
+              <%= t('filters.more_filters') %>
+            </button>
+          </section>
         </div>
       </div>
     </aside>
