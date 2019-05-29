@@ -8,36 +8,19 @@
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
     SortingDropdown.init()
     Filters.init()
-
-    if $(this).text() == 'List View'
-      $('.vue-guests-inline .vnis').removeClass 'col-md-12'
-    else
-      $('.vue-guests-inline .vnis').addClass 'col-md-12'
+    $('.vue-guests-inline .vnis').addClass 'col-md-12'
 
     $('#switch-views').click ->
       if $(this).text() == 'List View'
-        $('#filters-container').removeClass 'col-lg-2 col-md-2'
-        $('#filters-container').addClass 'col-lg-3 col-md-3'
-
-        $('#lodgings-container').removeClass 'col-lg-5 col-md-5'
-        $('#lodgings-container').addClass 'col-lg-7 col-md-7'
-
+        $('#lodgings-container').removeClass 'col-md-6'
+        $('#lodgings-container').addClass 'col-md-10'
         $('#map-container').removeClass 'd-sm-block'
-
-        $('.vue-guests-inline .vnis').removeClass 'col-md-12'
         $(this).text('Map View')
       else
-        $('#filters-container').addClass 'col-lg-2 col-md-2'
-        $('#filters-container').removeClass 'col-lg-3 col-md-3'
-
-        $('#lodgings-container').addClass 'col-lg-5 col-md-5'
-        $('#lodgings-container').removeClass 'col-lg-7 col-md-7'
-
+        $('#lodgings-container').addClass 'col-md-6'
+        $('#lodgings-container').removeClass 'col-md-10'
         $('#map-container').addClass 'd-sm-block'
-
-        $('.vue-guests-inline .vnis').addClass 'col-md-12'
         $(this).text('List View')
-
 
     $('.show-all-filters').click (e) ->
       e.stopPropagation()

@@ -27,7 +27,7 @@
 
   Filters.submit = ->
     $('#loader').show()
-    Rails.fire($('.search-filters .lodgings-filters').get(0), 'submit')
+    Rails.fire($('#filters-container .lodgings-filters').get(0), 'submit')
 
   updated_amenities_and_experiences = ->
     if $('.countries-list').css('display') == 'none'

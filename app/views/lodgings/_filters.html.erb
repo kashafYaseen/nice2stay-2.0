@@ -37,6 +37,8 @@
           </section>
 
           <section class="col-md-12">
+            <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+
             <div class="vue-app">
               <datepicker
                 :trigger-id="'trigger-range'"
@@ -67,7 +69,9 @@
             <%= hidden_field_tag :children, params[:children] %>
             <%= hidden_field_tag :infants, params[:infants] %>
 
-            <%= submit_tag 'Search', class: 'btn btn-outline-primary btn-sm w-100 mt-4' %>
+            <button class="btn btn-outline-primary btn-sm w-100 mt-4 submit-filters" type="button">
+              Search
+            </button>
           </section>
 
           <section class="lodging-types-list col-md-12 pt-3">
