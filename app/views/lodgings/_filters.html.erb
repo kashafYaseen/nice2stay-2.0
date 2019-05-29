@@ -56,13 +56,17 @@
 
           <section class="col-md-12">
             <div class="vue-app">
-              <guests-inline
+              <guests-dropdown
                 :adults="<%= params[:adults].to_i %>"
                 :children="<%= params[:children].to_i %>"
                 :infants="<%= params[:infants].to_i %>"
                 :adults-target="'#adults'"
                 :children-target="'#children'"
                 :infants-target="'#infants'"
+                :dropdown-id="'<%= "guests-dropdown-filters" %>'"
+                :show-apply="true"
+                :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
+                :submit-target="'.lodgings-filters'"
               />
             </div>
             <%= hidden_field_tag :adults, params[:adults] %>

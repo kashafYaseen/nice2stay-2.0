@@ -8,7 +8,6 @@
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
     SortingDropdown.init()
     Filters.init()
-    $('.vue-guests-inline .vnis').addClass 'col-md-12'
 
     $('#switch-views').click ->
       if $(this).text() == 'List View'
