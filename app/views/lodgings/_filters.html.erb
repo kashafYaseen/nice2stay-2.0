@@ -8,15 +8,17 @@
     <aside class="sidebar sidebar-offcanvas position-left">
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
       <div class="col-md-12 p-0">
-        <div class="row">       
+        <div class="row">
           <section class="col-md-12">
-            <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
-            </button>
+            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100">
+              <span class="title">
+                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
+              </span>
+            </a>
           </section>
 
           <section class="col-md-12">
-            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100" id="switch-views">List View</a>
+            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100" id="switch-views"><%= params[:layout_view].presence || 'List View' %></a>
           </section>
 
           <section class="col-md-12">
@@ -36,9 +38,11 @@
             </div>
           </section>
 
-          <section class="col-md-12">
+          <div class="col-md-12">
             <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+          </div>
 
+          <section class="col-md-12">
             <div class="vue-app">
               <datepicker
                 :trigger-id="'trigger-range'"
@@ -46,7 +50,7 @@
                 :check-out="'<%= params[:check_out]%>'"
                 :months="2"
                 :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
+                :action-buttons="false"
                 :full-screen="false"
                 :trigger-button="'btn btn-outline-primary btn-sm w-100'"
                 :inline="false"
@@ -64,16 +68,16 @@
                 :children-target="'#children'"
                 :infants-target="'#infants'"
                 :dropdown-id="'<%= "guests-dropdown-filters" %>'"
-                :show-apply="true"
+                :show-apply="false"
                 :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
-                :submit-target="'.lodgings-filters'"
+                :show-infants="false"
               />
             </div>
             <%= hidden_field_tag :adults, params[:adults] %>
             <%= hidden_field_tag :children, params[:children] %>
             <%= hidden_field_tag :infants, params[:infants] %>
 
-            <button class="btn btn-outline-primary btn-sm w-100 mt-4 submit-filters" type="button">
+            <button class="btn btn-primary btn-md w-100 mt-2 submit-filters" type="button">
               Search
             </button>
           </section>
@@ -130,11 +134,11 @@
             <% end %>
           </section>
 
-          <section class="col-md-12 pt-3 amenities-list">
-            <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities' %></p>
+          <section class="col-md-12 pt-3 amenities-hot-list">
+            <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities_pop' %></p>
             <% amenities.hot.each do |amenity| %>
               <div class="custom-control custom-checkbox col-md-12">
-                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
+                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities-hot" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
                   <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
@@ -205,4 +209,5 @@
   <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
+  <%= hidden_field_tag :layout_view, params[:layout_view] %>
 <% end %>

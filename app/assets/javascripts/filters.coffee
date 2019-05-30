@@ -2,16 +2,29 @@
   window.Filters or (window.Filters = {})
 
   Filters.init = ->
-    updated_amenities_and_experiences()
-    update_lodging_types()
+    updated_amenities()
     Filters.update_prices()
+
+    $('#filters-container #switch-views').click ->
+      if $(this).text() == 'List View'
+        $('#lodgings-container').removeClass 'col-md-6'
+        $('#lodgings-container').addClass 'col-md-10'
+        $('#map-container').removeClass 'd-sm-block'
+        $(this).text('Map View')
+        $('#layout_view').val('Map View')
+      else
+        $('#lodgings-container').addClass 'col-md-6'
+        $('#lodgings-container').removeClass 'col-md-10'
+        $('#map-container').addClass 'd-sm-block'
+        $(this).text('List View')
+        $('#layout_view').val('List View')
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
       $('.modal-backdrop').css('z-index', 1);
 
-    $('.amenities, .experiences, .countries').change ->
-      updated_amenities_and_experiences()
+    $('.amenities, .countries').change ->
+      updated_amenities()
 
     $('.discounts').change ->
       Filters.update_prices()
@@ -21,20 +34,19 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('.search-filters .lodging_type').change ->
-      update_lodging_types()
+    $('#filters-container .lodging_type, #filters-container .experiences, #filters-container .amenities-hot').change ->
       Filters.submit()
 
   Filters.submit = ->
     $('#loader').show()
     Rails.fire($('#filters-container .lodgings-filters').get(0), 'submit')
 
-  updated_amenities_and_experiences = ->
+  updated_amenities = ->
     if $('.countries-list').css('display') == 'none'
-      checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+      checked = $(".amenities-list input:checked").length
       $('.countries:checked').prop('checked', false)
     else
-      checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
+      checked = $(".amenities-list input:checked, .countries-list input:checked").length
 
     title = $('.more-filters-btn').data('title')
     if checked > 0
@@ -45,11 +57,6 @@
       $('.more-filters-btn').addClass 'btn-outline-primary'
       $('.more-filters-btn').removeClass 'btn-primary'
       $('.more-filters-btn').text(title)
-
-  update_lodging_types = ->
-    if $('.lodging-types-list input:checked').length > 0
-      $('#dropdownMenuButton3').addClass 'btn-primary'
-      $('#dropdownMenuButton3').removeClass 'btn-outline-primary'
 
   Filters.update_prices = ->
     if $('.price-range-slider #min_price').val() == "0" && $('.price-range-slider #max_price').val() == "1500" && $('.discounts:checked').length == 0
