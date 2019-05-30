@@ -7,13 +7,13 @@
     <div class="dropdown-menu w-100" :aria-labelledby="this.dropdownId" @click="handleMenuClick">
       <div class="dropdown-item mt-3 mb-3">
         <div class="row">
-          <label class="col-md-6 text-lg pt-2">{{ adultsTitle() }}</label>
+          <label class="col-6 text-lg pt-2">{{ adultsTitle() }}</label>
           <number-input-spinner
             :min="0"
             :max="this.maxAdults"
             :integerOnly="true"
             :inputClass="'vnis__input'"
-            :buttonClass="'vnis__button col-md-6'"
+            :buttonClass="'vnis__button col-6'"
             :value="this.totalAdults"
             @input="handleAdults"
           />
@@ -22,7 +22,7 @@
 
       <div class="dropdown-item mt-3 mb-3">
         <div class="row">
-          <label class="col-md-6 text-lg pt-2">{{ childrenTitle() }}</label>
+          <label class="col-6 text-lg pt-2">{{ childrenTitle() }}</label>
           <number-input-spinner
             :min="0"
             :max="this.maxCalculatedChildren"
@@ -30,14 +30,14 @@
             @input="handleChildren"
             :inputClass="'vnis__input'"
             :value="this.totalChildren"
-            :buttonClass="'vnis__button col-md-6'"
+            :buttonClass="'vnis__button col-6'"
           />
         </div>
       </div>
 
       <div class="dropdown-item mt-3 mb-3" v-if="this.showInfants">
         <div class="row">
-          <label class="col-md-6 text-lg pt-2">{{ infantsTitle() }}</label>
+          <label class="col-6 text-lg pt-2">{{ infantsTitle() }}</label>
           <number-input-spinner
             :min="0"
             :max="this.maxInfants"
@@ -45,7 +45,7 @@
             @input="handleInfants"
             :inputClass="'vnis__input'"
             :value="this.totalInfants"
-            :buttonClass="'vnis__button col-md-6'"
+            :buttonClass="'vnis__button col-6'"
           />
         </div>
       </div>
@@ -196,6 +196,7 @@
     background: none;
     border: 1px solid black;
     color: black;
+    width: 40px;
   }
 
   .vue-guests-dropdown .vnis .vnis__button:hover {
