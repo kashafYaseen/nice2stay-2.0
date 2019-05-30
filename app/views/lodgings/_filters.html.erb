@@ -10,13 +10,14 @@
       <div class="col-md-12 p-0">
         <div class="row">       
           <section class="col-md-12">
-            <button class="btn btn-outline-primary dropdown-toggle btn-sm w-100" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title"><%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
-            </button>
+            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100">
+              <span class="title">
+                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
+            </a>
           </section>
 
           <section class="col-md-12">
-            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100" id="switch-views">List View</a>
+            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100" id="switch-views"><%= params[:layout_view].presence || 'List View' %></a>
           </section>
 
           <section class="col-md-12">
@@ -73,7 +74,7 @@
             <%= hidden_field_tag :children, params[:children] %>
             <%= hidden_field_tag :infants, params[:infants] %>
 
-            <button class="btn btn-outline-primary btn-sm w-100 mt-4 submit-filters" type="button">
+            <button class="btn btn-primary btn-sm w-100 mt-4 submit-filters" type="button">
               Search
             </button>
           </section>
@@ -205,4 +206,5 @@
   <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
+  <%= hidden_field_tag :layout_view, params[:layout_view] %>
 <% end %>

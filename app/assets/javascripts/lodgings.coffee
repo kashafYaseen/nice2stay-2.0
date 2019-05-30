@@ -9,18 +9,6 @@
     SortingDropdown.init()
     Filters.init()
 
-    $('#switch-views').click ->
-      if $(this).text() == 'List View'
-        $('#lodgings-container').removeClass 'col-md-6'
-        $('#lodgings-container').addClass 'col-md-10'
-        $('#map-container').removeClass 'd-sm-block'
-        $(this).text('Map View')
-      else
-        $('#lodgings-container').addClass 'col-md-6'
-        $('#lodgings-container').removeClass 'col-md-10'
-        $('#map-container').addClass 'd-sm-block'
-        $(this).text('List View')
-
     $('.show-all-filters').click (e) ->
       e.stopPropagation()
       if $(this).text().includes("show all")

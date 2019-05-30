@@ -3,8 +3,21 @@
 
   Filters.init = ->
     updated_amenities_and_experiences()
-    update_lodging_types()
     Filters.update_prices()
+
+    $('#filters-container #switch-views').click ->
+      if $(this).text() == 'List View'
+        $('#lodgings-container').removeClass 'col-md-6'
+        $('#lodgings-container').addClass 'col-md-10'
+        $('#map-container').removeClass 'd-sm-block'
+        $(this).text('Map View')
+        $('#layout_view').val('Map View')
+      else
+        $('#lodgings-container').addClass 'col-md-6'
+        $('#lodgings-container').removeClass 'col-md-10'
+        $('#map-container').addClass 'd-sm-block'
+        $(this).text('List View')
+        $('#layout_view').val('List View')
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
@@ -21,8 +34,7 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('.search-filters .lodging_type').change ->
-      update_lodging_types()
+    $('#filters-container .lodging_type').change ->
       Filters.submit()
 
   Filters.submit = ->
@@ -45,11 +57,6 @@
       $('.more-filters-btn').addClass 'btn-outline-primary'
       $('.more-filters-btn').removeClass 'btn-primary'
       $('.more-filters-btn').text(title)
-
-  update_lodging_types = ->
-    if $('.lodging-types-list input:checked').length > 0
-      $('#dropdownMenuButton3').addClass 'btn-primary'
-      $('#dropdownMenuButton3').removeClass 'btn-outline-primary'
 
   Filters.update_prices = ->
     if $('.price-range-slider #min_price').val() == "0" && $('.price-range-slider #max_price').val() == "1500" && $('.discounts:checked').length == 0
