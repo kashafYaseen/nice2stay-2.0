@@ -8,11 +8,12 @@
     <aside class="sidebar sidebar-offcanvas position-left">
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
       <div class="col-md-12 p-0">
-        <div class="row">       
+        <div class="row">
           <section class="col-md-12">
             <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100">
               <span class="title">
-                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %></span>
+                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
+              </span>
             </a>
           </section>
 
@@ -37,9 +38,11 @@
             </div>
           </section>
 
-          <section class="col-md-12">
+          <div class="col-md-12">
             <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+          </div>
 
+          <section class="col-md-12">
             <div class="vue-app">
               <datepicker
                 :trigger-id="'trigger-range'"
@@ -47,7 +50,7 @@
                 :check-out="'<%= params[:check_out]%>'"
                 :months="2"
                 :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
+                :action-buttons="false"
                 :full-screen="false"
                 :trigger-button="'btn btn-outline-primary btn-sm w-100'"
                 :inline="false"
@@ -65,16 +68,16 @@
                 :children-target="'#children'"
                 :infants-target="'#infants'"
                 :dropdown-id="'<%= "guests-dropdown-filters" %>'"
-                :show-apply="true"
+                :show-apply="false"
                 :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
-                :submit-target="'.lodgings-filters'"
+                :show-infants="false"
               />
             </div>
             <%= hidden_field_tag :adults, params[:adults] %>
             <%= hidden_field_tag :children, params[:children] %>
             <%= hidden_field_tag :infants, params[:infants] %>
 
-            <button class="btn btn-primary btn-sm w-100 mt-4 submit-filters" type="button">
+            <button class="btn btn-primary btn-md w-100 mt-2 submit-filters" type="button">
               Search
             </button>
           </section>

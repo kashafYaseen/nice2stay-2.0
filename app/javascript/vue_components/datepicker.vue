@@ -46,14 +46,10 @@
         let formattedDates = ''
         if (!dateTwo && !dateOne){
           formattedDates =  'Dates'
-          $(`#${this.triggerId}`).addClass('btn-outline-primary');
-          $(`#${this.triggerId}`).removeClass('btn-primary');
         }
 
         if (dateOne) {
           formattedDates = format(dateOne, this.dateFormat)
-          $(`#${this.triggerId}`).removeClass('btn-outline-primary');
-          $(`#${this.triggerId}`).addClass('btn-primary');
         }
         if (dateTwo) {
           formattedDates += ' - ' + format(dateTwo, this.dateFormat)
