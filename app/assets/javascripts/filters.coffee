@@ -2,7 +2,7 @@
   window.Filters or (window.Filters = {})
 
   Filters.init = ->
-    updated_amenities_and_experiences()
+    updated_amenities()
     Filters.update_prices()
 
     $('#filters-container #switch-views').click ->
@@ -23,8 +23,8 @@
       $('#more-filters').modal('toggle')
       $('.modal-backdrop').css('z-index', 1);
 
-    $('.amenities, .experiences, .countries').change ->
-      updated_amenities_and_experiences()
+    $('.amenities, .countries').change ->
+      updated_amenities()
 
     $('.discounts').change ->
       Filters.update_prices()
@@ -34,19 +34,19 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('#filters-container .lodging_type').change ->
+    $('#filters-container .lodging_type, #filters-container .experiences, #filters-container .amenities-hot').change ->
       Filters.submit()
 
   Filters.submit = ->
     $('#loader').show()
     Rails.fire($('#filters-container .lodgings-filters').get(0), 'submit')
 
-  updated_amenities_and_experiences = ->
+  updated_amenities = ->
     if $('.countries-list').css('display') == 'none'
-      checked = $(".amenities-list input:checked, .experiences-list input:checked").length
+      checked = $(".amenities-list input:checked").length
       $('.countries:checked').prop('checked', false)
     else
-      checked = $(".amenities-list input:checked, .experiences-list input:checked, .countries-list input:checked").length
+      checked = $(".amenities-list input:checked, .countries-list input:checked").length
 
     title = $('.more-filters-btn').data('title')
     if checked > 0

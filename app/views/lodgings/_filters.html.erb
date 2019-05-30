@@ -134,11 +134,11 @@
             <% end %>
           </section>
 
-          <section class="col-md-12 pt-3 amenities-list">
-            <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities' %></p>
+          <section class="col-md-12 pt-3 amenities-hot-list">
+            <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities_pop' %></p>
             <% amenities.hot.each do |amenity| %>
               <div class="custom-control custom-checkbox col-md-12">
-                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
+                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities-hot" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
                   <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
