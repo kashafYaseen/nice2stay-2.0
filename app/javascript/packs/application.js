@@ -11,7 +11,6 @@ import Vue from 'vue/dist/vue.esm.js'
 import Datepicker from '../vue_components/datepicker.vue'
 import ReservationDatepicker from '../vue_components/reservation_datepicker.vue'
 import GuestsDropdown from '../vue_components/guests_dropdown.vue'
-import GuestsInline from '../vue_components/guests_inline.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 import AirbnbStyleDatepicker from 'vue-airbnb-style-datepicker'
 import NumberInputSpinner from 'vue-number-input-spinner'
@@ -26,7 +25,7 @@ window.initDatePicker = function() {
     const vues = document.querySelectorAll(".vue-app");
     vues.forEach(function(element) {
       if(element.__vue__ == undefined) {
-        new Vue({ el: element, components: { ReservationDatepicker, Datepicker, GuestsDropdown, GuestsInline } })
+        new Vue({ el: element, components: { ReservationDatepicker, Datepicker, GuestsDropdown } })
       }
     });
   }

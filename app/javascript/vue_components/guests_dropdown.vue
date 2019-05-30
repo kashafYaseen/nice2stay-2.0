@@ -196,7 +196,7 @@
     border: none;
   }
 
-  .vue-guests-dropdown .vue-guests-dropdown .dropdown-menu {
+  .vue-guests-dropdown .dropdown-menu {
     min-width: 300px;
   }
 </style>
