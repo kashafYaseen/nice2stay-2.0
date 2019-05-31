@@ -9,12 +9,10 @@
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
       <div class="col-md-12 p-0">
         <div class="row">
-          <section class="col-md-12">
-            <a class="btn btn-outline-primary dropdown-toggle btn-sm w-100">
-              <span class="title">
-                <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
-              </span>
-            </a>
+          <section class="col-md-12 text-center">
+            <span class="text-xs text-dark">
+              <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
+            </span>
           </section>
 
           <section class="col-md-12">
@@ -36,10 +34,12 @@
                 <%= hidden_field_tag :order, params[:order] %>
               </div>
             </div>
+
+            <hr class="border-dark mt-1 mb-3">
           </section>
 
           <div class="col-md-12">
-            <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field' %>
+            <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
           </div>
 
           <section class="col-md-12">
@@ -161,19 +161,6 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-5">
-          <section class="countries-list row mb-4 d-md-none d-block">
-            <p class="widget-title"><%= t('nav.landen') %></h3>
-            <% countries.each do |country| %>
-              <div class="custom-control custom-checkbox col-md-12">
-                <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in) || is_checked?(country.slug, :country), class: "custom-control-input countries", id: "country_#{country.id}" %>
-
-                <label class="custom-control-label" for="country_<%= country.id %>">
-                  <%= country.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, country.id, 'countries', total_lodgings) %>)</span>
-                </label>
-              </div>
-            <% end %>
-          </section>
-
           <section class="experiences-list row mb-4">
             <p class="widget-title"><%= t('search.availability') %></h3>
 
@@ -209,5 +196,6 @@
   <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
+  <%= hidden_field_tag :name_middle, params[:name_middle] %>
   <%= hidden_field_tag :layout_view, params[:layout_view] %>
 <% end %>

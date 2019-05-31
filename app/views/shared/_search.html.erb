@@ -2,7 +2,7 @@
   <%= form_tag lodgings_path, method: :get, id: 'searchbar_search_form' do %>
     <div class="row">
       <div class="col-md-12 col-sm-12 pt-2">
-        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field', id: 'searchbar_query' %>
+        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general', id: 'searchbar_query' %>
       </div>
 
       <div class="col-md-12 col-sm-12">
