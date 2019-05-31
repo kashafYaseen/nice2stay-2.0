@@ -12,7 +12,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search query, body: body, page: params[:page], per_page: 25, limit: params[:limit], includes: [:translations, { parent: :translations }]
+    Lodging.search body: body, page: params[:page], per_page: 25, limit: params[:limit], includes: [:translations, { parent: :translations }]
   end
 
   private
@@ -38,6 +38,7 @@ class SearchLodgings
     def conditions
       conditions = []
       merge_seo_filters conditions
+      conditions << { terms: { id: Lodging.search(params[:name_middle]).hits.collect{ |hit| hit['_id'].to_i } } } if params[:name_middle].present?
       conditions << { term: { published: true } }
       conditions << { term: { checked: params[:checked] } } if params[:checked].present?
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?

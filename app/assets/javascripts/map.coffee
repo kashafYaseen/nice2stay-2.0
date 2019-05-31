@@ -19,12 +19,13 @@
         Rails.fire($('.lodgings-filters').get(0), 'submit')
 
       map.on 'zoomend', ->
-        bounds = map.getBounds()
-        $('#loader').show();
-        location = "#{bounds.toBBoxString()}"
-        $('#bounds').val(location)
-        window.bounds_changed = true
-        Rails.fire($('.lodgings-filters').get(0), 'submit')
+        if !($('.lodgings-filters #country').val() || $('.lodgings-filters #region').val())
+          bounds = map.getBounds()
+          $('#loader').show();
+          location = "#{bounds.toBBoxString()}"
+          $('#bounds').val(location)
+          window.bounds_changed = true
+          Rails.fire($('.lodgings-filters').get(0), 'submit')
       window.bounds_changed = true
 
   Map.add_markers = (set_bounds = true) ->
