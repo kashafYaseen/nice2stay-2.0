@@ -19,13 +19,16 @@
         Rails.fire($('.lodgings-filters').get(0), 'submit')
 
       map.on 'zoomend', ->
-        if !($('.lodgings-filters #country').val() || $('.lodgings-filters #region').val())
-          bounds = map.getBounds()
+        bounds = map.getBounds()
+        location = "#{bounds.toBBoxString()}"
+        $('#bounds').val(location)
+        window.bounds_changed = true
+        if !window.country_bounds
           $('#loader').show();
-          location = "#{bounds.toBBoxString()}"
-          $('#bounds').val(location)
-          window.bounds_changed = true
           Rails.fire($('.lodgings-filters').get(0), 'submit')
+        else
+          window.country_bounds = false
+
       window.bounds_changed = true
 
   Map.add_markers = (set_bounds = true) ->
@@ -53,6 +56,11 @@
 
   set_safe_bounds = (element, bounds_box) ->
     l = element.dataset.bounds
+    if ($('.lodgings-filters #country').val() || $('.lodgings-filters #region').val())
+      window.country_bounds = true
+    else
+      window.country_bounds = false
+
     if l
       latlngs = l.split(',')
       southWest = new L.latLng(latlngs[1], latlngs[0])
