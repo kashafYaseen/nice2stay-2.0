@@ -3,7 +3,7 @@
 
   Slider.init = ->
     elem = document.querySelector('.ui-range-slider')
-    if undefined != elem and null != elem
+    if undefined != elem and null != elem and !elem.noUiSlider
 
       startOffset = parseInt(elem.parentNode.getAttribute('data-start-min'), 10)
       max = parseInt(elem.parentNode.getAttribute('data-start-max'), 10)
@@ -25,6 +25,7 @@
         range:
           min: lb
           max: microsecMax
+        , true
       elem.noUiSlider.on 'update', (_meta, index) ->
         value = _meta[index]
         if index
@@ -36,6 +37,6 @@
 
       elem.noUiSlider.on 'end', (_meta, index) ->
         Filters.update_prices()
-        $('.lodgings-filters').submit()
+        Filters.submit()
 
 ).call this

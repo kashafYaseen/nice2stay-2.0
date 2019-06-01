@@ -2,7 +2,7 @@
   window.Autocomplete or (window.Autocomplete = {})
 
   Autocomplete.init = (url) ->
-    $('.autocomplete').typeahead { highlight: true }, {
+    $('.autocomplete-general').typeahead { highlight: true }, {
       name: 'countries'
       displayKey: 'name'
       limit: 4
@@ -36,7 +36,7 @@
         suggestion: (lodging) -> suggestion(lodging)
     }
 
-    $('.autocomplete').bind 'typeahead:selected', (obj, datum) ->
+    $('.autocomplete-general').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'campaign'
         $('#homepage_search_form, #searchbar_search_form').attr('method', 'post')
       else if datum.type == 'country' || datum.type == 'region'
@@ -44,6 +44,67 @@
         $('.autocomplete-region').val(datum.region)
         $('.autocomplete').val('')
       $('#homepage_search_form, #searchbar_search_form').attr('action', datum.url)
+
+
+  Autocomplete.init_search = (url) ->
+    $('.filters-autocomplete').typeahead { highlight: true }, {
+      name: 'countries'
+      displayKey: 'name'
+      limit: 4
+      source: source(url, 'countries')
+      templates:
+        header: '<p class="category-name">Countries</p>',
+        suggestion: (country) -> suggestion(country)
+    }, {
+      name: 'regions'
+      displayKey: 'name'
+      limit: 4
+      source: source(url, 'regions')
+      templates:
+        header: '<p class="category-name">Regions</p>'
+        suggestion: (region) -> suggestion(region)
+    }, {
+      name: 'accommodations'
+      displayKey: 'name'
+      limit: 5
+      source: source(url, 'lodgings')
+      templates:
+        header: '<p class="category-name">Accommodations</p>'
+        suggestion: (lodging) -> suggestion(lodging)
+    }
+
+    $('.filters-autocomplete').bind 'typeahead:change', (obj, datum) ->
+      if $('.lodgings-filters #region').val() || $('.lodgings-filters #country').val()
+        $('.lodgings-filters #name_middle').val('')
+
+    $('.filters-autocomplete').bind 'typeahead:selected', (obj, datum) ->
+      if datum.type == 'country'
+        if $('.lodgings-filters #country').length == 0
+          $('<input>').attr(
+            type: 'hidden'
+            id: 'country'
+            name: 'country').appendTo '.lodgings-filters'
+
+        $('.lodgings-filters #country').val(datum.country)
+        $('.lodgings-filters #region').val('')
+        $('.lodgings-filters #bounds').val('')
+        $('.lodgings-filters #name_middle').val('')
+      else if datum.type == 'region'
+        if $('.lodgings-filters #region').length == 0
+          $('<input>').attr(
+            type: 'hidden'
+            id: 'region'
+            name: 'region').appendTo '.lodgings-filters'
+
+        $('.lodgings-filters #country').val('')
+        $('.lodgings-filters #region').val(datum.region)
+        $('.lodgings-filters #bounds').val('')
+        $('.lodgings-filters #name_middle').val('')
+      else
+        $('.lodgings-filters #country').val('')
+        $('.lodgings-filters #region').val('')
+        $('.lodgings-filters #bounds').val('')
+        $('.lodgings-filters #name_middle').val(datum.name)
 
   source = (url, type) ->
     return new Bloodhound(

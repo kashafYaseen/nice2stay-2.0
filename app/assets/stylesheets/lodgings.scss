@@ -52,6 +52,14 @@
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
 }
 
+#filters-container {
+  .twitter-typeahead {
+    .tt-menu {
+      min-width: 400px;
+    }
+  }
+}
+
 .twitter-typeahead {
   font-size: 15px;
 

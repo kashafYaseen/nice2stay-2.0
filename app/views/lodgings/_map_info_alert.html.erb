@@ -3,16 +3,12 @@
     <div class="card">
       <div class="card-body bg-white">
         <div class="row">
-          <div class="col-10 my-auto">
+          <div class="col-12 my-auto">
             <h5 class="card-title"><%= t 'collection.inspiration' %></h5>
 
             <% collection.each do |custom_text| %>
               <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path, query_params.to_query), class: 'tag' %>
             <% end %>
-          </div>
-
-          <div class="col-2 my-auto">
-            <%= image_tag("inspiration_icon.png", alt: "visit") %>
           </div>
         </div>
       </div>
