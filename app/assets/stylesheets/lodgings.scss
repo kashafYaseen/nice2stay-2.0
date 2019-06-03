@@ -424,3 +424,18 @@ div.nearby-places {
     min-height: 40px;
   }
 }
+
+#map-container {
+  .leaflet-control {
+    clear: right;
+  }
+  .map-searchbox-control {
+    border: none;
+    padding: 4px;
+    padding-top: 10px;
+  }
+
+  .search-on-drag-label {
+    padding-left: 5px;
+  }
+}
