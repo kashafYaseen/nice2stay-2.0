@@ -23,9 +23,8 @@
 
               <div class="dropdown-menu layout-dropdown-menu" aria-labelledby="LayoutFilter">
                 <a class="dropdown-item list-view" href="#"><%= 'List View' %></a>
-                <a class="dropdown-item list-and-map" href="#"><%= 'List & Map' %></a>
+                <a class="dropdown-item list-and-map d-none d-sm-block" href="#"><%= 'List & Map' %></a>
                 <a class="dropdown-item map-view" href="#"><%= 'Map View' %></a>
-                <%= hidden_field_tag :layout_view, params[:layout_view] %>
               </div>
             </div>
           </section>
@@ -208,5 +207,5 @@
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
   <%= hidden_field_tag :name_middle, params[:name_middle] %>
-  <%= hidden_field_tag :layout_view, params[:layout_view] %>
+  <%= hidden_field_tag :layout_view, params[:layout_view] || 'List & Map' %>
 <% end %>
