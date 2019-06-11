@@ -5,19 +5,29 @@
     updated_amenities()
     Filters.update_prices()
 
-    $('#filters-container #switch-views').click ->
-      if $(this).text() == 'List View'
+    $('.layout-dropdown-menu .dropdown-item').click ->
+      if $(this).hasClass 'list-view'
         $('#lodgings-container').removeClass 'col-md-6'
+        $('#lodgings-container').removeClass 'd-none'
         $('#lodgings-container').addClass 'col-md-10'
         $('#map-container').removeClass 'd-sm-block'
-        $(this).text('Map View')
-        $('#layout_view').val('Map View')
-      else
+        $('#map-container').removeClass 'col-md-10'
+        $('#layout_view').val('List View')
+        $('.layout-dropdown .dropdown-toggle .title').text('List View')
+      else if $(this).hasClass 'list-and-map'
         $('#lodgings-container').addClass 'col-md-6'
         $('#lodgings-container').removeClass 'col-md-10'
-        $('#map-container').addClass 'd-sm-block'
-        $(this).text('List View')
-        $('#layout_view').val('List View')
+        $('#lodgings-container').removeClass 'd-none'
+        $('#map-container').removeClass 'col-md-10'
+        $('#map-container').addClass 'd-sm-block col-md-4'
+        $('#layout_view').val('List & Map')
+        $('.layout-dropdown .dropdown-toggle .title').text('List & Map')
+      else if $(this).hasClass 'map-view'
+        $('#lodgings-container').addClass 'd-none'
+        $('#map-container').removeClass 'col-md-4'
+        $('#map-container').addClass 'col-md-10 d-sm-block'
+        $('#layout_view').val('Map View')
+        $('.layout-dropdown .dropdown-toggle .title').text('Map View')
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')

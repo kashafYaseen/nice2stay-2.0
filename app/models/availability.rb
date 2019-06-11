@@ -17,7 +17,7 @@ class Availability < ApplicationRecord
 
   def self.check_out_only!(check_in)
     days = where(available_on: [check_in -1.day, check_in]).order(available_on: :desc)
-    return days.take.update_columns(check_out_only: true) if days.size == 2
+    return days.take.update_columns(check_out_only: true) if days.count == 2 && days.take.present?
     days.take.try(:delete)
   end
 
