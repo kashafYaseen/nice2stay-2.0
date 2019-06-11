@@ -59,6 +59,7 @@
         closeButton: false
         maxWidth: 220
         minWidth: 210
+      marker.setIcon(L.divIcon(feature.properties.icon));
     markers_layer.on 'click', (e) ->
       update_popup(e.layer.feature)
 
