@@ -19,15 +19,19 @@
         $('#lodgings-container').removeClass 'col-md-10'
         $('#lodgings-container').removeClass 'd-none'
         $('#map-container').removeClass 'col-md-10'
-        $('#map-container').addClass 'd-sm-block col-md-4'
+        $('#map-container').addClass 'd-none d-sm-block col-md-4'
         $('#layout_view').val('List & Map')
         $('.layout-dropdown .dropdown-toggle .title').text('List & Map')
+        map.remove()
+        Map.init()
       else if $(this).hasClass 'map-view'
         $('#lodgings-container').addClass 'd-none'
-        $('#map-container').removeClass 'col-md-4'
+        $('#map-container').removeClass 'col-md-4 d-none'
         $('#map-container').addClass 'col-md-10 d-sm-block'
         $('#layout_view').val('Map View')
         $('.layout-dropdown .dropdown-toggle .title').text('Map View')
+        map.remove()
+        Map.init()
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
