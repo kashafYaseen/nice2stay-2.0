@@ -237,7 +237,7 @@ class Lodging < ApplicationRecord
       },
       properties: {
         icon: {
-          className: 'map-price-icon',
+          className: "map-price-icon price-icon-#{id}",
           html: "$<span class='marker-price'>#{price}</span>",
           iconSize: nil
         },
