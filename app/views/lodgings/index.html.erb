@@ -65,6 +65,7 @@
   InfiniteScroll.pagination('<%= lodgings_path(locale: locale) %>');
   Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
   Filters.switch_view('<%= params[:layout_view] %>');
+  Lodging.calculate_price();
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>

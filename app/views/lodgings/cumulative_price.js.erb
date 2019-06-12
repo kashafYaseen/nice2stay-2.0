@@ -1,0 +1,3 @@
+$('.price-details-box-<%= @lodging.id %>').html('<%= j render_price(@lodging.calculated_price, @lodging.dynamic_price) %>');
+$('.price-icon-<%= @lodging.id %> .marker-price').html('<%= @lodging.calculated_price %>');
+$("#price-loader-<%= @lodging.id %>").hide();

@@ -13,3 +13,4 @@ Map.add_markers();
 Map.highlight_lodgings();
 Url.update("<%= lodgings_path(locale: locale, page: params[:page]) %>");
 Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
+Lodging.calculate_price();
