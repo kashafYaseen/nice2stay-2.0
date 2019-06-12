@@ -11,7 +11,6 @@ class LodgingsController < ApplicationController
   def index
     @lodgings = SearchLodgings.call(params, @custom_text)
     @total_lodgings = CountTotalLodgings.call()
-    @lodgings.map{|lodging| lodging.cumulative_price(params.clone)}
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
     @title = @custom_text.try(:meta_title)
@@ -53,6 +52,11 @@ class LodgingsController < ApplicationController
   def calendar
     @lodging = Lodging.published.friendly.find(params[:id])
     response.headers.delete "X-Frame-Options"
+  end
+
+  def cumulative_price
+    @lodging = Lodging.published.friendly.find(params[:id])
+    @lodging.cumulative_price(params.clone)
   end
 
   private

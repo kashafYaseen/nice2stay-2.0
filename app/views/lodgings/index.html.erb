@@ -46,11 +46,11 @@
   <div class="col-md-4 fixed-map d-none d-sm-block" id="map-container">
     <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
 
-    <div class="col-md-12 bg-secondary d-none" id="pagination-container">
+    <div class="col-md-6 offset-md-3 d-none" id="pagination-container">
       <div class="card bg-white">
-        <div class="card-body pt-0 pb-1">
+        <div class="card-body p-2">
           <div class="pagination">
-            <%= paginate @lodgings, remote: true, window: 3 %>
+            <%= paginate @lodgings, remote: true, window: 1 %>
           </div>
         </div>
       </div>
@@ -65,6 +65,7 @@
   InfiniteScroll.pagination('<%= lodgings_path(locale: locale) %>');
   Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
   Filters.switch_view('<%= params[:layout_view] %>');
+  Lodging.calculate_price();
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>
