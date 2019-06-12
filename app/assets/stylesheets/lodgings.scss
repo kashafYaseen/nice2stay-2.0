@@ -424,3 +424,9 @@ div.nearby-places {
     min-height: 40px;
   }
 }
+
+#pagination-container {
+  z-index: 1000;
+  position: absolute;
+  bottom: 70px;
+}
