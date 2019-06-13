@@ -425,18 +425,8 @@ div.nearby-places {
   }
 }
 
-#map-container {
-  .leaflet-control {
-    clear: right;
-  }
-  .map-searchbox-control {
-    border: none;
-    padding: 4px;
-    padding-top: 10px;
-    padding-right: 10px;
-  }
-
-  .search-on-drag-label {
-    padding-left: 5px;
-  }
+#pagination-container {
+  z-index: 1000;
+  position: absolute;
+  bottom: 70px;
 }

@@ -5,19 +5,8 @@
     updated_amenities()
     Filters.update_prices()
 
-    $('#filters-container #switch-views').click ->
-      if $(this).text() == 'List View'
-        $('#lodgings-container').removeClass 'col-md-6'
-        $('#lodgings-container').addClass 'col-md-10'
-        $('#map-container').removeClass 'd-sm-block'
-        $(this).text('Map View')
-        $('#layout_view').val('Map View')
-      else
-        $('#lodgings-container').addClass 'col-md-6'
-        $('#lodgings-container').removeClass 'col-md-10'
-        $('#map-container').addClass 'd-sm-block'
-        $(this).text('List View')
-        $('#layout_view').val('List View')
+    $('.layout-dropdown-menu .dropdown-item').click ->
+      Filters.switch_view($(this).prop('class'))
 
     $('.more-filters-btn').click ->
       $('#more-filters').modal('toggle')
@@ -65,5 +54,39 @@
     else
       $('#dropdownMenuButton4').addClass 'btn-primary'
       $('#dropdownMenuButton4').removeClass 'btn-outline-primary'
+
+  Filters.switch_view = (layout) ->
+    if layout.includes('list-view') || layout.includes 'List View'
+      $('#lodgings-container').removeClass 'col-md-6'
+      $('#lodgings-container').removeClass 'd-none'
+      $('#lodgings-container').addClass 'col-md-10'
+      $('#map-container').removeClass 'd-sm-block'
+      $('#map-container').removeClass 'col-md-10'
+      $('#layout_view').val('List View')
+      $('.layout-dropdown .dropdown-toggle .title').text('List View')
+      $('#pagination-container').addClass 'd-none'
+      Url.update("");
+    else if layout.includes('list-and-map') || layout.includes 'List & Map'
+      $('#lodgings-container').addClass 'col-md-6'
+      $('#lodgings-container').removeClass 'col-md-10'
+      $('#lodgings-container').removeClass 'd-none'
+      $('#map-container').removeClass 'col-md-10'
+      $('#map-container').addClass 'd-none d-sm-block col-md-4'
+      $('#layout_view').val('List & Map')
+      $('.layout-dropdown .dropdown-toggle .title').text('List & Map')
+      $('#pagination-container').addClass 'd-none'
+      map.remove()
+      Map.init()
+      Url.update("");
+    else if layout.includes('map-view') || layout.includes 'Map View'
+      $('#lodgings-container').addClass 'd-none'
+      $('#map-container').removeClass 'col-md-4 d-none'
+      $('#map-container').addClass 'col-md-10 d-sm-block'
+      $('#layout_view').val('Map View')
+      $('.layout-dropdown .dropdown-toggle .title').text('Map View')
+      $('#pagination-container').removeClass 'd-none'
+      map.remove()
+      Map.init()
+      Url.update("");
 
 ).call this

@@ -4,7 +4,7 @@
   Map.init = ->
     if $('#map').length
       L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
-      map = window.map = L.mapbox.map 'map', 'mapbox.streets'
+      map = window.map = L.mapbox.map 'map', 'mapbox.streets', touchZoom: false, scrollWheelZoom: false
       map.setView [38.5816, -121.4944], 12
       window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
       bounds_changed = window.bounds_changed = false
@@ -59,6 +59,7 @@
         closeButton: false
         maxWidth: 220
         minWidth: 210
+      marker.setIcon(L.divIcon(feature.properties.icon));
     markers_layer.on 'click', (e) ->
       update_popup(e.layer.feature)
 
@@ -152,7 +153,7 @@
       lodging_id = $(this).data('lodging-id')
       markers_layer.eachLayer (marker) ->
         if marker.feature.properties.id == lodging_id
-          marker.openPopup()
+          $(".price-icon-#{lodging_id}").addClass 'price-icon-hover'
           update_popup(marker.feature)
 
     $('.lodgings-list').on 'mouseleave', '.lodging-container', ->
@@ -160,7 +161,7 @@
       lodging_id = $(this).data('lodging-id')
       markers_layer.eachLayer (marker) ->
         if marker.feature.properties.id == lodging_id
-          marker.closePopup()
+          $(".price-icon-#{lodging_id}").removeClass 'price-icon-hover'
 
   update_popup = (feature) ->
     html = $(".price-review-box-#{feature.properties.id} .review-box").html()

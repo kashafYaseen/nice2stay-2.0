@@ -236,6 +236,11 @@ class Lodging < ApplicationRecord
         coordinates: [longitude, latitude]
       },
       properties: {
+        icon: {
+          className: "map-price-icon price-icon-#{id}",
+          html: "€<span class='marker-price'>#{price}</span>",
+          iconSize: nil
+        },
         id: id,
         title: name,
         description: feature_description,
