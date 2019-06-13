@@ -47,8 +47,11 @@
 
             <div class="col-md-3 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
 
-              <div class="price-details-box-<%= lodging.id %>"></div>
-              <div id="price-loader-<%= lodging.id %>"><%= image_tag 'loader.gif', class: 'w-25' %></div>
+              <div class="price-details-box-<%= lodging.id %>">
+                <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
+              </div>
+
+              <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
 
               <div class="review-box">
                 <% if lodging.average_rating > 0 %>
