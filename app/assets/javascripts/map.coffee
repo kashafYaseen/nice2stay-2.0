@@ -60,7 +60,6 @@
         maxWidth: 220
         minWidth: 210
       marker.setIcon(L.divIcon(feature.properties.icon));
-      marker.riseOnHover = true
     markers_layer.on 'click', (e) ->
       update_popup(e.layer.feature)
 
@@ -155,7 +154,6 @@
       markers_layer.eachLayer (marker) ->
         if marker.feature.properties.id == lodging_id
           $(".price-icon-#{lodging_id}").addClass 'price-icon-hover'
-          #marker.openPopup()
           update_popup(marker.feature)
 
     $('.lodgings-list').on 'mouseleave', '.lodging-container', ->
@@ -163,7 +161,6 @@
       lodging_id = $(this).data('lodging-id')
       markers_layer.eachLayer (marker) ->
         if marker.feature.properties.id == lodging_id
-          #marker.closePopup()
           $(".price-icon-#{lodging_id}").removeClass 'price-icon-hover'
 
   update_popup = (feature) ->
