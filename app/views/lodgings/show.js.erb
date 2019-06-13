@@ -5,6 +5,7 @@ $('.lodgings-list-json').replaceWith('<%= j render_show_page_map @lodging, @plac
 $('.nearby-places').html('<%= j render "places/index", grouped_places: @places.group_by(&:place_category), lodging: @lodging %>');
 $('.nearby-places-title').text('Nearby Places Within <%= params[:places_within].presence || "100km" %>');
 $('#loader').hide();
+$(".price-loader").hide();
 $('[data-toggle="tooltip"]').tooltip();
 OwlCarousel.init();
 Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
