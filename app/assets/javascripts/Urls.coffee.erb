@@ -29,6 +29,6 @@
     if $('#experience_<%= experience.slug %>').is(':checked') then params += "&experiences_in[]=#{$('#experience_<%= experience.slug %>').val()}"
     <% end %>
 
-    window.history.pushState({}, null, "#{base_url}?#{params}");
+    window.history.pushState(history.state, null, "#{base_url}?#{params}");
 
 ).call this
