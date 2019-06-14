@@ -4,7 +4,7 @@
   Map.init = ->
     if $('#map').length
       L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
-      map = window.map = L.mapbox.map 'map', 'mapbox.streets', touchZoom: false, scrollWheelZoom: false
+      map = window.map = L.mapbox.map 'map', 'mapbox.streets'
       map.setView [38.5816, -121.4944], 12
       window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
       bounds_changed = window.bounds_changed = false

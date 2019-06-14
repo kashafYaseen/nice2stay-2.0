@@ -46,9 +46,9 @@
   <div class="col-md-4 fixed-map d-none d-sm-block" id="map-container">
     <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
 
-    <div class="col-md-6 offset-md-3 d-none" id="pagination-container">
+    <div class="col-md-10 offset-md-1 d-none" id="pagination-container">
       <div class="card bg-white">
-        <div class="card-body p-2">
+        <div class="card-body pt-0 pb-1">
           <div class="pagination">
             <%= paginate @lodgings, remote: true, window: 1 %>
           </div>
