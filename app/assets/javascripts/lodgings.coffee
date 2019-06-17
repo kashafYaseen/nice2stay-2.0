@@ -23,7 +23,7 @@
   Lodging.calculate_price = ->
     ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
     url = $('.lodging-container').data('cumulative-url')
-    params = "[]ids=#{ids}&"
+    params = "ids=#{ids}&"
     params += "check_in=#{$('.lodgings-filters .check-in').val()}"
     params += "&check_out=#{$('.lodgings-filters .check-out').val()}"
     params += "&adults=#{$('#adults').val()}"

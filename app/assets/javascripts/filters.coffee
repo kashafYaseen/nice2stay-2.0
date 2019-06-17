@@ -20,10 +20,12 @@
       Filters.submit()
 
     $('.submit-filters').click ->
+      Url.update("");
       Filters.submit()
       $('#more-filters').modal('hide');
 
     $('#filters-container .lodging_type, #filters-container .experiences, #filters-container .amenities-hot').change ->
+      Url.update("");
       Filters.submit()
 
   Filters.submit = ->

@@ -17,17 +17,17 @@
     if $('#discounts').is(':checked') then params += "&discounts=true"
     if $('#layout_view').val() then params += "&layout_view=#{$('#layout_view').val()}"
 
-    <% Lodging.lodging_types.each do |key, value| %>
-    if $("#lodging_type_<%= key %>").is(':checked') then params += "&lodging_type_in[]=#{$('#lodging_type_<%= key %>').val()}"
-    <% end %>
+    for type in $('.lodging-types-list input:checked')
+      params += "&lodging_type_in[]=#{$(type).val()}"
 
-    <% Amenity.all.each do |amenity| %>
-    if $('#amenity_<%= amenity.slug %>').is(':checked') then params += "&amenities_in[]=#{$('#amenity_<%= amenity.slug %>').val()}"
-    <% end %>
+    for experience in $('.experiences-list input:checked')
+      params += "&experiences_in[]=#{$(experience).val()}"
 
-    <% Experience.all.each do |experience| %>
-    if $('#experience_<%= experience.slug %>').is(':checked') then params += "&experiences_in[]=#{$('#experience_<%= experience.slug %>').val()}"
-    <% end %>
+    for amenity in $('.amenities-list input:checked')
+      params += "&amenities_in[]=#{$(amenity).val()}"
+
+    for amenity in $('.amenities-hot-list input:checked')
+      params += "&amenities_in[]=#{$(amenity).val()}"
 
     window.history.pushState(history.state, null, "#{base_url}?#{params}");
 
