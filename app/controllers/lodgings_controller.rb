@@ -59,6 +59,10 @@ class LodgingsController < ApplicationController
     @lodgings.map{ |lodging| lodging.cumulative_price(params.clone) }
   end
 
+  def quick_view
+    @lodging = Lodging.published.friendly.find(params[:id])
+  end
+
   private
     def set_lodging
       @lodging = Lodging.published.friendly.find(params[:id])
