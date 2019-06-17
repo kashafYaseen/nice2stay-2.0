@@ -21,21 +21,20 @@
         $("#{$(this).data('target')}-icon").text('keyboard_arrow_down')
 
   Lodging.calculate_price = ->
-    for container in $('.lodging-container')
-      lodging_id = $(container).data('lodging-id')
-      params = ""
-      params += "check_in=#{$('.lodgings-filters .check-in').val()}"
-      params += "&check_out=#{$('.lodgings-filters .check-out').val()}"
-      params += "&adults=#{$('#adults').val()}"
-      params += "&children=#{$('#children').val()}"
-      params += "&infants=#{$('#infants').val()}"
+    ids = $('.lodgings-list-json').map(-> JSON.parse @dataset.ids).get()
+    url = $('.lodging-container').data('cumulative-url')
+    params = "[]ids=#{ids}&"
+    params += "check_in=#{$('.lodgings-filters .check-in').val()}"
+    params += "&check_out=#{$('.lodgings-filters .check-out').val()}"
+    params += "&adults=#{$('#adults').val()}"
+    params += "&children=#{$('#children').val()}"
+    params += "&infants=#{$('#infants').val()}"
 
-      url = $(container).data('cumulative-url')
-      $.ajax
-        url: "#{url}?#{params}"
-        type: 'GET'
-        success: (data) ->
-          return
+    $.ajax
+      url: "#{url}?#{params}"
+      type: 'GET'
+      success: (data) ->
+        return
 
   Lodging.child_form = ->
     $('.btn-booking').click ->
