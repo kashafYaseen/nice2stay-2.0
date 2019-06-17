@@ -24,7 +24,9 @@
         Reservation.validate(values)
 
   Invoice.calculate = (lodging_ids) ->
-    Rails.fire($('.you-may-like-form').get(0), 'submit')
+    if $('.you-may-like-form').length > 0
+      Rails.fire($('.you-may-like-form').get(0), 'submit')
+
     for lodging_id in lodging_ids
       values = [$("#check_in_#{lodging_id}").val(), $("#check_out_#{lodging_id}").val(),
                 $("#adults_#{lodging_id}").val(), $("#children_#{lodging_id}").val(),

@@ -13,7 +13,7 @@
       :min-date="this.minDate"
       :disabled-dates="this.disabledDates"
       :show-action-buttons="this.actionButtons"
-      :fullscreenMobile="this.fullScreen"
+      :full-screen-mobile="this.fullScreen"
       :mobileHeader="'Nice2Stay'"
     ></airbnb-style-datepicker>
     <input type="hidden" name="check_in" class="check-in" :value="check_in">

@@ -55,8 +55,12 @@ class LodgingsController < ApplicationController
   end
 
   def cumulative_price
+    @lodgings = Lodging.where(id: params[:ids].try(:split, ','))
+    @lodgings.map{ |lodging| lodging.cumulative_price(params.clone) }
+  end
+
+  def quick_view
     @lodging = Lodging.published.friendly.find(params[:id])
-    @lodging.cumulative_price(params.clone)
   end
 
   private

@@ -15,6 +15,12 @@
     <%= render 'shared/footer' %>
 
     <script type="text/javascript">
+      window.onpopstate = function(event) {
+        if (window.historyInitiated) {
+          window.location.reload();
+        }
+      };
+
       initDatePicker();
       Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
       Custom.init();
