@@ -18,9 +18,9 @@
           </div>
         </div>
 
-        <div class="col-md-6 col-lg-7 col-xs-12">
-          <%= link_to render_lodging_path(lodging), class: "text-decoration-none row" do %>
-            <div class="col-md-9 col-xs-12">
+        <div class="col-md-6 col-lg-7 col-xs-12 p-0">
+          <div class="row">
+            <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-8 col-xs-12 pr-0" do %>
               <p class="text-xxs">
                 <% if lodging.as_child? %>
                   <%= truncate(lodging.parent.short_desc, length: 100) %>
@@ -45,9 +45,9 @@
                   <i class="material-icons md-18 done text-gray-dark"></i> <%= render_highlight lodging, 'highlight_3' %>
                 </p>
               </ul>
-            </div>
+            <% end %>
 
-            <div class="col-md-3 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
+            <div class="col-md-4 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
 
               <div class="price-details-box-<%= lodging.id %>">
                 <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
@@ -61,8 +61,14 @@
                   <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review' ) %></p>
                 <% end %>
               </div>
+
+              <div class="links-box text-cnter">
+                <%= link_to 'View', render_lodging_path(lodging), class: 'btn btn-primary btn-sm' %>
+
+                <%= link_to 'Quick View', '#', class: "btn btn-secondary btn-sm quick-view-btn", data: { lodging: lodging.id } %>
+              </div>
             </div>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
