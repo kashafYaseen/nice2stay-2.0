@@ -426,7 +426,7 @@ div.nearby-places {
 }
 
 #pagination-container {
-  z-index: 1000;
-  position: absolute;
-  bottom: 65px;
+  .first, .last, .next, .prev {
+    display: none;
+  }
 }
