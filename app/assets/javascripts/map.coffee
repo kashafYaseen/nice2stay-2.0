@@ -57,7 +57,7 @@
                       <p id='feature-price-#{feature.properties.id}' class='feature-price'></p>
 
                       <div class='text-center'>
-                        <a href='#{feature.properties.url}' class='btn-secondary btn-sm'>View</a>
+                        <a href='#{feature.properties.url}' class='btn-primary btn-sm'>View</a>
                         <a class='btn-secondary btn-sm cursor-pointer quick-view-#{feature.properties.id}' data-lodging='#{feature.properties.id}'>Quick View</a>
                       </div>"
       marker.bindPopup popupContent,
@@ -68,13 +68,9 @@
     markers_layer.on 'click', (e) ->
       update_popup(e.layer.feature)
 
-      $(".quick-view-#{e.layer.feature.properties.id}").on 'click', (e) ->
+      $(".quick-view-#{e.layer.feature.properties.id}").off('click').on 'click', (e) ->
         e.stopPropagation()
-        $.ajax
-          url: $("#lodging-#{$(this).data('lodging')} .persisted-data").data('quick-view');
-          type: 'GET'
-          success: (data) ->
-            return
+        Lodging.quick_view(this)
 
     markers_layer.setGeoJSON(features)
 

@@ -9,6 +9,10 @@
     SortingDropdown.init()
     Filters.init()
 
+    $(".quick-view-btn").on 'click', (e) ->
+      e.stopPropagation()
+      Lodging.quick_view(this)
+
     $('.show-all-filters').click (e) ->
       e.stopPropagation()
       if $(this).text().includes("show all")
@@ -72,6 +76,13 @@
       else
         $target.html($(this).data('truncated'))
         $(this).text('Read more')
+
+  Lodging.quick_view = (target) ->
+    $.ajax
+      url: $("#lodging-#{$(target).data('lodging')} .persisted-data").data('quick-view');
+      type: 'GET'
+      success: (data) ->
+        return
 
   more_filters_dropdown = (option) ->
     if option == 'close'

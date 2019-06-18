@@ -1,5 +1,5 @@
-<div class="modal fade" id="child-details-modal-<%= lodging.id %>" tabindex="-1">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade <%= quick_view ? 'quick-view-modal' : '' %>" id="child-details-modal-<%= lodging.id %>" tabindex="-1">
+  <div class="modal-dialog <%= quick_view ? 'modal-md' : 'modal-lg' %>">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title"><%= lodging.child_name %></h4>
@@ -34,7 +34,7 @@
               />
             </div>
 
-            <div class="col-md-7 bg-white col-border">
+            <div class="<%= quick_view ? 'col-md-12' : 'col-md-7 col-border' %> bg-white">
               <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
                  <%= render 'reservations/errors', resource: lodging.reservations.build %>
               </div>
