@@ -3,7 +3,7 @@
     <div class="text-center">
       <div class="d-inline align-baseline display-3 mr-1"><%= lodging.average_rating %></div>
 
-      <div class="d-inline align-baseline text-sm text-warning mr-1">
+      <div class="d-inline align-baseline text-sm text-primary mr-1">
         <%= render_stars_tag lodging.average_rating %>
         <p>(<%= pluralize(lodging.all_reviews.count, 'review', 'reviews') %>)</p>
       </div>
