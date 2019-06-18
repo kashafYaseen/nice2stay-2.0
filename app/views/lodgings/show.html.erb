@@ -57,7 +57,7 @@
           </div>
 
           <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
-          <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging, locals: { id_sufix: '_modal', quick_view: false }  %>
+          <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging, locals: { id_sufix: '_modal' }  %>
         <% end %>
       </div>
 
