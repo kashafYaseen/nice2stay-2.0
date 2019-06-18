@@ -44,6 +44,7 @@ class Lodging < ApplicationRecord
   delegate :desc, :published, to: :reviews, allow_nil: true, prefix: true
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
   delegate :admin_user, to: :owner, allow_nil: true
+  delegate :summary, :location_description, to: :parent, allow_nil: true, prefix: true
 
   scope :published, -> { where(published: true) }
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }

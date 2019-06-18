@@ -16,7 +16,7 @@ module ReviewsHelper
       </label>
 
     <div class='progress margin-bottom-1x'>
-      <div class='progress-bar bg-warning' role='progressbar'
+      <div class='progress-bar' role='progressbar'
         style='width: #{percentage}%; height: 2px;'
         aria-valuenow='#{rating}' aria-valuemin='0'
         aria-valuemax='5'>

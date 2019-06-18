@@ -274,12 +274,6 @@ div.review-paginator {
 }
 
 @media only screen and (max-width: 768px) {
-  #lodging-quick-view {
-    .quick-view-modal {
-      right: 0 !important;
-    }
-  }
-
   #sidebar {
     display: none;
   }
@@ -432,13 +426,7 @@ div.nearby-places {
 }
 
 #pagination-container {
-  z-index: 1000;
-  position: absolute;
-  bottom: 65px;
-}
-
-#lodging-quick-view {
-  .quick-view-modal {
-    right: 350px;
+  .first, .last, .next, .prev {
+    display: none;
   }
 }

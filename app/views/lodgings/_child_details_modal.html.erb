@@ -1,5 +1,5 @@
-<div class="modal fade <%= quick_view ? 'quick-view-modal' : '' %>" id="child-details-modal-<%= lodging.id %>" tabindex="-1">
-  <div class="modal-dialog <%= quick_view ? 'modal-md' : 'modal-lg' %>">
+<div class="modal fade" id="child-details-modal-<%= lodging.id %>" tabindex="-1">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title"><%= lodging.child_name %></h4>
@@ -12,9 +12,66 @@
         </div>
 
         <p class="text-sm">
-          <div id="lodging-description">
-            <%= lodging.short_desc.try(:html_safe) %>
+          <ul class="nav nav-tabs justify-content-start ml-0" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" href="#description-tab" data-toggle="tab" role="tab">Description</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#location-tab" data-toggle="tab" role="tab">Location</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#amenities-tab" data-toggle="tab" role="tab">Amenties</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#reviews-tab" data-toggle="tab" role="tab">Reviews</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="description-tab" role="tabpanel">
+              <p><%= lodging.as_child? ? lodging.parent_summary.try(:html_safe) : lodging.summary.try(:html_safe) %></p>
+            </div>
+
+            <div class="tab-pane fade" id="location-tab" role="tabpanel">
+              <p><%= lodging.as_child? ? lodging.parent_location_description.try(:html_safe) : lodging.location_description.try(:html_safe) %></p>
+            </div>
+
+            <div class="tab-pane fade" id="amenities-tab" role="tabpanel">
+              <ul class="list-icon pt-2 pb-2">
+                <% lodging.amenities.each do |amenity| %>
+                  <i class="material-icons md-14 check_circle text-success"></i> <%= amenity.name %>
+                <% end %>
+              </ul>
+            </div>
+
+            <div class="tab-pane fade" id="reviews-tab" role="tabpanel">
+              <div id="reviews-container">
+                <div class="row">
+                  <% if reviews.present? %>
+                    <div class="card-body col-md-12">
+                      <hr class="margin-bottom-1x">
+                      <%= render 'reviews/rating', lodging: lodging %>
+                    </div>
+
+                    <div class="col-md-12 padding-top-1x">
+                      <div class="reviews-container">
+                        <%= render reviews.limit(3) %>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="card-body col-md-12 pl-4">
+                      <p>Accommodation does not have any review yet.</p>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <hr class="margin-bottom-1x">
 
           <div class="row mt-5">
             <div class="col-md-5 vue-app">
@@ -34,10 +91,11 @@
               />
             </div>
 
-            <div class="<%= quick_view ? 'col-md-12' : 'col-md-7 col-border' %> bg-white">
+            <div class="col-md-7 col-border bg-white">
               <div class="reservation-form-errors-<%= lodging.id %> child-form-errors">
-                 <%= render 'reservations/errors', resource: lodging.reservations.build %>
+                <%= render 'reservations/errors', resource: lodging.reservations.build %>
               </div>
+
               <%= form_for lodging.reservations.build, url: reservations_path, remote: true, html: { id: "new_reservation_#{lodging.id}#{id_sufix}" } do |f| %>
 
                 <p class="mb-1 mt-2 text-xxxs text-dark" id="anternative-heading-<%= "#{lodging.id}#{id_sufix}" %>">
