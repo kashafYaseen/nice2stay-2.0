@@ -429,4 +429,15 @@ div.nearby-places {
   .first, .last, .next, .prev {
     display: none;
   }
+
+  .pagination .pages > li > a {
+    width: 30px;
+    height: 33px;
+  }
+
+  .pagination .pages > li.active > a {
+    border-color: #FFED00;
+    color: #000;
+    background-color: white;
+  }
 }

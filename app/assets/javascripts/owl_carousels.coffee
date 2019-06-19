@@ -8,6 +8,6 @@
       dots: false
       nav: true
       navText: false
-      autoHeight: true
+      autoHeight: false
 
 ).call this
