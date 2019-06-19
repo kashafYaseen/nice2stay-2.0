@@ -959,7 +959,7 @@ figure figcaption {
 }
 
 .text-primary {
-  color: #dc9814 !important;
+  color: #FFED00 !important;
 }
 
 .text-info {
@@ -3546,15 +3546,15 @@ button:focus {
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:hover > i {
-  color: #dc9814;
+  color: #FFED00;
 }
 
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-item.show .nav-link > i,
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-link.active > i {
-  border-bottom-color: #dc9814;
-  color: #dc9814;
+  border-bottom-color: #FFED00;
+  color: black;
 }
 
 .nav-link.dropdown-toggle {
@@ -3975,12 +3975,12 @@ button:focus {
 }
 
 .pagination .pages > li > a:hover {
-  border-color: #eaeaea;
+  border-color: #FFED00;
 }
 
 .pagination .pages > li.active > a {
-  border-color: #dc9814;
-  color: #dc9814;
+  border-color: #FFED00;
+  color: #000;
 }
 
 .pagination .btn > i {
@@ -4865,7 +4865,7 @@ a.list-group-item {
 
 .progress-bar {
   height: 18px;
-  background-color: #dc9814;
+  background-color: #FFED00;
 }
 
 .owl-carousel {

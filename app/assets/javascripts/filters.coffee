@@ -66,7 +66,7 @@
       $('#map-container').removeClass 'col-md-10'
       $('#layout_view').val('List View')
       $('.layout-dropdown .dropdown-toggle .title').text('List View')
-      $('#pagination-container').addClass 'd-none'
+      $('.lodgings-filters #pagination-container').addClass 'd-none'
       Url.update("");
     else if layout.includes('list-and-map') || layout.includes 'List & Map'
       $('#lodgings-container').addClass 'col-md-6'
@@ -76,7 +76,7 @@
       $('#map-container').addClass 'd-none d-sm-block col-md-4'
       $('#layout_view').val('List & Map')
       $('.layout-dropdown .dropdown-toggle .title').text('List & Map')
-      $('#pagination-container').addClass 'd-none'
+      $('.lodgings-filters #pagination-container').addClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
@@ -86,7 +86,7 @@
       $('#map-container').addClass 'col-md-10 d-sm-block'
       $('#layout_view').val('Map View')
       $('.layout-dropdown .dropdown-toggle .title').text('Map View')
-      $('#pagination-container').removeClass 'd-none'
+      $('.lodgings-filters #pagination-container').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");

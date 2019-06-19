@@ -1,0 +1,5 @@
+$('#lodging-quick-view').html("<%= j render 'child_details_modal', lodging: @lodging, id_sufix: '', reviews: @reviews %>");
+$('#lodging-quick-view #child-details-modal-<%= @lodging.id %>').modal('show');
+OwlCarousel.init();
+initDatePicker();
+Lodging.child_form();
