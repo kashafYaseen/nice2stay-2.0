@@ -57,7 +57,7 @@
                       <p id='feature-price-#{feature.properties.id}' class='feature-price'></p>
 
                       <div class='text-center'>
-                        <a href='#{feature.properties.url}' class='btn-primary btn-sm'>View</a>
+                        <a href='#{feature.properties.url}?#{window.location.href.split('?')[1]}' class='btn-primary btn-sm'>View</a>
                         <a class='btn-secondary btn-sm cursor-pointer quick-view-#{feature.properties.id}' data-lodging='#{feature.properties.id}'>Quick View</a>
                       </div>"
       marker.bindPopup popupContent,
