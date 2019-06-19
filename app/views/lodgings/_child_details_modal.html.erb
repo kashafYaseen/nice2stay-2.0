@@ -2,7 +2,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title"><%= lodging.child_name %></h4>
+        <h4 class="modal-title col-md-9"><%= lodging.child_name %></h4>
+        <%= link_to 'View Details', lodging_path(lodging), class: 'btn btn-md btn-secondary bg-white' if action_name == 'quick_view' %>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
 
