@@ -91,6 +91,13 @@ en:
     overview: Youre bookings and options requests
     gasten: Youre data
 
+  quick_view:
+    summary: Summary
+    location: Location
+    amentites: Amentites
+    reviews: Reviews
+    description: Description
+
   carts:
     step_2:
       header: Your request

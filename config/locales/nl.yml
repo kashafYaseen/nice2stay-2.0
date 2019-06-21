@@ -42,6 +42,13 @@ nl:
 
   prices_not_confirmed: De getoonde prijs van deze accommodatie is ter indicatie, deze kunnen nog wijzigen
 
+  quick_view:
+    summary: Sammenvatting
+    location: Locatie
+    amentites: Voorzieningen
+    reviews: Beoordelingen
+    description: Omschrijving
+
   profile_account: 
      side_nav_home: Dashboard
      side_nav_bookings: Boekingen & opties
