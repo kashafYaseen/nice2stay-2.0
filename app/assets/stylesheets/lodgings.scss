@@ -426,19 +426,33 @@ div.nearby-places {
 }
 
 #pagination-container {
-  .first, .last, .next, .prev {
+  z-index: 1000;
+  position: absolute;
+  bottom: 65px;
+  height: 60px;
+  overflow: hidden;
+
+  .first, .last {
     display: none;
   }
 
-  .pagination .pages > li > a {
-    width: 30px;
-    height: 33px;
+  .next, .prev {
+    display: inline;
   }
 
-  .pagination .pages > li.active > a {
-    border-color: #FFED00;
-    color: #000;
-    background-color: white;
+  .pagination { padding: 7px; } .column {
+    padding-top: 0;
+  }
+
+  .pagination .pages > .page {
+    display: none;
+  }
+  .pagination .pages {
+    padding-left: 3px; padding-right: 3px;
+  }
+
+  .pagination .pages > li.active {
+    display: inline-block !important;
   }
 }
 

@@ -13,12 +13,6 @@
             <span class="text-xs text-bold">
               <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
             </span>
-
-            <div id="pagination-container">
-              <div class="pagination">
-                <%= paginate @lodgings, remote: true, window: 1 %>
-              </div>
-            </div>
           </section>
 
           <section class="col-md-12">
