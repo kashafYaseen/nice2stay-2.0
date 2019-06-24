@@ -18,6 +18,7 @@ class Country < ApplicationRecord
   default_scope { includes(:translations) }
   scope :enabled, -> { where(disable: false).includes(:regions) }
   scope :search_import, -> { enabled }
+  scope :ordered, -> { order(boost: :desc) }
 
   delegate :menu, to: :campaigns, allow_nil: true, prefix: true
   delegate :country_page, to: :lodgings, prefix: true, allow_nil: true
