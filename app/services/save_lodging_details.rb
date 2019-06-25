@@ -123,6 +123,7 @@ class SaveLodgingDetails
         :published,
         :heads,
         :confirmed_price,
+        :confirmed_price_2020,
         :include_cleaning,
         :include_deposit,
         :checked,
