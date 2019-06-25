@@ -40,7 +40,7 @@ nl:
     name: Uw gegevens
     messages: Belangrijke berichten 
 
-  prices_not_confirmed: De getoonde prijs van deze accommodatie is ter indicatie, deze kunnen nog wijzigen
+  prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
 
   quick_view:
     summary: Sammenvatting

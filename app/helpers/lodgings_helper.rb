@@ -112,4 +112,10 @@ module LodgingsHelper
   def render_distance hit
     "#{hit['sort'].first.try(:round, 2)} km"
   end
+
+  def years_with_unconfirmed_prices lodging
+    return "2019 #{t('route.and')} 2020" unless lodging.confirmed_price_2020 || lodging.confirmed_price
+    return "2019" unless lodging.confirmed_price
+    return "2020" unless lodging.confirmed_price_2020
+  end
 end

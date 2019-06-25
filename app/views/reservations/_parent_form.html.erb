@@ -57,7 +57,8 @@
       <%= link_to 'Check Availability', '#', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
 
       <div class="bg-white mt-3">
-        <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed') unless lodging.confirmed_price %>
+        <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('prices_not_confirmed', years: years_with_unconfirmed_prices(lodging)) if lodging.display_price_notice? %>
+
 
         <%= render 'shared/alert', title: 'Important:', description: t('not_live_parent'), type: 'info' unless lodging.checked? %>
       </div>

@@ -229,6 +229,10 @@ class Lodging < ApplicationRecord
     end
   end
 
+  def display_price_notice?
+    !(confirmed_price && confirmed_price_2020)
+  end
+
   def feature
     {
       type: 'Feature',

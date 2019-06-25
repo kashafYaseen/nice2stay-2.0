@@ -82,7 +82,7 @@ en:
     holiday: Unique holiday
     inspiration: Inspiring collections 
 
-  prices_not_confirmed: The rate shown for this accommodation is an indication and might change
+  prices_not_confirmed: The prices shown for %{years} are subject to interim changes
 
   carts:
     overview: Your bookings and options requests
