@@ -41,6 +41,7 @@ nl:
     messages: Belangrijke berichten 
 
   prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
+  availability_not_confirmed: de beschikbaarheid is op aanvraag
 
   quick_view:
     summary: Sammenvatting

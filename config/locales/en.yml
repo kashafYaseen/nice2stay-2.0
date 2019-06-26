@@ -83,6 +83,7 @@ en:
     inspiration: Inspiring collections 
 
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
+  availability_not_confirmed: the availability is on request
 
   carts:
     overview: Your bookings and options requests
