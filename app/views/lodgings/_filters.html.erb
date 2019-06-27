@@ -13,26 +13,20 @@
             <span class="text-xs text-bold">
               <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
             </span>
-
-            <div class="<%= 'd-none' unless params[:layout_view] == 'Map View' %>" id="pagination-container">
-              <div class="pagination">
-                <%= paginate @lodgings, remote: true, window: 1 %>
-              </div>
-            </div>
           </section>
 
           <section class="col-md-12">
-            <div class="layout-dropdown dropdown">
-              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="LayoutFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="title"><%= params[:layout_view].presence || 'List & Map' %></span>
-              </button>
+            <button class="btn btn-outline-secondary btn-sm w-30 mr-0 list-view layout-btn btn-outline-secondary" type="button">
+              <span class="title">List</span>
+            </button>
 
-              <div class="dropdown-menu layout-dropdown-menu" aria-labelledby="LayoutFilter">
-                <a class="dropdown-item list-view" href="#"><%= 'List View' %></a>
-                <a class="dropdown-item list-and-map d-none d-sm-block" href="#"><%= 'List & Map' %></a>
-                <a class="dropdown-item map-view" href="#"><%= 'Map View' %></a>
-              </div>
-            </div>
+            <button class="btn btn-outline-secondary btn-sm w-30 mr-0 list-and-map layout-btn d-none d-sm-inline-block" type="button">
+              <span class="title">Split</span>
+            </button>
+
+            <button class="btn btn-outline-secondary btn-sm w-30 mr-0 map-view layout-btn" type="button">
+              <span class="title">Map</span>
+            </button>
           </section>
 
           <section class="col-md-12">
@@ -52,6 +46,7 @@
             </div>
 
             <hr class="border-dark mt-1 mb-3">
+            <p class="widget-title text-bold"><%= t 'search.title' %></p>
           </section>
 
           <div class="col-md-12">
@@ -213,5 +208,5 @@
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
   <%= hidden_field_tag :name_middle, params[:name_middle] %>
-  <%= hidden_field_tag :layout_view, params[:layout_view] || 'List & Map' %>
+  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'List & Map' %>
 <% end %>

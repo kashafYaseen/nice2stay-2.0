@@ -18,6 +18,11 @@ ActiveAdmin.register Booking do
       f.input :booking_status
       f.input :pre_payment
       f.input :final_payment
+      f.input :pre_payment_mollie_id
+      f.input :final_payment_mollie_id
+      f.input :pre_payed_at, as: :date_time_picker
+      f.input :final_payed_at, as: :date_time_picker
+
       f.input :confirmed
     end
 
@@ -33,8 +38,8 @@ ActiveAdmin.register Booking do
     column :booking_status
     column :pre_payment
     column :final_payment
-    column :pre_paid_at
-    column :final_paid_at
+    column :pre_payed_at
+    column :final_payed_at
     column :confirmed
     column :in_cart
     column :created_at
@@ -51,8 +56,10 @@ ActiveAdmin.register Booking do
       row :final_payment
       row :in_cart
       row :confirmed
-      row :pre_paid_at
-      row :final_paid_at
+      row :pre_payed_at
+      row :final_payed_at
+      row :pre_payment_mollie_id
+      row :final_payment_mollie_id
       row :created_at
       row :updated_at
 

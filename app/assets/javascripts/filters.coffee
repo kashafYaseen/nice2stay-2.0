@@ -5,7 +5,7 @@
     updated_amenities()
     Filters.update_prices()
 
-    $('.layout-dropdown-menu .dropdown-item').click ->
+    $('.layout-btn').click ->
       Filters.switch_view($(this).prop('class'))
 
     $('.more-filters-btn').click ->
@@ -58,6 +58,7 @@
       $('#dropdownMenuButton4').removeClass 'btn-outline-primary'
 
   Filters.switch_view = (layout) ->
+    $('.layout-btn').removeClass 'btn-primary'
     if layout.includes('list-view') || layout.includes 'List View'
       $('#lodgings-container').removeClass 'col-md-6'
       $('#lodgings-container').removeClass 'd-none'
@@ -65,8 +66,8 @@
       $('#map-container').removeClass 'd-sm-block'
       $('#map-container').removeClass 'col-md-10'
       $('#layout_view').val('List View')
-      $('.layout-dropdown .dropdown-toggle .title').text('List View')
-      $('.lodgings-filters #pagination-container').addClass 'd-none'
+      $('.list-view').addClass 'btn-primary'
+      $('#pagination-container').addClass 'd-none'
       Url.update("");
     else if layout.includes('list-and-map') || layout.includes 'List & Map'
       $('#lodgings-container').addClass 'col-md-6'
@@ -75,8 +76,8 @@
       $('#map-container').removeClass 'col-md-10'
       $('#map-container').addClass 'd-none d-sm-block col-md-4'
       $('#layout_view').val('List & Map')
-      $('.layout-dropdown .dropdown-toggle .title').text('List & Map')
-      $('.lodgings-filters #pagination-container').addClass 'd-none'
+      $('.list-and-map').addClass 'btn-primary'
+      $('#pagination-container').addClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
@@ -85,10 +86,13 @@
       $('#map-container').removeClass 'col-md-4 d-none'
       $('#map-container').addClass 'col-md-10 d-sm-block'
       $('#layout_view').val('Map View')
-      $('.layout-dropdown .dropdown-toggle .title').text('Map View')
-      $('.lodgings-filters #pagination-container').removeClass 'd-none'
+      $('.map-view').addClass 'btn-primary'
+      $('#pagination-container').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
+    else
+      $('.list-and-map').addClass 'btn-primary'
+      $('#pagination-container').addClass 'd-none'
 
 ).call this

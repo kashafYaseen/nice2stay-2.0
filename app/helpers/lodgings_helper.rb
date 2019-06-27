@@ -112,4 +112,17 @@ module LodgingsHelper
   def render_distance hit
     "#{hit['sort'].first.try(:round, 2)} km"
   end
+
+  def years_with_unconfirmed_prices lodging
+    return "2019 #{t('route.and')} 2020" unless lodging.confirmed_price_2020 || lodging.confirmed_price
+    return "2019" unless lodging.confirmed_price
+    return "2020" unless lodging.confirmed_price_2020
+  end
+
+  def render_price_notice lodging
+    price_notice = t('prices_not_confirmed', years: years_with_unconfirmed_prices(lodging))
+    return "#{price_notice} #{t('route.and')} #{t('availability_not_confirmed')}" if lodging.display_price_notice? && !lodging.checked?
+    return t('availability_not_confirmed').try(:capitalize) unless lodging.checked?
+    price_notice
+  end
 end

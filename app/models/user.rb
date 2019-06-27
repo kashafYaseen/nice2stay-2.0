@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   belongs_to :country, optional: true
   has_many :reviews
@@ -25,7 +26,7 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: { message: "has an account. Click here to <input type='button' name='login-form' value='Login' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#login-form-modal'>or here to <input type='button' name='reset-password-form' value='Reset password' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#reset-pass-form-modal'>" }, allow_blank: true
   validates :first_name, :last_name, :phone, presence: true, unless: :encrypted_password_changed?
-  validates :city, :address, :country, :zipcode, presence: true, unless: :skip_validations?
+  validates :city, :address, :country, presence: true, unless: :skip_validations?
   before_validation :set_password
 
   attr_accessor :skip_validations
@@ -74,6 +75,11 @@ class User < ApplicationRecord
     hash << ENV['FRONT_CHAT_SECRET']
     hash << email
     hash.hexdigest
+  end
+
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    User.find_by(email: data['email']) || User.create(first_name: data['first_name'], last_name: data['last_name'], email: data['email'], password: Devise.friendly_token[0,20], image: data['image'])
   end
 
   private

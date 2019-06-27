@@ -60,6 +60,7 @@ class SendBookingDetails
           cleaning_cost_price: reservation.cleaning_cost,
           status: reservation.booking_status,
           booking_status: reservation.booking_status,
+          canceled: reservation.canceled,
           by_houseowner: false,
           skip_data_posting: true,
           booking_request_attributes: { status: request_status(reservation.request_status) }

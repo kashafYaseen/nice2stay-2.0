@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_countries
-    @countries = Country.all.includes(:regions)
+    @countries = Country.all.includes(:regions).ordered
     @countries_enabled = @countries.enabled
   end
 

@@ -82,7 +82,8 @@ en:
     holiday: Unique holiday
     inspiration: Inspiring collections 
 
-  prices_not_confirmed: The rate shown for this accommodation is an indication and might change
+  prices_not_confirmed: The prices shown for %{years} are subject to interim changes
+  availability_not_confirmed: the availability is on request
 
   carts:
     overview: Your bookings and options requests
@@ -90,6 +91,13 @@ en:
   cart:
     overview: Youre bookings and options requests
     gasten: Youre data
+
+  quick_view:
+    summary: Summary
+    location: Location
+    amentites: Amentites
+    reviews: Reviews
+    description: Description
 
   carts:
     step_2:
@@ -239,6 +247,7 @@ en:
     for: for
     from: From
     of: of
+    title: Location, Date & Guests
 
   profile_account: 
      side_nav_home: Dashboard
@@ -276,7 +285,7 @@ en:
   cart:
     details: More nformation & availability
     price: Included, optional, conditions & calendar information
-    availability: Availabiltiy & Reserve
+    availability: Availabiltiy & Price
     shopping_cart: Add to cart
     nice2stay: No booking fees at Nice2stay
     prepayment_not_payed: When prepayment is done, then the final payment can be transferred

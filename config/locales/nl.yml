@@ -40,7 +40,15 @@ nl:
     name: Uw gegevens
     messages: Belangrijke berichten 
 
-  prices_not_confirmed: De getoonde prijs van deze accommodatie is ter indicatie, deze kunnen nog wijzigen
+  prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
+  availability_not_confirmed: de beschikbaarheid is op aanvraag
+
+  quick_view:
+    summary: Sammenvatting
+    location: Locatie
+    amentites: Voorzieningen
+    reviews: Beoordelingen
+    description: Omschrijving
 
   profile_account: 
      side_nav_home: Dashboard
@@ -239,6 +247,7 @@ nl:
     for: voor
     from: Vanaf
     of: van
+    title: Locatie, Datum & Gasten
 
   footer:
     support: Wilt u direct contact? 

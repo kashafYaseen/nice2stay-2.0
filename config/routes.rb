@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   draw :sidekiq
 
   get '404', to: 'pages#page_not_found', as: :page_not_found
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   localized do
-    devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
+    devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
 
