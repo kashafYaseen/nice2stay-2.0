@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :bookings
   has_many :reservations, through: :bookings
   has_many :notifications
+  has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
 
