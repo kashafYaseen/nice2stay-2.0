@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :bookings
   has_many :reservations, through: :bookings
   has_many :notifications
+  has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
 
@@ -28,6 +29,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :phone, presence: true, unless: :encrypted_password_changed?
   validates :city, :address, :country, presence: true, unless: :skip_validations?
   before_validation :set_password
+
+  accepts_nested_attributes_for :social_logins
 
   attr_accessor :skip_validations
 
@@ -78,11 +81,32 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(access_token)
-    data = access_token.info
-    User.find_by(email: data['email']) || User.create(first_name: data['first_name'], last_name: data['last_name'], email: data['email'], password: Devise.friendly_token[0,20], image: data['image'])
+    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token) || create_by_provider(access_token)
   end
 
   private
+    def self.find_by_provider_and_uid provider, uid
+      joins(:social_logins).where(social_logins: { provider: provider, uid: uid }).take
+    end
+
+    def self.create_by_user access_token
+      data = access_token.info
+      user = find_by(email: data[:email])
+      user.social_logins.find_or_create_by(uid: access_token.uid, provider: access_token.provider, email: data['email']) if user.present?
+      user
+    end
+
+    def self.create_by_provider access_token
+      data = access_token.info
+      create(
+        first_name: data['first_name'],
+        last_name: data['last_name'],
+        email: data['email'],
+        password: Devise.friendly_token[0,20],
+        social_logins_attributes: [{ provider: access_token.provider, uid: access_token.uid, email: data['email'] }]
+      )
+    end
+
     def auth_expires_at
       self.token_expires_at || update_token_expire_time
     end
