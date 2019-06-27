@@ -1,3 +1,15 @@
+<a class="media-btn media-facebook w-100" href="#">
+  <i class="socicon-facebook"></i><span>Login with Facebook</span>
+</a>
+
+<%= link_to user_google_oauth2_omniauth_authorize_path(locale: locale), class: 'media-btn media-google w-100' do %>
+  <i class="socicon-googleplus"></i><span>Login with Google+</span>
+<% end %>
+
+<a class="media-btn media-instagram w-100" href="#">
+  <i class="socicon-instagram"></i><span>Login with Instagram</span>
+</a>
+
 <%= form_for(resource, as: resource_name, url: session_path(resource), html: { id: rendom_id(resource) }, remote: remote) do |f| %>
   <div class="form-group input-group">
     <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: 'form-control', id: rendom_id(resource, :email) %>
