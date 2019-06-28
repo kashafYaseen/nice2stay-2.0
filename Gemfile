@@ -105,3 +105,4 @@ gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'chosen-rails'
 gem "skylight"
 gem 'omniauth-google-oauth2'
+gem 'omniauth-instagram'

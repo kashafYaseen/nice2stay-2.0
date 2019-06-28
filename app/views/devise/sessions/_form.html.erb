@@ -6,9 +6,9 @@
   <i class="socicon-googleplus"></i><span>Login with Google+</span>
 <% end %>
 
-<a class="media-btn media-instagram w-100" href="#">
+<%= link_to user_instagram_omniauth_authorize_path(locale: locale), class: 'media-btn media-instagram w-100' do %>
   <i class="socicon-instagram"></i><span>Login with Instagram</span>
-</a>
+<% end %>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource), html: { id: rendom_id(resource) }, remote: remote) do |f| %>
   <div class="form-group input-group">
