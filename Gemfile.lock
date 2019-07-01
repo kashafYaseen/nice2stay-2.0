@@ -294,6 +294,8 @@ GEM
     omniauth (1.9.0)
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
+    omniauth-facebook (5.0.0)
+      omniauth-oauth2 (~> 1.2)
     omniauth-google-oauth2 (0.7.0)
       jwt (>= 2.0)
       omniauth (>= 1.1.1)
@@ -486,6 +488,7 @@ DEPENDENCIES
   materialize-sass (~> 1.0.0.rc1)
   mini_magick
   mollie-api-ruby
+  omniauth-facebook
   omniauth-google-oauth2
   omniauth-instagram
   pg (~> 0.18)
