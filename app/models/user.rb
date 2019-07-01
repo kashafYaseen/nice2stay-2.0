@@ -98,13 +98,26 @@ class User < ApplicationRecord
 
     def self.create_by_provider access_token
       data = access_token.info
+
       create(
-        first_name: data['first_name'],
-        last_name: data['last_name'],
+        first_name: auth_first_name(data),
+        last_name: auth_last_name(data),
         email: data['email'],
         password: Devise.friendly_token[0,20],
         social_logins_attributes: [{ provider: access_token.provider, uid: access_token.uid, email: data['email'] }]
       )
+    end
+
+    def self.auth_first_name data
+      return data['first_name'] if data['first_name'].present?
+      return data['full_name'].split(' ').first if data['full_name'].present?
+      return data['name'].split(' ').first if data['name'].present?
+    end
+
+    def self.auth_last_name data
+      return data['last_name'] if data['last_name'].present?
+      return data['full_name'].split(' ').last if data['full_name'].present?
+      return data['name'].split(' ').last if data['name'].present?
     end
 
     def auth_expires_at
