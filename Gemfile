@@ -106,3 +106,4 @@ gem 'chosen-rails'
 gem "skylight"
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
+gem 'omniauth-facebook'
