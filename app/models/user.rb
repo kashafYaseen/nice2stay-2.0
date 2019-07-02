@@ -81,7 +81,7 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(access_token)
-    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token) || create_by_provider(access_token)
+    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token) #|| create_by_provider(access_token)
   end
 
   private
@@ -96,15 +96,15 @@ class User < ApplicationRecord
       user
     end
 
-    def self.create_by_provider access_token
-      data = access_token.info
+    def self.build_by_provider access_token
+      data = access_token['info']
 
-      create(
+      new(
         first_name: auth_first_name(data),
         last_name: auth_last_name(data),
         email: data['email'],
         password: Devise.friendly_token[0,20],
-        social_logins_attributes: [{ provider: access_token.provider, uid: access_token.uid, email: data['email'] }]
+        social_logins_attributes: [{ provider: access_token['provider'], uid: access_token['uid'], email: data['email'] }]
       )
     end
 
