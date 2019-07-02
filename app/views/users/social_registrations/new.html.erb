@@ -38,5 +38,30 @@
 
       <%= f.submit "Finish Sign Up", class: "btn btn-primary btn-block" %>
     <% end %>
+
+    <hr class="m-3">
+
+    <div class="row">
+      <div class="col-md-12">
+        <p class="text-center text-lg text-bold">Already Have a Nice2Stay Account?</p>
+        <p class="text-center text-sm mb-4">Connect this social account with your old nice2stay account.</p>
+      </div>
+
+      <div class="form-group col-md-12">
+        <%= form_for @user, url: users_social_registrations_path, method: :put do |f| %>
+
+          <%= f.label :email, 'Nice2Stay Email', class: 'form-label' %>
+          <%= f.email_field :email, autofocus: true, placeholder: 'Nice2Stay Email', class: 'form-control', id: rendom_id(resource, :email) %>
+
+          <%= f.fields_for :social_logins do |social_login| %>
+            <%= social_login.hidden_field :provider %>
+            <%= social_login.hidden_field :uid %>
+            <%= social_login.hidden_field :email %>
+          <% end %>
+
+          <%= f.submit "Connect", class: "btn btn-primary btn-block" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

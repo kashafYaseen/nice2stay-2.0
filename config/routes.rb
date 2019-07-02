@@ -35,7 +35,9 @@ Rails.application.routes.draw do
     resources :leads, only: [:create]
 
     namespace :users do
-      resources :social_registrations, only: [:new, :create]
+      resources :social_registrations, only: [:new, :create] do
+        put :update, on: :collection
+      end
     end
 
     namespace :dashboard do

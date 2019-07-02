@@ -16,8 +16,23 @@ class Users::SocialRegistrationsController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find_by(email: params[:user][:email])
+    return redirect_to new_users_social_registration_path, alert: 'No associated account found with this email.' unless @user.present?
+    if @user.update(update_params)
+      @user.send_confirmation_instructions
+      redirect_to root_path, notice: I18n.t('devise.confirmations.send_instructions')
+    else
+      redirect_to new_users_social_registration_path, alert: 'Unable to process your request at moment.'
+    end
+  end
+
   private
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :phone, social_logins_attributes: [:provider, :uid, :email])
+    end
+
+    def update_params
+      params.require(:user).permit(social_logins_attributes: [:provider, :uid, :email])
     end
 end
