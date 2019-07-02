@@ -34,6 +34,12 @@ Rails.application.routes.draw do
     resources :countries, only: [:index]
     resources :leads, only: [:create]
 
+    namespace :users do
+      resources :social_registrations, only: [:new, :create] do
+        put :update, on: :collection
+      end
+    end
+
     namespace :dashboard do
       resources :bookings, only: [:show] do
         resource :payment, only: [:create] do
