@@ -80,7 +80,7 @@ class ManageMolliePayment
 
     def webhook_url
       return update_status_dashboard_booking_payment_url(booking_id: booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      'http://8b47c27b.ngrok.io'
+      "http://6155492f.ngrok.io?booking_id=#{booking.id}"
     end
 
     def redirect_url
