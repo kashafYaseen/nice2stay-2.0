@@ -30,7 +30,7 @@ class SaveBookingDetails
       booking.reservations.where.not(id: params[:booking][:reservation_ids]).update_all(canceled: true)
 
       params[:booking][:reservations_attributes].each do |reservations_attribute|
-        reservation = booking.reservations.find_by(id: reservations_attribute[:id]) || booking.reservations.build
+        reservation = booking.reservations.not_canceled.find_by(id: reservations_attribute[:id]) || booking.reservations.build
         reservation.attributes = reservation_params(reservations_attribute)
         lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
         reservation.lodging = lodging

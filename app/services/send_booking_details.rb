@@ -37,6 +37,7 @@ class SendBookingDetails
           created_at: booking.created_at,
           fe_identifier: booking.identifier,
           skip_data_posting: true,
+          status: booking.booking_status,
           fe_id: booking.id,
         }
       }
@@ -44,7 +45,7 @@ class SendBookingDetails
 
     def booking_accommodations
       reservations = []
-      booking.reservations.order(:id).each do |reservation|
+      booking.reservations.not_canceled.order(:id).each do |reservation|
         reservations << {
           id: reservation.crm_booking_id,
           front_end_id: reservation.id,
@@ -92,7 +93,7 @@ class SendBookingDetails
       crm_booking = JSON.parse response.body
       booking.update_column :crm_id, crm_booking['id']
       crm_booking['booking_accommodation'].each do |booking_accommodation|
-        reservation = booking.reservations.find_by(id: booking_accommodation['front_end_id'])
+        reservation = booking.reservations.not_canceled.find_by(id: booking_accommodation['front_end_id'])
         next unless reservation.present?
         reservation.update_column :crm_booking_id, booking_accommodation['id']
       end
