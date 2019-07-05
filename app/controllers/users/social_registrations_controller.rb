@@ -19,11 +19,31 @@ class Users::SocialRegistrationsController < ApplicationController
   def update
     @user = User.find_by(email: params[:user][:email])
     return redirect_to new_users_social_registration_path, alert: 'No associated account found with this email.' unless @user.present?
-    if @user.update(update_params)
-      @user.send_confirmation_instructions
+    social_logins_params = update_params[:social_logins_attributes]['0']
+
+    @social_login = @user.social_logins.find_or_initialize_by(provider: social_logins_params[:provider], uid: social_logins_params[:uid], confirmed_at: nil) do |social_login|
+      social_login.confirmation_token = Devise.friendly_token
+      social_login.confirmation_sent_at = DateTime.current
+      social_login.email = social_logins_params[:email]
+    end
+
+    if @social_login.save
+      UserMailer.send_instructions(@user.id, @social_login.confirmation_token).deliver_now
       redirect_to root_path, notice: I18n.t('devise.confirmations.send_instructions')
     else
       redirect_to new_users_social_registration_path, alert: 'Unable to process your request at moment.'
+    end
+  end
+
+  def confirmation
+    @user = User.find(params[:id])
+    @social_login = @user.social_logins.find_by(confirmation_token: params[:confirmation_token])
+    if @social_login.present?
+      @social_login.update(confirmed_at: DateTime.current, confirmation_token: nil)
+      sign_in(@user)
+      redirect_to dashboard_path, notice: I18n.t('devise.omniauth_callbacks.success', kind: @social_login.provider)
+    else
+      redirect_to root_path, alert: "Invalid authentication token"
     end
   end
 

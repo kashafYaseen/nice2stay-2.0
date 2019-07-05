@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     namespace :users do
       resources :social_registrations, only: [:new, :create] do
         put :update, on: :collection
+        get :confirmation, on: :member
       end
     end
 
