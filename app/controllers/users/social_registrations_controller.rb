@@ -35,7 +35,7 @@ class Users::SocialRegistrationsController < ApplicationController
     end
   end
 
-  def confirmation
+  def show
     @user = User.find(params[:id])
     @social_login = @user.social_logins.find_by(confirmation_token: params[:confirmation_token])
     if @social_login.present?
