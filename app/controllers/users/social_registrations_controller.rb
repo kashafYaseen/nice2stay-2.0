@@ -7,7 +7,7 @@ class Users::SocialRegistrationsController < ApplicationController
 
   def create
     password = Devise.friendly_token[0,20]
-    @user = User.new(user_params.merge(password: password, password_confirmation: password))
+    @user = User.new(user_params.merge(password: password, password_confirmation: password, creation_status: :with_social_site))
     if @user.save
       session.delete('devise.omniauth_data')
       redirect_to root_path, notice: I18n.t('devise.confirmations.send_instructions')
@@ -35,7 +35,7 @@ class Users::SocialRegistrationsController < ApplicationController
     end
   end
 
-  def confirmation
+  def show
     @user = User.find(params[:id])
     @social_login = @user.social_logins.find_by(confirmation_token: params[:confirmation_token])
     if @social_login.present?
@@ -49,7 +49,7 @@ class Users::SocialRegistrationsController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :phone, social_logins_attributes: [:provider, :uid, :email])
+      params.require(:user).permit(:first_name, :last_name, :email, :phone, :creation_status, social_logins_attributes: [:provider, :uid, :email, :confirmed_at])
     end
 
     def update_params

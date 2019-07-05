@@ -15,6 +15,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       dashboard_path
     end
 
+    def update_resource(resource, params)
+      if resource.with_social_site?
+        resource.update_without_password(params)
+      else
+        resource.update_with_password(params)
+      end
+    end
+
   private
     def set_title
       @title = 'Profile'

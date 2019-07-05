@@ -37,6 +37,7 @@ class User < ApplicationRecord
   enum creation_status: {
     with_login: 0,
     without_login: 1,
+    with_social_site: 2,
   }
 
   def full_name

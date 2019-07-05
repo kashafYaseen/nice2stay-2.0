@@ -4,4 +4,4 @@
 <p>Account Type: <%= @social_login.provider %></p>
 <p>Email: <%= @social_login.email %></p>
 
-<p><%= link_to 'Confirm my account', confirmation_users_social_registration_url(@user, confirmation_token: @social_login.confirmation_token) %></p>
+<p><%= link_to 'Confirm my account', users_social_registration_url(@user, confirmation_token: @social_login.confirmation_token) %></p>
