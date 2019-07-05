@@ -49,7 +49,7 @@ class Users::SocialRegistrationsController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :phone, :creation_status, social_logins_attributes: [:provider, :uid, :email])
+      params.require(:user).permit(:first_name, :last_name, :email, :phone, :creation_status, social_logins_attributes: [:provider, :uid, :email, :confirmed_at])
     end
 
     def update_params

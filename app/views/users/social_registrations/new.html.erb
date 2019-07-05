@@ -33,6 +33,7 @@
           <%= social_login.hidden_field :provider %>
           <%= social_login.hidden_field :uid %>
           <%= social_login.hidden_field :email %>
+          <%= social_login.hidden_field :confirmed_at, value: DateTime.current %>
         <% end %>
       </div>
 
