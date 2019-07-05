@@ -81,18 +81,22 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(access_token)
-    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token) #|| create_by_provider(access_token)
+    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token)
   end
 
   private
     def self.find_by_provider_and_uid provider, uid
-      joins(:social_logins).where(social_logins: { provider: provider, uid: uid }).take
+      joins(:social_logins).where("social_logins.provider = ? and social_logins.uid = ? and social_logins.confirmed_at is not ?", provider, uid, nil).take
     end
 
     def self.create_by_user access_token
       data = access_token.info
       user = find_by(email: data[:email])
-      user.social_logins.find_or_create_by(uid: access_token.uid, provider: access_token.provider, email: data['email']) if user.present?
+
+      user.social_logins.find_or_create_by(uid: access_token.uid, provider: access_token.provider) do |social_login|
+        social_login.email = data['email']
+        social_login.confirmed_at = DateTime.current
+      end if user.present?
       user
     end
 
