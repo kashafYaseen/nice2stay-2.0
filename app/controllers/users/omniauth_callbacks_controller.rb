@@ -15,6 +15,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if @user.present? && @user.persisted?
         flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: omniauth_provider
+        session[:social_site] = omniauth_provider
         sign_in_and_redirect @user, event: :authentication
       elsif @user.present? && !@user.persisted?
         session['devise.omniauth_data'] = request.env['omniauth.auth'].except(:extra)
