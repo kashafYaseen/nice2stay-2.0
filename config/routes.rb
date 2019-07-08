@@ -12,6 +12,11 @@ Rails.application.routes.draw do
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
 
+    devise_scope :user do
+      get "users/edit/password", to: 'users/registrations#edit_password', as: :user_edit_password
+      post "users/edit/password", to: 'users/registrations#update_password', as: :user_update_password
+    end
+
     resources :announcements, only: [:index]
     resources :autocompletes, only: [:index]
     resources :lodgings, only: [:index, :show], path: :accommodations do
