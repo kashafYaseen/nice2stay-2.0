@@ -20,7 +20,7 @@
 
     <%= link_to user_edit_password_path, class: "list-group-item #{active_class(user_edit_password_path)}" do %>
       <i class="icon-head"></i><%= t 'profile_account.side_nav_password' %>
-    <% end unless current_user.with_social_site? %>
+    <% end unless current_user.with_social_site? || session[:social_site].present? %>
 
     <%= link_to dashboard_wishlists_path, class: "list-group-item with-badge #{active_class(dashboard_wishlists_path)}" do %>
       <i class="icon-heart"></i><%= t 'profile_account.side_nav_wishlist' %><span class="badge badge-default badge-pill"><%= wishlist_items_count(@wishlists) %></span>
