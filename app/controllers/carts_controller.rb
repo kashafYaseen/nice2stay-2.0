@@ -46,7 +46,11 @@ class CartsController < ApplicationController
     def set_password
       return if params[:create_account].present?
       user = User.without_login.find_by(email: booking_params[:user_attributes][:email])
-      return @booking.user =  user if user.present?
+      if user.present?
+        user.attributes = booking_params[:user_attributes]
+        user.save
+        return @booking.user =  user
+      end
       @booking.user.password = @booking.user.password_confirmation = Devise.friendly_token[0, 20]
     end
 
