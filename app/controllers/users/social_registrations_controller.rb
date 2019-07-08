@@ -6,6 +6,7 @@ class Users::SocialRegistrationsController < ApplicationController
   end
 
   def create
+    return redirect_to new_users_social_registration_path, alert: "#{user_params[:email]} already registered at nice2stay. Please connect your social account with this email using the form below." if User.find_by(email: user_params[:email]).present?
     password = Devise.friendly_token[0,20]
     @user = User.new(user_params.merge(password: password, password_confirmation: password, creation_status: :with_social_site))
     if @user.save
