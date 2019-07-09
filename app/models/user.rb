@@ -136,7 +136,7 @@ class User < ApplicationRecord
     end
 
     def set_password
-      return if with_login? || password.present? || password_confirmation.present?
+      return if with_login? || persisted? || password.present? || password_confirmation.present?
       self.password = self.password_confirmation = Devise.friendly_token[0, 20]
     end
 end
