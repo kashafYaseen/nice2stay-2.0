@@ -49,7 +49,7 @@ class CartsController < ApplicationController
       if user.present?
         user.attributes = booking_params[:user_attributes]
         user.save
-        return @booking.user =  user
+        return @booking.user = user
       end
       @booking.user.password = @booking.user.password_confirmation = Devise.friendly_token[0, 20]
     end
