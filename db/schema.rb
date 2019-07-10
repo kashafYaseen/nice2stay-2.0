@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_125434) do
+ActiveRecord::Schema.define(version: 2019_07_10_044304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -500,6 +500,8 @@ ActiveRecord::Schema.define(version: 2019_06_25_125434) do
     t.integer "boost", default: 0
     t.datetime "optimize_at"
     t.boolean "confirmed_price_2020", default: false
+    t.string "guest_centric_id"
+    t.boolean "guest_centric", default: false
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
@@ -788,6 +790,20 @@ ActiveRecord::Schema.define(version: 2019_06_25_125434) do
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
   end
 
+  create_table "social_logins", force: :cascade do |t|
+    t.string "provider"
+    t.string "uid"
+    t.string "email"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_social_logins_on_confirmation_token", unique: true
+    t.index ["user_id"], name: "index_social_logins_on_user_id"
+  end
+
   create_table "specifications", force: :cascade do |t|
     t.bigint "lodging_id"
     t.string "title"
@@ -884,6 +900,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_125434) do
   add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
+  add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
   add_foreign_key "users", "countries"
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
