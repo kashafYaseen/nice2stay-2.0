@@ -51,6 +51,7 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
         :inspiration,
         :popular,
         :show_page,
+        :special_offer,
       )
     end
 
