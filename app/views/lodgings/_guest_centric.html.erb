@@ -1,0 +1,25 @@
+<div class="col-md-12">
+  <% if guest_centric.present? && guest_centric['response'].present? %>
+    <% guest_centric['response']['hotels'].each do |hotel| %>
+      <h3><%= hotel['info']['hotelName'] %> Offers</h3>
+
+      <% hotel['offers'].each do |child| %>
+        <div class="col-md-12">
+          <p><b><%= child['name'] %></b></p>
+        </div>
+
+        <% child['offers'].each do |offer| %>
+          <ul class="pl-5">
+            <li>Avg Price<%= offer['avgPrice'] %></li>
+            <li>Tax<%= offer['tax'] %></li>
+            <li>Net Value<%= offer['netValue'] %></li>
+            <li>Total<%= offer['total'] %></li>
+          </ul>
+
+        <% end if child['offers'].present? %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>Please select dates & guest details.</p>
+  <% end %>
+</div>
