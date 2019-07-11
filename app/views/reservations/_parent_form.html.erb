@@ -46,15 +46,24 @@
       </div>
     </div>
 
+    <% url = lodging.guest_centric? ? lodging_guest_centric_offer_path(lodging) : reservations_path %>
+    <% method = lodging.guest_centric? ? 'get' : 'post'  %>
     <div class="col-md-12 p-0">
-      <%= form_for reservation, url: reservations_path, remote: true, html: {id: "new_reservation#{id_sufix}"} do |f| %>
+      <%= form_for reservation, url: url, remote: true, method: method, html: { id: "new_reservation#{id_sufix}" } do |f| %>
+
+        <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in#{id_sufix}", class: 'check_in' %>
+        <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out#{id_sufix}", class: 'check_out' %>
         <%= f.hidden_field "adults#{id_sufix}", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults' %>
         <%= f.hidden_field "children#{id_sufix}", value: (params[:children] || f.object.children), class: 'children' %>
         <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>
         <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
+
+        <%= f.submit('Check Availability', class: "btn btn-outline-primary w-100") if lodging.guest_centric? %>
       <% end %>
 
-      <%= link_to 'Check Availability', '#', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
+      <% unless lodging.guest_centric? %>
+        <%= link_to 'Check Availability', '#', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
+      <% end %>
 
       <div class="bg-white mt-3">
         <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(lodging) if lodging.display_price_notice? || !lodging.checked? %>

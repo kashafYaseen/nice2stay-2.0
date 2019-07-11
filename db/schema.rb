@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_04_115239) do
+ActiveRecord::Schema.define(version: 2019_07_10_044304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -500,6 +500,8 @@ ActiveRecord::Schema.define(version: 2019_07_04_115239) do
     t.integer "boost", default: 0
     t.datetime "optimize_at"
     t.boolean "confirmed_price_2020", default: false
+    t.string "guest_centric_id"
+    t.boolean "guest_centric", default: false
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
