@@ -140,6 +140,8 @@ class SaveLodgingDetails
         :updated_at,
         :boost,
         :optimize_at,
+        :guest_centric_id,
+        :guest_centric,
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },

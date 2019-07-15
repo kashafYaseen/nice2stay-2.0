@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_115239) do
     t.boolean "inspiration", default: false
     t.boolean "popular", default: false
     t.boolean "show_page", default: false
+    t.boolean "special_offer", default: false
     t.index ["country_id"], name: "index_custom_texts_on_country_id"
     t.index ["experience_id"], name: "index_custom_texts_on_experience_id"
     t.index ["region_id"], name: "index_custom_texts_on_region_id"
@@ -500,6 +501,8 @@ ActiveRecord::Schema.define(version: 2019_07_04_115239) do
     t.integer "boost", default: 0
     t.datetime "optimize_at"
     t.boolean "confirmed_price_2020", default: false
+    t.string "guest_centric_id"
+    t.boolean "guest_centric", default: false
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"

@@ -91,6 +91,11 @@
             <button class="btn btn-primary btn-md w-100 mt-2 submit-filters" type="button">
               Search
             </button>
+
+            <div class="custom-control custom-checkbox mt-2">
+              <%= check_box_tag :flexible_arrival, true, params[:flexible_arrival], class: "custom-control-input submit-filters" %>
+              <%= label_tag :flexible_arrival, t('search.flexibility_text'), class: 'custom-control-label' %>
+            </div>
           </section>
 
           <section class="lodging-types-list col-md-12 pt-3">
