@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable,
+         :omniauthable, omniauth_providers: SocialLogin::SOCIAL_SITES
 
   belongs_to :country, optional: true
   has_many :reviews
@@ -12,6 +13,7 @@ class User < ApplicationRecord
   has_many :bookings
   has_many :reservations, through: :bookings
   has_many :notifications
+  has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
 
@@ -28,11 +30,14 @@ class User < ApplicationRecord
   validates :city, :address, :country, presence: true, unless: :skip_validations?
   before_validation :set_password
 
+  accepts_nested_attributes_for :social_logins
+
   attr_accessor :skip_validations
 
   enum creation_status: {
     with_login: 0,
     without_login: 1,
+    with_social_site: 2,
   }
 
   def full_name
@@ -76,7 +81,50 @@ class User < ApplicationRecord
     hash.hexdigest
   end
 
+  def self.from_omniauth(access_token)
+    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token)
+  end
+
   private
+    def self.find_by_provider_and_uid provider, uid
+      joins(:social_logins).where("social_logins.provider = ? and social_logins.uid = ? and social_logins.confirmed_at is not ?", provider, uid, nil).take
+    end
+
+    def self.create_by_user access_token
+      data = access_token.info
+      user = find_by(email: data[:email])
+
+      user.social_logins.find_or_create_by(uid: access_token.uid, provider: access_token.provider) do |social_login|
+        social_login.email = data['email']
+        social_login.confirmed_at = DateTime.current
+      end if user.present?
+      user
+    end
+
+    def self.build_by_provider access_token
+      data = access_token['info']
+
+      new(
+        first_name: auth_first_name(data),
+        last_name: auth_last_name(data),
+        email: data['email'],
+        password: Devise.friendly_token[0,20],
+        social_logins_attributes: [{ provider: access_token['provider'], uid: access_token['uid'], email: data['email'] }]
+      )
+    end
+
+    def self.auth_first_name data
+      return data['first_name'] if data['first_name'].present?
+      return data['full_name'].split(' ').first if data['full_name'].present?
+      return data['name'].split(' ').first if data['name'].present?
+    end
+
+    def self.auth_last_name data
+      return data['last_name'] if data['last_name'].present?
+      return data['full_name'].split(' ').last if data['full_name'].present?
+      return data['name'].split(' ').last if data['name'].present?
+    end
+
     def auth_expires_at
       self.token_expires_at || update_token_expire_time
     end
@@ -88,7 +136,7 @@ class User < ApplicationRecord
     end
 
     def set_password
-      return if with_login? || password.present? || password_confirmation.present?
+      return if with_login? || persisted? || password.present? || password_confirmation.present?
       self.password = self.password_confirmation = Devise.friendly_token[0, 20]
     end
 end

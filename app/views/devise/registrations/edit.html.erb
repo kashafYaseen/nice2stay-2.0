@@ -20,22 +20,6 @@
 
       <%= render 'devise/registrations/common_fields', f: f, countries: @countries.collect{ |country| [country.name, country.id] } %>
 
-      <div class="form-group">
-        <p class="form-text text-muted"><small>Leave password blank if you don't want to change it</small></p>
-
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password'  %>
-      </div>
-
-      <div class="form-group">
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm Password'  %>
-      </div>
-
-      <div class="form-group">
-        <p class="form-text text-muted"><small>We need your current password to confirm your changes</small></p>
-
-        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', placeholder: 'Current Password'  %>
-      </div>
-
       <div class="col-12">
         <hr class="mt-2 mb-3">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
