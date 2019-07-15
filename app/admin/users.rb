@@ -3,6 +3,7 @@ ActiveAdmin.register User do
   filter :first_name
   filter :last_name
   filter :country
+  filter :creation_status, as: :select, collection: User.creation_statuses.keys
 
   controller do
     def permitted_params
