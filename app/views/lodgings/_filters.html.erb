@@ -130,6 +130,11 @@
               <%= label_tag :discounts, t('search.special_offer'), class: 'text-xxxs custom-control-label' %>
                 &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'discounts', total_lodgings) %>)</span>
             </div>
+
+             <div class="custom-control custom-checkbox">
+               <%= check_box_tag :flexible_arrival, true, params[:flexible_arrival], class: "custom-control-input amenities" %>
+              <%= label_tag :flexible_arrival, t('search.flexibility_text'), class: 'custom-control-label' %>
+             </div>
           </section>
 
           <section class="col-md-12 pt-3 experiences-list">
