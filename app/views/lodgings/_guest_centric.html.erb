@@ -4,19 +4,48 @@
       <h3><%= hotel['info']['hotelName'] %> Offers</h3>
 
       <% hotel['offers'].each do |child| %>
-        <div class="col-md-12">
-          <p><b><%= child['name'] %></b></p>
+        <div class="row mt-3 children-scroll-section">
+          <div class="col-md-3 col-border bg-white">
+            <%= image_tag child['defaultImage'], class: 'w-100 max-height-230' if child['defaultImage'].present? %>
+          </div>
+
+          <div class="col-md-2 col-border bg-white">
+            <p class="text-xxs"> <b><%= child['name'].try(:capitalize) %></b></p>
+            <p class="text-xxxs">
+             <%= pluralize child['MaxAdults'], t('search.guest'), t('search.guests') %>
+            </p>
+
+            <p class="text-xxxs">
+              <%= pluralize child['MaxChildren'], t('search.child'), t('search.children_1') %>
+            </p>
+
+            <p class="text-xxxs">
+              <%= pluralize child['MaxPersons'], 'Person', 'Persons' %>
+            </p>
+          </div>
+
+          <div class="col-md-4 bg-white col-border">
+            <p><%= child['description'].try(:html_safe) %></p>
+          </div>
+
+          <div class="col-md-3 bg-white col-border">
+            <% child['offers'].each do |offer| %>
+              <ul class="pl-5">
+                <li>Avg Price<%= offer['avgPrice'] %></li>
+                <li>Tax<%= offer['tax'] %></li>
+                <li>Net Value<%= offer['netValue'] %></li>
+                <li>Total<%= offer['total'] %></li>
+              </ul>
+
+            <% end if child['offers'].present? %>
+
+            <p class="text-sm text-dark" id="bill-<%= lodging.id %>"></p>
+              <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } do %>
+                <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+              <% end %>
+            <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
+          </div>
         </div>
-
-        <% child['offers'].each do |offer| %>
-          <ul class="pl-5">
-            <li>Avg Price<%= offer['avgPrice'] %></li>
-            <li>Tax<%= offer['tax'] %></li>
-            <li>Net Value<%= offer['netValue'] %></li>
-            <li>Total<%= offer['total'] %></li>
-          </ul>
-
-        <% end if child['offers'].present? %>
       <% end %>
     <% end %>
   <% else %>
