@@ -17,6 +17,8 @@
 <%= javascript_pack_tag 'application' %>
 <%= stylesheet_pack_tag 'application', media: 'all' %>
 
+<%= favicon_link_tag asset_path('favicon.png') %>
+
 <% if content_for? :meta_tags %>
   <%= yield :meta_tags %>
 <% else %>
