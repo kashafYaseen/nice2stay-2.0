@@ -5,11 +5,17 @@ Rails.application.routes.draw do
   draw :sidekiq
 
   get '404', to: 'pages#page_not_found', as: :page_not_found
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   localized do
-    devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
+    devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
+
+    devise_scope :user do
+      get "users/edit/password", to: 'users/registrations#edit_password', as: :user_edit_password
+      post "users/edit/password", to: 'users/registrations#update_password', as: :user_update_password
+    end
 
     resources :announcements, only: [:index]
     resources :autocompletes, only: [:index]
@@ -33,6 +39,12 @@ Rails.application.routes.draw do
     resources :feedbacks, only: [:new, :create]
     resources :countries, only: [:index]
     resources :leads, only: [:create]
+
+    namespace :users do
+      resources :social_registrations, only: [:new, :create, :show] do
+        put :update, on: :collection
+      end
+    end
 
     namespace :dashboard do
       resources :bookings, only: [:show] do

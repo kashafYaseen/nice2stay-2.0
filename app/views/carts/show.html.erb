@@ -80,73 +80,73 @@
                 </div>
               </div>
 
-                <fieldset <%= 'disabled' if user_signed_in? %>>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :first_name %>
-                        <%= user_fields.text_field :first_name, class: "form-control", required: true %>
-                        <%= user_fields.hidden_field :skip_validations, value: true %>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :last_name %>
-                        <%= user_fields.text_field :last_name, class: "form-control", required: true %>
-                      </div>
+              <fieldset>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :first_name %>
+                      <%= user_fields.text_field :first_name, class: "form-control", required: true %>
+                      <%= user_fields.hidden_field :skip_validations, value: true %>
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :email %>
-                        <%= user_fields.email_field :email, class: "form-control disabled", required: true %>
-                        <%= user_fields.hidden_field :creation_status, id: :user_creation_status %>
-                      </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :last_name %>
+                      <%= user_fields.text_field :last_name, class: "form-control", required: true %>
                     </div>
+                  </div>
+                </div>
 
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :phone %>
-                        <%= user_fields.text_field :phone, class: "form-control", required: true %>
-                      </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :email %>
+                      <%= user_fields.email_field :email, disabled: current_user.present?, class: "form-control disabled", required: true %>
+                      <%= user_fields.hidden_field :creation_status, id: :user_creation_status %>
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :city %>
-                        <%= user_fields.text_field :city, class: "form-control" %>
-                      </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :phone %>
+                      <%= user_fields.text_field :phone, class: "form-control", required: true %>
                     </div>
+                  </div>
+                </div>
 
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :zipcode %>
-                        <%= user_fields.text_field :zipcode, class: "form-control" %>
-                      </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :city %>
+                      <%= user_fields.text_field :city, class: "form-control" %>
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <%= user_fields.label :country %>
-                        <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country) %>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :address %>
-                        <%= user_fields.text_field :address, class: "form-control" %>
-                      </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :zipcode %>
+                      <%= user_fields.text_field :zipcode, class: "form-control" %>
                     </div>
                   </div>
-                </fieldset>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= user_fields.label :country %>
+                      <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country) %>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= user_fields.label :address %>
+                      <%= user_fields.text_field :address, class: "form-control" %>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
 
                 <% if user_signed_in? %>
                   <hr class="padding-bottom-1x">

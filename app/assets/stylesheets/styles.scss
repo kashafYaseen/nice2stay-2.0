@@ -3172,6 +3172,10 @@ button:focus {
   background-color: #55acee;
 }
 
+.media-btn.media-instagram {
+  background-color: #7d7d7d;
+}
+
 /* Base class */
 .social-button {
   display: inline-block;
@@ -3495,7 +3499,6 @@ button:focus {
 
 .nav-tabs {
   border-bottom: 2px solid #eaeaea;
-  margin-left: 15%;
 }
 
 .nav-tabs .nav-item {

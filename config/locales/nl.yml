@@ -53,8 +53,9 @@ nl:
   profile_account: 
      side_nav_home: Dashboard
      side_nav_bookings: Boekingen & opties
-     side_nav_profile: Wijzig profiel
+     side_nav_profile: Wachtwoord wijzigen
      side_nav_wishlist: Favorieten
+     side_nav_password: Wachtwoord bewerken
      account: Nice2stay account
      new_customers: Bent u nieuw? Vul hier dan uw gegevens in. 
      customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen

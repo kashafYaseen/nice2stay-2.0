@@ -57,8 +57,10 @@ class SearchLodgings
       conditions << { range: { minimum_adults: { lte: params[:adults] } } } if params[:adults].present?
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
-      conditions << flexibility_condition if params[:check_in].present?
-      conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
+      unless params[:flexible_arrival].present?
+        conditions << flexibility_condition if params[:check_in].present?
+        conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
+      end
 
       conditions << frame_coordinates if params[:bounds].present?
       conditions << near_latlong_condition if params[:within].present?
@@ -244,6 +246,7 @@ class SearchLodgings
       params[:country] = custom_text.country_slug if custom_text.country.present?
       params[:region] = custom_text.region_slug if custom_text.region.present?
       params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
+      params[:discounts] = true if custom_text.special_offer?
     end
 
     def lodging_type(type)

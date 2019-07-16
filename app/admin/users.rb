@@ -3,6 +3,7 @@ ActiveAdmin.register User do
   filter :first_name
   filter :last_name
   filter :country
+  filter :creation_status, as: :select, collection: User.creation_statuses.keys
 
   controller do
     def permitted_params
@@ -17,6 +18,7 @@ ActiveAdmin.register User do
     column :last_name
     column :email
     column :created_at
+    column :creation_status
 
     actions
   end
@@ -31,6 +33,7 @@ ActiveAdmin.register User do
       row :address
       row :city
       row :zipcode
+      row :creation_status
       row :created_at
       row :updated_at
     end
@@ -61,6 +64,16 @@ ActiveAdmin.register User do
         column :adults
         column :in_cart
         column :created_at
+      end
+    end
+
+    panel "Social Logins" do
+      table_for user.social_logins do
+        column :uid
+        column :provider
+        column :email
+        column :created_at
+        column :confirmed_at
       end
     end
 
