@@ -39,7 +39,21 @@ ActiveAdmin.register User do
     end
 
     panel "Bookings" do
-      table_for user.bookings do
+      table_for user.bookings.requests do
+        column :id
+        column :identifier do |booking|
+          link_to booking.identifier, admin_booking_path(booking)
+        end
+        column :booking_status
+        column :pre_payment
+        column :final_payment
+        column :in_cart
+        column :created_at
+      end
+    end
+
+    panel "In-Cart Bookings" do
+      table_for user.bookings.in_cart do
         column :id
         column :identifier do |booking|
           link_to booking.identifier, admin_booking_path(booking)
