@@ -14,7 +14,14 @@
 
     <p class="comment-text"><%= review.description %></p>
     <div class="comment-footer">
-      <span class="comment-meta"><%= review.user_full_name unless review.anonymous? %></span>
+      <span class="comment-meta">
+        <%= review.user_full_name unless review.anonymous? %>
+      </span></br>
+
+      <span class="comment-meta">
+        Review of <%= link_to "#{review.lodging_name}", review.lodging, class: 'text-decoration-none' %>
+      </span>
+
       <span class="comment-meta float-right"><%= render_date review.check_in %></span>
     </div>
   </div>
