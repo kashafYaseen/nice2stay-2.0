@@ -38,8 +38,8 @@ ActiveAdmin.register User do
       row :updated_at
     end
 
-    panel "Bookings" do
-      table_for user.bookings.requests do
+    panel "Upcoming Bookings" do
+      table_for user.bookings.upcoming do
         column :id
         column :identifier do |booking|
           link_to booking.identifier, admin_booking_path(booking)
@@ -52,8 +52,8 @@ ActiveAdmin.register User do
       end
     end
 
-    panel "In-Cart Bookings" do
-      table_for user.bookings.in_cart do
+    panel "Old Bookings" do
+      table_for user.bookings.old do
         column :id
         column :identifier do |booking|
           link_to booking.identifier, admin_booking_path(booking)
@@ -62,6 +62,25 @@ ActiveAdmin.register User do
         column :pre_payment
         column :final_payment
         column :in_cart
+        column :created_at
+      end
+    end
+
+    panel "Cart Bookings" do
+      table_for user.reservations.in_cart do
+        column :id do |reservation|
+          link_to reservation.id, admin_reservation_path(reservation)
+        end
+
+        column :identifier do |reservation|
+          link_to reservation.identifier, admin_booking_path(reservation.booking)
+        end
+
+        column :lodging
+        column :check_in
+        column :check_out
+        column :adults
+        column :children
         column :created_at
       end
     end
@@ -91,6 +110,8 @@ ActiveAdmin.register User do
       end
     end
 
+    panel 'Ahoy Events', class: 'async-panel', 'data-url': ahoy_events_admin_user_path(user)
+
     active_admin_comments
   end
 
@@ -107,6 +128,11 @@ ActiveAdmin.register User do
     else
       render :edit_password
     end
+  end
+
+  member_action :ahoy_events do
+    @events = resource.events
+    render layout: false
   end
 
   form do |f|
