@@ -107,3 +107,4 @@ gem "skylight"
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
 gem 'omniauth-facebook'
+gem 'arctic_admin'
