@@ -8,6 +8,10 @@ class Ahoy::Event < ApplicationRecord
 
   #after_create :sent_details
 
+  scope :index_pages, -> { where_event("Lodgings Search", action: "index") }
+  scope :show_pages, -> { where_event("Lodgings Search", action: "show") }
+  scope :bookings, -> { where_event("Booking") }
+
   private
     def sent_details
       SendAhoyEventDetailsJob.perform_later(self.id)

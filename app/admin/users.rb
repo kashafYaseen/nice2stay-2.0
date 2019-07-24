@@ -110,7 +110,7 @@ ActiveAdmin.register User do
       end
     end
 
-    panel 'Ahoy Events', class: 'async-panel', 'data-url': ahoy_events_admin_user_path(user)
+    panel 'Ahoy Events - Index', class: 'async-panel', 'data-url': ahoy_events_admin_user_path(user)
 
     active_admin_comments
   end
