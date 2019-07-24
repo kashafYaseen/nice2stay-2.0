@@ -1,0 +1,71 @@
+<table>
+  <thead>
+    <tr>
+      <th>Dates</th>
+      <th>Guests (Adults, Children, Infants)</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.index_pages.each do |event| %>
+      <tr>
+        <td><%= "#{event.properties['check_in']} - #{event.properties['check_out']}" %></td>
+        <td><%= "#{event.properties['adults'].to_i}, #{event.properties['children'].to_i}, #{event.properties['infants'].to_i}" %></td>
+        <td><%= render_datetime event.time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Ahoy Events - Show</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Dates</th>
+      <th>Guests (Adults, Children, Infants)</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.show_pages.each do |event| %>
+      <tr>
+        <td><%= event.properties['id'] %></td>
+        <td><%= "#{event.properties['check_in']} - #{event.properties['check_out']}" %></td>
+        <td><%= "#{event.properties['adults'].to_i}, #{event.properties['children'].to_i}, #{event.properties['infants'].to_i}" %></td>
+        <td><%= render_datetime event.time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Ahoy Events - Bookings</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Booking ID</th>
+      <th>In Cart</th>
+      <th>Dates</th>
+      <th>Guests (Adults, Children, Infants)</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.bookings.each do |event| %>
+      <tr>
+        <td><%= event.properties['id'] %></td>
+        <td><%= event.properties['booking_id'] %></td>
+        <td><%= event.properties['in_cart'] %></td>
+        <td><%= "#{event.properties['check_in']} - #{event.properties['check_out']}" %></td>
+        <td><%= "#{event.properties['adults'].to_i}, #{event.properties['children'].to_i}, #{event.properties['infants'].to_i}" %></td>
+        <td><%= render_datetime event.time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
