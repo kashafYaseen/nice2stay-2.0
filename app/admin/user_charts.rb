@@ -15,4 +15,14 @@ ActiveAdmin.register User, as: "UserCharts" do
     @users = SocialLogin.group(:provider).count
     render layout: false
   end
+
+  collection_action :users_visits do
+    @users = Ahoy::Visit.group_by_day(:started_at).count
+    render layout: false
+  end
+
+  collection_action :top_lodgings do
+    @lodgings = (Ahoy::Event.where("name = ? and time >= ? ", 'Lodgings Search', 1.month.ago).where_props(action: 'show').group("properties -> 'id'").count).sort_by { |k,v| -v }.first(10)#Ahoy::Visit.group_by_day(:started_at).count
+    render layout: false
+  end
 end
