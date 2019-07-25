@@ -5,7 +5,7 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
     columns do
       column do
-        panel 'Registrations By Month', class: 'async-panel', 'data-url': users_by_month_admin_user_charts_path
+        panel 'User Registrations per Month', class: 'async-panel', 'data-url': users_by_month_admin_user_charts_path
       end
     end
 
@@ -13,7 +13,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel 'Visits By Users', class: 'async-panel', 'data-url': users_visits_admin_user_charts_path
+        panel 'User Visits per Month', class: 'async-panel', 'data-url': users_visits_admin_user_charts_path
       end
     end
 
