@@ -7,7 +7,12 @@ ActiveAdmin.register User, as: "UserCharts" do
   end
 
   collection_action :users_by_login do
-    @users = (User.group(:creation_status).count).merge((SocialLogin.group(:provider).count))
+    @users = User.group(:creation_status).count
+    render layout: false
+  end
+
+  collection_action :users_by_socials do
+    @users = SocialLogin.group(:provider).count
     render layout: false
   end
 end
