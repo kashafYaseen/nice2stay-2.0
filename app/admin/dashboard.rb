@@ -5,6 +5,22 @@ ActiveAdmin.register_page "Dashboard" do
   content title: proc{ I18n.t("active_admin.dashboard") } do
     columns do
       column do
+        panel 'Bookings per Day', class: 'async-panel', 'data-url': bookings_per_day_admin_user_charts_path
+      end
+    end
+
+    br br
+
+    columns do
+      column do
+        panel 'Bookings per Month', class: 'async-panel', 'data-url': bookings_per_month_admin_user_charts_path
+      end
+    end
+
+    br br
+
+    columns do
+      column do
         panel 'User Registrations per Month', class: 'async-panel', 'data-url': users_by_month_admin_user_charts_path
       end
     end

@@ -22,7 +22,27 @@ ActiveAdmin.register User, as: "UserCharts" do
   end
 
   collection_action :top_lodgings do
-    @lodgings = (Ahoy::Event.where("name = ? and time >= ? ", 'Lodgings Search', 1.month.ago).where_props(action: 'show').group("properties -> 'id'").count).sort_by { |k,v| -v }.first(10)#Ahoy::Visit.group_by_day(:started_at).count
+    @lodgings = (Ahoy::Event.where("name = ? and time >= ? ", 'Lodgings Search', 1.month.ago).where_props(action: 'show').group("properties -> 'id'").count).sort_by { |k,v| -v }.first(10)
+    render layout: false
+  end
+
+  collection_action :bookings_per_month do
+    @bookings = [
+      {name: "Total", data: Reservation.joins(:booking).where(bookings: { confirmed: true }).group_by_month(:created_at, last: 12).count},
+      {name: "By Customers", data: Reservation.joins(:booking).where(bookings: { created_by: 0, confirmed: true }).group_by_month(:created_at, last: 12).count},
+      {name: "By Nice2Stay", data: Reservation.joins(:booking).where(bookings: { created_by: 2, confirmed: true }).group_by_month(:created_at, last: 12).count},
+    ]
+
+    render layout: false
+  end
+
+  collection_action :bookings_per_day do
+    @bookings = [
+      {name: "Total", data: Reservation.joins(:booking).where(bookings: { confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").count},
+      {name: "By Customers", data: Reservation.joins(:booking).where(bookings: { created_by: 0, confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").count},
+      {name: "By Nice2Stay", data: Reservation.joins(:booking).where(bookings: { created_by: 2, confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").count},
+    ]
+
     render layout: false
   end
 end
