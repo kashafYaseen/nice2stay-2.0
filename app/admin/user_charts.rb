@@ -28,9 +28,9 @@ ActiveAdmin.register User, as: "UserCharts" do
 
   collection_action :bookings_per_month do
     @bookings = [
-      {name: "Total", data: Reservation.joins(:booking).where(bookings: { confirmed: true }).group_by_month(:created_at, last: 12).count},
-      {name: "By Customers", data: Reservation.joins(:booking).where(bookings: { created_by: 0, confirmed: true }).group_by_month(:created_at, last: 12).count},
-      {name: "By Nice2Stay", data: Reservation.joins(:booking).where(bookings: { created_by: 2, confirmed: true }).group_by_month(:created_at, last: 12).count},
+      {name: "Total", data: Reservation.joins(:booking).where(bookings: { confirmed: true }).group_by_month(:created_at, last: 12).sum(:rent)},
+      {name: "By Customers", data: Reservation.joins(:booking).where(bookings: { created_by: 0, confirmed: true }).group_by_month(:created_at, last: 12).sum(:rent)},
+      {name: "By Nice2Stay", data: Reservation.joins(:booking).where(bookings: { created_by: 2, confirmed: true }).group_by_month(:created_at, last: 12).sum(:rent)},
     ]
 
     render layout: false
@@ -38,9 +38,9 @@ ActiveAdmin.register User, as: "UserCharts" do
 
   collection_action :bookings_per_day do
     @bookings = [
-      {name: "Total", data: Reservation.joins(:booking).where(bookings: { confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").count},
-      {name: "By Customers", data: Reservation.joins(:booking).where(bookings: { created_by: 0, confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").count},
-      {name: "By Nice2Stay", data: Reservation.joins(:booking).where(bookings: { created_by: 2, confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").count},
+      {name: "Total", data: Reservation.joins(:booking).where(bookings: { confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").sum(:rent)},
+      {name: "By Customers", data: Reservation.joins(:booking).where(bookings: { created_by: 0, confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").sum(:rent)},
+      {name: "By Nice2Stay", data: Reservation.joins(:booking).where(bookings: { created_by: 2, confirmed: true }).group_by_day(:created_at, last: 30, format: "%d %b").sum(:rent)},
     ]
 
     render layout: false
