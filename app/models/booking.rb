@@ -9,6 +9,7 @@ class Booking < ApplicationRecord
   scope :old, -> { where.not(id: Reservation.future_booking_ids(ids)) }
   scope :by_nice2stay, -> { where.not("be_identifier LIKE 'BYHOUSEOWNER%'") }
   scope :by_partner, -> { where("be_identifier LIKE 'BYHOUSEOWNER%'") }
+  scope :not_by_partners, -> { where(created_by: [0, 2]) }
 
   accepts_nested_attributes_for :reservations
   accepts_nested_attributes_for :user
