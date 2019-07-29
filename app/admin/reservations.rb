@@ -1,8 +1,19 @@
 ActiveAdmin.register Reservation do
-  remove_filter :review, :rules, :prices, :total_price, :discount, :rent, :crm_booking, :cleaning_cost
+  actions :show, :index
 
   scope :requests, default: true
   scope :option
+
+  filter :lodging
+  filter :booking_created_by, as: :select, collection: proc { Booking.created_bies }
+  filter :check_in
+  filter :check_out
+  filter :adults
+  filter :children
+  filter :infants
+  filter :in_cart
+  filter :canceled
+  filter :created_at
 
   controller do
     def permitted_params
@@ -26,6 +37,7 @@ ActiveAdmin.register Reservation do
     column :created_at
     column :in_cart
     column :user
+    column :created_by
 
     actions
   end

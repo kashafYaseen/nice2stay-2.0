@@ -1,5 +1,13 @@
 ActiveAdmin.register Reservation, as: "Cart" do
-  remove_filter :review, :rules, :prices, :total_price, :discount, :rent, :crm_booking, :cleaning_cost
+  actions :show, :index
+
+  filter :lodging
+  filter :check_in
+  filter :check_out
+  filter :adults
+  filter :children
+  filter :infants
+  filter :created_at
 
   controller do
     def permitted_params
@@ -7,7 +15,7 @@ ActiveAdmin.register Reservation, as: "Cart" do
     end
 
     def scoped_collection
-      Reservation.in_cart.includes({ lodging: :translations }).order(created_at: :desc)
+      Reservation.in_cart.includes({ lodging: :translations, booking: :user }).order(created_at: :desc)
     end
   end
 
@@ -15,14 +23,10 @@ ActiveAdmin.register Reservation, as: "Cart" do
     selectable_column
     id_column
     column :lodging
+    column :user
     column :check_in
     column :check_out
-    column :booking_status
-    column :request_status
     column :rent
     column :created_at
-    column :in_cart
-
-    actions
   end
 end

@@ -38,6 +38,21 @@ ActiveAdmin.register User do
       row :updated_at
     end
 
+    panel "First Visit" do
+      attributes_table_for user.first_visit do
+        row(:landing_page) { |v| link_to(v.landing_page, v.landing_page) if v.landing_page }
+        row(:referrer) { |v| link_to(v.referrer, v.referrer) if v.referrer }
+        row('Time to Signup') {|v| distance_of_time_in_words(v.user.created_at, v.started_at) }
+        row(:location)
+        row(:technology)
+        row(:utm_source)
+        row(:utm_medium)
+        row(:utm_term)
+        row(:utm_content)
+        row(:utm_campaign)
+      end
+    end
+
     panel "Upcoming Bookings" do
       table_for user.bookings.upcoming do
         column :id
@@ -110,7 +125,7 @@ ActiveAdmin.register User do
       end
     end
 
-    panel 'Ahoy Events', class: 'async-panel', 'data-url': ahoy_events_admin_user_path(user)
+    panel 'Ahoy Events - Index', class: 'async-panel', 'data-url': ahoy_events_admin_user_path(user)
 
     active_admin_comments
   end
