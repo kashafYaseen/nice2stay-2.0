@@ -1,4 +1,4 @@
-<div class="modal fade" id="login-registration-modal" tabindex="-1">
+<div class="modal fade" id="login-form-modal" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-white pb-0">
@@ -29,11 +29,15 @@
 
           <div class="tab-content">
             <div class="tab-pane fade show active" id="session-tab" role="tabpanel">
-              <%= render 'devise/sessions/form', remote: true %>
+              <div id="modal-flash-messages">
+                <%= render 'shared/notices' %>
+              </div>
+
+              <%= render 'devise/sessions/form', remote: true, colums: 'col-md-6' %>
             </div>
 
             <div class="tab-pane fade" id="registration-tab" role="tabpanel">
-              <%= render 'devise/registrations/form', remote: true, countries: @countries %>
+              <%= render 'devise/registrations/form', remote: true, countries: @countries, colums: 'col-md-6' %>
             </div>
           </div>
         </p>
