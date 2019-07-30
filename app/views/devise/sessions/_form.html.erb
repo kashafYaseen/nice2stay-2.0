@@ -1,32 +1,44 @@
-<%= link_to user_facebook_omniauth_authorize_path(locale: locale), class: 'media-btn media-facebook w-100' do %>
-  <span>Login with Facebook</span>
-<% end %>
+<% colums = colums.presence || 'col-md-12' %>
 
-<%= link_to user_google_oauth2_omniauth_authorize_path(locale: locale), class: 'media-btn media-google w-100' do %>
-  <span>Login with Google+</span>
-<% end %>
+<div class="row">
+  <div class="<%= colums %>">
+    <p><b>Login with social account</b></p>
 
-<%= link_to user_instagram_omniauth_authorize_path(locale: locale), class: 'media-btn media-instagram w-100' do %>
-  <span>Login with Instagram</span>
-<% end %>
+    <%= link_to user_facebook_omniauth_authorize_path(locale: locale), class: 'media-btn media-facebook w-100' do %>
+      <span>Login with Facebook</span>
+    <% end %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource), html: { id: rendom_id(resource) }, remote: remote) do |f| %>
-  <div class="form-group input-group">
-    <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: 'form-control', id: rendom_id(resource, :email) %>
-    <span class="input-group-addon"><i class="material-icons mail"></i></span>
+    <%= link_to user_google_oauth2_omniauth_authorize_path(locale: locale), class: 'media-btn media-google w-100' do %>
+      <span>Login with Google+</span>
+    <% end %>
+
+    <%= link_to user_instagram_omniauth_authorize_path(locale: locale), class: 'media-btn media-instagram w-100' do %>
+      <span>Login with Instagram</span>
+    <% end %>
   </div>
 
-  <div class="form-group input-group">
-    <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control', id: rendom_id(resource, :password) %>
-    <span class="input-group-addon"><i class="material-icons lock"></i></span>
-  </div>
+  <div class="<%= colums %>">
+    <p><b>Login with email</b></p>
 
-  <div class="custom-control custom-checkbox form-group">
-    <label class="form-check-label">
-      <%= f.check_box :remember_me, class: "custom-control-input", id: rendom_id(resource, :remember_me) %>
-      <label class="custom-control-label" for="user_remember_me">Remember me</label>
-    </label>
-  </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource), html: { id: rendom_id(resource) }, remote: remote) do |f| %>
+      <div class="form-group input-group">
+        <%= f.email_field :email, autofocus: true, placeholder: 'Email Address', class: 'form-control', id: rendom_id(resource, :email) %>
+        <span class="input-group-addon"><i class="material-icons mail"></i></span>
+      </div>
 
-  <%= f.submit "Log in", class: "btn btn-primary btn-block" %>
-<% end %>
+      <div class="form-group input-group">
+        <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control', id: rendom_id(resource, :password) %>
+        <span class="input-group-addon"><i class="material-icons lock"></i></span>
+      </div>
+
+      <div class="custom-control custom-checkbox form-group">
+        <label class="form-check-label">
+          <%= f.check_box :remember_me, class: "custom-control-input", id: rendom_id(resource, :remember_me) %>
+          <label class="custom-control-label" for="user_remember_me">Remember me</label>
+        </label>
+      </div>
+
+      <%= f.submit "Log in", class: "btn btn-primary btn-block" %>
+    <% end %>
+  </div>
+</div>
