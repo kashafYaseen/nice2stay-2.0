@@ -51,7 +51,7 @@
 
   Custom.ask_for_login = ->
     setTimeout (->
-      $('#login-form-modal').modal('show');
+      $('#login-registration-modal').modal('show');
     ), 10000
 
   set_top_position = ->
