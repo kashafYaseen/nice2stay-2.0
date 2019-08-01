@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="<%= colums %>">
-    <p><b>Sign up with social account</b></p>
+    <p>Sign up with social account</p>
 
     <%= link_to user_facebook_omniauth_authorize_path(locale: locale), class: 'media-btn media-facebook w-100' do %>
       <span>Sign up with Facebook</span>
@@ -18,7 +18,7 @@
   </div>
 
   <div class="<%= colums %>">
-    <p><b>Sign up with email</b></p>
+    <p>Sign up with email</p>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: rendom_id(resource) }) do |f| %>
       <%= render 'shared/errors', resource: resource %>

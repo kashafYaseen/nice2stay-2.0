@@ -99,6 +99,10 @@ en:
     reviews: Reviews
     description: Description
 
+  users:
+    login_modal_title: Please login or signup to get better experience and advantages
+    login_modal_subtitle: Acces shopping cart and fav list everywhere -  manage you're bookings - easy checkout - newsletter
+
   carts:
     step_2:
       header: Your request

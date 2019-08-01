@@ -36,6 +36,10 @@ nl:
                   Ons team geeft u deskundig advies op basis van onze expertise over de accommodaties. Wij bezoeken iedere accommodatie uitgebreid, zodat u altijd met iemand kunt praten met kennis over de plek en de omgeving.
                   U kunt van ons eerlijk advies verwachten, we weten hoe waardevol uw vakantie is en willen ervoor zorgen dat u naar de plek gaat die het beste bij u past.
 
+  users:
+    login_modal_title: Log in of registreer voor een betere website ervaring
+    login_modal_subtitle: Overal toegang tot winkelwagentje en favorietenlijst - beheer uw boekingen - vereenvoudigde checkout - nieuwsbrief
+
   profile: 
     name: Uw gegevens
     messages: Belangrijke berichten 
