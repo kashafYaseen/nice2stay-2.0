@@ -26,11 +26,11 @@ class UpdateLodgingPrices
         prices.each do |price_range|
           update_arrays(price_range)
           lodging.availabilities_for_range(price_range[:from], price_range[:to]).each do |availability|
-            import_list << Price.build(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults],
+            import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults],
               infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
 
             if price_range[:weekly_price].present?
-              import_list << Price.add(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults],
+              import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults],
                 infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
           end
