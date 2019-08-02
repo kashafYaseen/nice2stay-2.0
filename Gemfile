@@ -43,7 +43,6 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'bulk_insert'
 gem 'jwt'
 gem 'friendly_id'
 gem "breadcrumbs_on_rails"
