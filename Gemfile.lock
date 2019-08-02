@@ -67,6 +67,8 @@ GEM
       activemodel (= 5.2.0)
       activesupport (= 5.2.0)
       arel (>= 9.0)
+    activerecord-import (0.15.0)
+      activerecord (>= 3.2)
     activestorage (5.2.0)
       actionpack (= 5.2.0)
       activerecord (= 5.2.0)
@@ -464,6 +466,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   activeadmin_addons
+  activerecord-import (~> 0.15.0)
   ahoy_matey
   arctic_admin
   aws-sdk-s3
