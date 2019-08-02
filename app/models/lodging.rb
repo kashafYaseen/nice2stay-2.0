@@ -222,11 +222,11 @@ class Lodging < ApplicationRecord
   end
 
   def add_availabilities_for dates
-    Availability.bulk_insert do |availability|
-      dates.each do |date|
-        availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
-      end
+    availabilities_list = []
+    dates.each do |date|
+      availabilities_list << Availability.new(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
     end
+    Availability.import availabilities_list, on_duplicate_key_update: { conflict_target: [:lodging_id, :available_on], columns: [:updated_at] }
   end
 
   def display_price_notice?
@@ -272,11 +272,7 @@ class Lodging < ApplicationRecord
 
   private
     def add_availabilities
-      Availability.bulk_insert do |availability|
-        (Date.today..365.days.from_now).map(&:to_s).each do |date|
-          availability.add(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
-        end
-      end
+      add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
     end
 
     def price_list(params)
