@@ -48,6 +48,12 @@
       e.stopPropagation()
       $('html, body').animate { scrollTop: $('#location-container').offset().top - 100 }, 'slow'
 
+
+  Custom.ask_for_login = ->
+    setTimeout (->
+      $('#login-form-modal').modal('show');
+    ), 10000
+
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
     $('#map').css("top", "#{$('.fixed-filters').height()-10}px");

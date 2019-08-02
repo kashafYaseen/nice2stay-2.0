@@ -16,26 +16,28 @@
   <div class="alert alert-warning">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
 <% end %>
 
-<div class="row">
-  <div class="form-group col-md-12">
-    <%= f.text_field :phone, placeholder: 'Phone Number', class: 'form-control', id: rendom_id(resource, :phone) %>
+<% unless f.object.new_record? %>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <%= f.text_field :phone, placeholder: 'Phone Number', class: 'form-control', id: rendom_id(resource, :phone) %>
+    </div>
+
+    <div class="form-group col-md-12">
+      <%= f.select :country_id, countries, { include_blank: 'Select Country' }, class: 'form-control chosen-select', id: rendom_id(resource, :country) %>
+    </div>
   </div>
 
-  <div class="form-group col-md-12">
-    <%= f.select :country_id, countries, { include_blank: 'Select Country' }, class: 'form-control chosen-select', id: rendom_id(resource, :country) %>
-  </div>
-</div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <%= f.text_field :city, placeholder: 'City', class: 'form-control', id: rendom_id(resource, :city) %>
+    </div>
 
-<div class="row">
-  <div class="form-group col-md-6">
-    <%= f.text_field :city, placeholder: 'City', class: 'form-control', id: rendom_id(resource, :city) %>
+    <div class="form-group col-md-6">
+      <%= f.text_field :zipcode, placeholder: 'Zip Code', class: 'form-control', id: rendom_id(resource, :zipcode) %>
+    </div>
   </div>
 
-  <div class="form-group col-md-6">
-    <%= f.text_field :zipcode, placeholder: 'Zip Code', class: 'form-control', id: rendom_id(resource, :zipcode) %>
+  <div class="form-group">
+    <%= f.text_field :address, placeholder: 'Address', class: 'form-control', id: rendom_id(resource, :address) %>
   </div>
-</div>
-
-<div class="form-group">
-  <%= f.text_field :address, placeholder: 'Address', class: 'form-control', id: rendom_id(resource, :address) %>
-</div>
+<% end %>
