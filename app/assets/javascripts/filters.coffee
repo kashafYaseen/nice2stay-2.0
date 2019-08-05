@@ -68,6 +68,8 @@
       $('#layout_view').val('List View')
       $('.list-view').addClass 'btn-primary'
       $('#pagination-container').addClass 'd-none'
+      $('.lodging-container').removeClass 'col-md-12'
+      $('.lodging-container').addClass 'col-md-4'
       Url.update("");
     else if layout.includes('list-and-map') || layout.includes 'List & Map'
       $('#lodgings-container').addClass 'col-md-5'
@@ -78,6 +80,8 @@
       $('#layout_view').val('List & Map')
       $('.list-and-map').addClass 'btn-primary'
       $('#pagination-container').addClass 'd-none'
+      $('.lodging-container').removeClass 'col-md-4'
+      $('.lodging-container').addClass 'col-md-12'
       map.remove()
       Map.init()
       Url.update("");

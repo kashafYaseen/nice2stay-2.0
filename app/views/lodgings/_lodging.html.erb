@@ -20,7 +20,7 @@
 
         <div class="col-md-12">
           <div class="row p-2">
-            <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-9 col-xs-12" do %>
+            <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-8 col-xs-12" do %>
               <p class="text-xxs">
                 <% if lodging.as_child? %>
                   <%= truncate(lodging.parent.short_desc, length: 100) %>
@@ -47,7 +47,7 @@
               </ul>
             <% end %>
 
-            <div class="col-md-3 col-xs-12 my-auto text-center p-0 price-review-box-<%= lodging.id %>">
+            <div class="col-md-4 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
 
               <div class="price-details-box-<%= lodging.id %>">
                 <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
