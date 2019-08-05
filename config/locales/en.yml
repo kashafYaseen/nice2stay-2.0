@@ -252,6 +252,8 @@ en:
     from: From
     of: of
     title: Location, Date & Guests
+    price_info: Use date and number of guests to see total price
+    map_info: Move or zoom (in/out) the map to see more results
 
   profile_account: 
      side_nav_home: Dashboard

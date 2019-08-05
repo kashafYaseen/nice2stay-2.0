@@ -125,4 +125,9 @@ module LodgingsHelper
     return t('availability_not_confirmed').try(:capitalize) unless lodging.checked?
     price_notice
   end
+
+  def render_search_info
+    return t('search.map_info') if params[:check_in].present? && params[:adults].present?
+    t('search.price_info')
+  end
 end
