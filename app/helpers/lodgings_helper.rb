@@ -130,4 +130,9 @@ module LodgingsHelper
     return t('search.map_info') if params[:check_in].present? && params[:adults].present?
     t('search.price_info')
   end
+
+  def item_columns
+    return 'col-md-4' if params[:layout_view] == 'List View'
+    'col-md-12'
+  end
 end
