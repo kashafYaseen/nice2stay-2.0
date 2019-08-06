@@ -571,6 +571,9 @@ a:focus {
   font-size: 75%;
 } 
 
+.medium {
+  font-size: 165%;
+}
 
 .navi-link,
 .navi-link-light {
@@ -1007,6 +1010,7 @@ figure figcaption {
 
 .text-decoration-none {
   text-decoration: none !important;
+  cursor: pointer;
 }
 
 .text-crossed {
@@ -3771,7 +3775,7 @@ button:focus {
 .card-img-top,
 .card-img-bottom {
   border-radius: 0;
-  max-height: 230px;
+  max-height: 300px;
 }
 
 .card-text {

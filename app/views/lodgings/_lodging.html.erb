@@ -1,4 +1,4 @@
-<div class="col-md-12 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>" data-cumulative-url="<%= cumulative_price_lodgings_path %>" >
+<div class="<%= item_columns %> lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>" data-cumulative-url="<%= cumulative_price_lodgings_path %>" >
 <div class="persisted-data" data-url="<%= price_details_lodging_path(lodging) %>" data-quick-view="<%= quick_view_lodging_path(lodging) %>" data-validate-url="<%= validate_reservations_path %>"></div>
 
   <div class="card">
@@ -8,7 +8,7 @@
           <h5 class="card-title"><%= lodging.name %></h5>
         </div>
 
-        <div class="col-md-6 col-lg-5 col-xs-12">
+        <div class="col-md-12">
           <% if hits[lodging_counter]['_source']['discounts'] %>
             <span class="product-badge text-danger">Special offer</span>
           <% end %>
@@ -18,9 +18,9 @@
           </div>
         </div>
 
-        <div class="col-md-6 col-lg-7 col-xs-12 p-0">
-          <div class="row">
-            <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-8 col-xs-12 pr-0" do %>
+        <div class="col-md-12">
+          <div class="row p-2">
+            <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-8 col-xs-12" do %>
               <p class="text-xxs">
                 <% if lodging.as_child? %>
                   <%= truncate(lodging.parent.short_desc, length: 100) %>

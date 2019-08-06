@@ -253,6 +253,8 @@ nl:
     from: Vanaf
     of: van
     title: Locatie, Datum & Gasten
+    price_info: Gebruik datum en aantal gasten om totaal prijs te zien
+    map_info: Verplaats of zoom (in/uit) de kaart om meer resultaten te zien
 
   footer:
     support: Wilt u direct contact? 

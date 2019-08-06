@@ -67,6 +67,8 @@ GEM
       activemodel (= 5.2.0)
       activesupport (= 5.2.0)
       arel (>= 9.0)
+    activerecord-import (0.15.0)
+      activerecord (>= 3.2)
     activestorage (5.2.0)
       actionpack (= 5.2.0)
       activerecord (= 5.2.0)
@@ -129,8 +131,6 @@ GEM
     breadcrumbs_on_rails (3.0.1)
     browser (2.5.3)
     builder (3.2.3)
-    bulk_insert (1.6.0)
-      activerecord (>= 4.1.0)
     bullet (5.7.6)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11.0)
@@ -464,6 +464,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   activeadmin_addons
+  activerecord-import (~> 0.15.0)
   ahoy_matey
   arctic_admin
   aws-sdk-s3
@@ -471,7 +472,6 @@ DEPENDENCIES
   bootstrap-typeahead-rails
   bootstrap4-kaminari-views
   breadcrumbs_on_rails
-  bulk_insert
   bullet
   byebug
   capistrano
