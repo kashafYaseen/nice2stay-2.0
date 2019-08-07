@@ -68,11 +68,11 @@ module LodgingsHelper
   end
 
   def render_sort_text
-    return t('filters.sort_by') if params[:order].blank?
-    return 'Highest to Lowest' if params[:order] == 'price_desc'
-    return 'Lowest to Highest' if params[:order] == 'price_asc'
-    return 'Highest Rating' if params[:order] == 'rating_desc'
-    return 'Newest' if params[:order] == 'new_desc'
+    return t('sorting.default') if params[:order].blank?
+    return t('sorting.high_low') if params[:order] == 'price_desc'
+    return t('sorting.low_high') if params[:order] == 'price_asc'
+    return t('sorting.high_rating') if params[:order] == 'rating_desc'
+    return t('sorting.new') if params[:order] == 'new_desc'
   end
 
   def render_highlight lodging, highlight

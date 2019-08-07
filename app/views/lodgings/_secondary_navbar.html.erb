@@ -1,0 +1,40 @@
+<div class="col-md-12 secondary-navbar">
+  <div class="row">
+    <div class="col-md-5 widget-title text-bold">
+      <span class="text-xs">
+        Accommodations: <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
+      </span>
+    </div>
+
+    <div class="col-md-4 widget-title text-bold">
+      View:
+      <a class="text-decoration-none mr-0 list-view layout-btn">
+        <span class="title">Grid</span> -
+      </a>
+
+      <a class="text-decoration-none mr-0 list-and-map layout-btn d-none d-sm-inline-block">
+        <span class="title">Split</span> -
+      </a>
+
+      <a class="text-decoration-none mr-0 map-view layout-btn">
+        <span class="title">Map</span>
+      </a>
+    </div>
+
+    <div class="col-md-3 widget-title text-bold">
+      <div class="price-dropdown dropdown">
+        <a class="dropdown-toggle w-100 text-decoration-none" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sorting: <span class="title"><%= render_sort_text %></span>
+        </a>
+
+        <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+          <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+          <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+          <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+          <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+          <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

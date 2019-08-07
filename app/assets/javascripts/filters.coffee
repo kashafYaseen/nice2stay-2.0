@@ -67,7 +67,7 @@
       $('#map-container').removeClass 'col-md-10'
       $('#layout_view').val('List View')
       $('.list-view').addClass 'text-bold'
-      $('#pagination-container').addClass 'd-none'
+      $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
       $('.lodging-container').removeClass 'col-md-12'
       $('.lodging-container').addClass 'col-md-4'
       Url.update("");
@@ -79,7 +79,7 @@
       $('#map-container').addClass 'd-none d-sm-block col-md-5'
       $('#layout_view').val('List & Map')
       $('.list-and-map').addClass 'text-bold'
-      $('#pagination-container').addClass 'd-none'
+      $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
       $('.lodging-container').removeClass 'col-md-4'
       $('.lodging-container').addClass 'col-md-12'
       map.remove()
@@ -91,12 +91,12 @@
       $('#map-container').addClass 'col-md-10 d-sm-block'
       $('#layout_view').val('Map View')
       $('.map-view').addClass 'text-bold'
-      $('#pagination-container').removeClass 'd-none'
+      $('#pagination-container, #map-container .secondary-navbar').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
     else
       $('.list-and-map').addClass 'text-bold'
-      $('#pagination-container').addClass 'd-none'
+      $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
 
 ).call this

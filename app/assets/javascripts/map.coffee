@@ -20,19 +20,7 @@
           container
       )
 
-      NavbarControl = L.Control.extend(
-        options: position: 'topright'
-        onAdd: (map) ->
-          container = L.DomUtil.create('div', 'navbar-control bg-white leaflet-bar')
-          $(container).html($('.secondary-navbar').html())
-          L.DomEvent.addListener container, 'click', (e) ->
-            if $(e.target).parent().prop('class').includes('layout-btn')
-              Filters.switch_view($(e.target).parent().prop('class'))
-          container
-      )
-
       map.addControl new DragControl
-      map.addControl new NavbarControl
 
       map.on 'dragend', ->
         if $('.search-on-drag').is(":checked")
