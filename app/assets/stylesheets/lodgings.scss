@@ -463,19 +463,3 @@ div.nearby-places {
 .col-md-4.lodging-container .card-img-top {
   max-height: 250px;
 }
-
-.navbar-control {
-  display: none;
-}
-
-#map-container.col-md-10 .navbar-control {
-  width: 80vh;
-  display: block;
-  padding: 8px;
-}
-
-.navbar-control .layout-btn {
-  display: inline;
-  padding: 1px;
-  border: none;
-}
