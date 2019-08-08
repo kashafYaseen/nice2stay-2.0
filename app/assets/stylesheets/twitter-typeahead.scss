@@ -153,3 +153,22 @@
 .tt-suggestion p {
   margin: 0;
 }
+
+input.autocomplete-field {
+  margin-top: -46px;
+  z-index: 1;
+}
+
+.secondary-navbar .form-control:not(textarea) {
+  height: 30px;
+}
+
+.secondary-navbar input.autocomplete-field {
+  margin-top: -37px;
+  z-index: 1;
+}
+
+.secondary-navbar .twitter-typeahead #query,
+.secondary-navbar .twitter-typeahead .form-control {
+  top: 8px;
+}

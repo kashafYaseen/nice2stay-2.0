@@ -228,11 +228,6 @@ div.line-height-2 {
   line-height: 2;
 }
 
-input.autocomplete-field {
-  margin-top: -46px;
-  z-index: 1;
-}
-
 div.filters-show-less {
   max-height: 100px;
   overflow: hidden;
@@ -460,6 +455,17 @@ div.nearby-places {
   width: 30%;
 }
 
-.col-md-4.lodging-container .card-img-top {
-  max-height: 250px;
+.secondary-navbar {
+  top: 70px;
+  position: fixed;
+  background-color: #EBEBE6;
+  z-index: 3;
+}
+
+#lodgings-container, #map-container {
+  top: 30px;
+}
+
+#map-container {
+  top: 122px;
 }

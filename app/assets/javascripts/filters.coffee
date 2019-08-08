@@ -60,38 +60,35 @@
   Filters.switch_view = (layout) ->
     $('.layout-btn').removeClass 'text-bold'
     if layout.includes('list-view') || layout.includes 'List View'
-      $('#lodgings-container').removeClass 'col-md-5'
       $('#lodgings-container').removeClass 'd-none'
-      $('#lodgings-container').addClass 'col-md-10'
-      $('#map-container').removeClass 'd-sm-block'
-      $('#map-container').removeClass 'col-md-10'
+      $('#lodgings-container').addClass 'col-md-12'
+      $('#map-container').removeClass 'd-sm-block col-md-12'
       $('#layout_view').val('List View')
       $('.list-view').addClass 'text-bold'
-      $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
-      $('.lodging-container').removeClass 'col-md-12'
+      $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-4'
+      $('.lodging-container').removeClass 'col-md-6'
       Url.update("");
     else if layout.includes('list-and-map') || layout.includes 'List & Map'
-      $('#lodgings-container').addClass 'col-md-5'
-      $('#lodgings-container').removeClass 'col-md-10'
-      $('#lodgings-container').removeClass 'd-none'
-      $('#map-container').removeClass 'col-md-10'
-      $('#map-container').addClass 'd-none d-sm-block col-md-5'
+      $('#lodgings-container').addClass 'col-md-6'
+      $('#lodgings-container').removeClass 'd-none col-md-12'
+      $('#map-container').removeClass 'col-md-12'
+      $('#map-container').addClass 'd-none d-sm-block col-md-6'
       $('#layout_view').val('List & Map')
       $('.list-and-map').addClass 'text-bold'
-      $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
+      $('#pagination-container').addClass 'd-none'
+      $('.lodging-container').addClass 'col-md-6'
       $('.lodging-container').removeClass 'col-md-4'
-      $('.lodging-container').addClass 'col-md-12'
       map.remove()
       Map.init()
       Url.update("");
     else if layout.includes('map-view') || layout.includes 'Map View'
       $('#lodgings-container').addClass 'd-none'
-      $('#map-container').removeClass 'col-md-5 d-none'
-      $('#map-container').addClass 'col-md-10 d-sm-block'
+      $('#map-container').removeClass 'col-md-6 d-none'
+      $('#map-container').addClass 'col-md-12 d-sm-block'
       $('#layout_view').val('Map View')
       $('.map-view').addClass 'text-bold'
-      $('#pagination-container, #map-container .secondary-navbar').removeClass 'd-none'
+      $('#pagination-container').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");

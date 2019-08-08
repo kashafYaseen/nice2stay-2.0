@@ -1,40 +1,120 @@
-<div class="col-md-12 secondary-navbar">
-  <div class="row">
-    <div class="col-md-5 widget-title text-bold">
-      <span class="text-xs">
-        Accommodations: <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
-      </span>
-    </div>
+<%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
-    <div class="col-md-4 widget-title text-bold">
-      View:
-      <a class="text-decoration-none mr-0 list-view layout-btn">
-        <span class="title">Grid</span> -
-      </a>
+  <div class="col-md-12 secondary-navbar">
+    <div class="row">
+      <div class="col-md-1 widget-title text-bold">
+        <span class="text-xs">
+          <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
+        </span>
+      </div>
 
-      <a class="text-decoration-none mr-0 list-and-map layout-btn d-none d-sm-inline-block">
-        <span class="title">Split</span> -
-      </a>
+      <div class="col-md-8 row pt-1">
+        <div class="col-md-4">
+          <%= text_field_tag :query, params[:query], placeholder: "Countries, regions or accommodation name", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
+        </div>
 
-      <a class="text-decoration-none mr-0 map-view layout-btn">
-        <span class="title">Map</span>
-      </a>
-    </div>
+        <section class="col-md-2">
+          <div class="vue-app">
+            <datepicker
+              :trigger-id="'trigger-range'"
+              :check-in="'<%= params[:check_in]%>'"
+              :check-out="'<%= params[:check_out]%>'"
+              :months="2"
+              :min-date="'<%= Date.yesterday %>'"
+              :action-buttons="true"
+              :full-screen="false"
+              :trigger-button="'btn btn-outline-primary btn-sm w-100'"
+              :inline="false"
+            />
+          </div>
+        </section>
 
-    <div class="col-md-3 widget-title text-bold">
-      <div class="price-dropdown dropdown">
-        <a class="dropdown-toggle w-100 text-decoration-none" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sorting: <span class="title"><%= render_sort_text %></span>
+        <section class="col-md-2">
+          <div class="vue-app">
+            <guests-dropdown
+              :adults="<%= params[:adults].to_i %>"
+              :children="<%= params[:children].to_i %>"
+              :infants="<%= params[:infants].to_i %>"
+              :adults-target="'#adults'"
+              :children-target="'#children'"
+              :infants-target="'#infants'"
+              :dropdown-id="'<%= "guests-dropdown-filters" %>'"
+              :show-apply="false"
+              :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
+              :show-infants="false"
+            />
+          </div>
+          <%= hidden_field_tag :adults, params[:adults] %>
+          <%= hidden_field_tag :children, params[:children] %>
+          <%= hidden_field_tag :infants, params[:infants] %>
+        </section>
+
+        <section class="lodging-types-list col-md-2">
+          <div class="type-dropdown dropdown">
+            <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="typeFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= 'TYPE' %></span>
+            </button>
+
+            <div class="dropdown-menu type-dropdown-menu" aria-labelledby="typeFilter">
+              <% Lodging.lodging_types.each do |key, value| %>
+                <a class="dropdown-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= check_box_tag "lodging_type_in[]", key, is_checked?(key, :lodging_type_in), id: "lodging_type_#{key}", class: "custom-control-input lodging_type" %>
+
+                    <label class="custom-control-label" for="lodging_type_<%= key %>">
+                      <%= t("filters.#{key}") %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, key, 'lodging_type', @total_lodgings) %>)</span>
+                    </label>
+                  </div>
+                </a>
+              <% end %>
+            </div>
+          </div>
+        </section>
+
+        <section class="col-md-2">
+          <button class="btn btn-primary btn-sm w-100 mt-2 submit-filters" type="button">
+            Search
+          </button>
+        </section>
+      </div>
+
+      <div class="col-md-2 widget-title text-bold">
+        View:
+        <a class="text-decoration-none mr-0 list-view layout-btn">
+          <span class="title">Grid</span> -
         </a>
 
-        <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
-          <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
-          <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
-          <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
-          <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
-          <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+        <a class="text-decoration-none mr-0 list-and-map layout-btn d-none d-sm-inline-block">
+          <span class="title">Split</span> -
+        </a>
+
+        <a class="text-decoration-none mr-0 map-view layout-btn">
+          <span class="title">Map</span>
+        </a>
+      </div>
+
+      <div class="col-md-1 widget-title text-bold">
+        <div class="price-dropdown dropdown">
+          <a class="dropdown-toggle w-100 text-decoration-none" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sorting: <span class="title"><%= render_sort_text %></span>
+          </a>
+
+          <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+            <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+            <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+            <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+            <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+            <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <%= hidden_field_tag :order, params[:order] %>
+  <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
+  <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
+  <%= hidden_field_tag :bounds, params[:bounds] %>
+  <%= hidden_field_tag :name_middle, params[:name_middle] %>
+  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'List & Map' %>
+<% end %>
