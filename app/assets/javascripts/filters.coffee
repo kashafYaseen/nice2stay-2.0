@@ -5,6 +5,9 @@
     updated_amenities()
     Filters.update_prices()
 
+    $('#moreFilters').click ->
+      $('.more-filters-dropdown-menu').toggleClass 'd-none'
+
     $('.layout-btn').click ->
       Filters.switch_view($(this).prop('class'))
 
