@@ -460,6 +460,7 @@ div.nearby-places {
   position: fixed;
   background-color: #EBEBE6;
   z-index: 3;
+  height: 53px;
 }
 
 #lodgings-container, #map-container {
@@ -468,4 +469,28 @@ div.nearby-places {
 
 #map-container {
   top: 122px;
+}
+
+@media only screen and (max-width: 767px) {
+  #lodgings-container, #map-container {
+    top: 0;
+  }
+
+  #map-container {
+    top: 0;
+  }
+
+  .secondary-navbar {
+    top: 0;
+    background-color: white;
+  }
+}
+
+.more-filters-dropdown-menu {
+  position: fixed;
+  top: 123px;
+  z-index: 3;
+  background-color: #EBEBE6;
+  overflow: auto;
+  max-height: 85vh;
 }
