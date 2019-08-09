@@ -1,6 +1,13 @@
 <%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
 
   <div class="col-md-12 secondary-navbar">
+    <div class="sidebar-toggle position-left">
+      <i class="material-icons filter_list"></i>
+    </div>
+
+    <aside class="sidebar sidebar-offcanvas position-left">
+     <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+
     <div class="row">
       <div class="col-md-1 widget-title text-bold">
         <span class="text-xs">
