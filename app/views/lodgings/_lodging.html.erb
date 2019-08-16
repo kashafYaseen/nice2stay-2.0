@@ -17,55 +17,50 @@
             <%= render_image_tags lodging, class: "card-img-top item" %>
           </div>
         </div>
+      </div>
 
+      <div class="row">
         <div class="col-md-12">
-          <div class="row p-2">
-            <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-8 col-xs-12" do %>
-              <p class="text-xxs">
-                <% if lodging.as_child? %>
-                  <%= truncate(lodging.parent.short_desc, length: 100) %>
-                <% else %>
-                  <%= truncate(lodging.short_desc, length: 100) %>
-                <% end %>
-              </p>
+          <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12 col-xs-12" do %>
+            <p class="text-xxs">
+              <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
+              <% if lodging.children.present? %>
+                / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
+              <% end %>
+              <br>
+              <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+            </p>
 
+            <ul class="list-icon">
               <p class="text-xxs">
-                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
-                <% if lodging.children.present? %>
-                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
-                <% end %>
-                <br>
-                <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+                <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_1' %><br>
+                <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_2' %><br>
+                <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_3' %>
               </p>
+            </ul>
+            <hr>
+          <% end %>
+        </div>
+      </div>
 
-              <ul class="list-icon">
-                <p class="text-xxs">
-                  <i class="material-icons md-18 done text-gray-dark"></i> <%= render_highlight lodging, 'highlight_1' %><br>
-                  <i class="material-icons md-18 done text-gray-dark"></i> <%= render_highlight lodging, 'highlight_2' %><br>
-                  <i class="material-icons md-18 done text-gray-dark"></i> <%= render_highlight lodging, 'highlight_3' %>
-                </p>
-              </ul>
+      <div class="row">
+        <div class="col-md-12 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
+
+          <div class="price-details-box-<%= lodging.id %>">
+            <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
+          </div>
+
+          <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
+
+          <div class="review-box">
+            <% if lodging.average_rating > 0 %>
+              <%= render_stars_tag lodging.average_rating %>
+              <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review' ) %></p>
             <% end %>
+          </div>
 
-            <div class="col-md-4 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
-
-              <div class="price-details-box-<%= lodging.id %>">
-                <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
-              </div>
-
-              <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
-
-              <div class="review-box">
-                <% if lodging.average_rating > 0 %>
-                  <%= render_stars_tag lodging.average_rating %>
-                  <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review' ) %></p>
-                <% end %>
-              </div>
-
-              <div class="links-box text-cnter">
-                <%= link_to 'Quick View', '#', class: "btn btn-secondary btn-sm quick-view-btn", data: { lodging: lodging.id } %>
-              </div>
-            </div>
+          <div class="links-box text-cnter">
+            <%= link_to 'Quick View', '#', class: "btn btn-secondary btn-sm quick-view-btn col-md-8", data: { lodging: lodging.id } %>
           </div>
         </div>
       </div>
