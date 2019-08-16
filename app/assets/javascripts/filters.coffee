@@ -5,7 +5,7 @@
     updated_amenities()
     Filters.update_prices()
 
-    $('#moreFilters').click ->
+    $('#moreFilters, .close-filters-dropdown').click ->
       $('.more-filters-dropdown-menu').toggleClass 'd-none'
 
     $('.layout-btn').click ->
