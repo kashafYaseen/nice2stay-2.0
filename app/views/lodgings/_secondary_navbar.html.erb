@@ -9,18 +9,18 @@
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
 
     <div class="row">
-      <div class="col-md-1 widget-title text-bold p-0 pl-1">
+      <div class="col-md-1 widget-title text-bold p-0 pl-2">
         <span class="text-xs">
           <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
         </span>
       </div>
 
-      <div class="col-md-8 row pt-1">
-        <div class="col-md-2">
-          <%= text_field_tag :query, params[:query], placeholder: "Countries, regions or accommodation name", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
+      <div class="col-md-7 row pt-1">
+        <div class="col-md-4">
+          <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
         </div>
 
-        <section class="col-md-2">
+        <section class="pr-1">
           <div class="vue-app">
             <datepicker
               :trigger-id="'trigger-range'"
@@ -36,7 +36,7 @@
           </div>
         </section>
 
-        <section class="col-md-2">
+        <section class="pr-1">
           <div class="vue-app">
             <guests-dropdown
               :adults="<%= params[:adults].to_i %>"
@@ -56,7 +56,7 @@
           <%= hidden_field_tag :infants, params[:infants] %>
         </section>
 
-        <section class="lodging-types-list col-md-2">
+        <section class="lodging-types-list pr-1">
           <div class="type-dropdown dropdown">
             <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="typeFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title"><%= 'TYPE' %></span>
@@ -78,13 +78,13 @@
           </div>
         </section>
 
-        <section class="more-filters col-md-2">
+        <section class="more-filters pr-1">
           <button class="btn btn-sm btn btn-outline-primary w-100" type="button" id="moreFilters">
             <span class="title">More Filters</span>
           </button>
         </section>
 
-        <section class="col-md-2">
+        <section class="pr-1">
           <button class="btn btn-primary btn-sm w-100 mt-2 submit-filters" type="button">
             Search
           </button>
@@ -106,10 +106,10 @@
         </a>
       </div>
 
-      <div class="col-md-1 widget-title text-bold p-0">
+      <div class="col-md-2 widget-title text-bold p-0">
         <div class="price-dropdown dropdown">
           <a class="dropdown-toggle w-100 text-decoration-none" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sorting: <span class="title"><%= render_sort_text %></span>
+            <span class="widget-title text-bold">Sorting:</span> <span class="title"><%= render_sort_text %></span>
           </a>
 
           <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
