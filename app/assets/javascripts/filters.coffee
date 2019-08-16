@@ -6,6 +6,8 @@
     Filters.update_prices()
 
     $('#moreFilters, .close-filters-dropdown').click ->
+      if !$('.more-filters-dropdown-menu').hasClass 'd-none'
+        Filters.submit()
       $('.more-filters-dropdown-menu').toggleClass 'd-none'
 
     $('.layout-btn').click ->
@@ -15,19 +17,15 @@
       $('#more-filters').modal('toggle')
       $('.modal-backdrop').css('z-index', 1);
 
-    $('.amenities, .countries').change ->
+    $('.amenities, .amenities-hot, .experiences, .discounts').change ->
       updated_amenities()
-
-    $('.discounts').change ->
-      Filters.update_prices()
-      Filters.submit()
 
     $('.submit-filters').click ->
       Url.update("");
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('#filters-container .lodging_type, #filters-container .experiences, #filters-container .amenities-hot').change ->
+    $('#filters-container .lodging_type').change ->
       Url.update("");
       Filters.submit()
 
@@ -36,11 +34,7 @@
     Rails.fire($('#filters-container .lodgings-filters').get(0), 'submit')
 
   updated_amenities = ->
-    if $('.countries-list').css('display') == 'none'
-      checked = $(".amenities-list input:checked").length
-      $('.countries:checked').prop('checked', false)
-    else
-      checked = $(".amenities-list input:checked, .countries-list input:checked").length
+    checked = $(".more-filters-dropdown-menu input:checked").length
 
     title = $('.more-filters-btn').data('title')
     if checked > 0

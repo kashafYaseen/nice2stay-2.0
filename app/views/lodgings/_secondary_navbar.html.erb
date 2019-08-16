@@ -79,7 +79,7 @@
         </section>
 
         <section class="more-filters pr-1">
-          <button class="btn btn-sm btn btn-outline-primary w-100" type="button" id="moreFilters">
+          <button class="btn btn-sm btn btn-outline-primary w-100 more-filters-btn" type="button" id="moreFilters" data-title="<%= t('filters.more_filters') %>">
             <span class="title">More Filters</span>
           </button>
         </section>
@@ -161,7 +161,7 @@
         </div>
       </section>
 
-      <section class="col-md-3 experiences-list pt-3">
+    <section class="col-md-3 experiences-list pt-3">
         <p class="p-0 col-md-12 text-bold"><%= t 'filters.theme' %> </p>
         <% experiences.each do |experience| %>
           <div class="custom-control custom-checkbox col-md-12">
