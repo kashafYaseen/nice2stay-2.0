@@ -26,7 +26,7 @@
 
   export default {
     name: "datepicker",
-    props: ['monthsToShow', 'triggerId', 'columnClass', 'triggerButton', "checkIn", "checkOut", "months", "disabledDates", "minDate", "actionButtons", "fullScreen", "inline" ],
+    props: ['monthsToShow', 'triggerId', 'columnClass', 'triggerButton', "checkIn", "checkOut", "months", "disabledDates", "minDate", "actionButtons", "fullScreen", "inline", "highlightOnSelection" ],
 
     data() {
       let check_in = this.checkIn
@@ -44,8 +44,13 @@
     methods: {
       formatDates(dateOne, dateTwo) {
         let formattedDates = ''
-        if (!dateTwo && !dateOne){
+        if (!dateTwo && !dateOne) {
           formattedDates =  'Dates'
+
+          if (this.highlightOnSelection) {
+            $(`#${this.triggerId}`).addClass('btn-outline-primary');
+            $(`#${this.triggerId}`).removeClass('btn-primary');
+          }
         }
 
         if (dateOne) {
@@ -58,6 +63,11 @@
         return formattedDates
       },
       date_one_selected(val) {
+        if (this.highlightOnSelection) {
+          $(`#${this.triggerId}`).removeClass('btn-outline-primary');
+          $(`#${this.triggerId}`).addClass('btn-primary');
+        }
+
         this.check_in = val
         $('.check-in').val(val);
       },

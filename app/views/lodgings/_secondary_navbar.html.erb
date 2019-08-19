@@ -32,6 +32,7 @@
               :full-screen="false"
               :trigger-button="'btn btn-outline-primary btn-sm w-100'"
               :inline="false"
+              :highlight-on-selection="true"
             />
           </div>
         </section>
@@ -49,6 +50,7 @@
               :show-apply="false"
               :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
               :show-infants="false"
+              :highlight-on-selection="true"
             />
           </div>
           <%= hidden_field_tag :adults, params[:adults] %>
