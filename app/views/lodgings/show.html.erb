@@ -216,7 +216,6 @@
 <% content_for :canonical do %><%= lodging_url(@lodging) %><% end %>
 
 <%= content_for :js_init do %>
-  GuestDropdown.init();
   Lodging.read_more()
   initPhotoSwipeFromDOM('.lodging-gallery');
   initDatePicker();
