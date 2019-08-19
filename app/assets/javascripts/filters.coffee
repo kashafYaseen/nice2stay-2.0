@@ -19,6 +19,7 @@
 
     $('.amenities, .amenities-hot, .experiences, .discounts').change ->
       updated_amenities()
+      Filters.submit()
 
     $('.submit-filters').click ->
       Url.update("");
