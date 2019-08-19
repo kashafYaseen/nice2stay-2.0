@@ -6,9 +6,11 @@
     Filters.update_prices()
 
     $('#moreFilters, .close-filters-dropdown').click ->
-      if !$('.more-filters-dropdown-menu').hasClass 'd-none'
-        Filters.submit()
       $('.more-filters-dropdown-menu').toggleClass 'd-none'
+
+    $('.lodgings-filters .filters-autocomplete').on 'keypress', (e) ->
+      if e.which == 13
+        Filters.submit()
 
     $('.layout-btn').click ->
       Filters.switch_view($(this).prop('class'))
@@ -19,6 +21,7 @@
 
     $('.amenities, .amenities-hot, .experiences, .discounts').change ->
       updated_amenities()
+      Filters.submit()
 
     $('.submit-filters').click ->
       Url.update("");

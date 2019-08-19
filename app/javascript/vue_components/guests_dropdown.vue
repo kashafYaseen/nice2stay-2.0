@@ -114,6 +114,10 @@
       showInfants: {
         type: Boolean,
         default: true
+      },
+      highlightOnSelection: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -125,6 +129,7 @@
       }
     },
     mounted() {
+      this.guests()
     },
     methods: {
       handleAdults(value) {
@@ -157,10 +162,22 @@
           guestsTitle += `${(this.totalChildren || this.totalAdults ? ', ' : ' ')} ${this.totalInfants} ${this.infantsTitle()}`
         }
 
-        if(guestsTitle == "")
+        if(guestsTitle == "") {
+          if (this.highlightOnSelection) {
+            $(`#${this.dropdownId}`).addClass('btn-outline-primary');
+            $(`#${this.dropdownId}`).removeClass('btn-primary');
+          }
+
           return "Guests";
-        else
+        }
+        else {
+          if (this.highlightOnSelection) {
+            $(`#${this.dropdownId}`).removeClass('btn-outline-primary');
+            $(`#${this.dropdownId}`).addClass('btn-primary');
+          }
+
           return guestsTitle;
+        }
       },
       handleMenuClick(e) {
         e.stopPropagation()

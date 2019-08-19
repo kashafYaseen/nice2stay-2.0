@@ -32,6 +32,7 @@
               :full-screen="false"
               :trigger-button="'btn btn-outline-primary btn-sm w-100'"
               :inline="false"
+              :highlight-on-selection="true"
             />
           </div>
         </section>
@@ -46,9 +47,11 @@
               :children-target="'#children'"
               :infants-target="'#infants'"
               :dropdown-id="'<%= "guests-dropdown-filters" %>'"
-              :show-apply="false"
+              :show-apply="true"
               :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
               :show-infants="false"
+              :highlight-on-selection="true"
+              :submit-target="'.lodgings-filters'"
             />
           </div>
           <%= hidden_field_tag :adults, params[:adults] %>
@@ -57,7 +60,7 @@
         </section>
 
         <section class="lodging-types-list pr-1">
-          <div class="type-dropdown dropdown">
+          <div class="types-dropdown dropdown">
             <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="typeFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="title"><%= 'TYPE' %></span>
             </button>
@@ -81,12 +84,6 @@
         <section class="more-filters pr-1">
           <button class="btn btn-sm btn btn-outline-primary w-100 more-filters-btn" type="button" id="moreFilters" data-title="<%= t('filters.more_filters') %>">
             <span class="title">More Filters</span>
-          </button>
-        </section>
-
-        <section class="pr-1">
-          <button class="btn btn-primary btn-sm w-100 mt-2 submit-filters" type="button">
-            Search
           </button>
         </section>
       </div>
