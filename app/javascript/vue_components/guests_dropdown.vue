@@ -129,6 +129,7 @@
       }
     },
     mounted() {
+      this.guests()
     },
     methods: {
       handleAdults(value) {
@@ -170,7 +171,6 @@
           return "Guests";
         }
         else {
-
           if (this.highlightOnSelection) {
             $(`#${this.dropdownId}`).removeClass('btn-outline-primary');
             $(`#${this.dropdownId}`).addClass('btn-primary');
