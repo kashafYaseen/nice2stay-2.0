@@ -5,7 +5,7 @@
     <div class="card-body bg-white">
       <div class="row">
         <div class="col-md-12 col-xs-12">
-          <h5 class="card-title"><%= lodging.name %></h5>
+          <h6 class="card-title"><%= lodging.name %></h6>
         </div>
 
         <div class="col-md-12">
@@ -22,6 +22,7 @@
       <div class="row">
         <div class="col-md-12">
           <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12 col-xs-12" do %>
+            <p><%= lodging.h1 %></p>
             <p class="text-xxs">
               <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
               <% if lodging.children.present? %>

@@ -15,7 +15,7 @@
         </span>
       </div>
 
-      <div class="col-md-7 row pt-1">
+      <div class="col-md-9 row pt-1">
         <div class="col-md-4">
           <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
         </div>
@@ -88,22 +88,20 @@
         </section>
       </div>
 
-      <div class="col-md-2 widget-title text-bold">
+      <div class="col-md-2 widget-title text-bold mt-2">
         View:
         <a class="text-decoration-none mr-0 list-view layout-btn">
           <span class="title">Grid</span> -
         </a>
 
         <a class="text-decoration-none mr-0 list-and-map layout-btn d-none d-sm-inline-block">
-          <span class="title">Split</span> -
+          <span class="title">Grid & Map</span> -
         </a>
 
         <a class="text-decoration-none mr-0 map-view layout-btn">
-          <span class="title">Map</span>
+          <span class="title">Large Map</span>
         </a>
-      </div>
 
-      <div class="col-md-2 widget-title text-bold p-0">
         <div class="price-dropdown dropdown">
           <a class="dropdown-toggle w-100 text-decoration-none" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="widget-title text-bold">Sorting:</span> <span class="title"><%= render_sort_text %></span>
