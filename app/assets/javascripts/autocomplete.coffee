@@ -105,6 +105,7 @@
         $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val(datum.name)
+      Filters.submit()
 
   source = (url, type) ->
     return new Bloodhound(
