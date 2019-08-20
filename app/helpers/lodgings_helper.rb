@@ -69,10 +69,10 @@ module LodgingsHelper
 
   def render_sort_text
     return t('filters.sort_by') if params[:order].blank?
-    return 'Highest to Lowest' if params[:order] == 'price_desc'
-    return 'Lowest to Highest' if params[:order] == 'price_asc'
-    return 'Highest Rating' if params[:order] == 'rating_desc'
-    return 'Newest' if params[:order] == 'new_desc'
+    return t('sorting.high_low') if params[:order] == 'price_desc'
+    return t('sorting.low_high') if params[:order] == 'price_asc'
+    return t('sorting.high_rating') if params[:order] == 'rating_desc'
+    return t('sorting.new') if params[:order] == 'new_desc'
   end
 
   def render_highlight lodging, highlight
@@ -101,8 +101,8 @@ module LodgingsHelper
   end
 
   def render_price price, dynamic
-    return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
-    "<div class='price-text-from price-text'> #{t('search.from')} </div> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
+    return "<h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
+    "<p class='price-text-from price-text d-inline'> #{t('search.from')} </p> <h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> per #{t('search.night')}</p>".html_safe
   end
 
   def render_show_page_map lodging, places
@@ -132,7 +132,7 @@ module LodgingsHelper
   end
 
   def item_columns
-    return 'col-md-4' if params[:layout_view] == 'List View'
-    'col-md-12'
+    return 'col-md-6 col-lg-3' if params[:layout_view] == 'List View'
+    'col-md-12 col-lg-6'
   end
 end

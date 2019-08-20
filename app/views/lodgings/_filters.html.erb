@@ -9,43 +9,7 @@
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
       <div class="col-md-12 p-0">
         <div class="row">
-          <section class="col-md-12 text-center">
-            <span class="text-xs text-bold">
-              <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
-            </span>
-          </section>
-
           <section class="col-md-12">
-            <button class="btn btn-outline-secondary btn-sm w-30 mr-0 list-view layout-btn btn-outline-secondary" type="button">
-              <span class="title">Grid</span>
-            </button>
-
-            <button class="btn btn-outline-secondary btn-sm w-30 mr-0 list-and-map layout-btn d-none d-sm-inline-block" type="button">
-              <span class="title">Split</span>
-            </button>
-
-            <button class="btn btn-outline-secondary btn-sm w-30 mr-0 map-view layout-btn" type="button">
-              <span class="title">Map</span>
-            </button>
-          </section>
-
-          <section class="col-md-12">
-            <div class="price-dropdown dropdown">
-              <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="title"><%= render_sort_text %></span>
-              </button>
-
-              <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
-                <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
-                <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
-                <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
-                <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
-                <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
-                <%= hidden_field_tag :order, params[:order] %>
-              </div>
-            </div>
-
-            <hr class="border-dark mt-1 mb-3">
             <p class="widget-title text-bold"><%= t 'search.title' %></p>
           </section>
 
@@ -209,6 +173,7 @@
     </div>
   </div>
 
+  <%= hidden_field_tag :order, params[:order] %>
   <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>

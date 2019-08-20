@@ -60,76 +60,6 @@
   }
 }
 
-.twitter-typeahead {
-  font-size: 15px;
-
-  .tt-input {
-    margin-bottom: 0;
-  }
-
-  .autocomplete {
-    position: relative !important;
-  }
-
-  .tt-query {
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  }
-
-  .tt-hint {
-    color: #999;
-  }
-
-  .tt-menu {
-    width: 100%;
-    margin-top: 1px;
-    padding: 4px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    max-height: 750px;
-    overflow-y: auto;
-  }
-
-  .tt-suggestion {
-    padding: 3px 20px;
-    line-height: 24px;
-    &:hover{
-      background-color: #f0f0f0;
-    }
-  }
-
-  .tt-cursor {
-    color: #fff;
-    background-color: #dc9814;
-  }
-
-  .tt-highlight {
-    font-weight: 700;
-  }
-
-  .category-name {
-    margin-bottom: 0;
-    padding: 5px;
-    line-height: 1.1;
-    text-align: right;
-    border-top: 1px solid #ccc;
-  }
-
-  img {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-  }
-}
-
 .lodging-gallery {
   width: 100%;
   float: left;
@@ -228,11 +158,6 @@ div.line-height-2 {
   line-height: 2;
 }
 
-input.autocomplete-field {
-  margin-top: -46px;
-  z-index: 1;
-}
-
 div.filters-show-less {
   max-height: 100px;
   overflow: hidden;
@@ -297,6 +222,14 @@ div.review-paginator {
 
   .lodgings-filters section, .lodgings-filters button {
     width: 100%;
+  }
+
+  .lodgings-filters .more-filters-dropdown-menu section, .lodgings-filters button {
+    width: auto;
+  }
+
+  .more-filters-dropdown-menu {
+    top: 70px !important;
   }
 
   .lodgings-filters .more-filters-btn {
@@ -426,9 +359,9 @@ div.nearby-places {
 }
 
 #pagination-container {
-  z-index: 1000;
+  z-index: 2;
   position: absolute;
-  bottom: 65px;
+  bottom: 120px;
   height: 60px;
   overflow: hidden;
 
@@ -460,6 +393,50 @@ div.nearby-places {
   width: 30%;
 }
 
-.col-md-4.lodging-container .card-img-top {
-  max-height: 250px;
+.secondary-navbar {
+  top: 70px;
+  position: fixed;
+  background-color: #EBEBE6;
+  z-index: 3;
+  height: 53px;
+}
+
+#lodgings-container, #map-container {
+  top: 30px;
+}
+
+#map-container {
+  top: 122px;
+}
+
+@media only screen and (max-width: 767px) {
+  #lodgings-container, #map-container {
+    top: 0;
+  }
+
+  #map-container {
+    top: 0;
+  }
+
+  .secondary-navbar {
+    top: 0;
+    background-color: white;
+  }
+}
+
+.more-filters-dropdown-menu {
+  position: fixed;
+  top: 123px;
+  z-index: 3;
+  background-color: #fff;
+  overflow: auto;
+  max-height: 85vh;
+}
+
+.lodgings-filters .btn-sm {
+  height: 33px;
+}
+
+.lodging-container .card {
+  height: 97%;
 }
