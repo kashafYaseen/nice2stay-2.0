@@ -59,15 +59,12 @@
 
   Filters.switch_view = (layout) ->
     $('.layout-btn').removeClass 'text-bold'
-    $('.view-dropdown .dropdown-toggle').removeClass('btn-primary')
     if layout.includes('list-view') || layout.includes 'List View'
       $('#lodgings-container').removeClass 'd-none'
       $('#lodgings-container').addClass 'col-md-12'
       $('#map-container').removeClass 'd-sm-block col-md-12'
       $('#layout_view').val('List View')
       $('.view-dropdown .dropdown-toggle .title').text('GRID')
-      $('.view-dropdown .dropdown-toggle').removeClass('btn-outline-primary')
-      $('.view-dropdown .dropdown-toggle').addClass('btn-primary')
       $('.list-view').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-3'
@@ -80,8 +77,6 @@
       $('#map-container').addClass 'd-none d-sm-block col-md-6'
       $('#layout_view').val('List & Map')
       $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
-      $('.view-dropdown .dropdown-toggle').removeClass('btn-outline-primary')
-      $('.view-dropdown .dropdown-toggle').addClass('btn-primary')
       $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-6'
@@ -95,8 +90,6 @@
       $('#map-container').addClass 'col-md-12 d-sm-block'
       $('#layout_view').val('Map View')
       $('.view-dropdown .dropdown-toggle .title').text('LARGE MAP')
-      $('.view-dropdown .dropdown-toggle').removeClass('btn-outline-primary')
-      $('.view-dropdown .dropdown-toggle').addClass('btn-primary')
       $('.map-view').addClass 'text-bold'
       $('#pagination-container').removeClass 'd-none'
       map.remove()
