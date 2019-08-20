@@ -9,14 +9,14 @@
      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
 
     <div class="row">
-      <div class="col-md-1 widget-title text-bold p-0 pl-2">
+      <div class="col-md-12 col-lg-1 widget-title text-bold p-0 pl-2">
         <span class="text-xs">
           <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
         </span>
       </div>
 
       <div class="col-md-11 row pt-1 pr-0 pr-md-1">
-        <div class="col-md-4 p-0 pr-1 pr-md-2">
+        <div class="col-sm-12 col-md-12 col-lg-4 p-0 pr-1 pr-md-2">
           <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
         </div>
 
