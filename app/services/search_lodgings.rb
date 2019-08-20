@@ -66,7 +66,7 @@ class SearchLodgings
       conditions << near_latlong_condition if params[:within].present?
 
       availability_condition conditions if params[:check_in].present? || params[:check_out].present?
-      all(:amenities, params[:amenities_in], conditions) if params[:amenities_in].present?
+      all(:amenities_ids, params[:amenities_in], conditions) if params[:amenities_in].present?
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
       conditions
