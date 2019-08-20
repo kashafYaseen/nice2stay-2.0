@@ -224,6 +224,14 @@ div.review-paginator {
     width: 100%;
   }
 
+  .lodgings-filters .more-filters-dropdown-menu section, .lodgings-filters button {
+    width: auto;
+  }
+
+  .more-filters-dropdown-menu {
+    top: 70px !important;
+  }
+
   .lodgings-filters .more-filters-btn {
     margin-right: 0;
   }

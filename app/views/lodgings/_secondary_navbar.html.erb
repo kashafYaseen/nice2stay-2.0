@@ -15,8 +15,8 @@
         </span>
       </div>
 
-      <div class="col-md-11 row pt-1">
-        <div class="col-md-4">
+      <div class="col-md-11 row pt-1 pr-0 pr-md-1">
+        <div class="col-md-4 p-0 pr-1 pr-md-2">
           <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
         </div>
 
@@ -89,8 +89,8 @@
 
         <section class="pr-1 ml-auto">
           <div class="view-dropdown dropdown">
-            <button class="dropdown-toggle w-100 btn btn-sm btn-outline-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title">View</span>
+            <button class="dropdown-toggle w-100 btn btn-sm btn-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title">Grid & Map</span>
             </button>
 
             <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
@@ -174,7 +174,7 @@
         <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities_pop' %></p>
         <% amenities.hot.each do |amenity| %>
           <div class="custom-control custom-checkbox col-md-12">
-            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities-hot" %>
+            <%= check_box_tag "amenities_in[]", amenity.id, is_checked?(amenity.id, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities-hot" %>
 
             <label class="custom-control-label" for="amenity_<%= amenity.id %>">
               <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
@@ -187,7 +187,7 @@
         <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities' %></p>
         <% amenities.regular.each do |amenity| %>
           <div class="custom-control custom-checkbox col-md-6">
-            <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
+            <%= check_box_tag "amenities_in[]", amenity.id, is_checked?(amenity.id, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
             <label class="custom-control-label" for="amenity_<%= amenity.id %>">
               <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
