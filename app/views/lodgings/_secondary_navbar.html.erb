@@ -15,7 +15,7 @@
         </span>
       </div>
 
-      <div class="col-md-9 row pt-1">
+      <div class="col-md-11 row pt-1">
         <div class="col-md-4">
           <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
         </div>
@@ -86,35 +86,36 @@
             <span class="title">More Filters</span>
           </button>
         </section>
-      </div>
 
-      <div class="col-md-2 widget-title text-bold mt-2">
-        View:
-        <a class="text-decoration-none mr-0 list-view layout-btn">
-          <span class="title">Grid</span> -
-        </a>
+        <section class="pr-1 ml-auto">
+          <div class="view-dropdown dropdown">
+            <button class="dropdown-toggle w-100 btn btn-sm btn-outline-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title">View</span>
+            </button>
 
-        <a class="text-decoration-none mr-0 list-and-map layout-btn d-none d-sm-inline-block">
-          <span class="title">Grid & Map</span> -
-        </a>
-
-        <a class="text-decoration-none mr-0 map-view layout-btn">
-          <span class="title">Large Map</span>
-        </a>
-
-        <div class="price-dropdown dropdown">
-          <a class="dropdown-toggle w-100 text-decoration-none" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="widget-title text-bold">Sorting:</span> <span class="title"><%= render_sort_text %></span>
-          </a>
-
-          <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
-            <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
-            <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
-            <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
-            <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
-            <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+            <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
+              <a class="dropdown-item list-view layout-btn" href="#">GRID</a>
+              <a class="dropdown-item list-and-map layout-btn d-none d-sm-block" href="#">Grid & Map</a>
+              <a class="dropdown-item map-view layout-btn" href="#">Large Map</a>
+            </div>
           </div>
-        </div>
+        </section>
+
+        <section class="pr-1">
+          <div class="price-dropdown dropdown">
+            <button class="dropdown-toggle w-100 btn btn-sm btn-outline-primary" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= render_sort_text %></span>
+            </button>
+
+            <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+              <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+              <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+              <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+              <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+              <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
