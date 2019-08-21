@@ -12,10 +12,10 @@
       Map.highlight_lodgings()
 
       DragControl = L.Control.extend(
-        options: position: 'topleft'
+        options: position: 'topright'
         onAdd: (map) ->
           container = L.DomUtil.create('div', 'map-searchbox-control bg-white leaflet-bar')
-          radiobuttons = "<input type='checkbox' name='search-on-drag' value='true' class='search-on-drag leaflet-control mt-1' checked/><label for='search-on-drag' class='search-on-drag-label'>Search if I move map</label><br>"
+          radiobuttons = "<input type='checkbox' name='search-on-drag' value='true' class='search-on-drag leaflet-control mt-1 float-left mr-0' checked/><label for='search-on-drag' class='search-on-drag-label'>Search if I move map</label><br>"
           $(container).html(radiobuttons)
           container
       )

@@ -6,6 +6,14 @@ class Ahoy::Visit < ApplicationRecord
 
   #after_create :sent_details
 
+  def technology
+    [browser, os, device_type].map(&:presence).compact.join(', ')
+  end
+
+  def location
+    [city, region, country].map(&:presence).compact.join(', ')
+  end
+
   private
     def sent_details
       SendAhoyVisitDetailsJob.perform_later(self.id)

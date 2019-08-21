@@ -24,7 +24,7 @@
       limit: 10
       source: source(url, 'campaigns')
       templates:
-        header: '<p class="category-name darken">Collections</p>'
+        header: '<p class="category-name darken">Popular Collections</p>'
         suggestion: (collection) -> suggestion(collection)
     }, {
       name: 'accommodations'
@@ -105,6 +105,7 @@
         $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val(datum.name)
+      Filters.submit()
 
   source = (url, type) ->
     return new Bloodhound(

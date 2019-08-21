@@ -5,6 +5,13 @@
     updated_amenities()
     Filters.update_prices()
 
+    $('#moreFilters, .close-filters-dropdown').click ->
+      $('.more-filters-dropdown-menu').toggleClass 'd-none'
+
+    $('.lodgings-filters .filters-autocomplete').on 'keypress', (e) ->
+      if e.which == 13
+        Filters.submit()
+
     $('.layout-btn').click ->
       Filters.switch_view($(this).prop('class'))
 
@@ -12,11 +19,8 @@
       $('#more-filters').modal('toggle')
       $('.modal-backdrop').css('z-index', 1);
 
-    $('.amenities, .countries').change ->
+    $('.amenities, .amenities-hot, .experiences, .discounts').change ->
       updated_amenities()
-
-    $('.discounts').change ->
-      Filters.update_prices()
       Filters.submit()
 
     $('.submit-filters').click ->
@@ -24,7 +28,7 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('#filters-container .lodging_type, #filters-container .experiences, #filters-container .amenities-hot').change ->
+    $('#filters-container .lodging_type').change ->
       Url.update("");
       Filters.submit()
 
@@ -33,11 +37,7 @@
     Rails.fire($('#filters-container .lodgings-filters').get(0), 'submit')
 
   updated_amenities = ->
-    if $('.countries-list').css('display') == 'none'
-      checked = $(".amenities-list input:checked").length
-      $('.countries:checked').prop('checked', false)
-    else
-      checked = $(".amenities-list input:checked, .countries-list input:checked").length
+    checked = $(".more-filters-dropdown-menu input:checked").length
 
     title = $('.more-filters-btn').data('title')
     if checked > 0
@@ -58,41 +58,45 @@
       $('#dropdownMenuButton4').removeClass 'btn-outline-primary'
 
   Filters.switch_view = (layout) ->
-    $('.layout-btn').removeClass 'btn-primary'
+    $('.layout-btn').removeClass 'text-bold'
     if layout.includes('list-view') || layout.includes 'List View'
-      $('#lodgings-container').removeClass 'col-md-6'
       $('#lodgings-container').removeClass 'd-none'
-      $('#lodgings-container').addClass 'col-md-10'
-      $('#map-container').removeClass 'd-sm-block'
-      $('#map-container').removeClass 'col-md-10'
+      $('#lodgings-container').addClass 'col-md-12'
+      $('#map-container').removeClass 'd-sm-block col-md-12'
       $('#layout_view').val('List View')
-      $('.list-view').addClass 'btn-primary'
+      $('.view-dropdown .dropdown-toggle .title').text('GRID')
+      $('.list-view').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
+      $('.lodging-container').addClass 'col-md-6 col-lg-3'
+      $('.lodging-container').removeClass 'col-md-12 col-lg-6'
       Url.update("");
     else if layout.includes('list-and-map') || layout.includes 'List & Map'
       $('#lodgings-container').addClass 'col-md-6'
-      $('#lodgings-container').removeClass 'col-md-10'
-      $('#lodgings-container').removeClass 'd-none'
-      $('#map-container').removeClass 'col-md-10'
-      $('#map-container').addClass 'd-none d-sm-block col-md-4'
+      $('#lodgings-container').removeClass 'd-none col-md-12'
+      $('#map-container').removeClass 'col-md-12'
+      $('#map-container').addClass 'd-none d-sm-block col-md-6'
       $('#layout_view').val('List & Map')
-      $('.list-and-map').addClass 'btn-primary'
+      $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
+      $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
+      $('.lodging-container').addClass 'col-md-12 col-lg-6'
+      $('.lodging-container').removeClass 'col-md-6 col-lg-3'
       map.remove()
       Map.init()
       Url.update("");
     else if layout.includes('map-view') || layout.includes 'Map View'
       $('#lodgings-container').addClass 'd-none'
-      $('#map-container').removeClass 'col-md-4 d-none'
-      $('#map-container').addClass 'col-md-10 d-sm-block'
+      $('#map-container').removeClass 'col-md-6 d-none'
+      $('#map-container').addClass 'col-md-12 d-sm-block'
       $('#layout_view').val('Map View')
-      $('.map-view').addClass 'btn-primary'
+      $('.view-dropdown .dropdown-toggle .title').text('LARGE MAP')
+      $('.map-view').addClass 'text-bold'
       $('#pagination-container').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
     else
-      $('.list-and-map').addClass 'btn-primary'
-      $('#pagination-container').addClass 'd-none'
+      $('.list-and-map').addClass 'text-bold'
+      $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
 
 ).call this

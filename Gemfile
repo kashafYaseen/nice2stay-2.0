@@ -43,7 +43,6 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'bulk_insert'
 gem 'jwt'
 gem 'friendly_id'
 gem "breadcrumbs_on_rails"
@@ -107,3 +106,7 @@ gem "skylight"
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
 gem 'omniauth-facebook'
+gem 'arctic_admin'
+gem "chartkick"
+gem 'groupdate'
+gem 'activerecord-import', '~> 0.15.0'

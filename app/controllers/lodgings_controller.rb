@@ -72,8 +72,8 @@ class LodgingsController < ApplicationController
 
     def set_collection
       @custom_text = CustomText.find_by(id: params[:custom_text])
-      return @collection = @custom_text.relatives if @custom_text.present?
-      @collection = CustomText.home_page unless params[:country].present? || params[:region].present? || params[:bounds].present?
+      # return @collection = @custom_text.relatives if @custom_text.present?
+      # @collection = CustomText.home_page unless params[:country].present? || params[:region].present? || params[:bounds].present?
     end
 
     def track_action

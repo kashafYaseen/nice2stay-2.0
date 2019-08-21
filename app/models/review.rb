@@ -16,7 +16,7 @@ class Review < ApplicationRecord
   scope :ratings_average, -> { (RATING_TYPE.sum { |type| rating_sum(type) } / (uniq.count.to_f * 5)).round(2) }
 
   delegate :full_name, :email, to: :user, prefix: true
-  delegate :slug, to: :lodging, prefix: true
+  delegate :slug, :name, to: :lodging, prefix: true, allow_nil: true
   delegate :check_in, :booking_id, to: :reservation, allow_nil: true
 
   after_commit :update_ratings

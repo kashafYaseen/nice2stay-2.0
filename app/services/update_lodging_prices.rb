@@ -22,21 +22,21 @@ class UpdateLodgingPrices
   private
     def update_prices
       begin
+        import_list = []
         prices.each do |price_range|
-          Price.bulk_insert do |price|
-            update_arrays(price_range)
-            lodging.availabilities_for_range(price_range[:from], price_range[:to]).each do |availability|
-              price.add(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults],
-                infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
+          update_arrays(price_range)
+          lodging.availabilities_for_range(price_range[:from], price_range[:to]).each do |availability|
+            import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults],
+              infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
 
-              if price_range[:weekly_price].present?
-                price.add(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults],
-                  infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
-              end
+            if price_range[:weekly_price].present?
+              import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults],
+                infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
           end
           create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival])
         end
+        Price.import import_list
         true
       rescue
         false
@@ -45,7 +45,7 @@ class UpdateLodgingPrices
 
     def add_missing_availabilities
       lodging.availabilities.check_out_only.destroy_all
-      missing_dates = (Date.today..365.days.from_now).map(&:to_s) - lodging.availabilities.pluck(:available_on).map(&:to_s)
+      missing_dates = (Date.today..end_date).map(&:to_s) - lodging.availabilities.pluck(:available_on).map(&:to_s)
       lodging.add_availabilities_for missing_dates
     end
 
@@ -94,5 +94,10 @@ class UpdateLodgingPrices
       price_range[:children] = ['0'] if price_range[:children] == []
       price_range[:adults]   = ['0'] if price_range[:adults] == []
       price_range[:infants]  = ['0'] if price_range[:infants] == []
+    end
+
+    def end_date
+      return '31-12-2020'.to_date if 365.days.from_now < '31-12-2020'.to_date
+      365.days.from_now
     end
 end

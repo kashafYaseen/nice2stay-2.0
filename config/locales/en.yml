@@ -99,6 +99,10 @@ en:
     reviews: Reviews
     description: Description
 
+  users:
+    login_modal_title: Please login or signup to get better experience and advantages
+    login_modal_subtitle: Acces shopping cart and fav list everywhere -  manage you're bookings - easy checkout - newsletter
+
   carts:
     step_2:
       header: Your request
@@ -248,6 +252,8 @@ en:
     from: From
     of: of
     title: Location, Date & Guests
+    price_info: Use date and number of guests to see total price
+    map_info: Move or zoom (in/out) the map to see more results
 
   profile_account: 
      side_nav_home: Dashboard
