@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-9 col-md-12">
+    <div class="<%= @lodging.as_parent? && @lodging.guest_centric? ? 'col-lg-12' : 'col-lg-9 col-md-12' %>">
       <div class="col-md-12 margin-top-1x">
         <div class="row target-section" id="home-container">
           <div class="col-md-12 col-xs-12">
@@ -52,11 +52,11 @@
         <p><%= @lodging.summary.try(:html_safe) %></p><br>
 
         <% if @lodging.as_parent? && @lodging.guest_centric? %>
-          <div class="col-sm-12 margin-top-1x price_box d-lg-none">
+          <div class="col-sm-12 margin-top-1x price_box">
             <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
           </div>
 
-          <div id="guest_centric_offers">
+          <div id="guest_centric_offers" class="col-md-12 margin-top-1x">
             <%= render 'guest_centric', lodging: @lodging, guest_centric: @guest_centric %>
           </div>
         <% else @lodging.as_parent? %>
@@ -209,13 +209,15 @@
       <%= render 'shared_content', lodging: @lodging %>
     </div>
 
-    <div class="col-md-3 sticky-top margin-top-1x price_box pr-0 d-none d-lg-block">
-      <% if @lodging.as_standalone? %>
-        <%= render 'standalone', lodging: @lodging, reservation: @reservation, id_sufix: '' %>
-      <% else %>
-        <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '' %>
-      <% end %>
-    </div>
+    <% unless @lodging.as_parent? && @lodging.guest_centric? %>
+      <div class="col-md-3 sticky-top margin-top-1x price_box pr-0 d-none d-lg-block">
+        <% if @lodging.as_standalone? %>
+          <%= render 'standalone', lodging: @lodging, reservation: @reservation, id_sufix: '' %>
+        <% else %>
+          <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '' %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 

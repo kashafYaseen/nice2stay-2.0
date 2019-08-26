@@ -4,11 +4,7 @@
       <h3><%= hotel['info']['hotelName'] %> Offers</h3>
 
       <% hotel['offers'].each do |child| %>
-        <% if child['isPromotion'] %>
-          <%= render partial: 'lodgings/guest_centric_child', collection: child['offers'], as: :child, locals: { lodging: lodging } %>
-        <% else %>
-          <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging %>
-        <% end %>
+        <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging %>
       <% end %>
     <% end %>
   <% else %>
