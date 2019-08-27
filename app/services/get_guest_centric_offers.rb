@@ -31,7 +31,7 @@ class GetGuestCentricOffers
     end
 
     def query_params
-      "HotelCode=#{lodging.guest_centric_id}&checkIn=#{params[:check_in]}&nrNights=#{nights}&nrAdults=#{params[:adults].to_i}&nrChildren=#{params[:children].to_i}&nrRooms=#{params[:rooms].to_i}&languageCode=#{params[:locale]}&currency=EUR&key=#{ENV['GUEST_CENTRIC_KEY']}"
+      "HotelCode=#{lodging.guest_centric_id}&checkIn=#{params[:check_in]}&nrNights=#{nights}&nrAdults=#{params[:adults].to_i}&nrChildren=#{params[:children].to_i}&nrRooms=#{params[:rooms].to_i}&languageCode=#{params[:locale]}&currency=EUR&key=#{ENV['GUEST_CENTRIC_KEY']}&includeCancelPolicies=1"
     end
 
     def nights
