@@ -11,7 +11,7 @@
     <%= image_tag child['defaultImage'], class: 'w-100 max-height-230' if child['defaultImage'].present? %>
   </div>
 
-  <div class="col-md-3 col-border bg-white text-sm">
+  <div class="col-md-4 col-border bg-white text-sm">
     <b><%= child['name'] %></b>
     <p><%= child['description'].try(:html_safe) %></p>
 
@@ -24,11 +24,11 @@
     <% end %>
   </div>
 
-  <div class="col-md-3 col-border bg-white text-sm">
+  <div class="col-md-4 col-border bg-white text-sm group-toggle">
     <% if child['isPromotion'] %>
       <% child['offers'].each do |offer| %>
-        <label class="col-border col-md-12 border-dark border-right">
-          <b><%= radio_button_tag(:offer, offer['offer'], class: "offers-select-radio") %> <%= offer['name'].try(:capitalize) %></b><br>
+        <label class="col-border col-md-12 border-dark border-right group-toggle-radio">
+          <b><%= radio_button_tag(:offer, offer['offer'], true, class: "offers-select-radio d-none") %> <%= offer['name'].try(:capitalize) %></b><br>
 
           <%= "Adults: #{offer['MaxAdults']} - Children: #{offer['MaxChildren']}" %><br>
 
@@ -36,8 +36,8 @@
         </label><br>
       <% end %>
     <% else %>
-      <label>
-        <b><%= child['name'].try(:capitalize) %></b><br>
+      <label class="col-border col-md-12 border-dark border-right group-toggle-radio">
+        <b><%= radio_button_tag(:offer, child['offer'], true, class: "offers-select-radio d-none") %> <%= child['name'].try(:capitalize) %></b><br>
 
         <%= "Adults: #{child['MaxAdults']} - Children: #{child['MaxChildren']}" %><br>
 
@@ -46,33 +46,13 @@
     <% end %>
   </div>
 
-  <div class="col-md-2 col-border bg-white text-sm">
-    <% if child['isPromotion'] %>
-      <% child['offers'].each do |offer| %>
-        <% offer['mealPlans'].each do |meal| %>
-          <label class="col-border col-md-12 border-dark border-right">
-            <b><%= radio_button_tag(:meal, meal['id'], class: "meal-select-radio") %> <%= meal['label'] %></b><br>
-
-            <%= "Price: #{meal['total']}" if meal['total'] > 0 %><br>
-          </label><br>
-        <% end if offer['mealPlans'].present? %>
-      <% end %>
-    <% else %>
-      <% child['mealPlans'].each do |meal| %>
-        <label class="col-border col-md-12 border-dark border-right">
-          <b><%= radio_button_tag(:meal, meal['id'], class: "meal-select-radio") %> <%= meal['label'] %></b><br>
-
-          <%= "Price: #{meal['total']}" if meal['total'] > 0 %><br>
-        </label><br>
-      <% end if child['mealPlans'].present? %>
-    <% end %>
-  </div>
-
   <div class="col-md-2 bg-white col-border">
     <p class="text-sm text-dark" id="bill-<%= lodging.id %>"></p>
       <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } do %>
         <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
       <% end %>
+
+    <p class="text-xxxs text-center"><b><%= "#{child['cancelPolicy']['type']}: #{child['cancelPolicy']['name']}" %></b></p>
     <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
   </div>
 </div>
