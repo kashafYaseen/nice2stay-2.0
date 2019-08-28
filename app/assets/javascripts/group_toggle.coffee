@@ -9,6 +9,7 @@
       $(this).removeClass 'border-dark'
       $(this).addClass 'border-primary'
       if $(this).data('submit')
+        $('#loader').show()
         Rails.fire($($(this).data('submit')).get(0), 'submit')
 
 ).call this

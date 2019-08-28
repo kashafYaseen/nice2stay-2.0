@@ -1,6 +1,10 @@
 <%= render 'shared/photoswipe' %>
 <%= render 'navbar' %>
 
+<div id="loader">
+  <%= image_tag 'loader.gif', class: 'w-50' %>
+</div>
+
 <div class="container-fluid">
   <div class="row">
     <div class="<%= @lodging.as_parent? && @lodging.guest_centric? ? 'col-lg-12' : 'col-lg-9 col-md-12' %>">
@@ -240,4 +244,5 @@
     Invoice.calculate(<%= calculation_ids @lodging %>);
   <% end %>
   GroupToggle.init();
+  $('#loader').hide();
 <% end %>
