@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     resources :announcements, only: [:index]
     resources :autocompletes, only: [:index]
     resources :lodgings, only: [:index, :show], path: :accommodations do
-      resources :guest_centric_offers, only: [:show]
+      resources :guest_centric_offers, only: [:show] do
+        post :rates, on: :collection
+      end
       post :index, on: :collection
       get :price_details, on: :member
       get :quick_view, on: :member

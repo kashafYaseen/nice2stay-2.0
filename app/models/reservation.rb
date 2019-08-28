@@ -30,6 +30,7 @@ class Reservation < ApplicationRecord
   accepts_nested_attributes_for :review
 
   attr_accessor :skip_data_posting
+  attr_accessor :offer_id
 
   enum booking_status: {
     prebooking: 0,

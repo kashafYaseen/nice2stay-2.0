@@ -1,0 +1,1 @@
+$(".<%= params[:reservation][:offer_id].gsub('.', '-') %>").html('€<%= @total.try(:round, 2) %>');

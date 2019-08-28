@@ -236,6 +236,8 @@
   Lodging.highlight_menu();
   OwlCarousel.init();
   Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
-  Invoice.calculate(<%= calculation_ids @lodging %>);
+  <% unless @lodging.as_parent? && @lodging.guest_centric? %>
+    Invoice.calculate(<%= calculation_ids @lodging %>);
+  <% end %>
   GroupToggle.init();
 <% end %>
