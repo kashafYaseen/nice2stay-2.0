@@ -1,4 +1,4 @@
-class GetGuestCentricOffers
+class GetGuestCentricRates
   attr_reader :lodging
   attr_reader :uri
   attr_reader :params
@@ -10,14 +10,14 @@ class GetGuestCentricOffers
   def initialize(lodging, params)
     @lodging = lodging
     @params = params
-    @uri = URI.parse("http://secure.guestcentric.net/api/secure/beapi/hotel/find_offers")
+    @uri = URI.parse("http://secure.guestcentric.net/api/secure/beapi/hotel/list_rates")
   end
 
   def call
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.set_form_data form_data
-    JSON.parse http.request(request).body
+    response = JSON.parse http.request(request).body
   end
 
   private
@@ -28,20 +28,14 @@ class GetGuestCentricOffers
     def form_data
       {
         'HotelCode': lodging.guest_centric_id,
-        "checkIn": params[:check_in],
-        'nrNights': nights,
+        'offer': params[:offer_id],
+        'startDate': params[:check_in],
+        "endDate": params[:check_out],
         'nrAdults': params[:adults].to_i,
         'nrChildren': params[:children].to_i,
         'nrRooms': params[:rooms].to_i,
-        'languageCode': params[:locale],
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],
-        'includeCancelPolicies': 1,
       }
-    end
-
-    def nights
-      return 1 unless params[:check_in].present? && params[:check_out].present?
-      (params[:check_out].to_date - params[:check_in].to_date).to_i
     end
 end

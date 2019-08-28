@@ -36,9 +36,9 @@
             :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
             :show-apply="false"
             :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
-            :max-adults="<%= lodging.adults.to_i %>"
-            :max-children="<%= lodging.children.to_i %>"
-            :max-infants="<%= lodging.infants.to_i %>"
+            :max-adults="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
+            :max-children="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
+            :max-infants="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
           />
         </div>
       </div>
@@ -46,6 +46,7 @@
 
     <% url = lodging.guest_centric? ? lodging_guest_centric_offer_path(lodging) : reservations_path %>
     <% method = lodging.guest_centric? ? 'get' : 'post'  %>
+
     <div class="col-md-12 p-0">
       <%= form_for reservation, url: url, remote: true, method: method, html: { id: "new_reservation#{id_sufix}" } do |f| %>
 
