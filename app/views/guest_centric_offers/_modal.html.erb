@@ -1,0 +1,24 @@
+<div class="modal fade" id="offers-modal-<%= child['offer'].gsub('.', '-') %>" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><%= child['name'] %></h4>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="owl-carousel">
+          <%= render_guest_centric_images child, class: "modal-slider-img" %>
+        </div>
+
+        <p class="text-sm">
+          <div id="guest-centric-child-description">
+            <%= child['shortDescription'] %>
+            <%= child['longDescription'].html_safe %>
+            <%= child['roomtext'].html_safe %>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
