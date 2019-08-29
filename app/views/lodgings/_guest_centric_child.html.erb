@@ -30,21 +30,23 @@
     <div class="col-md-4 col-border bg-white text-sm group-toggle">
       <% if child['isPromotion'] %>
         <% child['offers'].each do |offer| %>
+          <%= link_to offer['name'].try(:capitalize), '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold' %>
+          <%= render 'guest_centric_offers/modal', child: offer %>
+
           <% offers << offer['offer'].gsub('.', '-') %>
           <label class="col-border col-md-12 border-dark border-right group-toggle-radio" data-submit="#new_reservation_<%= lodging.id %>">
-            <b><%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= offer['name'].try(:capitalize) %></b><br>
-
-            <%= "Adults: #{offer['MaxAdults']} - Children: #{offer['MaxChildren']}" %><br>
+            <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= "Adults: #{offer['MaxAdults']} - Children: #{offer['MaxChildren']}" %><br>
 
             <%= "Price: #{offer['avgPrice']}" %><br>
           </label><br>
         <% end %>
       <% else %>
         <% offers << child['offer'].gsub('.', '-') %>
-        <label class="col-border col-md-12 border-dark border-right group-toggle-radio" data-submit="#new_reservation_<%= lodging.id %>">
-          <b><%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <%= child['name'].try(:capitalize) %></b><br>
+        <%= link_to child['name'].try(:capitalize), '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold' %>
+        <%= render 'guest_centric_offers/modal', child: child %>
 
-          <%= "Adults: #{child['MaxAdults']} - Children: #{child['MaxChildren']}" %><br>
+        <label class="col-border col-md-12 border-dark border-right group-toggle-radio" data-submit="#new_reservation_<%= lodging.id %>">
+          <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %>  <%= "Adults: #{child['MaxAdults']} - Children: #{child['MaxChildren']}" %><br>
 
           <%= "Price: #{child['avgPrice']}" %><br>
         </label>

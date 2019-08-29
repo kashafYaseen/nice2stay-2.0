@@ -1,2 +1,3 @@
-$(".<%= params[:reservation][:offer_id].gsub('.', '-') %>").html('€<%= @total.try(:round, 2) %>');
+$(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('€<%= @total.try(:round, 2) %>');
+$(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', true);
 $('#loader').hide();
