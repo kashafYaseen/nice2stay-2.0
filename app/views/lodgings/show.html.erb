@@ -235,14 +235,17 @@
   Lodging.read_more()
   initPhotoSwipeFromDOM('.lodging-gallery');
   initDatePicker();
-  Invoice.init();
-  Lodging.child_form();
-  Lodging.highlight_menu();
   OwlCarousel.init();
   Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
-  <% unless @lodging.as_parent? && @lodging.guest_centric? %>
+
+  <% if @lodging.as_parent? && @lodging.guest_centric? %>
+    GuestCentric.init();
+  <% else %>
     Invoice.calculate(<%= calculation_ids @lodging %>);
+    Invoice.init();
+    Lodging.child_form();
+    Lodging.highlight_menu();
   <% end %>
-  GroupToggle.init();
+
   $('#loader').hide();
 <% end %>
