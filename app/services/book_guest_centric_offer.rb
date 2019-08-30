@@ -46,7 +46,7 @@ class BookGuestCentricOffer
         'city':, params[:city],
         'zip_code': params[:zip_code],
         'total': params[:total],
-        'creditCardHolderName': ,
+        'creditCardHolderName': '',
         'creditCardNumber': '4111111111111111',
         'creditCardMonth': '12',
         'creditCardYear': '2019',
@@ -55,7 +55,3 @@ class BookGuestCentricOffer
       }
     end
 end
-
-
-
-
