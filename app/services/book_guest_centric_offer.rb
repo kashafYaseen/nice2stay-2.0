@@ -43,7 +43,7 @@ class BookGuestCentricOffer
         'email': params[:email],
         'phone': params[:phone],
         'address': params[:address],
-        'city':, params[:city],
+        'city': params[:city],
         'zip_code': params[:zip_code],
         'total': params[:total],
         'creditCardHolderName': '',
