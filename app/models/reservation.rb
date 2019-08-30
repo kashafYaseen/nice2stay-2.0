@@ -31,6 +31,7 @@ class Reservation < ApplicationRecord
 
   attr_accessor :skip_data_posting
   attr_accessor :offer_id
+  attr_accessor :meal_id
 
   enum booking_status: {
     prebooking: 0,

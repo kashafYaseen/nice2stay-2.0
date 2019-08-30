@@ -38,6 +38,12 @@
             <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= "Adults: #{offer['MaxAdults']} - Children: #{offer['MaxChildren']}" %><br>
 
             <%= "Price: #{offer['avgPrice']}" %><br>
+
+            <% child['mealPlans'].each do |meal| %>
+              <%= f.check_box(:meal_id, {}, meal['id'], nil) %>
+              <label><%= "#{meal['label']} - €#{meal['total']}" %></label><br>
+            <% end if child['mealPlans'].present? %>
+
           </label><br>
         <% end %>
       <% else %>
@@ -49,6 +55,12 @@
           <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %>  <%= "Adults: #{child['MaxAdults']} - Children: #{child['MaxChildren']}" %><br>
 
           <%= "Price: #{child['avgPrice']}" %><br>
+
+          <% child['mealPlans'].each do |meal| %>
+            <%= f.check_box(:meal_id, {}, meal['id'], nil) %>
+            <label><%= "#{meal['label']} - €#{meal['total']}" %></label><br>
+          <% end if child['mealPlans'].present? %>
+
         </label>
       <% end %>
     </div>
