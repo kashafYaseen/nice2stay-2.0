@@ -1,23 +1,60 @@
-<div class="modal fade" id="offers-modal-<%= child['offer'].gsub('.', '-') %>" tabindex="-1">
+<div class="modal fade guest-centric-modal" id="offers-modal-<%= child['offer'].gsub('.', '-') %>" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"><%= child['name'] %></h4>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </div>
+      <div class="modal-body p-0 pl-3">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="text-sm">
+              <div>
+                <h4 class="modal-title"><%= child['name'] %></h4>
+                <hr class="mt-2 mb-3">
+              </div>
 
-      <div class="modal-body">
-        <div class="owl-carousel">
-          <%= render_guest_centric_images child, class: "modal-slider-img" %>
-        </div>
+              <ul class="nav nav-tabs justify-content-start ml-0" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#photos-tab-<%= child['beid'] %>" data-toggle="tab" role="tab">Photos</a>
+                </li>
 
-        <p class="text-sm">
-          <div id="guest-centric-child-description">
-            <%= child['shortDescription'] %>
-            <%= child['longDescription'].html_safe %>
-            <%= child['roomtext'].html_safe %>
+                <li class="nav-item">
+                  <a class="nav-link" href="#description-tab-<%= child['beid'] %>" data-toggle="tab" role="tab">Desciption</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#terms-tab-<%= child['beid'] %>" data-toggle="tab" role="tab">Terms & Conditions</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="photos-tab-<%= child['beid'] %>" role="tabpanel">
+                  <div class="owl-carousel">
+                    <%= render_guest_centric_images child, class: "modal-slider-img" %>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade show" id="description-tab-<%= child['beid'] %>" role="tabpanel">
+                  <div id="guest-centric-child-description">
+                    <%= child['longDescription'].html_safe %>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
+                  <%= child['termsAndConditions'] %>
+                </div>
+              </div>
+            </p>
           </div>
-        </p>
+
+          <div class="col-md-6 price_box">
+            <h4>Rate per night</h4>
+            <div class="rates row"></div>
+
+            <h4>Meal Plans</h4>
+            <% meal_plans.each do |meal| %>
+              <%= check_box_tag(:meal_id, meal['id'], nil) %>
+              <label><%= "#{meal['label']} - €#{meal['total']}" %></label><br>
+            <% end if meal_plans.present? %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
