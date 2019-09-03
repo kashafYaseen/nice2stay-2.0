@@ -37,7 +37,7 @@
           <label class="col-border col-md-12 border-dark border-right group-toggle-radio" data-submit="#new_reservation_<%= lodging.id %>">
             <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= "Adults: #{offer['MaxAdults']} - Children: #{offer['MaxChildren']}" %><br>
 
-            <%= "Price: #{offer['avgPrice']}" %><br>
+            <%= "Price: #{offer['total']}" %><br>
           </label><br>
         <% end %>
       <% else %>
@@ -48,7 +48,7 @@
         <label class="col-border col-md-12 border-dark border-right group-toggle-radio" data-submit="#new_reservation_<%= lodging.id %>">
           <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %>  <%= "Adults: #{child['MaxAdults']} - Children: #{child['MaxChildren']}" %><br>
 
-          <%= "Price: #{child['avgPrice']}" %><br>
+          <%= "Price: #{child['total']}" %><br>
         </label>
       <% end %>
     </div>
