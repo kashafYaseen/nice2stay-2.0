@@ -45,14 +45,62 @@
           </div>
 
           <div class="col-md-6 price_box">
-            <h4>Rate per night</h4>
-            <div class="rates row"></div>
+            <h5>Rate per night</h5>
+            <div class="rates row pl-2 mb-3"></div>
 
-            <h4>Meal Plans</h4>
+            <h5>Meal Plans</h5>
+            <hr>
             <% meal_plans.each do |meal| %>
-              <%= check_box_tag(:meal_id, meal['id'], nil) %>
-              <label><%= "#{meal['label']} - €#{meal['total']}" %></label><br>
+              <div class="row">
+                <span class="col-md-8 text-left">
+                  <%= check_box_tag(:meal_id, meal['id'], nil) %>
+                  <b><%= meal['label'] %></b>
+                </span>
+
+                <span class="col-md-4 text-right">
+                  <b><%= "€#{meal['total']}" %></b>
+                </span>
+              </div>
+
+              <label></label><br>
             <% end if meal_plans.present? %>
+
+            <div class="row p-2 mt-5">
+              <span class="col-md-8 text-left border-bottom border-black p-0">
+                Total for your stay
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black">
+                €<%= child['netValue'] %>
+              </span>
+            </div>
+
+            <div class="row row pl-2 pr-2 pt-0">
+              <span class="col-md-8 text-left border-bottom border-black p-0">
+                Taxes
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black">
+                €<%= child['tax'] %>
+              </span>
+            </div>
+
+            <div class="row p-2 mb-5">
+              <span class="col-md-8 text-left p-0">
+                Total amount
+              </span>
+
+              <span class="col-md-4 text-right price">
+                €<%= child['total'] %>
+              </span>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 p-0">
+                <button class="btn btn-primary btn-md float-right">Add To Cart</button>
+                <button class="close float-right btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

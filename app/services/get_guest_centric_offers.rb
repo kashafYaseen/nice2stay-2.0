@@ -17,6 +17,8 @@ class GetGuestCentricOffers
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.set_form_data form_data
+    puts "----------- form data"
+    puts form_data
     JSON.parse http.request(request).body
   end
 
@@ -30,9 +32,9 @@ class GetGuestCentricOffers
         'HotelCode': lodging.guest_centric_id,
         "checkIn": params[:check_in],
         'nrNights': nights,
-        'nrAdults': params[:adults].to_i,
+        'nrAdults': params[:adults] || 1,
         'nrChildren': params[:children].to_i,
-        'nrRooms': params[:rooms].to_i,
+        'nrRooms': params[:rooms] || 1,
         'languageCode': params[:locale],
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],

@@ -1,5 +1,9 @@
-<div class="col-md-4 mt-2 text-center">
-  <span><b><%= rate['day'] %></b></span>
-  <hr class="m-1 border-black">
-  <span>€<%= rate['value'] %></span>
+<div class="col-md-12 mt-2 row">
+  <span class="col-md-8 text-left border-default border-black">
+    <b><%= render_date rate['day'].to_date %></b>
+  </span>
+
+  <span class="col-md-4 text-right border-default border-black">
+    €<%= rate['value'] %>
+  </span>
 </div>
