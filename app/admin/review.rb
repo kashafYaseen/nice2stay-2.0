@@ -51,6 +51,10 @@ ActiveAdmin.register Review do
         review.photos.each do |photo|
           photo_tags += image_tag(photo, class: 'thumb')
         end if review.photos.attached?
+
+        review.thumbnails.each do |photo|
+          photo_tags += image_tag(photo, class: 'thumb')
+        end if review.thumbnails.present?
         photo_tags.try :html_safe
       end
     end
