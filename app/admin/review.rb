@@ -19,11 +19,13 @@ ActiveAdmin.register Review do
     id_column
     column :lodging
     column :user
-    column :title
     column :stars
     column :reservation
     column :published
     column :anonymous
+    column :photos do |review|
+      review.photos.attached? || review.thumbnails.present?
+    end
     actions
   end
 
@@ -32,7 +34,6 @@ ActiveAdmin.register Review do
       row :lodging
       row :user
       row :reservation
-      row :title
       row :quality
       row :interior
       row :setting
