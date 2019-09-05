@@ -53,7 +53,7 @@
             <% meal_plans.each do |meal| %>
               <div class="row">
                 <span class="col-md-8 text-left">
-                  <%= check_box_tag(:meal_id, meal['id'], nil) %>
+                  <%= check_box_tag(:meal_id, meal['id'], nil, class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded" } ) %>
                   <b><%= meal['label'] %></b>
                 </span>
 
