@@ -30,7 +30,7 @@ class GetGuestCentricRates
         'HotelCode': lodging.guest_centric_id,
         'offer': params[:offer_id],
         'startDate': params[:check_in],
-        "endDate": params[:check_out],
+        "endDate": params[:check_out].to_date.prev_day,
         'nrAdults': params[:adults].to_i,
         'nrChildren': params[:children].to_i,
         'nrRooms': params[:rooms].to_i,

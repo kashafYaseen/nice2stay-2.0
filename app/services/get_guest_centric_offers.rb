@@ -17,8 +17,6 @@ class GetGuestCentricOffers
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.set_form_data form_data
-    puts "----------- form data"
-    puts form_data
     JSON.parse http.request(request).body
   end
 
