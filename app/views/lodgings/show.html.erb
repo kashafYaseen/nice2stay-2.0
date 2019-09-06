@@ -10,7 +10,7 @@
     <div class="<%= @lodging.as_parent? && @lodging.guest_centric? ? 'col-lg-12' : 'col-lg-9 col-md-12' %>">
       <div class="col-md-12 margin-top-1x">
         <div class="row target-section" id="home-container">
-          <div class="col-md-12 col-xs-12">
+          <div class="col-md-8 col-xs-12">
             <div class="gallery-control">
               <figure itemprop="associatedMedia" itemscope>
                 <a itemprop="contentUrl">
@@ -33,12 +33,44 @@
               <% end %>
             </div>
           </div>
+        
+        <div class="col-md-4 col-xs-12">
+          <h4>Vanaf 200,- per nacht</h4>
+          <br>
+          <ul class="list-icon">
+        <h6>
+          <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
+          <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
+          <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+        </h6>
+        <br>
+
+        <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100" %>
+      </ul>
+
+      <span class="d-block display-2 text-gray-light">
+        <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+
+        <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+
+        <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+
+        <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+
+        
+         </span>
+
+      
         </div>
 
-        <h2><%= @lodging.h1 %></h2>
-        <div class="mb-4">
-          <h4><%= @lodging.h2 %></h4>
         </div>
+
+        <div class="row">
+
+        <div class="col-md-8">
+
+        <h3><%= @lodging.h1 %></h3>
+        
 
         <% if @lodging.as_standalone? %>
           <h6>
@@ -53,10 +85,20 @@
           </h6>
         <% end %>
 
-        <p><%= @lodging.summary.try(:html_safe) %></p><br>
+        <p><%= @lodging.summary.try(:html_safe) %></p>
+        </div>
+        </div>
+
+      </div>
+      </div>
+       </div>
+      
+      </div>
 
         <% if @lodging.as_parent? && @lodging.guest_centric? %>
+
           <div class="price_box col-md-12 margin-bottom-2x margin-top-1x">
+            <div class="container">
             <div class="col-sm-12">
               <%= render 'parent', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
             </div>
@@ -80,6 +122,9 @@
           <%= render 'standalone', lodging: @lodging, reservation: @reservation, id_sufix: '_modal' %>
         <% end %>
       </div>
+
+
+      <div class="container">
 
       <div id="questions" class="col-md-12 margin-bottom-1x p-0">
         <div class="infobox">

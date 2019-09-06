@@ -3,8 +3,8 @@
     data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="row price_box">
-  <div class="col-md-12 col-sm-12 col-lg-12 pr-0">
+<div class="row">
+  <div class="col-md-8 col-sm-12 col-lg-8 pr-0">
     <h4 class="margin-bottom-1x"><%= t 'cart.availability' %> </h4>
     <div data-lodging-id="<%= lodging.id %>">
 
@@ -22,6 +22,7 @@
             :customized-dates="<%= lodging.customized_dates %>"
             :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
             :show-action-buttons="false"
+            
           />
         </div>
 
@@ -35,7 +36,7 @@
             :infants-target="'.infants'"
             :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
             :show-apply="false"
-            :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+            :button-classes="'btn btn-outline-primary dropdown-toggle'"
             :max-adults="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
             :max-children="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
             :max-infants="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
@@ -43,11 +44,28 @@
         </div>
       </div>
     </div>
+    </div>
 
     <% url = lodging.guest_centric? ? lodging_guest_centric_offer_path(lodging) : reservations_path %>
     <% method = lodging.guest_centric? ? 'get' : 'post'  %>
 
-    <div class="col-md-12 p-0">
+    <div class="col-lg-4 pl-4">
+      <div>
+          <guests-dropdownx
+            :adults="<%= no_of_adults(params[:adults].to_i) %>"
+            :children="<%= params[:children].to_i %>"
+            :infants="<%= params[:infants].to_i %>"
+            :adults-target="'.adults'"
+            :children-target="'.children'"
+            :infants-target="'.infants'"
+            :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
+            :show-apply="false"
+            :button-classes="'btn btn-outline-primary dropdown-toggle'"
+            :max-adults="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
+            :max-children="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
+            :max-infants="<%= lodging.guest_centric? ? 20 : lodging.adults.to_i %>"
+          />
+        </div>
       <%= form_for reservation, url: url, remote: true, method: method, html: { id: "new_reservation#{id_sufix}" } do |f| %>
 
         <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in#{id_sufix}", class: 'check_in' %>
@@ -57,11 +75,11 @@
         <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>
         <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
 
-        <%= f.submit('Check Availability', class: "btn btn-outline-primary w-100") if lodging.guest_centric? %>
+        <%= f.submit('Check Availability', class: "btn btn-primary w-50") if lodging.guest_centric? %>
       <% end %>
 
       <% unless lodging.guest_centric? %>
-        <%= link_to 'Check Availability', '#', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
+        <%= link_to 'Check Availability', '#', class: "btn btn-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
       <% end %>
 
       <div class="bg-white mt-3">
