@@ -7816,3 +7816,6 @@ video {
 .default-font-family {
   font-family: 'Open Sans', sans-serif;
 }
+
+.toggle.toggle-rounded, .toggle-on.toggle-rounded, .toggle-off.toggle-rounded { border-radius: 20rem; }
+.toggle.toggle-rounded .toggle-handle { border-radius: 20rem; width: 36px; }

@@ -39,6 +39,21 @@
 
             <%= "Price: #{offer['total']}" %><br>
           </label><br>
+
+          <% child['mealPlans'].each do |meal| %>
+            <div class="row">
+              <span class="col-md-8 text-left">
+                <%= f.check_box :meal_id, { class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded" } }, meal['id'], nil %>
+                <b><%= meal['label'] %></b>
+              </span>
+
+              <span class="col-md-4 text-right">
+                <b><%= "€#{meal['total']}" %></b>
+              </span>
+            </div>
+
+            <label></label><br>
+          <% end if child['mealPlans'].present? %>
         <% end %>
       <% else %>
         <% offers << child['offer'].gsub('.', '-') %>
@@ -50,6 +65,21 @@
 
           <%= "Price: #{child['total']}" %><br>
         </label>
+
+        <% child['mealPlans'].each do |meal| %>
+          <div class="row">
+            <span class="col-md-8 text-left">
+              <%= f.check_box :meal_id, { class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded" } }, meal['id'], nil %>
+              <b><%= meal['label'] %></b>
+            </span>
+
+            <span class="col-md-4 text-right">
+              <b><%= "€#{meal['total']}" %></b>
+            </span>
+          </div>
+
+          <label></label><br>
+        <% end if child['mealPlans'].present? %>
       <% end %>
     </div>
 
