@@ -82,5 +82,6 @@ production:
   <<: *default
   database: geosearch_production
   pool: 50
+  host: 'localhost'
   username: geosearch
   password: <%= ENV['GEOSEARCH_DATABASE_PASSWORD'] %>
