@@ -35,13 +35,13 @@
           :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
           :show-apply="false"
           :button-classes="'btn btn-outline-primary dropdown-toggle'"
-          :max-adults="<%= lodging.adults.to_i %>"
-          :max-children="<%= lodging.adults.to_i %>"
-          :max-infants="<%= lodging.adults.to_i %>"
+          :max-adults="20"
+          :max-children="20"
+          :max-infants="20"
         />
       </div>
 
-      <%= form_for reservation, url: reservations_path, remote: true, method: :post, html: { id: "new_reservation#{id_sufix}" } do |f| %>
+      <%= form_for reservation, url: lodging_guest_centric_offer_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}" } do |f| %>
 
         <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in#{id_sufix}", class: 'check_in' %>
         <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out#{id_sufix}", class: 'check_out' %>
@@ -49,9 +49,9 @@
         <%= f.hidden_field "children#{id_sufix}", value: (params[:children] || f.object.children), class: 'children' %>
         <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>
         <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
-      <% end %>
 
-      <%= link_to 'Check Availability', '#', class: "btn btn-primary btn-calculate-bill", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
+        <%= f.submit('Check Availability', class: "btn btn-primary") %>
+      <% end %>
     </div>
   </div>
 </div>
