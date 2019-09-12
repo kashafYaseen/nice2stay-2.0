@@ -10,7 +10,7 @@
       $('#target_modal').val $(this).data('target')
       $(radio).removeClass 'border-dark'
       $(radio).addClass 'border-primary'
-      if $(radio).data('submit')
+      if $(radio).data('submit') && $(radio).data('bookable')
         $('#loader').show()
         Rails.fire($($(radio).data('submit')).get(0), 'submit')
 

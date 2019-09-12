@@ -27,11 +27,11 @@ class Reservation < ApplicationRecord
   scope :confirmed_options, -> { requests.option.confirmed }
   scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ? and canceled = ?', Date.today, false).pluck(:booking_id).uniq }
 
+  scope :guest_centric, -> { where.not(offer_id: nil) }
+
   accepts_nested_attributes_for :review
 
   attr_accessor :skip_data_posting
-  attr_accessor :offer_id
-  attr_accessor :meal_id
 
   enum booking_status: {
     prebooking: 0,
@@ -113,7 +113,7 @@ class Reservation < ApplicationRecord
     end
 
     def update_price_details
-      return if skip_data_posting
+      return if skip_data_posting || offer_id.present?
       rent = calculate_rent
       update_columns rent: rent, total_price: (rent - discount.to_f)
     end

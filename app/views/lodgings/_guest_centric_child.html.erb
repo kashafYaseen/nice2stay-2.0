@@ -33,7 +33,7 @@
           <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'] %>
 
           <% offers << offer['offer'].gsub('.', '-') %>
-          <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= lodging.id %>">
+          <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= lodging.id %>" data-bookable="<%= child["isBookable"] %>">
             <%= link_to "#{offer['name'].try(:capitalize)} - more details", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold text-xlg guest-centric-modal-btn' %><br>
 
             <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %>
@@ -65,7 +65,7 @@
         <% offers << child['offer'].gsub('.', '-') %>
         <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'] %>
 
-        <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= lodging.id %>">
+        <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= lodging.id %>" data-bookable="<%= child["isBookable"] %>">
           <%= link_to "#{child['name'].try(:capitalize)} - more details", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold text-xlg guest-centric-modal-btn' %><br>
 
           <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %>
@@ -97,7 +97,7 @@
 
     <div class="col-md-2 bg-white col-border">
         <p class="<%= offers.join(' ') %> text-center text-bold mb-0"></p>
-        <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } do %>
+        <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" }, value: "cart" do %>
           <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
         <% end %>
 

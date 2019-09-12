@@ -16,11 +16,20 @@ class CartsController < ApplicationController
 
   def update
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
-    if @booking.save
+    if @booking.reservations.guest_centric.present?
+      @booking.reservations.guest_centric.each do |reservation|
+        puts BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
+      end
+      @booking.save(validate: false)
       cookies[:booking_details] = @booking.id
       redirect_to details_carts_path, notice: 'Booking was created successfully.'
     else
-      render :show
+      if @booking.save(validate: false)
+        cookies[:booking_details] = @booking.id
+        redirect_to details_carts_path, notice: 'Booking was created successfully.'
+      else
+        render :show
+      end
     end
   end
 

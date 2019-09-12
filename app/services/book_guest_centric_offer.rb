@@ -1,15 +1,17 @@
 class BookGuestCentricOffer
   attr_reader :lodging
   attr_reader :uri
-  attr_reader :params
+  attr_reader :reservation
+  attr_reader :booking
 
-  def self.call(lodging, params)
-    self.new(lodging, params).call
+  def self.call(lodging, reservation, booking)
+    self.new(lodging, reservation, booking).call
   end
 
-  def initialize(lodging, params)
+  def initialize(lodging, reservation, booking)
     @lodging = lodging
-    @params = params
+    @booking = booking
+    @reservation = reservation
     @uri = URI.parse("http://secure.guestcentric.net/api/secure/beapi/hotel/book")
   end
 
@@ -28,30 +30,31 @@ class BookGuestCentricOffer
     def form_data
       {
         'HotelCode': lodging.guest_centric_id,
-        "checkIn": params[:check_in],
-        "checkOut": params[:check_out],
-        'nrAdults': params[:adults].to_i,
-        'nrChildren': params[:children].to_i,
-        'childrenAges': params[:children_ages],
-        'nrRooms': params[:rooms].to_i,
-        'languageCode': params[:locale],
+        "checkIn": reservation.check_in,
+        "checkOut": reservation.check_out,
+        'nrAdults': reservation.adults.to_i,
+        'nrChildren': reservation.children.to_i,
+        'childrenAges': '',
+        'nrRooms': 1,
+        'languageCode': 'nl',
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],
-        'offer': params[:offer_id],
-        'firstName': params[:first_name],
-        'lastName': params[:last_name],
-        'email': params[:email],
-        'phone': params[:phone],
-        'address': params[:address],
-        'city': params[:city],
-        'zip_code': params[:zip_code],
-        'total': params[:total],
-        'creditCardHolderName': '',
+        'offer': reservation.offer_id,
+        'firstName': booking.user.first_name,
+        'lastName': booking.user.last_name,
+        'email': booking.user.email,
+        'phone': booking.user.phone,
+        'address': booking.user.address,
+        'city': booking.user.city,
+        'zip_code': booking.user.zipcode,
+        'total': reservation.rent,
+        'creditCardHolderName': booking.user.first_name,
         'creditCardNumber': '4111111111111111',
         'creditCardMonth': '12',
         'creditCardYear': '2019',
         'creditCardType': 'Visa',
-        'countryCode': params[:country_code],
+        'countryCode': 'nl',
+        'ccValidation': false
       }
     end
 end
