@@ -51,6 +51,7 @@
             <h5>Meal Plans</h5>
             <hr>
             <% meal_plans.each do |meal| %>
+              <% next if meal['id'] == 1 %>
               <div class="row">
                 <span class="col-md-8 text-left">
                   <%= check_box_tag(:meal_id, meal['id'], nil, class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded" } ) %>
