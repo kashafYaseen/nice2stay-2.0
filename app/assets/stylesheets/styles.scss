@@ -1812,6 +1812,10 @@ p {
   font-size: 18px;
 }
 
+.text-xlg {
+  font-size: 18px;
+}
+
 .text-lg {
   font-size: 16px;
 }
@@ -1831,7 +1835,6 @@ p {
 .text-xxxs {
   font-size: 12px;
 }
-
 
 .strong {
   font-weight: 600;
@@ -7819,3 +7822,5 @@ video {
 
 .toggle.toggle-rounded, .toggle-on.toggle-rounded, .toggle-off.toggle-rounded { border-radius: 20rem; }
 .toggle.toggle-rounded .toggle-handle { border-radius: 20rem; width: 36px; }
+.toggle-off.toggle-rounded {  background-color: #EBEBE6; }
+.toggle.btn-xs { width: 32px !important; }

@@ -39,6 +39,7 @@
       "triggerId",
       "showActionButtons",
       "inline",
+      "highlightOnSelection"
     ],
     data() {
       let check_in = this.checkIn
@@ -57,16 +58,20 @@
       formatDates(dateOne, dateTwo) {
         let formattedDates = ''
 
-        if (!dateTwo && !dateOne){
-          formattedDates =  `${this.checkInTitle} - ${this.checkOutTitle}`
-          $(`#${this.triggerId}`).addClass('btn-outline-primary');
-          $(`#${this.triggerId}`).removeClass('btn-primary');
+        if (!dateTwo && !dateOne) {
+          formattedDates = `${this.checkInTitle} - ${this.checkOutTitle}`
+          if (this.highlightOnSelection) {
+            $(`#${this.triggerId}`).addClass('btn-outline-primary');
+            $(`#${this.triggerId}`).removeClass('btn-primary');
+          }
         }
 
         if (dateOne) {
-          formattedDates =  `${format(dateOne, this.dateFormat)} - ${this.checkOutTitle}`
-          $(`#${this.triggerId}`).removeClass('btn-outline-primary');
-          $(`#${this.triggerId}`).addClass('btn-primary');
+          formattedDates = `${format(dateOne, this.dateFormat)} - ${this.checkOutTitle}`
+          if (this.highlightOnSelection) {
+            $(`#${this.triggerId}`).removeClass('btn-outline-primary');
+            $(`#${this.triggerId}`).addClass('btn-primary');
+          }
         }
 
         if (dateTwo) {
