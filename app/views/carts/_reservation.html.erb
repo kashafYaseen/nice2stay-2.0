@@ -14,7 +14,7 @@
   <td class="text-center text-sm"><%= render_rounded_price reservation.cleaning_cost %></td>
   <td class="text-center text-sm"><%= render_rounded_price reservation.discount %></td>
   <td class="text-center text-sm"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %></td>
-  <td class="text-center text-sm"><%= t("bookings.#{reservation.booking_status}") %></td>
+  <td class="text-center text-sm badge <%= reservation_badge_class(reservation) %>"><%= t("bookings.#{reservation.request_status}") %></td>
 
   <td class="text-center">
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart', remote: true do %>

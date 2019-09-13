@@ -72,14 +72,14 @@ class Reservation < ApplicationRecord
 
   private
     def update_lodging_availability
-      return if in_cart? || prebooking? || option?
+      return if in_cart? || prebooking? || option? || offer_id.present?
       lodging.availabilities.check_out_only!(check_in)
       lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
     def availability
-      return unless check_in.present? && check_out.present? && lodging.present?
+      return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
       _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
       check_out_days = _availabilities.where(check_out_only: true)
@@ -87,7 +87,7 @@ class Reservation < ApplicationRecord
     end
 
     def accommodation_rules
-      return unless check_in.present? && check_out.present? && lodging.present?
+      return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       nights = (check_out - check_in).to_i
       active_rules = rules_active(check_in, check_out)
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
