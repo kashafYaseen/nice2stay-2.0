@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_061858) do
+ActiveRecord::Schema.define(version: 2019_09_13_100546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_061858) do
     t.string "thumbnails", default: [], array: true
     t.string "images", default: [], array: true
     t.integer "boost", default: 0
+    t.string "code"
   end
 
   create_table "countries_leads", force: :cascade do |t|
@@ -738,6 +739,9 @@ ActiveRecord::Schema.define(version: 2019_08_01_061858) do
     t.bigint "booking_id"
     t.boolean "canceled", default: false
     t.string "booked_by"
+    t.string "guest_centric_booking_id"
+    t.string "offer_id"
+    t.string "meal_id"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end

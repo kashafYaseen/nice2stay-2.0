@@ -1,6 +1,17 @@
-$(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('€<%= @total.try(:round, 2) %>');
-$(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', true);
-$("<%= params['target_modal'] %> .rates").html('<%= j render partial: "guest_centric_offers/rate", collection: @guest_centric_rates, as: :rate %>');
-$("<%= params['target_modal'] %>").modal('show');
-$('#loader').hide();
-$('.checkbox-toggler').bootstrapToggle()
+<% if params['button'] == 'cart' %>
+  $('#flash-messages').html("<%= j render 'shared/notices' %>");
+  $('#navbar-cart-body').html("<%= j render 'carts/navbar_cart_body', reservations: @reservations %>");
+  $('.cart-items-count').html("<%= cart_items_count(@reservations) %>");
+  $('.cart-subtotal').html("<%= cart_sub_total(@reservations) %>");
+  $('#cart').addClass('current');
+  $('.toolbar-dropdown').addClass('open');
+  $('.toolbar-cart').addClass('active');
+<% else %>
+  $(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('€<%= @total.try(:round, 2) %>');
+  $(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', true);
+  $("<%= params['target_modal'] %> .rates").html('<%= j render partial: "guest_centric_offers/rate", collection: @guest_centric_rates, as: :rate %>');
+  $("<%= params['target_modal'] %>").modal('show');
+  $('#loader').hide();
+  $('.checkbox-toggler').bootstrapToggle()
+  $(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").next('button').removeClass('disabled');
+<% end %>
