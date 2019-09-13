@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_111301) do
+ActiveRecord::Schema.define(version: 2019_09_13_100546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2019_09_12_111301) do
     t.string "thumbnails", default: [], array: true
     t.string "images", default: [], array: true
     t.integer "boost", default: 0
+    t.string "code"
   end
 
   create_table "countries_leads", force: :cascade do |t|
