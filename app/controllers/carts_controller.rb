@@ -5,6 +5,7 @@ class CartsController < ApplicationController
   before_action :set_booking_details, only: [:details]
 
   def show
+    @guest_centric = @booking.reservations.guest_centric.present?
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
   end
 
@@ -15,21 +16,17 @@ class CartsController < ApplicationController
   end
 
   def update
+    @guest_centric = @booking.reservations.guest_centric.present?
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
-    if @booking.reservations.guest_centric.present?
+    if @booking.save
       @booking.reservations.guest_centric.each do |reservation|
-        puts BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
+        BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
       end
-      @booking.save(validate: false)
+
       cookies[:booking_details] = @booking.id
       redirect_to details_carts_path, notice: 'Booking was created successfully.'
     else
-      if @booking.save(validate: false)
-        cookies[:booking_details] = @booking.id
-        redirect_to details_carts_path, notice: 'Booking was created successfully.'
-      else
-        render :show
-      end
+      render :show
     end
   end
 

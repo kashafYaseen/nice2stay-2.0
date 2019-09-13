@@ -33,6 +33,12 @@ module ReservationsHelper
     number_to_currency((price * multiplier), unit: '€', separator: ',', delimiter: "", precision: ((price * multiplier).round == (price * multiplier)) ? 0 : round_by)
   end
 
+  def reservation_badge_class(reservation)
+    return 'badge-warning' if reservation.pending?
+    return 'badge-success' if reservation.confirmed?
+    'badge-info'
+  end
+
   def pre_paid_link(booking)
     title_prefix = action_name == "show" ? "Pre Payment" : "€#{booking.pre_payment}"
     return link_to "#{title_prefix} Receiced: #{ render_date(booking.pre_payed_at) }", '#', class: "btn btn-success disabled w-100" if booking.step_passed?(:pre_paid)

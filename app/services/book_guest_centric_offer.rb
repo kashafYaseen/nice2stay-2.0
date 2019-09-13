@@ -3,6 +3,7 @@ class BookGuestCentricOffer
   attr_reader :uri
   attr_reader :reservation
   attr_reader :booking
+  attr_reader :user
 
   def self.call(lodging, reservation, booking)
     self.new(lodging, reservation, booking).call
@@ -12,6 +13,7 @@ class BookGuestCentricOffer
     @lodging = lodging
     @booking = booking
     @reservation = reservation
+    @user = booking.user
     @uri = URI.parse("http://secure.guestcentric.net/api/secure/beapi/hotel/book")
   end
 
@@ -19,7 +21,8 @@ class BookGuestCentricOffer
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.set_form_data form_data
-    JSON.parse http.request(request).body
+    response = JSON.parse(http.request(request).body)
+    reservation.update_columns(guest_centric_booking_id: response['response']['bookingCode'], booking_status: 'booked', request_status: 'confirmed') unless response['error']
   end
 
   private
@@ -40,20 +43,20 @@ class BookGuestCentricOffer
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],
         'offer': reservation.offer_id,
-        'firstName': booking.user.first_name,
-        'lastName': booking.user.last_name,
-        'email': booking.user.email,
-        'phone': booking.user.phone,
-        'address': booking.user.address,
-        'city': booking.user.city,
-        'zip_code': booking.user.zipcode,
+        'firstName': user.first_name,
+        'lastName': user.last_name,
+        'email': user.email,
+        'phone': user.phone,
+        'address': user.address,
+        'city': user.city,
+        'zip_code': user.zipcode,
         'total': reservation.rent,
-        'creditCardHolderName': booking.user.first_name,
+        'countryCode': user.country_code,
+        'creditCardHolderName': user.first_name,
         'creditCardNumber': '4111111111111111',
         'creditCardMonth': '12',
         'creditCardYear': '2019',
         'creditCardType': 'Visa',
-        'countryCode': 'nl',
         'ccValidation': false
       }
     end
