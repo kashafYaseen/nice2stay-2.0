@@ -8,11 +8,11 @@
     mobile_menu = $('.slideable-menu .menu')
 
     $(window).scroll ->
-      if $('#show-page-submenu').length > 0
-        if $(this).scrollTop() > 200
-          $('#show-page-submenu').fadeIn 500
+      if $('#show-page-submenu, .show-page-submenu').length > 0
+        if isScrolledIntoView($('.form-heading'))
+          $('#show-page-submenu, .show-page-submenu').fadeOut 100
         else
-          $('#show-page-submenu').fadeOut 500
+          $('#show-page-submenu, .show-page-submenu').fadeIn 500
 
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'
@@ -57,5 +57,15 @@
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
     $('#map').css("top", "#{$('.fixed-filters').height()-10}px");
+
+
+  isScrolledIntoView = (elem) ->
+    $elem = $(elem)
+    $window = $(window)
+    docViewTop = $window.scrollTop()
+    docViewBottom = docViewTop + $window.height()
+    elemTop = $elem.offset().top
+    elemBottom = elemTop + $elem.height()
+    elemBottom <= docViewBottom and elemTop >= docViewTop
 
 ).call this

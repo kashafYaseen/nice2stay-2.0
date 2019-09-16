@@ -3,9 +3,12 @@
     data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="row">
+<div class="row <%= 'pl-4' unless id_sufix.present? %>">
   <div class="col-md-12">
-    <h4 class="margin-bottom-1x"><%= t 'cart.availability' %> </h4>
+    <% if id_sufix.present? %>
+      <h4 class="margin-bottom-1x form-heading"><%= t 'cart.availability' %></h4>
+    <% end %>
+
     <div class="row" data-lodging-id="<%= lodging.id %>">
       <div class="vue-app">
         <reservation-datepicker
@@ -43,8 +46,8 @@
 
       <%= form_for reservation, url: lodging_guest_centric_offer_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}" } do |f| %>
 
-        <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in#{id_sufix}", class: 'check_in' %>
-        <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out#{id_sufix}", class: 'check_out' %>
+        <%= f.hidden_field :check_in, value: params[:check_in].presence || Date.today, id: "check_in#{id_sufix}", class: 'check_in' %>
+        <%= f.hidden_field :check_out, value: params[:check_out].presence || 7.days.from_now, id: "check_out#{id_sufix}", class: 'check_out' %>
         <%= f.hidden_field "adults#{id_sufix}", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults' %>
         <%= f.hidden_field "children#{id_sufix}", value: (params[:children] || f.object.children), class: 'children' %>
         <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>

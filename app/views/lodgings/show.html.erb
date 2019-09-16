@@ -1,6 +1,14 @@
 <% if @lodging.as_parent? && @lodging.guest_centric? %>
+  <div class="col-md-12 secondary-navbar-form show-page-submenu">
+    <%= render 'reservations/guest_centric_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '' %>
+  </div>
+
   <%= render 'lodgings/show/guest_centric' %>
 <% elsif @lodging.as_parent? %>
+  <div class="col-md-12 secondary-navbar-form show-page-submenu">
+    <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '' %>
+  </div>
+
   <%= render 'lodgings/show/parent' %>
 <% else %>
   <%= render 'lodgings/show/standalone' %>
