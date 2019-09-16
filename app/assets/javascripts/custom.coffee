@@ -8,11 +8,11 @@
     mobile_menu = $('.slideable-menu .menu')
 
     $(window).scroll ->
-      if $('#show-page-submenu').length > 0
+      if $('#show-page-submenu, .show-page-submenu').length > 0
         if $(this).scrollTop() > 200
-          $('#show-page-submenu').fadeIn 500
+          $('#show-page-submenu, .show-page-submenu').fadeIn 500
         else
-          $('#show-page-submenu').fadeOut 500
+          $('#show-page-submenu, .show-page-submenu').fadeOut 500
 
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'

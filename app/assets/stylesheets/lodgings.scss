@@ -401,6 +401,14 @@ div.nearby-places {
   height: 53px;
 }
 
+.secondary-navbar-form {
+  top: 70px;
+  position: fixed;
+  background-color: white;
+  z-index: 3;
+  height: 63px;
+}
+
 #lodgings-container, #map-container {
   top: 30px;
 }

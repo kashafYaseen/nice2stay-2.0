@@ -3,9 +3,12 @@
     data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="row">
+<div class="row <%= 'pl-4' unless id_sufix.present? %>">
   <div class="col-md-12">
-    <h4 class="margin-bottom-1x"><%= t 'cart.availability' %> </h4>
+    <% if id_sufix.present? %>
+      <h4 class="margin-bottom-1x form-heading"><%= t 'cart.availability' %></h4>
+    <% end %>
+
     <div class="row" data-lodging-id="<%= lodging.id %>">
       <div class="vue-app">
         <reservation-datepicker
