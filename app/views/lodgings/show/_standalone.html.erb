@@ -49,13 +49,13 @@
             </ul>
 
             <span class="d-block display-2 text-gray-light">
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
             </span>
           </div>
         </div>
@@ -84,7 +84,7 @@
 </div>
 
 <div class="col-sm-12 margin-top-1x price_box">
-  <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation, id_sufix: '_modal' %>
+  <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation, id_sufix: '' %>
 </div>
 
 <div class="container">
@@ -237,4 +237,5 @@
   Lodging.child_form();
   Lodging.highlight_menu();
   $('#loader').hide();
+  $('.price-loader').hide();
 <% end %>
