@@ -25,7 +25,10 @@ window.initDatePicker = function() {
     const vues = document.querySelectorAll(".vue-app");
     vues.forEach(function(element) {
       if(element.__vue__ == undefined) {
-        new Vue({ el: element, components: { ReservationDatepicker, Datepicker, GuestsDropdown } })
+        if ($(element).data('id'))
+          window[$(element).data('id')] = new Vue({ el: element, components: { ReservationDatepicker, Datepicker, GuestsDropdown } })
+        else
+          new Vue({ el: element, components: { ReservationDatepicker, Datepicker, GuestsDropdown } })
       }
     });
   }
