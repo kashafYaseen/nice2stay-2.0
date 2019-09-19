@@ -9,7 +9,7 @@
       <%= form_for reservation, url: reservations_path, remote: true, html: { id: "new_reservation#{id_sufix}" } do |f| %>
 
         <div class="row">
-          <div class="vue-app">
+          <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
             <reservation-datepicker
               :check-in="'<%= params[:check_in]%>'"
               :check-out="'<%= params[:check_out]%>'"
@@ -23,10 +23,11 @@
               :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
               :show-action-buttons="false"
               :inline="false"
+              :bind-with="'<%= id_sufix.present? ? "vue_datepicker" : "vue_datepicker_modal" %>'"
             />
           </div>
 
-          <div class="vue-app">
+          <div class="vue-app" data-id="vue_guest_dropdown<%= id_sufix %>">
             <guests-dropdown
               :adults="<%= no_of_adults(params[:adults].to_i) %>"
               :children="<%= params[:children].to_i %>"
@@ -40,6 +41,7 @@
               :max-adults="<%= lodging.adults.to_i %>"
               :max-children="<%= lodging.children.to_i %>"
               :max-infants="<%= lodging.infants.to_i %>"
+              :bind-with="'<%= id_sufix.present? ? "vue_guest_dropdown" : "vue_guest_dropdown_modal" %>'"
             />
           </div>
 
@@ -64,7 +66,7 @@
 
         <div class="row">
           <div class="col-md-6">
-            <div class="vue-app">
+            <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
               <reservation-datepicker
                 :check-in="'<%= params[:check_in]%>'"
                 :check-out="'<%= params[:check_out]%>'"
@@ -79,12 +81,13 @@
                 :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
                 :show-action-buttons="false"
                 :inline="true"
+                :bind-with="'<%= id_sufix.present? ? "vue_datepicker" : "vue_datepicker_modal" %>'"
               />
             </div>
           </div>
 
           <div class="col-md-6">
-            <div class="vue-app">
+            <div class="vue-app" data-id="vue_guest_dropdown<%= id_sufix %>">
               <guests-dropdown
                 :adults="<%= no_of_adults(params[:adults].to_i) %>"
                 :children="<%= params[:children].to_i %>"
@@ -99,6 +102,7 @@
                 :max-adults="<%= lodging.adults.to_i %>"
                 :max-children="<%= lodging.children.to_i %>"
                 :max-infants="<%= lodging.infants.to_i %>"
+                :bind-with="'<%= id_sufix.present? ? "vue_guest_dropdown" : "vue_guest_dropdown_modal" %>'"
               />
             </div>
 
