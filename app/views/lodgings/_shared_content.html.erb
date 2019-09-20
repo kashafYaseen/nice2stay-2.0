@@ -1,4 +1,4 @@
-<div class="col-md-12 p-0">
+<div class="col-md-12 p-0 container">
   <div class="row bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
     <div class="col-md-12">
       <div class="gallery-wrapper">
@@ -19,7 +19,39 @@
   </div>
 </div>
 
-<div class="col-md-12 leads_homepage mt-2 pt-3">
+<div class="margin-top-2x price_box pt-3 pl-3" id="reviews-container">
+  <div class="row">
+    <% if @reviews.present? %>
+      <div class="col-md-12">
+        <h3 class="card-title"><%= t 'nav.reviews' %></h3>
+      </div>
+
+      <div class="card-body col-md-5">
+        <hr class="margin-bottom-1x">
+        <%= render 'reviews/rating', lodging: lodging %>
+      </div>
+
+      <div class="col-md-6 padding-top-2x">
+        <div class="reviews-container">
+          <%= render @reviews %>
+        </div>
+
+        <div class="review-paginator padding-bottom-2x">
+          <%= paginate @reviews, remote: true, window: 0 %>
+        </div>
+      </div>
+    <% else %>
+      <div class="row">
+        <div class="card-body col-md-12 pl-4">
+          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
+          <p>Accommodation does not have any review yet.</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="col-md-12 price_box pt-3">
   <h4 class="mb-3">
     <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
   </h4>
@@ -84,8 +116,10 @@
       </div>
     </div>
   </div>
+</div>
 
-  <div class="row">
+<div class="bg-white col-md-12 p-0 padding-top-1x container">
+  <div class="row container">
     <div class="col-md-12" id="description-container">
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <ul class="list-icon">
@@ -119,38 +153,6 @@
       <button class="btn float-right btn-gallery-container d-block d-sm-none m-0 pr-0">
         Show All
       </button>
-    </div>
-  </div>
-
-  <div class="margin-top-2x leads_homepage pt-3 pl-3" id="reviews-container">
-    <div class="row">
-      <% if @reviews.present? %>
-        <div class="col-md-12">
-          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
-        </div>
-
-        <div class="card-body col-md-5">
-          <hr class="margin-bottom-1x">
-          <%= render 'reviews/rating', lodging: lodging %>
-        </div>
-
-        <div class="col-md-6 padding-top-2x">
-          <div class="reviews-container">
-            <%= render @reviews %>
-          </div>
-
-          <div class="review-paginator padding-bottom-2x">
-            <%= paginate @reviews, remote: true, window: 0 %>
-          </div>
-        </div>
-      <% else %>
-        <div class="row">
-          <div class="card-body col-md-12 pl-4">
-            <h3 class="card-title"><%= t 'nav.reviews' %></h3>
-            <p>Accommodation does not have any review yet.</p>
-          </div>
-        </div>
-      <% end %>
     </div>
   </div>
 

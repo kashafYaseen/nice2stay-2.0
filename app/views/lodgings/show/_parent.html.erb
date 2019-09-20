@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-md-4 col-xs-12">
-            <h4>Vanaf 200,- per nacht</h4><br>
+            <h4><%= @lodging.name %></h4><br>
             <ul class="list-icon">
               <h6>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
@@ -215,9 +215,9 @@
       </div>
     </div>
   </div>
-  <%= render 'shared_content', lodging: @lodging %>
 </div>
 
+<%= render 'shared_content', lodging: @lodging %>
 <%= render 'shared/meta_tags', resource: @lodging %>
 
 <% content_for :canonical do %><%= lodging_url(@lodging) %><% end %>
