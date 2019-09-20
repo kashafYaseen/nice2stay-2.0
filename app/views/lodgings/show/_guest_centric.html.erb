@@ -35,7 +35,12 @@
           </div>
 
           <div class="col-md-4 col-xs-12">
-            <h4>Vanaf 200,- per nacht</h4>
+            <h4><%= @lodging.name %></h4>
+            <% if @reviews.present? %>
+              <div class="align-baseline text-xlg text-primary mr-1">
+                <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
+              </div>
+            <% end %>
             <br>
             <ul class="list-icon">
               <h6>
@@ -49,13 +54,13 @@
             </ul>
 
             <span class="d-block display-2 text-gray-light">
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
             </span>
           </div>
         </div>
@@ -214,9 +219,9 @@
       </div>
     </div>
   </div>
-
-  <%= render 'shared_content', lodging: @lodging %>
 </div>
+
+<%= render 'shared_content', lodging: @lodging %>
 
 <%= render 'shared/meta_tags', resource: @lodging %>
 
