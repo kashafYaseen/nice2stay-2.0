@@ -98,7 +98,7 @@
           <hr class="margin-bottom-1x">
 
           <div class="row mt-5">
-            <div class="col-md-5 vue-app">
+            <div class="col-md-5 vue-app" data-id="vue-child-modal-<%= lodging.id %>">
               <reservation-datepicker
                 :check-in="'<%= params[:check_in] %>'"
                 :check-out="'<%= params[:check_out] %>'"
@@ -129,7 +129,7 @@
 
                 <p class="text-xxs lbl-error-<%= lodging.id %>" id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
 
-                <div class="vue-app">
+                <div class="vue-app" data-id="vue-child-guests-modal-<%= lodging.id %>">
                   <guests-dropdown
                     :adults="<%= no_of_adults(params[:adults].to_i) %>"
                     :children="<%= params[:children].to_i %>"

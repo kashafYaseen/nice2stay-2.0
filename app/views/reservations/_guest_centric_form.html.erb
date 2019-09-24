@@ -4,13 +4,13 @@
 </div>
 
 <div class="row <%= 'pl-4' unless id_sufix.present? %>">
-  <div class="col-md-12">
+  <div class="col-md-12 <%= 'container' unless id_sufix.present? %>">
     <% if id_sufix.present? %>
       <h4 class="margin-bottom-1x form-heading"><%= t 'cart.availability' %></h4>
     <% end %>
 
     <div class="row" data-lodging-id="<%= lodging.id %>">
-      <div class="vue-app">
+      <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
         <reservation-datepicker
           :check-in="'<%= params[:check_in].presence || Date.today %>'"
           :check-out="'<%= params[:check_out].presence || 7.days.from_now %>'"
@@ -24,10 +24,11 @@
           :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
           :show-action-buttons="false"
           :inline="false"
+          :bind-with="'<%= id_sufix.present? ? "vue_datepicker" : "vue_datepicker_modal" %>'"
         />
       </div>
 
-      <div class="vue-app">
+      <div class="vue-app" data-id="vue_guest_dropdown<%= id_sufix %>">
         <guests-dropdown
           :adults="<%= no_of_adults(params[:adults].to_i) %>"
           :children="<%= params[:children].to_i %>"
@@ -41,6 +42,7 @@
           :max-adults="20"
           :max-children="20"
           :max-infants="20"
+          :bind-with="'<%= id_sufix.present? ? "vue_guest_dropdown" : "vue_guest_dropdown_modal" %>'"
         />
       </div>
 
@@ -48,9 +50,9 @@
 
         <%= f.hidden_field :check_in, value: params[:check_in].presence || Date.today, id: "check_in#{id_sufix}", class: 'check_in' %>
         <%= f.hidden_field :check_out, value: params[:check_out].presence || 7.days.from_now, id: "check_out#{id_sufix}", class: 'check_out' %>
-        <%= f.hidden_field "adults#{id_sufix}", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults' %>
-        <%= f.hidden_field "children#{id_sufix}", value: (params[:children] || f.object.children), class: 'children' %>
-        <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>
+        <%= f.hidden_field "adults", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults#{id_sufix}" %>
+        <%= f.hidden_field "children", value: (params[:children] || f.object.children), class: 'children', id: "children#{id_sufix}" %>
+        <%= f.hidden_field "infants", value: (params[:infants] || f.object.infants), class: 'infants', id: "infants#{id_sufix}" %>
         <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
 
         <%= f.submit('Check Availability', class: "btn btn-primary") %>

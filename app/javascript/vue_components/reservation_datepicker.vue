@@ -39,7 +39,8 @@
       "triggerId",
       "showActionButtons",
       "inline",
-      "highlightOnSelection"
+      "highlightOnSelection",
+      "bindWith"
     ],
     data() {
       let check_in = this.checkIn
@@ -84,10 +85,15 @@
       date_one_selected(val) {
         this.check_in = val
         $('.check_in').val(val);
+        if (this.bindWith)
+          window[this.bindWith].$children[0].check_in = val
       },
       date_two_selected(val) {
         this.check_out = val
         $('.check_out').val(val);
+        if (this.bindWith)
+          window[this.bindWith].$children[0].check_out = val
+
         this.apply()
       },
       apply() {

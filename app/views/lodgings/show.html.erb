@@ -11,5 +11,9 @@
 
   <%= render 'lodgings/show/parent' %>
 <% else %>
+  <div class="col-md-12 secondary-navbar-form show-page-submenu">
+    <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation, id_sufix: '_modal' %>
+  </div>
+
   <%= render 'lodgings/show/standalone' %>
 <% end %>

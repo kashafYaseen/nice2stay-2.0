@@ -57,18 +57,19 @@
 
   show_page_secondary_nav = ->
     if $('#show-page-submenu, .show-page-submenu').length > 0
-      if isScrolledIntoView($('.form-heading'))
+      if isScrolledIntoView($('.form-heading')) || $(window).scrollTop() < $('#home-container').parent().height()
         $('#show-page-submenu, .show-page-submenu').fadeOut 100
       else
         $('#show-page-submenu, .show-page-submenu').fadeIn 500
 
   isScrolledIntoView = (elem) ->
     $elem = $(elem)
-    $window = $(window)
-    docViewTop = $window.scrollTop()
-    docViewBottom = docViewTop + $window.height()
-    elemTop = $elem.offset().top
-    elemBottom = elemTop + $elem.height()
-    elemBottom <= docViewBottom and elemTop >= docViewTop
+    if $elem.length > 0
+      $window = $(window)
+      docViewTop = $window.scrollTop()
+      docViewBottom = docViewTop + $window.height()
+      elemTop = $elem.offset().top
+      elemBottom = elemTop + $elem.height()
+      elemBottom <= docViewBottom and elemTop >= docViewTop
 
 ).call this
