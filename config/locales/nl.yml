@@ -215,6 +215,13 @@ nl:
     prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
     select_details: Selecteer periode & aantal personen
 
+  calendar:
+    legenda: Legenda kalender
+    available: Beschikbaar
+    not_available: Niet beschikbaar
+    special_offer: Special offer
+    under_option: Onder optie
+
   information:
     included: Inclusief ?
     informatie: Belangrijke informatie

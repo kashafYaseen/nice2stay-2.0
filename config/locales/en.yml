@@ -293,11 +293,18 @@ en:
   cart:
     details: More nformation & availability
     price: Conditions & important information
-    availability: Availabiltiy & Prices
+    availability: Availability & Prices
     shopping_cart: Add to cart
     nice2stay: No booking fees at Nice2stay
     prepayment_not_payed: When prepayment is done, then the final payment can be transferred
     select_details: Please select dates & guest details
+
+  calendar:
+    legenda: Calendar Legenda
+    available: Available
+    not_available: Not available
+    special_offer: Special offer
+    under_option: Under option
 
   activerecord:
     errors:
