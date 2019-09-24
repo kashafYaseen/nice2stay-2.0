@@ -64,7 +64,7 @@
         <%= f.radio_button :booking_status, status, id: "booking_status_#{status}_#{lodging.id}#{id_sufix}" %>
           <label><%= t("reservations.#{status}") %></label>
         <% end %>
-        <p id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
+        <p id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>" data-text="<%= t('cart.select_details') %>"></p>
         <div class="text-dark text-left line-height-2" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></div>
         <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}" %>
         <p class="extra_small text-center"><%= t 'cart.nice2stay' %></p>

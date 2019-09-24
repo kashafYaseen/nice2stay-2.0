@@ -157,10 +157,11 @@ en:
     advice_details: Expert advice and attentive service 
     search: Search for unique holiday homes, apartments and boutique hotels and more ...
     intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
-    intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France an Greece. All accommodations have been personally selected and visited by us. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
+    intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France and Greece. All accommodations have been personally selected and visited by our team. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
     acco_show_header: "%{lodging_name} is visited by %{admin_name}"
     acco_show_p: All accommodations in our unique collection meet our high standards in quality, comfort, style and setting. We visit every place, meet the owners and explore the area, so we are sure that you will have a great holiday here!
     acco_show_visit: "Do you want to <a href='mailto:support@nice2stay.com'>know more</a> from %{admin_name} about %{lodging_name}? She is happy to advise you!"
+    vragen_show_header: Do you have questions about
 
   opens:
     week: Monday - Friday 9.00 am - 18.00 pm
@@ -291,11 +292,12 @@ en:
 
   cart:
     details: More nformation & availability
-    price: Included, optional, conditions & calendar information
-    availability: Availabiltiy & Price
+    price: Conditions & important information
+    availability: Availabiltiy & Prices
     shopping_cart: Add to cart
     nice2stay: No booking fees at Nice2stay
     prepayment_not_payed: When prepayment is done, then the final payment can be transferred
+    select_details: Please select dates & guest details
 
   activerecord:
     errors:
