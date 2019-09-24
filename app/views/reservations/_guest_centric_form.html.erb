@@ -50,9 +50,9 @@
 
         <%= f.hidden_field :check_in, value: params[:check_in].presence || Date.today, id: "check_in#{id_sufix}", class: 'check_in' %>
         <%= f.hidden_field :check_out, value: params[:check_out].presence || 7.days.from_now, id: "check_out#{id_sufix}", class: 'check_out' %>
-        <%= f.hidden_field "adults#{id_sufix}", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults' %>
-        <%= f.hidden_field "children#{id_sufix}", value: (params[:children] || f.object.children), class: 'children' %>
-        <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>
+        <%= f.hidden_field "adults", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults#{id_sufix}" %>
+        <%= f.hidden_field "children", value: (params[:children] || f.object.children), class: 'children', id: "children#{id_sufix}" %>
+        <%= f.hidden_field "infants", value: (params[:infants] || f.object.infants), class: 'infants', id: "infants#{id_sufix}" %>
         <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
 
         <%= f.submit('Check Availability', class: "btn btn-primary") %>
