@@ -1,9 +1,39 @@
 <div class="col-md-12 mt-2 row">
-  <span class="col-md-8 text-left border-default border-black">
-    <b><%= render_date rate['day'].to_date %></b>
+  <span class="col-md-6">
+    Check-in: <b><%= render_date reservation.check_in %></b>
   </span>
 
-  <span class="col-md-4 text-right border-default border-black">
-    €<%= rate['value'] %>
+  <span class="col-md-6 pr-0">
+    Check-out: <b><%= render_date reservation.check_out %></b>
+  </span>
+</div>
+
+<div class="col-md-12 mt-2 row">
+  <span class="col-md-6">
+    Rooms: <b><%= '1' %></b>
+  </span>
+
+  <span class="col-md-6">
+    Nr. of nights: <b><%= (reservation.check_out - reservation.check_in).to_i %></b>
+  </span>
+</div>
+
+<div class="col-md-12 mt-2 row">
+  <span class="col-md-6">
+    Adults: <b><%= reservation.adults %></b>
+  </span>
+
+  <span class="col-md-6">
+    Children: <b><%= reservation.adults %></b>
+  </span>
+</div>
+
+<div class="row col-md-12 mt-2">
+  <span class="col-md-6 border-bottom border-black pb-2">
+    Avg. rate per night
+  </span>
+
+  <span class="col-md-6 border-bottom border-black">
+    <b>€<%= (total / (reservation.check_out - reservation.check_in).to_i).round(2) %></b>
   </span>
 </div>
