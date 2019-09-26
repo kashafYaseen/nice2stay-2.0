@@ -48,24 +48,6 @@
             <h5>Reservation Summary</h5>
             <div class="rates row pl-2 mb-3"></div>
 
-            <h5>Meal Plans</h5>
-            <hr>
-            <% meal_plans.each do |meal| %>
-              <% next if meal['id'] == 1 %>
-              <div class="row">
-                <span class="col-md-8 text-left">
-                  <%= check_box_tag(:meal_id, meal['id'], nil, class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded" } ) %>
-                  <b><%= meal['label'] %></b>
-                </span>
-
-                <span class="col-md-4 text-right">
-                  <b><%= "€#{meal['total']}" %></b>
-                </span>
-              </div>
-
-              <label></label><br>
-            <% end if meal_plans.present? %>
-
             <div class="row p-2 mt-5">
               <span class="col-md-8 text-left border-bottom border-black p-0">
                 Total for your stay
@@ -73,6 +55,16 @@
 
               <span class="col-md-4 text-right border-bottom border-black">
                 €<%= child['netValue'] %>
+              </span>
+            </div>
+
+            <div class="row row pl-2 pr-2 pt-0">
+              <span class="col-md-8 text-left border-bottom border-black p-0">
+                Meals
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black meal-price">
+                €<%= reservation.meal_price %>
               </span>
             </div>
 
@@ -98,7 +90,10 @@
 
             <div class="row">
               <div class="col-md-12 p-0">
-                <button class="btn btn-primary btn-md float-right">Add To Cart</button>
+                <%= button_tag class: "btn btn-primary btn-booking btn-md float-right", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" }, value: "cart" do %>
+                  <i class="material-icons add_shopping_cart"></i>&nbsp; Add To Cart
+                <% end %>
+
                 <button class="close float-right btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
               </div>
             </div>

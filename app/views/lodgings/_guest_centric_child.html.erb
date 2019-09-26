@@ -1,4 +1,4 @@
-<%= form_for lodging.reservations.build, url: rates_lodging_guest_centric_offers_en_path(lodging), remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
+<%= form_for @reservation, url: rates_lodging_guest_centric_offers_en_path(lodging), remote: true, html: { id: "new_reservation_#{lodging.id}" } do |f| %>
 
   <% offers = [] %>
   <div class="row mt-3 children-scroll-section">
@@ -30,7 +30,7 @@
     <div class="col-md-4 col-border bg-white text-sm group-toggle">
       <% if child['isPromotion'] %>
         <% child['offers'].each do |offer| %>
-          <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'] %>
+          <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging %>
 
           <% offers << offer['offer'].gsub('.', '-') %>
           <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= lodging.id %>" data-bookable="<%= child["isBookable"] %> " data-price="<%= offer['total'] %>">
@@ -53,7 +53,7 @@
             <% next if meal['id'] == 1 %>
             <div class="row">
               <span class="col-md-8 text-left">
-                <%= f.check_box :meal_id, { class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded", price: meal['total'] } }, meal['id'], nil %>
+                <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
                 <b><%= meal['label'] %></b>
               </span>
 
@@ -61,15 +61,13 @@
                 <b><%= "€#{meal['total']}" %></b>
               </span>
             </div>
-
-            <label></label><br>
           <% end if child['mealPlans'].present? %>
 
           </label><br>
         <% end %>
       <% else %>
         <% offers << child['offer'].gsub('.', '-') %>
-        <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'] %>
+        <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging %>
 
         <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= lodging.id %>" data-bookable="<%= child["isBookable"] %>" data-price="<%= child['total'] %>">
           <%= link_to "#{child['name'].try(:capitalize)} - more details", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold text-xlg guest-centric-modal-btn' %><br>
@@ -90,7 +88,7 @@
             <% next if meal['id'] == 1 %>
             <div class="row">
               <span class="col-md-8 text-left">
-                <%= f.check_box :meal_id, { class: "checkbox-toggler", data: { size: 'xs', height: '10', on: ' ', off: ' ', onstyle: "info", style: "toggle-rounded", price: meal['total'] } }, meal['id'], nil %>
+                <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
                 <b><%= meal['label'] %></b>
               </span>
 
@@ -98,8 +96,6 @@
                 <b><%= "€#{meal['total']}" %></b>
               </span>
             </div>
-
-            <label></label><br>
           <% end if child['mealPlans'].present? %>
         </label>
       <% end %>
@@ -123,5 +119,6 @@
   <%= f.hidden_field :infants, value: (get_centric_param(:infants) || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
   <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
   <%= f.hidden_field :offer_id, class: 'offer-id' %>
+  <%= f.hidden_field :meal_price, class: 'meal-price' %>
   <%= hidden_field_tag :target_modal %>
 <% end %>

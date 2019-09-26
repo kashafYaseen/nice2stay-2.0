@@ -3,11 +3,13 @@ class GuestCentricOffersController < ApplicationController
 
   def show
     @guest_centric = GetGuestCentricOffers.call(@lodging, params[:reservation].merge(locale: locale))
+    @reservation = @lodging.reservations.build(reservation_params)
   end
 
   def rates
     @guest_centric_rates, @total = GetGuestCentricRates.call(@lodging, params[:reservation])['response'], 0
     @guest_centric_rates.each { |rate| @total += rate['value'].to_f }
+    @total += reservation_params[:meal_price].to_f
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true, rent: @total))
 
     if params['button'] == 'cart'
@@ -25,7 +27,7 @@ class GuestCentricOffersController < ApplicationController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :offer_id, :meal_id)
+      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :offer_id, :meal_id, :meal_price)
     end
 
     def set_booking_and_cookie
