@@ -1,5 +1,6 @@
 class GuestCentricOffersController < ApplicationController
   before_action :set_lodging
+  before_action :set_booking_and_cookie, only: [:rates]
 
   def show
     @guest_centric = GetGuestCentricOffers.call(@lodging, params[:reservation].merge(locale: locale))
@@ -13,7 +14,6 @@ class GuestCentricOffersController < ApplicationController
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true, rent: @total))
 
     if params['button'] == 'cart'
-      set_booking_and_cookie
       @reservation.save(validate: false)
       @reservation = @reservation.lodging.reservations.build
       @reservations = @booking.reservations
