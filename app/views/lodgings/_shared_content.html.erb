@@ -20,12 +20,12 @@
 </div>
 
 <div class="margin-top-2x price_box pt-3 pl-3" id="reviews-container">
-  <div class="row">
-    <% if @reviews.present? %>
-      <div class="col-md-12">
-        <h3 class="card-title"><%= t 'nav.reviews' %></h3>
-      </div>
+  <% if @reviews.present? %>
+    <div class="col-md-12 container-fluid">
+      <h3 class="card-title"><%= t 'nav.reviews' %></h3>
+    </div>
 
+    <div class="row container-fluid">
       <div class="card-body col-md-5">
         <hr class="margin-bottom-1x">
         <%= render 'reviews/rating', lodging: lodging %>
@@ -40,23 +40,23 @@
           <%= paginate @reviews, remote: true, window: 0 %>
         </div>
       </div>
-    <% else %>
-      <div class="row">
-        <div class="card-body col-md-12 pl-4">
-          <h3 class="card-title"><%= t 'nav.reviews' %></h3>
-          <p>Accommodation does not have any review yet.</p>
-        </div>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="card-body col-md-12 container-fluid">
+        <h3 class="card-title"><%= t 'nav.reviews' %></h3>
+        <p>Accommodation does not have any review yet.</p>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
 
 <div class="col-md-12 price_box pt-3">
-  <h4 class="mb-3">
+  <h4 class="mb-3 container-fluid">
     <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
   </h4>
 
-  <div class="row">
+  <div class="row container-fluid">
     <div class="col-md-2 col-lg-2">
       <div class="d-table">
         <img class="d-block w-150 mx-auto img-thumbnail rounded-circle mb-3" src="<%= lodging.admin_user.try(:image) || 'https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg' %>" alt="Team">
@@ -93,7 +93,7 @@
 </div>
 
 <div class="bg-white col-md-12 p-0 padding-top-1x" id="location-container">
-  <div id="infobox" class="row">
+  <div id="infobox">
     <div class="col-md-12">
       <div class="infobox">
         <div class="infobox-header bg-secondary">
@@ -119,8 +119,8 @@
 </div>
 
 <div class="bg-white col-md-12 p-0 padding-top-1x container">
-  <div class="row container">
-    <div class="col-md-12" id="description-container">
+  <div class="row">
+    <div class="col-md-6" id="description-container">
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <ul class="list-icon">
         <h5>
@@ -137,18 +137,18 @@
       <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description %>" data-truncated="<%= truncated_description(lodging.description, 1000) %>">Read more</button>
     </div>
 
-    <div class="col-md-12 col-xs-12">
+    <div class="col-md-6">
       <h3 class="card-title"><%= t 'nav.amentities' %></h3>
       <hr class="margin-bottom-1x">
       <ul class="list-icon">
         <% @lodging.amenities.each do |amenity| %>
           <i class="material-icons md-14 check_circle text-success"></i> <%= amenity.name %>
         <% end %>
-       </ul>
+      </ul>
     </div>
   </div>
 
-  <div class="row">
+  <div>
     <div class="col-md-12">
       <button class="btn float-right btn-gallery-container d-block d-sm-none m-0 pr-0">
         Show All
