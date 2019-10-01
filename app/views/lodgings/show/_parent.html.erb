@@ -5,7 +5,7 @@
   <%= image_tag 'loader.gif', class: 'w-50' %>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid home-container">
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-12 margin-top-1x">
@@ -60,9 +60,17 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-8">
             <h3><%= @lodging.h1 %></h3>
             <p><%= @lodging.summary.try(:html_safe) %></p>
+          </div>
+
+          <div class="col-md-4">
+            <div class="pt-3">
+              <% Review::RATING_TYPE.each do |type| %>
+                <%= rating_tag(@lodging.send(type), type) %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
