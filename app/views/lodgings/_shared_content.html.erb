@@ -92,7 +92,9 @@
   </div>
 </div>
 
-<div class="bg-white col-md-12 p-0 padding-top-1x" id="location-container">
+<div class="address-mark" id="lodging-map-location"></div>
+
+<div class="bg-white col-md-12 p-0 padding-top-1x container-fluid" id="location-container">
   <div id="infobox">
     <div class="col-md-12">
       <div class="infobox">
@@ -102,7 +104,6 @@
 
         <div class="infobox-content p-3">
           <%= lodging.location_description.try(:html_safe) %>
-          <div class="address-mark" id="lodging-map-location"></div>
           <%= render_show_page_map lodging, @places %>
 
           <h5 class="nearby-places-title">
