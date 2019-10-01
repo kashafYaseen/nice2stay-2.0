@@ -1,5 +1,5 @@
 <div class="col-md-12 p-0 container">
-  <div class="row bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
+  <div class="bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
     <div class="col-md-12">
       <div class="gallery-wrapper">
         <div class="isotope-grid cols-3">
@@ -19,10 +19,10 @@
   </div>
 </div>
 
-<div class="margin-top-2x price_box pt-3 pl-3" id="reviews-container">
+<div class="margin-top-2x price_box pt-3 pl-3 reviews-container-section" id="reviews-container">
   <% if @reviews.present? %>
     <div class="col-md-12 container-fluid">
-      <h3 class="card-title"><%= t 'nav.reviews' %></h3>
+      <h4 class="card-title"><%= t 'nav.reviews' %></h4>
     </div>
 
     <div class="row container-fluid">
@@ -42,7 +42,7 @@
       </div>
     </div>
   <% else %>
-    <div class="row">
+    <div>
       <div class="card-body col-md-12 container-fluid">
         <h3 class="card-title"><%= t 'nav.reviews' %></h3>
         <p>Accommodation does not have any review yet.</p>
@@ -92,8 +92,6 @@
   </div>
 </div>
 
-<div class="address-mark" id="lodging-map-location"></div>
-
 <div class="bg-white col-md-12 p-0 padding-top-1x container-fluid" id="location-container">
   <div id="infobox">
     <div class="col-md-12">
@@ -105,22 +103,16 @@
         <div class="infobox-content p-3">
           <%= lodging.location_description.try(:html_safe) %>
           <%= render_show_page_map lodging, @places %>
-
-          <h5 class="nearby-places-title">
-            Nearby Places Within <%= params[:places_within].presence || '100km' %>
-          </h5>
-        </div>
-
-         <div class="col-md-12 nearby-places mt-3">
-          <%= render 'places/index', grouped_places: @places.group_by(&:place_category), lodging: lodging %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<div class="address-mark" id="lodging-map-location"></div>
+
 <div class="bg-white col-md-12 p-0 padding-top-1x container">
-  <div class="row">
+  <div class="row col-md-12">
     <div class="col-md-6" id="description-container">
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <ul class="list-icon">
@@ -157,7 +149,7 @@
     </div>
   </div>
 
-  <div class="padding-bottom-1x pt-2 mb-1 row">
+  <div class="padding-bottom-1x pt-2 mb-1">
     <div class="col-md-12 padding-top-1x target-section" id="like-container">
       <h3 class="card-title"><%= t 'nav.also_like' %></h3>
       <hr class="margin-bottom-1x">
