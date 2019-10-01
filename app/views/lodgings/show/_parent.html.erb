@@ -65,13 +65,17 @@
             <p><%= @lodging.summary.try(:html_safe) %></p>
           </div>
 
-          <div class="col-md-4">
-            <div class="pt-3">
-              <% Review::RATING_TYPE.each do |type| %>
-                <%= rating_tag(@lodging.send(type), type) %>
-              <% end %>
+          <% if @reviews.present? %>
+            <div class="col-md-4">
+              <div class="pt-3">
+                <% Review::RATING_TYPE.each do |type| %>
+                  <%= rating_tag(@lodging.send(type), type) %>
+                <% end %>
+              </div>
+
+              <%= link_to "read all reviews", '#', class: "scroll-to-btn", data: { target: '.reviews-container-section' } %>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
