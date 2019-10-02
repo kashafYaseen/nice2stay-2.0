@@ -66,6 +66,10 @@ class Reservation < ApplicationRecord
     self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum
   end
 
+  def total_meal_price
+    meal_price.to_f * total_nights.to_i
+  end
+
   def step_passed?(step)
     Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
   end

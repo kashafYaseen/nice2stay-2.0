@@ -10,8 +10,9 @@ class GuestCentricOffersController < ApplicationController
   def rates
     @guest_centric_rates, @total = GetGuestCentricRates.call(@lodging, params[:reservation])['response'], 0
     @guest_centric_rates.each { |rate| @total += rate['value'].to_f }
-    @total += reservation_params[:meal_price].to_f
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true, rent: @total))
+    @total += @reservation.total_meal_price
+    @reservation.rent = @total
 
     if params['button'] == 'cart'
       @reservation.save(validate: false)
