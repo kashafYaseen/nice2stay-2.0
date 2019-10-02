@@ -1,5 +1,3 @@
-
-
 <div class="col-md-12 leads_homepage pt-3">
   <h4 class="mb-3 container-fluid">
     <%= t 'usp.acco_show_header', lodging_name: lodging.name, admin_name: lodging.admin_user.try(:first_name) || 'Christa' %>
@@ -41,19 +39,15 @@
   </div>
 </div>
 
-
 <div class="col-md-12 p-0 padding-top-1x container" id="location-container">
-  
-    <div class="col-md-12">
-          <h3><%= t 'nav.location' %> </h3>
+  <div class="col-md-12">
+    <h3><%= t 'nav.location' %> </h3><br>
 
-          <br>        
-          <%= lodging.location_description.try(:html_safe) %>
-          <%= render_show_page_map lodging, @places %>
-      </div>
-   
-  
+    <%= lodging.location_description.try(:html_safe) %>
+    <%= render_show_page_map lodging, @places %>
+  </div>
 </div>
+
 <div class="address-mark" id="lodging-map-location"></div>
 
 <div class="col-md-12 p-0 container">
@@ -108,9 +102,6 @@
     </div>
   <% end %>
 </div>
-
-
-
 
 <div class="bg-white col-md-12 p-0 padding-top-1x container">
   <div class="row col-md-12">
