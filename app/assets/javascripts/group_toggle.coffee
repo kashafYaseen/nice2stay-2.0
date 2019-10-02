@@ -10,6 +10,11 @@
 
     $('#guest_centric_offers').on 'change', '.meal_check_box', ->
       radio = $(this).parents('label')
+
+      if $(this).is(':checked')
+        $(radio).find('.meal_check_box').prop('checked', false);
+        $(this).prop('checked', true);
+
       $('#target_modal').val ''
       select_item(radio)
       submit_form(radio)
@@ -18,10 +23,7 @@
     $(radio).siblings('label').removeClass 'border-primary'
     $(radio).siblings('label').addClass 'border-dark'
 
-    meal_price = 0
-    for meal in $(radio).find('.meal_check_box:checked')
-      meal_price += $(meal).data('price')
-    $(radio).parents('form').find('.meal-price').val meal_price
+    $(radio).parents('form').find('.meal-price').val $(radio).find('.meal_check_box:checked').data('price')
 
     $('.offer-id').val $(radio).find('.offers-select-radio').val()
     $(radio).removeClass 'border-dark'

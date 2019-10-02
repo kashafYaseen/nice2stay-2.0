@@ -52,12 +52,10 @@ class BookGuestCentricOffer
         'zip_code': user.zipcode,
         'total': reservation.rent,
         'countryCode': user.country_code,
-        'creditCardHolderName': user.first_name,
-        'creditCardNumber': '4111111111111111',
-        'creditCardMonth': '12',
-        'creditCardYear': '2019',
         'creditCardType': 'Visa',
-        'ccValidation': false
+        'ccValidation': false,
+        'paymentValidation': false,
+        'mealPlan': reservation.meal_id.to_i,
       }
     end
 end
