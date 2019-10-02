@@ -41,6 +41,21 @@
   </div>
 </div>
 
+
+<div class="col-md-12 p-0 padding-top-1x container" id="location-container">
+  
+    <div class="col-md-12">
+          <h3><%= t 'nav.location' %> </h3>
+
+          <br>        
+          <%= lodging.location_description.try(:html_safe) %>
+          <%= render_show_page_map lodging, @places %>
+      </div>
+   
+  
+</div>
+<div class="address-mark" id="lodging-map-location"></div>
+
 <div class="col-md-12 p-0 container">
   <div class="bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
     <div class="col-md-12">
@@ -135,24 +150,7 @@
   </div>
 </div>
 
-<div class="bg-white col-md-12 p-0 padding-top-1x container-fluid" id="location-container">
-  <div id="infobox">
-    <div class="col-md-12">
-      <div class="infobox">
-        <div class="infobox-header bg-secondary">
-          <h3><%= t 'nav.location' %> <%= @lodging.name %></h3>
-        </div>
 
-        <div class="infobox-content p-3">
-          <%= lodging.location_description.try(:html_safe) %>
-          <%= render_show_page_map lodging, @places %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="address-mark" id="lodging-map-location"></div>
 
 <div class="bg-white col-md-12 p-0 padding-top-1x container">
   <div class="row col-md-12">
