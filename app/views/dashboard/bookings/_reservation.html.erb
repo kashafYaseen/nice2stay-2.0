@@ -43,6 +43,24 @@
   </div>
 </div>
 
+<% if reservation.offer_id.present? %>
+  <div class="card">
+    <div class="card-header" role="tab">
+      <h5>
+        <a href="#guest-centric-details<%= reservation.id %>" data-toggle="collapse" class="collapsed">Guest Centric Details</a>
+      </h5>
+    </div>
+
+    <div class="collapse" id="guest-centric-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
+      <div class="card-body">
+        <p>Offer ID: <%= reservation.offer_id %></p>
+        <p>Meal ID: <%= reservation.meal_id %></p>
+        <p>Booking ID: <%= reservation.guest_centric_booking_id %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
