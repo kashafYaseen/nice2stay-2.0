@@ -56,8 +56,8 @@
        data-validate-url="<%= validate_reservations_path %>">
   </div>
 
-  <div class="row price_box">
-    <div class="col-md-12 col-sm-12 col-lg-12 container-fluid">
+  <div class="row price_box p-2">
+    <div class="col-md-12 col-sm-12 col-lg-12 container">
       <%= form_for reservation, url: reservations_path, remote: true, html: { id: "new_reservation#{id_sufix}" } do |f| %>
         <h4 class="margin-bottom-1x form-heading"><%= t 'cart.availability' %> </h4>
         <div class="reservation-form-errors-<%= lodging.id %>">
