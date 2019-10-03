@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_120417) do
+ActiveRecord::Schema.define(version: 2019_10_03_095510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_120417) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
-    t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on"
+    t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 
@@ -505,6 +505,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_120417) do
     t.boolean "confirmed_price_2020", default: false
     t.string "guest_centric_id"
     t.boolean "guest_centric", default: false
+    t.boolean "realtime_availability", default: false
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"

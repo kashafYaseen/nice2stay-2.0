@@ -34,7 +34,8 @@
       if values[4] == '' then values[4] = 0
       if values[3] == '' then values[3] = 0
       if values.some(check_values)
-        $("#lbl-error-#{lodging_id}, #lbl-error-#{lodging_id}_modal").text('Please select dates & guest details')
+        $error_label = $("#lbl-error-#{lodging_id}, #lbl-error-#{lodging_id}_modal")
+        $error_label.text($error_label.data('text'))
         $("#bill-#{lodging_id}, #bill-#{lodging_id}_modal").text('')
       else
         Invoice.print(values, lodging_id)

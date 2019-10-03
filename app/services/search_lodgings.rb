@@ -44,6 +44,7 @@ class SearchLodgings
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
       conditions << { term: { discounts: true } } if params[:discounts].present?
+      conditions << { term: { realtime_availability: true } } if params[:realtime_availability].present?
 
       conditions << { terms: { country: params[:countries_in] } } if params[:countries_in].present?
 
@@ -80,6 +81,7 @@ class SearchLodgings
         experiences: { terms: { field: :experiences_ids, size: Experience.count } },
         discounts: { terms: { field: :discounts } },
         checked: { terms: { field: :checked } },
+        realtime_availability: { terms: { field: :realtime_availability } },
       }
     end
 

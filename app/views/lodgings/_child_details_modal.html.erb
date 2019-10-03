@@ -127,7 +127,7 @@
 
                 <div id="flexible-search-<%= "#{lodging.id}#{id_sufix}" %>" class="text-xxxs flexible-search-data"></div>
 
-                <p class="text-xxs lbl-error-<%= lodging.id %>" id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
+                <p class="text-xxs lbl-error-<%= lodging.id %>" id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>" data-text="<%= t('cart.select_details') %>"></p>
 
                 <div class="vue-app" data-id="vue-child-guests-modal-<%= lodging.id %>">
                   <guests-dropdown
