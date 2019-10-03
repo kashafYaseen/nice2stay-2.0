@@ -192,6 +192,11 @@ div.review-paginator {
   }
 }
 
+.lodgings-filters .dropdown-menu.realtime-dropdown-menu {
+  width: 300px;
+  padding: 10px;
+}
+
 @media only screen and (min-width: 767px) {
   #show-page-submenu {
     background: transparent !important;

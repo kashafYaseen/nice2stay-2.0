@@ -246,6 +246,7 @@ en:
     date_filter: Arrival and Departure
     special_offer: Special Offer
     realtime_availability: Direct Reservation
+    realtime_availability_details: Accommodations that you can reserve without waiting for approval from our partners.
     night: night
     updated_availability: Show only accommodations with up to date availability
     availability: Availabiltiy
