@@ -33,5 +33,8 @@
     if $(radio).data('submit') && $(radio).data('bookable')
       $('#loader').show()
       Rails.fire($($(radio).data('submit')).get(0), 'submit')
+      $(radio).parents('form').find('.restrictions').removeClass 'text-danger'
+    else
+      $(radio).parents('form').find('.restrictions').addClass 'text-danger'
 
 ).call this
