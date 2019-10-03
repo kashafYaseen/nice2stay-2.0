@@ -1,16 +1,31 @@
 ActiveAdmin.register Review do
   permit_params :stars, :setting, :quality, :interior, :communication, :service, :suggetion, :title, :published, :perfect, :anonymous, :description
 
+  filter :lodging
+  filter :user
+  filter :published
+  filter :perfect
+  filter :anonymous
+  filter :created_at
+
+  controller do
+    def scoped_collection
+      Review.includes(:translations, :reservation, :user, lodging: :translations)
+    end
+  end
+
   index do
     selectable_column
     id_column
     column :lodging
     column :user
-    column :title
     column :stars
     column :reservation
     column :published
     column :anonymous
+    column :photos do |review|
+      review.photos.attached? || review.thumbnails.present?
+    end
     actions
   end
 
@@ -19,7 +34,6 @@ ActiveAdmin.register Review do
       row :lodging
       row :user
       row :reservation
-      row :title
       row :quality
       row :interior
       row :setting
@@ -32,6 +46,18 @@ ActiveAdmin.register Review do
       row :suggetion
       row :updated_at
       row :created_at
+
+      row :photos do |review|
+        photo_tags = ""
+        review.photos.each do |photo|
+          photo_tags += image_tag(photo, class: 'thumb')
+        end if review.photos.attached?
+
+        review.thumbnails.each do |photo|
+          photo_tags += image_tag(photo, class: 'thumb')
+        end if review.thumbnails.present?
+        photo_tags.try :html_safe
+      end
     end
 
     active_admin_comments

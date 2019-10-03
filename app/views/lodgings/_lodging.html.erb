@@ -54,7 +54,7 @@
           <div class="review-box">
             <% if lodging.average_rating > 0 %>
               <%= render_stars_tag lodging.average_rating %>
-              <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review' ) %></p>
+              <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review', 'reviews' ) %></p>
             <% end %>
           </div>
 

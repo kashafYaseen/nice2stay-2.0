@@ -19,6 +19,7 @@ class CountTotalLodgings
         experiences: { terms: { field: :experiences_ids, size: Experience.count } },
         discounts: { terms: { field: :discounts } },
         checked: { terms: { field: :checked } },
+        realtime_availability: { terms: { field: :realtime_availability } },
       }
     end
 end

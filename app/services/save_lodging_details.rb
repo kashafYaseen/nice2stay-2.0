@@ -142,6 +142,7 @@ class SaveLodgingDetails
         :optimize_at,
         :guest_centric_id,
         :guest_centric,
+        :realtime_availability,
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },

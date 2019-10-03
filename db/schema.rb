@@ -505,6 +505,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_120417) do
     t.boolean "confirmed_price_2020", default: false
     t.string "guest_centric_id"
     t.boolean "guest_centric", default: false
+    t.boolean "realtime_availability", default: false
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"

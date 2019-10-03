@@ -213,6 +213,14 @@ nl:
     shopping_cart: Vraag aan
     nice2stay: Geen reserveringskosten bij Nice2stay
     prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
+    select_details: Selecteer periode & aantal personen
+
+  calendar:
+    legenda: Legenda kalender
+    available: Beschikbaar
+    not_available: Niet beschikbaar
+    special_offer: Special offer
+    under_option: Onder optie
 
   information:
     included: Inclusief ?
@@ -245,6 +253,7 @@ nl:
     date_filter: Aankomst en Vetrek
     flexibility_text: flexibel qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
+    realtime_availability: Direct Reserveren
     night: nacht
     updated_availability: Toon enkel accommodaties met up to date beschikbaarheid
     availability: Beschikbaarheid
