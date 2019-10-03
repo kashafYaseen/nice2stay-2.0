@@ -28,7 +28,7 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('#filters-container .lodging_type').change ->
+    $('#filters-container .lodging_type, #filters-container .realtime-availability').change ->
       Url.update("");
       Filters.submit()
 
