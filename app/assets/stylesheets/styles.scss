@@ -58,6 +58,10 @@
   color: #606060;
 }
 
+.min-price .price {
+  font-size: 20px;
+}
+
 .sticky-top {
   top:8%;
 }
@@ -3795,6 +3799,11 @@ button:focus {
 .card-img-bottom {
   border-radius: 0;
   height: 250px;
+}
+
+.owl-carousel-full .card-img-top {
+  border-radius: 0;
+  height: 600px;
 }
 
 .card-text {

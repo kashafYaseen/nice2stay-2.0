@@ -7,37 +7,35 @@
 
 <div class="container-fluid home-container">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-12">
       <div class="col-md-12 margin-top-1x">
         <div class="row target-section" id="home-container">
-          <div class="col-md-8 col-xs-12">
-            <div class="gallery-control">
-              <figure itemprop="associatedMedia" itemscope>
-                <a itemprop="contentUrl">
-                  <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
-                </a>
-
-                <figcaption itemprop="caption description">
-                  <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
-                </figcaption>
-              </figure>
-            </div>
-            <div class="lodging-gallery margin-top-1x" itemscope>
+          <div class="col-md-12 col-xs-12">
+            <div class="owl-carousel owl-carousel-full">
               <% @lodging.images.each_with_index do |image_url, index| %>
-                <figure itemprop="associatedMedia" itemscope class="d-none">
-                  <a href="<%= image_url %>" itemprop="contentUrl">
-                    <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
-                  </a>
-                  <figcaption itemprop="caption description"><%= index %></figcaption>
-                </figure>
+                <%= image_tag image_url, class: "card-img-top item", alt: '' %>
               <% end %>
             </div>
           </div>
+        </div>
 
-          <div class="col-md-4 col-xs-12">
-            <h3><%= @lodging.name %></h3>
-            <br>
+        <div class="row mt-2">
+          <div class="col-md-8">
+            <h3><%= @lodging.h1 %></h3>
+            <p><%= @lodging.summary.try(:html_safe) %></p>
+          </div>
+
+          <div class="col-md-4">
             <ul class="list-icon">
+              <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
+              <div class="min-price"><%= render_price(@lodging.price.to_f.round(2), false) %></div>
+
+              <% if @reviews.present? %>
+                <div class="align-baseline text-xlg text-primary mr-1">
+                  <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
+                </div>
+              <% end %>
+
               <h6>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
@@ -45,48 +43,27 @@
               </h6>
 
               <h6>
-               <%= image_tag("guest.png", alt: "Guest", class: 'img-small' ) %><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
+                <%= image_tag("guest.png", alt: "Guest", class: 'img-small' ) %><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %>
 
-              <% if @lodging.children.present? %>
-                <%= image_tag("guest.png", alt: "Child", class: 'img-small') %> <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %>
-              <% end %>
+                <% if @lodging.children.present? %>
+                  <%= image_tag("guest.png", alt: "Child", class: 'img-small') %> <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %>
+                <% end %>
 
-              <%= image_tag("bedroom.png", alt: "Bedroom", class: 'img-small') %><%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %><br>
-              <%= image_tag("bathroom.png", alt: "Bathroom", class: 'img-small') %> <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+                <%= image_tag("bedroom.png", alt: "Bedroom", class: 'img-small') %><%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
+                <%= image_tag("bathroom.png", alt: "Bathroom", class: 'img-small') %> <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
               </h6>
-
-              <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
             </ul>
 
             <span class="d-block display-2 text-gray-light">
-              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
             </span>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-8">
-            <h4><%= @lodging.h1 %></h4>
-            <p><%= @lodging.summary.try(:html_safe) %></p>
-          </div>
-
-          <% if @reviews.present? %>
-            <div class="col-md-4">
-              <div class="pt-3">
-                <% Review::RATING_TYPE.each do |type| %>
-                  <%= rating_tag(@lodging.send(type), type) %>
-                <% end %>
-              </div>
-
-              <%= link_to "read all reviews", '#', class: "scroll-to-btn", data: { target: '.reviews-container-section' } %>
-            </div>
-          <% end %>
         </div>
       </div>
     </div>
