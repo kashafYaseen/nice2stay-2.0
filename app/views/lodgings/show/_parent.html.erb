@@ -19,16 +19,16 @@
           </div>
         </div>
 
-        <div class="row mt-2">
-          <div class="col-md-8">
+        <div class="row mt-4">
+          <div class="col-md-6">
             <h3><%= @lodging.h1 %></h3>
             <p><%= @lodging.summary.try(:html_safe) %></p>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <ul class="list-icon">
               <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
-              <div class="min-price"><%= render_price(@lodging.price.to_f.round(2), false) %></div>
+              <div class="min-price mb-3"><%= render_price(@lodging.price.to_f.round(2), false) %></div>
 
               <% if @reviews.present? %>
                 <div class="align-baseline text-xlg text-primary mr-1">
