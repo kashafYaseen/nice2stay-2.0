@@ -10,14 +10,14 @@
       navText: false
       autoHeight: false
 
-    $(".owl-carousel-full").owlCarousel
-      items: 2
-      loop: true
-      dots: false
-      nav: true
-      navText: false
-      autoHeight: true
-      autoWidth: true
-      margin:10
+    $(".owl-carousel-full").not('.slick-initialized').slick
+      dots: false,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 1,
+      centerMode: false,
+      variableWidth: true
+
+    $('.slick-prev.slick-arrow, .slick-next.slick-arrow').text('')
 
 ).call this
