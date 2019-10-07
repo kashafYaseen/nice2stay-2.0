@@ -3,7 +3,7 @@
 
   GroupToggle.init = ->
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
-      radio = $(this).parent()
+      radio = $(this).parents('label')
       $('#target_modal').val $(this).data('target')
       select_item(radio)
       submit_form(radio)

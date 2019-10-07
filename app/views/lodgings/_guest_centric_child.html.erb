@@ -34,7 +34,7 @@
 
           <% offers << offer['offer'].gsub('.', '-') %>
           <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}" %>" data-bookable="<%= child["isBookable"] %> " data-price="<%= offer['total'] %>">
-            <%= link_to "#{offer['name'].try(:capitalize)} - more details", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold text-xlg guest-centric-modal-btn' %><br>
+            <p><i class="material-icons info_outline"></i> <%= link_to "#{offer['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn' %></p>
 
             <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %>
             <span>
@@ -70,7 +70,7 @@
         <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging %>
 
         <label class="col-border col-md-12 border-dark border-right" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}" %>" data-bookable="<%= child["isBookable"] %>" data-price="<%= child['total'] %>">
-          <%= link_to "#{child['name'].try(:capitalize)} - more details", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'text-bold text-xlg guest-centric-modal-btn' %><br>
+          <p><i class="material-icons info_outline"></i> <%= link_to "#{child['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn' %></p>
 
           <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %>
 
