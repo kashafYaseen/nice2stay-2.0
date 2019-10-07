@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_095510) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
-    t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
+    t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on"
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
 

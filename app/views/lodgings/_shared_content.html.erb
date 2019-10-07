@@ -41,7 +41,7 @@
 
 <div class="col-md-12 p-0 padding-top-1x container" id="location-container">
   <div class="col-md-12">
-    <h3><%= t 'nav.location' %> </h3><br>
+    <h4><%= t 'nav.location' %> </h4><br>
 
     <%= lodging.location_description.try(:html_safe) %>
     <%= render_show_page_map lodging, @places %>
