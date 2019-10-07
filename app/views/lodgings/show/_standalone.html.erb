@@ -36,35 +36,39 @@
                 </div>
               <% end %>
 
+               <h6>
+                <%= image_tag("guest.png", alt: "Guest", class: 'img-small' ) %> <%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %> 
+
+                <% if @lodging.children.present? %>
+                  <%= image_tag("guest.png", alt: "Child", class: 'img-small') %> <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %><br>
+                <% end %>
+
+                <%= image_tag("bedroom.png", alt: "Bedroom", class: 'img-small') %> <%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
+                <%= image_tag("bathroom.png", alt: "Bathroom", class: 'img-small') %> <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+              </h6>
+
+              <div class="mt-4"></div>
+
               <h6>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
               </h6>
 
-              <div class="mb-5"></div>
+              <div class="mb-4"></div>
 
-              <h6>
-                <%= image_tag("guest.png", alt: "Guest", class: 'img-small' ) %><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %> 
-
-                <% if @lodging.children.present? %>
-                  <%= image_tag("guest.png", alt: "Child", class: 'img-small') %> <%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children_1') %>
-                <% end %>
-
-                <%= image_tag("bedroom.png", alt: "Bedroom", class: 'img-small') %><%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %>
-                <%= image_tag("bathroom.png", alt: "Bathroom", class: 'img-small') %> <%= pluralize @lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
-              </h6>
+             
             </ul>
 
-            <div class="mt-5"></div>
+            <div class="mt-4"></div>
 
             <span class="d-block display-2 text-gray-light">
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %> <%= t 'usp.inspect' %></h6>
+              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %> <%= t 'usp.inspect' %>
               
-              <h6> <%= image_tag("usp_support.png", :alt => "visit", :class => 'w-40') %> <%= t 'usp.price' %></h6>
+              <%= image_tag("usp_support.png", :alt => "visit", :class => 'w-40') %> <%= t 'usp.price' %></h6>
 
-              <h6><%= image_tag("usp_helpdesk.png", :alt => "visit" ,:class => 'w-40') %> <%= t 'usp.advice' %> </h6>
-              <h6><%= image_tag("usp_secure.png", :alt => "visit", :class => 'w-40') %> <%= t 'usp.payment' %></h6>
+              <h6><%= image_tag("usp_helpdesk.png", :alt => "visit" ,:class => 'w-40') %> <%= t 'usp.advice' %>
+              <%= image_tag("usp_secure.png", :alt => "visit", :class => 'w-40') %> <%= t 'usp.payment' %></h6>
             </span>
           </div>
         </div>
