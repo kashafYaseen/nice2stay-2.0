@@ -39,6 +39,15 @@ module ReservationsHelper
     'badge-info'
   end
 
+
+  def render_meal_title(meal_id)
+    return 'Bed & Breakfast' if meal_id.to_i == 2
+    return 'Half-Board' if meal_id.to_i == 3
+    return 'Full-Board' if meal_id.to_i == 4
+    return 'All Inclusive' if meal_id.to_i == 5
+    'Meals'
+  end
+
   def pre_paid_link(booking)
     title_prefix = action_name == "show" ? "Pre Payment" : "€#{booking.pre_payment}"
     return link_to "#{title_prefix} Receiced: #{ render_date(booking.pre_payed_at) }", '#', class: "btn btn-success disabled w-100" if booking.step_passed?(:pre_paid)
