@@ -39,13 +39,17 @@ module ReservationsHelper
     'badge-info'
   end
 
-
   def render_meal_title(meal_id)
     return 'Bed & Breakfast' if meal_id.to_i == 2
     return 'Half-Board' if meal_id.to_i == 3
     return 'Full-Board' if meal_id.to_i == 4
     return 'All Inclusive' if meal_id.to_i == 5
     'Meals'
+  end
+
+  def render_meal_price(per_day_price, params)
+    return per_day_price unless get_centric_param(:check_in).present? && get_centric_param(:check_out).present?
+    (per_day_price.to_f * (get_centric_param(:check_out).to_date - get_centric_param(:check_in).to_date).to_i).round(2)
   end
 
   def pre_paid_link(booking)
