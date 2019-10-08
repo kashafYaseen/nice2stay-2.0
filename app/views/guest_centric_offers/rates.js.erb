@@ -13,8 +13,14 @@
   $("<%= params['target_modal'] %> .price").html('<%= "€#{@total.try(:round, 2)}" %>');
   $("<%= params['target_modal'] %> .meal-price").html('<%= "€#{@reservation.total_meal_price.to_f}" %>');
   $("<%= params['target_modal'] %> .meal-title").html('<%= render_meal_title(@reservation.meal_id) %>');
+  <% if @reservation.meal_id.present? %>
+    $("<%= params['target_modal'] %> .meal-details").removeClass('d-none');
+  <% else %>
+    $("<%= params['target_modal'] %> .meal-details").addClass('d-none');
+  <% end %>
   $("<%= params['target_modal'] %>").modal('show');
   $('#loader').hide();
   $('.checkbox-toggler').bootstrapToggle()
   $(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").next('button').removeClass('disabled');
 <% end %>
+$('[data-toggle="tooltip"]').tooltip();

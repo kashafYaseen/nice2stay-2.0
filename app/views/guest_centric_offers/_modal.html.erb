@@ -33,6 +33,7 @@
 
                 <div class="tab-pane fade show" id="description-tab-<%= child['beid'] %>" role="tabpanel">
                   <div id="guest-centric-child-description">
+                    <p>Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></p>
                     <%= child['longDescription'].html_safe %>
                   </div>
                 </div>
@@ -58,7 +59,7 @@
               </span>
             </div>
 
-            <div class="row row pl-2 pr-2 pt-0">
+            <div class="row row pl-2 pr-2 pt-0 meal-details">
               <span class="col-md-8 text-left border-bottom border-black p-0 meal-title">
                 <%= render_meal_title(reservation.meal_id) %>
               </span>
