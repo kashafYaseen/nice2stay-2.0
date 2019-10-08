@@ -54,11 +54,11 @@
             <div class="row">
               <span class="col-md-8 text-left">
                 <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
-                <b><%= meal['label'] %></b>
+                <%= meal['label'] %>
               </span>
 
               <span class="col-md-4 text-right">
-                <b><%= "€#{meal['total']}" %></b>
+                <b><%= "€#{render_meal_price meal['total'], params}" %></b>
               </span>
             </div>
           <% end if child['mealPlans'].present? %>
@@ -89,11 +89,11 @@
             <div class="row">
               <span class="col-md-8 text-left">
                 <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
-                <b><%= meal['label'] %></b>
+                <%= meal['label'] %>
               </span>
 
               <span class="col-md-4 text-right">
-                <b><%= "€#{meal['total']}" %></b>
+                <b><%= "€#{render_meal_price meal['total'], params}" %></b>
               </span>
             </div>
           <% end if child['mealPlans'].present? %>
