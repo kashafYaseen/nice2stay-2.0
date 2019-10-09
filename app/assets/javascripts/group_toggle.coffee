@@ -4,6 +4,8 @@
   GroupToggle.init = ->
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
       radio = $(this).parents('label')
+      $(radio).siblings('label').find('.meal_check_box').prop('checked', false);
+
       $('#target_modal').val $(this).data('target')
       select_item(radio)
       submit_form(radio)
