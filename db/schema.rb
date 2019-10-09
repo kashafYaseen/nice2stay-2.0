@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_102056) do
+ActiveRecord::Schema.define(version: 2019_10_09_103710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -537,6 +537,16 @@ ActiveRecord::Schema.define(version: 2019_10_09_102056) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "offer_lodgings", force: :cascade do |t|
+    t.bigint "offer_id"
+    t.bigint "lodging_id"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_offer_lodgings_on_lodging_id"
+    t.index ["offer_id"], name: "index_offer_lodgings_on_offer_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.date "from"
     t.date "to"
@@ -907,6 +917,8 @@ ActiveRecord::Schema.define(version: 2019_10_09_102056) do
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "offer_lodgings", "lodgings", on_delete: :cascade
+  add_foreign_key "offer_lodgings", "offers", on_delete: :cascade
   add_foreign_key "offers", "leads", on_delete: :cascade
   add_foreign_key "owners", "admin_users"
   add_foreign_key "places", "countries", on_delete: :cascade
