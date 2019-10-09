@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_061858) do
+ActiveRecord::Schema.define(version: 2019_10_09_102056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_061858) do
     t.string "thumbnails", default: [], array: true
     t.string "images", default: [], array: true
     t.integer "boost", default: 0
+    t.string "code"
   end
 
   create_table "countries_leads", force: :cascade do |t|
@@ -536,6 +537,18 @@ ActiveRecord::Schema.define(version: 2019_08_01_061858) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "offers", force: :cascade do |t|
+    t.date "from"
+    t.date "to"
+    t.integer "adults", default: 1
+    t.integer "childrens", default: 0
+    t.text "notes"
+    t.bigint "lead_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_offers_on_lead_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -739,6 +752,10 @@ ActiveRecord::Schema.define(version: 2019_08_01_061858) do
     t.bigint "booking_id"
     t.boolean "canceled", default: false
     t.string "booked_by"
+    t.string "guest_centric_booking_id"
+    t.string "offer_id"
+    t.string "meal_id"
+    t.float "meal_price", default: 0.0
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
@@ -890,6 +907,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_061858) do
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "offers", "leads", on_delete: :cascade
   add_foreign_key "owners", "admin_users"
   add_foreign_key "places", "countries", on_delete: :cascade
   add_foreign_key "places", "place_categories", on_delete: :cascade
