@@ -1,6 +1,7 @@
 ActiveAdmin.register Lead do
-
   permit_params :from, :to, :user_id, :adults, :childrens, country_ids: [:id]
+
+  actions :all, except: [:destroy]
 
   form do |f|
     inputs 'Lead' do
@@ -10,6 +11,17 @@ ActiveAdmin.register Lead do
       f.input :childrens
       f.input :user
       f.input :countries
+
+      f.has_many :offers, allow_destroy: true, heading: 'Offer', new_record: 'Add New Offer' do |offer|
+        offer.input :from
+        offer.input :to
+        offer.input :adults
+        offer.input :childrens
+
+        offer.has_many :offer_lodgings, allow_destroy: true, new_record: 'Add Accommodation' do |offer_lodging|
+          offer_lodging.input :lodging
+        end
+      end
     end
 
     f.actions do
@@ -24,10 +36,10 @@ ActiveAdmin.register Lead do
     column :to
     column :adults
     column :childrens
+    column :default_status
     column :user
     column :extra_information
     column :created_at
-    column :updated_at
 
     actions
   end
@@ -38,6 +50,7 @@ ActiveAdmin.register Lead do
       row :to
       row :adults
       row :childrens
+      row :default_status
       row :user
       row :extra_information
       row :created_at

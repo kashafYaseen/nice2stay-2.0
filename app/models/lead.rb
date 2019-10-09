@@ -4,6 +4,7 @@ class Lead < ApplicationRecord
   has_and_belongs_to_many :countries
 
   accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :offers
 
   enum generated: {
     site_user: 0,
@@ -28,5 +29,5 @@ class Lead < ApplicationRecord
     asked_for_more_info: 7,
     informed_availability: 8,
     customer_consulting: 9,
-  }
+  }, _suffix: true
 end
