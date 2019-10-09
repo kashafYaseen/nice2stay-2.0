@@ -10,6 +10,7 @@
 
     $('#guest_centric_offers').on 'change', '.meal_check_box', ->
       radio = $(this).parents('label')
+      $(radio).siblings('label').find('.meal_check_box').prop('checked', false);
 
       if $(this).is(':checked')
         $(radio).find('.meal_check_box').prop('checked', false);
