@@ -39,32 +39,42 @@
               <span class="float-right">Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span>
             </p>
 
-            <span>
-              <%= render_reservation_guests(@reservation) %>
-            </span>
+            <% child['mealPlans'].each do |meal| %>
+              <% next if meal['id'] == 1 || meal['total'] > 0 %>
+              <div class="row">
+                <span class="col-md-12 text-left text-green">
+                  <i class="material-icons free_breakfast text-dark"></i> <%= meal['label'] %>
+                </span>
+              </div>
+            <% end if child['mealPlans'].present? %>
 
-            <span class="float-right">
-              <%= "€#{offer['total']}" %>
-            </span>
+            <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
+              <span class="mt-3">Extra:</span>
+            <% end %>
 
-          <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
-            <b class="mt-3 d-block">+</b>
-          <% end %>
+            <% child['mealPlans'].each do |meal| %>
+              <% next if meal['id'] == 1 || meal['total'] <= 0 %>
+              <div class="row">
+                <span class="col-md-8 text-left">
+                  <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
+                  <%= meal['label'] %>
+                </span>
 
-          <% child['mealPlans'].each do |meal| %>
-            <% next if meal['id'] == 1 %>
-            <div class="row">
-              <span class="col-md-8 text-left">
-                <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
-                <%= meal['label'] %>
+                <span class="col-md-4 text-right">
+                  <%= "€#{render_meal_price meal['total'], params}" %>
+                </span>
+              </div>
+            <% end if child['mealPlans'].present? %>
+
+            <div class="mt-3">
+             <span class="text-bold">
+                <%= render_reservation_guests(@reservation) %>
               </span>
 
-              <span class="col-md-4 text-right">
-                <%= "€#{render_meal_price meal['total'], params}" %>
+              <span class="float-right text-bold">
+                <%= "€#{offer['total']}" %>
               </span>
             </div>
-          <% end if child['mealPlans'].present? %>
-
           </label><br>
         <% end %>
       <% else %>
@@ -77,18 +87,22 @@
             <span class="float-right">Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span>
           </p>
 
-          <span>
-            <%= render_reservation_guests(@reservation) %>
-          </span>
+          <% child['mealPlans'].each do |meal| %>
+            <% next if meal['id'] == 1 || meal['total'] > 0 %>
+            <div class="row">
+              <span class="col-md-12 text-left text-green">
+                <i class="material-icons free_breakfast text-dark"></i> <%= meal['label'] %>
+              </span>
+            </div>
+          <% end if child['mealPlans'].present? %>
 
-          <span class="float-right"><%= "€#{child['total']}" %></span>
 
           <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
-            <b class="mt-3 d-block">+</b>
+            <span class="mt-3">Extra:</span>
           <% end %>
 
           <% child['mealPlans'].each do |meal| %>
-            <% next if meal['id'] == 1 %>
+            <% next if meal['id'] == 1 || meal['total'] <= 0 %>
             <div class="row">
               <span class="col-md-8 text-left">
                 <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
@@ -100,6 +114,14 @@
               </span>
             </div>
           <% end if child['mealPlans'].present? %>
+
+          <div class="mt-3">
+            <span class="text-bold">
+              <%= render_reservation_guests(@reservation) %>
+            </span>
+
+            <span class="float-right text-bold"><%= "€#{child['total']}" %></span>
+          </div>
         </label>
       <% end %>
     </div>

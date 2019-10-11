@@ -3,11 +3,20 @@
     <% guest_centric['response']['hotels'].each do |hotel| %>
       <h3><%= hotel['info']['hotelName'] %> Offers</h3>
 
-      <% hotel['offers'].each do |child| %>
-        <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging %>
+      <% if hotel['offers'].present? %>
+        <% hotel['offers'].each do |child| %>
+          <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging %>
+        <% end %>
+      <% else %>
+        <p>No Offer/Room Found! Please select different dates & guest details and try again.</p>
       <% end %>
     <% end %>
   <% else %>
-    <p>Please select dates & guest details.</p>
+    <% if guest_centric.present? && guest_centric['error_message'].present? %>
+      <p><%= guest_centric['error_message'] %></p>
+      <p>Please select different dates & guest details and try again.</p>
+    <% else %>
+      <p>Please select dates & guest details.</p>
+    <% end %>
   <% end %>
 </div>
