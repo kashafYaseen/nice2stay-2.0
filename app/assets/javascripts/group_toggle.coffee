@@ -4,7 +4,7 @@
   GroupToggle.init = ->
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
       radio = $(this).parents('label')
-      $(radio).siblings('label').find('.meal_check_box').prop('checked', false);
+      $('.meal_check_box').prop('checked', false);
 
       $('#target_modal').val $(this).data('target')
       select_item(radio)
@@ -12,7 +12,7 @@
 
     $('#guest_centric_offers').on 'change', '.meal_check_box', ->
       radio = $(this).parents('label')
-      $(radio).siblings('label').find('.meal_check_box').prop('checked', false);
+      $('.meal_check_box').not(this).prop('checked', false);
 
       if $(this).is(':checked')
         $(radio).find('.meal_check_box').prop('checked', false);
@@ -23,14 +23,18 @@
       submit_form(radio)
 
   select_item = (radio) ->
-    $(radio).siblings('label').removeClass 'border-primary'
-    $(radio).siblings('label').addClass 'border-dark'
+    deselect_all()
 
     $(radio).parents('form').find('.meal-price').val $(radio).find('.meal_check_box:checked').data('price')
-
     $('.offer-id').val $(radio).find('.offers-select-radio').val()
     $(radio).removeClass 'border-dark'
     $(radio).addClass 'border-primary'
+
+  deselect_all = ->
+    $('label.offer-item').removeClass 'border-primary border-danger'
+    $('label.offer-item').addClass 'border-dark'
+    $('.btn-booking').addClass 'disabled'
+    $('.offer-price').text ''
 
   submit_form = (radio) ->
     if $(radio).data('submit') && $(radio).data('bookable')
@@ -39,5 +43,7 @@
       $(radio).parents('form').find('.restrictions').removeClass 'text-danger'
     else
       $(radio).parents('form').find('.restrictions').addClass 'text-danger'
+      $(radio).addClass 'border-danger'
+      $(radio).find('.offers-select-radio').prop('checked', false)
 
 ).call this
