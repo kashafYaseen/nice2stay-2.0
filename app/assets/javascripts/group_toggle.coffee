@@ -4,7 +4,7 @@
   GroupToggle.init = ->
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
       radio = $(this).parents('label')
-      $('.meal_check_box').prop('checked', false);
+      $('.meal_check_box').not(radio.find('.meal_check_box')).prop('checked', false);
 
       $('#target_modal').val $(this).data('target')
       select_item(radio)
@@ -27,6 +27,7 @@
 
     $(radio).parents('form').find('.meal-price').val $(radio).find('.meal_check_box:checked').data('price')
     $('.offer-id').val $(radio).find('.offers-select-radio').val()
+    $('.offer-rent').val $(radio).data('price')
     $(radio).removeClass 'border-dark'
     $(radio).addClass 'border-primary'
 

@@ -33,7 +33,8 @@
           <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging %>
 
           <% offers << offer['offer'].gsub('.', '-') %>
-          <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}" %>" data-bookable="<%= child["isBookable"] %> " data-price="<%= offer['total'] %>">
+          <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}" %>" data-bookable="<%= child["isBookable"] %> " data-price="<%= money_string_to_float offer['total'] %>">
+
             <p>
               <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= link_to "#{offer['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
               <span class="float-right">Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span>
@@ -81,7 +82,7 @@
         <% offers << child['offer'].gsub('.', '-') %>
         <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging %>
 
-        <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}" %>" data-bookable="<%= child["isBookable"] %>" data-price="<%= child['total'] %>">
+        <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}" %>" data-bookable="<%= child["isBookable"] %>" data-price="<%= money_string_to_float child['total'] %>">
           <p>
             <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <%= link_to "#{child['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
             <span class="float-right">Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span>
@@ -144,6 +145,7 @@
   <%= f.hidden_field :infants, value: (get_centric_param(:infants) || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
   <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
   <%= f.hidden_field :offer_id, class: 'offer-id' %>
+  <%= f.hidden_field :rent, class: 'offer-rent' %>
   <%= f.hidden_field :meal_price, class: 'meal-price' %>
   <%= hidden_field_tag :target_modal %>
 <% end %>
