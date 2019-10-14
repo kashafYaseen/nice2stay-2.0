@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_03_095510) do
+ActiveRecord::Schema.define(version: 2019_10_14_083605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -525,6 +525,23 @@ ActiveRecord::Schema.define(version: 2019_10_03_095510) do
     t.index ["lodging_id"], name: "index_lodgings_experiences_on_lodging_id"
   end
 
+  create_table "meal_translations", force: :cascade do |t|
+    t.integer "meal_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.index ["locale"], name: "index_meal_translations_on_locale"
+    t.index ["meal_id"], name: "index_meal_translations_on_meal_id"
+  end
+
+  create_table "meals", force: :cascade do |t|
+    t.integer "gc_meal_id"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "read_at"
@@ -535,6 +552,28 @@ ActiveRecord::Schema.define(version: 2019_10_03_095510) do
     t.datetime "updated_at", null: false
     t.index ["notifiable_id", "notifiable_type"], name: "index_notifications_on_notifiable_id_and_notifiable_type"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "offer_lodgings", force: :cascade do |t|
+    t.bigint "offer_id"
+    t.bigint "lodging_id"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_offer_lodgings_on_lodging_id"
+    t.index ["offer_id"], name: "index_offer_lodgings_on_offer_id"
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.date "from"
+    t.date "to"
+    t.integer "adults", default: 1
+    t.integer "childrens", default: 0
+    t.text "notes"
+    t.bigint "lead_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_offers_on_lead_id"
   end
 
   create_table "owners", force: :cascade do |t|
@@ -895,6 +934,9 @@ ActiveRecord::Schema.define(version: 2019_10_03_095510) do
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "lodgings", on_delete: :cascade
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "offer_lodgings", "lodgings", on_delete: :cascade
+  add_foreign_key "offer_lodgings", "offers", on_delete: :cascade
+  add_foreign_key "offers", "leads", on_delete: :cascade
   add_foreign_key "owners", "admin_users"
   add_foreign_key "places", "countries", on_delete: :cascade
   add_foreign_key "places", "place_categories", on_delete: :cascade
