@@ -9,4 +9,8 @@ module GuestCentricHelper
     child['fullImages'].each { |image_path|  tags << image_tag(image_path, options) }
     tags.html_safe
   end
+
+  def money_string_to_float value
+    value.gsub('.', '').gsub(',', '.').to_f
+  end
 end

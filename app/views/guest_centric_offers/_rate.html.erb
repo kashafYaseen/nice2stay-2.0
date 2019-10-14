@@ -34,6 +34,6 @@
   </span>
 
   <span class="col-md-6 border-bottom border-black">
-    <b>€<%= (total / (reservation.check_out - reservation.check_in).to_i).round(2) %></b>
+    <b>€<%= (reservation.rent / (reservation.check_out - reservation.check_in).to_i).round(2) %></b>
   </span>
 </div>
