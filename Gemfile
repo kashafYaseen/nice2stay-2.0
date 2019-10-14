@@ -110,3 +110,4 @@ gem 'arctic_admin'
 gem "chartkick"
 gem 'groupdate'
 gem 'activerecord-import', '~> 0.15.0'
+gem 'globalize-accessors'
