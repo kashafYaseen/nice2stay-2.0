@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_070450) do
+ActiveRecord::Schema.define(version: 2019_10_15_083420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -531,6 +531,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_070450) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.string "name"
     t.index ["locale"], name: "index_meal_translations_on_locale"
     t.index ["meal_id"], name: "index_meal_translations_on_meal_id"
   end
@@ -540,6 +541,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_070450) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
   end
 
   create_table "notifications", force: :cascade do |t|
