@@ -34,7 +34,7 @@
   deselect_all = ->
     $('label.offer-item').removeClass 'border-primary border-danger'
     $('label.offer-item').addClass 'border-dark'
-    $('.btn-booking').addClass 'disabled'
+    $('.btn-booking').not('.guest-centric-modal .btn-booking').addClass 'disabled'
     $('.offer-price').text ''
 
   submit_form = (radio) ->
