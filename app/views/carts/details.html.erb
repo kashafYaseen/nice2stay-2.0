@@ -91,3 +91,7 @@
     </div>
   </div>
 </div>
+
+<% content_for :js_init do %>
+  $('[data-toggle="tooltip"]').tooltip();
+<% end %>

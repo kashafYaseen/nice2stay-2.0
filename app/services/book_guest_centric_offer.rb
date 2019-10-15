@@ -22,7 +22,11 @@ class BookGuestCentricOffer
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.set_form_data form_data
     response = JSON.parse(http.request(request).body)
-    reservation.update_columns(guest_centric_booking_id: response['response']['bookingCode'], booking_status: 'booked', request_status: 'confirmed') unless response['error']
+    if response['error']
+      reservation.update_columns(gc_errors: response['error_message'])
+    else
+      reservation.update_columns(guest_centric_booking_id: response['response']['bookingCode'], booking_status: 'booked', request_status: 'confirmed')
+    end
   end
 
   private
