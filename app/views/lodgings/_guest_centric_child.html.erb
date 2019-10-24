@@ -143,6 +143,7 @@
   <%= f.hidden_field :adults, value: no_of_adults(get_centric_param(:adults) || f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
   <%= f.hidden_field :children, value: (get_centric_param(:children) || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
   <%= f.hidden_field :infants, value: (get_centric_param(:infants) || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
+  <%= f.hidden_field :rooms, value: get_centric_param(:rooms), id: "rooms_#{lodging.id}", class: 'rooms' %>
   <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
   <%= f.hidden_field :offer_id, class: 'offer-id' %>
   <%= f.hidden_field :rent, class: 'offer-rent' %>
