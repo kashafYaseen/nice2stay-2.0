@@ -4,8 +4,8 @@
       <h3><%= hotel['info']['hotelName'] %> Offers</h3>
 
       <% if hotel['offers'].present? %>
-        <% hotel['offers'].each do |child| %>
-          <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging %>
+        <% hotel['offers'].each_with_index do |child, index| %>
+          <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging, index: index %>
         <% end %>
       <% else %>
         <p>No Offer/Room Found! Please select different dates & guest details and try again.</p>

@@ -101,7 +101,7 @@
 
             <div class="row">
               <div class="col-md-12 p-0">
-                <%= button_tag class: "btn btn-primary btn-booking btn-md float-right", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" }, value: "cart" do %>
+                <%= button_tag class: "btn btn-primary btn-booking btn-md float-right", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{index}" }, value: "cart" do %>
                   <i class="material-icons add_shopping_cart"></i>&nbsp; Add To Cart
                 <% end %>
 

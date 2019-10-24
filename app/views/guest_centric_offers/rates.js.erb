@@ -8,6 +8,7 @@
   $('.toolbar-cart').addClass('active');
 <% else %>
   $(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('€<%= @reservation.rent.try(:round, 2) %>');
+  $("span.offer-<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('€<%= @reservation.rent.try(:round, 2) %>');
   $(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', true);
   $('.offers-select-radio').not(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', false)
   $("<%= params['target_modal'] %> .rates").html('<%= j render "guest_centric_offers/rate", reservation: @reservation, total: @reservation.rent.try(:round, 2) %>');
