@@ -55,7 +55,7 @@ module ReservationsHelper
 
   def render_meal_price(per_day_price, params)
     return per_day_price unless get_centric_param(:check_in).present? && get_centric_param(:check_out).present?
-    (per_day_price.to_f * (get_centric_param(:check_out).to_date - get_centric_param(:check_in).to_date).to_i).round(2)
+    (per_day_price.to_f * (get_centric_param(:check_out).to_date - get_centric_param(:check_in).to_date).to_i * get_centric_param(:rooms).to_i).round(2)
   end
 
   def pre_paid_link(booking)
