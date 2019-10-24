@@ -46,10 +46,15 @@
         />
       </div>
 
+      <div class="col-md-2 pt-2 pl-0">
+        <%= select_tag :rooms, options_for_select((1..9).map{ |room| ["#{room} #{'Room'.pluralize(room)} ", room] }), class: 'form-control total-rooms rooms' %>
+      </div>
+
       <%= form_for reservation, url: lodging_guest_centric_offer_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}" } do |f| %>
 
         <%= f.hidden_field :check_in, value: params[:check_in].presence || Date.today, id: "check_in#{id_sufix}", class: 'check_in' %>
         <%= f.hidden_field :check_out, value: params[:check_out].presence || 7.days.from_now, id: "check_out#{id_sufix}", class: 'check_out' %>
+        <%= f.hidden_field :rooms, value: params[:rooms].presence || 1, id: "rooms#{id_sufix}", class: 'rooms' %>
         <%= f.hidden_field "adults", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults#{id_sufix}" %>
         <%= f.hidden_field "children", value: (params[:children] || f.object.children), class: 'children', id: "children#{id_sufix}" %>
         <%= f.hidden_field "infants", value: (params[:infants] || f.object.infants), class: 'infants', id: "infants#{id_sufix}" %>

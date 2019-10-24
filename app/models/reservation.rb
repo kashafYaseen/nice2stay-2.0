@@ -67,7 +67,7 @@ class Reservation < ApplicationRecord
   end
 
   def total_meal_price
-    (meal_price.to_f * total_nights.to_i).round(2)
+    (meal_price.to_f * total_nights.to_i * rooms.to_i).round(2)
   end
 
   def step_passed?(step)
