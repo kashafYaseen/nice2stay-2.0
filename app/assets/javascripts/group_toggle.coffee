@@ -24,6 +24,8 @@
 
   select_item = (radio) ->
     deselect_all()
+    for offer in $('.offer-item').not(radio)
+      $(offer).find('.offer-price').text "€#{$(offer).data('price')}"
 
     $(radio).parents('form').find('.meal-price').val $(radio).find('.meal_check_box:checked').data('price')
     $('.offer-id').val $(radio).find('.offers-select-radio').val()
