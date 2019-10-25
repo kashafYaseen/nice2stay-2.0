@@ -33,7 +33,7 @@
           <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index %>
 
           <% offers << offer['offer'].gsub('.', '-') %>
-          <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}#{index}" %>" data-bookable="<%= child["isBookable"] %> " data-price="<%= money_string_to_float offer['total'] %>">
+          <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}#{index}" %>" data-bookable="<%= child["isBookable"] %> " data-price="<%= money_string_to_float offer['total'] %>" data-tax="<%= money_string_to_float offer['tax'] %>">
 
             <p>
               <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= link_to "#{offer['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
@@ -57,12 +57,12 @@
               <% next if meal['id'] == 1 || meal['total'] <= 0 %>
               <div class="row">
                 <span class="col-md-8 text-left">
-                  <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
+                  <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['net'], tax: meal['taxes'] } }, meal['id'], nil %>
                   <%= meal['label'] %>
                 </span>
 
                 <span class="col-md-4 text-right">
-                  <%= "€#{render_meal_price meal['total'], params}" %>
+                  <%= "€#{render_meal_price meal['net'], params}" %>
                 </span>
               </div>
             <% end if child['mealPlans'].present? %>
@@ -82,7 +82,7 @@
         <% offers << child['offer'].gsub('.', '-') %>
         <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index %>
 
-        <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}#{index}" %>" data-bookable="<%= child["isBookable"] %>" data-price="<%= money_string_to_float child['total'] %>">
+        <label class="col-border col-md-12 border-dark border-right offer-item" data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}#{index}" %>" data-bookable="<%= child["isBookable"] %>" data-price="<%= money_string_to_float child['total'] %>" data-tax="<%= money_string_to_float child['tax'] %>">
           <p>
             <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <%= link_to "#{child['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
             <span class="float-right">Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span>
@@ -106,12 +106,12 @@
             <% next if meal['id'] == 1 || meal['total'] <= 0 %>
             <div class="row">
               <span class="col-md-8 text-left">
-                <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['total'] } }, meal['id'], nil %>
+                <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['net'], tax: meal['taxes'] } }, meal['id'], nil %>
                 <%= meal['label'] %>
               </span>
 
               <span class="col-md-4 text-right">
-                <%= "€#{render_meal_price meal['total'], params}" %>
+                <%= "€#{render_meal_price meal['net'], params}" %>
               </span>
             </div>
           <% end if child['mealPlans'].present? %>
@@ -148,5 +148,7 @@
   <%= f.hidden_field :offer_id, class: 'offer-id' %>
   <%= f.hidden_field :rent, class: 'offer-rent' %>
   <%= f.hidden_field :meal_price, class: 'meal-price' %>
+  <%= f.hidden_field :meal_tax, class: 'meal-tax' %>
+  <%= f.hidden_field :tax, class: 'total-tax' %>
   <%= hidden_field_tag :target_modal %>
 <% end %>

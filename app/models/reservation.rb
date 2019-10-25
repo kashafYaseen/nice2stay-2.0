@@ -32,6 +32,8 @@ class Reservation < ApplicationRecord
   accepts_nested_attributes_for :review
 
   attr_accessor :skip_data_posting
+  attr_accessor :meal_tax
+  attr_accessor :tax
 
   enum booking_status: {
     prebooking: 0,
@@ -68,6 +70,10 @@ class Reservation < ApplicationRecord
 
   def total_meal_price
     (meal_price.to_f * total_nights.to_i * rooms.to_i).round(2)
+  end
+
+  def total_meal_tax
+    (meal_tax.to_f * total_nights.to_i * rooms.to_i).round(2)
   end
 
   def step_passed?(step)
