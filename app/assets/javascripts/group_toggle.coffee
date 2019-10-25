@@ -28,8 +28,10 @@
       $(offer).find('.offer-price').text "€#{$(offer).data('price')}"
 
     $(radio).parents('form').find('.meal-price').val $(radio).find('.meal_check_box:checked').data('price')
+    $(radio).parents('form').find('.meal-tax').val $(radio).find('.meal_check_box:checked').data('tax')
     $('.offer-id').val $(radio).find('.offers-select-radio').val()
     $('.offer-rent').val $(radio).data('price')
+    $('.total-tax').val $(radio).data('tax')
     $(radio).removeClass 'border-dark'
     $(radio).addClass 'border-primary'
 
