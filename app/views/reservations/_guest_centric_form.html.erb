@@ -48,7 +48,7 @@
       </div>
 
       <div class="col-md-2 pt-2 pl-0">
-        <%= select_tag :rooms, options_for_select((1..9).map{ |room| ["#{room} #{'Room'.pluralize(room)} ", room] }), class: 'form-control total-rooms rooms' %>
+        <%= select_tag :rooms, options_for_select((1..9).map{ |room| ["#{room} #{'Room'.pluralize(room)} ", room] }), class: 'form-control total-rooms rooms text-uppercase' %>
       </div>
 
       <%= form_for reservation, url: lodging_guest_centric_offer_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}" } do |f| %>
