@@ -121,7 +121,11 @@
       },
       bindWith: {
         type: String
-      }
+      },
+      titleSuffix: {
+        type: String,
+        default: ''
+      },
     },
     data() {
       return {
@@ -178,7 +182,7 @@
             $(`#${this.dropdownId}`).removeClass('btn-primary');
           }
 
-          return "Guests";
+          return "Guests" + this.titleSuffix;
         }
         else {
           if (this.highlightOnSelection) {
@@ -186,7 +190,7 @@
             $(`#${this.dropdownId}`).addClass('btn-primary');
           }
 
-          return guestsTitle;
+          return guestsTitle + this.titleSuffix;
         }
       },
       handleMenuClick(e) {
