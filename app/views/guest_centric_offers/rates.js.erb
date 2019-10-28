@@ -12,18 +12,17 @@
   $(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', true);
   $('.offers-select-radio').not(":radio[value='<%= get_centric_param(:offer_id) %>']").prop('checked', false)
   $("<%= params['target_modal'] %> .rates").html('<%= j render "guest_centric_offers/rate", reservation: @reservation, total: @reservation.rent.try(:round, 2) %>');
-  $("<%= params['target_modal'] %> .taxes").html('<%= "€#{(@reservation.total_meal_tax.to_f + @reservation.tax.to_f).try(:round, 2)}" %>');
+  $("<%= params['target_modal'] %> .taxes, span.taxes-<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('<%= "€#{(@reservation.total_meal_tax.to_f + @reservation.tax.to_f).try(:round, 2)}" %>');
   $("<%= params['target_modal'] %> .price").html('<%= "€#{@reservation.rent.try(:round, 2)}" %>');
-  $("<%= params['target_modal'] %> .meal-price").html('<%= "€#{@reservation.total_meal_price.to_f}" %>');
-  $("<%= params['target_modal'] %> .meal-title").html('<%= render_meal_title(@reservation.meal_id) %>');
+  $("<%= params['target_modal'] %> .meal-price, span.meal-price-<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('<%= "€#{@reservation.total_meal_price.to_f}" %>');
+  $("<%= params['target_modal'] %> .meal-title, span.meal-title-<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").html('<%= render_meal_title(@reservation.meal_id) %>');
+  $(".meal-details, .offer-meal-details").addClass('d-none');
   <% if @reservation.meal_id.present? %>
-    $("<%= params['target_modal'] %> .meal-details").removeClass('d-none');
-  <% else %>
-    $("<%= params['target_modal'] %> .meal-details").addClass('d-none');
+    $("<%= params['target_modal'] %> .meal-details, .meal-<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").removeClass('d-none');
   <% end %>
   $("<%= params['target_modal'] %>").modal('show');
   $('#loader').hide();
   $('.checkbox-toggler').bootstrapToggle()
-  $(".<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").next('button').removeClass('disabled');
+  $("button.btn-<%= get_centric_param(:offer_id).to_s.gsub('.', '-') %>").removeClass('disabled');
 <% end %>
 $('[data-toggle="tooltip"]').tooltip();

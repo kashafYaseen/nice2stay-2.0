@@ -26,6 +26,7 @@
     deselect_all()
     for offer in $('.offer-item').not(radio)
       $(offer).find('.offer-price').text "€#{$(offer).data('price')}"
+      $(offer).find('.tax-price').text "€#{$(offer).data('tax')}"
 
     $(radio).parents('form').find('.meal-price').val $(radio).find('.meal_check_box:checked').data('price')
     $(radio).parents('form').find('.meal-tax').val $(radio).find('.meal_check_box:checked').data('tax')
