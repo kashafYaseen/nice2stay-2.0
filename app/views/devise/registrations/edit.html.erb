@@ -20,6 +20,12 @@
 
       <%= render 'devise/registrations/common_fields', f: f, countries: @countries.collect{ |country| [country.name, country.id] } %>
 
+      <div class="row">
+        <div class="form-group col-md-12">
+          <%= f.select :language, languages, {}, class: 'form-control', id: rendom_id(resource, :language) %>
+        </div>
+      </div>
+
       <div class="col-12">
         <hr class="mt-2 mb-3">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
