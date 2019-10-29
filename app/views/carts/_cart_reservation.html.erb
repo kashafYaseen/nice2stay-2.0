@@ -1,0 +1,59 @@
+<div class="row mb-5">
+  <div class="col-md-6">
+    <b>Summary</b>
+    <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart text-info text-bold float-right', remote: true do %>
+      <span>remove</span>
+    <% end unless action_name == 'details' %>
+
+    <p>
+      <span class="text-sm"><%= reservation.adults + reservation.children %>guests</span> <br>
+      <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
+    </p>
+  </div>
+
+  <div class="col-md-6 mb-auto">
+    <%= link_to reservation.lodging, class: 'btn btn-secondary cart-stars text-left h-100 w-100' do %>
+      <span class="d-block"><%= reservation.lodging_name %></span>
+      <span class="d-block"><%= reservation.lodging.address %></span>
+      <%= render_stars_tag reservation.lodging.average_rating %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <span class="col-md-5 text-left border-top border-black pt-2 pb-2">
+        Rent
+      </span>
+
+      <span class="col-md-5 text-right border-top border-black ml-auto pt-2 pb-2 mr-3">
+        <%= render_rounded_price reservation.rent %>
+      </span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="row">
+      <span class="col-md-5 text-left border-top border-black pt-2 pb-2">
+        Taxes
+      </span>
+
+      <span class="col-md-5 text-right border-top border-black ml-auto pt-2 pb-2 mr-3">
+        €0
+      </span>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="row">
+      <span class="col-md-5 text-left border-top border-black pt-2 pb-2">
+        Total Charges
+      </span>
+
+      <span class="col-md-5 text-right ml-auto border-top border-black pt-2 pb-2 mr-3 price-large">
+        <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %>
+      </span>
+    </div>
+  </div>
+</div>
