@@ -33,6 +33,9 @@
     $('.offer-id').val $(radio).find('.offers-select-radio').val()
     $('.offer-rent').val $(radio).data('price')
     $('.total-tax').val $(radio).data('tax')
+    $('.additional-fee').val $(radio).data('fee')
+    $('.room-type').val $(radio).data('type')
+
     $(radio).removeClass 'border-dark'
     $(radio).addClass 'border-primary'
 

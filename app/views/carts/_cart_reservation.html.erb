@@ -1,4 +1,4 @@
-<div class="row mb-5">
+<div class="row mb-3">
   <div class="col-md-6">
     <b>Summary</b>
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart text-info text-bold float-right', remote: true do %>
@@ -9,6 +9,9 @@
       <span class="text-sm"><%= reservation.adults + reservation.children %>guests</span> <br>
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
+
+    <b>Room Type</b>
+    <p><%= reservation.remove_type %></p>
   </div>
 
   <div class="col-md-6 mb-auto">
@@ -20,40 +23,110 @@
   </div>
 </div>
 
-<div class="row row border-grey border-bottom mb-5">
-  <div class="col-md-12">
-    <div class="row">
-      <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-        Rent
-      </span>
+<% if reservation.guest_centric? %>
+  <p class="text-green text-bold" data-toggle="tooltip" data-placement="left" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">Direct reservation & Confirmation</p>
 
-      <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-        <%= render_rounded_price reservation.rent %>
-      </span>
+  <div class="row row border-grey border-bottom mb-5">
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          <%= "#{reservation.rooms} #{'Room'.pluralize reservation.rooms}" %>
+        </span>
+
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price (reservation.rent - reservation.tax_and_additional_fee - reservation.total_meal_price) %>
+        </span>
+      </div>
+    </div>
+
+    <% if reservation.meal_id.present? %>
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= render_meal_title(reservation.meal_id) %>
+          </span>
+
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+            <%= render_rounded_price reservation.total_meal_price %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          Taxes & Fees
+        </span>
+
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price reservation.tax_and_additional_fee %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          Total Charges
+        </span>
+
+        <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
+          <%= render_rounded_price reservation.rent.to_f %>
+        </span>
+      </div>
     </div>
   </div>
+<% else %>
+  <p class="text-danger" data-toggle="tooltip" data-placement="left" data-original-title="Nice2stay will receive your request and contact you.">On Request</p>
 
-  <div class="col-md-12">
-    <div class="row">
-      <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-        Taxes
-      </span>
+  <div class="row row border-grey border-bottom mb-5">
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          Rent
+        </span>
 
-      <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-        €0
-      </span>
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price reservation.rent %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          Cleaning Cost
+        </span>
+
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price reservation.cleaning_cost %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          Discount
+        </span>
+
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price reservation.discount %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          Total Charges
+        </span>
+
+        <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
+          <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %>
+        </span>
+      </div>
     </div>
   </div>
-
-  <div class="col-md-12">
-    <div class="row">
-      <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-        Total Charges
-      </span>
-
-      <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
-        <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %>
-      </span>
-    </div>
-  </div>
-</div>
+<% end %>
