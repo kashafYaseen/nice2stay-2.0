@@ -12,22 +12,22 @@
   </div>
 
   <div class="col-md-6 mb-auto">
-    <%= link_to reservation.lodging, class: 'btn btn-secondary cart-stars text-left h-100 w-100' do %>
+    <%= link_to reservation.lodging, class: 'btn btn-secondary cart-stars text-left h-100 w-100 pt-1 pb-2' do %>
       <span class="d-block"><%= reservation.lodging_name %></span>
-      <span class="d-block"><%= reservation.lodging.address %></span>
-      <%= render_stars_tag reservation.lodging.average_rating %>
+      <span class="d-block"><%= reservation.lodging_address %></span>
+      <%= render_stars_tag reservation.lodging_average_rating if reservation.lodging_average_rating > 0 %>
     <% end %>
   </div>
 </div>
 
-<div class="row">
+<div class="row row border-grey border-bottom mb-5">
   <div class="col-md-12">
     <div class="row">
-      <span class="col-md-5 text-left border-top border-black pt-2 pb-2">
+      <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
         Rent
       </span>
 
-      <span class="col-md-5 text-right border-top border-black ml-auto pt-2 pb-2 mr-3">
+      <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
         <%= render_rounded_price reservation.rent %>
       </span>
     </div>
@@ -35,11 +35,11 @@
 
   <div class="col-md-12">
     <div class="row">
-      <span class="col-md-5 text-left border-top border-black pt-2 pb-2">
+      <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
         Taxes
       </span>
 
-      <span class="col-md-5 text-right border-top border-black ml-auto pt-2 pb-2 mr-3">
+      <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
         €0
       </span>
     </div>
@@ -47,11 +47,11 @@
 
   <div class="col-md-12">
     <div class="row">
-      <span class="col-md-5 text-left border-top border-black pt-2 pb-2">
+      <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
         Total Charges
       </span>
 
-      <span class="col-md-5 text-right ml-auto border-top border-black pt-2 pb-2 mr-3 price-large">
+      <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
         <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %>
       </span>
     </div>
