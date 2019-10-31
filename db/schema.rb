@@ -790,7 +790,7 @@ ActiveRecord::Schema.define(version: 2019_10_30_090602) do
     t.float "meal_tax", default: 0.0
     t.float "tax", default: 0.0
     t.float "additional_fee", default: 0.0
-    t.string "remove_type"
+    t.string "room_type"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end

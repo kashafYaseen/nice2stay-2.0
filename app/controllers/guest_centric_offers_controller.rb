@@ -40,7 +40,7 @@ class GuestCentricOffersController < ApplicationController
         :meal_tax,
         :tax,
         :additional_fee,
-        :remove_type
+        :room_type
       )
     end
 
