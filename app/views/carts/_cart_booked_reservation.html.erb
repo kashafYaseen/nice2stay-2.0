@@ -25,7 +25,11 @@
 </div>
 
 <% if reservation.guest_centric? %>
-  <p class="text-green text-bold" data-toggle="tooltip" data-placement="left" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">Direct reservation & Confirmation</p>
+  <% if reservation.gc_errors.present? %>
+    <p class="text-danger text-bold" data-toggle="tooltip" data-placement="left" data-original-title="<%= reservation.gc_errors %>">NOT CONFIRMED</p>
+  <% else %>
+    <p class="text-green text-bold">CONFIRMED</p>
+  <% end %>
 
   <div class="row row border-grey border-bottom mb-5">
     <div class="col-md-12">
@@ -79,7 +83,7 @@
     </div>
   </div>
 <% else %>
-  <p class="text-danger" data-toggle="tooltip" data-placement="left" data-original-title="Nice2stay will receive your request and contact you.">On Request</p>
+  <p class="text-warning" data-toggle="tooltip" data-placement="left" data-original-title="Nice2stay will receive your request and contact you.">REQUEST SENT</p>
 
   <div class="row row border-grey border-bottom mb-5">
     <div class="col-md-12">
