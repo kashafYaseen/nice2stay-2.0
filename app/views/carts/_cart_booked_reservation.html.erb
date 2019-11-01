@@ -6,7 +6,7 @@
     <% end unless action_name == 'details' %>
 
     <p>
-      <span class="text-sm"><%= reservation.adults + reservation.children %>guests</span> <br>
+      <span class="text-sm"><%= reservation.adults + reservation.children %> guests</span> <br>
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
 
@@ -28,9 +28,13 @@
 
 <% if reservation.guest_centric? %>
   <% if reservation.gc_errors.present? %>
-    <p class="text-danger text-bold" data-toggle="tooltip" data-placement="left" data-original-title="<%= reservation.gc_errors %>">NOT CONFIRMED</p>
+    <div class="bootstrap-default">
+      <div class="alert alert-danger" role="alert" data-toggle="tooltip" data-placement="left" data-original-title="<%= reservation.gc_errors %>">Reservation is not confirmed. Please search again or contact our booking consultant</div>
+    </div>
   <% else %>
-    <p class="text-green text-bold" data-toggle="tooltip" data-placement="left" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">CONFIRMED</p>
+    <div class="bootstrap-default">
+      <div class="alert alert-success" role="alert" data-toggle="tooltip" data-placement="left" data-original-title="Your reservation is confirmed. Our booking consultants will check the reservation and contact you with the documents and payment details. You can always check your reservation in the your nice2stay account.">Good news your reservation is confirmed</div>
+    </div>
   <% end %>
 
   <div class="row row border-grey border-bottom mb-5">
@@ -85,7 +89,9 @@
     </div>
   </div>
 <% else %>
-  <p class="text-warning" data-toggle="tooltip" data-placement="left" data-original-title="Reservation request is a type of online booking that sends the reservation request to nice2stay and our partner to confirm request. We will inform you asap if the request is confirmed by our partner. Normally you get  a message from us within a few hours.">REQUEST SENT</p>
+  <div class="bootstrap-default">
+    <div class="alert alert-success" role="alert" data-toggle="tooltip" data-placement="left" data-original-title="Your request is send to nice2stay and our partner. We need to wait until the partner accepts the request. Normaly it takes a few hours and our booking consultans will inform you about the status of the request asap.">Request is send to nice2stay and partner</div>
+  </div>
 
   <div class="row row border-grey border-bottom mb-5">
     <div class="col-md-12">
