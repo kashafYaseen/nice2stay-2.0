@@ -843,6 +843,10 @@ figure figcaption {
   border-bottom: 1px solid !important;
 }
 
+.border-top {
+  border-top: 1px solid !important;
+}
+
 .border-top-0 {
   border-top: 0 !important;
 }
@@ -1120,6 +1124,10 @@ figure figcaption {
 
 .bg-cover {
   background-size: cover;
+}
+
+.border-grey {
+  border-color: #eaeaea !important;
 }
 
 .border-primary {
@@ -1818,6 +1826,10 @@ p {
 
 .lead {
   font-size: 18px;
+}
+
+.price-large {
+  font-size: 25px;
 }
 
 .text-xlg {

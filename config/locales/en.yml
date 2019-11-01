@@ -85,9 +85,6 @@ en:
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
   availability_not_confirmed: the availability is on request
 
-  carts:
-    overview: Your bookings and options requests
-    gasten: Your personal data
   cart:
     overview: Youre bookings and options requests
     gasten: Youre data
@@ -109,8 +106,8 @@ en:
       header_2: Enter your information
     step_3:  Send request
     step_1: "Next step: Your details"
+    overview: Shopping cart
     acco: Accommodations
-    overview: Your bookings and options requests
     name: Name accommodation
     checkin: Checkin
     check_out: Checkout

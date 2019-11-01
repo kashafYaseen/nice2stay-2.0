@@ -15,7 +15,7 @@ class Reservation < ApplicationRecord
   after_destroy :send_reservation_removal_details
 
   delegate :active, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, :child_name, :confirmed_price, :image, to: :lodging, prefix: true, allow_nil: true
+  delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
   delegate :email, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
@@ -32,8 +32,6 @@ class Reservation < ApplicationRecord
   accepts_nested_attributes_for :review
 
   attr_accessor :skip_data_posting
-  attr_accessor :meal_tax
-  attr_accessor :tax
 
   enum booking_status: {
     prebooking: 0,
@@ -74,6 +72,14 @@ class Reservation < ApplicationRecord
 
   def total_meal_tax
     (meal_tax.to_f * total_nights.to_i * rooms.to_i).round(2)
+  end
+
+  def tax_and_additional_fee
+    (total_meal_tax.to_f + tax.to_f + additional_fee.to_f).round(2)
+  end
+
+  def guest_centric?
+    offer_id.present?
   end
 
   def step_passed?(step)

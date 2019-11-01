@@ -25,7 +25,23 @@ class GuestCentricOffersController < ApplicationController
     end
 
     def reservation_params
-      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :offer_id, :meal_id, :meal_price, :rent, :rooms, :meal_tax, :tax)
+      params.require(:reservation).permit(
+        :check_in,
+        :check_out,
+        :lodging_id,
+        :adults,
+        :children,
+        :infants,
+        :offer_id,
+        :meal_id,
+        :meal_price,
+        :rent,
+        :rooms,
+        :meal_tax,
+        :tax,
+        :additional_fee,
+        :room_type
+      )
     end
 
     def set_booking_and_cookie
