@@ -10,8 +10,10 @@
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
 
-    <b>Room Type</b>
-    <p><%= link_to (reservation.guest_centric? ? reservation.room_type : reservation.lodging_name), reservation.lodging, class: 'text-decoration-none' %></p>
+    <% if reservation.guest_centric? || reservation.lodging.as_child? %>
+      <b>Room Type</b>
+      <p><%= link_to (reservation.guest_centric? ? reservation.room_type : reservation.lodging_name), reservation.lodging, class: 'text-decoration-none' %></p>
+    <% end %>
   </div>
 
   <div class="col-md-6 mb-auto">
@@ -28,7 +30,7 @@
   <% if reservation.gc_errors.present? %>
     <p class="text-danger text-bold" data-toggle="tooltip" data-placement="left" data-original-title="<%= reservation.gc_errors %>">NOT CONFIRMED</p>
   <% else %>
-    <p class="text-green text-bold">CONFIRMED</p>
+    <p class="text-green text-bold" data-toggle="tooltip" data-placement="left" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">CONFIRMED</p>
   <% end %>
 
   <div class="row row border-grey border-bottom mb-5">
@@ -83,7 +85,7 @@
     </div>
   </div>
 <% else %>
-  <p class="text-warning" data-toggle="tooltip" data-placement="left" data-original-title="Nice2stay will receive your request and contact you.">REQUEST SENT</p>
+  <p class="text-warning" data-toggle="tooltip" data-placement="left" data-original-title="Reservation request is a type of online booking that sends the reservation request to nice2stay and our partner to confirm request. We will inform you asap if the request is confirmed by our partner. Normally you get  a message from us within a few hours.">REQUEST SENT</p>
 
   <div class="row row border-grey border-bottom mb-5">
     <div class="col-md-12">
