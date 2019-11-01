@@ -8,8 +8,14 @@
           <% end %>
 
           <div class="product-info">
-            <h4 class="product-title">
-              <%= link_to reservation.lodging_name, reservation.lodging %>
+            <h4 class="product-title mt-0">
+              <%= link_to reservation.lodging do %>
+                <%= reservation.lodging_name %>
+
+                <% if reservation.guest_centric? %>
+                  <span><%= reservation.room_type %></span>
+                <% end %>
+              <% end %>
             </h4>
           </div>
         </div>
