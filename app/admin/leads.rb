@@ -4,6 +4,10 @@ ActiveAdmin.register Lead do
   actions :all, except: [:destroy]
 
   form do |f|
+    panel "lodgings", class: 'lodgings-panel' do
+      render "lodgings"
+    end
+
     inputs 'Lead' do
       f.input :from
       f.input :to
