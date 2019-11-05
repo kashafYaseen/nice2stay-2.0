@@ -3,6 +3,10 @@ ActiveAdmin.register Lead do
 
   actions :all, except: [:destroy]
 
+  action_item :toggle_sidebar, only: [:new, :edit] do
+    link_to 'Toggle Sidebar', '#', class: 'toggle-sidebar'
+  end
+
   form do |f|
     panel "lodgings", class: 'lodgings-panel' do
       render "lodgings"
