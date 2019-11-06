@@ -1,0 +1,59 @@
+<%= form_tag lodgings_path, method: :get, class: 'lodgings-filters form-inline', data: { check_in: params[:check_in], check_out: params[:check_out] }, remote: true do %>
+
+  <div class="col-md-12 secondary-navbar">
+    <div class="sidebar-toggle position-left">
+      <i class="material-icons filter_list"></i>
+    </div>
+
+    <aside class="sidebar sidebar-offcanvas position-left">
+     <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+
+    <div class="row">
+      <div class="col-md-12 col-lg-2 widget-title text-bold p-0 pl-2">
+        <span class="text-xs">
+          <%= page_entries_info(lodgings, entry_name: 'Lodging' ) %>
+        </span>
+      </div>
+
+      <div class="col-md-11 row pt-1 pr-0 pr-md-1">
+        <section class="pr-1 ml-auto">
+          <div class="view-dropdown dropdown">
+            <button class="dropdown-toggle w-100 btn btn-sm btn-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title">Grid & Map</span>
+            </button>
+
+            <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
+              <a class="dropdown-item list-view layout-btn" href="#">GRID</a>
+              <a class="dropdown-item list-and-map layout-btn d-none d-sm-block" href="#">Grid & Map</a>
+              <a class="dropdown-item map-view layout-btn" href="#">Large Map</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="pr-1">
+          <div class="price-dropdown dropdown">
+            <button class="dropdown-toggle w-100 btn btn-sm btn-outline-primary" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= render_sort_text %></span>
+            </button>
+
+            <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+              <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+              <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+              <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+              <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+              <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <%= hidden_field_tag :adults, @offer.adults %>
+  <%= hidden_field_tag :children, @offer.childrens %>
+  <%= hidden_field_tag :check_in, @offer.from, class: 'check-in' %>
+  <%= hidden_field_tag :check_out, @offer.to, class: 'check-out' %>
+  <%= hidden_field_tag :order, params[:order] %>
+
+  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'List & Map' %>
+<% end %>
