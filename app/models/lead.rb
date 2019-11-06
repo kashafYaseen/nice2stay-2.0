@@ -1,5 +1,6 @@
 class Lead < ApplicationRecord
   belongs_to :user, optional: true
+  belongs_to :admin_user, optional: true
   has_many :offers
   has_and_belongs_to_many :countries
 
