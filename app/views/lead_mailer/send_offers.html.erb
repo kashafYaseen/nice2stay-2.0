@@ -30,7 +30,7 @@
       <%= t('support_team_text') %>
     </div>
     <div class="card card-body my-1 p-3"><%= t('call_us') %></div>
-    <div class="card card-body p-3"><%= t('send_us_email') %></div>
+    <div class="card card-body p-3"><%= link_to t('send_us_email'), 'mailto:finance@nice2stay.com' %></div>
 
     <div class="card card-body p-3">
       <%= link_to t('login_account'), new_user_session_url %>
