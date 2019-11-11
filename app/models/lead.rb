@@ -11,6 +11,8 @@ class Lead < ApplicationRecord
   accepts_nested_attributes_for :user
   accepts_nested_attributes_for :offers, allow_destroy: true, reject_if: :all_blank
 
+  translates :notes, :email_intro
+
   enum generated: {
     site_user: 0,
     site: 1,
