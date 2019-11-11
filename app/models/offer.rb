@@ -4,4 +4,6 @@ class Offer < ApplicationRecord
   has_many :lodgings, through: :offer_lodgings
 
   accepts_nested_attributes_for :offer_lodgings
+
+  validates :title, :from, :to, :adults, :childrens, presence: true
 end

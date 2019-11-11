@@ -2,10 +2,14 @@ class Lead < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :admin_user, optional: true
   has_many :offers
+  has_many :lodgings, through: :offers
+
   has_and_belongs_to_many :countries
 
+  validates :admin_user, presence: true, on: :update
+
   accepts_nested_attributes_for :user
-  accepts_nested_attributes_for :offers
+  accepts_nested_attributes_for :offers, allow_destroy: true, reject_if: :all_blank
 
   enum generated: {
     site_user: 0,
