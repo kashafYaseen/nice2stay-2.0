@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-body">
+        <b><%= t('email.dear', name: @user.full_name) %></b><br>
+        <p><%= t('emails.leads.greetings') %></p>
+        <%= link_to t('emails.leads.link'), leads_url(@lead) %>
+        <p><%= t('emails.leads.body') %></p>
+        <p>
+          <%= t('emails.leads.steps') %><br>
+          - <%= t('emails.leads.step_1') %><br>
+          - <%= t('emails.leads.step_2') %><br>
+          - <%= t('emails.leads.step_3') %><br>
+        </p>
+
+        <p><%= t('emails.leads.availability_notice') %></p>
+        <p><%= t('emails.leads.looking_forward') %></p>
+
+        <p>
+          <%= t('email.warm_regards') %>
+          <%= @lead.admin_user.try :full_name %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card card-body p-3">
+      <b><%= t('any_doubt') %></b><br>
+      <%= t('support_team_text') %>
+    </div>
+    <div class="card card-body my-1 p-3"><%= t('call_us') %></div>
+    <div class="card card-body p-3"><%= t('send_us_email') %></div>
+
+    <div class="card card-body p-3">
+      <%= link_to t('login_account'), new_user_session_url %>
+    </div>
+  </div>
+</div>

@@ -55,13 +55,25 @@
               <tr>
                 <td align="center" class="m-3">
                   <p>
+                    <%= link_to "Nice2stay © copyright #{Date.current.year}", root_url, class: 'nav-item' %>
+                  </p>
+                </td>
+
+                <td align="center" class="m-3">
+                  <p>
                     <%= link_to 'Home', root_url, class: 'nav-item' %>
                   </p>
                 </td>
 
                 <td align="center" class="m-3">
                   <p>
-                    <%= link_to 'About', admin_page_url('over-ons'), class: 'nav-item' %>
+                    <%= link_to 'About', page_url('over-ons'), class: 'nav-item' %>
+                  </p>
+                </td>
+
+                <td align="center" class="m-3">
+                  <p>
+                    <%= link_to 'Contact', page_url('contact'), class: 'nav-item' %>
                   </p>
                 </td>
               </tr>
