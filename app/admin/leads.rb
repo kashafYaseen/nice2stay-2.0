@@ -5,6 +5,19 @@ ActiveAdmin.register Lead do
     link_to 'Toggle Sidebar', '#', class: 'toggle-sidebar'
   end
 
+  action_item :send_offer_email, only: [:show] do
+    link_to 'Send Offer Email', send_offer_admin_lead_path(lead), method: :post if lead.offers.present?
+  end
+
+  member_action :send_offer, method: :post do
+    if resource.offers.present?
+      LeadMailer.send_offers(resource.user_id, resource.id).deliver_later
+      redirect_to admin_lead_path(resource), notice: "Offer was send successfully."
+    else
+      redirect_to admin_lead_path(resource), alert: "Lead does not have any offer"
+    end
+  end
+
   controller do
     def permitted_params
       params.permit!
@@ -29,6 +42,8 @@ ActiveAdmin.register Lead do
       f.input :childrens
       f.input :user
       f.input :countries
+      f.input :email_intro_en, as: :text, input_html: { rows: 4 }
+      f.input :email_intro_nl, as: :text, input_html: { rows: 4 }
 
       f.has_many :offers, allow_destroy: true, heading: 'Offer', new_record: 'Add New Offer' do |offer|
         offer.input :title
@@ -72,6 +87,11 @@ ActiveAdmin.register Lead do
       row :default_status
       row :user
       row :extra_information
+      row :email_intro_en
+      row :email_intro_nl
+      row :url do |lead|
+        lead_url(lead)
+      end
       row :created_at
       row :updated_at
     end

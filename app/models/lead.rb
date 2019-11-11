@@ -6,12 +6,13 @@ class Lead < ApplicationRecord
 
   has_and_belongs_to_many :countries
 
-  validates :admin_user, presence: true, on: :update
+  validates :admin_user, :email_intro_en, :email_intro_nl, presence: true, on: :update
 
   accepts_nested_attributes_for :user
   accepts_nested_attributes_for :offers, allow_destroy: true, reject_if: :all_blank
 
   translates :notes, :email_intro
+  globalize_accessors locales: [:en, :nl], attributes: [:email_intro]
 
   enum generated: {
     site_user: 0,
