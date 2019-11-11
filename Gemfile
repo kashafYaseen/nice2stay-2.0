@@ -51,6 +51,8 @@ gem 'devise-i18n'
 gem 'activeadmin_addons'
 gem 'ahoy_matey'
 gem 'starrr'
+gem 'premailer-rails'
+gem 'bootstrap-email'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
