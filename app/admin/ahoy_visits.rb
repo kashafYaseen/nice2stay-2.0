@@ -3,6 +3,7 @@ ActiveAdmin.register Ahoy::Visit do
   menu parent: 'Track', label: 'Visits'
 
   filter :user
+  filter :ip
   filter :device_type
   filter :started_at
 
