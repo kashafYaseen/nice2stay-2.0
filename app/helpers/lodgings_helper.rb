@@ -105,6 +105,11 @@ module LodgingsHelper
     "<p class='price-text-from price-text d-inline'> #{t('search.from')} </p> <h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> per #{t('search.night')}</p>".html_safe
   end
 
+  def render_offer_price price, dynamic, offer
+    return "<h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> #{t('search.for')} #{(offer.to - offer.from).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
+    "<p class='price-text-from price-text d-inline'> #{t('search.from')} </p> <h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> per #{t('search.night')}</p>".html_safe
+  end
+
   def render_show_page_map lodging, places
     tag.div class: "lodgings-list-json", data: { feature: ( places.collect(&:feature) + [lodging.feature]), categories: places.collect{ |place| [place.place_category_name, place.place_category_id]}.uniq }
   end

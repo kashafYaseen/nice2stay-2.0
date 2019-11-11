@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
     resources :feedbacks, only: [:new, :create]
     resources :countries, only: [:index]
-    resources :leads, only: [:create]
+    resources :leads, only: [:create, :show]
 
     namespace :users do
       resources :social_registrations, only: [:new, :create, :show] do

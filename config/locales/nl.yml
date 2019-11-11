@@ -780,6 +780,8 @@ nl:
   guests: "Gasten"
   period_request: "Periode"
   rent: "Huursom"
+  login_account: Inlog account
+  call_us: 0031-238447005
 
   your_details: "Uw Gegevens"
   mobile_phone_number: "Telefoon nummer"
@@ -848,3 +850,15 @@ nl:
   not_live_parent:
     De beschikbaarheid van deze accommodatie is niet (altijd) up to date!
     Selecteer de gewenste periode en accommodatie, onze <a href="mailto:support@nice2stay.com">Booking Consultants</a> nemen z.s.m. na uw aanvraag contact met u op.
+
+  emails:
+    leads:
+      greetings: Nogmaals hartelijk dank voor uw telefoontje, leuk dat u weer contact met ons heeft opgenomen!
+      link: BEKIJK HIER UW PERSOONLIJK GESELECTEERDE AANBOD
+      body: Alle prijzen en voorwaarden kunt u vinden op onze website, als u de gewenste periode + gezelschap selecteert. Er gelden geen boekingskosten als u boekt bij Nice2stay en wij garanderen altijd de beste prijs.
+      steps: Wat zijn de vervolgstappen?
+      step_1: Mocht u verder nog vragen hebben dan help ik u graag.
+      step_2: Wilt u definitief reserveren? Dan kunt u gemakkelijk zelf via onze website een reservering aanvragen of ik doe het graag voor u!
+      step_3: Ook is het mogelijk een optie te nemen voor 24 uur, voor het geval u bijv uw vliegtickets nog moet regelen.
+      availability_notice: Door de grote interesse in onze accommodaties kan ik de beschikbaarheid helaas niet garanderen.
+      looking_forward: Ik kijk uit naar uw reactie.

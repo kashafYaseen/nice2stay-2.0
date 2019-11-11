@@ -1,13 +1,87 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Nice2Stay</title>
+    <%= stylesheet_link_tag 'email' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="email">
+  <!-- HEADER -->
+    <table class="head-wrap">
+      <tr>
+        <td class="header container">
+          <div class="content">
+            <table>
+              <tr>
+                <td class="logo">
+                  <%= link_to root_url do %>
+                    <%= image_tag 'https://www.nice2stay.com/assets/site-logo-619c61c0e09a6d1cf8b3f68a9124e37247deb66f89fc5e5b30965d862eab8cf0.png' %>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <!-- /HEADER -->
+
+    <!-- BODY -->
+    <table class="body-wrap mt-3">
+      <tr>
+        <td class="container">
+          <div class="content">
+            <table class="body bg-light">
+              <tr>
+                <td>
+                  <%= yield %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <!-- /BODY -->
+
+    <!-- FOOTER -->
+    <table class="footer-wrap">
+      <tr>
+        <td class="container">
+          <div class="content">
+            <table>
+              <tr>
+                <td align="center" class="m-3">
+                  <p>
+                    <%= link_to "Nice2stay © copyright #{Date.current.year}", root_url, class: 'nav-item' %>
+                  </p>
+                </td>
+
+                <td align="center" class="m-3">
+                  <p>
+                    <%= link_to 'Home', root_url, class: 'nav-item' %>
+                  </p>
+                </td>
+
+                <td align="center" class="m-3">
+                  <p>
+                    <%= link_to 'About', page_url('over-ons'), class: 'nav-item' %>
+                  </p>
+                </td>
+
+                <td align="center" class="m-3">
+                  <p>
+                    <%= link_to 'Contact', page_url('contact'), class: 'nav-item' %>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+  <!-- /FOOTER -->
   </body>
 </html>
