@@ -103,6 +103,7 @@ gem 'searchkick'
 gem 'activeadmin'
 gem 'route_translator'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
+gem 'globalize-accessors'
 gem 'chosen-rails'
 gem "skylight"
 gem 'omniauth-google-oauth2'
