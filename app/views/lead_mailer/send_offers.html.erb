@@ -4,7 +4,7 @@
       <div class="card-body">
         <b><%= t('email.dear', name: @user.full_name) %></b><br>
         <p><%= @lead.email_intro %></p>
-        <%= link_to t('emails.leads.link'), leads_url(@lead) %>
+        <%= link_to t('emails.leads.link'), lead_url(@lead) %>
         <p><%= t('emails.leads.body') %></p>
         <p>
           <%= t('emails.leads.steps') %><br>
