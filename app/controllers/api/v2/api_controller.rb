@@ -1,5 +1,8 @@
 class Api::V2::ApiController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error
+  include Pagy::Backend
+
+  before_action :set_locale
 
   def current_user
     @current_user
@@ -9,13 +12,21 @@ class Api::V2::ApiController < ActionController::API
     @current_user = user
   end
 
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def locale
+    I18n.locale
+  end
+
   protected
     def authenticate
       authenticate_token || not_authenticated
     end
 
-    def not_acceptable(errors)
-      render json: { errors: errors }, status: :not_acceptable
+    def invalid_credentials
+      render json: { errors: [I18n.t('devise.failure.invalid', authentication_keys: 'email')] }, status: :not_acceptable
       return
     end
 

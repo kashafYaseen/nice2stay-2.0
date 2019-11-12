@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   draw :api_v1
-  draw :api_v2
   draw :seo
   draw :sidekiq
 
@@ -11,6 +10,7 @@ Rails.application.routes.draw do
     devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
+    draw :api_v2
 
     devise_scope :user do
       get "users/edit/password", to: 'users/registrations#edit_password', as: :user_edit_password

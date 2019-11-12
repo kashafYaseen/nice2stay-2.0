@@ -1,7 +1,7 @@
 namespace :api do
   namespace :v2 do
     resources :lodgings
-    resources :users
+    resource :profiles, only: [:create]
     resource :sessions, only: [:create, :update]
   end
 end
