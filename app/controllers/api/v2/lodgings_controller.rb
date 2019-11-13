@@ -1,8 +1,9 @@
 class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_lodging, only: [:show]
+  before_action :set_custom_text, only: [:index]
 
   def index
-    @lodgings = SearchLodgings.call(params)
+    @lodgings = SearchLodgings.call(params, @custom_text)
     render json: Api::V2::LodgingSerializer.new(@lodgings).serialized_json, status: :ok
   end
 
@@ -19,5 +20,9 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   private
     def set_lodging
       @lodging = Lodging.find(params[:id])
+    end
+
+    def set_custom_text
+      @custom_text = CustomText.find_by(id: params[:custom_text_id])
     end
 end
