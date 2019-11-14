@@ -93,10 +93,10 @@ en:
     gasten: Youre data
 
   quick_view:
-    summary: Summary
-    location: Location
-    amentites: Amentites
-    reviews: Reviews
+    summary: SUMMARY
+    location: LOCATION
+    amenities: AMENITIES
+    reviews: REVIEWS
     description: Description
 
   users:

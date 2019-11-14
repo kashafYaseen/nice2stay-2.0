@@ -48,10 +48,10 @@ nl:
   availability_not_confirmed: de beschikbaarheid is op aanvraag
 
   quick_view:
-    summary: Sammenvatting
-    location: Locatie
-    amentites: Voorzieningen
-    reviews: Beoordelingen
+    summary: SAMENVATTING
+    location: LOCATIE
+    amenities: FACILITEITEN
+    reviews: REVIEWS
     description: Omschrijving
 
   profile_account: 
