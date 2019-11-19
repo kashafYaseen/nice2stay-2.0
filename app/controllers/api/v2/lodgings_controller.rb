@@ -19,7 +19,8 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
   private
     def set_lodging
-      @lodging = Lodging.find(params[:id])
+      @lodging = Lodging.published.friendly.find(params[:id])
+      @lodging = @lodging.parent if @lodging.parent.present?
     end
 
     def set_custom_text
