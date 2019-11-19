@@ -8,5 +8,6 @@ namespace :api do
     resources :pages, only: [] do
       get :home, on: :collection
     end
+    resource :filters, only: [:show]
   end
 end
