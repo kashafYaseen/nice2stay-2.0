@@ -12,8 +12,4 @@ class Api::V2::LodgingSerializer
   attribute :country_name do |lodging|
     lodging.country.try(:name) if lodging.home_page?
   end
-
-  attributes :rooms, if: Proc.new { |lodging, params| params.present? && params[:rooms].present? } do |lodging, params|
-    Api::V2::LodgingSerializer.new(lodging.lodging_children) if lodging.as_parent?
-  end
 end

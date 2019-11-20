@@ -1,5 +1,5 @@
 class Api::V2::LodgingsController < Api::V2::ApiController
-  before_action :set_lodging, only: [:show]
+  before_action :set_lodging, only: [:show, :options]
   before_action :set_custom_text, only: [:index]
 
   def index
@@ -8,7 +8,11 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def show
-    render json: Api::V2::LodgingSerializer.new(@lodging, { params: { rooms: true } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingDetailsSerializer.new(@lodging).serialized_json, status: :ok
+  end
+
+  def options
+    render json: Api::V2::LodgingDetailsSerializer.new(@lodging.lodging_children).serialized_json, status: :ok
   end
 
   def cumulative_price
