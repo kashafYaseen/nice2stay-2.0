@@ -270,19 +270,19 @@ class Lodging < ApplicationRecord
     '#dc9813'
   end
 
+  def price_list(params)
+    total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
+    SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i), self)
+  end
+
+  def discount(params)
+    return unless params[:check_in].present? && params[:check_out].present?
+    SearchDiscounts.call(params.merge(lodging_id: self.id))
+  end
+
   private
     def add_availabilities
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
-    end
-
-    def price_list(params)
-      total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i), self)
-    end
-
-    def discount(params)
-      return unless params[:check_in].present? && params[:check_out].present?
-      SearchDiscounts.call(params.merge(lodging_id: self.id))
     end
 
     def calculate_discount(discounts, total_price)

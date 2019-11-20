@@ -3,6 +3,8 @@ namespace :api do
     resource :profiles, only: [:create]
     resource :sessions, only: [:create, :update]
     resources :lodgings, only: [:index, :show] do
+      resource :invoices, only: [:show]
+
       get :cumulative_price, on: :collection
       get :options, on: :member
     end
