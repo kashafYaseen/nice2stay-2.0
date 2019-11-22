@@ -2,7 +2,8 @@ class Api::V2::ReviewsController < Api::V2::ApiController
   before_action :set_lodging
 
   def index
-    render json: Api::V2::ReviewSerializer.new(@lodging.all_reviews).serialized_json, status: :ok
+    pagy, reviews = pagy(@lodging.all_reviews.includes(:lodging, :reservation), items: params[:per_page], page: params[:page])
+    render json: Api::V2::ReviewSerializer.new(reviews).serialized_json, status: :ok
   end
 
   private
