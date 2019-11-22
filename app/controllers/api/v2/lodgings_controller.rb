@@ -12,7 +12,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def options
-    render json: Api::V2::LodgingDetailsSerializer.new(@lodging.lodging_children).serialized_json, status: :ok
+    render json: Api::V2::LodgingDetailsSerializer.new(@lodging.lodging_children.published).serialized_json, status: :ok
   end
 
   def cumulative_price
