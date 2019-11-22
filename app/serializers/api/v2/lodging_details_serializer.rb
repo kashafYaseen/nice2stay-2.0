@@ -13,6 +13,10 @@ class Api::V2::LodgingDetailsSerializer
     lodging.as_child? ? lodging.parent_summary : lodging.summary
   end
 
+  attributes :admin_user do |lodging|
+    { name: lodging.admin_user.try(:full_name), image: lodging.admin_user.try(:image) }
+  end
+
   attribute :location_description do |lodging|
     lodging.as_child? ? lodging.parent_location_description : lodging.location_description
   end
