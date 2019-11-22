@@ -64,13 +64,15 @@ class SearchPriceWithFlexibleDates
       lodging.flexible_search = false
       price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
       price_list = price_list + [lodging.price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
-      return { rates: price_list, search_params: params, valid: valid?(params) }
+      reservation = build_reservation params
+      return { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
     end
 
     def search_price_with(params)
       price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
       price_list = price_list + [lodging.price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
-      return { rates: price_list, search_params: params, valid: valid?(params) }
+      reservation = build_reservation params
+      return { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
     end
 
     def available_for?(check_in, check_out)
@@ -94,7 +96,7 @@ class SearchPriceWithFlexibleDates
       all - (check_out_only - [check_out])
     end
 
-    def valid?(params)
-      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging, booking: Booking.new).valid?
+    def build_reservation(params)
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging, booking: Booking.new)
     end
 end

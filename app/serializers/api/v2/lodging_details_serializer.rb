@@ -32,4 +32,12 @@ class Api::V2::LodgingDetailsSerializer
   attributes :amenities do |lodging|
     Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations))
   end
+
+  attributes :options, if: Proc.new { |lodging| lodging.as_parent? } do |lodging|
+    Api::V2::LodgingDetailsSerializer.new(lodging.lodging_children.published.includes(:parent, :translations, { price_text: :translations }))
+  end
+
+  attributes :price_details, if: Proc.new { |lodging, params| params.present? && params[:price_params].present? } do |lodging, params|
+    Prices::GetInvoiceDetails.call(lodging, params[:price_params])
+  end
 end

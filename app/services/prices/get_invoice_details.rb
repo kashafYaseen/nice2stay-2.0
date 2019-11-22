@@ -14,43 +14,44 @@ class Prices::GetInvoiceDetails
   end
 
   def call
-    return flexible_search if lodging.flexible_search
-    non_flexible_search
+    non_flexible_search unless lodging.flexible_search
   end
 
   private
-    def flexible_search
-      search_params = results.map{ |result| result[:search_params] }
-
-      {
-        rates: results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }},
-        flexible: true,
-        search_params: search_params,
-        valid: results.map{ |result| result[:valid] },
-        cleaning_costs: cleaning_costs,
-        discounts: discounts_list(search_params),
-      }
-    end
-
     def non_flexible_search
+      rates = results[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }
+      total_price, nights = total_and_nights(rates)
+      cleaning_cost = lodging.cleaning_cost_for((params[:adults].to_i + params[:children].to_i), nights)
+      discount = total_discounts(params, total_price, nights)
+
       {
         rates: results[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h },
         search_params: results[:search_params],
         valid: results[:valid],
+        errors: results[:errors],
         flexible: false,
-        cleaning_costs: cleaning_costs,
-        discounts: lodging.discount(params),
+        cleaning_cost: cleaning_cost,
+        discount: discount,
+        subtotal: (total_price + cleaning_cost),
+        total: (total_price + cleaning_cost - discount),
       }
     end
 
-    def discounts_list search_params
-      discounts = []
-      search_params.each do |param|
-        discounts << lodging.discount([param[:check_in], param[:check_out]])
+    def total_discounts search_params, total_price, nights
+      total_discount = 0
+      lodging.discount(search_params).each do |discount|
+        if discount.percentage?
+          total_discount += (((total_price/nights) * discount.total_nights) * discount.value/100)
+        else
+          total_discount += (discount.value * discount.total_nights)
+        end
       end
+      total_discount
     end
 
-    def cleaning_costs
-      lodging.cleaning_costs.for_guests(params[:adults].to_i + params[:children].to_i)
+    def total_and_nights rates
+      total, nights = 0, 0
+      rates.each { |price, night| total, nights = (price * night) + total, night + nights }
+      [total, nights]
     end
 end

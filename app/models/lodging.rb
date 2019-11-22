@@ -271,6 +271,7 @@ class Lodging < ApplicationRecord
   end
 
   def price_list(params)
+    return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
     total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
     SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i), self)
   end
@@ -278,6 +279,18 @@ class Lodging < ApplicationRecord
   def discount(params)
     return unless params[:check_in].present? && params[:check_out].present?
     SearchDiscounts.call(params.merge(lodging_id: self.id))
+  end
+
+  def cleaning_cost_for guests, nights
+    total_cost = 0
+    cleaning_costs.for_guests(guests).each do |cleaning_cost|
+      if cleaning_cost.fixed_price > 0
+        total_cost += cleaning_cost.fixed_price
+      elsif cleaning_cost.price_per_day > 0
+        total_cost += (cleaning_cost.price_per_day * nights)
+      end
+    end
+    total_cost
   end
 
   private
