@@ -14,7 +14,7 @@ class Api::V2::LodgingDetailsSerializer
   end
 
   attributes :admin_user do |lodging|
-    { name: lodging.admin_user.try(:full_name), image: lodging.admin_user.try(:image) }
+    { name: (lodging.admin_user.try(:full_name) || 'Christa'), image: (lodging.admin_user.try(:image) || 'https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/5478/chirsta.jpg' ) }
   end
 
   attribute :location_description do |lodging|
