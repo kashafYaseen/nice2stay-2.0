@@ -40,10 +40,10 @@ class Prices::GetInvoiceDetails
     def total_discounts search_params, total_price, nights
       total_discount = 0
       lodging.discount(search_params).each do |discount|
-        if discount.percentage?
-          total_discount += (((total_price/nights) * discount.total_nights) * discount.value/100)
+        if discount[:percentage] == 'percentage'
+          total_discount += (((total_price/nights) * discount[:total_nights]) * discount[:value]/100.to_f)
         else
-          total_discount += (discount.value * discount.total_nights)
+          total_discount += (discount[:value] * discount[:total_nights])
         end
       end
       total_discount
