@@ -22,18 +22,18 @@ class GetGuestCentricRates
 
   private
     def header
-      { 'username': ENV['GUEST_CENTRIC_USER'], 'pass': ENV['GUEST_CENTRIC_PASS'] }
+      { 'username': lodging.gc_username, 'pass': lodging.gc_password }
     end
 
     def form_data
       {
         'HotelCode': lodging.guest_centric_id,
         'offer': params[:offer_id],
-        'startDate': params[:check_in],
-        "endDate": params[:check_out].to_date.prev_day,
-        'nrAdults': params[:adults].to_i,
-        'nrChildren': params[:children].to_i,
-        'nrRooms': params[:rooms].to_i,
+        'startDate': Date.current.to_s,
+        "endDate": 1.year.from_now.to_date.to_s,
+        'nrAdults': params[:adults].presence || 1,
+        'nrChildren': params[:children],
+        'nrRooms': params[:rooms].presence || 1,
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],
       }
