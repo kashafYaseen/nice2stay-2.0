@@ -1,3 +1,3 @@
 <%= tag.div class: "lodgings-list-json", data: { features: lodgings.collect(&:feature), bounds: params[:bounds], ids: lodgings.pluck(:id) } %>
 
-<%= render partial: 'lodging', collection: lodgings, locals: { hits: lodgings.hits } %>
+<%= render partial: 'lodgings/lodging', collection: lodgings, locals: { hits: lodgings.hits } %>

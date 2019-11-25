@@ -18,7 +18,7 @@
       </div>
 
       <div class="map-info-data pl-3 bg-secondary w-100">
-        <%= render 'map_info_alert', collection: @collection, lodgings: @lodgings %>
+        <%= render 'map_info_alert', collection: @collection, lodgings: @lodgings, lead: nil %>
       </div>
 
       <div class="col-md-12">
@@ -64,7 +64,6 @@
   Map.init();
   $('#loader').hide();
   InfiniteScroll.pagination('<%= lodgings_path(locale: locale) %>');
-  Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
   Filters.switch_view('<%= params[:layout_view] %>');
   Lodging.calculate_price();
   Invoice.init();

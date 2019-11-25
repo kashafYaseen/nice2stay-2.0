@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_090602) do
+ActiveRecord::Schema.define(version: 2019_11_25_045721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,6 +383,17 @@ ActiveRecord::Schema.define(version: 2019_10_30_090602) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "lead_translations", force: :cascade do |t|
+    t.integer "lead_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "notes"
+    t.text "email_intro"
+    t.index ["lead_id"], name: "index_lead_translations_on_lead_id"
+    t.index ["locale"], name: "index_lead_translations_on_locale"
+  end
+
   create_table "leads", force: :cascade do |t|
     t.date "from"
     t.date "to"
@@ -405,6 +416,9 @@ ActiveRecord::Schema.define(version: 2019_10_30_090602) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "admin_user_id"
+    t.text "email_intro"
+    t.index ["admin_user_id"], name: "index_leads_on_admin_user_id"
     t.index ["user_id"], name: "index_leads_on_user_id"
   end
 
@@ -506,6 +520,8 @@ ActiveRecord::Schema.define(version: 2019_10_30_090602) do
     t.string "guest_centric_id"
     t.boolean "guest_centric", default: false
     t.boolean "realtime_availability", default: false
+    t.string "gc_username"
+    t.string "gc_password"
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
@@ -575,6 +591,7 @@ ActiveRecord::Schema.define(version: 2019_10_30_090602) do
     t.bigint "lead_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
     t.index ["lead_id"], name: "index_offers_on_lead_id"
   end
 
@@ -934,6 +951,7 @@ ActiveRecord::Schema.define(version: 2019_10_30_090602) do
   add_foreign_key "custom_texts", "experiences", on_delete: :cascade
   add_foreign_key "custom_texts", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
+  add_foreign_key "leads", "admin_users"
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade

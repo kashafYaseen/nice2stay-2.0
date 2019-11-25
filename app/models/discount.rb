@@ -7,6 +7,12 @@ class Discount < ApplicationRecord
   delegate :name, to: :lodging, prefix: true
   attr_accessor :total_nights
 
+  enum discount_type: {
+    percentage: "percentage",
+    incentive: "incentive",
+    amount: "amount",
+  }
+
   def search_data
     attributes.merge(
       dates: (start_date..end_date).map(&:to_s),

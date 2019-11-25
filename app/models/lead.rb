@@ -1,8 +1,18 @@
 class Lead < ApplicationRecord
   belongs_to :user, optional: true
+  belongs_to :admin_user, optional: true
+  has_many :offers
+  has_many :lodgings, through: :offers
+
   has_and_belongs_to_many :countries
 
+  validates :admin_user, :email_intro_en, :email_intro_nl, presence: true, on: :update
+
   accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :offers, allow_destroy: true, reject_if: :all_blank
+
+  translates :notes, :email_intro
+  globalize_accessors locales: [:en, :nl], attributes: [:email_intro]
 
   enum generated: {
     site_user: 0,
@@ -27,5 +37,5 @@ class Lead < ApplicationRecord
     asked_for_more_info: 7,
     informed_availability: 8,
     customer_consulting: 9,
-  }
+  }, _suffix: true
 end
