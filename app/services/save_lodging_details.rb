@@ -143,6 +143,8 @@ class SaveLodgingDetails
         :guest_centric_id,
         :guest_centric,
         :realtime_availability,
+        :gc_username,
+        :gc_password,
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },
