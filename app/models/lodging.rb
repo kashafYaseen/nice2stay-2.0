@@ -95,6 +95,11 @@ class Lodging < ApplicationRecord
     (Date.today..2.years.from_now).map(&:to_s) - _availabilities
   end
 
+  def gc_not_available_on params = {}
+    result = GetGuestCentricRates.call self, params
+    result['response'].collect { |r| r['day'] if r['value'].to_f <= 0 }.compact rescue []
+  end
+
   def address
     [street, city, zip, state].compact.join(", ")
   end
