@@ -90,10 +90,10 @@ en:
     gasten: Youre data
 
   quick_view:
-    summary: Summary
-    location: Location
-    amentites: Amentites
-    reviews: Reviews
+    summary: SUMMARY
+    location: LOCATION
+    amenities: AMENITIES
+    reviews: REVIEWS
     description: Description
 
   users:
@@ -596,6 +596,8 @@ en:
   guests: "Guests"
   period_request: "Period request"
   rent: "Rent"
+  login_account: Login Account
+  call_us: 0031-238447005
 
   your_details: "Your details"
   mobile_phone_number: "Mobile phone number"
@@ -665,3 +667,15 @@ of the accommodation."
     The availability of this property is not (always) up to date!
     Select the desired period and accommodation.
     Our <a href="mailto:support@nice2stay.com">Booking Consultants</a> will contact you immediately after your request.
+
+  emails:
+    leads:
+      greetings: Thank you once again for your enquiry at Nice2stay!
+      link: CLICK HERE TO SEE THE CUSTOM OFFER
+      body: You can find the conditions for each holiday home in the presentation on our website. We do not charge booking fees if you book with Nice2stay.
+      steps: What are the next steps?
+      step_1: Please let us know if you have any questions
+      step_2: In case you are seriously interested, but cannot book yet we advise you to request an option for 24 hours
+      step_3: Do you wish to make a booking? Then we will send the owner of the property a booking request. In case the owner accepts the booking, we will send you the booking confirmation by email.
+      availability_notice: Due to the increasing demand for our holiday accommodations we cannot guarantee availability.
+      looking_forward: Looking forward to your reply!

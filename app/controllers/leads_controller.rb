@@ -1,5 +1,10 @@
 class LeadsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:create]
+
+  def show
+    @lead = Lead.find(params[:id])
+    @offers = @lead.offers
+  end
 
   def create
     @lead = @user.leads.build(lead_params)

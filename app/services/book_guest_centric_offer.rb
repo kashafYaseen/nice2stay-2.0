@@ -34,7 +34,7 @@ class BookGuestCentricOffer
 
   private
     def header
-      { 'username': ENV['GUEST_CENTRIC_USER'], 'pass': ENV['GUEST_CENTRIC_PASS'] }
+      { 'username': lodging.gc_username, 'pass': lodging.gc_password }
     end
 
     def form_data

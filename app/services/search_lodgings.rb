@@ -40,6 +40,7 @@ class SearchLodgings
       merge_seo_filters conditions
       conditions << { terms: { id: Lodging.search(params[:name_middle]).hits.collect{ |hit| hit['_id'].to_i } } } if params[:name_middle].present?
       conditions << { term: { published: true } }
+      conditions << { terms: { id: params[:lodging_ids] } } if params[:lodging_ids].present?
       conditions << { term: { checked: params[:checked] } } if params[:checked].present?
       conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
       conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?

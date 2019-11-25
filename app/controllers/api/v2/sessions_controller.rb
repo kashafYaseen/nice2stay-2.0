@@ -3,13 +3,13 @@ class Api::V2::SessionsController < Api::V2::ApiController
 
   def create
     @user = User.authenticate(email: params[:email], password: params[:password])
-    return not_authenticated unless @user.present?
+    return invalid_credentials unless @user.present?
     @user.regenerate_auth_token
-    render status: :created
+    render json: Api::V2::UserSerializer.new(@user, { params: { auth_token: true } }).serialized_json, status: :created
   end
 
   def update
     current_user.regenerate_auth_token
-    render status: :created
+    render json: Api::V2::UserSerializer.new(current_user, { params: { auth_token: true } }).serialized_json, status: :created
   end
 end
