@@ -5,7 +5,7 @@
   <%= image_tag 'loader.gif', class: 'w-50' %>
 </div>
 
-<div class="container-fluid home-container">
+<div class="home-container">
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-12 margin-top-1x">
@@ -19,16 +19,16 @@
           </div>
         </div>
 
-        <div class="row mt-4">
+        <div class="row container-fluid mt-4">
           <div class="col-md-6">
-            <h4><%= @lodging.h1 %></h4>
+            <h2><%= @lodging.h1 %></h2>
             <p><%= @lodging.summary.try(:html_safe) %></p>
           </div>
 
           <div class="col-md-6">
             <ul class="list-icon">
               <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
-              <div class="min-price mb-3"><%= render_price(@lodging.price.to_f.round(2), false) %></div>
+             
 
               <% if @reviews.present? %>
                 <div class="align-baseline text-xlg mb-4 text-primary mr-1">
