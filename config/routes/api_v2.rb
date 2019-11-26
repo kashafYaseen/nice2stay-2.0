@@ -13,5 +13,6 @@ namespace :api do
       get :home, on: :collection
     end
     resource :filters, only: [:show]
+    resources :autocompletes, only: [:index]
   end
 end

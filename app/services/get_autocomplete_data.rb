@@ -29,7 +29,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { presentation: ['as_parent', 'as_standalone'], published: true }
-      }).map{ |lodging| { name: lodging.name, type: 'lodging', url: lodging_path(lodging.slug, locale: locale) } }
+      }).map{ |lodging| { name: lodging.name, type: 'lodging', id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
     end
 
     def campaigns
@@ -40,7 +40,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { collection: true, popular_homepage: true }
-      }).map{ |campaign| { name: campaign.send("title_#{locale}"), type: 'campaign', url: campaign.url } }
+      }).map{ |campaign| { name: campaign.send("title_#{locale}"), id: campaign.id, type: 'campaign', url: campaign.url } }
     end
 
     def countries
@@ -51,7 +51,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |country| { name: country.send("name_#{locale}"), type: 'country', country: country.slug, url: lodgings_path(locale: locale) } }
+      }).map{ |country| { name: country.send("name_#{locale}"), id: country.id, type: 'country', country: country.slug, url: lodgings_path(locale: locale) } }
     end
 
     def regions
@@ -62,6 +62,6 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |region| { name: region.send("name_#{locale}"), type: 'region', country: region.country_slug, region: region.slug, url: lodgings_path(locale: locale) } }
+      }).map{ |region| { name: region.send("name_#{locale}"), id: region.id, type: 'region', country: region.country_slug, region: region.slug, url: lodgings_path(locale: locale) } }
     end
 end
