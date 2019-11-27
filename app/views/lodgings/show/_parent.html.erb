@@ -5,7 +5,7 @@
   <%= image_tag 'loader.gif', class: 'w-50' %>
 </div>
 
-<div class="container-fluid home-container">
+<div class="home-container">
   <div class="row">
     <div class="col-md-12">
       <div class="col-md-12 margin-top-1x">
@@ -19,36 +19,37 @@
           </div>
         </div>
 
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <h4><%= @lodging.h1 %></h4>
-            <p><%= @lodging.summary.try(:html_safe) %></p>
-          </div>
+        <div class="container-fluid">
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h2><%= @lodging.h1 %></h2>
+              <p><%= @lodging.summary.try(:html_safe) %></p>
+            </div>
 
-          <div class="col-md-6">
-            <ul class="list-icon">
-              <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
-              <div class="min-price mb-3"><%= render_price(@lodging.price.to_f.round(2), false) %></div>
+            <div class="col-md-6">
+              <ul class="list-icon">
+                <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
 
-              <% if @reviews.present? %>
-                <div class="align-baseline text-xlg mt-5 text-primary mr-1">
-                  <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
-                </div>
-              <% end %>
+                <% if @reviews.present? %>
+                  <div class="align-baseline text-xlg mt-5 text-primary mr-1">
+                    <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
+                  </div>
+                <% end %>
 
-              <h6>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
-                <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
-              </h6>
-            </ul>
+                <h6>
+                  <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
+                  <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
+                  <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+                </h6>
+              </ul>
 
-            <div class="mb-5"></div>
-            <span class="d-block display-2 text-gray-light">
-              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %> <%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              <div class="mb-5"></div>
+              <span class="d-block display-2 text-gray-light">
+                <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %> <%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
 
-              <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %> <%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
-            </span>
+                <h6><%= image_tag("usp_visit.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %> <%= image_tag("usp_support.png", class: 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
+              </span>
+            </div>
           </div>
         </div>
       </div>
