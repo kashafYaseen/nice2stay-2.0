@@ -28,7 +28,6 @@
           <div class="col-md-6">
             <ul class="list-icon">
               <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
-             
 
               <% if @reviews.present? %>
                 <div class="align-baseline text-xlg mb-4 text-primary mr-1">
@@ -84,7 +83,6 @@
     <div class="row">
       <div class="col-md-6">
         <div class="col-md-12 mt-1">
-
           <div class="bg-white mt-3">
             <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? || !@lodging.checked? %>
           </div>
