@@ -29,8 +29,6 @@
             <ul class="list-icon">
               <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
 
-             
-
               <% if @reviews.present? %>
                 <div class="align-baseline text-xlg text-primary mr-1">
                   <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
