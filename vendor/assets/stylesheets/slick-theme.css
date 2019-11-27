@@ -3,18 +3,7 @@
 /* Slider */
 
 .slick-loading .slick-list {
-  background: #fff url('./ajax-loader.gif') center center no-repeat;
-}
-
-
-/* Icons */
-
-@font-face {
-  font-family: 'slick';
-  font-weight: normal;
-  font-style: normal;
-  src: url('./fonts/slick.eot');
-  src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
+  background: #fff url('preloader.gif') center center no-repeat;
 }
 
 /* Arrows */
@@ -62,10 +51,8 @@
 
 .slick-prev:before,
 .slick-next:before {
-  font-family: 'slick';
-  font-size: 20px;
+  font-size: 23px;
   line-height: 1;
-  opacity: .75;
   color: black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
