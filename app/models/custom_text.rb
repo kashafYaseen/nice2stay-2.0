@@ -28,10 +28,10 @@ class CustomText < ApplicationRecord
 
   def filters
     {
-      experiences: experience_slug,
-      country: country_slug,
-      region: region_slug,
-      lodging_type: lodging_type(category),
+      experiences: { slug: experience_slug, id: experience_id },
+      country: { slug: country_slug, id: country_id },
+      region: { slug: region_slug, id: region_id },
+      lodging_type: { slug: lodging_type(category) },
       discounts: special_offer?,
     }
   end
