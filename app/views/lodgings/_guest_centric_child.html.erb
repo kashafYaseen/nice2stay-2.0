@@ -2,7 +2,8 @@
 
   <% if child['isPromotion'] %>
     <% offers = [] %>
-    <p class="mt-2"><b><%= child['name'] %></b></p>
+    <h5 class="mt-2"><%= child['name'] %></h5>
+    <p><%= child['description'].try(:html_safe) %></p>
 
     <% child['offers'].each do |offer| %>
       <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
@@ -64,6 +65,8 @@
                 </span>
               </div>
             <% end %>
+
+            <p class="text-green text-left text-bold mb-0" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
 
             <% child['mealPlans'].each do |meal| %>
               <% next if meal['id'] == 1 || meal['total'] > 0 %>
@@ -153,9 +156,6 @@
             <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled btn-#{offer['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
               <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
             <% end %>
-
-            <p class="text-green text-center text-bold" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">- Instant reservation</p>
-            <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
           </label><br>
         </div>
       </div>
@@ -164,7 +164,7 @@
     <% offers = [] %>
     <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: child['id_package']) %>
 
-    <p class="mt-2"><b><%= child['name'] %></b></p>
+    <h5 class="mt-2"><%= child['name'] %></h5>
 
     <div class="row mt-3 children-scroll-section">
       <div class="col-md-4 col-border bg-white">
@@ -221,6 +221,8 @@
               </span>
             </div>
           <% end %>
+
+          <p class="text-green text-left text-bold mb-0" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
 
           <% child['mealPlans'].each do |meal| %>
             <% next if meal['id'] == 1 || meal['total'] > 0 %>
@@ -309,9 +311,6 @@
           <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled btn-#{child['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
             <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
           <% end %>
-
-          <p class="text-green text-center text-bold" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">- Instant reservation</p>
-          <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
         </label>
       </div>
     </div>
