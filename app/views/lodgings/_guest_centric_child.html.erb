@@ -2,21 +2,35 @@
 
   <% offers = [] %>
   <div class="row mt-3 children-scroll-section">
-    <div class="col-md-3 col-border bg-white">
+    <div class="col-md-4 col-border bg-white">
       <% if child['isPromotion'] %>
-        <% if child['type'] == 'percentage' %>
-          <span class="text-info"><%= child['percentage'] %>% off</span>
+        <%= image_tag child['defaultImage'], class: 'w-100 max-height-230' if child['defaultImage'].present? %>
+      <% else %>
+        <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: child['id_package']) %>
+
+        <% if lodging_child.present? %>
+          <div class="owl-carousel">
+            <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+          </div>
         <% else %>
-          <span class="text-info">€<%= child['promotionValue'] %> off</span>
+          <div class="owl-carousel">
+            <%= render_guest_centric_images child, class: "modal-slider-img" %>
+          </div>
         <% end %>
       <% end %>
-
-      <%= image_tag child['defaultImage'], class: 'w-100 max-height-230' if child['defaultImage'].present? %>
     </div>
 
     <div class="col-md-3 col-border bg-white text-sm">
       <b><%= child['name'] %></b>
-      <p><%= child['description'].try(:html_safe) %></p>
+      <% if child['isPromotion'] %>
+        <p><%= child['description'].try(:html_safe) %></p>
+      <% else %>
+        <% if lodging_child.present? %>
+          <p><%= lodging_child.short_desc.try(:html_safe) %></p>
+        <% else %>
+          <p><%= child['description'].try(:html_safe) %></p>
+        <% end %>
+      <% end %>
 
       <% if child['restrictions'].present? %>
         Restrictions:
@@ -27,10 +41,12 @@
       <% end %>
     </div>
 
-    <div class="col-md-6 col-border bg-white text-sm group-toggle">
+    <div class="col-md-5 col-border bg-white text-sm group-toggle">
       <% if child['isPromotion'] %>
         <% child['offers'].each do |offer| %>
-          <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index %>
+          <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
+
+          <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child %>
 
           <label 
             class="col-border col-md-12 border-dark border-right offer-item"
@@ -46,6 +62,14 @@
               <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= link_to "#{offer['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
               <span class="float-right">Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span>
             </p>
+
+            <% if offer['availability'].to_i <= 5 %>
+              <div class="row">
+                <span class="col-md-12 text-left text-danger">
+                  Only <%= offer['availability'] %> <%= 'room'.pluralize offer['availability'].to_i %> left!
+                </span>
+              </div>
+            <% end %>
 
             <% child['mealPlans'].each do |meal| %>
               <% next if meal['id'] == 1 || meal['total'] > 0 %>
@@ -141,7 +165,7 @@
           </label><br>
         <% end %>
       <% else %>
-        <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index %>
+        <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child %>
 
         <label
           class="col-border col-md-12 border-dark border-right offer-item"
@@ -157,6 +181,14 @@
             <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <%= link_to "#{child['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
             <span class="float-right">Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span>
           </p>
+
+          <% if child['availability'].to_i <= 5 %>
+            <div class="row">
+              <span class="col-md-12 text-left text-danger">
+                Only <%= child['availability'] %> <%= 'room'.pluralize child['availability'].to_i %> left!
+              </span>
+            </div>
+          <% end %>
 
           <% child['mealPlans'].each do |meal| %>
             <% next if meal['id'] == 1 || meal['total'] > 0 %>
