@@ -1,51 +1,44 @@
 <%= form_for @reservation, url: rates_lodging_guest_centric_offers_en_path(lodging), remote: true, html: { id: "new_reservation_#{lodging.id}#{child['id_offer']}#{index}" } do |f| %>
 
-  <% offers = [] %>
-  <div class="row mt-3 children-scroll-section">
-    <div class="col-md-4 col-border bg-white">
-      <% if child['isPromotion'] %>
-        <%= image_tag child['defaultImage'], class: 'w-100 max-height-230' if child['defaultImage'].present? %>
-      <% else %>
-        <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: child['id_package']) %>
+  <% if child['isPromotion'] %>
+    <% offers = [] %>
+    <p class="mt-2"><b><%= child['name'] %></b></p>
 
-        <% if lodging_child.present? %>
-          <div class="owl-carousel">
-            <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
-          </div>
-        <% else %>
-          <div class="owl-carousel">
-            <%= render_guest_centric_images child, class: "modal-slider-img" %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
+    <% child['offers'].each do |offer| %>
+      <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
 
-    <div class="col-md-3 col-border bg-white text-sm">
-      <b><%= child['name'] %></b>
-      <% if child['isPromotion'] %>
-        <p><%= child['description'].try(:html_safe) %></p>
-      <% else %>
-        <% if lodging_child.present? %>
-          <p><%= lodging_child.short_desc.try(:html_safe) %></p>
-        <% else %>
-          <p><%= child['description'].try(:html_safe) %></p>
-        <% end %>
-      <% end %>
+      <div class="row mt-3 children-scroll-section">
+        <div class="col-md-4 col-border bg-white">
+          <% if lodging_child.present? %>
+            <div class="owl-carousel">
+              <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+            </div>
+          <% else %>
+            <div class="owl-carousel">
+              <%= render_guest_centric_images offer, class: "modal-slider-img" %>
+            </div>
+          <% end %>
+        </div>
 
-      <% if child['restrictions'].present? %>
-        Restrictions:
+        <div class="col-md-3 col-border bg-white text-sm">
+          <b><%= offer['name'] %></b>
 
-        <ul class="text-xxs restrictions">
-          <%= child['restrictions'].html_safe %>
-        </ul>
-      <% end %>
-    </div>
+          <% if lodging_child.present? %>
+            <p><%= lodging_child.short_desc.try(:html_safe) %></p>
+          <% else %>
+            <p><%= child['description'].try(:html_safe) %></p>
+          <% end %>
 
-    <div class="col-md-5 col-border bg-white text-sm group-toggle">
-      <% if child['isPromotion'] %>
-        <% child['offers'].each do |offer| %>
-          <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
+          <% if child['restrictions'].present? %>
+            Restrictions:
 
+            <ul class="text-xxs restrictions">
+              <%= child['restrictions'].html_safe %>
+            </ul>
+          <% end %>
+        </div>
+
+        <div class="col-md-5 col-border bg-white text-sm group-toggle">
           <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child %>
 
           <label 
@@ -164,8 +157,45 @@
             <p class="text-green text-center text-bold" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">- Instant reservation</p>
             <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
           </label><br>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <% offers = [] %>
+    <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: child['id_package']) %>
+
+    <p class="mt-2"><b><%= child['name'] %></b></p>
+
+    <div class="row mt-3 children-scroll-section">
+      <div class="col-md-4 col-border bg-white">
+        <% if lodging_child.present? %>
+          <div class="owl-carousel">
+            <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+          </div>
+        <% else %>
+          <div class="owl-carousel">
+            <%= render_guest_centric_images child, class: "modal-slider-img" %>
+          </div>
         <% end %>
-      <% else %>
+      </div>
+
+      <div class="col-md-3 col-border bg-white text-sm">
+        <% if lodging_child.present? %>
+          <p><%= lodging_child.short_desc.try(:html_safe) %></p>
+        <% else %>
+          <p><%= child['description'].try(:html_safe) %></p>
+        <% end %>
+
+        <% if child['restrictions'].present? %>
+          Restrictions:
+
+          <ul class="text-xxs restrictions">
+            <%= child['restrictions'].html_safe %>
+          </ul>
+        <% end %>
+      </div>
+
+      <div class="col-md-5 col-border bg-white text-sm group-toggle">
         <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child %>
 
         <label
@@ -276,7 +306,6 @@
             <span class="float-right offer-price text-bold <%= child['offer'].gsub('.', '-') %>"><%= "€#{child['total']}" %></span>
           </div>
 
-          <h4 class="<%= child['offer'].gsub('.', '-') %> text-center text-bold mb-0 offer-price"></h4>
           <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled btn-#{child['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
             <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
           <% end %>
@@ -284,9 +313,9 @@
           <p class="text-green text-center text-bold" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">- Instant reservation</p>
           <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
         </label>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <%= f.hidden_field :check_in, value: get_centric_param(:check_in), id: "check_in_#{lodging.id}", class: 'check_in' %>
   <%= f.hidden_field :check_out, value: get_centric_param(:check_out), id: "check_out_#{lodging.id}", class: 'check_out' %>
