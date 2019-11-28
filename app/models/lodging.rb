@@ -298,6 +298,16 @@ class Lodging < ApplicationRecord
     total_cost
   end
 
+  def first_available_date disable_dates
+    date = Date.today
+
+    300.times do
+      return date unless disable_dates.include? date.to_s
+      date = date.next
+    end
+    date
+  end
+
   private
     def add_availabilities
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
