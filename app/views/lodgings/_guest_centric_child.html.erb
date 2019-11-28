@@ -56,6 +56,7 @@
             data-tax="<%= money_string_to_float offer['tax'] %>"
             data-fee="<%= offer['additionalFees'] %>"
             data-type="<%= offer['name'].try(:capitalize) %>"
+            data-child="<%= lodging_child.try(:id) %>"
           >
 
             <p>
@@ -175,6 +176,7 @@
           data-tax="<%= money_string_to_float child['tax'] %>"
           data-fee="<%= child['additionalFees'] %>"
           data-type="<%= child['name'].try(:capitalize) %>"
+          data-child="<%= lodging_child.try(:id) %>"
         >
 
           <p>
@@ -292,7 +294,7 @@
   <%= f.hidden_field :children, value: (get_centric_param(:children) || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
   <%= f.hidden_field :infants, value: (get_centric_param(:infants) || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
   <%= f.hidden_field :rooms, value: get_centric_param(:rooms), id: "rooms_#{lodging.id}", class: 'rooms' %>
-  <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}" %>
+  <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}", class: 'gc-child-id' %>
   <%= f.hidden_field :offer_id, class: 'offer-id' %>
   <%= f.hidden_field :rent, class: 'offer-rent' %>
   <%= f.hidden_field :meal_price, class: 'meal-price' %>

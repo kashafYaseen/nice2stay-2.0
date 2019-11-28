@@ -36,6 +36,9 @@
     $('.additional-fee').val $(radio).data('fee')
     $('.room-type').val $(radio).data('type')
 
+    if $(radio).data('child')
+      $('.gc-child-id').val $(radio).data('child')
+
     $(radio).removeClass 'border-dark'
     $(radio).addClass 'border-primary'
 
