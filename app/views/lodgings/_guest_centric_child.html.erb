@@ -2,13 +2,13 @@
 
   <% if child['isPromotion'] %>
     <% offers = [] %>
-    <h5 class="mt-2"><%= child['name'] %></h5>
+    <h4 class="mt-4"><%= child['name'] %></h4>
     <p><%= child['description'].try(:html_safe) %></p>
 
     <% child['offers'].each do |offer| %>
       <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
 
-      <div class="row mt-3 children-scroll-section">
+      <div class="row mt-3 children-scroll-section" data-name-filter="<%= offer['roomOffer'].split('.')[0] %>" data-adults-filter="<%= offer['MaxAdults'] %>">
         <div class="col-md-4 col-border bg-white">
           <% if lodging_child.present? %>
             <div class="owl-carousel">
@@ -164,9 +164,9 @@
     <% offers = [] %>
     <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: child['id_package']) %>
 
-    <h5 class="mt-2"><%= child['name'] %></h5>
+    <h4 class="mt-4"><%= child['name'] %></h4>
 
-    <div class="row mt-3 children-scroll-section">
+    <div class="row mt-3 children-scroll-section" data-name-filter="<%= child['id_package'] %>" data-adults-filter="<%= child['MaxAdults'] %>">
       <div class="col-md-4 col-border bg-white">
         <% if lodging_child.present? %>
           <div class="owl-carousel">

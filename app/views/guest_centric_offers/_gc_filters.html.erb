@@ -1,0 +1,28 @@
+<% if guest_centric.present? && guest_centric['response'].present? %>
+  <% guest_centric['response']['hotels'].each do |hotel| %>
+    <% if hotel['offers'].present? %>
+      <% names, adults = [], [] %>
+      <% hotel['offers'].each_with_index do |child, index| %>
+        <% if child['isPromotion'] %>
+          <% child['offers'].each do |offer| %>
+            <% names << [offer['name'], offer['roomOffer'].split('.')[0]] %>
+            <% adults << offer['MaxAdults'] %>
+          <% end %>
+        <% else %>
+            <% names << [child['name'], child['id_package']] %>
+            <% adults << child['MaxAdults'] %>
+        <% end %>
+      <% end %>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= select_tag :rooms, options_for_select(names.uniq), include_blank: 'Filter Rooms', class: 'form-control names-filter-select' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= select_tag :rooms, options_for_select(adults.uniq), include_blank: 'Filter Max Adults', class: 'form-control adults-filter-select' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
