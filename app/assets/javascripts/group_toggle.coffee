@@ -2,6 +2,7 @@
   window.GroupToggle or (window.GroupToggle = {})
 
   GroupToggle.init = ->
+    filters()
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
       radio = $(this).parents('label')
       $('.meal_check_box').not(radio.find('.meal_check_box')).prop('checked', false);
@@ -57,5 +58,25 @@
       $(radio).parents('form').find('.restrictions').addClass 'text-danger'
       $(radio).addClass 'border-danger'
       $(radio).find('.offers-select-radio').prop('checked', false)
+
+  filters = ->
+    $('body').on 'change', '.names-filter-select', (e) ->
+      apply_filters $('.adults-filter-select').val(), $(this).val()
+
+    $('body').on 'change', '.adults-filter-select', (e) ->
+      apply_filters $(this).val(), $('.name-filter-select').val()
+
+  apply_filters = (adults, name) ->
+    $('.children-scroll-section').addClass 'd-none'
+
+    if name == '' && adults == ''
+      $('.children-scroll-section').removeClass 'd-none'
+
+    if name != ''
+      $("body").find("[data-name-filter='#{name}']").removeClass 'd-none'
+
+    if adults != ''
+      $("body").find("[data-adults-filter='#{adults}']").removeClass 'd-none'
+
 
 ).call this

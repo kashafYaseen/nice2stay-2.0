@@ -8,7 +8,7 @@
     <% child['offers'].each do |offer| %>
       <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
 
-      <div class="row mt-3 children-scroll-section">
+      <div class="row mt-3 children-scroll-section" data-name-filter="<%= offer['roomOffer'].split('.')[0] %>" data-adults-filter="<%= offer['MaxAdults'] %>">
         <div class="col-md-4 col-border bg-white">
           <% if lodging_child.present? %>
             <div class="owl-carousel">
@@ -166,7 +166,7 @@
 
     <h5 class="mt-2"><%= child['name'] %></h5>
 
-    <div class="row mt-3 children-scroll-section">
+    <div class="row mt-3 children-scroll-section" data-name-filter="<%= child['id_package'] %>" data-adults-filter="<%= child['MaxAdults'] %>">
       <div class="col-md-4 col-border bg-white">
         <% if lodging_child.present? %>
           <div class="owl-carousel">
