@@ -78,5 +78,4 @@
     if adults != ''
       $("body").find("[data-adults-filter='#{adults}']").removeClass 'd-none'
 
-
 ).call this
