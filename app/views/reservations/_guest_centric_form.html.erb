@@ -13,57 +13,66 @@
       <% end %>
 
       <div class="row" data-lodging-id="<%= lodging.id %>">
-        <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
-          <reservation-datepicker
-            :check-in="'<%= params[:check_in].presence || Date.today %>'"
-            :check-out="'<%= params[:check_out].presence || 7.days.from_now %>'"
-            :check-in-title="'<%= t('search.check_in') %>'"
-            :check-out-title="'<%= t('search.check_out') %>'"
-            :months="2"
-            :lodging-id="<%= lodging.id %>"
-            :disabled-dates="<%= lodging.gc_not_available_on(params) %>"
-            :min-date="'<%= Date.today %>'"
-            :customized-dates="<%= lodging.customized_dates %>"
-            :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
-            :show-action-buttons="false"
-            :inline="false"
-          />
+        <div class="col-md-6">
+          <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
+            <reservation-datepicker
+              :check-in="'<%= params[:check_in].presence || @check_in %>'"
+              :check-out="'<%= params[:check_out].presence || @check_in.next %>'"
+              :check-in-title="'<%= t('search.check_in') %>'"
+              :check-out-title="'<%= t('search.check_out') %>'"
+              :months="2"
+              :lodging-id="<%= lodging.id %>"
+              :disabled-dates="<%= @disable_dates %>"
+              :min-date="'<%= Date.today %>'"
+              :customized-dates="<%= lodging.customized_dates %>"
+              :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
+              :show-action-buttons="false"
+              :inline="true"
+            />
+          </div>
         </div>
 
-        <div class="vue-app" data-id="vue_guest_dropdown<%= id_sufix %>">
-          <guests-dropdown
-            :adults="<%= no_of_adults(params[:adults].to_i) %>"
-            :children="<%= params[:children].to_i %>"
-            :infants="<%= params[:infants].to_i %>"
-            :adults-target="'.adults'"
-            :children-target="'.children'"
-            :infants-target="'.infants'"
-            :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
-            :show-apply="false"
-            :button-classes="'btn btn-outline-primary dropdown-toggle'"
-            :max-adults="20"
-            :max-children="20"
-            :max-infants="20"
-            title-suffix=" (Per Room)"
-          />
+        <div class="col-md-6">
+          <div class="row">
+            <div class="vue-app ml-3" data-id="vue_guest_dropdown<%= id_sufix %>">
+              <guests-dropdown
+                :adults="<%= no_of_adults(params[:adults].to_i) %>"
+                :children="<%= params[:children].to_i %>"
+                :infants="<%= params[:infants].to_i %>"
+                :adults-target="'.adults'"
+                :children-target="'.children'"
+                :infants-target="'.infants'"
+                :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
+                :show-apply="false"
+                :button-classes="'btn btn-outline-primary dropdown-toggle'"
+                :max-adults="20"
+                :max-children="20"
+                :max-infants="20"
+                title-suffix=" (Per Room)"
+              />
+            </div>
+
+            <div class="col-md-3 pt-2 pl-0">
+              <%= select_tag :rooms, options_for_select((1..9).map{ |room| ["#{room} #{'Room'.pluralize(room)} ", room] }), class: 'form-control total-rooms rooms text-uppercase' %>
+            </div>
+
+            <%= form_for reservation, url: lodging_guest_centric_offer_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}" } do |f| %>
+
+              <%= f.hidden_field :check_in, value: params[:check_in].presence || @check_in, id: "check_in#{id_sufix}", class: 'check_in' %>
+              <%= f.hidden_field :check_out, value: params[:check_out].presence || @check_in.next, id: "check_out#{id_sufix}", class: 'check_out' %>
+              <%= f.hidden_field :rooms, value: params[:rooms].presence || 1, id: "rooms#{id_sufix}", class: 'rooms' %>
+              <%= f.hidden_field "adults", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults#{id_sufix}" %>
+              <%= f.hidden_field "children", value: (params[:children] || f.object.children), class: 'children', id: "children#{id_sufix}" %>
+              <%= f.hidden_field "infants", value: (params[:infants] || f.object.infants), class: 'infants', id: "infants#{id_sufix}" %>
+              <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
+
+              <%= f.submit('Check Availability', class: "btn btn-primary") %>
+            <% end %>
+
+            <div id="gc-filters">
+            </div>
+          </div>
         </div>
-
-        <div class="col-md-2 pt-2 pl-0">
-          <%= select_tag :rooms, options_for_select((1..9).map{ |room| ["#{room} #{'Room'.pluralize(room)} ", room] }), class: 'form-control total-rooms rooms text-uppercase' %>
-        </div>
-
-        <%= form_for reservation, url: lodging_guest_centric_offer_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}" } do |f| %>
-
-          <%= f.hidden_field :check_in, value: params[:check_in].presence || Date.today, id: "check_in#{id_sufix}", class: 'check_in' %>
-          <%= f.hidden_field :check_out, value: params[:check_out].presence || 7.days.from_now, id: "check_out#{id_sufix}", class: 'check_out' %>
-          <%= f.hidden_field :rooms, value: params[:rooms].presence || 1, id: "rooms#{id_sufix}", class: 'rooms' %>
-          <%= f.hidden_field "adults", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults#{id_sufix}" %>
-          <%= f.hidden_field "children", value: (params[:children] || f.object.children), class: 'children', id: "children#{id_sufix}" %>
-          <%= f.hidden_field "infants", value: (params[:infants] || f.object.infants), class: 'infants', id: "infants#{id_sufix}" %>
-          <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
-
-          <%= f.submit('Check Availability', class: "btn btn-primary") %>
-        <% end %>
       </div>
     </div>
   </div>

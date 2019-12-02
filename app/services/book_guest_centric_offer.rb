@@ -43,7 +43,7 @@ class BookGuestCentricOffer
         'nrChildren': reservation.children.to_i,
         'childrenAges': '',
         'nrRooms': reservation.rooms.to_i,
-        'languageCode': 'nl',
+        'languageCode': 'en',
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],
         'offer': reservation.offer_id,

@@ -26,20 +26,31 @@
 
               <div class="tab-content">
                 <div class="tab-pane fade show active" id="photos-tab-<%= child['beid'] %>" role="tabpanel">
-                  <div class="owl-carousel">
-                    <%= render_guest_centric_images child, class: "modal-slider-img" %>
-                  </div>
+                  <% if lodging_child.present? %>
+                    <div class="owl-carousel">
+                      <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+                    </div>
+                  <% else %>
+                    <div class="owl-carousel">
+                      <%= render_guest_centric_images child, class: "modal-slider-img" %>
+                    </div>
+                  <% end %>
                 </div>
 
                 <div class="tab-pane fade show" id="description-tab-<%= child['beid'] %>" role="tabpanel">
                   <div id="guest-centric-child-description">
                     <p>Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></p>
-                    <%= child['longDescription'].html_safe %>
+
+                    <% if lodging_child.present? %>
+                      <p><%= lodging_child.short_desc.try(:html_safe) %></p>
+                    <% else %>
+                      <p><%= child['longDescription'].try(:html_safe) %></p>
+                    <% end %>
                   </div>
                 </div>
 
                 <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
-                  <%= child['termsAndConditions'] %>
+                  <%= child['termsAndConditions'].try(:html_safe) %>
                 </div>
               </div>
             </p>

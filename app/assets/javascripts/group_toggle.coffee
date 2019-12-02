@@ -2,6 +2,7 @@
   window.GroupToggle or (window.GroupToggle = {})
 
   GroupToggle.init = ->
+    filters()
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
       radio = $(this).parents('label')
       $('.meal_check_box').not(radio.find('.meal_check_box')).prop('checked', false);
@@ -36,6 +37,9 @@
     $('.additional-fee').val $(radio).data('fee')
     $('.room-type').val $(radio).data('type')
 
+    if $(radio).data('child')
+      $('.gc-child-id').val $(radio).data('child')
+
     $(radio).removeClass 'border-dark'
     $(radio).addClass 'border-primary'
 
@@ -54,5 +58,17 @@
       $(radio).parents('form').find('.restrictions').addClass 'text-danger'
       $(radio).addClass 'border-danger'
       $(radio).find('.offers-select-radio').prop('checked', false)
+
+  filters = ->
+    $('body').on 'click', '.btn-offer-filter', (e) ->
+      $(this).toggleClass('selected')
+      $(this).toggleClass('btn-white btn-primary')
+
+      if $('.btn-offer-filter.selected').length > 0
+        $('.guest-centric-offer').addClass 'd-none'
+        for button in $('.btn-offer-filter.selected')
+          $("body").find("[data-offer-filter='#{$(button).data('offer')}']").removeClass 'd-none'
+      else
+        $('.guest-centric-offer').removeClass 'd-none'
 
 ).call this
