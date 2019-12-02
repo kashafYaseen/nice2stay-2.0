@@ -14,13 +14,15 @@
         <% end %>
       <% end %>
 
-      <div class="row">
+      <div class="row mt-4">
+        <h4 class="margin-bottom-1x form-heading col-md-12">Filters</h4>
+
         <div class="col-md-6">
           <%= select_tag :rooms, options_for_select(names.uniq), include_blank: 'Filter Rooms', class: 'form-control names-filter-select' %>
         </div>
 
         <div class="col-md-6">
-          <%= select_tag :rooms, options_for_select(adults.uniq), include_blank: 'Filter Max Adults', class: 'form-control adults-filter-select' %>
+          <%= select_tag :rooms, options_for_select(adults.uniq.sort), include_blank: 'Filter Max Adults', class: 'form-control adults-filter-select' %>
         </div>
       </div>
     <% end %>
