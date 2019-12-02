@@ -55,8 +55,7 @@
             >
 
               <p>
-                <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <%= link_to "#{offer['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
-                <span class="float-right">Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span>
+                <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <span class="text-bold"><%= offer['name'].try(:capitalize) %></span> <span class="float-right">Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span>
               </p>
 
               <% if offer['availability'].to_i <= 5 %>
@@ -147,9 +146,7 @@
               </div>
 
               <div class="mt-3">
-                <span class="text-bold">
-                  Total
-                </span>
+                <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
                 <span class="float-right offer-price text-bold <%= offer['offer'].gsub('.', '-') %>"><%= "€#{offer['total']}" %></span>
               </div>
@@ -213,8 +210,7 @@
           >
 
             <p>
-              <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <%= link_to "#{child['name'].try(:capitalize)}", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-bold' %>
-              <span class="float-right">Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span>
+              <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <span class="text-bold"><%= child['name'].try(:capitalize) %></span> <span class="float-right">Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span>
             </p>
 
             <% if child['availability'].to_i <= 5 %>
@@ -304,9 +300,7 @@
             </div>
 
             <div class="mt-3">
-              <span class="text-bold">
-                Total
-              </span>
+              <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
               <span class="float-right offer-price text-bold <%= child['offer'].gsub('.', '-') %>"><%= "€#{child['total']}" %></span>
             </div>
