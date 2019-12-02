@@ -1,29 +1,13 @@
 <% if guest_centric.present? && guest_centric['response'].present? %>
   <% guest_centric['response']['hotels'].each do |hotel| %>
     <% if hotel['offers'].present? %>
-      <% names, adults = [], [] %>
-      <% hotel['offers'].each_with_index do |child, index| %>
-        <% if child['isPromotion'] %>
-          <% child['offers'].each do |offer| %>
-            <% names << [offer['name'], offer['roomOffer'].split('.')[0]] %>
-            <% adults << offer['MaxAdults'] %>
+      <div class="mt-4 col-md-12">
+        <h4 class="filter-title">Filters</h4>
+        <% hotel['offers'].each_with_index do |child, index| %>
+          <% if child['isPromotion'] %>
+            <button class="btn btn-secondary btn-sm btn-offer-filter btn-white" data-offer="<%= child['promotionId'] %>"><%= "#{child['name']} (#{child['offers'].count})" %></button>
           <% end %>
-        <% else %>
-            <% names << [child['name'], child['id_package']] %>
-            <% adults << child['MaxAdults'] %>
         <% end %>
-      <% end %>
-
-      <div class="row mt-4">
-        <h4 class="margin-bottom-1x form-heading col-md-12">Filters</h4>
-
-        <div class="col-md-6">
-          <%= select_tag :rooms, options_for_select(names.uniq), include_blank: 'Filter Rooms', class: 'form-control names-filter-select' %>
-        </div>
-
-        <div class="col-md-6">
-          <%= select_tag :rooms, options_for_select(adults.uniq.sort), include_blank: 'Filter Max Adults', class: 'form-control adults-filter-select' %>
-        </div>
       </div>
     <% end %>
   <% end %>
