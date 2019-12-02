@@ -50,6 +50,8 @@
                 </div>
 
                 <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
+                  <%= cancel_policy['cancellationPoliciesText'].try(:html_safe) if cancel_policy.present? && cancel_policy['cancellationPoliciesText'].present? %>
+
                   <%= child['termsAndConditions'].try(:html_safe) %>
                 </div>
               </div>

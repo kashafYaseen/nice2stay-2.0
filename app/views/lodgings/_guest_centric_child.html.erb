@@ -41,7 +41,7 @@
           </div>
 
           <div class="col-md-5 col-border bg-white text-sm group-toggle">
-            <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child %>
+            <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child, cancel_policy: child['cancelPolicy'] %>
 
             <label
               class="col-border col-md-12 border-dark border-right offer-item"
@@ -199,7 +199,7 @@
         </div>
 
         <div class="col-md-5 col-border bg-white text-sm group-toggle">
-          <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child %>
+          <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child, cancel_policy: child['cancelPolicy'] %>
 
           <label
             class="col-border col-md-12 border-dark border-right offer-item"
