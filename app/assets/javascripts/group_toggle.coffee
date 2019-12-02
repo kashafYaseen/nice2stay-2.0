@@ -65,10 +65,10 @@
       $(this).toggleClass('btn-white btn-primary')
 
       if $('.btn-offer-filter.selected').length > 0
-        $('.children-scroll-section').addClass 'd-none'
+        $('.guest-centric-offer').addClass 'd-none'
         for button in $('.btn-offer-filter.selected')
           $("body").find("[data-offer-filter='#{$(button).data('offer')}']").removeClass 'd-none'
       else
-        $('.children-scroll-section').removeClass 'd-none'
+        $('.guest-centric-offer').removeClass 'd-none'
 
 ).call this
