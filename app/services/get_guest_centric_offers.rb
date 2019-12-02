@@ -33,7 +33,7 @@ class GetGuestCentricOffers
         'nrAdults': params[:adults] || 1,
         'nrChildren': params[:children].to_i,
         'nrRooms': params[:rooms] || 1,
-        'languageCode': params[:locale],
+        'languageCode': 'en',
         'currency': 'EUR',
         'key': ENV['GUEST_CENTRIC_KEY'],
         'includeCancelPolicies': 1,
