@@ -50,7 +50,13 @@
                 </div>
 
                 <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
-                  <%= cancel_policy['cancellationPoliciesText'].try(:html_safe) if cancel_policy.present? && cancel_policy['cancellationPoliciesText'].present? %>
+                  <% if cancel_policy.present? && cancel_policy['cancelPolicyRules'].present? %>
+                    <% if cancel_policy['cancelPolicyRules'][0]['BeforeDays'] == '999' %>
+                      <%= t('guest_centric.cancellation_policy_1', amount: cancel_policy['cancelPolicyRules'][0]['AmountValue']) %>
+                    <% else %>
+                      <%= t('guest_centric.cancellation_policy_2', amount: cancel_policy['cancelPolicyRules'][0]['AmountValue'], days: cancel_policy['cancelPolicyRules'][0]['BeforeDays']) %>
+                    <% end %>
+                  <% end %>
 
                   <%= child['termsAndConditions'].try(:html_safe) %>
                 </div>

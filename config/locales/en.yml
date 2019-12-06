@@ -679,3 +679,7 @@ of the accommodation."
       step_3: Do you wish to make a booking? Then we will send the owner of the property a booking request. In case the owner accepts the booking, we will send you the booking confirmation by email.
       availability_notice: Due to the increasing demand for our holiday accommodations we cannot guarantee availability.
       looking_forward: Looking forward to your reply!
+
+  guest_centric:
+    cancellation_policy_1: In case of cancellation, the cancellation costs are %{amount} of the reservation sum.
+    cancellation_policy_2: Until %{days} days before the start of the stay you can cancel free of charge. After %{days} days before arrival the cancellation costs are %{amount} of the reservation sum.
