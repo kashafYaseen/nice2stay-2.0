@@ -865,5 +865,5 @@ nl:
       looking_forward: Ik kijk uit naar uw reactie.
 
   guest_centric:
-    cancellation_policy_1: In geval van annulering zijn de annuleringskosten %{amount} van de reserveringssom.
-    cancellation_policy_2: Tot %{days} dagen voor aanvang van het verblijf kunt u kosteloos annuleren. Na %{days} dagen voor aankomst zijn de annuleringskosten %{amount} van de reserveringssom.
+    cancellation_policy_1: In geval van annulering zijn de annuleringskosten %{amount}% van de reserveringssom.
+    cancellation_policy_2: Tot %{days} dagen voor aanvang van het verblijf kunt u kosteloos annuleren. Na %{days} dagen voor aankomst zijn de annuleringskosten %{amount}% van de reserveringssom.
