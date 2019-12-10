@@ -5,14 +5,17 @@
     <p>Sign up with social account</p>
 
     <%= link_to user_facebook_omniauth_authorize_path(locale: locale), class: 'media-btn media-facebook w-100' do %>
+      <i class="fab fa-facebook-f"></i>
       <span>Sign up with Facebook</span>
     <% end %>
 
     <%= link_to user_google_oauth2_omniauth_authorize_path(locale: locale), class: 'media-btn media-google w-100' do %>
+      <i class="fab fa-google"></i>
       <span>Sign up with Google+</span>
     <% end %>
 
     <%= link_to user_instagram_omniauth_authorize_path(locale: locale), class: 'media-btn media-instagram w-100' do %>
+      <i class="fab fa-instagram"></i>
       <span>Sign up with Instagram</span>
     <% end %>
   </div>
