@@ -2,6 +2,7 @@ namespace :api do
   namespace :v2 do
     resource :profiles, only: [:create]
     resource :sessions, only: [:create, :update]
+    resource :omniauths, only: [:create, :update]
     resources :lodgings, only: [:index, :show] do
       resource :invoices, only: [:show]
       resources :reviews, only: [:index]

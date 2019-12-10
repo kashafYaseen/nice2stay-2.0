@@ -83,7 +83,7 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(access_token)
-    find_by_provider_and_uid(access_token.provider, access_token.uid) || create_by_user(access_token)
+    find_by_provider_and_uid(access_token['provider'], access_token['uid']) || create_by_user(access_token)
   end
 
   private
@@ -92,10 +92,10 @@ class User < ApplicationRecord
     end
 
     def self.create_by_user access_token
-      data = access_token.info
-      user = find_by(email: data[:email])
+      data = access_token['info']
+      user = find_by(email: data['email'])
 
-      user.social_logins.find_or_create_by(uid: access_token.uid, provider: access_token.provider) do |social_login|
+      user.social_logins.find_or_create_by(uid: access_token['uid'], provider: access_token['provider']) do |social_login|
         social_login.email = data['email']
         social_login.confirmed_at = DateTime.current
       end if user.present?
