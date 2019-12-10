@@ -3,7 +3,7 @@ class Api::V2::ReviewsController < Api::V2::ApiController
 
   def index
     pagy, reviews = pagy(@lodging.all_reviews.includes(:lodging, :reservation), items: params[:per_page], page: params[:page])
-    render json: Api::V2::ReviewSerializer.new(reviews).serialized_json, status: :ok
+    render json: Api::V2::ReviewSerializer.new(reviews).serializable_hash.merge(pagy: pagy), status: :ok
   end
 
   private

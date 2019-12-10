@@ -16,9 +16,15 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
-    @lodgings = Lodging.where(id: params[:ids].try(:split, ','))
-    @lodgings.map{ |lodging| lodging.cumulative_price(params.clone) }
-    render json: Api::V2::LodgingSerializer.new(@lodgings).serialized_json, status: :ok
+    lodgings = []
+
+    params[:ids].try(:split, ',').each do |id|
+      lodging = Lodging.find(id)
+      lodging.cumulative_price(params.clone)
+      lodgings << lodging
+    end
+
+    render json: Api::V2::LodgingSerializer.new(lodgings).serialized_json, status: :ok
   end
 
   private
