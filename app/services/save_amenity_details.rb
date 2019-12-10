@@ -44,6 +44,7 @@ class SaveAmenityDetails
         :name,
         :filter_enabled,
         :hot,
+        :icon,
       )
     end
 
