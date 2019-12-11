@@ -25,4 +25,20 @@ class CustomText < ApplicationRecord
       return send(method)
     end
   end
+
+  def filters
+    {
+      experiences: { slug: experience_slug, id: experience_id },
+      country: { slug: country_slug, id: country_id },
+      region: { slug: region_slug, id: region_id },
+      lodging_type: { slug: lodging_type(category) },
+      discounts: special_offer?,
+    }
+  end
+
+  def lodging_type(type)
+    return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
+    return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
+    return 'bnb' if ["boutique-hotels", "boutique-hotels", "bnb"].include?(type)
+  end
 end
