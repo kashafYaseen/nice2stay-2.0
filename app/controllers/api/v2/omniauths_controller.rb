@@ -13,7 +13,7 @@ class Api::V2::OmniauthsController < Api::V2::ApiController
 
   def update
     if params[:sign_up] || params[:sign_up] == 'true'
-      return render json: { email: user_params[:email], already_registered: true }, status: :not_acceptable if User.find_by(email: user_params[:email]).present?
+      return render json: { email: user_params[:email], already_registered: true }, status: :ok if User.find_by(email: user_params[:email]).present?
 
       password = Devise.friendly_token[0, 20]
       user = User.new(user_params.merge(password: password, password_confirmation: password, creation_status: :with_social_site))
