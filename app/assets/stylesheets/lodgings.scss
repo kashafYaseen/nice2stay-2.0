@@ -351,7 +351,8 @@ div.nearby-places {
     a {
       text-decoration: none;
       font-weight: 500;
-      font-size: medium;
+      font-size: 15px;
+      font-family: 'Open Sans', sans-serif;
     }
   }
 
@@ -460,4 +461,8 @@ div.nearby-places {
 
 .scroll-to-btn.active {
   border-bottom: 3px solid #FFED00;
+}
+
+.filter-title {
+  font-size: 21px;
 }

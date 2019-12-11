@@ -66,7 +66,7 @@
   filters = ->
     $('body').on 'click', '.btn-offer-filter', (e) ->
       $(this).toggleClass('selected')
-      $(this).toggleClass('btn-white btn-primary')
+      $(this).toggleClass('btn-primary')
 
       if $('.btn-offer-filter.selected').length > 0
         $('.guest-centric-offer').addClass 'd-none'
