@@ -63,7 +63,8 @@
 }
 
 .sticky-top {
-  top:8%;
+  top: 120px;
+  z-index: 998;
 }
 .infobox {
   border: 1px solid #ececec;
