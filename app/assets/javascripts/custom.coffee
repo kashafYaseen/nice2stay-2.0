@@ -29,6 +29,13 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
+    $(window).scroll ->
+      for scrol_link in $('.scroll-to-btn')
+        if isScrolledIntoView $($(scrol_link).data('target'))
+          $(scrol_link).addClass 'active'
+        else
+          $(scrol_link).removeClass 'active'
+
     $(".scroll-to-btn").click (e) ->
       e.stopPropagation()
       $('html, body').animate { scrollTop: $($(this).data('target')).offset().top - 100 }, 'slow'
