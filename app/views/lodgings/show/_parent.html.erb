@@ -58,15 +58,19 @@
 
 <div class="col-sm-12 margin-top-1x price_box">
   <div class="container-fluid">
-    <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
+    <div class="row">
+      <div class="col-md-3 bg-white">
+        <%= render 'reservations/parent_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
+      </div>
 
-    <div class="mt-3 col-md-11 mx-auto">
-      <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
+      <div class="mt-3 col-md-9 mx-auto">
+        <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
+
+        <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
+
+        <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging, locals: { id_sufix: '_modal', reviews: @reviews }  %>
+      </div>
     </div>
-
-    <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
-
-    <%= render partial: 'child_details_modal', collection: @lodging_children, as: :lodging, locals: { id_sufix: '_modal', reviews: @reviews }  %>
   </div>
 </div>
 
