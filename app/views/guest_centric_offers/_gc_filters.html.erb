@@ -1,11 +1,11 @@
 <% if guest_centric.present? && guest_centric['response'].present? %>
   <% guest_centric['response']['hotels'].each do |hotel| %>
     <% if hotel['offers'].present? %>
-      <div class="mt-4 col-md-12">
+      <div class="mt-4 p-0 col-md-12">
         <h4 class="filter-title">Filters</h4>
         <% hotel['offers'].each_with_index do |child, index| %>
           <% if child['isPromotion'] %>
-            <button class="btn btn-secondary btn-sm btn-offer-filter btn-white w-100" data-offer="<%= child['promotionId'] %>"><%= "#{child['name']} (#{child['offers'].count})" %></button>
+            <button class="btn btn-secondary btn-sm btn-offer-filter w-100" data-offer="<%= child['promotionId'] %>"><%= "#{child['name']} (#{child['offers'].count})" %></button>
           <% end %>
         <% end %>
       </div>
