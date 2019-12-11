@@ -34,7 +34,7 @@ class Api::V2::LodgingDetailsSerializer
   end
 
   attributes :amenities do |lodging|
-    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations))
+    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations).uniq)
   end
 
   attributes :options, if: Proc.new { |lodging| lodging.as_parent? } do |lodging|

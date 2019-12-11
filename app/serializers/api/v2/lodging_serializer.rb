@@ -14,6 +14,6 @@ class Api::V2::LodgingSerializer
   end
 
   attributes :amenities, if: Proc.new { |lodging, params| params.present? && params[:amenities].present? } do |lodging, params|
-    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations))
+    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations).uniq)
   end
 end
