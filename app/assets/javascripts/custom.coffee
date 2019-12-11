@@ -7,10 +7,6 @@
     toolbar_section = $('.toolbar-section')
     mobile_menu = $('.slideable-menu .menu')
 
-    show_page_secondary_nav()
-    $(window).scroll ->
-      show_page_secondary_nav()
-
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
@@ -54,13 +50,6 @@
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
     $('#map').css("top", "#{$('.fixed-filters').height()-10}px");
-
-  show_page_secondary_nav = ->
-    if $('#show-page-submenu, .show-page-submenu').length > 0
-      if isScrolledIntoView($('.form-heading')) || $(window).scrollTop() < $('#home-container').parent().height()
-        $('#show-page-submenu, .show-page-submenu').fadeOut 100
-      else
-        $('#show-page-submenu, .show-page-submenu').fadeIn 500
 
   isScrolledIntoView = (elem) ->
     $elem = $(elem)
