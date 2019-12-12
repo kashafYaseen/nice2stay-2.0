@@ -19,15 +19,13 @@
         </div>
 
         <div class="row container-fluid padding-sm-0 mt-4">
-          <div class="col-md-6">
+          <div class="col-md-8">
             <h2><%= @lodging.h1 %></h2>
             <p><%= @lodging.summary.try(:html_safe) %></p>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-4">
             <ul class="list-icon">
-              <%= link_to 'Check Availability', '#', class: "btn btn-primary w-100 scroll-to-btn", data: { target: '.form-heading' } %>
-
               <% if @reviews.present? %>
                 <div class="align-baseline text-xlg text-primary mr-1">
                   <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
@@ -42,15 +40,16 @@
               <br>
             </ul>
 
-            <span class="d-block display-2 text-gray-light">
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
-
-              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
-
-              <h6><%= image_tag("usp_visit.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
-
-              <h6><%= image_tag("usp_support.png", :class => 'w-40', alt: "visit") %><%= t 'usp.inspect' %></h6>
-            </span>
+            <div class="bs-glyphicons">
+              <ul class="bs-glyphicons-list">
+                <% @lodging.amenities.hot.each do |amenity| %>
+                  <li>
+                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-<%= amenity.icon.presence || 'shield-check' %> fa-2x"></i></span>
+                    <span class="glyphicon-class"><%= amenity.name %></span>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
