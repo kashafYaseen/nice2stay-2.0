@@ -1,14 +1,15 @@
 class Api::V2::LodgingsController < Api::V2::ApiController
+  before_action :set_user_if_present
   before_action :set_lodging, only: [:show, :options]
   before_action :set_custom_text, only: [:index]
 
   def index
     @lodgings = SearchLodgings.call(params, @custom_text)
-    render json: Api::V2::LodgingSerializer.new(@lodgings, { params: { amenities: true } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(@lodgings, { params: { amenities: true, current_user: current_user } }).serialized_json, status: :ok
   end
 
   def show
-    render json: Api::V2::LodgingDetailsSerializer.new(@lodging).serialized_json, status: :ok
+    render json: Api::V2::LodgingDetailsSerializer.new(@lodging, { params: { current_user: current_user } }).serialized_json, status: :ok
   end
 
   def options
