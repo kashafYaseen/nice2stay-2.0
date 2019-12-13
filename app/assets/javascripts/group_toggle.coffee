@@ -4,7 +4,11 @@
   GroupToggle.init = ->
     filters()
     $('body').on 'click', '.guest-centric-modal-btn, .offers-select-radio', ->
-      radio = $(this).parents('label')
+      if $(this).data('parent')
+        radio = $($(this).data('parent'))
+      else
+        radio = $(this).parents('label')
+
       $('.meal_check_box').not(radio.find('.meal_check_box')).prop('checked', false);
 
       $('#target_modal').val $(this).data('target')
@@ -62,7 +66,7 @@
   filters = ->
     $('body').on 'click', '.btn-offer-filter', (e) ->
       $(this).toggleClass('selected')
-      $(this).toggleClass('btn-white btn-primary')
+      $(this).toggleClass('btn-primary')
 
       if $('.btn-offer-filter.selected').length > 0
         $('.guest-centric-offer').addClass 'd-none'

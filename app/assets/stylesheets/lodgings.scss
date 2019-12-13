@@ -197,12 +197,6 @@ div.review-paginator {
   padding: 10px;
 }
 
-@media only screen and (min-width: 767px) {
-  #show-page-submenu {
-    background: transparent !important;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   #sidebar {
     display: none;
@@ -346,8 +340,10 @@ div.nearby-places {
   position: fixed;
   top: 70px;
   width: 100%;
-  height: 40px;
+  height: 36px;
   background-color: white;
+  z-index: 1001;
+  padding-top: 6px;
 
   .nav-item {
     display: inline;
@@ -355,7 +351,9 @@ div.nearby-places {
     a {
       text-decoration: none;
       font-weight: 500;
-      font-size: medium;
+      font-size: 11px;
+      font-family: 'Open Sans', sans-serif;
+      text-transform: uppercase;
     }
   }
 
@@ -363,7 +361,7 @@ div.nearby-places {
     overflow-x: auto;
     white-space: nowrap;
     list-style: none;
-    min-height: 40px;
+    min-height: 30px;
   }
 }
 
@@ -460,4 +458,12 @@ div.nearby-places {
 
 .group-toggle .group-toggle-radio:hover {
   border-color: #FFED00 !important;
+}
+
+.scroll-to-btn.active {
+  border-bottom: 3px solid #FFED00;
+}
+
+.filter-title {
+  font-size: 21px;
 }

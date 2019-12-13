@@ -1,0 +1,51 @@
+<div class="toolbar-section">
+  <%= form_tag lodgings_path, method: :get, id: 'searchbar_search_form' do %>
+    <div class="row">
+      <div class="col-md-4 pt-2">
+        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general', id: 'searchbar_query' %>
+      </div>
+
+      <div class="vue-app" data-id="vue_search_bar">
+        <div>
+          <datepicker
+            :trigger-id="'searchbar-trigger-range'"
+            :check-in="'<%= params[:check_in]%>'"
+            :check-out="'<%= params[:check_out]%>'"
+            :months="1"
+            :min-date="'<%= Date.yesterday %>'"
+            :action-buttons="true"
+            :full-screen="false"
+            :trigger-button="'btn btn-outline-primary'"
+            :inline="false"
+          />
+        </div>
+      </div>
+
+      <div class="vue-app" data-id="vue_search_bar">
+        <div>
+          <guests-dropdown
+            :adults="<%= params[:adults].to_i %>"
+            :children="<%= params[:children].to_i %>"
+            :infants="<%= params[:infants].to_i %>"
+            :adults-target="'#searchbar_adults'"
+            :children-target="'#searchbar_children'"
+            :infants-target="'#searchbar_infants'"
+            :dropdown-id="'<%= "guests-dropdown-searchbar" %>'"
+            :show-apply="false"
+            :button-classes="'btn btn-outline-primary dropdown-toggle'"
+          />
+        </div>
+      </div>
+
+      <%= hidden_field_tag :adults, params[:adults], id: 'searchbar_adults' %>
+      <%= hidden_field_tag :children, params[:children], id: 'searchbar_children' %>
+      <%= hidden_field_tag :infants, params[:infants], min: 0, id: 'searchbar_infants' %>
+      <%= hidden_field_tag :country, params[:country], id: 'searchbar_country', class: 'autocomplete-country' %>
+      <%= hidden_field_tag :region, params[:region], id: 'searchbar_region', class: 'autocomplete-region' %>
+
+      <%= hidden_field_tag :standalone, true, id: 'searchbar_standalone', class: 'standalone' %>
+      <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary' , data: { disable_with: t('search.search_button') }
+      %>
+    </div>
+  <% end %>
+</div>

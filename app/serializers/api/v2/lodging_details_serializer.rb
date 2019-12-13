@@ -34,7 +34,7 @@ class Api::V2::LodgingDetailsSerializer
   end
 
   attributes :amenities do |lodging|
-    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations))
+    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations).uniq)
   end
 
   attributes :options, if: Proc.new { |lodging| lodging.as_parent? } do |lodging|
@@ -43,5 +43,9 @@ class Api::V2::LodgingDetailsSerializer
 
   attributes :price_details, if: Proc.new { |lodging, params| params.present? && params[:price_params].present? } do |lodging, params|
     Prices::GetInvoiceDetails.call(lodging, params[:price_params])
+  end
+
+  attributes :wishlist_id, if: Proc.new { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
+    lodging.wishlists.find_by(user: params[:current_user]).try(:id)
   end
 end
