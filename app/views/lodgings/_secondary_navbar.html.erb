@@ -15,49 +15,37 @@
         </span>
       </div>
 
-      <div class="col-md-11 row pt-1 pr-0 pr-md-1">
-        <div class="col-sm-12 col-md-12 col-lg-4 p-0 pr-1 pr-md-2">
-          <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
-        </div>
+      <div class="col-md-11 row pt-1 row pt-1 container-fluid">
+        <section class="pl-sm-0 pl-md-5 pr-1">
+          <div class="view-dropdown dropdown">
+            <button class="dropdown-toggle w-100 btn btn-sm btn-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title">Grid & Map</span>
+            </button>
 
-        <section class="pr-1">
-          <div class="vue-app">
-            <datepicker
-              :trigger-id="'trigger-range'"
-              :check-in="'<%= params[:check_in]%>'"
-              :check-out="'<%= params[:check_out]%>'"
-              :months="2"
-              :min-date="'<%= Date.yesterday %>'"
-              :action-buttons="true"
-              :full-screen="false"
-              :trigger-button="'btn btn-outline-primary btn-sm w-100'"
-              :inline="false"
-              :highlight-on-selection="true"
-            />
+            <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
+              <a class="dropdown-item list-view layout-btn" href="#">GRID</a>
+              <a class="dropdown-item list-and-map layout-btn d-none d-sm-block" href="#">Grid & Map</a>
+              <a class="dropdown-item map-view layout-btn" href="#">Large Map</a>
+            </div>
           </div>
         </section>
 
         <section class="pr-1">
-          <div class="vue-app">
-            <guests-dropdown
-              :adults="<%= params[:adults].to_i %>"
-              :children="<%= params[:children].to_i %>"
-              :infants="<%= params[:infants].to_i %>"
-              :adults-target="'#adults'"
-              :children-target="'#children'"
-              :infants-target="'#infants'"
-              :dropdown-id="'<%= "guests-dropdown-filters" %>'"
-              :show-apply="true"
-              :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
-              :show-infants="false"
-              :highlight-on-selection="true"
-              :submit-target="'.lodgings-filters'"
-            />
+          <div class="price-dropdown dropdown">
+            <button class="dropdown-toggle w-100 btn btn-sm btn-outline-primary" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title"><%= render_sort_text %></span>
+            </button>
+
+            <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+              <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+              <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+              <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+              <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+              <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
+            </div>
           </div>
-          <%= hidden_field_tag :adults, params[:adults] %>
-          <%= hidden_field_tag :children, params[:children] %>
-          <%= hidden_field_tag :infants, params[:infants] %>
         </section>
+
 
         <section class="lodging-types-list pr-1">
           <div class="types-dropdown dropdown">
@@ -101,36 +89,6 @@
           <button class="btn btn-sm btn btn-outline-primary w-100 more-filters-btn" type="button" id="moreFilters" data-title="<%= t('filters.more_filters') %>">
             <span class="title">More Filters</span>
           </button>
-        </section>
-
-        <section class="pr-1 ml-auto">
-          <div class="view-dropdown dropdown">
-            <button class="dropdown-toggle w-100 btn btn-sm btn-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title">Grid & Map</span>
-            </button>
-
-            <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
-              <a class="dropdown-item list-view layout-btn" href="#">GRID</a>
-              <a class="dropdown-item list-and-map layout-btn d-none d-sm-block" href="#">Grid & Map</a>
-              <a class="dropdown-item map-view layout-btn" href="#">Large Map</a>
-            </div>
-          </div>
-        </section>
-
-        <section class="pr-1">
-          <div class="price-dropdown dropdown">
-            <button class="dropdown-toggle w-100 btn btn-sm btn-outline-primary" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="title"><%= render_sort_text %></span>
-            </button>
-
-            <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
-              <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
-              <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
-              <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
-              <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
-              <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
-            </div>
-          </div>
         </section>
       </div>
     </div>
@@ -214,6 +172,11 @@
     </div>
   </div>
 
+  <%= hidden_field_tag :check_in, params[:check_in], class: "check-in" %>
+  <%= hidden_field_tag :check_out, params[:check_out], class: "check-out" %>
+  <%= hidden_field_tag :adults, params[:adults] %>
+  <%= hidden_field_tag :children, params[:children] %>
+  <%= hidden_field_tag :infants, params[:infants] %>
   <%= hidden_field_tag :order, params[:order] %>
   <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>

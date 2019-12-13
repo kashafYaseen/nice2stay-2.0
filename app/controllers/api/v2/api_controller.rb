@@ -21,6 +21,10 @@ class Api::V2::ApiController < ActionController::API
   end
 
   protected
+    def set_user_if_present
+      authenticate_token
+    end
+
     def authenticate
       authenticate_token || not_authenticated
     end

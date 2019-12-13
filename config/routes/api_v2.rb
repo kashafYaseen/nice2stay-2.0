@@ -15,5 +15,6 @@ namespace :api do
     end
     resource :filters, only: [:show]
     resources :autocompletes, only: [:index]
+    resources :favourites, only: [:index, :create, :destroy]
   end
 end
