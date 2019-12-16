@@ -89,6 +89,9 @@ en:
     overview: Youre bookings and options requests
     gasten: Youre data
 
+  amenities:
+    popular: Popular Amenities
+
   quick_view:
     summary: SUMMARY
     location: LOCATION
