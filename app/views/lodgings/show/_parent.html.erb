@@ -20,11 +20,6 @@
 
         <div class="container-fluid">
           <div class="row mt-4">
-            <div class="col-md-8">
-              <h2><%= @lodging.h1 %></h2>
-              <p><%= @lodging.summary.try(:html_safe) %></p>
-            </div>
-
             <div class="col-md-4">
               <ul class="list-icon">
                 <% if @reviews.present? %>
@@ -52,6 +47,11 @@
                   <% end %>
                 </ul>
               </div>
+            </div>
+
+            <div class="col-md-8">
+              <h2><%= @lodging.h1 %></h2>
+              <p><%= @lodging.summary.try(:html_safe) %></p>
             </div>
           </div>
         </div>

@@ -53,6 +53,8 @@
 <div class="col-md-12 p-0 container">
   <div class="bg-white pt-5 target-section gallery-container-minimized" id="gallery-container">
     <div class="col-md-12 padding-sm-0">
+      <div id="gallery-container-link"></div>
+
       <div class="gallery-wrapper">
         <div class="isotope-grid cols-4">
           <div class="gutter-sizer"></div>
@@ -153,6 +155,7 @@
       <h3 class="card-title"><%= t 'nav.also_like' %></h3>
       <hr class="margin-bottom-1x">
 
+      <div id="like-container-container"></div>
       <div class="row">
         <%= render partial: 'lodging', collection: @lodgings, locals: { hits: @lodgings.hits } %>
       </div>
