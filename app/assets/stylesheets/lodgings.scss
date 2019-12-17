@@ -340,8 +340,8 @@ div.nearby-places {
   position: fixed;
   top: 70px;
   width: 100%;
-  height: 43px;
-  background-color: #EBEBE6;
+  height: 45px;
+  background-color: #FAFAFA;
   z-index: 1001;
 
   .nav-item {
@@ -402,7 +402,7 @@ div.nearby-places {
 .secondary-navbar {
   top: 70px;
   position: fixed;
-  background-color: #EBEBE6;
+  background-color: #FAFAFA;
   z-index: 3;
   height: 53px;
 }
@@ -460,7 +460,7 @@ div.nearby-places {
 }
 
 .scroll-to-btn.active {
-  background-color: lightgray;
+  background-color: #FFED00;
 }
 
 .filter-title {
