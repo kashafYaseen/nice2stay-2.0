@@ -340,10 +340,9 @@ div.nearby-places {
   position: fixed;
   top: 70px;
   width: 100%;
-  height: 36px;
-  background-color: white;
+  height: 43px;
+  background-color: #EBEBE6;
   z-index: 1001;
-  padding-top: 6px;
 
   .nav-item {
     display: inline;
@@ -461,7 +460,7 @@ div.nearby-places {
 }
 
 .scroll-to-btn.active {
-  border-bottom: 3px solid #FFED00;
+  background-color: lightgray;
 }
 
 .filter-title {

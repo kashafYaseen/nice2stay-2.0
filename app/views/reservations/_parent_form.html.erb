@@ -3,7 +3,7 @@
     data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="row sticky-top <%= 'pl-4' unless id_sufix.present? %>">
+<div class="row sticky-top <%= 'pl-4' unless id_sufix.present? %>" id="availability-and-prices">
   <div class="col-md-12 <%= 'container' unless id_sufix.present? %>">
     <div class="row" data-lodging-id="<%= lodging.id %>">
       <div class="col-md-12">
@@ -39,8 +39,9 @@
             :show-apply="false"
             :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
             :max-adults="<%= lodging.adults.to_i %>"
-            :max-children="<%= lodging.adults.to_i %>"
-            :max-infants="<%= lodging.adults.to_i %>"
+            :max-children="<%= lodging.children.to_i %>"
+            :max-infants="<%= lodging.infants.to_i %>"
+            :lodging-ids="<%= lodging.lodging_children.try(:ids) %>"
             :bind-with="'<%= id_sufix.present? ? "vue_guest_dropdown" : "vue_guest_dropdown_modal" %>'"
           />
         </div>

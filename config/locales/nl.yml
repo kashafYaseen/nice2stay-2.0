@@ -47,6 +47,9 @@ nl:
   prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
   availability_not_confirmed: de beschikbaarheid is op aanvraag
 
+  amenities:
+    popular: Populaire Voorzieningen
+
   quick_view:
     summary: SAMENVATTING
     location: LOCATIE
@@ -275,7 +278,7 @@ nl:
 
   filters:
     guests: Reisgezelschap
-    price: Prijs per nacht 
+    price: Prijs
     theme: Experience
     type: Type accommodatie
     amentities_pop: Faciliteiten populair

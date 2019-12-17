@@ -3,7 +3,7 @@
 
   Lodging.init = ->
     Slider.init()
-    TypeDropdown.init()
+    Dropdown.init()
     OwlCarousel.init()
     SidebarCanvas.init('.sidebar-toggle', '.sidebar-offcanvas', '.sidebar-close')
     SortingDropdown.init()

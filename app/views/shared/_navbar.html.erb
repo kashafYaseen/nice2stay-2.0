@@ -7,7 +7,7 @@
   </div>
 
   <nav class="site-menu">
-    <div class="container">
+    <div class="container-fluid">
       <!-- Search Section-->
       <%= render 'shared/menu_search' %>
     </div>
@@ -23,15 +23,6 @@
       <a class="toolbar-toggle search-toggle" href="#search">
         <i class="material-icons search"></i>
       </a>
-
-      <% if user_signed_in? %>
-        <a class="toolbar-toggle toolbar-notifications" href="#notifications">
-          <i>
-            <span class="material-icons notifications"></span>
-            <span class="count unread-notifications-count">1</span>
-          </i>
-        </a>
-      <% end %>
 
       <a class="toolbar-toggle toolbar-wishlist" href="#wishlist">
         <i>
@@ -172,8 +163,6 @@
       <%= render 'shared/cart', reservations: @booking.try(:reservations) %>
       <!-- Wishlist Section-->
       <%= render 'shared/wishlist', wishlists: @wishlists %>
-      <!-- Notifications Section-->
-      <%= render 'shared/notifications' if user_signed_in? %>
     </div>
   </div>
 </header>

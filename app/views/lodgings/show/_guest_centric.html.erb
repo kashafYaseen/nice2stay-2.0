@@ -19,11 +19,6 @@
         </div>
 
         <div class="row container-fluid padding-sm-0 mt-4">
-          <div class="col-md-8">
-            <h2><%= @lodging.h1 %></h2>
-            <p><%= @lodging.summary.try(:html_safe) %></p>
-          </div>
-
           <div class="col-md-4">
             <ul class="list-icon">
               <% if @reviews.present? %>
@@ -41,6 +36,8 @@
             </ul>
 
             <div class="bs-glyphicons">
+              <h6><%= t('amenities.popular') %></h6>
+
               <ul class="bs-glyphicons-list">
                 <% @lodging.amenities.hot.each do |amenity| %>
                   <li>
@@ -51,13 +48,18 @@
               </ul>
             </div>
           </div>
+
+          <div class="col-md-8">
+            <h2><%= @lodging.h1 %></h2>
+            <p><%= @lodging.summary.try(:html_safe) %></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="price_box col-md-12 margin-bottom-2x margin-top-1x padding-sm-0">
+<div class="price_box col-md-12 margin-bottom-2x margin-top-1x padding-sm-0" id="availability-and-prices">
   <div class="container">
     <div class="row">
       <div class="col-md-3 bg-white">
