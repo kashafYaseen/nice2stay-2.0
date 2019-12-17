@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown guests-dropdown vue-guests-dropdown" :id="'vue-'+this.dropdownId">
+  <div class="dropdown guests-dropdown vue-guests-dropdown" :id="'vue-'+this.dropdownId" ref="vuedropdwon">
     <button :class="this.buttonClasses" type="button" :id="this.dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="title">{{ guests() }}</span>
     </button>
@@ -126,6 +126,9 @@
         type: String,
         default: ''
       },
+      lodgingIds: {
+        type: Array
+      }
     },
     data() {
       return {
@@ -136,6 +139,7 @@
       }
     },
     mounted() {
+      $(this.$refs.vuedropdwon).on("hide.bs.dropdown", this.handleDropdownClose)
       this.guests()
     },
     methods: {
@@ -206,6 +210,19 @@
         }
         else if(this.lodgingId) {
           Invoice.calculate([this.lodgingId])
+        }
+      },
+
+      handleDropdownClose() {
+        if(this.submitTarget && $(this.submitTarget).length > 0) {
+          $('#loader').show();
+          Rails.fire($(this.submitTarget).get(0), 'submit');
+        }
+        else if(this.lodgingId) {
+          Invoice.calculate([this.lodgingId])
+        }
+        else if (this.lodgingIds) {
+         Invoice.calculate(this.lodgingIds)
         }
       },
       adultsTitle() {

@@ -39,8 +39,9 @@
             :show-apply="false"
             :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
             :max-adults="<%= lodging.adults.to_i %>"
-            :max-children="<%= lodging.adults.to_i %>"
-            :max-infants="<%= lodging.adults.to_i %>"
+            :max-children="<%= lodging.children.to_i %>"
+            :max-infants="<%= lodging.infants.to_i %>"
+            :lodging-ids="<%= lodging.lodging_children.try(:ids) %>"
             :bind-with="'<%= id_sufix.present? ? "vue_guest_dropdown" : "vue_guest_dropdown_modal" %>'"
           />
         </div>
