@@ -49,7 +49,7 @@ en:
 
   filters:
     guests: Traveling party
-    price: Price per night
+    price: Price
     theme: Experience
     type: Accommodation type
     amentities_pop: Amentities popular

@@ -39,15 +39,12 @@
   updated_amenities = ->
     checked = $(".more-filters-dropdown-menu input:checked").length
 
-    title = $('.more-filters-btn').data('title')
     if checked > 0
       $('.more-filters-btn').addClass 'btn-primary'
       $('.more-filters-btn').removeClass 'btn-outline-primary'
-      $('.more-filters-btn').text("#{title} .#{checked}")
     else
       $('.more-filters-btn').addClass 'btn-outline-primary'
       $('.more-filters-btn').removeClass 'btn-primary'
-      $('.more-filters-btn').text(title)
 
   Filters.update_prices = ->
     if $('.price-range-slider #min_price').val() == "0" && $('.price-range-slider #max_price').val() == "1500" && $('.discounts:checked').length == 0
