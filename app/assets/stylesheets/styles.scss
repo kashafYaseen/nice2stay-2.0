@@ -7864,3 +7864,9 @@ video {
 .slick-next .slick-arrow {
   background-color: black;
 }
+
+@media (min-width: 768px) {
+  .ml-md-7, .mx-md-7 {
+    margin-left: 7.5rem !important;
+  }
+}

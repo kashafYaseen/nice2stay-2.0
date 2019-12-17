@@ -20,6 +20,8 @@
 
         <div class="row container-fluid padding-sm-0 mt-4">
           <div class="col-md-4">
+            <h2><%= @lodging.h1 %></h2>
+
             <ul class="list-icon">
               <% if @reviews.present? %>
                 <div class="align-baseline text-xlg text-primary mr-1">
@@ -50,7 +52,6 @@
           </div>
 
           <div class="col-md-8">
-            <h2><%= @lodging.h1 %></h2>
             <p><%= @lodging.summary.try(:html_safe) %></p>
           </div>
         </div>
