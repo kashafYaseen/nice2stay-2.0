@@ -41,6 +41,7 @@
             :max-adults="<%= lodging.adults.to_i %>"
             :max-children="<%= lodging.children.to_i %>"
             :max-infants="<%= lodging.infants.to_i %>"
+            :lodging-ids="<%= lodging.lodging_children.try(:ids) %>"
           />
         </div>
       </div>
