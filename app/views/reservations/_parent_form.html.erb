@@ -21,7 +21,6 @@
             :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
             :show-action-buttons="false"
             :inline="true"
-            :bind-with="'<%= id_sufix.present? ? "vue_datepicker" : "vue_datepicker_modal" %>'"
           />
         </div>
       </div>
@@ -42,7 +41,6 @@
             :max-children="<%= lodging.children.to_i %>"
             :max-infants="<%= lodging.infants.to_i %>"
             :lodging-ids="<%= lodging.lodging_children.try(:ids) %>"
-            :bind-with="'<%= id_sufix.present? ? "vue_guest_dropdown" : "vue_guest_dropdown_modal" %>'"
           />
         </div>
       </div>
