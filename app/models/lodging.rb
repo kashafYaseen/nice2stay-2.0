@@ -51,6 +51,7 @@ class Lodging < ApplicationRecord
   scope :home_page, -> { published.where(home_page: true) }
   scope :region_page, -> { published.where(region_page: true) }
   scope :country_page, -> { published.where(country_page: true) }
+  scope :guest_centric, -> { published.where(guest_centric: true) }
   scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description

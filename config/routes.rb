@@ -74,6 +74,7 @@ Rails.application.routes.draw do
     resources :pages, only: [:show]
 
     get "dashboard", to: "dashboard#index"
+    get '/lodgings/guest_centric', to: "guest_centric_offers#index"
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
     get '/', to: 'pages#home', as: :root
