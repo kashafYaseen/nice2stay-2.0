@@ -6,7 +6,7 @@
     <% end unless action_name == 'details' %>
 
     <p>
-      <span class="text-sm"><%= reservation.adults + reservation.children %> guests</span> <br>
+      <span class="text-sm"><%= reservation.adults.to_i + reservation.children.to_i %> guests</span> <br>
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
 
