@@ -68,6 +68,10 @@ class Reservation < ApplicationRecord
     Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
   end
 
+  def total_rent
+    rent.to_f + cleaning_cost.to_f - discount.to_f
+  end
+
   private
     def update_lodging_availability
       return if in_cart? || prebooking? || option?
