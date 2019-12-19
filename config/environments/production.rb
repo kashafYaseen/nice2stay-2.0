@@ -112,7 +112,8 @@ Rails.application.configure do
       email_prefix: "Error",
       sender_address: %{"notifier" <notifier@nice2stay.com>},
       exception_recipients: %w{ahmad@thedevden.co sikandar.tariq@thedevden.co}
-    }
+    },
+    error_grouping: true
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
