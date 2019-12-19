@@ -1,6 +1,10 @@
 class GuestCentricOffersController < ApplicationController
-  before_action :set_lodging
+  before_action :set_lodging, except: [:index]
   before_action :set_booking_and_cookie, only: [:rates]
+
+  def index
+    @lodgings = Lodging.guest_centric
+  end
 
   def show
     @guest_centric = GetGuestCentricOffers.call(@lodging, params[:reservation].merge(locale: locale))

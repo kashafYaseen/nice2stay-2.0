@@ -16,5 +16,6 @@ namespace :api do
     resource :filters, only: [:show]
     resources :autocompletes, only: [:index]
     resources :favourites, only: [:index, :create, :destroy]
+    resources :bookings, only: [:index, :show]
   end
 end

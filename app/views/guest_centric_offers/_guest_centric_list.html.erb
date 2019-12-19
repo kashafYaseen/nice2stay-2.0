@@ -1,0 +1,55 @@
+<% lodgings.each do |lodging| %>
+  <h1><%= lodging.name %></h1>
+
+  <div class="col-md-12">
+    <% guest_centric = GetGuestCentricOffers.call(lodging, params[:reservation]) %>
+    <% if guest_centric.present? && guest_centric['response'].present? %>
+      <% guest_centric['response']['hotels'].each do |hotel| %>
+        <% if hotel['offers'].present? %>
+          <% hotel['offers'].each_with_index do |child, index| %>
+            <% if child['isPromotion'] %>
+              <% child['offers'].each do |offer| %>
+                <div class="row">
+                  <div class="col-md-4">
+                    Name: <b><%= offer['name'].try(:capitalize) %></b>
+                  </div>
+
+                  <div class="col-md-4">
+                    GC ID: <b><%= offer['roomOffer'].split('.')[0] %></b>
+                  </div>
+
+                  <div class="col-md-4">
+                    GC ID in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]).try(:guest_centric_id) %></b>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="row">
+                <div class="col-md-4">
+                  Name: <b><%= child['name'] %></b>
+                </div>
+
+                <div class="col-md-4">
+                  GC ID: <b><%= child['id_package'] %></b>
+                </div>
+
+                <div class="col-md-4">
+                  GC ID in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: child['id_package']).try(:guest_centric_id) %></b>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p>No Offer/Room Found! Please select different dates & guest details and try again.</p>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% if guest_centric.present? && guest_centric['error_message'].present? %>
+        <p><%= guest_centric['error_message'] %></p>
+        <p>Please select different dates & guest details and try again.</p>
+      <% else %>
+        <p>Please select dates & guest details.</p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
