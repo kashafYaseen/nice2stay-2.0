@@ -6,6 +6,7 @@ namespace :api do
     resources :lodgings, only: [:index, :show] do
       resource :invoices, only: [:show]
       resources :reviews, only: [:index]
+      resources :places, only: [:index]
 
       get :cumulative_price, on: :collection
       get :options, on: :member
