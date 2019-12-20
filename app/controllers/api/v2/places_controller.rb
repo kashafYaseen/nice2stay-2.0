@@ -3,7 +3,7 @@ class Api::V2::PlacesController < Api::V2::ApiController
 
   def index
     @places = SearchPlaces.call(params.merge(latitude: @lodging.latitude, longitude: @lodging.longitude))
-    render json: { data: @places.group_by(&:place_category).map{ |k, v| { category: {id: k.id, name: k.name}, places: v } } }, status: :ok
+    render json: { places: @places, categories: @places.collect(&:place_category).uniq }, status: :ok
   end
 
   private
