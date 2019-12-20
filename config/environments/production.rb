@@ -108,7 +108,7 @@ Rails.application.configure do
   }
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
-    ignore_crawlers: %w{Googlebot bingbot Applebot SeznamBot},
+    ignore_crawlers: %w{Googlebot bingbot Applebot SeznamBot SemrushBot},
     email: {
       email_prefix: "Error",
       sender_address: %{"notifier" <notifier@nice2stay.com>},
