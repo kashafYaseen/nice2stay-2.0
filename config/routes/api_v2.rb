@@ -18,5 +18,8 @@ namespace :api do
     resources :autocompletes, only: [:index]
     resources :favourites, only: [:index, :create, :destroy]
     resources :bookings, only: [:index, :show]
+    resource :carts do
+      post :remove, on: :member
+    end
   end
 end
