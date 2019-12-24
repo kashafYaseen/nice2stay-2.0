@@ -91,7 +91,7 @@ module LodgingsHelper
   end
 
   def render_lodging_path lodging
-    path = lodging_path(lodging_id(lodging), query_params)
+    path = lodging_path(lodging_id(lodging) || lodging, query_params)
     path += "##{lodging.slug}" if lodging.as_child?
     path
   end
