@@ -107,7 +107,7 @@ class Reservation < ApplicationRecord
     end
 
     def no_of_guests
-      return unless lodging.adults.present?
+      return unless lodging.present? && lodging.adults.present?
       return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults.to_i
 
       children_vacancies = lodging.children.to_i + lodging.adults - adults.to_i
