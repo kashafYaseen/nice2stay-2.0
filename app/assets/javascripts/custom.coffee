@@ -7,6 +7,10 @@
     toolbar_section = $('.toolbar-section')
     mobile_menu = $('.slideable-menu .menu')
 
+    resize_campaigs()
+    $(window).resize ->
+      resize_campaigs()
+
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
@@ -67,5 +71,8 @@
       elemTop = $elem.offset().top
       elemBottom = elemTop + $elem.height()
       elemBottom <= docViewBottom and elemTop >= docViewTop
+
+  resize_campaigs = ->
+    $('.spotlight-campaigns img').css('height', $('.ups-tags div').innerHeight());
 
 ).call this

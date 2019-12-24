@@ -14,3 +14,43 @@
     text-align: center;
   }
 }
+
+.spotlight-campaigns {
+  .image-title-box {
+    display: block;
+    position: absolute;
+    top: 18%;
+    left: 34%;
+    width: 80%;
+    margin-top: -10%;
+    margin-left: -24%;
+    background-color: #1312124d;
+    color: white;
+    font-size: 34px;
+    padding: 3%;
+    text-align: center;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+.owl-carousel {
+  .image-title-box {
+    display: block;
+    position: absolute;
+    top: 80%;
+    left: 30%;
+    width: 90%;
+    margin-top: -10%;
+    margin-left: -24%;
+    background-color: #1312124d;
+    color: white;
+    font-size: 20px;
+    padding: 3%;
+    text-align: center;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .grid-item.gallery-item img {
+    min-height: 290px;
+  }
+}

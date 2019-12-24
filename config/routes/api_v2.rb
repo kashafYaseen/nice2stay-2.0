@@ -21,5 +21,6 @@ namespace :api do
     resource :carts do
       post :remove, on: :member
     end
+    resources :countries, only: [:index]
   end
 end
