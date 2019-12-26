@@ -1,6 +1,6 @@
 namespace :api do
   namespace :v2 do
-    resource :profiles, only: [:create]
+    resource :profiles, only: [:create, :show, :update]
     resource :sessions, only: [:create, :update]
     resource :omniauths, only: [:create, :update]
     resources :lodgings, only: [:index, :show] do
