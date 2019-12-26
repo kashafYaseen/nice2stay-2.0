@@ -83,7 +83,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="grid-item gallery-item">
-              <%= link_to campaign.title campaign.url do %>
+              <%= link_to campaign.url do %>
                 <%= image_tag campaign.image if campaign.image.present? %>
                 <h2 class="image-title-box"><%= campaign.title %></h2>
               <% end %>
@@ -123,6 +123,22 @@
           <%= link_to country_path(country, locale: locale) do %>
             <%= image_tag country.image if country.image.present? %>
             <h2 class="image-title-box"><%= country.name %></h2>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-12 p-0">
+    <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center">Popular Collections</h6>
+    <hr class="margin-bottom-1x">
+    <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
+
+      <% @slider_campaigns.each do |campaign| %>
+        <div class="grid-item gallery-item">
+          <%= link_to campaign.url do %>
+            <%= image_tag campaign.image if campaign.image.present? %>
+            <h2 class="image-title-box"><%= campaign.title %></h2>
           <% end %>
         </div>
       <% end %>
