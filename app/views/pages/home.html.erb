@@ -93,37 +93,43 @@
       </div>
     <% end %>
   </div>
-
-  <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center"><%= t 'collection.populair' %></h6>
-  <hr class="margin-bottom-1x">
-  <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
-
-    <% @custom_texts.popular.each do |custom_text| %>
-      <div class="grid-item gallery-item">
-        <%= link_to seo_url custom_text.seo_path do %>
-          <%= image_tag custom_text.image if custom_text.image.present? %>
-          <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
-          <span class="caption"><%= custom_text.h1_text %></span>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center">Popular Destination</h6>
-  <hr class="margin-bottom-1x">
-  <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
-
-    <% @countries_enabled.each do |country| %>
-      <div class="grid-item gallery-item">
-        <%= link_to country_path(country, locale: locale) do %>
-          <%= image_tag country.image if country.image.present? %>
-          <h2 class="image-title-box"><%= country.name %></h2>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="margin-bottom-2x"></div>
 </div>
+
+<div class="row m-0">
+  <div class="col-md-12 p-0">
+    <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center"><%= t 'collection.populair' %></h6>
+    <hr class="margin-bottom-1x">
+    <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
+
+      <% @custom_texts.popular.each do |custom_text| %>
+        <div class="grid-item gallery-item">
+          <%= link_to seo_url custom_text.seo_path do %>
+            <%= image_tag custom_text.image if custom_text.image.present? %>
+            <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
+            <span class="caption"><%= custom_text.h1_text %></span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-12 p-0">
+    <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center">Popular Destination</h6>
+    <hr class="margin-bottom-1x">
+    <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
+
+      <% @countries_enabled.each do |country| %>
+        <div class="grid-item gallery-item">
+          <%= link_to country_path(country, locale: locale) do %>
+            <%= image_tag country.image if country.image.present? %>
+            <h2 class="image-title-box"><%= country.name %></h2>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="margin-bottom-2x"></div>
 
 <% content_for :canonical do %><%= root_url %><% end %>
