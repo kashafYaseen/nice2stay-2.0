@@ -14,4 +14,8 @@ class Api::V2::BookingSerializer
   attributes :reservations, if: Proc.new { |booking, params| params.present? && params[:reservations].present? } do |booking, params|
     Api::V2::ReservationSerializer.new(booking.reservations.not_canceled)
   end
+
+  attributes :user, if: Proc.new { |booking, params| params.present? && params[:auth].present? } do |booking, params|
+    Api::V2::UserSerializer.new(booking.user, { params: { auth_token: params[:auth] } })
+  end
 end
