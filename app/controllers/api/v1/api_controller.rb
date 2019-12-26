@@ -13,7 +13,7 @@ class Api::V1::ApiController < ActionController::API
     end
 
     def unprocessable_entity(errors)
-      render json: { errors: errors }, status: :unprocessable_entity
+      render json: { errors: errors.try(:full_messages).presence || errors }, status: :unprocessable_entity
       return
     end
 
