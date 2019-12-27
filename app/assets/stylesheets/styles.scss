@@ -31,8 +31,11 @@
   height: 600px;
  }
 
-.jumbotron{
+.jumbotron-background {
   background-image: url("https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/27302/12__2_.jpg");
+}
+
+.jumbotron {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;

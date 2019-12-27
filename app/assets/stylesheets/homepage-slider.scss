@@ -1,18 +1,32 @@
 .homepage-slider {
-  .image-title-box {
-    display: block;
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    width: 50%;
-    margin-top: -10%;
-    margin-left: -24%;
-    color: white;
-    font-size: 28px;
-    text-weight: strong;
-    padding: 3%;
-    text-align: center;
+  .jumbotron {
+    .image-title-box {
+      display: block;
+      position: absolute;
+      top: 10%;
+      padding-top: 15%;
+      left: 24%;
+      width: 100%;
+      background-color: #13121252;
+      color: white;
+      font-size: 47px;
+      text-align: center;
+      height: 100vh;
+      box-shadow: none;
+    }
+
+    .gallery-item:hover > a > img {
+      -webkit-transform: none;
+              transform: none;
+    }
+
+    .gallery-item:hover .caption {
+      -webkit-transform: none;
+              transform: none;
+    }
   }
+
+
 }
 
 .spotlight-campaigns {
