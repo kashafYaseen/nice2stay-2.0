@@ -1,6 +1,8 @@
 namespace :api do
   namespace :v2 do
-    resource :profiles, only: [:create, :show, :update]
+    resource :profiles, only: [:create, :show, :update] do
+      post :update_password
+    end
     resource :sessions, only: [:create, :update]
     resource :omniauths, only: [:create, :update]
     resources :lodgings, only: [:index, :show] do
@@ -17,7 +19,9 @@ namespace :api do
     resource :filters, only: [:show]
     resources :autocompletes, only: [:index]
     resources :favourites, only: [:index, :create, :destroy]
-    resources :bookings, only: [:index, :show]
+    resources :bookings, only: [:index, :show] do
+      resource :payments, only: [:create]
+    end
     resource :carts do
       post :remove, on: :member
     end
