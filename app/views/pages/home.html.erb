@@ -1,18 +1,19 @@
-<div class="row price_box m-0">
-  <div class="jumbotron col-md-8 p-0">
-    <div class="dark-overlay-image">
-      <div class="container-fluid">
-        <div class="col-md-12 text-center mt-200">
-          <h1 class="text-white display-4 text-uppercase">Trust Our Taste </h1>
-          <h3 class="text-white"> <%= t 'usp.discover' %> </h3>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="row price_box m-0 homepage-slider">
+  <div class="jumbotron col-md-12 p-0">
+    <div class="owl-carousel" data-owl-carousel='{ "nav": true, "dots": false, "loop": true, "autoplayTimeout": 4000}'>
 
-  <div class="col-md-4 pl-5 pr-5 my-auto">
-    <h6 class="text-bold"><%= t 'usp.intro_details' %></h6>
-    <h4 class="text-bold"> <%= t 'usp.discover' %> </h4>
+      <% @slider_campaigns.each do |campaign| %>
+        <div class="grid-item gallery-item dark-overlay-image">
+          <%= link_to campaign.url do %>
+            <%= image_tag campaign.image if campaign.image.present? %>
+            <div class="image-title-box">
+              <h2 class="text-white display-4 text-uppercase"><%= campaign.title %></h2>
+              <h3 class="text-white"><%= strip_tags campaign.description %></h3>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -128,24 +129,26 @@
       <% end %>
     </div>
   </div>
-
-  <div class="col-md-12 p-0">
-    <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center">Popular Collections</h6>
-    <hr class="margin-bottom-1x">
-    <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
-
-      <% @slider_campaigns.each do |campaign| %>
-        <div class="grid-item gallery-item">
-          <%= link_to campaign.url do %>
-            <%= image_tag campaign.image if campaign.image.present? %>
-            <h2 class="image-title-box"><%= campaign.title %></h2>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
 </div>
 
-<div class="margin-bottom-2x"></div>
+<div class="margin-bottom-3x"></div>
+
+<div class="row price_box m-0">
+  <div class="jumbotron jumbotron-background col-md-8 p-0">
+    <div class="dark-overlay-image">
+      <div class="container-fluid">
+        <div class="col-md-12 text-center mt-200">
+          <h1 class="text-white display-4 text-uppercase">Trust Our Taste </h1>
+          <h3 class="text-white"> <%= t 'usp.discover' %> </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 pl-5 pr-5 my-auto">
+    <h6 class="text-bold"><%= t 'usp.intro_details' %></h6>
+    <h4 class="text-bold"> <%= t 'usp.discover' %> </h4>
+  </div>
+</div>
 
 <% content_for :canonical do %><%= root_url %><% end %>
