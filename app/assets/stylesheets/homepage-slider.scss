@@ -25,8 +25,30 @@
               transform: none;
     }
   }
+}
 
+@media (max-width: 576px) {
+  .homepage-slider {
+    .jumbotron {
+      height: 500px;
 
+      .image-title-box {
+        height: 550px;
+        top: 7%;
+        padding-top: 45%;
+      }
+
+      .gallery-item img {
+        height: 500px;
+      }
+    }
+
+    .owl-carousel {
+      .dark-overlay-image {
+        height: 500px;
+      }
+    }
+  }
 }
 
 .spotlight-campaigns {
