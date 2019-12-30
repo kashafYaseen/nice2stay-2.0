@@ -1,73 +1,73 @@
-<div class="bg-dark home-search-toggle">
-  <div class="col-md-12 pt-5 pb-5">
-    <h2 class="text-white"> <%= t 'usp.discover' %> </h2>
+<% content_for :body_class, "home-full-page-layout" %>
 
-    <h5 class="text-white margin-bottom-1x"><%= t 'usp.homepage' %></h5>
-    <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
-      <div class="row">
-        <div class="col-md-6 col-sm-12 pt-3">
-          <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general' %>
-        </div>
+<div class="row price_box m-0">
+  <div class="jumbotron jumbotron-background col-md-12 p-0">
+    <div class="dark-overlay-image">
+      <div class="offset-md-1 col-sm-12 col-md-6 col-lg-5 col-xl-4 mt-vh">
+        <div class="row text-center">
+          <div class="card bg-white p-3">
+            <div class="card-body text-left">
+              <h1 class="display-4"><%= t('usp.discover') %></h1>
+              <h3><%= t('usp.search') %></h3>
 
-        <div class="col-md-6 col-sm-12 pt-0">
-          <div class="row homepage-actions-row">
-            <div class="vue-app">
-              <datepicker
-                :trigger-id="'trigger-range'"
-                :check-in="'<%= params[:check_in]%>'"
-                :check-out="'<%= params[:check_out]%>'"
-                :months="2"
-                :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
-                :full-screen="false"
-                :trigger-button="'btn btn-outline-primary'"
-                :inline="false"
-              />
+              <div class="row">
+                <div class="col-md-12">
+                  <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
+                    <div class="row">
+                      <div class="col-12 pt-3">
+                        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general' %>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="vue-app">
+                          <datepicker
+                            :trigger-id="'trigger-range'"
+                            :check-in="'<%= params[:check_in]%>'"
+                            :check-out="'<%= params[:check_out]%>'"
+                            :months="2"
+                            :min-date="'<%= Date.yesterday %>'"
+                            :action-buttons="true"
+                            :full-screen="false"
+                            :trigger-button="'btn btn-outline-primary w-100'"
+                            :inline="false"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="vue-app">
+                          <guests-dropdown
+                            :adults="<%= params[:adults].to_i %>"
+                            :children="<%= params[:children].to_i %>"
+                            :infants="<%= params[:infants].to_i %>"
+                            :adults-target="'.adults'"
+                            :children-target="'.children'"
+                            :infants-target="'.infants'"
+                            :dropdown-id="'<%= "guests-dropdown-homepage" %>'"
+                            :show-apply="false"
+                            :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
+                        <%= hidden_field_tag :children, params[:children], class: 'children' %>
+                        <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
+                        <%= hidden_field_tag :standalone, true %>
+                        <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
+                        <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
+                        <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary float-right' , data: { disable_with: t('search.search_button') }
+                        %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
             </div>
-
-            <div class="vue-app">
-              <guests-dropdown
-                :adults="<%= params[:adults].to_i %>"
-                :children="<%= params[:children].to_i %>"
-                :infants="<%= params[:infants].to_i %>"
-                :adults-target="'.adults'"
-                :children-target="'.children'"
-                :infants-target="'.infants'"
-                :dropdown-id="'<%= "guests-dropdown-homepage" %>'"
-                :show-apply="false"
-                :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
-              />
-            </div>
-
-            <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
-            <%= hidden_field_tag :children, params[:children], class: 'children' %>
-            <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
-            <%= hidden_field_tag :standalone, true %>
-            <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
-            <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
-            <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
-            %>
           </div>
         </div>
       </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="row price_box m-0 homepage-slider">
-  <div class="jumbotron col-md-12 p-0">
-    <div class="owl-carousel" data-owl-carousel='{ "nav": true, "dots": false, "loop": true, "autoplayTimeout": 4000}'>
-      <% @slider_campaigns.each do |campaign| %>
-        <div class="grid-item gallery-item dark-overlay-image">
-          <%= link_to campaign.url do %>
-            <%= image_tag campaign.image if campaign.image.present? %>
-            <div class="image-title-box">
-              <h2 class="text-white display-4 text-uppercase"><%= campaign.title %></h2>
-              <h3 class="text-white"><%= strip_tags campaign.description %></h3>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

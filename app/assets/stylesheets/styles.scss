@@ -6906,10 +6906,6 @@ video {
   display: none;
 }
 
-.home-search-toggle {
-  display: none;
-}
-
 @media (max-width: 1340px) {
   .toolbar .toolbar-toggle.mobile-menu-toggle {
     display: table-cell;
@@ -6917,10 +6913,6 @@ video {
 
   .toolbar .toolbar-toggle.search-toggle {
     display: table-cell;
-  }
-
-  .home-search-toggle {
-    display: block;
   }
 }
 
