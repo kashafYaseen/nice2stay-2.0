@@ -73,6 +73,7 @@
       elemBottom <= docViewBottom and elemTop >= docViewTop
 
   resize_campaigs = ->
-    $('.spotlight-campaigns img').css('height', $('.ups-tags div').innerHeight());
+    if window.innerWidth > 576
+      $('.spotlight-campaigns img').css('height', $('.ups-tags div').innerHeight());
 
 ).call this
