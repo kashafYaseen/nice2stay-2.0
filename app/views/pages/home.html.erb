@@ -18,7 +18,7 @@
                         <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general' %>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-6">
                         <div class="vue-app">
                           <datepicker
                             :trigger-id="'trigger-range'"
@@ -34,7 +34,7 @@
                         </div>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-6">
                         <div class="vue-app">
                           <guests-dropdown
                             :adults="<%= params[:adults].to_i %>"
@@ -50,13 +50,19 @@
                         </div>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 pr-1">
                         <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
                         <%= hidden_field_tag :children, params[:children], class: 'children' %>
                         <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
                         <%= hidden_field_tag :standalone, true %>
                         <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
                         <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
+
+                        <div class="float-left m-2">
+                          <%= check_box_tag :flexible_arrival, true, false %>
+                          <%= label_tag :flexible_arrival, 'flexible arrival +/- 3 days' %>
+                        </div>
+
                         <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary float-right' , data: { disable_with: t('search.search_button') }
                         %>
                       </div>
@@ -74,136 +80,149 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12 col-lg-4 margin-top-1x ups-tags">
+    <div class="col-sm-6 margin-top-1x">
+     <p class="text-sm margin-top-1x"><%= t 'usp.intro_details' %></p>
+    </div>
+
+    <div class="col-sm-6 margin-top-1x">
+      <section class="widget-tags">
+        <h5 class="mb-10">Nice2stay</h5>
+        <% @pages.each do |page| %>
+          <%= link_to page.title, page_path(page), class: "tag" %>
+        <% end %>
+      </section>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 margin-top-1x">
       <div class="card margin-bottom-1x">
-        <div class="card-body bg-white">
+        <div class="card-body">
           <div class="row pt-2">
-            <div class="col-md-6 col-lg-12 mb-5 mb-md-0">
-              <div class="row">
-                <span class="col-md-4 display-4 text-gray-light mb-4 text-center">
-                  <%= image_tag("usp_visit.png", alt: "visit") %>
-                </span>
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30" >
+              <span class="d-block display-4 text-gray-light mb-4">
+                <%= image_tag("usp_visit.png", :alt => "visit") %>
+              </span>
 
-                <div class="col-md-8 text-center text-md-left">
-                  <h4 class="h5 mb-2"><%= t 'usp.inspect' %></h4>
-                  <p class="text-muted text-xxxs mb-0"><%= t 'usp.inspect_details' %></p>
-                </div>
-              </div>
+              <h4 class="h5 mb-2"><%= t 'usp.inspect' %></h4>
+              <p class="text-muted text-xxxs mb-0"><%= t 'usp.inspect_details' %></p>
             </div>
 
-            <div class="col-md-6 col-lg-12 mb-5 mb-md-0">
-              <div class="row">
-                <span class="col-md-4 display-4 text-gray-light mb-4 text-center">
-                  <%= image_tag("usp_support.png", alt: "visit") %>
-                </span>
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
+              <span class="d-block display-4 text-gray-light mb-4">
+                <%= image_tag("usp_support.png", :alt => "visit") %>
+              </span>
 
-                <div class="col-md-8 text-center text-md-left">
-                  <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
-                  <p class="text-muted text-xxxs mb-0"><%= t 'usp.price_details' %></p>
-                </div>
-              </div>
+              <h5 class="h5 mb-2"><%= t 'usp.price' %></h5>
+              <p class="text-muted text-xxxs mb-0"><%= t 'usp.price_details' %></p>
             </div>
 
-            <div class="col-md-6 col-lg-12 mb-5 mb-md-0">
-              <div class="row">
-                <span class="col-md-4 display-4 text-gray-light mb-4 text-center">
-                  <%= image_tag("usp_helpdesk.png", alt: "visit") %>
-                </span>
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
+              <span class="d-block display-4 text-gray-light mb-4">
+                <%= image_tag("usp_helpdesk.png", :alt => "visit") %>
+              </span>
 
-                <div class="col-md-8 text-center text-md-left">
-                  <h5 class="h5 mb-2"><%= t 'usp.advice' %></h5>
-                  <p class="text-muted text-xxxs mb-0"><%= t 'usp.advice_details' %></p>
-                </div>
-              </div>
+              <h5 class="h5 mb-2"><%= t 'usp.advice' %></h5>
+              <p class="text-muted text-xxxs mb-0"><%= t 'usp.advice_details' %></p>
             </div>
 
-            <div class="col-md-6 col-lg-12 mb-5 mb-md-0">
-              <div class="row">
-                <span class="col-md-4 display-4 text-gray-light mb-4 text-center">
-                  <%= image_tag("usp_secure.png", alt: "visit") %>
-                </span>
+            <div class="col-md-3 col-sm-4 col-xs-6 text-center mb-30">
+              <span class="d-block display-4 text-gray-light mb-4">
+                <%= image_tag("usp_secure.png", :alt => "visit") %>
+              </span>
 
-                <div class="col-md-8 text-center text-md-left">
-                  <h5 class="h5 mb-2"><%= t 'usp.payment' %></h5>
-                  <p class="text-muted text-xxxs mb-0"><%= t 'usp.payment_details' %></p>
-                </div>
-              </div>
+              <h5 class="h5 mb-2"><%= t 'usp.payment' %></h5>
+              <p class="text-muted text-xxxs mb-0"><%= t 'usp.payment_details' %></p>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <% @campaigns.each do |campaign| %>
-      <div class="col-sm-12 col-md-6 col-lg-4 margin-top-1x spotlight-campaigns">
-        <div class="row">
-          <div class="col-md-12">
+      <% if @custom_texts.popular.present? %>
+        <section class="padding-top-1x pb-2">
+          <h3 class="mb-30"><%= t 'collection.populair' %></h3>
+          <hr class="mt-3"></hr>
+
+          <div class="isotope-grid cols-4">
+            <div class="gutter-sizer"></div>
+            <div class="grid-sizer"></div>
+
+            <% @custom_texts.popular.each do |custom_text| %>
+              <div class="grid-item gallery-item">
+                <%= link_to seo_url custom_text.seo_path do %>
+                  <%= image_tag custom_text.image if custom_text.image.present? %>
+                  <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
+                  <span class="caption"><%= custom_text.h1_text %></span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+
+      <section class="padding-top-1x pb-2">
+        <h3 class="mb-30">Popular Destination</h3>
+        <hr class="mt-3"></hr>
+
+        <div class="isotope-grid cols-4">
+          <div class="gutter-sizer"></div>
+          <div class="grid-sizer"></div>
+
+          <% @countries_enabled.each do |country| %>
             <div class="grid-item gallery-item">
-              <%= link_to campaign.url do %>
-                <%= image_tag campaign.image if campaign.image.present? %>
-                <h2 class="image-title-box"><%= campaign.title %></h2>
+              <%= link_to country_path(country, locale: locale) do %>
+                <%= image_tag country.image, style: 'min-height: 200px' if country.image.present? %>
+                <h2 class="image-title-box"><%= country.name %></h2>
               <% end %>
             </div>
-          </div>
+          <% end %>
         </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <% if @all_reviews.present? %>
+      <div class="col-sm-12 margin-top-1x margin-bottom-2 col-xs-12 col-md-6">
+        <h3 class="mb-3"><%= t 'reviews.title' %></h3>
+        <h5 class="card-title text-muted margin-bottom-1x"></h5>
+
+        <section class="col-md-12 padding-top-2x margin-bottom-2x leads_homepage padding-bottom-2x">
+          <div class="reviews-container">
+            <%= render @reviews %>
+          </div>
+
+          <div class="homepage-review-paginator">
+            <%= paginate @reviews, remote: true %>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-sm-12 margin-top-2x x col-xs-12 col-md-6">
+        <h5 class="card-title margin-top-1x  text-muted margin-bottom-1x"></h5>
+        <%= render 'reviews/average_rating', reviews: @all_reviews %>
       </div>
     <% end %>
   </div>
-</div>
 
-<div class="row m-0">
-  <div class="col-md-12 p-0">
-    <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center"><%= t 'collection.populair' %></h6>
-    <hr class="margin-bottom-1x">
-    <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
-
-      <% @custom_texts.popular.each do |custom_text| %>
-        <div class="grid-item gallery-item">
-          <%= link_to seo_url custom_text.seo_path do %>
-            <%= image_tag custom_text.image if custom_text.image.present? %>
-            <h2 class="image-title-box"><%= custom_text.menu_title %></h2>
-            <span class="caption"><%= custom_text.h1_text %></span>
-          <% end %>
-        </div>
-      <% end %>
+  <div class="row">
+    <div class="col-md-6 padding-bottom-2x margin-bottom-2x">
+      <section class="col-md-12 homepage padding-top-2x">
+        <%= render 'leads/form', lead: @lead, countries: @countries %>
+      </section>
     </div>
-  </div>
 
-  <div class="col-md-12 p-0">
-    <h6 class="text-muted text-normal text-uppercase margin-top-3x text-center">Popular Destination</h6>
-    <hr class="margin-bottom-1x">
-    <div class="owl-carousel" data-owl-carousel='{ "nav": false, "dots": true, "loop": true, "margin": 1, "autoplay": true, "autoplayTimeout": 4000, "responsive": {"0":{"items": 2}, "630":{"items": 3}, "800": {"items":4}, "1200": {"items": 5}} }'>
-
-      <% @countries_enabled.each do |country| %>
-        <div class="grid-item gallery-item">
-          <%= link_to country_path(country, locale: locale) do %>
-            <%= image_tag country.image if country.image.present? %>
-            <h2 class="image-title-box"><%= country.name %></h2>
-          <% end %>
-        </div>
-      <% end %>
+    <div class="col-md-6">
+      <h3 class="mb-3"><%= t('lead.title') %></h3>
+      <p><%= t('lead.description') %></p>
     </div>
-  </div>
-</div>
-
-<div class="margin-bottom-3x"></div>
-
-<div class="row price_box m-0">
-  <div class="jumbotron jumbotron-background col-md-8 p-0">
-    <div class="dark-overlay-image">
-      <div class="container-fluid">
-        <div class="col-md-12 text-center mt-200">
-          <h1 class="text-white display-4 text-uppercase">Trust Our Taste </h1>
-          <h3 class="text-white"> <%= t 'usp.discover' %> </h3>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4 pl-5 pr-5 my-auto">
-    <h6 class="text-bold"><%= t 'usp.intro_details' %></h6>
-    <h4 class="text-bold"> <%= t 'usp.discover' %> </h4>
   </div>
 </div>
 
 <% content_for :canonical do %><%= root_url %><% end %>
+
+<% content_for :js_init do %>
+  Lodging.read_more();
+<% end %>
