@@ -8,8 +8,9 @@
     $('#moreFilters, .close-filters-dropdown').click ->
       $('.more-filters-dropdown-menu').toggleClass 'd-none'
 
-    $('.lodgings-filters .filters-autocomplete').on 'keypress', (e) ->
+    $('.filters-autocomplete').on 'keypress', (e) ->
       if e.which == 13
+        $('.lodgings-filters .query').val $(this).val()
         Filters.submit()
 
     $('.layout-btn').click ->

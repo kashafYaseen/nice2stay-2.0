@@ -4,40 +4,6 @@
       <div class="col-md-5 pt-2">
         <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
       </div>
-
-      <div class="vue-app">
-        <datepicker
-          :trigger-id="'trigger-range'"
-          :check-in="'<%= params[:check_in]%>'"
-          :check-out="'<%= params[:check_out]%>'"
-          :months="2"
-          :min-date="'<%= Date.yesterday %>'"
-          :action-buttons="true"
-          :full-screen="false"
-          :trigger-button="'btn btn-outline-primary dropdown-toggle'"
-          :inline="false"
-          :highlight-on-selection="true"
-        />
-      </div>
-
-      <div class="vue-app">
-        <guests-dropdown
-          :adults="<%= params[:adults].to_i %>"
-          :children="<%= params[:children].to_i %>"
-          :infants="<%= params[:infants].to_i %>"
-          :adults-target="'#adults'"
-          :children-target="'#children'"
-          :infants-target="'#infants'"
-          :dropdown-id="'<%= "guests-dropdown-filters" %>'"
-          :show-apply="true"
-          :button-classes="'btn btn-outline-primary dropdown-toggle'"
-          :show-infants="false"
-          :highlight-on-selection="true"
-          :submit-target="'.lodgings-filters'"
-        />
-      </div>
-
-      <%= button_tag t('search.search_button'), class: "btn btn-primary submit-filters" %>
     </div>
 
     <% content_for :js_init do %>

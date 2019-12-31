@@ -46,6 +46,42 @@
           </div>
         </section>
 
+        <section>
+          <div class="vue-app">
+            <datepicker
+              :trigger-id="'trigger-range'"
+              :check-in="'<%= params[:check_in]%>'"
+              :check-out="'<%= params[:check_out]%>'"
+              :months="2"
+              :min-date="'<%= Date.yesterday %>'"
+              :action-buttons="true"
+              :full-screen="false"
+              :trigger-button="'btn btn-outline-primary dropdown-toggle btn-sm mr-1'"
+              :inline="false"
+              :highlight-on-selection="true"
+            />
+          </div>
+        </section>
+
+        <section>
+          <div class="vue-app">
+            <guests-dropdown
+              :adults="<%= params[:adults].to_i %>"
+              :children="<%= params[:children].to_i %>"
+              :infants="<%= params[:infants].to_i %>"
+              :adults-target="'#adults'"
+              :children-target="'#children'"
+              :infants-target="'#infants'"
+              :dropdown-id="'<%= "guests-dropdown-filters" %>'"
+              :show-apply="true"
+              :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
+              :show-infants="false"
+              :highlight-on-selection="true"
+              :submit-target="'.lodgings-filters'"
+            />
+          </div>
+        </section>
+
         <section class="lodging-types-list pr-1">
           <div class="types-dropdown dropdown">
             <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="typeFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -203,4 +239,5 @@
   <%= hidden_field_tag :bounds, params[:bounds] %>
   <%= hidden_field_tag :name_middle, params[:name_middle] %>
   <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'List & Map' %>
+  <%= hidden_field_tag :query, params[:query], class: 'query' %>
 <% end %>
