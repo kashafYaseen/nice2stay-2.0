@@ -137,7 +137,7 @@ module LodgingsHelper
   end
 
   def item_columns
-    return 'col-lg-4' if action_name == 'show'
+    return 'col-lg-6' if action_name == 'show'
     return 'col-md-6' if params[:layout_view] == 'List View'
     'col-md-12'
   end
