@@ -99,7 +99,7 @@
 
           <div class="row mt-5">
             <div class="col-md-5 vue-app" data-id="vue-child-modal-<%= lodging.id %>">
-              <reservation-datepicker
+            <reservation-datepicker
                 :check-in="'<%= params[:check_in] %>'"
                 :check-out="'<%= params[:check_out] %>'"
                 :check-in-title="'<%= t('search.check_in') %>'"
@@ -112,6 +112,7 @@
                 :invoice-on-apply="true"
                 :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
                 :show-action-buttons="false"
+                :inline="true"
               />
             </div>
 
