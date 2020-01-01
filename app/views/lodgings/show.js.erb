@@ -7,3 +7,4 @@ $(".price-loader").hide();
 $('[data-toggle="tooltip"]').tooltip();
 OwlCarousel.init();
 Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
+Lodging.read_more();
