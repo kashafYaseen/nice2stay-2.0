@@ -64,10 +64,17 @@
             </div>
 
             <div class="tab-pane fade" id="amenities-tab-<%= lodging.id %>" role="tabpanel">
-              <ul class="list-icon pt-2 pb-2">
-                <% lodging.amenities.each do |amenity| %>
-                  <i class="material-icons md-14 check_circle text-success"></i> <%= amenity.name %>
-                <% end %>
+              <ul class="list-icon">
+                <div class="bs-glyphicons">
+                  <ul class="bs-glyphicons-list">
+                    <% lodging.amenities.each do |amenity| %>
+                      <li>
+                        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-<%= amenity.icon.presence || 'shield-check' %> fa-2x"></i></span>
+                        <span class="glyphicon-class"><%= amenity.name %></span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               </ul>
             </div>
 
