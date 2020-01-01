@@ -32,6 +32,9 @@
     if $('.realtime-dropdown input').is(":checked")
       highlight('.realtime-dropdown .dropdown-toggle')
 
+    if $('.flexible-dropdown input').is(":checked")
+      highlight('.flexible-dropdown .dropdown-toggle')
+
   highlight = (element) ->
     $(element).addClass 'btn-primary'
     $(element).removeClass 'btn-outline-primary'

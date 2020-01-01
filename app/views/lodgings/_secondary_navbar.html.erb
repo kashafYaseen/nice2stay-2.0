@@ -192,6 +192,21 @@
             </div>
           </div>
         </section>
+
+        <section class="pr-1">
+          <div class="flexible-dropdown dropdown">
+            <button class="btn btn-sm btn btn-outline-primary dropdown-toggle w-100" type="button" id="typeFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="title">Flexible Arrival</span>
+            </button>
+
+            <div class="dropdown-menu flexible-dropdown-menu p-2" aria-labelledby="typeFilter">
+              <div class="custom-control custom-checkbox">
+                <%= check_box_tag :flexible_arrival, true, params[:flexible_arrival], class: "custom-control-input flexible-arrival" %>
+                <%= label_tag :flexible_arrival, t('filters.flexible_text'), class: 'text-xxxs custom-control-label' %>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -213,10 +228,11 @@
         <% end %>
       </section>
 
-      <section class="col-md-3 amenities-list pt-3">
+      <section class="col-md-9 amenities-list pt-3 row">
         <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities' %></p>
+
         <% amenities.regular.each do |amenity| %>
-          <div class="custom-control custom-checkbox col-md-6">
+          <div class="custom-control custom-checkbox col-md-3">
             <%= check_box_tag "amenities_in[]", amenity.id, is_checked?(amenity.id, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
 
             <label class="custom-control-label" for="amenity_<%= amenity.id %>">

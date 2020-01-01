@@ -62,7 +62,9 @@ en:
     apartment: Apartments
     villa: Villas
     bnb: Boutique hotels
-  sorting: 
+    flexible_tooltip: when you select this option, you get more results. By example when flex arrival is on and you select checkin friday then you'll also see results with checkin as saterday or sunday
+    flexible_text: Flexible arrivale -3/+3 days
+  sorting:
     low_high: Lowest price
     high_low: Highest price
     high_rating: Highest rating

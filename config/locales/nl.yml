@@ -290,6 +290,9 @@ nl:
     apartment: Appartementen
     villa: Vakantiehuizen
     bnb: Boutique hotels
+    flexible_tooltip: Wanneer u deze optie selecteert, krijgt u meer resultaten. Als Flex aankomst bijvoorbeeld is ingeschakeld en u checkin vrijdag heeft geselecteerd, dan ziet u ook resultaten voor inchecken op zaterdag of zondag
+    flexible_text: Flexibele aankomst -3/+3 dagen
+
   sorting: 
     low_high: Laagste prijs
     high_low: Hoogste prijs

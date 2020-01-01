@@ -29,7 +29,7 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('#filters-container .lodging_type, #filters-container .realtime-availability').change ->
+    $('#filters-container .lodging_type, #filters-container .realtime-availability, #filters-container .flexible-arrival').change ->
       Url.update("");
       Filters.submit()
 
