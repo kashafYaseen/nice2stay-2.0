@@ -16,6 +16,7 @@
     if $('#country').val()   then params += "&country=#{$('#country').val()}"
     if $('#discounts').is(':checked') then params += "&discounts=true"
     if $('.realtime-availability').is(':checked') then params += "&realtime_availability=true"
+    if $('.flexible-arrival').is(':checked') then params += "&flexible_arrival=true"
     if $('#layout_view').val() then params += "&layout_view=#{$('#layout_view').val()}"
     if $('.lodgings-filters .query').val() then params += "&query=#{$('.lodgings-filters .query').val()}"
 
