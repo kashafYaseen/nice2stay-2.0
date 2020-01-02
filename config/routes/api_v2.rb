@@ -26,5 +26,6 @@ namespace :api do
       post :remove, on: :member
     end
     resources :countries, only: [:index]
+    resources :leads, only: [:create]
   end
 end
