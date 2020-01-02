@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :prepare_exception_notifier
   protect_from_forgery prepend: true, with: :exception
   before_action :set_locale, :set_booking, :set_wishlists, :set_countries, :set_custom_texts, :set_pages
   rescue_from ActionController::InvalidAuthenticityToken, with: :handle_token_authenticity
@@ -44,4 +45,12 @@ class ApplicationController < ActionController::Base
   def handle_token_authenticity
     redirect_back fallback_location: root_path, alert: "Unable to process your request. Please try again"
   end
+
+  private
+    def prepare_exception_notifier
+      request.env["exception_notifier.exception_data"] = {
+        current_user: current_user,
+        current_visit: current_visit,
+      }
+    end
 end
