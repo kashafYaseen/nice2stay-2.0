@@ -4,7 +4,7 @@
   <div class="card">
     <div class="card-body bg-white">
       <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-4">
+        <div class="col-sm-12 col-md-12 col-lg-6">
           <% if hits[lodging_counter]['_source']['discounts'] %>
             <span class="product-badge text-danger">Special offer</span>
           <% end %>
@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-sm-12 col-md-12 col-lg-5" do %>
+        <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-sm-12 col-md-12 col-lg-4" do %>
           <h6 class="card-title text-bold"><%= lodging.name %></h6>
 
           <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
@@ -37,7 +37,7 @@
           <hr class="mt-1">
         <% end %>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 text-center p-0 price-review-box-<%= lodging.id %>">
+        <div class="col-sm-12 col-md-12 col-lg-2 text-center p-0 price-review-box-<%= lodging.id %>">
 
           <div class="price-details-box-<%= lodging.id %>">
             <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
