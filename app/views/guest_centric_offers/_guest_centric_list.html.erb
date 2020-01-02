@@ -19,7 +19,7 @@
                   </div>
 
                   <div class="col-md-4">
-                    GC ID in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]).try(:guest_centric_id) %></b>
+                    GC in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]).try(:name) %></b>
                   </div>
                 </div>
               <% end %>
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-md-4">
-                  GC ID in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: child['id_package']).try(:guest_centric_id) %></b>
+                  GC in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: child['id_package']).try(:name) %></b>
                 </div>
               </div>
             <% end %>
