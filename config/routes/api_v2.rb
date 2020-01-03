@@ -27,5 +27,8 @@ namespace :api do
     end
     resources :countries, only: [:index]
     resources :leads, only: [:create]
+    resources :reservations, only: [] do
+      resources :reviews, only: [:create]
+    end
   end
 end
