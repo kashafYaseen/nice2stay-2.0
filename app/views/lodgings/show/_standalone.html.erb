@@ -24,7 +24,7 @@
 
             <ul class="list-icon">
               <% if @reviews.present? %>
-                <div class="align-baseline text-xlg mb-4 text-primary mr-1">
+                <div class="align-baseline text-xlg mt-3 mb-3 text-primary mr-1">
                   <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
                 </div>
               <% end %>
@@ -49,8 +49,6 @@
               </div>
 
               <div class="bs-glyphicons">
-                <h6><%= t('amenities.popular') %></h6>
-
                 <ul class="bs-glyphicons-list">
                   <% @lodging.amenities.hot.each do |amenity| %>
                     <li>
