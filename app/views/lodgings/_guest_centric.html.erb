@@ -6,15 +6,15 @@
           <%= render 'lodgings/guest_centric_child', child: child, lodging: lodging, index: index %>
         <% end %>
       <% else %>
-        <p class="text-white">No Offer/Room Found! Please select different dates & guest details and try again.</p>
+        <p>No Offer/Room Found! Please select different dates & guest details and try again.</p>
       <% end %>
     <% end %>
   <% else %>
     <% if guest_centric.present? && guest_centric['error_message'].present? %>
-      <p class="text-white"><%= guest_centric['error_message'] %></p>
-      <p class="text-white">Please select different dates & guest details and try again.</p>
+      <p><%= guest_centric['error_message'] %></p>
+      <p>Please select different dates & guest details and try again.</p>
     <% else %>
-      <p class="text-white">Please select dates & guest details.</p>
+      <p>Please select dates & guest details.</p>
     <% end %>
   <% end %>
 </div>

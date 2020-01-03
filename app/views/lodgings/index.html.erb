@@ -11,7 +11,7 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-6" id="lodgings-container">
+  <div class="col-lg-7 col-xl-6" id="lodgings-container">
     <div class="row">
       <div class="seo-data bg-secondary w-100">
         <%= render 'seo_data', custom_text: @custom_text %>
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 fixed-map d-none d-sm-block" id="map-container">
+  <div class="col-lg-5 col-xl-6 fixed-map d-none d-sm-block" id="map-container">
     <%#= render 'secondary_navbar', lodgings: @lodgings %>
     <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
 
