@@ -44,7 +44,7 @@
         $('.autocomplete-region').val(datum.region)
         $('.autocomplete').val('')
       $('#homepage_search_form, #searchbar_search_form').attr('action', datum.url)
-
+      $('#homepage_search_form, #searchbar_search_form').submit()
 
   Autocomplete.init_search = (url) ->
     $('.filters-autocomplete').typeahead { highlight: true }, {
