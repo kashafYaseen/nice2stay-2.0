@@ -12,15 +12,15 @@
           <div class="col-md-12 col-xs-12">
             <div class="owl-carousel-full">
               <% @lodging.images.each_with_index do |image_url, index| %>
-                <div class="mr-4"><%= image_tag image_url, class: "card-img-top item", alt: '' %></div>
+                <div class="mr-1"><%= image_tag image_url, class: "card-img-top item", alt: '' %></div>
               <% end %>
             </div>
           </div>
         </div>
 
         <div class="row container-fluid mt-4">
-          <div class="col-md-4">
-            <h2><%= @lodging.h1 %></h2>
+          <div class="col-md-3">
+            <h2 class="name-header mb-3"><%= @lodging.h1 %></h2>
 
             <ul class="list-icon">
               <% if @reviews.present? %>
@@ -48,17 +48,6 @@
                 </ul>
               </div>
 
-              <div class="bs-glyphicons">
-                <ul class="bs-glyphicons-list">
-                  <% @lodging.amenities.hot.each do |amenity| %>
-                    <li>
-                      <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-<%= amenity.icon.presence || 'shield-check' %> fa-2x"></i></span>
-                      <span class="glyphicon-class"><%= amenity.name %></span>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-
               <div class="mt-4"></div>
 
               <h6>
@@ -66,13 +55,27 @@
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
                 <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
               </h6>
-
-              <div class="mb-4"></div>
             </ul>
           </div>
 
-          <div class="col-md-8">
-            <p><%= @lodging.summary.try(:html_safe) %></p>
+          <div class="col-md-6">
+            <%= @lodging.summary.try(:html_safe) %>
+          </div>
+
+          <div class="col-md-3">
+            <h6 class="amenities-header"><%= t('amenities.popular') %></h6>
+
+            <div class="bs-glyphicons">
+              <ul class="bs-glyphicons-list">
+                <% @lodging.amenities.hot.each do |amenity| %>
+                  <li>
+                    <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-<%= amenity.icon.presence || 'shield-check' %> fa-2x"></i></span>
+                    <span class="glyphicon-class"><%= amenity.name %></span>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <a class="scroll-to-btn text-info" data-target="#lodging-full-description">view all amenities</a>
           </div>
         </div>
       </div>
