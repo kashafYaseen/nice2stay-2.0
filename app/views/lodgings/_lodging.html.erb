@@ -46,7 +46,13 @@
           </div>
 
           <% if lodging.including_text.present? %>
-            <p class="text-info text-center mt-2 mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= lodging.including_text %>" data-html="true"><u>included</u></p>
+            <p class="text-info text-center mt-2 mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= lodging.including_text %>" data-html="true"><i class="fal fa-check-square"></i> <span class="text-dotted">included</span></p>
+          <% end %>
+
+          <% if lodging.realtime_availability %>
+            <p class="text-info text-center mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xs"><%= t('bookings.direct') %></span></p>
+          <% else %>
+            <p class="text-info text-center mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.on_request') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xs"><%= t('bookings.booking_or_option') %></span></p>
           <% end %>
 
           <div class="review-box">
