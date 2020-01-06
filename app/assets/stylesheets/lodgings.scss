@@ -464,6 +464,10 @@ div.nearby-places {
   border-color: #FFED00 !important;
 }
 
+.scroll-to-btn {
+  cursor: pointer;
+}
+
 .scroll-to-btn.active {
   background-color: #FFED00;
 }
@@ -476,4 +480,16 @@ div.nearby-places {
   background: #EBEBE6;
   width: 100%;
   color: #404040;
+}
+
+.amenities-header {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.name-header {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.2;
 }
