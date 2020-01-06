@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_10_062528) do
+ActiveRecord::Schema.define(version: 2020_01_06_065555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -419,8 +419,20 @@ ActiveRecord::Schema.define(version: 2019_12_10_062528) do
     t.datetime "updated_at", null: false
     t.bigint "admin_user_id"
     t.text "email_intro"
+    t.integer "stay"
+    t.integer "experience"
+    t.integer "budget"
     t.index ["admin_user_id"], name: "index_leads_on_admin_user_id"
     t.index ["user_id"], name: "index_leads_on_user_id"
+  end
+
+  create_table "leads_regions", force: :cascade do |t|
+    t.bigint "lead_id"
+    t.bigint "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_leads_regions_on_lead_id"
+    t.index ["region_id"], name: "index_leads_regions_on_region_id"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -954,6 +966,8 @@ ActiveRecord::Schema.define(version: 2019_12_10_062528) do
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "leads", "admin_users"
   add_foreign_key "leads", "users", on_delete: :cascade
+  add_foreign_key "leads_regions", "leads", on_delete: :cascade
+  add_foreign_key "leads_regions", "regions", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade

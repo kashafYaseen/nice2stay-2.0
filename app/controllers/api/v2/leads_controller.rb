@@ -20,7 +20,11 @@ class Api::V2::LeadsController < Api::V2::ApiController
         :adults,
         :childrens,
         :extra_information,
+        :stay,
+        :experience,
+        :budget,
         { country_ids: [] },
+        { region_ids: [] },
         user_attributes: [:first_name, :last_name, :email, :phone, :password, :password_confirmation, :skip_validations],
       )
     end
@@ -32,7 +36,11 @@ class Api::V2::LeadsController < Api::V2::ApiController
         :adults,
         :childrens,
         :extra_information,
+        :stay,
+        :experience,
+        :budget,
         { country_ids: [] },
+        { region_ids: [] },
       )
     end
 end

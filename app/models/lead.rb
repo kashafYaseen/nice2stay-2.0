@@ -5,6 +5,7 @@ class Lead < ApplicationRecord
   has_many :lodgings, through: :offers
 
   has_and_belongs_to_many :countries
+  has_and_belongs_to_many :regions
 
   validates :admin_user, :email_intro_en, :email_intro_nl, presence: true, on: :update
 
@@ -24,6 +25,30 @@ class Lead < ApplicationRecord
   enum lead_type: {
     advice: 0,
     favorite: 1,
+  }
+
+  enum stay: {
+    "1 day": 0,
+    "2 - 3 days": 1,
+    "1 week": 2,
+    "2 weeks": 3,
+    "3 weeks": 4,
+    "more then 3 weeks": 5,
+  }
+
+  enum budget: {
+    "0 - 200": 0,
+    "200 - 300": 1,
+    "300 - 400": 2,
+    "400 - 500": 3,
+    "500 or more": 4,
+  }
+
+  enum experience: {
+    sport_and_recreation: 0,
+    culture_and_history: 1,
+    nature_and_wildlive: 2,
+    other: 3,
   }
 
   enum default_status: {
