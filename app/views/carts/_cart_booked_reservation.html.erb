@@ -106,29 +106,33 @@
       </div>
     </div>
 
-    <div class="col-md-12">
-      <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          Cleaning Cost
-        </span>
+    <% if reservation.cleaning_cost.to_f > 0 %>
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            Cleaning Cost
+          </span>
 
-        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price reservation.cleaning_cost %>
-        </span>
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+            <%= render_rounded_price reservation.cleaning_cost %>
+          </span>
+        </div>
       </div>
-    </div>
+    <% end %>
 
-    <div class="col-md-12">
-      <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          Discount
-        </span>
+    <% if reservation.discount.to_f > 0 %>
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            Discount
+          </span>
 
-        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price reservation.discount %>
-        </span>
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+            <%= render_rounded_price reservation.discount %>
+          </span>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="col-md-12">
       <div class="row">

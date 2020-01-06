@@ -663,6 +663,14 @@ of the accommodation."
     arrival_email_sent: Arrival email send
     option: Option request
     request_price: Price request
+    instant: You book this accommodation instantly, the period will be automatically reserved for you and you'll immediately receive a confirmation.
+    on_request: Your reservation needs to be accepted by the owner of the accommodation.  After a booking approval it is a definitive reservation and you will immediately receive a confirmation of your booking. After option approval from the owner of the accommodation you will have 24 hours time to think, you will be notified as soon as the owner has given his approval.
+    booking_or_option: On request
+    direct: Instant
+    instant_booking: Instant booking
+    booking_on_request: Booking on request
+    option_title: Option
+    option_tooltip: After approval from the owner of the accommodation you will have 24 hours time to think, you will be notified as soon as the owner has given his approval.
 
   not_live_standalone:
     The availability of this property is not (always) up to date!

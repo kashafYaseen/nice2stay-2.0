@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row">
   <div class="col-md-6">
     <b>Summary</b>
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart text-info text-bold float-right', remote: true do %>
@@ -27,8 +27,9 @@
 </div>
 
 <% if reservation.guest_centric? %>
-  <div class="bootstrap-default">
-    <div class="alert alert-success" role="alert" data-toggle="tooltip" data-placement="left" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation.">Direct reservation & Confirmation</div>
+  <div class="mb-3">
+    <span class="text-bold"><%= t('bookings.instant_booking') %></span><br>
+    <span class="text-sm"><%= t('bookings.instant') %></span>
   </div>
 
   <div class="row row border-grey border-bottom mb-5">
@@ -83,9 +84,17 @@
     </div>
   </div>
 <% else %>
-  <div class="bootstrap-default">
-    <div class="alert alert-info" role="alert" data-toggle="tooltip" data-placement="left" data-original-title="Reservation request is a type of online booking that sends the reservation request to nice2stay and our partner to confirm request. We will inform you asap if the request is confirmed by our partner. Normally you get  a message from us within a few hours.">On Request</div>
-  </div>
+  <% if reservation.option? %>
+    <div class="mb-3">
+      <span class="text-bold"><%= t('bookings.option_title') %></span><br>
+      <span class="text-sm"><%= t('bookings.option_tooltip') %></span>
+    </div>
+  <% else %>
+    <div class="mb-3">
+      <span class="text-bold"><%= t('bookings.booking_on_request') %></span><br>
+      <span class="text-sm"><%= t('bookings.on_request') %></span>
+    </div>
+  <% end %>
 
   <div class="row row border-grey border-bottom mb-5">
     <div class="col-md-12">
@@ -100,29 +109,33 @@
       </div>
     </div>
 
-    <div class="col-md-12">
-      <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          Cleaning Cost
-        </span>
+    <% if reservation.cleaning_cost.to_f > 0 %>
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            Cleaning Cost
+          </span>
 
-        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price reservation.cleaning_cost %>
-        </span>
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+            <%= render_rounded_price reservation.cleaning_cost %>
+          </span>
+        </div>
       </div>
-    </div>
+    <% end %>
 
-    <div class="col-md-12">
-      <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          Discount
-        </span>
+    <% if reservation.discount.to_f > 0 %>
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            Discount
+          </span>
 
-        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price reservation.discount %>
-        </span>
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+            <%= render_rounded_price reservation.discount %>
+          </span>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="col-md-12">
       <div class="row">
