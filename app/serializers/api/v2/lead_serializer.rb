@@ -1,6 +1,7 @@
 class Api::V2::LeadSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :from, :to, :adults, :childrens, :extra_information, :user_id
+  attributes :id, :from, :to, :adults, :childrens, :extra_information, :user_id,
+             :stay, :budget, :experience
 
   attributes :countries do |lead|
     Api::V2::CountrySerializer.new(lead.countries)
