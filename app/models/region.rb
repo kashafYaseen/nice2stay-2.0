@@ -4,6 +4,7 @@ class Region < ApplicationRecord
   has_many :custom_texts
   has_many :places
   has_and_belongs_to_many :campaigns
+  has_and_belongs_to_many :leads
 
   include ImageHelper
 

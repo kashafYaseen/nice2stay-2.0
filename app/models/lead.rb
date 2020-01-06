@@ -5,6 +5,7 @@ class Lead < ApplicationRecord
   has_many :lodgings, through: :offers
 
   has_and_belongs_to_many :countries
+  has_and_belongs_to_many :regions
 
   validates :admin_user, :email_intro_en, :email_intro_nl, presence: true, on: :update
 
