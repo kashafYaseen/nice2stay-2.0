@@ -12,7 +12,7 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
       Rails.application.reload_routes!
       render json: @custom_text, status: :created
     else
-      render json: @custom_text.errors, status: :unprocessable_entity
+      unprocessable_entity(@custom_text.errors)
     end
   end
 
