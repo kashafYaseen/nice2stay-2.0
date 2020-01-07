@@ -7,7 +7,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     if @user.save(validate: false)
       render json: @user, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      unprocessable_entity(@user.errors)
     end
   end
 

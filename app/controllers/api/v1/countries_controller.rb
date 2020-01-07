@@ -5,7 +5,7 @@ class Api::V1::CountriesController < Api::V1::ApiController
     if @country.valid?
       render json: @country, status: :created
     else
-      render json: @country.errors, status: :unprocessable_entity
+      unprocessable_entity(country.errors)
     end
   end
 end

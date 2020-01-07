@@ -5,7 +5,7 @@ class Api::V1::AmenitiesController < Api::V1::ApiController
     if @amenity.valid?
       render json: @amenity, status: :created
     else
-      render json: @amenity.errors, status: :unprocessable_entity
+      unprocessable_entity(@amenity.errors)
     end
   end
 end

@@ -11,7 +11,7 @@ class Api::V1::ReservationsController < Api::V1::ApiController
     if result
       render status: :created
     else
-      render json: @reservation.errors, status: :unprocessable_entity
+      unprocessable_entity(@reservation.errors)
     end
   end
 
@@ -19,7 +19,7 @@ class Api::V1::ReservationsController < Api::V1::ApiController
     if @reservation.update(reservation_params)
       render status: :ok
     else
-      render json: @reservation.errors, status: :unprocessable_entity
+      unprocessable_entity(@reservation.errors)
     end
   end
 
