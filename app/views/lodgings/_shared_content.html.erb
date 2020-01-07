@@ -105,9 +105,33 @@
   <% end %>
 </div>
 
-<div class="bg-white col-md-12 p-0 padding-top-1x container">
+<div class="bg-white col-md-12 p-0 padding-top-1x container" id="lodging-amenities">
   <div class="row col-md-12">
-    <div class="col-md-8" id="description-container">
+    <div class="col-md-12">
+      <h3 class="card-title"><%= t 'nav.amentities' %></h3>
+      <hr class="margin-bottom-1x">
+
+      <% @lodging.amenities.includes(:amenity_category, :translations).group_by(&:amenity_category).each do |amenity_category, amenities| %>
+        <div class="row">
+          <div class="col-md-3">
+            <h5><%= amenity_category.try(:name) %></h5>
+          </div>
+
+          <div class="col-md-9">
+            <ul class="bs-glyphicons-list row">
+              <% amenities.each do |amenity| %>
+                <li class="col-md-3">
+                  <i class="fal fa-check-circle text-green"></i> <span class="glyphicon-class"><%= amenity.name %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <hr class="margin-bottom-1x">
+      <% end %>
+    </div>
+
+    <div class="col-md-12" id="description-container">
       <h3 class="card-title"><%= @lodging.h3 %></h3>
       <ul class="list-icon">
         <h5>
@@ -122,23 +146,6 @@
       </div>
 
       <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description %>" data-truncated="<%= truncated_description(lodging.description, 1000) %>">Read more</button>
-    </div>
-
-    <div class="col-md-4">
-      <h3 class="card-title"><%= t 'nav.amentities' %></h3>
-      <hr class="margin-bottom-1x">
-      <ul class="list-icon">
-        <div class="bs-glyphicons">
-          <ul class="bs-glyphicons-list">
-            <% @lodging.amenities.each do |amenity| %>
-              <li>
-                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-<%= amenity.icon.presence || 'shield-check' %> fa-2x"></i></span>
-                <span class="glyphicon-class"><%= amenity.name %></span>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </ul>
     </div>
   </div>
 
