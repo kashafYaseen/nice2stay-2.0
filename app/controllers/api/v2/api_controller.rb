@@ -30,7 +30,7 @@ class Api::V2::ApiController < ActionController::API
     end
 
     def invalid_credentials
-      render json: { errors: [I18n.t('devise.failure.invalid', authentication_keys: 'email')] }, status: :not_acceptable
+      render json: { errors: [I18n.t('devise.failure.invalid', authentication_keys: 'email')] }, status: :unauthorized
       return
     end
 

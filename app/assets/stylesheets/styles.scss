@@ -83,6 +83,10 @@
   border-right: 1px solid #ececec;
 }
 
+.border-left {
+  border-left: 1px solid #ececec;
+}
+
 .infobox-header {
   padding: 10px;
 }
@@ -6717,6 +6721,7 @@ video {
 .site-menu {
   position: absolute;
   top: 0;
+  left: 100px;
   width: 100%;
   height: 100%;
   z-index: 1;
