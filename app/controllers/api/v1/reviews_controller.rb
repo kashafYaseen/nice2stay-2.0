@@ -5,7 +5,7 @@ class Api::V1::ReviewsController < Api::V1::ApiController
     if @review.persisted?
       render json: @review, status: :created
     else
-      render json: @review.errors, status: :unprocessable_entity
+      unprocessable_entity(@review.errors)
     end
   end
 end

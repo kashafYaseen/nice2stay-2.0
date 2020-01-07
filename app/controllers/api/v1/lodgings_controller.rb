@@ -12,7 +12,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     if @lodging.valid?
       render status: :created
     else
-      render json: @lodging.errors, status: :unprocessable_entity
+      unprocessable_entity(@lodging.errors)
     end
   end
 
@@ -20,7 +20,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     if @lodging.update(lodging_params)
       render status: :ok
     else
-      render json: @lodging.errors, status: :unprocessable_entity
+      unprocessable_entity(@lodging.errors)
     end
   end
 

@@ -5,7 +5,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
     if @booking.persisted?
       render status: :created
     else
-      render json: @booking.errors, status: :unprocessable_entity
+      unprocessable_entity(@booking.errors)
     end
   end
 end

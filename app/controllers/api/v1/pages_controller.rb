@@ -5,7 +5,7 @@ class Api::V1::PagesController < Api::V1::ApiController
     if @page.valid?
       render json: @page, status: :created
     else
-      render json: @page.errors, status: :unprocessable_entity
+      unprocessable_entity(@page.errors)
     end
   end
 end

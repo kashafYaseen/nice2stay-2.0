@@ -5,7 +5,7 @@ class Api::V1::ExperiencesController < Api::V1::ApiController
     if @experience.valid?
       render json: @experience, status: :created
     else
-      render json: @experience.errors, status: :unprocessable_entity
+      unprocessable_entity(@experience.errors)
     end
   end
 end

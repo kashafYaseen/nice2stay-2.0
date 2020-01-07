@@ -5,7 +5,7 @@ class Api::V1::CampaignsController < Api::V1::ApiController
     if @campaign.valid?
       render json: @campaign, status: :created
     else
-      render json: @campaign.errors, status: :unprocessable_entity
+      unprocessable_entity(@campaign.errors)
     end
   end
 end
