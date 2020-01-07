@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_065555) do
+ActiveRecord::Schema.define(version: 2020_01_07_112112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,25 @@ ActiveRecord::Schema.define(version: 2020_01_06_065555) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "icon"
+    t.bigint "amenity_category_id"
+    t.index ["amenity_category_id"], name: "index_amenities_on_amenity_category_id"
+  end
+
+  create_table "amenity_categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "crm_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "amenity_category_translations", force: :cascade do |t|
+    t.integer "amenity_category_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["amenity_category_id"], name: "index_amenity_category_translations_on_amenity_category_id"
+    t.index ["locale"], name: "index_amenity_category_translations_on_locale"
   end
 
   create_table "amenity_translations", force: :cascade do |t|
@@ -951,6 +970,7 @@ ActiveRecord::Schema.define(version: 2020_01_06_065555) do
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
+  add_foreign_key "amenities", "amenity_categories", on_delete: :cascade
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
