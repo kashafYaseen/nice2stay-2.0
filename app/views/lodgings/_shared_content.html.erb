@@ -156,8 +156,10 @@
       </button>
     </div>
   </div>
+</div>
 
-  <div class="padding-bottom-1x pt-2 mb-1">
+<div class="col-md-12 p-0 padding-top-1x calendar_section">
+  <div class="padding-bottom-1x pt-2 mb-1 container">
     <div class="col-md-12 padding-top-1x target-section" id="like-container">
       <h3 class="card-title"><%= t 'nav.also_like' %></h3>
       <hr class="margin-bottom-1x">
@@ -168,7 +170,9 @@
       </div>
     </div>
   </div>
+</div>
 
+<div>
   <%= form_tag lodging_path(lodging), method: :get, class: 'you-may-like-form', remote: true do %>
     <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
     <%= hidden_field_tag :children, params[:children], class: 'children' %>
