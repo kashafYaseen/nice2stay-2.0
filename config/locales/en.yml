@@ -304,7 +304,7 @@ en:
     rent: Rent
     remove: remove
     cleaning_cost: Cleaning Cost
-    total_charges: Total Charges
+    total_charges: Total Rent
     book_securely: Book securely in less than 2 minutes
 
   calendar:
@@ -669,12 +669,17 @@ of the accommodation."
     request_price: Price request
     instant: You book this accommodation instantly, the period will be automatically reserved for you and you immediately receive a confirmation.
     on_request: Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
+    listing_on_request: Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking. After option approval you will have 24 hours time to think
     booking_or_option: On request
     direct: Instant
     instant_booking: Instant booking
     booking_on_request: Booking on request
+    booking_request: Booking Request
     option_title: Option
     option_tooltip: After approval from the owner of the accommodation you will have 24 hours time to think, you will be notified as soon as the owner has given his approval.
+    option_sent: Your option is succesfully send to nice2stay and our partner. After approval from the owner of the accommodation you will have 24 hours to think, you will be notified as soon as the owner has given his approval.
+    request_sent: Your booking request is succesfully sent to nice2stay and our partner. Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
+    gc_sent: You have booked this accommodation instantly and the period is reserved for you. The confirmation will be send to you.
 
   not_live_standalone:
     The availability of this property is not (always) up to date!

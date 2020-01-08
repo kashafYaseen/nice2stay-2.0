@@ -60,7 +60,7 @@
 
                         <div class="float-left m-2">
                           <%= check_box_tag :flexible_arrival, true, false %>
-                          <%= label_tag :flexible_arrival, t('filters.flexible_text'), data: { toggle: 'tooltip', placement: 'bottom', 'original-title': t('filters.flexible_tooltip') } %>
+                          <%= label_tag :flexible_arrival, t('filters.flexible_text'), data: { toggle: 'tooltip', placement: 'bottom', 'original-title': t('filters.flexible_tooltip') }, class: 'text-dotted' %>
                         </div>
 
                         <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary float-right' , data: { disable_with: t('search.search_button') }
