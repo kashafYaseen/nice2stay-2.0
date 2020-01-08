@@ -6,7 +6,7 @@
     <% end %>
   </div>
 
-  <nav class="site-menu">
+  <nav class="site-menu <%= yield :site_menu_class %>">
     <div class="container-fluid">
       <!-- Search Section-->
       <%= render 'shared/menu_search' %>
