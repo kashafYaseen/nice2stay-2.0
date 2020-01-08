@@ -6,6 +6,9 @@
         <div class="row">
           <div class="col-md-6 border-default mx-auto bg-white">
             <h4 class="mb-5 text-bold"><%= t 'carts.overview' %></h4>
+
+            <div id="cart-flash-messages"></div>
+
             <div id="cart-body">
               <%= render partial: 'cart_reservation', collection: @booking.reservations, as: :reservation %>
             </div>
@@ -222,6 +225,7 @@
 
 <% content_for :canonical do %><%= carts_url %><% end %>
 <% content_for :body_class do %>calendar_section<% end %>
+<% content_for :site_menu_class do %>d-none<% end %>
 
 <% content_for :js_init do %>
   Cart.init();

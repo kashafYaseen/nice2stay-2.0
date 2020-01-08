@@ -1,5 +1,13 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12 mb-auto">
+    <% lodging = (reservation.lodging.as_child? ? reservation.lodging.parent : reservation.lodging) %>
+    <%= link_to lodging, class: 'btn btn-secondary cart-stars text-left h-100 w-100 pt-3 pb-2 pl-2' do %>
+      <span class="d-block text-bold text-lg mb-1"><%= lodging.name %></span>
+      <%= render_stars_tag lodging.average_rating if lodging.average_rating > 0 %>
+    <% end %>
+  </div>
+
+  <div class="col-md-12">
     <b><%= t('cart.summary') %></b>
     <%= link_to remove_carts_path(reservation_id: reservation), class: 'remove-from-cart text-info text-bold float-right', remote: true do %>
       <span><%= t('cart.remove') %></span>
@@ -13,15 +21,6 @@
     <% if reservation.guest_centric? || reservation.lodging.as_child? %>
       <b>Room Type</b>
       <p><%= link_to (reservation.guest_centric? ? reservation.room_type : reservation.lodging_name), reservation.lodging, class: 'text-decoration-none' %></p>
-    <% end %>
-  </div>
-
-  <div class="col-md-6 mb-auto">
-    <% lodging = (reservation.lodging.as_child? ? reservation.lodging.parent : reservation.lodging) %>
-    <%= link_to lodging, class: 'btn btn-secondary cart-stars text-left h-100 w-100 pt-1 pb-2' do %>
-      <span class="d-block"><%= lodging.name %></span>
-      <span class="d-block"><%= lodging.address %></span>
-      <%= render_stars_tag lodging.average_rating if lodging.average_rating > 0 %>
     <% end %>
   </div>
 </div>
