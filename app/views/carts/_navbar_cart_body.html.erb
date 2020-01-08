@@ -23,8 +23,7 @@
         <% if reservation.guest_centric? %>
           <div class="product-item ml-2">
             <div class="product-info text-medium">
-              <div class="text-info mb-3" data-placement="left" data-original-title="<%= t('bookings.instant') %>"><%= t('bookings.instant_booking') %></div>
-
+              <span><em><strong><%= t "nav_cart.type" %>:</strong></em> <%= t('bookings.instant_booking') %></span>
               <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>
               <span><em><strong><%= t "nav_cart.checkout" %>:</strong></em> <%= reservation.check_out %></span>
               <span><em><strong><%= t "nav_cart.nights" %>:</strong></em> <%= reservation.total_nights %></span>
@@ -47,9 +46,9 @@
           <div class="product-item ml-2">
             <div class="product-info text-medium">
               <% if reservation.option? %>
-                <div class="text-info mb-3 mt-1" data-placement="left" data-original-title="<%= t('bookings.option_tooltip') %>"><%= t('bookings.option_title') %></div>
+                <span><em><strong><%= t "nav_cart.type" %>:</strong></em> <%= t('bookings.option_title') %></span>
               <% else %>
-                <div class="text-info mb-3 mt-1" data-placement="left" data-original-title="<%= t('bookings.on_request') %>"><%= t('bookings.booking_on_request') %></div>
+                <span><em><strong><%= t "nav_cart.type" %>:</strong></em> <%= t('bookings.booking_on_request') %></span>
               <% end %>
 
               <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>

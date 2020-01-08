@@ -87,10 +87,6 @@ en:
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
   availability_not_confirmed: the availability is on request
 
-  cart:
-    overview: Youre bookings and options requests
-    gasten: Youre data
-
   amenities:
     popular: Popular amenities
 
@@ -193,7 +189,7 @@ en:
     alternative: Alternatives
 
   nav_cart: 
-    type: Request
+    type: Type
     price: Price
     nights: Nights
     From: From 
@@ -302,6 +298,14 @@ en:
     nice2stay: No booking fees at Nice2stay
     prepayment_not_payed: When prepayment is done, then the final payment can be transferred
     select_details: Please select dates & guest details
+    overview: Youre bookings and options requests
+    gasten: Youre data
+    summary: Summary
+    rent: Rent
+    remove: remove
+    cleaning_cost: Cleaning Cost
+    total_charges: Total Charges
+    book_securely: Book securely in less than 2 minutes
 
   calendar:
     legenda: Calendar Legenda
@@ -663,8 +667,8 @@ of the accommodation."
     arrival_email_sent: Arrival email send
     option: Option request
     request_price: Price request
-    instant: You book this accommodation instantly, the period will be automatically reserved for you and you'll immediately receive a confirmation.
-    on_request: Your reservation needs to be accepted by the owner of the accommodation.  After a booking approval it is a definitive reservation and you will immediately receive a confirmation of your booking. After option approval from the owner of the accommodation you will have 24 hours time to think, you will be notified as soon as the owner has given his approval.
+    instant: You book this accommodation instantly, the period will be automatically reserved for you and you immediately receive a confirmation.
+    on_request: Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
     booking_or_option: On request
     direct: Instant
     instant_booking: Instant booking
