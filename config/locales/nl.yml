@@ -197,7 +197,7 @@ nl:
     alternative: Alternatieven
 
   nav_cart:
-    type: Soort aanvraag
+    type: Type
     price: Huurprijs
     nights: Aantal nachten
     checkin: Check-in
@@ -217,6 +217,12 @@ nl:
     nice2stay: Geen reserveringskosten bij Nice2stay
     prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
     select_details: Selecteer periode & aantal personen
+    summary: Samenvatting
+    rent: Huursom
+    remove: verwijder
+    cleaning_cost: Schoonmaakkosten
+    total_charges: Total bedrag
+    book_securely: Boek veilig in minder dan 1 minuut
 
   calendar:
     legenda: Legenda kalender
@@ -850,11 +856,11 @@ nl:
     option: Optie aanvraag
     request_price: Prijs verzoek
     instant: U boekt deze accommodatie direct, de periode wordt voor u vastgelegd en u ontvangt onmiddellijk een bevestiging.
-    on_request: Uw reservering dient enkel te worden geaccepteerd door de eigenaar van de accommodatie. Na akkoord is het een definitieve reservering en ontvangt u direct een bevestiging. Na optie akkoord van de eigenaar van de accommodatie krijgt u 24 uur de tijd om een definitieve reservering te maken.
+    on_request: Uw reservering dient enkel te worden geaccepteerd door de eigenaar van de accommodatie, na akkoord is het een definitieve reservering en ontvangt u direct een bevestiging.
     booking_or_option: Op aanvraag
     direct: Direct
     instant_booking: Direct reserveren
-    booking_on_request: Booking on request
+    booking_on_request: Reservering op aanvraag
     option_title: Optie
     option_tooltip: Na akkoord van de eigenaar van de accommodatie krijgt u 24 uur de tijd om een definitieve reservering te maken, u krijgt bericht zodra de eigenaar akkoord heeft gegeven.
 
