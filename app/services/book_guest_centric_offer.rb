@@ -23,7 +23,7 @@ class BookGuestCentricOffer
     request.set_form_data form_data
     response = JSON.parse(http.request(request).body)
     if response['error']
-      reservation.update_columns(gc_errors: response['error_message'])
+      reservation.update_columns(gc_errors: response['error_message'], request_status: 'rejected')
     else
       reservation.update_columns(guest_centric_booking_id: response['response']['bookingCode'], booking_status: 'booked', request_status: 'confirmed')
     end
