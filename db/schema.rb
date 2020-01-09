@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_112112) do
+ActiveRecord::Schema.define(version: 2020_01_09_110629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -840,6 +840,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_112112) do
     t.float "tax", default: 0.0
     t.float "additional_fee", default: 0.0
     t.string "room_type"
+    t.text "gc_policy"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
