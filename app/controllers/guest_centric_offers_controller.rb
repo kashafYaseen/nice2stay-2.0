@@ -44,7 +44,8 @@ class GuestCentricOffersController < ApplicationController
         :meal_tax,
         :tax,
         :additional_fee,
-        :room_type
+        :room_type,
+        :gc_policy,
       )
     end
 

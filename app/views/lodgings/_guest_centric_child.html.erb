@@ -40,7 +40,7 @@
           </div>
 
           <div class="col-md-5 col-border bg-white text-sm group-toggle">
-            <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child, cancel_policy: child['cancelPolicy'] %>
+            <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child, cancel_policy: gc_cancel_policy(child['cancelPolicy']) %>
 
             <label
               class="col-border col-md-12 border-dark border-right offer-item parent-<%= offer['offer'].gsub('.', '-') %>"
@@ -51,6 +51,7 @@
               data-fee="<%= offer['additionalFees'] %>"
               data-type="<%= offer['name'].try(:capitalize) %>"
               data-child="<%= lodging_child.try(:id) %>"
+              data-policy="<%= gc_cancel_policy(child['cancelPolicy']) %>"
             >
 
               <p>
@@ -177,7 +178,7 @@
         </div>
 
         <div class="col-md-5 col-border bg-white text-sm group-toggle">
-          <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child, cancel_policy: child['cancelPolicy'] %>
+          <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child, cancel_policy: gc_cancel_policy(child['cancelPolicy']) %>
 
           <label
             class="col-border col-md-12 border-dark border-right offer-item parent-<%= child['offer'].gsub('.', '-') %>"
@@ -188,6 +189,7 @@
             data-fee="<%= child['additionalFees'] %>"
             data-type="<%= child['name'].try(:capitalize) %>"
             data-child="<%= lodging_child.try(:id) %>"
+            data-policy="<%= gc_cancel_policy(child['cancelPolicy']) %>"
           >
 
             <p>
@@ -283,6 +285,7 @@
   <%= f.hidden_field :rooms, value: get_centric_param(:rooms), id: "rooms_#{lodging.id}", class: 'rooms' %>
   <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}", class: 'gc-child-id' %>
   <%= f.hidden_field :offer_id, class: 'offer-id' %>
+  <%= f.hidden_field :gc_policy, class: 'guest-centric-policy' %>
   <%= f.hidden_field :rent, class: 'offer-rent' %>
   <%= f.hidden_field :meal_price, class: 'meal-price' %>
   <%= f.hidden_field :meal_tax, class: 'meal-tax' %>

@@ -13,4 +13,10 @@ module GuestCentricHelper
   def money_string_to_float value
     value.gsub('.', '').gsub(',', '.').to_f
   end
+
+  def gc_cancel_policy cancel_policy
+    return unless cancel_policy.present? && cancel_policy['cancelPolicyRules'].present?
+    return t('guest_centric.cancellation_policy_1', amount: cancel_policy['cancelPolicyRules'][0]['AmountValue']) if cancel_policy['cancelPolicyRules'][0]['BeforeDays'] == '999'
+    t('guest_centric.cancellation_policy_2', amount: cancel_policy['cancelPolicyRules'][0]['AmountValue'], days: cancel_policy['cancelPolicyRules'][0]['BeforeDays'])
+  end
 end
