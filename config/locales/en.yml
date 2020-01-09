@@ -122,6 +122,7 @@ en:
     succes:  We would like to thank you for requesting your reservation/ option request at Nice2stay. Your request has been submitted to the owner of the accommodation and we will inform you as soon as possible (within 24 hours) whether your reservation will be confirmed.You will be notified by email and you can view the status in your Nice2stay account
     country: Country
     preferred_language: Preferred Language
+    guest_details: Guest Details
 
   indicator: 
     gasten:  Your data
@@ -680,6 +681,7 @@ of the accommodation."
     option_sent: Your option is succesfully send to nice2stay and our partner. After approval from the owner of the accommodation you will have 24 hours to think, you will be notified as soon as the owner has given his approval.
     request_sent: Your booking request is succesfully sent to nice2stay and our partner. Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
     gc_sent: You have booked this accommodation instantly and the period is reserved for you. The confirmation will be send to you.
+    created: Your booking %{identifier} was created succesfully. See the status per accommodation below and in your <a href="%{link}">profile</a>
 
   not_live_standalone:
     The availability of this property is not (always) up to date!

@@ -24,7 +24,7 @@ class CartsController < ApplicationController
       end
 
       cookies[:booking_details] = @booking.id
-      redirect_to details_carts_path, notice: "Your booking ##{@booking.identifier} was created succesfully. See the status per accommodation below."
+      redirect_to details_carts_path, notice: I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
     else
       render :show
     end
