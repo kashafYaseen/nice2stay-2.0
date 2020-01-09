@@ -36,6 +36,9 @@ ActiveAdmin.register Reservation do
     column :rent
     column :created_at
     column :in_cart
+    column :channel_manager do |reservation|
+      reservation.guest_centric?
+    end
     column :user
     column :created_by
 

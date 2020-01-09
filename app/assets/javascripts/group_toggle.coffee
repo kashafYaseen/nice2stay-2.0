@@ -40,6 +40,7 @@
     $('.total-tax').val $(radio).data('tax')
     $('.additional-fee').val $(radio).data('fee')
     $('.room-type').val $(radio).data('type')
+    $('.guest-centric-policy').val $(radio).data('policy')
 
     if $(radio).data('child')
       $('.gc-child-id').val $(radio).data('child')

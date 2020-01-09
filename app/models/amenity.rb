@@ -11,6 +11,8 @@ class Amenity < ApplicationRecord
   scope :hot, -> { where(hot: true) }
   scope :regular, -> { where(hot: false) }
 
+  delegate :name, to: :amenity_category, prefix: true, allow_nil: true
+
   def name_downcase
     self.name.downcase!
   end
