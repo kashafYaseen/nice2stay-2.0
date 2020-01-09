@@ -115,6 +115,7 @@ nl:
     type: Type
     succes: Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status.
     preferred_language: Voorkeur taal
+    guest_details: Uw gegevens
 
   indicator:
     gasten: Uw gegevens
@@ -868,6 +869,7 @@ nl:
     option_sent: Uw optie is succesvol verzonden naar nice2stay en onze partner. Na goedkeuring van de eigenaar van de accommodatie heeft u 24 uur de tijd om na te denken. U wordt op de hoogte gebracht zodra de eigenaar zijn goedkeuring heeft gegeven.
     request_sent: Uw boekingsaanvraag is succesvol verzonden naar nice2stay en onze partner. Uw reservering moet worden aanvaard door de eigenaar van de accommodatie. Na goedkeuring is dit een definitieve reservering en ontvangt u onmiddellijk een bevestiging van uw boeking.
     gc_sent: U heeft de accommodatie geboekt en de periode is voor u gereserveerd. De bevestiging wordt u toegestuurd via email.
+    created: Uw boeking %{identifier} is succesvol verzonden. Onderstaand kunt u per accommodatie de status vinden en in uw <a href="%{link}">profiel</a>
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!
