@@ -16,7 +16,7 @@ class LodgingsController < ApplicationController
     @title = @custom_text.try(:meta_title)
 
   rescue Searchkick::InvalidQueryError
-    redirect_back fallback_location: root_en_path, alert: 'Invalid search parameters, please try again'
+    redirect_back fallback_location: lodgings_path, alert: 'Invalid search parameters, please try again'
   end
 
   # GET /lodgings/1
