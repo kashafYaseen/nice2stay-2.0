@@ -52,6 +52,8 @@
       e.stopPropagation()
       $('html, body').animate { scrollTop: $('#location-container').offset().top - 100 }, 'slow'
 
+    if $('.secondary-navbar, #show-page-submenu').length > 0
+      $('#flash-messages .alert').css('margin-top', 124);
 
   Custom.ask_for_login = ->
     setTimeout (->

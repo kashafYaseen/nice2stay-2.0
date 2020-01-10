@@ -20,6 +20,10 @@
     margin-top: 0;
   }
 
+  .navbar.navbar-sticky + #flash-messages .alert {
+    margin-top: 70px;
+  }
+
   .toolbar .toolbar-toggle {
     border-right: 2px solid transparent;
     background-color: transparent;
