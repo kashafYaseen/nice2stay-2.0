@@ -8,4 +8,8 @@ class Api::V2::ReservationSerializer
   attributes :lodging do |reservation|
     Api::V2::LodgingSerializer.new(reservation.lodging)
   end
+
+  attributes :review do |reservation|
+    Api::V2::ReviewSerializer.new(reservation.review)
+  end
 end

@@ -15,6 +15,19 @@ class Api::V2::CartsController < Api::V2::ApiController
     end
   end
 
+  def update
+    @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
+    if @booking.save
+      @booking.reservations.guest_centric.each do |reservation|
+        BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
+      end
+
+      render json: Api::V2::BookingSerializer.new(@booking, { params: { reservations: true, auth: true } }).serialized_json, status: :ok
+    else
+      unprocessable_entity(@booking.errors)
+    end
+  end
+
   def destroy
     @booking.reservations.delete_all
     render json: Api::V2::ReservationSerializer.new(@booking.reservations).serializable_hash.merge(booking_id: @booking.id), status: :ok
@@ -28,6 +41,14 @@ class Api::V2::CartsController < Api::V2::ApiController
   private
     def reservation_params
       params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :booking_status, :cleaning_cost, :discount)
+    end
+
+    def booking_params
+      params.require(:booking).permit(
+        :in_cart,
+        user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
+        reservations_attributes: [:id, :booking_id, :in_cart]
+      )
     end
 
     def set_booking

@@ -18,6 +18,12 @@ module ReservationsHelper
     "#{reservation.check_in} - #{reservation.check_out}"
   end
 
+  def render_reservation_guests(reservation)
+    guests = "Adults: #{reservation.adults.to_i}"
+    guests += "- Children: #{reservation.children}" if reservation.children.to_i > 0
+    guests
+  end
+
   def render_request_status(status)
     status_classes = ['bg-warning', 'bg-success', 'bg-danger']
     "<span class='d-inline-block #{status_classes[Reservation.request_statuses[status]]} text-white text-xs p-1'>#{status.humanize}</span>".html_safe
@@ -31,6 +37,25 @@ module ReservationsHelper
   def render_rounded_price(price, multiplier = 1, round_by = 2)
     return '--' unless price.present?
     number_to_currency((price * multiplier), unit: '€', separator: ',', delimiter: "", precision: ((price * multiplier).round == (price * multiplier)) ? 0 : round_by)
+  end
+
+  def reservation_badge_class(reservation)
+    return 'badge-warning' if reservation.pending?
+    return 'badge-success' if reservation.confirmed?
+    'badge-info'
+  end
+
+  def render_meal_title(meal_id)
+    return 'Bed & Breakfast' if meal_id.to_i == 2
+    return 'Half-Board' if meal_id.to_i == 3
+    return 'Full-Board' if meal_id.to_i == 4
+    return 'All Inclusive' if meal_id.to_i == 5
+    'Meals'
+  end
+
+  def render_meal_price(per_day_price, params)
+    return per_day_price unless get_centric_param(:check_in).present? && get_centric_param(:check_out).present?
+    (per_day_price.to_f * (get_centric_param(:check_out).to_date - get_centric_param(:check_in).to_date).to_i * get_centric_param(:rooms).to_i).round(2)
   end
 
   def pre_paid_link(booking)

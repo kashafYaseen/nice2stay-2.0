@@ -49,7 +49,7 @@ en:
 
   filters:
     guests: Traveling party
-    price: Price per night
+    price: Price
     theme: Experience
     type: Accommodation type
     amentities_pop: Amentities popular
@@ -62,7 +62,9 @@ en:
     apartment: Apartments
     villa: Villas
     bnb: Boutique hotels
-  sorting: 
+    flexible_tooltip: when you select this option, you get more results. By example when flex arrival is on and you select checkin friday then you'll also see results with checkin as saterday or sunday
+    flexible_text: Flexible arrivale -3/+3 days
+  sorting:
     low_high: Lowest price
     high_low: Highest price
     high_rating: Highest rating
@@ -85,12 +87,8 @@ en:
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
   availability_not_confirmed: the availability is on request
 
-  carts:
-    overview: Your bookings and options requests
-    gasten: Your personal data
-  cart:
-    overview: Youre bookings and options requests
-    gasten: Youre data
+  amenities:
+    popular: Popular amenities
 
   quick_view:
     summary: SUMMARY
@@ -109,8 +107,8 @@ en:
       header_2: Enter your information
     step_3:  Send request
     step_1: "Next step: Your details"
+    overview: Shopping cart
     acco: Accommodations
-    overview: Your bookings and options requests
     name: Name accommodation
     checkin: Checkin
     check_out: Checkout
@@ -124,6 +122,7 @@ en:
     succes:  We would like to thank you for requesting your reservation/ option request at Nice2stay. Your request has been submitted to the owner of the accommodation and we will inform you as soon as possible (within 24 hours) whether your reservation will be confirmed.You will be notified by email and you can view the status in your Nice2stay account
     country: Country
     preferred_language: Preferred Language
+    guest_details: Guest Details
 
   indicator: 
     gasten:  Your data
@@ -191,7 +190,7 @@ en:
     alternative: Alternatives
 
   nav_cart: 
-    type: Request
+    type: Type
     price: Price
     nights: Nights
     From: From 
@@ -246,6 +245,7 @@ en:
     date_filter: Arrival and Departure
     special_offer: Special Offer
     realtime_availability: Direct Reservation
+    realtime_availability_details: Accommodations that you can reserve without waiting for approval from our partners.
     night: night
     updated_availability: Show only accommodations with up to date availability
     availability: Availabiltiy
@@ -299,6 +299,15 @@ en:
     nice2stay: No booking fees at Nice2stay
     prepayment_not_payed: When prepayment is done, then the final payment can be transferred
     select_details: Please select dates & guest details
+    overview: Youre bookings and options requests
+    gasten: Youre data
+    summary: Summary
+    rent: Rent
+    remove: remove
+    cleaning_cost: Cleaning Cost
+    total_charges: Total Rent
+    book_securely: Book securely in less than 2 minutes
+    pay_less: With nice2stay you never pay more than directly with the owner and we do not request booking costs
 
   calendar:
     legenda: Calendar Legenda
@@ -660,6 +669,20 @@ of the accommodation."
     arrival_email_sent: Arrival email send
     option: Option request
     request_price: Price request
+    instant: You book this accommodation instantly, the period will be automatically reserved for you and you immediately receive a confirmation.
+    on_request: Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
+    listing_on_request: Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking. After option approval you will have 24 hours time to think
+    booking_or_option: On request
+    direct: Instant
+    instant_booking: Instant booking
+    booking_on_request: Booking on request
+    booking_request: Booking Request
+    option_title: Option
+    option_tooltip: After approval from the owner of the accommodation you will have 24 hours time to think, you will be notified as soon as the owner has given his approval.
+    option_sent: Your option is succesfully send to nice2stay and our partner. After approval from the owner of the accommodation you will have 24 hours to think, you will be notified as soon as the owner has given his approval.
+    request_sent: Your booking request is succesfully sent to nice2stay and our partner. Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
+    gc_sent: You have booked this accommodation instantly and the period is reserved for you. The confirmation will be send to you.
+    created: Your booking %{identifier} was created succesfully. See the status per accommodation below and in your <a href="%{link}">profile</a>
 
   not_live_standalone:
     The availability of this property is not (always) up to date!
@@ -681,3 +704,7 @@ of the accommodation."
       step_3: Do you wish to make a booking? Then we will send the owner of the property a booking request. In case the owner accepts the booking, we will send you the booking confirmation by email.
       availability_notice: Due to the increasing demand for our holiday accommodations we cannot guarantee availability.
       looking_forward: Looking forward to your reply!
+
+  guest_centric:
+    cancellation_policy_1: In case of cancellation, the cancellation costs are %{amount}% of the reservation sum.
+    cancellation_policy_2: Until %{days} days before the start of the stay you can cancel free of charge. After %{days} days before arrival the cancellation costs are %{amount}% of the reservation sum.

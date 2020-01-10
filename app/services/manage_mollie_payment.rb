@@ -3,11 +3,13 @@ class ManageMolliePayment
 
   attr_reader :booking
   attr_reader :user
+  attr_reader :redirect_custom_url
 
-  def initialize(booking)
+  def initialize(booking, redirect_custom_url = nil)
     @booking = booking
     @mollie = ManageMollieCustomer.new(booking.user)
     @user = @mollie.user
+    @redirect_custom_url = redirect_custom_url
   end
 
   def pre_payment
@@ -15,7 +17,7 @@ class ManageMolliePayment
 
     if booking.pre_payment_mollie_id?
       payment = find_payment(booking.pre_payment_mollie_id)
-      return payment if payment.status == 'open'
+      return update_redirect_url(payment) if payment.status == 'open'
     end
 
     payment = create_payment((booking.pre_payment || booking.pre_payment_amount), "#{booking.identifier} - Pre Payment")
@@ -28,7 +30,7 @@ class ManageMolliePayment
 
     if booking.final_payment_mollie_id?
       payment = find_payment(booking.final_payment_mollie_id)
-      return payment if payment.status == 'open'
+      return update_redirect_url(payment) if payment.status == 'open'
     end
 
     payment = create_payment((booking.final_payment || booking.final_payment_amount), "#{booking.identifier} - Final Payment")
@@ -83,7 +85,13 @@ class ManageMolliePayment
       "http://6155492f.ngrok.io?booking_id=#{booking.id}"
     end
 
+    def update_redirect_url(payment)
+      payment.update(redirect_url: redirect_url) unless payment.redirect_url == redirect_url
+      payment
+    end
+
     def redirect_url
+      return redirect_custom_url if redirect_custom_url.present?
       return dashboard_booking_url(booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
       dashboard_booking_url(booking, host: 'localhost', port: 3000)
     end

@@ -1,0 +1,8 @@
+$('#guest_centric_offers').html("<%= j render 'lodgings/guest_centric', lodging: @lodging, guest_centric: @guest_centric %>");
+$('#gc-filters').html("<%= j render 'gc_filters', guest_centric: @guest_centric %>");
+OwlCarousel.init();
+$('#loader').hide();
+$('.checkbox-toggler').bootstrapToggle()
+$('[data-toggle="tooltip"]').tooltip();
+if($('.btn-offer-filter').length == 0)
+  $('.filter-title').addClass('d-none');

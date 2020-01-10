@@ -8,8 +8,9 @@
     $('#moreFilters, .close-filters-dropdown').click ->
       $('.more-filters-dropdown-menu').toggleClass 'd-none'
 
-    $('.lodgings-filters .filters-autocomplete').on 'keypress', (e) ->
+    $('.filters-autocomplete').on 'keypress', (e) ->
       if e.which == 13
+        $('.lodgings-filters .query').val $(this).val()
         Filters.submit()
 
     $('.layout-btn').click ->
@@ -28,7 +29,7 @@
       Filters.submit()
       $('#more-filters').modal('hide');
 
-    $('#filters-container .lodging_type').change ->
+    $('#filters-container .lodging_type, #filters-container .realtime-availability, #filters-container .flexible-arrival').change ->
       Url.update("");
       Filters.submit()
 
@@ -39,15 +40,12 @@
   updated_amenities = ->
     checked = $(".more-filters-dropdown-menu input:checked").length
 
-    title = $('.more-filters-btn').data('title')
     if checked > 0
       $('.more-filters-btn').addClass 'btn-primary'
       $('.more-filters-btn').removeClass 'btn-outline-primary'
-      $('.more-filters-btn').text("#{title} .#{checked}")
     else
       $('.more-filters-btn').addClass 'btn-outline-primary'
       $('.more-filters-btn').removeClass 'btn-primary'
-      $('.more-filters-btn').text(title)
 
   Filters.update_prices = ->
     if $('.price-range-slider #min_price').val() == "0" && $('.price-range-slider #max_price').val() == "1500" && $('.discounts:checked').length == 0
@@ -60,33 +58,33 @@
   Filters.switch_view = (layout) ->
     $('.layout-btn').removeClass 'text-bold'
     if layout.includes('list-view') || layout.includes 'List View'
-      $('#lodgings-container').removeClass 'd-none'
+      $('#lodgings-container').removeClass 'col-lg-7 col-xl-7 d-none'
       $('#lodgings-container').addClass 'col-md-12'
       $('#map-container').removeClass 'd-sm-block col-md-12'
       $('#layout_view').val('List View')
       $('.view-dropdown .dropdown-toggle .title').text('GRID')
       $('.list-view').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
-      $('.lodging-container').addClass 'col-md-6 col-lg-3'
-      $('.lodging-container').removeClass 'col-md-12 col-lg-6'
+      $('.lodging-container').addClass 'col-md-6'
+      $('.lodging-container').removeClass 'col-md-12'
       Url.update("");
     else if layout.includes('list-and-map') || layout.includes 'List & Map'
-      $('#lodgings-container').addClass 'col-md-6'
+      $('#lodgings-container').addClass 'col-lg-7 col-xl-7'
       $('#lodgings-container').removeClass 'd-none col-md-12'
       $('#map-container').removeClass 'col-md-12'
-      $('#map-container').addClass 'd-none d-sm-block col-md-6'
+      $('#map-container').addClass 'd-none d-sm-block col-lg-5 col-xl-5'
       $('#layout_view').val('List & Map')
       $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
       $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
-      $('.lodging-container').addClass 'col-md-12 col-lg-6'
-      $('.lodging-container').removeClass 'col-md-6 col-lg-3'
+      $('.lodging-container').addClass 'col-md-12'
+      $('.lodging-container').removeClass 'col-md-6'
       map.remove()
       Map.init()
       Url.update("");
     else if layout.includes('map-view') || layout.includes 'Map View'
       $('#lodgings-container').addClass 'd-none'
-      $('#map-container').removeClass 'col-md-6 d-none'
+      $('#map-container').removeClass 'col-lg-5 col-xl-5 d-none'
       $('#map-container').addClass 'col-md-12 d-sm-block'
       $('#layout_view').val('Map View')
       $('.view-dropdown .dropdown-toggle .title').text('LARGE MAP')

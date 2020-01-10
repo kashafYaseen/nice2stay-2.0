@@ -8,25 +8,59 @@
           <% end %>
 
           <div class="product-info">
-            <h4 class="product-title">
-              <%= link_to reservation.lodging_name, reservation.lodging %>
+            <h4 class="product-title mt-0">
+              <%= link_to reservation.lodging do %>
+                <%= reservation.lodging_name %>
+
+                <% if reservation.guest_centric? %>
+                  <span><%= reservation.room_type %></span>
+                <% end %>
+              <% end %>
             </h4>
           </div>
         </div>
 
-        <div class="product-item ml-2">
-          <div class="product-info text-medium">
-            <span><em><strong><%= t "nav_cart.type" %>: </strong></em><%= t("bookings.#{reservation.booking_status}") %></span>
-            <span><em><strong><%= t "carts.cleaning" %>: </strong></em> <%= render_rounded_price reservation.cleaning_cost %></span>
-            <span><em><strong>Discount:</strong></em> <%= render_rounded_price reservation.discount.to_f %></span>
-            <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span>
-            <span><em><strong><%= t "nav_cart.nights" %>:</strong></em> <%= reservation.total_nights %></span>
-            <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>
-            <span><em><strong><%= t "nav_cart.checkout" %>:</strong></em> <%= reservation.check_out %></span>
-            <span><em><strong><%= t "nav_cart.guests" %>:</strong></em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
-          </div>
-        </div>
+        <% if reservation.guest_centric? %>
+          <div class="product-item ml-2">
+            <div class="product-info text-medium">
+              <span><em><strong><%= t "nav_cart.type" %>:</strong></em> <%= t('bookings.instant_booking') %></span>
+              <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>
+              <span><em><strong><%= t "nav_cart.checkout" %>:</strong></em> <%= reservation.check_out %></span>
+              <span><em><strong><%= t "nav_cart.nights" %>:</strong></em> <%= reservation.total_nights %></span>
+              <span><em><strong><%= t "nav_cart.guests" %>:</strong></em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
 
+              <span>
+                <em><strong><%= "#{reservation.rooms} #{'Room'.pluralize reservation.rooms}" %>: </strong></em>
+                <%= render_rounded_price (reservation.rent - reservation.tax_and_additional_fee - reservation.total_meal_price) %>
+              </span>
+
+              <% if reservation.meal_id.present? %>
+                <span><em><strong><%= render_meal_title(reservation.meal_id) %>: </strong></em> <%= render_rounded_price reservation.total_meal_price %></span>
+              <% end %>
+
+              <span><em><strong>Taxes & Fees:</strong></em> <%= render_rounded_price reservation.tax_and_additional_fee %></span>
+              <span><em><strong>Total Charges: </strong></em><%= render_rounded_price reservation.rent.to_f %></span>
+            </div>
+          </div>
+        <% else %>
+          <div class="product-item ml-2">
+            <div class="product-info text-medium">
+              <% if reservation.option? %>
+                <span><em><strong><%= t "nav_cart.type" %>:</strong></em> <%= t('bookings.option_title') %></span>
+              <% else %>
+                <span><em><strong><%= t "nav_cart.type" %>:</strong></em> <%= t('bookings.booking_on_request') %></span>
+              <% end %>
+
+              <span><em><strong><%= t "nav_cart.checkin" %>:</strong></em> <%= reservation.check_in %></span>
+              <span><em><strong><%= t "nav_cart.checkout" %>:</strong></em> <%= reservation.check_out %></span>
+              <span><em><strong><%= t "nav_cart.nights" %>:</strong></em> <%= reservation.total_nights %></span>
+              <span><em><strong><%= t "nav_cart.guests" %>:</strong></em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
+              <span><em><strong><%= t "carts.cleaning" %>: </strong></em> <%= render_rounded_price reservation.cleaning_cost %></span>
+              <span><em><strong>Discount:</strong></em> <%= render_rounded_price reservation.discount.to_f %></span>
+              <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span>
+            </div>
+          </div>
+        <% end %>
       </td>
 
       <td class="text-center">

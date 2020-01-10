@@ -119,6 +119,13 @@
         type: Boolean,
         default: false
       },
+      bindWith: {
+        type: String
+      },
+      titleSuffix: {
+        type: String,
+        default: ''
+      },
       lodgingIds: {
         type: Array
       }
@@ -142,14 +149,21 @@
         this.maxCalculatedChildren = (this.maxAdults - this.totalAdults) + this.maxChildren
         if(this.totalChildren > this.maxCalculatedChildren)
           this.handleChildren(this.maxCalculatedChildren)
+
+        if (this.bindWith)
+          window[this.bindWith].$children[0].totalAdults = value
       },
       handleChildren(value) {
         $(this.childrenTarget).val(value)
         this.totalChildren = value
+        if (this.bindWith)
+          window[this.bindWith].$children[0].totalChildren = value
       },
       handleInfants(value) {
         $(this.infantsTarget).val(value)
         this.totalInfants = value
+        if (this.bindWith)
+          window[this.bindWith].$children[0].totalInfants = value
       },
       guests() {
         var guestsTitle = "";
@@ -172,7 +186,7 @@
             $(`#${this.dropdownId}`).removeClass('btn-primary');
           }
 
-          return "Guests";
+          return "Guests" + this.titleSuffix;
         }
         else {
           if (this.highlightOnSelection) {
@@ -180,7 +194,7 @@
             $(`#${this.dropdownId}`).addClass('btn-primary');
           }
 
-          return guestsTitle;
+          return guestsTitle + this.titleSuffix;
         }
       },
       handleMenuClick(e) {

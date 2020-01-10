@@ -24,7 +24,7 @@ class User < ApplicationRecord
   delegate :active, to: :wishlists, allow_nil: true, prefix: true
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
   delegate :recent, to: :notifications, allow_nil: true, prefix: true
-  delegate :name, :slug, to: :country, allow_nil: true, prefix: true
+  delegate :name, :code, :slug, to: :country, allow_nil: true, prefix: true
 
   validates :email, uniqueness: { message: "has an account. Click here to <input type='button' name='login-form' value='Login' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#login-form-modal'>or here to <input type='button' name='reset-password-form' value='Reset password' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#reset-pass-form-modal'>" }, allow_blank: true
   validates :first_name, :last_name, :phone, presence: true, unless: :encrypted_password_changed?

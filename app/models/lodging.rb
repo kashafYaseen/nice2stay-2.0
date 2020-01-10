@@ -51,6 +51,7 @@ class Lodging < ApplicationRecord
   scope :home_page, -> { published.where(home_page: true) }
   scope :region_page, -> { published.where(region_page: true) }
   scope :country_page, -> { published.where(country_page: true) }
+  scope :guest_centric, -> { published.where(guest_centric: true) }
   scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
@@ -93,6 +94,11 @@ class Lodging < ApplicationRecord
       _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
     end
     (Date.today..2.years.from_now).map(&:to_s) - _availabilities
+  end
+
+  def gc_not_available_on params = {}
+    result = GetGuestCentricRates.call self, params
+    result['response'].collect { |r| r['day'] if r['value'].to_f <= 0 }.compact rescue []
   end
 
   def address
@@ -291,6 +297,16 @@ class Lodging < ApplicationRecord
       end
     end
     total_cost
+  end
+
+  def first_available_date disable_dates
+    date = Date.today
+
+    300.times do
+      return date unless disable_dates.include? date.to_s
+      date = date.next
+    end
+    date
   end
 
   private

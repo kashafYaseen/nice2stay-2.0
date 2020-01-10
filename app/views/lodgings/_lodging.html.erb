@@ -4,7 +4,7 @@
   <div class="card">
     <div class="card-body bg-white">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12 col-md-12 col-lg-6">
           <% if hits[lodging_counter]['_source']['discounts'] %>
             <span class="product-badge text-danger">Special offer</span>
           <% end %>
@@ -13,53 +13,58 @@
             <%= render_image_tags lodging, class: "card-img-top item" %>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12 col-xs-12" do %>
-            <h6 class="card-title"><%= lodging.name %></h6>
+        <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-sm-12 col-md-12 col-lg-4" do %>
+          <h6 class="card-title text-bold"><%= lodging.name %></h6>
 
-            <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
+          <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
+          <p class="text-xxs">
+            <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
+            <% if lodging.children.present? %>
+              / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
+            <% end %>
+            <br>
+            <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+          </p>
+
+          <ul class="list-icon">
             <p class="text-xxs">
-              <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
-              <% if lodging.children.present? %>
-                / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
-              <% end %>
-              <br>
-              <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_1' %><br>
+              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_2' %><br>
+              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_3' %>
             </p>
+          </ul>
+          <hr class="mt-1">
+        <% end %>
 
-            <ul class="list-icon">
-              <p class="text-xxs">
-                <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_1' %><br>
-                <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_2' %><br>
-                <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_3' %>
-              </p>
-            </ul>
-            <hr class="mt-1">
-          <% end %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 col-xs-12 text-center p-0 price-review-box-<%= lodging.id %>">
-
+        <div class="col-sm-12 col-md-12 col-lg-2 text-left p-0 price-review-box-<%= lodging.id %> border-left pl-3">
           <div class="price-details-box-<%= lodging.id %>">
             <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
 
             <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
           </div>
 
-          <div class="review-box">
+          <div class="review-box mb-2">
             <% if lodging.average_rating > 0 %>
               <%= render_stars_tag lodging.average_rating %>
               <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review', 'reviews' ) %></p>
             <% end %>
           </div>
 
+          <% if lodging.including_text.present? %>
+            <p class="text-info mt-2 mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= lodging.including_text %>" data-html="true"><i class="fal fa-check-square"></i> <span class="text-dotted text-xxs"><%= t('included') %></span></p>
+          <% end %>
+
+          <% if lodging.realtime_availability %>
+            <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
+          <% else %>
+            <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.listing_on_request') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.booking_or_option') %></span></p>
+          <% end %>
+
           <div class="links-box text-cnter">
-            <%= link_to 'Quick View', '#', class: "btn btn-secondary btn-sm quick-view-btn col-md-8", data: { lodging: lodging.id } %>
+            <%= link_to '#', class: "quick-view-btn text-xxs text-info", data: { lodging: lodging.id } do %>
+              <i class="fal fa-eye"></i> <span>Quick View</span>
+            <% end %>
           </div>
         </div>
       </div>

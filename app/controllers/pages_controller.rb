@@ -14,7 +14,8 @@ class PagesController < ApplicationController
     @lead = Lead.new
     @lodgings = Lodging.home_page
     @custom_texts = CustomText.home_page
-    @campaigns = Campaign.menu
+    @campaigns = Campaign.spotlight
+    @slider_campaigns = Campaign.menu
   end
 
   def page_not_found

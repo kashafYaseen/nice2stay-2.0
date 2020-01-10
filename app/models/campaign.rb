@@ -11,6 +11,7 @@ class Campaign < ApplicationRecord
   default_scope { includes(:translations) }
   scope :home_page, -> { where(collection: true, popular_homepage: true) }
   scope :menu, -> { where(slider: true) }
+  scope :spotlight, -> { where(popular_homepage: true, spotlight: true) }
   scope :search_import, -> { home_page }
 
   def should_index?

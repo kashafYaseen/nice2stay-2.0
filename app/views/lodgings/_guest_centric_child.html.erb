@@ -1,0 +1,296 @@
+<%= form_for @reservation, url: rates_lodging_guest_centric_offers_en_path(lodging), remote: true, html: { id: "new_reservation_#{lodging.id}#{child['id_offer']}#{index}" } do |f| %>
+
+  <% if child['isPromotion'] %>
+    <% offers = [] %>
+    <div class="guest-centric-offer" data-offer-filter="<%= child['promotionId'] %>">
+      <h4 class="mt-4"><%= child['name'] %></h4>
+      <p><%= child['description'].try(:html_safe) %></p>
+
+      <% child['offers'].each do |offer| %>
+        <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
+
+        <div class="row mt-3 children-scroll-section">
+          <div class="col-md-4 col-border bg-white">
+            <% if lodging_child.present? %>
+              <div class="owl-carousel">
+                <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+              </div>
+            <% else %>
+              <div class="owl-carousel">
+                <%= render_guest_centric_images offer, class: "modal-slider-img" %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="col-md-3 bg-white col-border">
+            <p class="mb-0 mt-2"><b><%= offer['name'].try(:capitalize) %></b></p>
+            <p class="mb-0"><span>Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span></p>
+
+            <% if offer['availability'].to_i <= 5 %>
+              <div class="row mt-2">
+                <span class="col-md-12 text-left text-danger">
+                  Only <%= offer['availability'] %> <%= 'room'.pluralize offer['availability'].to_i %> left!
+                </span>
+              </div>
+            <% end %>
+
+            <p class="text-green text-left mb-2" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
+
+            <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{offer['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
+          </div>
+
+          <div class="col-md-5 col-border bg-white text-sm group-toggle">
+            <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child, cancel_policy: gc_cancel_policy(child['cancelPolicy']) %>
+
+            <label
+              class="col-border col-md-12 border-dark border-right offer-item parent-<%= offer['offer'].gsub('.', '-') %>"
+              data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}#{index}" %>"
+              data-bookable="<%= child["isBookable"] %>"
+              data-price="<%= money_string_to_float offer['total'] %>"
+              data-tax="<%= money_string_to_float offer['tax'] %>"
+              data-fee="<%= offer['additionalFees'] %>"
+              data-type="<%= offer['name'].try(:capitalize) %>"
+              data-child="<%= lodging_child.try(:id) %>"
+              data-policy="<%= gc_cancel_policy(child['cancelPolicy']) %>"
+            >
+
+              <p>
+                <%= f.radio_button(:offer_id, offer['offer'], class: "offers-select-radio") %> <span class="text-bold"><%= offer['name'].try(:capitalize) %></span>
+              </p>
+
+              <% child['mealPlans'].each do |meal| %>
+                <% next if meal['id'] == 1 || meal['total'] > 0 %>
+                <div class="row">
+                  <span class="col-md-12 text-left text-green">
+                    <i class="material-icons free_breakfast text-dark"></i> <%= meal['label'] %>
+                  </span>
+                </div>
+              <% end if child['mealPlans'].present? %>
+
+              <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
+                <span class="mt-3">Extra:</span>
+              <% end %>
+
+              <% child['mealPlans'].each do |meal| %>
+                <% next if meal['id'] == 1 || meal['total'] <= 0 %>
+                <div class="row">
+                  <span class="col-8 text-left">
+                    <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['net'], tax: meal['taxes'] }, id: "meal-id-#{offer['offer'].gsub('.', '-')}#{meal['id']}" }, meal['id'], nil %>
+                    <label for="<%= "meal-id-#{offer['offer'].gsub('.', '-')}#{meal['id']}" %>" class="mb-0"><%= meal['label'] %></label>
+                  </span>
+
+                  <span class="col-4 text-right">
+                    <%= "€#{render_meal_price meal['net'], params}" %>
+                  </span>
+                </div>
+              <% end if child['mealPlans'].present? %>
+
+              <div class="mt-3">
+               <span class="text-bold">
+                  <%= render_reservation_guests(@reservation) %>
+                </span>
+
+                <span class="float-right text-bold">
+                  <%= "€#{offer['netValue']}" %>
+                </span>
+              </div>
+
+              <div class="row offer-meal-details meal-<%= offer['offer'].gsub('.', '-') %> d-none">
+                <span class="col-md-8 text-left meal-title-<%= offer['offer'].gsub('.', '-') %>">
+                  <%= render_meal_title(@reservation.meal_id) %>
+                </span>
+
+                <span class="col-md-4 text-right meal-price-<%= offer['offer'].gsub('.', '-') %>">
+                  €<%= @reservation.meal_price %>
+                </span>
+              </div>
+
+              <div class="row">
+                <span class="col-8 text-left">
+                  Taxes
+                </span>
+
+                <span class="col-4 text-right tax-price taxes-<%= offer['offer'].gsub('.', '-') %>">
+                  €<%= offer['tax'] %>
+                </span>
+              </div>
+
+              <div class="row">
+                <span class="col-8">
+                  Additional Fees
+                </span>
+
+                <span class="col-md-4 text-right">
+                  €<%= offer['additionalFees'] %>
+                </span>
+              </div>
+
+              <div class="mt-3">
+                <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
+
+                <span class="float-right offer-price text-bold <%= offer['offer'].gsub('.', '-') %>"><%= "€#{offer['total']}" %></span>
+              </div>
+
+              <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled btn-#{offer['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
+                <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+              <% end %>
+            </label><br>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <% offers = [] %>
+    <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: child['id_package']) %>
+
+    <div class="guest-centric-offer" data-offer-filter="">
+      <h4 class="mt-4"><%= child['name'] %></h4>
+
+      <div class="row mt-3 children-scroll-section">
+        <div class="col-md-4 col-border bg-white">
+          <% if lodging_child.present? %>
+            <div class="owl-carousel">
+              <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+            </div>
+          <% else %>
+            <div class="owl-carousel">
+              <%= render_guest_centric_images child, class: "modal-slider-img" %>
+            </div>
+          <% end %>
+
+        </div>
+
+        <div class="col-md-3 bg-white col-border">
+          <p class="mb-0 mt-2"><span class="text-bold"><%= child['name'].try(:capitalize) %></span></p>
+          <p class="mb-0"><span>Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span></p>
+
+          <% if child['availability'].to_i <= 5 %>
+            <div class="row mt-2">
+              <span class="col-md-12 text-left text-danger">
+                Only <%= child['availability'] %> <%= 'room'.pluralize child['availability'].to_i %> left!
+              </span>
+            </div>
+          <% end %>
+
+          <p class="text-green text-left mb-2" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
+
+          <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{child['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
+        </div>
+
+        <div class="col-md-5 col-border bg-white text-sm group-toggle">
+          <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child, cancel_policy: gc_cancel_policy(child['cancelPolicy']) %>
+
+          <label
+            class="col-border col-md-12 border-dark border-right offer-item parent-<%= child['offer'].gsub('.', '-') %>"
+            data-submit="#new_reservation_<%= "#{lodging.id}#{child['id_offer']}#{index}" %>"
+            data-bookable="<%= child["isBookable"] %>"
+            data-price="<%= money_string_to_float child['total'] %>"
+            data-tax="<%= money_string_to_float child['tax'] %>"
+            data-fee="<%= child['additionalFees'] %>"
+            data-type="<%= child['name'].try(:capitalize) %>"
+            data-child="<%= lodging_child.try(:id) %>"
+            data-policy="<%= gc_cancel_policy(child['cancelPolicy']) %>"
+          >
+
+            <p>
+              <%= f.radio_button(:offer_id, child['offer'], class: "offers-select-radio") %> <span class="text-bold"><%= child['name'].try(:capitalize) %></span>
+            </p>
+
+            <% child['mealPlans'].each do |meal| %>
+              <% next if meal['id'] == 1 || meal['total'] > 0 %>
+              <div class="row">
+                <span class="col-md-12 text-left text-green">
+                  <i class="material-icons free_breakfast text-dark"></i> <%= meal['label'] %>
+                </span>
+              </div>
+            <% end if child['mealPlans'].present? %>
+
+
+            <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
+              <span class="mt-3">Extra:</span>
+            <% end %>
+
+            <% child['mealPlans'].each do |meal| %>
+              <% next if meal['id'] == 1 || meal['total'] <= 0 %>
+              <div class="row">
+                <span class="col-8 text-left">
+                  <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['net'], tax: meal['taxes'] }, id: "meal-id-#{child['offer'].gsub('.', '-')}#{meal['id']}" }, meal['id'], nil %>
+                  <label for="<%= "meal-id-#{child['offer'].gsub('.', '-')}#{meal['id']}" %>" class="mb-0"><%= meal['label'] %></label>
+                </span>
+
+                <span class="col-4 text-right">
+                  <%= "€#{render_meal_price meal['net'], params}" %>
+                </span>
+              </div>
+            <% end if child['mealPlans'].present? %>
+
+            <div class="mt-3">
+              <span class="text-bold">
+                <%= render_reservation_guests(@reservation) %>
+              </span>
+
+              <span class="float-right text-bold"><%= "€#{child['netValue']}" %></span>
+            </div>
+
+            <div class="row offer-meal-details meal-<%= child['offer'].gsub('.', '-') %> d-none">
+              <span class="col-md-8 text-left meal-title-<%= child['offer'].gsub('.', '-') %>">
+                <%= render_meal_title(@reservation.meal_id) %>
+              </span>
+
+              <span class="col-md-4 text-right meal-price-<%= child['offer'].gsub('.', '-') %>">
+                €<%= @reservation.meal_price %>
+              </span>
+            </div>
+
+            <div class="row">
+              <span class="col-8 text-left">
+                Taxes
+              </span>
+
+              <span class="col-4 text-right tax-price taxes-<%= child['offer'].gsub('.', '-') %>">
+                €<%= child['tax'] %>
+              </span>
+            </div>
+
+            <div class="row">
+              <span class="col-8">
+                Additional Fees
+              </span>
+
+              <span class="col-md-4 text-right">
+                €<%= child['additionalFees'] %>
+              </span>
+            </div>
+
+            <div class="mt-3">
+              <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
+
+              <span class="float-right offer-price text-bold <%= child['offer'].gsub('.', '-') %>"><%= "€#{child['total']}" %></span>
+            </div>
+
+            <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled btn-#{child['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
+              <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+            <% end %>
+          </label>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :check_in, value: get_centric_param(:check_in), id: "check_in_#{lodging.id}", class: 'check_in' %>
+  <%= f.hidden_field :check_out, value: get_centric_param(:check_out), id: "check_out_#{lodging.id}", class: 'check_out' %>
+  <%= f.hidden_field :adults, value: no_of_adults(get_centric_param(:adults) || f.object.adults), id: "adults_#{lodging.id}", class: 'adults' %>
+  <%= f.hidden_field :children, value: (get_centric_param(:children) || f.object.children), id: "children_#{lodging.id}", class: 'children' %>
+  <%= f.hidden_field :infants, value: (get_centric_param(:infants) || f.object.infants), id: "infants_#{lodging.id}", class: 'infants' %>
+  <%= f.hidden_field :rooms, value: get_centric_param(:rooms), id: "rooms_#{lodging.id}", class: 'rooms' %>
+  <%= f.hidden_field :lodging_id, value: lodging.id, id: "lodging_id_#{lodging.id}", class: 'gc-child-id' %>
+  <%= f.hidden_field :offer_id, class: 'offer-id' %>
+  <%= f.hidden_field :gc_policy, class: 'guest-centric-policy' %>
+  <%= f.hidden_field :rent, class: 'offer-rent' %>
+  <%= f.hidden_field :meal_price, class: 'meal-price' %>
+  <%= f.hidden_field :meal_tax, class: 'meal-tax' %>
+  <%= f.hidden_field :tax, class: 'total-tax' %>
+  <%= f.hidden_field :additional_fee, class: 'additional-fee' %>
+  <%= f.hidden_field :room_type, class: 'room-type' %>
+  <%= hidden_field_tag :target_modal %>
+<% end %>

@@ -1,0 +1,29 @@
+<div class="toolbar-section">
+  <% if action_name == 'index' && controller_name == 'lodgings' %>
+    <div class="row">
+      <div class="col-md-5 pt-2">
+        <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
+      </div>
+    </div>
+
+    <% content_for :js_init do %>
+      Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
+    <% end %>
+  <% else %>
+    <%= form_tag lodgings_path, method: :get, id: 'searchbar_search_form' do %>
+      <div class="row">
+        <div class="col-md-5 pt-2">
+          <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general', id: 'searchbar_query' %>
+        </div>
+
+        <%= hidden_field_tag :adults, params[:adults], id: 'searchbar_adults' %>
+        <%= hidden_field_tag :children, params[:children], id: 'searchbar_children' %>
+        <%= hidden_field_tag :infants, params[:infants], min: 0, id: 'searchbar_infants' %>
+        <%= hidden_field_tag :country, params[:country], id: 'searchbar_country', class: 'autocomplete-country' %>
+        <%= hidden_field_tag :region, params[:region], id: 'searchbar_region', class: 'autocomplete-region' %>
+
+        <%= hidden_field_tag :standalone, true, id: 'searchbar_standalone', class: 'standalone' %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -28,4 +28,7 @@
 //= require velocity.min
 //= require starrr.js
 //= require chosen-jquery
+//= require bootstrap-toggle.min
+//= require slick.min
+
 //= require_tree .

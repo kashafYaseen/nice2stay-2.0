@@ -1,197 +1,177 @@
-<div class="container price_box  padding-top-1x padding-bottom-3x mb-2">
+<div class="container padding-top-1x padding-bottom-3x mb-2">
   <div class="row">
     <!-- Checkout Address-->
     <div class="col-md-12">
-      <div class="steps flex-sm-nowrap mb-5">
-        <a class="step active"><h4 class="step-title"><i class="material-icons check_circle"></i><%= t 'indicator.gasten' %></h4></a>
-         <a class="step"><h3 class="step-title"><%= t 'indicator.send' %></h3></a>
-        <a class="step"><h3 class="step-title"><%= t 'indicator.confirmation' %></h3></a>
-      </div>
-
       <% if @booking.reservations.present? %>
-        <h5><%= t 'carts.overview' %></h5>
-        <hr class="padding-bottom-1x">
-        <div class="table-responsive shopping-cart">
-          <table class="table">
-            <thead>
-              <tr>
-              <th class="text-center text-xs"><%= t 'carts.name' %></th>
-              <th class="text-center text-xs"><%= t 'carts.checkin' %></th>
-              <th class="text-center text-xs"><%= t 'carts.checkout' %></th>
-              <th class="text-center text-xs"><%= t 'carts.adults' %></th>
-              <th class="text-center text-xs"><%= t 'carts.children' %></th>
-              <th class="text-center text-xs"><%= t 'carts.infants' %></th>
-              <th class="text-center text-xs"><%= t 'carts.subtotal' %></th>
-              <th class="text-center text-xs"><%= t 'carts.cleaning' %></th>
-              <th class="text-center text-xs"><%= 'Discount' %></th>
-              <th class="text-center text-xs"><%= t 'carts.total' %></th>
-              <th class="text-center text-xs"><%= t 'carts.type' %></th>
-                <th class="text-center">
-                  <%= link_to t('carts.empty'), carts_path, class: 'btn btn-sm btn-outline-danger', method: :DELETE %>
-                </th>
-              </tr>
-            </thead>
-
-            <tbody id="cart-body">
-              <%= render partial: 'reservation', collection: @booking.reservations %>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="shopping-cart-footer">
-        </div>
-
         <div class="row">
-          <div class="col-md-12">
-            <% if user_signed_in? %>
-              <p>Hi <%= current_user.full_name %>!, you are logon. Your details are automaticly filled in the form</p>
-            <% else %>
-              <h5><%= t 'profile_account.account' %></h5>
-              <p><%= t 'profile_account.customers' %></p>
-              <div class="row">
-                <div class="col-md-5 mx-auto">
-                  <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
-                </div>
+          <div class="col-md-6 border-default mx-auto bg-white">
+            <h4 class="mb-2 text-bold"><%= t 'carts.overview' %></h4>
+            <div id="cart-flash-messages"></div>
 
-                <div class="col-md-5 mx-auto">
-                  <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 margin-top-2x">
-            <h5><%= t 'carts.gasten' %></h5>
-            <p><%= t 'profile_account.new_customers' %></p>
-            <hr class="padding-bottom-1x">
-            <%= form_for @booking, url: carts_path do |f| %>
-              <%= render 'shared/errors', resource: @booking %>
-
-              <%= f.hidden_field :in_cart, value: false %>
-              <%= f.fields_for :user do |user_fields| %>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <%= user_fields.label :language, t('carts.preferred_language'), class: 'col-2 text-bold pt-1' %>
-                    <%= user_fields.select :language, languages, {}, class: 'form-control col-3', id: rendom_id(resource, :language) %>
-                  </div>
-                </div>
-              </div>
-
-              <fieldset>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :first_name %>
-                      <%= user_fields.text_field :first_name, class: "form-control", required: true %>
-                      <%= user_fields.hidden_field :skip_validations, value: true %>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :last_name %>
-                      <%= user_fields.text_field :last_name, class: "form-control", required: true %>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :email %>
-                      <%= user_fields.email_field :email, disabled: current_user.present?, class: "form-control disabled", required: true %>
-                      <%= user_fields.hidden_field :creation_status, id: :user_creation_status %>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :phone %>
-                      <%= user_fields.text_field :phone, class: "form-control", required: true %>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :city %>
-                      <%= user_fields.text_field :city, class: "form-control" %>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :zipcode %>
-                      <%= user_fields.text_field :zipcode, class: "form-control" %>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <%= user_fields.label :country %>
-                      <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country) %>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <%= user_fields.label :address %>
-                      <%= user_fields.text_field :address, class: "form-control" %>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-
-                <% if user_signed_in? %>
-                  <hr class="padding-bottom-1x">
-                <% else %>
-                  <div class="row password-fields d-none">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :password %>
-                        <%= user_fields.password_field :password, class: "form-control", autocomplete: 'new-password' %>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <%= user_fields.label :password_confirmation %>
-                        <%= user_fields.password_field :password_confirmation, class: "form-control", autocomplete: 'new-password' %>
-                      </div>
-                    </div>
-                  </div>
-                  <hr class="padding-bottom-1x">
-
-                  <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                      <%= check_box_tag :create_account, nil, show_password_fields?(@booking.user), class: "custom-control-input" %>
-                      <label class="custom-control-label" for="create_account"><%= t "profile_account.create_new_account" %></label>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-
-              <%= f.fields_for :reservations do |reservation_fields| %>
-                <%= reservation_fields.hidden_field :id %>
-                <%= reservation_fields.hidden_field :booking_id %>
-                <%= reservation_fields.hidden_field :in_cart, value: false %>
-              <% end %>
-
-              <div class="d-flex justify-content-between">
-                 <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
-                  <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
-                <% end %>
-
-                <%= f.submit t('carts.step_3'), class: "btn btn-primary mb-0 mr-0" %>
+            <div class="bootstrap-default">
+              <div class="alert alert-info" role="alert">
+                <%= t('cart.pay_less') %>
               </div>
             </div>
-          <% end %>
+
+            <div id="cart-body">
+              <%= render partial: 'cart_reservation', collection: @booking.reservations, as: :reservation %>
+            </div>
+          </div>
+
+          <div class="col-md-5 border-default mx-auto bg-white">
+            <div class="row">
+              <div class="col-md-12">
+                <h4 class="mb-5 text-bold"><%= t('cart.book_securely') %></h4>
+
+                <% if user_signed_in? %>
+                  <p>Hi <%= current_user.full_name %>!, you are logon. Your details are automaticly filled in the form</p>
+                <% else %>
+                  <h5><%= t 'profile_account.account' %></h5>
+                  <p><%= t 'profile_account.customers' %></p>
+                  <div class="row">
+                    <div class="col-md-5 mx-auto">
+                      <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+                    </div>
+
+                    <div class="col-md-5 mx-auto">
+                      <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 margin-top-2x">
+                <%= form_for @booking, url: carts_path do |f| %>
+                  <%= render 'shared/errors', resource: @booking %>
+
+                  <%= f.hidden_field :in_cart, value: false %>
+                  <%= f.fields_for :user do |user_fields| %>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <%= user_fields.label :language, t('carts.preferred_language'), class: 'text-bold' %>
+                        <%= user_fields.select :language, languages, {}, class: 'form-control', id: rendom_id(resource, :language) %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <fieldset>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :first_name %>
+                          <%= user_fields.text_field :first_name, class: "form-control", required: true %>
+                          <%= user_fields.hidden_field :skip_validations, value: true %>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :last_name %>
+                          <%= user_fields.text_field :last_name, class: "form-control", required: true %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :email %>
+                          <%= user_fields.email_field :email, disabled: current_user.present?, class: "form-control disabled", required: true %>
+                          <%= user_fields.hidden_field :creation_status, id: :user_creation_status %>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :phone %>
+                          <%= user_fields.text_field :phone, class: "form-control", required: true %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :city %>
+                          <%= user_fields.text_field :city, class: "form-control", required: @guest_centric %>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :zipcode %>
+                          <%= user_fields.text_field :zipcode, class: "form-control", required: @guest_centric %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <%= user_fields.label :country %>
+                          <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country), required: @guest_centric %>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <%= user_fields.label :address %>
+                          <%= user_fields.text_field :address, class: "form-control", required: @guest_centric %>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                    <% if user_signed_in? %>
+                      <hr class="padding-bottom-1x">
+                    <% else %>
+                      <div class="row password-fields d-none">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <%= user_fields.label :password %>
+                            <%= user_fields.password_field :password, class: "form-control", autocomplete: 'new-password' %>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <%= user_fields.label :password_confirmation %>
+                            <%= user_fields.password_field :password_confirmation, class: "form-control", autocomplete: 'new-password' %>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="padding-bottom-1x">
+
+                      <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                          <%= check_box_tag :create_account, nil, show_password_fields?(@booking.user), class: "custom-control-input" %>
+                          <label class="custom-control-label" for="create_account"><%= t "profile_account.create_new_account" %></label>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+
+                  <%= f.fields_for :reservations do |reservation_fields| %>
+                    <%= reservation_fields.hidden_field :id %>
+                    <%= reservation_fields.hidden_field :booking_id %>
+                    <%= reservation_fields.hidden_field :in_cart, value: false %>
+                  <% end %>
+
+                  <div class="d-flex justify-content-between">
+                     <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
+                      <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
+                    <% end %>
+
+                    <%= f.submit 'Complete', class: "btn btn-primary mb-0 mr-0" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </div>
       <% else %>
         <div class="shopping-cart-footer">
@@ -249,6 +229,8 @@
 </section>
 
 <% content_for :canonical do %><%= carts_url %><% end %>
+<% content_for :body_class do %>calendar_section<% end %>
+<% content_for :site_menu_class do %>d-none<% end %>
 
 <% content_for :js_init do %>
   Cart.init();

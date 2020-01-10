@@ -7,12 +7,9 @@
     toolbar_section = $('.toolbar-section')
     mobile_menu = $('.slideable-menu .menu')
 
-    $(window).scroll ->
-      if $('#show-page-submenu').length > 0
-        if $(this).scrollTop() > 200
-          $('#show-page-submenu').fadeIn 500
-        else
-          $('#show-page-submenu').fadeOut 500
+    resize_campaigs()
+    $(window).resize ->
+      resize_campaigs()
 
     close_tool_box = ->
       toolbar_toggle.removeClass 'active'
@@ -36,6 +33,13 @@
       toolbar_toggle.removeClass 'active'
       toolbar_section.removeClass 'current'
 
+    $(window).scroll ->
+      for scrol_link in $('.scroll-to-btn')
+        if isScrolledIntoView $($(scrol_link).data('target'))
+          $(scrol_link).addClass 'active'
+        else
+          $(scrol_link).removeClass 'active'
+
     $(".scroll-to-btn").click (e) ->
       e.stopPropagation()
       $('html, body').animate { scrollTop: $($(this).data('target')).offset().top - 100 }, 'slow'
@@ -48,6 +52,8 @@
       e.stopPropagation()
       $('html, body').animate { scrollTop: $('#location-container').offset().top - 100 }, 'slow'
 
+    if $('.secondary-navbar, #show-page-submenu').length > 0
+      $('#flash-messages .alert').css('margin-top', 124);
 
   Custom.ask_for_login = ->
     setTimeout (->
@@ -57,5 +63,19 @@
   set_top_position = ->
     $('.lodgings-list').css("margin-top", "#{$('.fixed-filters').height()-10}px");
     $('#map').css("top", "#{$('.fixed-filters').height()-10}px");
+
+  isScrolledIntoView = (elem) ->
+    $elem = $(elem)
+    if $elem.length > 0
+      $window = $(window)
+      docViewTop = $window.scrollTop()
+      docViewBottom = docViewTop + $window.height()
+      elemTop = $elem.offset().top
+      elemBottom = elemTop + $elem.height()
+      elemBottom <= docViewBottom and elemTop >= docViewTop
+
+  resize_campaigs = ->
+    if window.innerWidth > 576
+      $('.spotlight-campaigns img').css('height', $('.ups-tags div').innerHeight());
 
 ).call this

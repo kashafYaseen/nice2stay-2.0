@@ -3,15 +3,11 @@
     data-validate-url="<%= validate_reservations_path %>">
 </div>
 
-<div class="row price_box">
-  <div class="col-md-12 col-sm-12 col-lg-12 pr-0">
-    <h4 class="margin-bottom-1x"><%= t 'cart.availability' %> </h4>
-    <div data-lodging-id="<%= lodging.id %>"
-      data-disabled-dates="<%= lodging.children_not_available_on %>"
-      data-customized-dates="<%= lodging.customized_dates %>">
-
-      <div class="vue-app">
-        <div>
+<div class="row sticky-top <%= 'pl-4' unless id_sufix.present? %>" id="availability-and-prices">
+  <div class="col-md-12 <%= 'container' unless id_sufix.present? %>">
+    <div class="row" data-lodging-id="<%= lodging.id %>">
+      <div class="col-md-12">
+        <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
           <reservation-datepicker
             :check-in="'<%= params[:check_in] %>'"
             :check-out="'<%= params[:check_out] %>'"
@@ -24,10 +20,13 @@
             :customized-dates="<%= lodging.customized_dates %>"
             :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
             :show-action-buttons="false"
+            :inline="true"
           />
         </div>
+      </div>
 
-        <div>
+      <div class="col-md-12">
+        <div class="vue-app" data-id="vue_guest_dropdown<%= id_sufix %>">
           <guests-dropdown
             :adults="<%= no_of_adults(params[:adults].to_i) %>"
             :children="<%= params[:children].to_i %>"
@@ -45,21 +44,17 @@
           />
         </div>
       </div>
-    </div>
 
-    <div class="col-md-12 p-0">
-      <%= form_for reservation, url: reservations_path, remote: true, html: {id: "new_reservation#{id_sufix}"} do |f| %>
+      <%= form_for reservation, url: reservations_path, remote: true, method: :post, html: { id: "new_reservation#{id_sufix}", class: 'col-md-12' } do |f| %>
+        <%= f.hidden_field :check_in, value: params[:check_in], id: "check_in#{id_sufix}", class: 'check_in' %>
+        <%= f.hidden_field :check_out, value: params[:check_out], id: "check_out#{id_sufix}", class: 'check_out' %>
         <%= f.hidden_field "adults#{id_sufix}", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults' %>
         <%= f.hidden_field "children#{id_sufix}", value: (params[:children] || f.object.children), class: 'children' %>
         <%= f.hidden_field "infants#{id_sufix}", value: (params[:infants] || f.object.infants), class: 'infants' %>
         <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
       <% end %>
 
-      <%= link_to 'Check Availability', '#', class: "btn btn-outline-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
-
-      <div class="bg-white mt-3">
-        <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(lodging) if lodging.display_price_notice? || !lodging.checked? %>
-      </div>
+      <%= link_to 'Check Availability', '#', class: "btn btn-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
     </div>
   </div>
 </div>

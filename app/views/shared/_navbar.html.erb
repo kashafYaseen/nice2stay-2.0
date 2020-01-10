@@ -1,98 +1,28 @@
 <header class="navbar navbar-sticky">
   <!-- Site Branding-->
-  <div class="site-branding">
+  <div class="site-branding col-1">
     <%= link_to root_path do %>
-      <%= image_tag "site-logo.png", class: "site-logo" %>
+      <%= render_logo_tag %>
     <% end %>
   </div>
 
-  <!-- Main Navigation-->
-  <nav class="site-menu">
-    <ul>
-      
-
-      <li><a href="#"><span>Nice2stay</span></a>
-        <ul class="sub-menu">
-          <% @pages.each do |page| %>
-            <li><%= link_to page.title, page_path(page) %></li>
-          <% end %>
-        </ul>
-      </li>
-
-       <li><a href="#"><span><%= t 'nav.land' %></span></a>
-        <ul class="mega-menu">
-          <% @countries_enabled.each do |country| %>
-            <li><span class="mega-menu-title"><%= link_to country.name, country_path(country, locale: locale) %> </span>
-              <ul>
-                <% country.regions.each do | region | %>
-                  <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-
-      <li><a href="#"><span><%= t 'nav.collections' %></span></a>
-        <ul class="mega-menu">
-          <li><span class="mega-menu-title"><a>popular collections</a></span>
-            <ul>
-              <% @menu_custom_texts.each do |custom_text| %>
-                <li><%= link_to custom_text.menu_title, seo_url(custom_text.seo_path) %></li>
-              <% end %>
-            </ul>
-          </li>
-
-          <% @countries_enabled.each do |country| %>
-            <li><span class="mega-menu-title"><a><%= country.name %></a></span>
-              <ul>
-                <% country.custom_texts.country_menu.each do |custom_text| %>
-                  <li><%= link_to custom_text.menu_title, seo_url(custom_text.seo_path) %></li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-
-      <li>
-        <% if I18n.locale == :nl %>
-          <%= link_to locale: 'en' do %>
-            <span>
-              <%= image_tag('united-states-of-america-flag-icon-16.png', width: '16', height: '11', alt: 'English') %>
-            </span>
-          <% end %>
-        <% else %>
-          <%= link_to locale: 'nl' do %>
-            <span>
-              <%= image_tag('netherlands-flag-icon-16.png', width: '16', height: '11', alt: 'English') %>
-            </span>
-          <% end %>
-        <% end %>
-      </li>
-    </ul>
+  <nav class="site-menu <%= yield :site_menu_class %>">
+    <div class="container-fluid">
+      <!-- Search Section-->
+      <%= render 'shared/menu_search' %>
+    </div>
   </nav>
+
   <!-- Toolbar-->
   <div class="toolbar">
     <div class="inner">
-      <a class="toolbar-toggle mobile-menu-toggle" href="#mobileMenu">
+      <a class="toolbar-toggle" href="#mobileMenu">
         <i class="material-icons menu"></i>
       </a>
 
       <a class="toolbar-toggle search-toggle" href="#search">
         <i class="material-icons search"></i>
       </a>
-
-      <% if user_signed_in? %>
-        <a class="toolbar-toggle toolbar-notifications" href="#notifications">
-          <i>
-            <span class="material-icons notifications"></span>
-            <span class="count unread-notifications-count">1</span>
-          </i>
-        </a>
-      <% end %>
-
-      
 
       <a class="toolbar-toggle toolbar-wishlist" href="#wishlist">
         <i>
@@ -233,8 +163,6 @@
       <%= render 'shared/cart', reservations: @booking.try(:reservations) %>
       <!-- Wishlist Section-->
       <%= render 'shared/wishlist', wishlists: @wishlists %>
-      <!-- Notifications Section-->
-      <%= render 'shared/notifications' if user_signed_in? %>
     </div>
   </div>
 </header>

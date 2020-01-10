@@ -12,7 +12,14 @@
       </div>
     </div>
 
-    <p class="comment-text"><%= review.description %></p>
+    <p class="comment-text review-<%= review.id %>"><%= truncated_description(review.description, 120) %></p>
+
+    <% if truncate_description?(review.description, 120) %>
+      <p class="text-right mb-0 m-0">
+        <button class="btn btn-sm btn-read-more text-info m-0" data-target=".review-<%= review.id %>" data-actual="<%= review.description %>" data-truncated="<%= truncated_description(review.description, 120) %>">Read more</button>
+      </p>
+    <% end %>
+
     <div class="comment-footer">
       <span class="comment-meta">
         <%= review.user_full_name unless review.anonymous? %>

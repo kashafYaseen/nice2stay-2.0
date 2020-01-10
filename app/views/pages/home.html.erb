@@ -1,63 +1,78 @@
-<div class="jumbotron">
-  <div class="dark-overlay-image">
-    <div class="container-fluid">
-      <div class="col-md-12 pt-5">
-        <h2 class="text-white"> <%= t 'usp.discover' %> </h2>
+<% content_for :body_class, "home-full-page-layout" %>
 
-        <h5 class="text-white margin-bottom-1x"><%= t 'usp.homepage' %></h5>
-        <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
-          <div class="row">
-            <div class="col-md-6 col-sm-12 pt-3">
-              <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general' %>
-            </div>
+<div class="row price_box m-0">
+  <div class="jumbotron jumbotron-background col-md-12 p-0">
+    <div class="dark-overlay-image">
+      <div class="offset-md-1 col-sm-12 col-md-6 col-lg-5 col-xl-4 mt-vh">
+        <div class="row text-center">
+          <div class="card bg-white p-3">
+            <div class="card-body text-left">
+              <h1 class="display-4"><%= t('usp.discover') %></h1>
+              <h5><%= t('usp.search') %></h5>
 
-            <div class="col-md-6 col-sm-12 pt-0">
-              <div class="row homepage-actions-row">
-                <div class="vue-app">
-                  <datepicker
-                    :trigger-id="'trigger-range'"
-                    :check-in="'<%= params[:check_in]%>'"
-                    :check-out="'<%= params[:check_out]%>'"
-                    :months="2"
-                    :min-date="'<%= Date.yesterday %>'"
-                    :action-buttons="true"
-                    :full-screen="false"
-                    :trigger-button="'btn btn-outline-primary'"
-                    :inline="false"
-                  />
+              <div class="row">
+                <div class="col-md-12">
+                  <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
+                    <div class="row">
+                      <div class="col-12 pt-3">
+                        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general', data: { skip_submission: true } %>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="vue-app">
+                          <datepicker
+                            :trigger-id="'trigger-range'"
+                            :check-in="'<%= params[:check_in]%>'"
+                            :check-out="'<%= params[:check_out]%>'"
+                            :months="2"
+                            :min-date="'<%= Date.yesterday %>'"
+                            :action-buttons="true"
+                            :full-screen="false"
+                            :trigger-button="'btn btn-outline-primary w-100'"
+                            :inline="false"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="vue-app">
+                          <guests-dropdown
+                            :adults="<%= params[:adults].to_i %>"
+                            :children="<%= params[:children].to_i %>"
+                            :infants="<%= params[:infants].to_i %>"
+                            :adults-target="'.adults'"
+                            :children-target="'.children'"
+                            :infants-target="'.infants'"
+                            :dropdown-id="'<%= "guests-dropdown-homepage" %>'"
+                            :show-apply="false"
+                            :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 pr-1">
+                        <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
+                        <%= hidden_field_tag :children, params[:children], class: 'children' %>
+                        <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
+                        <%= hidden_field_tag :standalone, true %>
+                        <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
+                        <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
+
+                        <div class="float-left m-2">
+                          <%= check_box_tag :flexible_arrival, true, false %>
+                          <%= label_tag :flexible_arrival, t('filters.flexible_text'), data: { toggle: 'tooltip', placement: 'bottom', 'original-title': t('filters.flexible_tooltip') }, class: 'text-dotted' %>
+                        </div>
+
+                        <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary float-right' , data: { disable_with: t('search.search_button') }
+                        %>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-
-                <div class="vue-app">
-                  <guests-dropdown
-                    :adults="<%= params[:adults].to_i %>"
-                    :children="<%= params[:children].to_i %>"
-                    :infants="<%= params[:infants].to_i %>"
-                    :adults-target="'.adults'"
-                    :children-target="'.children'"
-                    :infants-target="'.infants'"
-                    :dropdown-id="'<%= "guests-dropdown-homepage" %>'"
-                    :show-apply="false"
-                    :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm'"
-                  />
-                </div>
-
-                <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
-                <%= hidden_field_tag :children, params[:children], class: 'children' %>
-                <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
-                <%= hidden_field_tag :standalone, true %>
-                <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
-                <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
-                <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
-                %>
               </div>
             </div>
           </div>
-        <% end %>
-
-        <h6 class="text-white margin-top-1x">Trending searches: </h6>
-        <% @custom_texts.inspiration.each do |custom_text| %>
-          <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'trending' %>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -144,42 +159,36 @@
           </div>
         </section>
       <% end %>
-    </div>
 
-    <div class="col-sm-6 margin-top-1x">
-      <section class="widget-tags">
-        <h5 class="mt-3 mb-10"><%= t 'nav.landen' %></h5>
+      <section class="padding-top-1x pb-2">
+        <h3 class="mb-30">Popular Destination</h3>
+        <hr class="mt-3"></hr>
 
-        <% @countries_enabled.each do |country| %>
-          <%= link_to country.name, country_path(country, locale: locale), class: "tag" %>
-        <% end %>
-      </section>
-    </div>
+        <div class="isotope-grid cols-4">
+          <div class="gutter-sizer"></div>
+          <div class="grid-sizer"></div>
 
-    <div class="col-sm-12 col-xs-12 col-md-12">
-      <section class="widget-tags">
-        <h5 class="mt-3 mb-10"><%= t 'nav.regio' %></h5>
-
-        <% Region.all.each do |region| %>
-          <%= link_to region.name, country_region_path(region.country, region, locale: locale), class: "tag" %>
-        <% end %>
-      </section>
-
-      <section class="widget-tags">
-        <h5 class="mt-1 mb-10"><%= t 'collection.inspiration' %></h5>
-        <% @custom_texts.inspiration.each do |custom_text| %>
-          <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
-        <% end %>
+          <% @countries_enabled.each do |country| %>
+            <div class="grid-item gallery-item">
+              <%= link_to country_path(country, locale: locale) do %>
+                <%= image_tag country.image, style: 'min-height: 200px' if country.image.present? %>
+                <h2 class="image-title-box"><%= country.name %></h2>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </section>
     </div>
   </div>
+</div>
 
+<div class="container-fluid">
   <div class="row">
     <% if @all_reviews.present? %>
       <div class="col-sm-12 margin-top-1x margin-bottom-2 col-xs-12 col-md-6">
         <h3 class="mb-3"><%= t 'reviews.title' %></h3>
         <h5 class="card-title text-muted margin-bottom-1x"></h5>
-        
+
         <section class="col-md-12 padding-top-2x margin-bottom-2x leads_homepage padding-bottom-2x">
           <div class="reviews-container">
             <%= render @reviews %>
@@ -213,3 +222,7 @@
 </div>
 
 <% content_for :canonical do %><%= root_url %><% end %>
+
+<% content_for :js_init do %>
+  Lodging.read_more();
+<% end %>

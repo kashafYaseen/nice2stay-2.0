@@ -47,6 +47,9 @@ nl:
   prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
   availability_not_confirmed: de beschikbaarheid is op aanvraag
 
+  amenities:
+    popular: Populaire faciliteiten
+
   quick_view:
     summary: SAMENVATTING
     location: LOCATIE
@@ -112,6 +115,7 @@ nl:
     type: Type
     succes: Bedankt voor uw aanvraag bij Nice2stay. Uw verzoek is ingediend bij de eigenaar van de accommodatie(s) en wij zullen u op de hoogte houden van de status.
     preferred_language: Voorkeur taal
+    guest_details: Uw gegevens
 
   indicator:
     gasten: Uw gegevens
@@ -134,12 +138,12 @@ nl:
     discover: Boek uw perfecte accommodatie
     verhaal: Mooie verhalen beginnen hier...
     holiday: Ervaar de ideale vakanties
-    inspect: Bezocht & Geïnspecteerd
+    inspect: Door ons bezocht en geinspecteerd
     homepage: Ontdek onze persoonlijk geselecteerde collectie vakantiehuizen, appartementen & boutique hotels.
     inspect_details: Elke accommodatie is door ons team bezocht & geïnspecteerd
     price: Transparante prijzen
     price_details: Transparante prijzen, bij ons geen verborgen boekingskosten
-    advice: Deskundig advies
+    advice: Wij geven u graag deskundig advies
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
     payment: Online beveiligd betalen
     payment_details: Bij ons kunt u online betalen met Ideal, SOFORT, SEPA, Bancontact en meer 
@@ -176,7 +180,7 @@ nl:
     reviews: Gemiddelde score & laatste reviews van Nice2stay klanten
     home: Home
     gallary: Foto's 
-    location: Locatie van 
+    location: Locatie 
     reviews: Beoordelingen & Rating
     amentities: Faciliteiten
     info: Uitgebreide informatie
@@ -194,7 +198,7 @@ nl:
     alternative: Alternatieven
 
   nav_cart:
-    type: Soort aanvraag
+    type: Type
     price: Huurprijs
     nights: Aantal nachten
     checkin: Check-in
@@ -214,6 +218,13 @@ nl:
     nice2stay: Geen reserveringskosten bij Nice2stay
     prepayment_not_payed: Als de aanbetaling is gedaan, kan ook het restant worden betaald
     select_details: Selecteer periode & aantal personen
+    summary: Samenvatting
+    rent: Huursom
+    remove: verwijder
+    cleaning_cost: Schoonmaakkosten
+    total_charges: Totale huursom
+    book_securely: Boek veilig in minder dan 1 minuut
+    pay_less: Bij nice2stay betaalt u nooit meer dan bij de eigenaar direct en wij vragen geen reserveringsksoten
 
   calendar:
     legenda: Legenda kalender
@@ -254,6 +265,7 @@ nl:
     flexibility_text: flexibel qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     realtime_availability: Direct Reserveren
+    realtime_availability_details: Accommodaties die je kunt reserveren zonder te wachten op goedkeuring van onze partners.
     night: nacht
     updated_availability: Toon enkel accommodaties met up to date beschikbaarheid
     availability: Beschikbaarheid
@@ -274,7 +286,7 @@ nl:
 
   filters:
     guests: Reisgezelschap
-    price: Prijs per nacht 
+    price: Prijs
     theme: Experience
     type: Type accommodatie
     amentities_pop: Faciliteiten populair
@@ -286,6 +298,9 @@ nl:
     apartment: Appartementen
     villa: Vakantiehuizen
     bnb: Boutique hotels
+    flexible_tooltip: Wanneer u deze optie selecteert, krijgt u meer resultaten. Als Flex aankomst bijvoorbeeld is ingeschakeld en u checkin vrijdag heeft geselecteerd, dan ziet u ook resultaten voor inchecken op zaterdag of zondag
+    flexible_text: Flexibele aankomst -3/+3 dagen
+
   sorting: 
     low_high: Laagste prijs
     high_low: Hoogste prijs
@@ -842,6 +857,20 @@ nl:
     arrival_email_sent: Aankomst email verstuurd
     option: Optie aanvraag
     request_price: Prijs verzoek
+    instant: U boekt deze accommodatie direct, de periode wordt voor u vastgelegd en u ontvangt onmiddellijk een bevestiging.
+    on_request: Uw reservering dient enkel te worden geaccepteerd door de eigenaar van de accommodatie, na akkoord is het een definitieve reservering en ontvangt u direct een bevestiging.
+    listing_on_request: Uw reservering dient enkel te worden geaccepteerd door de eigenaar van de accommodatie. Na akkoord is het een definitieve reservering en ontvangt u direct een bevestiging. Na optie akkoord van de eigenaar van de accommodatie krijgt u 24 uur de tijd om een definitieve reservering te maken.
+    booking_or_option: Op aanvraag
+    direct: Direct
+    instant_booking: Direct reserveren
+    booking_on_request: Reservering op aanvraag
+    booking_request: Boekingsaanvraag
+    option_title: Optie
+    option_tooltip: Na akkoord van de eigenaar van de accommodatie krijgt u 24 uur de tijd om een definitieve reservering te maken, u krijgt bericht zodra de eigenaar akkoord heeft gegeven.
+    option_sent: Uw optie is succesvol verzonden naar nice2stay en onze partner. Na goedkeuring van de eigenaar van de accommodatie heeft u 24 uur de tijd om na te denken. U wordt op de hoogte gebracht zodra de eigenaar zijn goedkeuring heeft gegeven.
+    request_sent: Uw boekingsaanvraag is succesvol verzonden naar nice2stay en onze partner. Uw reservering moet worden aanvaard door de eigenaar van de accommodatie. Na goedkeuring is dit een definitieve reservering en ontvangt u onmiddellijk een bevestiging van uw boeking.
+    gc_sent: U heeft de accommodatie geboekt en de periode is voor u gereserveerd. De bevestiging wordt u toegestuurd via email.
+    created: Uw boeking %{identifier} is succesvol verzonden. Onderstaand kunt u per accommodatie de status vinden en in uw <a href="%{link}">profiel</a>
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!
@@ -862,3 +891,7 @@ nl:
       step_3: Ook is het mogelijk een optie te nemen voor 24 uur, voor het geval u bijv uw vliegtickets nog moet regelen.
       availability_notice: Door de grote interesse in onze accommodaties kan ik de beschikbaarheid helaas niet garanderen.
       looking_forward: Ik kijk uit naar uw reactie.
+
+  guest_centric:
+    cancellation_policy_1: In geval van annulering zijn de annuleringskosten %{amount}% van de reserveringssom.
+    cancellation_policy_2: Tot %{days} dagen voor aanvang van het verblijf kunt u kosteloos annuleren. Na %{days} dagen voor aankomst zijn de annuleringskosten %{amount}% van de reserveringssom.

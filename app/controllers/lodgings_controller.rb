@@ -14,6 +14,9 @@ class LodgingsController < ApplicationController
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
     @title = @custom_text.try(:meta_title)
+
+  rescue Searchkick::InvalidQueryError
+    redirect_back fallback_location: root_en_path, alert: 'Invalid search parameters, please try again'
   end
 
   # GET /lodgings/1
@@ -26,6 +29,10 @@ class LodgingsController < ApplicationController
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)
     @lodging_children = @lodging.lodging_children.published.includes(:availabilities, :translations) if @lodging.as_parent?
     @title = @lodging.meta_title
+    if @lodging.guest_centric?
+      @disable_dates = @lodging.gc_not_available_on(params)
+      @check_in = @lodging.first_available_date(@disable_dates)
+    end
   end
 
   def price_details
