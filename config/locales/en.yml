@@ -47,6 +47,8 @@ en:
     nl: Dutch
     en: English
 
+  details: DETAILS
+
   filters:
     guests: Traveling party
     price: Price
