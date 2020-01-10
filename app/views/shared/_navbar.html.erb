@@ -82,7 +82,7 @@
               <ul class="slideable-submenu">
                 <% @pages.each do |page| %>
                   <li><%= link_to page.title, page_path(page) %></li>
-                <% end %>
+                <% end if @pages.present? %>
               </ul>
             </li>
 
@@ -110,7 +110,7 @@
                     <ul class="slideable-submenu">
                       <% country.regions.each do | region | %>
                         <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
-                      <% end %>
+                      <% end if @countries_enabled.present? %>
                     </ul>
                   </li>
                 <% end %>
@@ -131,7 +131,7 @@
                   <ul class="slideable-submenu">
                     <% @menu_custom_texts.each do |custom_text| %>
                       <li><%= link_to custom_text.menu_title, seo_url(custom_text.seo_path) %></li>
-                    <% end %>
+                    <% end if @menu_custom_texts.present? %>
                   </ul>
                 </li>
 
@@ -145,7 +145,7 @@
                     <ul class="slideable-submenu">
                       <% country.custom_texts.country_menu.each do |custom_text| %>
                         <li><%= link_to custom_text.menu_title, seo_url(custom_text.seo_path) %></li>
-                      <% end %>
+                      <% end if @countries_enabled.present? %>
                     </ul>
                   </li>
                 <% end %>
