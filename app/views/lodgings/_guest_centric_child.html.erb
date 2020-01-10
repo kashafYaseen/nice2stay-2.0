@@ -24,19 +24,23 @@
 
           <div class="col-md-3 bg-white col-border">
             <p class="mb-0 mt-2"><b><%= offer['name'].try(:capitalize) %></b></p>
-            <p class="mb-0"><span>Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span></p>
+
+            <p class="mb-0">
+              <span><%= t "pdf_document.adults" %> <b> <%= offer['MaxAdults'] %> (max)</b></span><br>
+              <span><%= t "pdf_document.children" %> <b> <%= offer['MaxChildren'] %> (max)</b></span>
+            </p>
 
             <% if offer['availability'].to_i <= 5 %>
               <div class="row mt-2">
                 <span class="col-md-12 text-left text-danger">
-                  Only <%= offer['availability'] %> <%= 'room'.pluralize offer['availability'].to_i %> left!
+                  <%= t('guest_centric.only') %> <%= offer['availability'] %> <%= t('guest_centric.left') %>!
                 </span>
               </div>
             <% end %>
 
-            <p class="text-green text-left mb-2" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
+            <i class="fal fa-calendar-alt text-info text-xs"></i> <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{offer['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
-            <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{offer['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
+            <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
           </div>
 
           <div class="col-md-5 col-border bg-white text-sm group-toggle">
@@ -162,19 +166,22 @@
 
         <div class="col-md-3 bg-white col-border">
           <p class="mb-0 mt-2"><span class="text-bold"><%= child['name'].try(:capitalize) %></span></p>
-          <p class="mb-0"><span>Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span></p>
+            <p class="mb-0">
+              <span><%= t "pdf_document.adults" %> <b> <%= child['MaxAdults'] %> (max)</b></span><br>
+              <span><%= t "pdf_document.children" %> <b> <%= child['MaxChildren'] %> (max)</b></span>
+            </p>
 
           <% if child['availability'].to_i <= 5 %>
             <div class="row mt-2">
               <span class="col-md-12 text-left text-danger">
-                Only <%= child['availability'] %> <%= 'room'.pluralize child['availability'].to_i %> left!
+                <%= t('guest_centric.only') %> <%= child['availability'] %> <%= t('guest_centric.left') %>!
               </span>
             </div>
           <% end %>
 
-          <p class="text-green text-left mb-2" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
+          <i class="fal fa-calendar-alt text-info text-xs"></i> <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{child['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
-          <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{child['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
+          <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
         </div>
 
         <div class="col-md-5 col-border bg-white text-sm group-toggle">

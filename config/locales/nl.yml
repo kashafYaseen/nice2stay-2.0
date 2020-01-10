@@ -897,3 +897,13 @@ nl:
   guest_centric:
     cancellation_policy_1: In geval van annulering zijn de annuleringskosten %{amount}% van de reserveringssom.
     cancellation_policy_2: Tot %{days} dagen voor aanvang van het verblijf kunt u kosteloos annuleren. Na %{days} dagen voor aankomst zijn de annuleringskosten %{amount}% van de reserveringssom.
+    breakfast_included_tooltip: Het ontbijt is inbegrepen voor het aantal dagen en personen waarvoor je boekt
+    half_board_included_tooltip: Ontbijt en diner zijn inbegrepen voor het aantal dagen en personen waarvoor je boekt
+    full_board_included_tooltip: Ontbijt, lunch en diner zijn inbegrepen voor het aantal dagen en personen waarvoor je boekt
+    all_inclusive_tooltip: Ontbijt, lunch, diner en drinken zijn inbegrepen voor het aantal dagen en personen waarvoor je boekt (excl. alcoholische dranken)
+    breakfast_included: Ontbijt inbegrepen
+    half_board: Halfpension
+    full_board: Volpension
+    all_inclusive: All inclusive
+    only: Nog maar
+    left: beschikbaar
