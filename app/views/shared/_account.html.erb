@@ -1,6 +1,6 @@
 <div class="toolbar-section" id="account">
   <% if user_signed_in? %>
-    <%= "You are logon with #{session[:social_site]} and your account is connected to #{current_user.email}" if session[:social_site].present? %>
+    <%= "You are logged in with #{session[:social_site]} and your account is connected to #{current_user.email}" if session[:social_site].present? %>
 
     <%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-primary btn-block', method: :delete %>
     <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary btn-block' %>

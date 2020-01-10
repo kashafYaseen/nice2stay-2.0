@@ -83,12 +83,14 @@ en:
     normal: Our collections
     holiday: Unique holiday
     inspiration: Inspiring collections 
+    country: Countries
 
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
   availability_not_confirmed: the availability is on request
 
   amenities:
     popular: Popular amenities
+    view_all: view all amenities
 
   quick_view:
     summary: SUMMARY

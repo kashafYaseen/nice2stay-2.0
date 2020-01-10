@@ -25,6 +25,7 @@ nl:
     normal: Onze collecties
     holiday: Unieke vakantie 
     inspiration: Inspiratie collecties
+    country: Landen
 
   locale:
     nl: Nederlands
@@ -49,6 +50,7 @@ nl:
 
   amenities:
     popular: Populaire faciliteiten
+    view_all: bekijk alle faciliteiten
 
   quick_view:
     summary: SAMENVATTING
