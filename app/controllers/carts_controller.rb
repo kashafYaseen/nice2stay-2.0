@@ -12,7 +12,7 @@ class CartsController < ApplicationController
   def remove
     @booking.reservations.find_by(id: params[:reservation_id]).try(:delete)
     @reservations = @booking.reservations.reload
-    flash.now[:notice] = 'Reservation was removed successfully.'
+    flash.now[:error] = 'Accommodation was removed successfully.'
   end
 
   def update

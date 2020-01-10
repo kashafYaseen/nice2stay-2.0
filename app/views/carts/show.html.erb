@@ -5,9 +5,14 @@
       <% if @booking.reservations.present? %>
         <div class="row">
           <div class="col-md-6 border-default mx-auto bg-white">
-            <h4 class="mb-5 text-bold"><%= t 'carts.overview' %></h4>
-
+            <h4 class="mb-2 text-bold"><%= t 'carts.overview' %></h4>
             <div id="cart-flash-messages"></div>
+
+            <div class="bootstrap-default">
+              <div class="alert alert-info" role="alert">
+                <%= t('cart.pay_less') %>
+              </div>
+            </div>
 
             <div id="cart-body">
               <%= render partial: 'cart_reservation', collection: @booking.reservations, as: :reservation %>
