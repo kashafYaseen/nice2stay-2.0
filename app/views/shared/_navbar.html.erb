@@ -145,10 +145,10 @@
                     <ul class="slideable-submenu">
                       <% country.custom_texts.country_menu.each do |custom_text| %>
                         <li><%= link_to custom_text.menu_title, seo_url(custom_text.seo_path) %></li>
-                      <% end if @countries_enabled.present? %>
+                      <% end %>
                     </ul>
                   </li>
-                <% end %>
+                <% end if @countries_enabled.present? %>
               </ul>
             </li>
           </ul>
