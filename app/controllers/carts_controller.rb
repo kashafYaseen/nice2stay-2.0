@@ -20,7 +20,7 @@ class CartsController < ApplicationController
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
     if @booking.save
       @booking.reservations.guest_centric.each do |reservation|
-        BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
+        BookGuestCentricOffer.call(reservation.lodging_parent, reservation, @booking)
       end
 
       cookies[:booking_details] = @booking.id
