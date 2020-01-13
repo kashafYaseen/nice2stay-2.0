@@ -46,11 +46,7 @@ module ReservationsHelper
   end
 
   def render_meal_title(meal_id)
-    return 'Bed & Breakfast' if meal_id.to_i == 2
-    return 'Half-Board' if meal_id.to_i == 3
-    return 'Full-Board' if meal_id.to_i == 4
-    return 'All Inclusive' if meal_id.to_i == 5
-    'Meals'
+    t("guest_centric.meal_#{meal_id}")
   end
 
   def render_meal_price(per_day_price, params)

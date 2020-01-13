@@ -910,3 +910,15 @@ nl:
     only: Nog maar
     left: beschikbaar
     price_details: prijs details & policy
+    photos: Foto's
+    description: omschrijing
+    policy: policy
+    payment: Betaling
+    reservation_summary: Reserverings samenvatting
+    adults_per_room: Volwassen per kamer
+    children_per_room: Kinderen per kamer
+    avg_rate: Gem prijs per nacht
+    total_for_stay: Totale huursom
+    total: Totaal
+    tax: Belasting
+    additional_fee: Additional fee
