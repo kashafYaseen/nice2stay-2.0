@@ -712,13 +712,13 @@ of the accommodation."
   guest_centric:
     cancellation_policy_1: In case of cancellation, the cancellation costs are %{amount}% of the reservation sum.
     cancellation_policy_2: Until %{days} days before the start of the stay you can cancel free of charge. After %{days} days before arrival the cancellation costs are %{amount}% of the reservation sum.
-    breakfast_included_tooltip: Breakfast is included for the amount of days and people you book for
-    half_board_included_tooltip: Breakfast and dinner are included for the amount of days and people you book for
-    full_board_included_tooltip: Breakfast, lunch and dinner are included for the amount of days and people you book for
-    all_inclusive_tooltip: Breakfast, lunch, dinner and drinks are included for the amount of days and people you book for (excl. alcoholic beverage choices)
-    breakfast_included: Breakfast included
-    half_board_included: Half Board
-    full_board_included: Full Board
-    all_inclusive: All Inclusive
+    meal_tooltip_2: Breakfast is included for the amount of days and people you book for
+    meal_tooltip_3: Breakfast and dinner are included for the amount of days and people you book for
+    meal_tooltip_4: Breakfast, lunch and dinner are included for the amount of days and people you book for
+    meal_tooltip_5: Breakfast, lunch, dinner and drinks are included for the amount of days and people you book for (excl. alcoholic beverage choices)
+    meal_2: Breakfast included
+    meal_3: Half Board
+    meal_4: Full Board
+    meal_5: All Inclusive
     only: Only
     left: left
