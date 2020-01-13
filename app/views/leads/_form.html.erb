@@ -120,7 +120,7 @@
     <%= f.label :countries, class: 'col-2 col-form-label text-muted' %>
 
     <div class="col-10">
-      <%= f.select :country_ids, countries.map { |s| [s.name, s.id] }, { include_blank: false }, { multiple: true, class: 'form-control chosen-select', data: { placeholder: "Select countries" } } %>
+      <%= f.select :country_ids, countries.map { |s| [s.name, s.id] }, { include_blank: false }, { multiple: true, class: 'form-control chosen-select', data: { placeholder: "Select countries" } } if countries.present? %>
     </div>
   </div>
 

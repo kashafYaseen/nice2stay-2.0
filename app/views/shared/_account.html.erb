@@ -17,7 +17,7 @@
       </div>
 
       <div class="tab-pane fade" id="signup" role="tabpanel">
-        <%= render 'devise/registrations/form', countries: @countries.collect{ |country| [country.name, country.id] } %>
+        <%= render 'devise/registrations/form', countries: (@countries.collect{ |country| [country.name, country.id] } if @countries.present?) %>
       </div>
     </div>
   <% end %>
