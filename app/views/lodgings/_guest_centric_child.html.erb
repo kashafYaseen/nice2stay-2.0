@@ -128,7 +128,7 @@
               </div>
 
               <div class="mt-3">
-                <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
+                <span class="text-bold">Total</span> <%= link_to "(#{t('guest_centric.price_details')})", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
                 <span class="float-right offer-price text-bold <%= offer['offer'].gsub('.', '-') %>"><%= "€#{offer['total']}" %></span>
               </div>
@@ -264,7 +264,7 @@
             </div>
 
             <div class="mt-3">
-              <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
+              <span class="text-bold">Total</span> <%= link_to "(#{t('guest_centric.price_details')})", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
               <span class="float-right offer-price text-bold <%= child['offer'].gsub('.', '-') %>"><%= "€#{child['total']}" %></span>
             </div>
