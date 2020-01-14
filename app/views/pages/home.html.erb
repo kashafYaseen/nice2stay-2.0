@@ -161,7 +161,7 @@
       <% end %>
 
       <section class="padding-top-1x pb-2">
-        <h3 class="mb-30">Popular Destination</h3>
+        <h3 class="mb-30"><%= t 'collection.country' %></h3>
         <hr class="mt-3"></hr>
 
         <div class="isotope-grid cols-4">
@@ -175,7 +175,7 @@
                 <h2 class="image-title-box"><%= country.name %></h2>
               <% end %>
             </div>
-          <% end %>
+          <% end if @countries.present? %>
         </div>
       </section>
     </div>

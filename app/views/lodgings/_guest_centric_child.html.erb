@@ -1,4 +1,4 @@
-<%= form_for @reservation, url: rates_lodging_guest_centric_offers_en_path(lodging), remote: true, html: { id: "new_reservation_#{lodging.id}#{child['id_offer']}#{index}" } do |f| %>
+<%= form_for @reservation, url: rates_lodging_guest_centric_offers_path(lodging), remote: true, html: { id: "new_reservation_#{lodging.id}#{child['id_offer']}#{index}" } do |f| %>
 
   <% if child['isPromotion'] %>
     <% offers = [] %>
@@ -10,7 +10,7 @@
         <% lodging_child = lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]) %>
 
         <div class="row mt-3 children-scroll-section">
-          <div class="col-md-4 col-border bg-white">
+          <div class="col-md-5 col-border bg-white">
             <% if lodging_child.present? %>
               <div class="owl-carousel">
                 <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
@@ -24,22 +24,28 @@
 
           <div class="col-md-3 bg-white col-border">
             <p class="mb-0 mt-2"><b><%= offer['name'].try(:capitalize) %></b></p>
-            <p class="mb-0"><span>Max: <%= "Adults #{offer['MaxAdults']} - Children #{offer['MaxChildren']}" %></span></p>
+
+            <p class="mb-0">
+              <span><%= t "pdf_document.adults" %> <b> <%= offer['MaxAdults'] %> (max)</b></span><br>
+              <% if offer['MaxChildren'].to_i > 0 %>
+                <span><%= t "pdf_document.children" %> <b> <%= offer['MaxChildren'] %> (max)</b></span>
+              <% end %>
+            </p>
 
             <% if offer['availability'].to_i <= 5 %>
               <div class="row mt-2">
                 <span class="col-md-12 text-left text-danger">
-                  Only <%= offer['availability'] %> <%= 'room'.pluralize offer['availability'].to_i %> left!
+                  <%= t('guest_centric.only') %> <%= offer['availability'] %> <%= t('guest_centric.left') %>!
                 </span>
               </div>
             <% end %>
 
-            <p class="text-green text-left mb-2" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
+            <i class="fal fa-calendar-alt text-info text-xs"></i> <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{offer['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
-            <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{offer['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
+            <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
           </div>
 
-          <div class="col-md-5 col-border bg-white text-sm group-toggle">
+          <div class="col-md-4 col-border bg-white text-sm group-toggle">
             <%= render 'guest_centric_offers/modal', child: offer, meal_plans: child['mealPlans'], reservation: @reservation, lodging: @lodging, index: index, lodging_child: lodging_child, cancel_policy: gc_cancel_policy(child['cancelPolicy']) %>
 
             <label
@@ -61,22 +67,18 @@
               <% child['mealPlans'].each do |meal| %>
                 <% next if meal['id'] == 1 || meal['total'] > 0 %>
                 <div class="row">
-                  <span class="col-md-12 text-left text-green">
-                    <i class="material-icons free_breakfast text-dark"></i> <%= meal['label'] %>
+                  <span class="col-md-12 text-left text-green text-dotted" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t("guest_centric.meal_tooltip_#{meal['id']}") %>">
+                    <i class="material-icons free_breakfast text-dark"></i> <%= t("guest_centric.meal_#{meal['id']}") %>
                   </span>
                 </div>
               <% end if child['mealPlans'].present? %>
-
-              <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
-                <span class="mt-3">Extra:</span>
-              <% end %>
 
               <% child['mealPlans'].each do |meal| %>
                 <% next if meal['id'] == 1 || meal['total'] <= 0 %>
                 <div class="row">
                   <span class="col-8 text-left">
                     <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['net'], tax: meal['taxes'] }, id: "meal-id-#{offer['offer'].gsub('.', '-')}#{meal['id']}" }, meal['id'], nil %>
-                    <label for="<%= "meal-id-#{offer['offer'].gsub('.', '-')}#{meal['id']}" %>" class="mb-0"><%= meal['label'] %></label>
+                    <label for="<%= "meal-id-#{offer['offer'].gsub('.', '-')}#{meal['id']}" %>" class="mb-0 text-dotted" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t("guest_centric.meal_tooltip_#{meal['id']}") %>"><%= t("guest_centric.meal_#{meal['id']}") %></label>
                   </span>
 
                   <span class="col-4 text-right">
@@ -107,7 +109,7 @@
 
               <div class="row">
                 <span class="col-8 text-left">
-                  Taxes
+                  <%= t('guest_centric.tax') %>
                 </span>
 
                 <span class="col-4 text-right tax-price taxes-<%= offer['offer'].gsub('.', '-') %>">
@@ -117,7 +119,7 @@
 
               <div class="row">
                 <span class="col-8">
-                  Additional Fees
+                  <%= t('guest_centric.additional_fee') %>
                 </span>
 
                 <span class="col-md-4 text-right">
@@ -126,7 +128,7 @@
               </div>
 
               <div class="mt-3">
-                <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
+                <span class="text-bold">Total</span> <%= link_to "(#{t('guest_centric.price_details')})", '#', data: { target: "#offers-modal-#{offer['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
                 <span class="float-right offer-price text-bold <%= offer['offer'].gsub('.', '-') %>"><%= "€#{offer['total']}" %></span>
               </div>
@@ -137,7 +139,7 @@
             </label><br>
           </div>
         </div>
-      <% end %>
+      <% end if child['offers'].present? %>
     </div>
   <% else %>
     <% offers = [] %>
@@ -147,7 +149,7 @@
       <h4 class="mt-4"><%= child['name'] %></h4>
 
       <div class="row mt-3 children-scroll-section">
-        <div class="col-md-4 col-border bg-white">
+        <div class="col-md-5 col-border bg-white">
           <% if lodging_child.present? %>
             <div class="owl-carousel">
               <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
@@ -157,27 +159,31 @@
               <%= render_guest_centric_images child, class: "modal-slider-img" %>
             </div>
           <% end %>
-
         </div>
 
         <div class="col-md-3 bg-white col-border">
           <p class="mb-0 mt-2"><span class="text-bold"><%= child['name'].try(:capitalize) %></span></p>
-          <p class="mb-0"><span>Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></span></p>
+            <p class="mb-0">
+              <span><%= t "pdf_document.adults" %> <b> <%= child['MaxAdults'] %> (max)</b></span><br>
+              <% if child['MaxChildren'].to_i > 0 %>
+                <span><%= t "pdf_document.children" %> <b> <%= child['MaxChildren'] %> (max)</b></span>
+              <% end %>
+            </p>
 
           <% if child['availability'].to_i <= 5 %>
             <div class="row mt-2">
               <span class="col-md-12 text-left text-danger">
-                Only <%= child['availability'] %> <%= 'room'.pluralize child['availability'].to_i %> left!
+                <%= t('guest_centric.only') %> <%= child['availability'] %> <%= t('guest_centric.left') %>!
               </span>
             </div>
           <% end %>
 
-          <p class="text-green text-left mb-2" data-toggle="tooltip" data-placement="bottom" data-original-title="Instant reservation is a type of online booking that automatically confirms the booking. It allows you to book the property immediately and receive an instant confirmation."><i class="material-icons date_range text-dark"></i> Instant reservation</p>
+          <i class="fal fa-calendar-alt text-info text-xs"></i> <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{child['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
-          <%= link_to 'Details & policy', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal', parent: ".parent-#{child['offer'].gsub('.', '-')}" }, class: 'guest-centric-modal-btn text-xs text-info' %>
+          <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
         </div>
 
-        <div class="col-md-5 col-border bg-white text-sm group-toggle">
+        <div class="col-md-4 col-border bg-white text-sm group-toggle">
           <%= render 'guest_centric_offers/modal', child: child, meal_plans: child['mealPlans'], reservation: @reservation, lodging: lodging, index: index, lodging_child: lodging_child, cancel_policy: gc_cancel_policy(child['cancelPolicy']) %>
 
           <label
@@ -199,23 +205,18 @@
             <% child['mealPlans'].each do |meal| %>
               <% next if meal['id'] == 1 || meal['total'] > 0 %>
               <div class="row">
-                <span class="col-md-12 text-left text-green">
-                  <i class="material-icons free_breakfast text-dark"></i> <%= meal['label'] %>
+                <span class="col-md-12 text-left text-green text-dotted" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t("guest_centric.meal_tooltip_#{meal['id']}") %>">
+                  <i class="material-icons free_breakfast text-dark"></i> <%= t("guest_centric.meal_#{meal['id']}") %>
                 </span>
               </div>
             <% end if child['mealPlans'].present? %>
-
-
-            <% if child['mealPlans'].present? && child['mealPlans'].count > 1 %>
-              <span class="mt-3">Extra:</span>
-            <% end %>
 
             <% child['mealPlans'].each do |meal| %>
               <% next if meal['id'] == 1 || meal['total'] <= 0 %>
               <div class="row">
                 <span class="col-8 text-left">
                   <%= f.check_box :meal_id, { class: 'meal_check_box', data: { price: meal['net'], tax: meal['taxes'] }, id: "meal-id-#{child['offer'].gsub('.', '-')}#{meal['id']}" }, meal['id'], nil %>
-                  <label for="<%= "meal-id-#{child['offer'].gsub('.', '-')}#{meal['id']}" %>" class="mb-0"><%= meal['label'] %></label>
+                  <label for="<%= "meal-id-#{child['offer'].gsub('.', '-')}#{meal['id']}" %>" class="mb-0 text-dotted" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t("guest_centric.meal_tooltip_#{meal['id']}") %>"><%= t("guest_centric.meal_#{meal['id']}") %></label>
                 </span>
 
                 <span class="col-4 text-right">
@@ -263,7 +264,7 @@
             </div>
 
             <div class="mt-3">
-              <span class="text-bold">Total</span> <%= link_to '(price details & policy)', '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
+              <span class="text-bold">Total</span> <%= link_to "(#{t('guest_centric.price_details')})", '#', data: { target: "#offers-modal-#{child['offer'].gsub('.', '-')}", toggle: 'modal' }, class: 'guest-centric-modal-btn text-xs text-info' %>
 
               <span class="float-right offer-price text-bold <%= child['offer'].gsub('.', '-') %>"><%= "€#{child['total']}" %></span>
             </div>

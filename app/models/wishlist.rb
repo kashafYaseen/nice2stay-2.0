@@ -1,4 +1,5 @@
 class Wishlist < ApplicationRecord
+  belongs_to :trip
   belongs_to :user
   belongs_to :lodging
 

@@ -9,10 +9,27 @@
     <div class="col-md-12 padding-sm-0">
       <div class="col-md-12 margin-top-1x padding-sm-0">
         <div class="row target-section" id="home-container">
-          <div class="col-md-12 col-xs-12 padding-sm-0">
-            <div class="owl-carousel-full">
+          <div class="col-md-12 col-xs-12">
+            <div class="gallery-control">
+              <figure itemprop="associatedMedia" itemscope>
+                <a itemprop="contentUrl">
+                  <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
+                </a>
+
+                <figcaption itemprop="caption description">
+                  <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="lodging-gallery margin-top-1x" itemscope>
               <% @lodging.images.each_with_index do |image_url, index| %>
-                <div class="mr-1"><%= image_tag image_url, class: "card-img-top item", alt: '' %></div>
+                <figure itemprop="associatedMedia" itemscope class="d-none">
+                  <a href="<%= image_url %>" itemprop="contentUrl">
+                    <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+                  </a>
+                  <figcaption itemprop="caption description"><%= index %></figcaption>
+                </figure>
               <% end %>
             </div>
           </div>
@@ -75,7 +92,7 @@
                 <% end %>
               </ul>
             </div>
-            <a class="scroll-to-btn text-info" data-target="#lodging-amenities">view all amenities</a>
+            <a class="scroll-to-btn text-info" data-target="#lodging-amenities"><%= t('amenities.view_all') %></a>
           </div>
         </div>
       </div>

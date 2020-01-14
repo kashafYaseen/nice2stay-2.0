@@ -16,6 +16,10 @@ class User < ApplicationRecord
   has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
+
+  has_many :trip_members
+  has_many :trips, through: :trip_members
+
   has_one :first_visit, -> (user) { order(:started_at).where("started_at < ?", user.created_at) }, class_name: 'Ahoy::Visit'
 
   mount_uploader :image, ImageUploader

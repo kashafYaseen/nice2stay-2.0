@@ -26,7 +26,7 @@ class BookGuestCentricOffer
     puts "------------------form_data = #{form_data}"
     puts "------------------response = #{response}"
     if response['error']
-      reservation.update_columns(gc_errors: response['error_message'])
+      reservation.update_columns(gc_errors: "#{response['error_message']} -- #{response['error_list']}", request_status: 'rejected')
     else
       reservation.update_columns(guest_centric_booking_id: response['response']['bookingCode'], booking_status: 'booked', request_status: 'confirmed')
     end

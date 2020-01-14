@@ -19,8 +19,8 @@ module ReservationsHelper
   end
 
   def render_reservation_guests(reservation)
-    guests = "Adults: #{reservation.adults.to_i}"
-    guests += "- Children: #{reservation.children}" if reservation.children.to_i > 0
+    guests = "#{t("pdf_document.adults")} #{reservation.adults.to_i}"
+    guests += "- #{t("pdf_document.children")} #{reservation.children}" if reservation.children.to_i > 0
     guests
   end
 
@@ -46,11 +46,7 @@ module ReservationsHelper
   end
 
   def render_meal_title(meal_id)
-    return 'Bed & Breakfast' if meal_id.to_i == 2
-    return 'Half-Board' if meal_id.to_i == 3
-    return 'Full-Board' if meal_id.to_i == 4
-    return 'All Inclusive' if meal_id.to_i == 5
-    'Meals'
+    t("guest_centric.meal_#{meal_id}")
   end
 
   def render_meal_price(per_day_price, params)

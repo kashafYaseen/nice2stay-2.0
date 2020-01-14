@@ -1,5 +1,5 @@
 <div class="modal fade guest-centric-modal" id="offers-modal-<%= child['offer'].gsub('.', '-') %>" tabindex="-1">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xlg">
     <div class="modal-content">
       <div class="modal-body p-0 pl-3">
         <div class="row">
@@ -12,15 +12,19 @@
 
               <ul class="nav nav-tabs justify-content-start ml-0" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#photos-tab-<%= child['beid'] %>" data-toggle="tab" role="tab">Photos</a>
+                  <a class="nav-link active" href="#photos-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.photos') %></a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="#description-tab-<%= child['beid'] %>" data-toggle="tab" role="tab">Desciption</a>
+                  <a class="nav-link" href="#description-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.description') %></a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="#terms-tab-<%= child['beid'] %>" data-toggle="tab" role="tab">Terms & Conditions</a>
+                  <a class="nav-link" href="#policy-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.policy') %></a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#terms-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.payment') %></a>
                 </li>
               </ul>
 
@@ -49,22 +53,26 @@
                   </div>
                 </div>
 
-                <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
+                <div class="tab-pane fade show" id="policy-tab-<%= child['beid'] %>" role="tabpanel">
                   <%= cancel_policy %>
+                </div>
 
-                  <%#= child['termsAndConditions'].try(:html_safe) %>
+                <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
+                  <% if lodging_child.present? %>
+                    <p><%= lodging_child.payment_terms_text.try(:html_safe) %></p>
+                  <% end %>
                 </div>
               </div>
             </p>
           </div>
 
-          <div class="col-md-6 price_box">
-            <h5>Reservation Summary</h5>
+          <div class="col-md-6 price_box bg-white">
+            <h5><%= t('guest_centric.reservation_summary') %></h5>
             <div class="rates row pl-2 mb-3"></div>
 
             <div class="row p-2 mt-5">
               <span class="col-md-8 text-left border-bottom border-black p-0">
-                Total for your stay
+                <%= t('guest_centric.total_for_stay') %>
               </span>
 
               <span class="col-md-4 text-right border-bottom border-black">
@@ -84,7 +92,7 @@
 
             <div class="row row pl-2 pr-2 pt-0">
               <span class="col-md-8 text-left border-bottom border-black p-0">
-                Taxes
+                <%= t('guest_centric.tax') %>
               </span>
 
               <span class="col-md-4 text-right border-bottom border-black taxes">
@@ -94,7 +102,7 @@
 
             <div class="row row pl-2 pr-2 pt-0">
               <span class="col-md-8 text-left border-bottom border-black p-0">
-                Additional Fees
+                <%= t('guest_centric.additional_fee') %>
               </span>
 
               <span class="col-md-4 text-right border-bottom border-black">
@@ -104,7 +112,7 @@
 
             <div class="row p-2 mb-5">
               <span class="col-md-8 text-left p-0">
-                Total amount
+                <%= t('guest_centric.total') %>
               </span>
 
               <span class="col-md-4 text-right price">

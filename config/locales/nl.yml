@@ -25,10 +25,13 @@ nl:
     normal: Onze collecties
     holiday: Unieke vakantie 
     inspiration: Inspiratie collecties
+    country: Landen
 
   locale:
     nl: Nederlands
     en: Engels
+
+  details: BEKIJK
 
   lead:
     title: Wilt u advies voor uw vakantie?
@@ -49,6 +52,7 @@ nl:
 
   amenities:
     popular: Populaire faciliteiten
+    view_all: bekijk alle faciliteiten
 
   quick_view:
     summary: SAMENVATTING
@@ -224,6 +228,7 @@ nl:
     cleaning_cost: Schoonmaakkosten
     total_charges: Totale huursom
     book_securely: Boek veilig in minder dan 1 minuut
+    pay_less: Bij nice2stay betaalt u nooit meer dan bij de eigenaar direct en wij vragen geen reserveringsksoten
 
   calendar:
     legenda: Legenda kalender
@@ -894,3 +899,26 @@ nl:
   guest_centric:
     cancellation_policy_1: In geval van annulering zijn de annuleringskosten %{amount}% van de reserveringssom.
     cancellation_policy_2: Tot %{days} dagen voor aanvang van het verblijf kunt u kosteloos annuleren. Na %{days} dagen voor aankomst zijn de annuleringskosten %{amount}% van de reserveringssom.
+    meal_tooltip_2: Het ontbijt is inbegrepen voor het aantal dagen en personen waarvoor je boekt
+    meal_tooltip_3: Ontbijt en diner zijn inbegrepen voor het aantal dagen en personen waarvoor je boekt
+    meal_tooltip_4: Ontbijt, lunch en diner zijn inbegrepen voor het aantal dagen en personen waarvoor je boekt
+    meal_tooltip_5: Ontbijt, lunch, diner en drinken zijn inbegrepen voor het aantal dagen en personen waarvoor je boekt (excl. alcoholische dranken)
+    meal_2: Ontbijt inbegrepen
+    meal_3: Halfpension
+    meal_4: Volpension
+    meal_5: All inclusive
+    only: Nog maar
+    left: beschikbaar
+    price_details: prijs details & policy
+    photos: Foto's
+    description: omschrijing
+    policy: policy
+    payment: Betaling
+    reservation_summary: Reserverings samenvatting
+    adults_per_room: Volwassen per kamer
+    children_per_room: Kinderen per kamer
+    avg_rate: Gem prijs per nacht
+    total_for_stay: Totale huursom
+    total: Totaal
+    tax: Belasting
+    additional_fee: Additional fee

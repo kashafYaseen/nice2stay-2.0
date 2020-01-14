@@ -38,8 +38,8 @@
                 <span><em><strong><%= render_meal_title(reservation.meal_id) %>: </strong></em> <%= render_rounded_price reservation.total_meal_price %></span>
               <% end %>
 
-              <span><em><strong>Taxes & Fees:</strong></em> <%= render_rounded_price reservation.tax_and_additional_fee %></span>
-              <span><em><strong>Total Charges: </strong></em><%= render_rounded_price reservation.rent.to_f %></span>
+              <span><em><strong><%= t('guest_centric.tax') %>:</strong></em> <%= render_rounded_price reservation.tax_and_additional_fee %></span>
+              <span><em><strong><%= t('guest_centric.total') %>: </strong></em><%= render_rounded_price reservation.rent.to_f %></span>
             </div>
           </div>
         <% else %>

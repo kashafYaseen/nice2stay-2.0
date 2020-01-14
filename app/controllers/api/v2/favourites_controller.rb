@@ -27,6 +27,6 @@ class Api::V2::FavouritesController < Api::V2::ApiController
     end
 
     def wishlist_params
-      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children)
+      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children, :trip_id)
     end
 end

@@ -14,6 +14,9 @@ class LodgingsController < ApplicationController
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
     @title = @custom_text.try(:meta_title)
+
+  rescue Searchkick::InvalidQueryError
+    redirect_back fallback_location: lodgings_path, alert: 'Invalid search parameters, please try again'
   end
 
   # GET /lodgings/1

@@ -14,26 +14,26 @@
   </span>
 
   <span class="col-md-6">
-    Nr. of nights: <b><%= (reservation.check_out - reservation.check_in).to_i %></b>
+    Nr. of nights: <b><%= reservation.total_nights %></b>
   </span>
 </div>
 
 <div class="col-md-12 mt-2 row">
   <span class="col-md-6">
-    Adults per room: <b><%= reservation.adults %></b>
+    <%= t('guest_centric.adults_per_room') %>: <b><%= reservation.adults %></b>
   </span>
 
   <span class="col-md-6">
-    Children per room: <b><%= reservation.children %></b>
+    <%= t('guest_centric.children_per_room') %>: <b><%= reservation.children %></b>
   </span>
 </div>
 
 <div class="row col-md-12 mt-2">
   <span class="col-md-6 border-bottom border-black pb-2">
-    Avg. rate per night
+    <%= t('guest_centric.avg_rate') %>
   </span>
 
   <span class="col-md-6 border-bottom border-black">
-    <b>€<%= (reservation.rent / (reservation.check_out - reservation.check_in).to_i).round(2) %></b>
+    <b>€<%= (reservation.rent / reservation.total_nights).round(2) if reservation.total_nights.to_i > 0 %></b>
   </span>
 </div>
