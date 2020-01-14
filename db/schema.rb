@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_09_110629) do
+ActiveRecord::Schema.define(version: 2020_01_14_100439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -918,6 +918,27 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.index ["lodging_id"], name: "index_specifications_on_lodging_id"
   end
 
+  create_table "trip_members", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "trip_id"
+    t.boolean "admin", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_trip_members_on_trip_id"
+    t.index ["user_id"], name: "index_trip_members_on_user_id"
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.string "name"
+    t.integer "adults", default: 1
+    t.integer "children", default: 0
+    t.float "budget", default: 0.0
+    t.date "check_in"
+    t.date "check_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -967,7 +988,9 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.string "name"
     t.text "notes"
     t.integer "status", default: 0
+    t.bigint "trip_id"
     t.index ["lodging_id"], name: "index_wishlists_on_lodging_id"
+    t.index ["trip_id"], name: "index_wishlists_on_trip_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
@@ -1014,7 +1037,10 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
+  add_foreign_key "trip_members", "trips", on_delete: :cascade
+  add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
+  add_foreign_key "wishlists", "trips", on_delete: :cascade
   add_foreign_key "wishlists", "users", on_delete: :cascade
 end
