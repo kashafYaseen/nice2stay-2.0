@@ -1,0 +1,76 @@
+<div class=" padding-bottom-3x mb-1 page-title">
+  <div class="row">
+    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+      <h1 class="text-center">Add New Member</h1>
+      <%= form_for @user, url: trip_trip_members_path(@trip) do |f| %>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <%= f.text_field :first_name, placeholder: 'First Name', class: 'form-control', id: rendom_id(resource, :first_name) %>
+          </div>
+
+          <div class="form-group col-md-6">
+            <%= f.text_field :last_name, placeholder: 'Last Name', class: 'form-control', id: rendom_id(resource, :last_name) %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.email_field :email, class: 'form-control', placeholder: 'Email Address' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit "Add", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container padding-bottom-3x mb-1">
+  <div class="table-responsive shopping-cart">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Member Name</th>
+          <th class="text-center">Invited By</th>
+          <th class="text-center">Invitation Status</th>
+          <th class="text-center">Role</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @trip.trip_members.each do |trip_member| %>
+          <% next if trip_member.user_id == current_user.id %>
+          <tr>
+            <td>
+              <div class="product-item">
+                <a class="product-thumb">
+                  <%= render_user_image(trip_member.user) %>
+                </a>
+
+                <div class="product-info">
+                  <h4 class="product-title">
+                    <%= trip_member.user_full_name %>
+                  </h4>
+                  <span><em><%= trip_member.user_email %></em></span>
+                </div>
+              </div>
+            </td>
+
+            <td class="text-center text-lg text-medium"><%= trip_member.user_invited_by.try(:full_name) %></td>
+            <td class="text-center text-lg text-medium"><%= trip_member.user_invitation_status %></td>
+            <% if trip_member.admin? %>
+              <td class="text-center text-lg text-medium">Admin</td>
+              <td class="text-center">
+                <%= link_to trip_trip_member_en_path(@trip, trip_member), method: :delete, class: 'remove-from-cart', data: { toggle: 'tooltip', title: 'Remove Member' } do %>
+                  <i class="material-icons icon_close"></i>
+                <% end %>
+              </td>
+            <% else %>
+              <td class="text-center text-lg text-medium">Member</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

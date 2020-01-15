@@ -52,6 +52,10 @@ Rails.application.routes.draw do
       get :validate, on: :collection
     end
 
+    resources :trips, only: [:show] do
+      resources :trip_members, only: [:new, :create, :destroy]
+    end
+
     namespace :dashboard do
       resources :bookings, only: [:show] do
         resource :payment, only: [:create] do

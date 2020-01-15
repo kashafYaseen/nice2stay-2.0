@@ -90,6 +90,11 @@ class User < ApplicationRecord
     find_by_provider_and_uid(access_token['provider'], access_token['uid']) || create_by_user(access_token)
   end
 
+  def invitation_status
+    return "Pending"  if invitation_accepted_at.blank? && !invitation_sent_at.blank?
+    return "Accepted"
+  end
+
   private
     def self.find_by_provider_and_uid provider, uid
       joins(:social_logins).where("social_logins.provider = ? and social_logins.uid = ? and social_logins.confirmed_at is not ?", provider, uid, nil).take
