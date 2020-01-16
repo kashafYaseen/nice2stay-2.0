@@ -43,6 +43,7 @@ class Api::V2::TripsController < Api::V2::ApiController
         :budget,
         :check_in,
         :check_out,
+        :visibility,
       )
     end
 end
