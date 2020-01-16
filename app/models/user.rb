@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: SocialLogin::SOCIAL_SITES
 
@@ -88,6 +88,11 @@ class User < ApplicationRecord
 
   def self.from_omniauth(access_token)
     find_by_provider_and_uid(access_token['provider'], access_token['uid']) || create_by_user(access_token)
+  end
+
+  def invitation_status
+    return "Pending"  if invitation_accepted_at.blank? && !invitation_sent_at.blank?
+    return "Accepted"
   end
 
   private

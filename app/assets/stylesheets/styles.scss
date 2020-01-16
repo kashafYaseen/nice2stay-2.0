@@ -6079,6 +6079,17 @@ video {
   z-index: 10;
 }
 
+.noUi-tooltip {
+  position: relative;
+  top: -29px;
+  left: -42px;
+  border: 1px solid;
+  width: 100px;
+  text-align: center;
+  background: black;
+  color: white;
+}
+
 .noUi-state-tap .noUi-origin {
   transition: left .3s, top .3s;
 }

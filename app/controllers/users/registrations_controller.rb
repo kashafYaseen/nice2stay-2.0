@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  prepend_before_action :authenticate_scope!, only: [:edit, :update, :destroy, :edit_password, :update_password]
   before_action :set_title, only: [:edit, :update]
   layout 'dashboard', only: [:edit, :update, :edit_password, :update_password]
 

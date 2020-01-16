@@ -162,7 +162,7 @@
       <!-- Shopping Cart Section-->
       <%= render 'shared/cart', reservations: @booking.try(:reservations) %>
       <!-- Wishlist Section-->
-      <%= render 'shared/wishlist', wishlists: @wishlists %>
+      <%= render 'shared/wishlist', trips: @cart_trips %>
     </div>
   </div>
 </header>

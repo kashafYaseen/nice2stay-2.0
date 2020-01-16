@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
 
   def set_wishlists
     @wishlists = current_user.wishlists_active.includes(:lodging) if current_user.present?
+    @cart_trips = current_user.trips if current_user.present?
   end
 
   def set_locale

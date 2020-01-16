@@ -201,6 +201,9 @@ GEM
       warden (~> 1.2.3)
     devise-i18n (1.6.5)
       devise (>= 4.4)
+    devise_invitable (1.7.4)
+      actionmailer (>= 4.1.0)
+      devise (>= 4.0.0)
     dotenv (2.4.0)
     dotenv-rails (2.4.0)
       dotenv (= 2.4.0)
@@ -513,6 +516,7 @@ DEPENDENCIES
   devise (~> 4.4)
   devise-bootstrapped!
   devise-i18n
+  devise_invitable
   dotenv-rails
   exception_notification
   fast_jsonapi
