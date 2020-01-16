@@ -33,7 +33,6 @@
           <th>Member Name</th>
           <th class="text-center">Invited By</th>
           <th class="text-center">Invitation Status</th>
-          <th class="text-center">Role</th>
         </tr>
       </thead>
 
@@ -58,16 +57,11 @@
 
             <td class="text-center text-lg text-medium"><%= trip_member.user_invited_by.try(:full_name) %></td>
             <td class="text-center text-lg text-medium"><%= trip_member.user_invitation_status %></td>
-            <% if trip_member.admin? %>
-              <td class="text-center text-lg text-medium">Admin</td>
-              <td class="text-center">
-                <%= link_to trip_trip_member_en_path(@trip, trip_member), method: :delete, class: 'remove-from-cart', data: { toggle: 'tooltip', title: 'Remove Member' } do %>
-                  <i class="material-icons icon_close"></i>
-                <% end %>
-              </td>
-            <% else %>
-              <td class="text-center text-lg text-medium">Member</td>
-            <% end %>
+            <td class="text-center">
+              <%= link_to trip_trip_member_en_path(@trip, trip_member), method: :delete, class: 'remove-from-cart', data: { toggle: 'tooltip', title: 'Remove Member' } do %>
+                <i class="material-icons icon_close"></i>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

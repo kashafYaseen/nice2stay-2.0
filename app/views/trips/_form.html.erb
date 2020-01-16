@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-12">
+    <%= form_for trip do |f| %>
+      <div class="trips-form-errors">
+        <%= render 'shared/errors', resource: trip %>
+      </div>
+
+      <div class="form-group input-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, autofocus: true, placeholder: 'Name', class: 'form-control' %>
+      </div>
+
+      <div class="form-group input-group">
+        <%= f.label :budget, 'budget (€)' %>
+
+        <div class="price-range-slider form-control border-0" data-min="0" data-max="1500" data-step="1" data-start-min="<%= trip.budget %>">
+          <div class="ui-range-slider"></div>
+
+          <footer class="ui-range-slider-footer pt-3">
+            <div class="column">
+              <div class="ui-range-values">
+                <div class="ui-range-value-min">€<span></span>
+                  <%= f.hidden_field :budget %>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      <div class="form-group input-group">
+        <%= f.label :check_in, 'Dates' %>
+
+        <div class="vue-app">
+          <datepicker
+          :trigger-id="'trigger-range-2'"
+          :check-in="'<%= trip.check_in || Date.today %>'"
+          :check-out="'<%= trip.check_out || 7.days.from_now %>'"
+          :months="2"
+          :min-date="'<%= Date.today %>'"
+          :action-buttons="true"
+          :full-screen="false"
+          :trigger-button="'btn btn-outline-primary w-100'"
+          :inline="false" />
+        </div>
+
+        <%= f.hidden_field :check_in, value: trip.check_in || Date.today, class: 'check_in' %>
+        <%= f.hidden_field :check_out, value: trip.check_out || 7.days.from_now, class: 'check_out' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :adults, 'Guests' %>
+
+        <div class="vue-app">
+          <guests-dropdown
+            :adults="<%= no_of_adults(trip.adults).to_i %>"
+            :children="<%= trip.children.to_i %>"
+            :adults-target="'.trip-adults'"
+            :children-target="'.trip-children'"
+            :dropdown-id="'<%= "guests-dropdown-trips" %>'"
+            :show-apply="false"
+            :show-infants="false"
+            :button-classes="'btn btn-outline-primary dropdown-toggle col-md-12'"
+          />
+        </div>
+
+        <%= f.hidden_field :adults, value: no_of_adults(trip.adults), min: 1, class: 'trip-adults' %>
+        <%= f.hidden_field :children, value: trip.children, min: 0, class: 'trip-children' %>
+      </div>
+
+      <div class="form-group input-group">
+        <%= f.label :visibility %>
+        <%= f.select :visibility, Trip.visibilities.keys.map{ |key| [key.titleize, key] }, {}, class: 'form-control' %>
+      </div>
+
+      <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :js_init do %>
+  Slider.single()
+<% end %>

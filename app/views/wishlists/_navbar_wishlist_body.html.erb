@@ -1,28 +1,29 @@
-<% if wishlists.present? %>
-  <% wishlists.each do |wishlist| %>
+<% if trips.present? %>
+  <% trips.each do |trip| %>
     <tr>
       <td>
-        <div class="product-item">
-          <%= link_to wishlist.lodging, class: 'product-thumb' do %>
-            <%= image_tag wishlist.lodging_image if wishlist.lodging_image.present? %>
-          <% end %>
-
-          <div class="product-info">
+        <div>
+          <div class="product-info col-md-12">
             <h4 class="product-title">
-              <%= link_to wishlist.lodging_name, wishlist.lodging %>
+              <%= link_to trip.name, trip %>
             </h4>
-            <span><em>Adults:</em><%= wishlist.adults.to_i %></span>
-            <span><em>Children:</em><%= wishlist.children.to_i %></span>
-            <span><em>From:</em><%= wishlist.check_in %></span>
-            <span><em>To:</em><%= wishlist.check_out %></span>
+
+            <span>
+              <%= "#{trip.adults} #{'Adult'.pluralize trip.adults}" %>, <%= "#{trip.children} #{'Child'.pluralize trip.children}" %>
+            </span> -
+            <span><%= "#{render_date trip.check_in} - #{render_date trip.check_out}" %></span> -
+            <span><%= render_rounded_price(trip.budget) %></span>
+          </div>
+
+          <div class="row mt-2 col-md-12">
+            <% trip.users.limit(3).each do |user| %>
+              <% next if user == current_user %>
+              <span class="col-md-4">
+                <%= render_user_image(user) %> <%= user.full_name %>
+              </span>
+            <% end %>
           </div>
         </div>
-      </td>
-
-      <td class="text-center">
-        <%= link_to remove_wishlists_path(wishlist_id: wishlist), class: 'remove-from-cart', remote: true do %>
-          <i class="material-icons">close</i>
-        <% end %>
       </td>
     </tr>
   <% end %>

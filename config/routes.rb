@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       get :validate, on: :collection
     end
 
-    resources :trips, only: [:show] do
+    resources :trips, except: [:index, :destroy] do
       resources :trip_members, only: [:new, :create, :destroy]
     end
 
