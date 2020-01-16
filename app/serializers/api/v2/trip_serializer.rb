@@ -1,6 +1,6 @@
 class Api::V2::TripSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :name, :adults, :children, :budget, :check_in, :check_out
+  attributes :id, :name, :adults, :children, :budget, :check_in, :check_out, :visibility
 
   attributes :users do |trip|
     Api::V2::UserSerializer.new(trip.users)
