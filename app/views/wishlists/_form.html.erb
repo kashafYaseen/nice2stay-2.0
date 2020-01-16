@@ -1,4 +1,4 @@
-<%= form_for lodging.wishlists.build, remote: true, html: { id: "new_wishlist_#{lodging.id}#{id_sufix}" } do |f| %>
+<%= form_for lodging.wishlists.build, url: new_wishlists_path, method: :get, remote: true, html: { id: "new_wishlist_#{lodging.id}#{id_sufix}" } do |f| %>
   <%= f.hidden_field :check_in, id: "wishlist_check_in_#{lodging.id}#{id_sufix}", class: 'check_in' %>
   <%= f.hidden_field :check_out, id: "wishlist_check_out_#{lodging.id}#{id_sufix}", class: 'check_out' %>
   <%= f.hidden_field :adults, id: "wishlist_adults_#{lodging.id}#{id_sufix}", class: 'adults' %>

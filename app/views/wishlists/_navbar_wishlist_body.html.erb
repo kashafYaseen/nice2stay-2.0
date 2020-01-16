@@ -1,34 +1,55 @@
-<% if trips.present? %>
-  <% trips.each do |trip| %>
-    <tr>
-      <td>
-        <div>
-          <div class="product-info col-md-12">
-            <h4 class="product-title">
-              <%= link_to trip.name, trip %>
-            </h4>
+<div class="table-responsive shopping-cart mb-0">
+  <table class="table">
+    <thead>
+      <tr id="wishlist-flash-messages"></tr>
 
-            <span>
-              <%= "#{trip.adults} #{'Adult'.pluralize trip.adults}" %>, <%= "#{trip.children} #{'Child'.pluralize trip.children}" %>
-            </span> -
-            <span><%= "#{render_date trip.check_in} - #{render_date trip.check_out}" %></span> -
-            <span><%= render_rounded_price(trip.budget) %></span>
+      <tr>
+        <th colspan="2">
+          <div class="d-flex justify-content-between align-items-center">Trips
+            <%= link_to new_trip_path, class: "navi-link text-uppercase" do %>
+              <span class="text-xxs">Create New Trip</span>
+              <i class="material-icons keyboard_arrow_right"></i>
+            <% end%>
           </div>
+        </th>
+      </tr>
+    </thead>
 
-          <div class="row mt-2 col-md-12">
-            <% trip.users.limit(3).each do |user| %>
-              <% next if user == current_user %>
-              <span class="col-md-4">
-                <%= render_user_image(user) %> <%= user.full_name %>
-              </span>
-            <% end %>
-          </div>
-        </div>
-      </td>
-    </tr>
-  <% end %>
-<% else %>
-  <tr>
-    <td>Wishlist is empty.</td>
-  </tr>
-<% end %>
+    <tbody id="navbar-wishlist-body">
+      <% if trips.present? %>
+        <% trips.each do |trip| %>
+          <tr>
+            <td>
+              <div>
+                <div class="product-info col-md-12">
+                  <h4 class="product-title">
+                    <%= link_to trip.name, trip %>
+                  </h4>
+
+                  <span>
+                    <%= "#{trip.adults} #{'Adult'.pluralize trip.adults}" %>, <%= "#{trip.children} #{'Child'.pluralize trip.children}" %>
+                  </span> -
+                  <span><%= "#{render_date trip.check_in} - #{render_date trip.check_out}" %></span> -
+                  <span><%= render_rounded_price(trip.budget) %></span>
+                </div>
+
+                <div class="row mt-2 col-md-12">
+                  <% trip.users.limit(3).each do |user| %>
+                    <% next if user == current_user %>
+                    <span class="col-md-4">
+                      <%= render_user_image(user) %> <%= user.full_name %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td>Wishlist is empty.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
