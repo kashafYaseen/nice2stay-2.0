@@ -6,8 +6,13 @@ class WishlistsController < ApplicationController
   def show
   end
 
+  def new
+    @wishlist = current_user.wishlists.build(wishlist_params)
+  end
+
   def create
     @wishlist = current_user.wishlists.create(wishlist_params)
+    flash.now[:notice] = "Accommodation was add to #{@wishlist.trip_name} successfully."
   end
 
   def edit
@@ -47,7 +52,7 @@ class WishlistsController < ApplicationController
     end
 
     def wishlist_params
-      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children, :name)
+      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children, :name, :trip_id)
     end
 
     def set_wishlist

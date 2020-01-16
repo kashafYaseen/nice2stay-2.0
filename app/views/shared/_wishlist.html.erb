@@ -1,22 +1,3 @@
 <div class="toolbar-section" id="wishlist">
-  <div class="table-responsive shopping-cart mb-0">
-    <table class="table">
-      <thead>
-        <tr>
-          <th colspan="2">
-            <div class="d-flex justify-content-between align-items-center">Trips
-              <%= link_to new_trip_path, class: "navi-link text-uppercase" do %>
-                <span class="text-xxs">Create New Trip</span>
-                <i class="material-icons keyboard_arrow_right"></i>
-              <% end%>
-            </div>
-          </th>
-        </tr>
-      </thead>
-
-      <tbody id="navbar-wishlist-body">
-        <%= render 'wishlists/navbar_wishlist_body', trips: trips %>
-      </tbody>
-    </table>
-  </div>
+  <%= render 'wishlists/navbar_wishlist_body', trips: trips %>
 </div>
