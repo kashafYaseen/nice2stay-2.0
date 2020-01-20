@@ -61,11 +61,15 @@
             <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.listing_on_request') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.booking_or_option') %></span></p>
           <% end %>
 
-          <div class="links-box text-cnter">
+          <div class="links-box">
             <%= link_to '#', class: "quick-view-btn text-xxs text-info", data: { lodging: lodging.id } do %>
               <i class="fal fa-eye"></i> <span>Quick View</span>
             <% end %>
           </div>
+
+          <%= link_to new_wishlists_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'text-xxs text-info' do %>
+            <i class="fal fa-heart"></i> <span>Add To List</span>
+          <% end %>
 
           <%= link_to t('details'), render_lodging_path(lodging), class: 'btn btn-md btn-primary float-right d-block d-sm-none' %>
         </div>
