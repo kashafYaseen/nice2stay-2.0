@@ -9,17 +9,13 @@
     <div class="col-md-12 padding-sm-0">
       <div class="col-md-12 margin-top-1x padding-sm-0">
         <div class="row target-section" id="home-container">
-          <div class="col-md-12 col-xs-12">
-            <div class="gallery-control">
-              <figure itemprop="associatedMedia" itemscope>
-                <a itemprop="contentUrl">
-                  <img src="<%= @lodging.image %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="w-100 max-image" />
-                </a>
-
-                <figcaption itemprop="caption description">
-                  <input type="button" name="view-photos" value="view photos" class="btn btn-white btn-sm">
-                </figcaption>
-              </figure>
+          <div class="col-md-12 col-xs-12 pr-0">
+            <div>
+              <div class="owl-carousel-full">
+                <% @lodging.images.each_with_index do |image_url, index| %>
+                  <%= image_tag image_url, class: "item", alt: index %>
+                <% end %>
+              </div>
             </div>
 
             <div class="lodging-gallery margin-top-1x" itemscope>
