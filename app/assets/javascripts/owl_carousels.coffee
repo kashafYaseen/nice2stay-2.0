@@ -17,6 +17,8 @@
       slidesToShow: 1,
       centerMode: false,
       variableWidth: true
+      autoWidth: true
+      margin: 10,
 
     $('.slick-prev.slick-arrow, .slick-next.slick-arrow').text('')
 
