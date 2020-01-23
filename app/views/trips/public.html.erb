@@ -10,9 +10,6 @@
               <div class="card-body bg-white">
                 <div class="row">
                   <div class="col-12">
-                    <%= link_to 'Edit', edit_trip_path(@trip), class: 'float-right' %>
-                    <%= link_to 'Shareable Link', public_trip_path(@trip), class: 'text-info float-right mr-2', target: '_blank' if @trip.everyone? %>
-
                     <h3><%= @trip.name %></h3>
 
                     <div class="row mt-2">
@@ -36,8 +33,6 @@
                 <div class="row">
                   <div class="col-12">
                     <div id="trip-flash-messages"></div>
-                    <%= link_to 'Add Members', new_trip_trip_member_path(@trip), class: 'float-right', remote: true %>
-
                     <div class="row mt-2 trip-members">
                       <%= render 'trip_members', trip: @trip %>
                     </div>

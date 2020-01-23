@@ -1,0 +1,34 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body bg-white">
+      <div class="row">
+        <div class="col-12">
+          <%= link_to 'Edit', edit_trip_path(trip), class: 'float-right' %>
+
+          <h3><%= link_to trip.name, trip_path(trip) %></h3>
+
+          <div class="row mt-2">
+            <div class="col-md-4">
+              <span class="text-bold">Guests: </span> <span><%= "#{trip.adults} #{'Adult'.pluralize trip.adults}" %>, <%= "#{trip.children} #{'Child'.pluralize trip.children}" %></span><br>
+              <span class="text-bold">Dates: </span><span><%= "#{render_date trip.check_in} - #{render_date trip.check_out}" %></span><br>
+              <span class="text-bold">Budget per night: </span><span><%= render_rounded_price(trip.budget) %></span><br>
+              <span class="text-bold">Advice from nice2stay: </span><span>No</span><br>
+            </div>
+
+            <div class="col-md-4">
+              <span class="text-bold">Visibility: </span> <span><%= trip.visibility.titleize %></span><br>
+              <% if trip.everyone? %>
+                <span class="text-bold">Shareable Link: </span> <span><%= link_to 'link', public_trip_path(trip), class: 'text-info', target: '_blank' %></span><br>
+              <% end %>
+            </div>
+
+            <div class="col-md-4">
+              <span class="text-bold">Members: </span> <span class="members-names-<%= trip.id %>"><%= trip.users.pluck(:first_name).join(', ') %></span><br>
+              <%= link_to 'Add Members', new_trip_trip_member_path(trip), class: 'text-info', remote: true %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

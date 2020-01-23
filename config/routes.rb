@@ -52,7 +52,8 @@ Rails.application.routes.draw do
       get :validate, on: :collection
     end
 
-    resources :trips, except: [:index, :destroy] do
+    resources :trips, except: [:destroy] do
+      get :public, on: :member
       resources :trip_members, only: [:new, :create, :destroy]
     end
 

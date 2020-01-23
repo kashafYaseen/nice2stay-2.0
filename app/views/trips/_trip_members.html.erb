@@ -1,0 +1,10 @@
+<% if trip.users.count > 1 %>
+  <% trip.users.each do |user| %>
+    <% next if user == current_user %>
+    <span class="col-md-2">
+      <%= render_user_image(user) %> <%= user.full_name %>
+    </span>
+  <% end %>
+<% else %>
+  <p>Invite friends & family for help to plan this trip</p>
+<% end %>

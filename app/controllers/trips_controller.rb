@@ -1,6 +1,10 @@
 class TripsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:public]
   before_action :set_trip, only: [:show, :edit, :update]
+
+  def index
+    @trips = current_user.trips
+  end
 
   def show
   end
@@ -28,6 +32,10 @@ class TripsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def public
+    @trip = Trip.everyone.find(params[:id])
   end
 
   private

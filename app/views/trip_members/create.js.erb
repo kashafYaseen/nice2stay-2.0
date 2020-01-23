@@ -1,0 +1,4 @@
+$('#trip-flash-messages').html("<%= j render 'shared/bootstrap_notices' %>");
+$('#dynamic-modal #new-member-modal').modal('hide');
+$('.trip-members').html("<%= j render 'trips/trip_members', trip: @trip %>");
+$('.members-names-<%= @trip.id %>').html('<%= @trip.users.pluck(:first_name).join(', ') %>');
