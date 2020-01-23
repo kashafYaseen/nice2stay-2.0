@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   localized do
-    devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
+    devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords', invitations: 'users/invitations' }
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
     draw :api_v2
@@ -52,7 +52,8 @@ Rails.application.routes.draw do
       get :validate, on: :collection
     end
 
-    resources :trips, except: [:index, :destroy] do
+    resources :trips, except: [:destroy] do
+      get :public, on: :member
       resources :trip_members, only: [:new, :create, :destroy]
     end
 

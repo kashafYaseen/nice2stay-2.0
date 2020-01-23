@@ -7,7 +7,7 @@ class TripMembersController < ApplicationController
   end
 
   def create
-    redirect_to new_trip_trip_member_path(@trip), notice: Invites::InviteUser.call(@trip, current_user, member_params)
+    flash.now[:notice] = Invites::InviteUser.call(@trip, current_user, member_params)
   end
 
   def destroy
