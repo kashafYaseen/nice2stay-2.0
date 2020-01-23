@@ -5,7 +5,11 @@
 
       <tr>
         <th colspan="2">
-          <div class="d-flex justify-content-between align-items-center"><%= link_to 'View All Trips', trips_path %>
+          <div class="d-flex justify-content-between align-items-center">
+            <%= link_to trips_path, class: 'navi-link text-uppercase' do %>
+              <span class="text-xxs">View All Trips</span>
+            <% end %>
+
             <%= link_to new_trip_path, class: "navi-link text-uppercase" do %>
               <span class="text-xxs">Create New Trip</span>
               <i class="material-icons keyboard_arrow_right"></i>
@@ -33,8 +37,8 @@
                   <span><%= render_rounded_price(trip.budget) %></span>
                 </div>
 
-                <div class="row mt-2 ml-1 col-md-12">
-                  <%= trip.users.pluck(:first_name).join(', ') %>
+                <div class="mt-2 col-md-12">
+                 <span class="text-bold">Members:&nbsp;</span> <%= trip.users.uniq.pluck(:first_name).join(', ') %>
                 </div>
               </div>
             </td>
