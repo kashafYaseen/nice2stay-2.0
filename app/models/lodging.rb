@@ -39,7 +39,9 @@ class Lodging < ApplicationRecord
   delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
-  delegate :country, to: :region, allow_nil: true
+  delegate :country, :name, to: :region, allow_nil: true
+  delegate :name, to: :region, allow_nil: true, prefix: true
+  delegate :name, to: :country, allow_nil: true, prefix: true
   delegate :with_in, :for_range, to: :availabilities, allow_nil: true, prefix: true
   delegate :desc, :published, to: :reviews, allow_nil: true, prefix: true
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
