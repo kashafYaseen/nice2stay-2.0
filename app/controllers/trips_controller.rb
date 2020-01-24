@@ -15,8 +15,8 @@ class TripsController < ApplicationController
 
   def create
     @trip = current_user.trips.build(trip_params)
-    @trip.users << current_user
     if @trip.save
+      @trip.users << current_user
       redirect_to @trip, notice: 'Trip was created successfully'
     else
       render :new

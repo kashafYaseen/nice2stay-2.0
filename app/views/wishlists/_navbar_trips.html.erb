@@ -15,13 +15,8 @@
             <span><%= render_rounded_price(trip.budget) %></span>
           </div>
 
-          <div class="row mt-2 col-md-12">
-            <% trip.users.limit(3).each do |user| %>
-              <% next if user == current_user %>
-              <span class="col-md-4">
-                <%= render_user_image(user) %> <%= user.full_name %>
-              </span>
-            <% end %>
+          <div class="mt-2 col-md-12">
+            <span class="text-bold">Members:&nbsp;</span> <%= trip.users.uniq.pluck(:first_name).join(', ') %>
           </div>
         </div>
       </td>
