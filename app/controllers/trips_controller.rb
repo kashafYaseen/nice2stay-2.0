@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!, except: [:public]
-  before_action :set_trip, only: [:show, :edit, :update]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy]
 
   def index
     @trips = current_user.trips
@@ -32,6 +32,11 @@ class TripsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @trip.destroy
+    redirect_to trips_path, notice: 'Trip was removed successfully'
   end
 
   def public
