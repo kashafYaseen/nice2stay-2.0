@@ -14,4 +14,9 @@ class WishlistsController < ApplicationController
     current_user.wishlists.find_by(trip_id: params[:id], lodging_id: params[:lodging_id]).try(:destroy)
     redirect_to trip_path(params[:id]), notice: 'Accommodation was removed successfully.'
   end
+
+  private
+    def wishlist_params
+      params.require(:wishlist).permit(:check_in, :check_out, :lodging_id, :adults, :children, :name, :trip_id)
+    end
 end
