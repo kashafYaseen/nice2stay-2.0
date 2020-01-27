@@ -19,7 +19,9 @@ namespace :api do
     resource :filters, only: [:show]
     resources :autocompletes, only: [:index]
     resources :favourites, only: [:index, :create, :destroy]
-    resources :trips, only: [:index, :create, :update, :destroy]
+    resources :trips, only: [:index, :create, :update, :destroy] do
+      resources :trip_members, only: [:new, :create, :destroy]
+    end
     resources :bookings, only: [:index, :show] do
       resource :payments, only: [:create]
     end
