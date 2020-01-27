@@ -44,6 +44,7 @@ class Api::V2::TripsController < Api::V2::ApiController
         :check_in,
         :check_out,
         :visibility,
+        :need_advise,
       )
     end
 end

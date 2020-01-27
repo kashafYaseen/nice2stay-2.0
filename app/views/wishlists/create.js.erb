@@ -1,5 +1,4 @@
 $('#wishlist').html("<%= j render 'navbar_wishlist_body', trips: @cart_trips %>");
-$('.wishlist-items-count').html("<%= wishlist_items_count(@wishlists) %>");
 $('#wishlist').addClass('current');
 $('.toolbar-dropdown').addClass('open');
 $('.toolbar-wishlist').addClass('active');
