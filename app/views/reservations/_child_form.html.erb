@@ -108,8 +108,6 @@
       <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}" } do %>
         <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
       <% end %>
-
-      <%= render 'wishlists/form', lodging: lodging %>
     </div>
   </div>
   <hr class="mb-4"></hr>

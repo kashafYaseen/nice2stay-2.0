@@ -68,11 +68,6 @@ Rails.application.routes.draw do
         resources :reviews, except: [:show, :index]
       end
 
-      resource :wishlists do
-        get :remove, on: :member
-        post :checkout
-      end
-
       resources :notifications, only: [:index] do
         get :mark_as_read, on: :collection
       end

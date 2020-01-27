@@ -22,8 +22,8 @@
       <i class="icon-head"></i><%= t 'profile_account.side_nav_password' %>
     <% end unless current_user.with_social_site? || session[:social_site].present? %>
 
-    <%= link_to dashboard_wishlists_path, class: "list-group-item with-badge #{active_class(dashboard_wishlists_path)}" do %>
-      <i class="icon-heart"></i><%= t 'profile_account.side_nav_wishlist' %><span class="badge badge-default badge-pill"><%= wishlist_items_count(@wishlists) %></span>
+    <%= link_to trips_path, class: "list-group-item with-badge" do %>
+      <i class="icon-heart"></i> Trips<span class="badge badge-default badge-pill"><%= trip_items_count(@cart_trips) %></span>
     <% end %>
   </nav>
 </div>
