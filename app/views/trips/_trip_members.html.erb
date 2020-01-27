@@ -1,7 +1,7 @@
 <% if trip.users.count > 1 %>
   <% trip.users.each do |user| %>
     <% next if user == current_user %>
-    <span class="col-md-2">
+    <span class="col-md-2 text-center">
       <%= render_user_image(user) %> <%= user.full_name %>
     </span>
   <% end %>

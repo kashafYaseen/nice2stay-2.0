@@ -33,10 +33,8 @@ Rails.application.routes.draw do
       get :remove, on: :member
       get :details, on: :member
     end
-    resource :wishlists do
-      get :remove, on: :member
-      post :checkout
-    end
+
+    resources :wishlists, only: [:new, :create, :destroy]
 
     resources :feedbacks, only: [:new, :create]
     resources :countries, only: [:index]

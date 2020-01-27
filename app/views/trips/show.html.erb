@@ -10,17 +10,27 @@
               <div class="card-body bg-white">
                 <div class="row">
                   <div class="col-12">
-                    <%= link_to 'Edit', edit_trip_path(@trip), class: 'float-right' %>
+                    <%= link_to 'Remove', trip_path(@trip), class: 'float-right text-info', method: :delete, data: { confirm: "Are you sure you want to remove this trip?" } %>
+
+                    <%= link_to 'Edit', edit_trip_path(@trip), class: 'float-right mr-2' %>
                     <%= link_to 'Shareable Link', public_trip_path(@trip), class: 'text-info float-right mr-2', target: '_blank' if @trip.everyone? %>
 
                     <h3><%= @trip.name %></h3>
 
                     <div class="row mt-2">
-                      <span class="col-md-4">
-                        <%= "#{@trip.adults} #{'Adult'.pluralize @trip.adults}" %>, <%= "#{@trip.children} #{'Child'.pluralize @trip.children}" %>
-                      </span>
-                      <span class="col-md-4"><%= "#{render_date @trip.check_in} - #{render_date @trip.check_out}" %></span>
-                      <span class="col-md-4"><%= render_rounded_price(@trip.budget) %></span>
+                      <div class="col-md-6">
+                        <span class="text-bold">Guests: </span> <span><%= "#{@trip.adults} #{'Adult'.pluralize @trip.adults}" %>, <%= "#{@trip.children} #{'Child'.pluralize @trip.children}" %></span><br>
+                        <span class="text-bold">Dates: </span><span><%= "#{render_date @trip.check_in} - #{render_date @trip.check_out}" %></span><br>
+                        <span class="text-bold">Budget per night: </span><span><%= render_rounded_price(@trip.budget) %></span><br>
+                        <span class="text-bold">Advice from nice2stay: </span><span>No</span><br>
+                      </div>
+
+                      <div class="col-md-6">
+                        <span class="text-bold">Visibility: </span> <span><%= @trip.visibility.titleize %></span><br>
+                        <% if @trip.everyone? %>
+                          <span class="text-bold">Shareable Link: </span> <span><%= link_to 'link', public_trip_path(@trip), class: 'text-info', target: '_blank' %></span><br>
+                        <% end %>
+                      </div>
                     </div>
                   </div>
                 </div>

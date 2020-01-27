@@ -11,7 +11,8 @@
         </div>
 
         <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-sm-12 col-md-12 col-lg-4" do %>
-          <h6 class="card-title"><%= lodging.name %></h6>
+          <h6 class="card-title mb-1"><%= lodging.name %></h6>
+          <p class="text-xxs no-hover"><i class="fal fa-map-marker-alt mr-1"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
 
           <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
           <p class="text-xxs">
@@ -56,14 +57,14 @@
             <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.listing_on_request') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.booking_or_option') %></span></p>
           <% end %>
 
-          <div class="links-box mb-3">
+          <div class="links-box mb-2">
             <%= link_to '#', class: "quick-view-btn text-xxs text-info", data: { lodging: lodging.id } do %>
               <i class="fal fa-eye"></i> <span>Quick View</span>
             <% end %>
           </div>
 
-          <%= link_to '', class: 'col-md-12 text-center' do %>
-            <i class="fa fa-heart fa-2x text-primary"></i>
+          <%= link_to wishlist_path(@trip, lodging_id: lodging.id), class: "text-xxs text-info", method: :delete, data: { confirm: "Are you sure you want to remove this?" } do %>
+            <i class="fal fa-heart"></i> <span>Remove from list</span>
           <% end %>
 
           <%= link_to t('details'), render_lodging_path(lodging), class: 'btn btn-md btn-primary float-right d-block d-sm-none' %>
