@@ -133,7 +133,7 @@
                 <span class="float-right offer-price text-bold <%= offer['offer'].gsub('.', '-') %>"><%= "€#{offer['total']}" %></span>
               </div>
 
-              <%= link_to new_wishlists_path({ wishlist: { lodging_id: lodging_child.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
+              <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging_child.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
                 <i class="fal fa-heart fa-2x"></i>
               <% end if lodging_child.present? %>
 
@@ -273,7 +273,7 @@
               <span class="float-right offer-price text-bold <%= child['offer'].gsub('.', '-') %>"><%= "€#{child['total']}" %></span>
             </div>
 
-            <%= link_to new_wishlists_path({ wishlist: { lodging_id: lodging_child.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
+            <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging_child.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
               <i class="fal fa-heart fa-2x"></i>
             <% end if lodging_child.present? %>
 

@@ -67,7 +67,7 @@
             <% end %>
           </div>
 
-          <%= link_to new_wishlists_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'text-xxs text-info' do %>
+          <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'text-xxs text-info' do %>
             <i class="fal fa-heart"></i> <span>Add To List</span>
           <% end %>
 
