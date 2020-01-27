@@ -57,6 +57,7 @@ class TripsController < ApplicationController
         :check_in,
         :check_out,
         :visibility,
+        :need_advise,
       )
     end
 end

@@ -73,6 +73,10 @@
         <%= f.select :visibility, Trip.visibilities.keys.map{ |key| [key.titleize, key] }, {}, class: 'form-control' %>
       </div>
 
+      <div class="form-group input-group">
+        <%= f.check_box :need_advise, { class: ''}, true, false %> <%= f.label :need_advise, 'Advice from nice2stay?' %>
+      </div>
+
       <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
     <% end %>
   </div>

@@ -134,7 +134,7 @@
               </div>
 
               <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging_child.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
-                <i class="fal fa-heart fa-2x"></i>
+                <i class="fal fa-heart fa-1x"></i>
               <% end if lodging_child.present? %>
 
               <%= button_tag class: "btn btn-primary col-md-9 #{lodging_child.present? ? 'col-md-9' : 'col-md-12'} btn-booking disabled btn-#{offer['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
@@ -274,7 +274,7 @@
             </div>
 
             <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging_child.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
-              <i class="fal fa-heart fa-2x"></i>
+              <i class="fal fa-heart fa-1x"></i>
             <% end if lodging_child.present? %>
 
             <%= button_tag class: "btn btn-primary #{lodging_child.present? ? 'col-md-9' : 'col-md-12'} btn-booking disabled btn-#{child['offer'].gsub('.', '-')}", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{child['id_offer']}#{index}" }, value: "cart" do %>
