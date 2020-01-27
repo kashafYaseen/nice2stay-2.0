@@ -11,7 +11,8 @@
         </div>
 
         <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-sm-12 col-md-12 col-lg-4" do %>
-          <h6 class="card-title"><%= lodging.name %></h6>
+          <h6 class="card-title mb-1"><%= lodging.name %></h6>
+          <p class="text-xxs no-hover"><i class="fal fa-map-marker-alt mr-1"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
 
           <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
           <p class="text-xxs">
