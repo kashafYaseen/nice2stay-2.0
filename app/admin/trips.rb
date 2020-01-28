@@ -14,6 +14,7 @@ ActiveAdmin.register Trip do
     end
 
     column :visibility
+    column :need_advise
     column :created_at
 
     actions
@@ -28,6 +29,7 @@ ActiveAdmin.register Trip do
       row :adults
       row :children
       row :budget
+      row :need_advise
       row :created_at
       row :updated_at
     end
