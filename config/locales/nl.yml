@@ -228,7 +228,7 @@ nl:
     cleaning_cost: Schoonmaakkosten
     total_charges: Totale huursom
     book_securely: Boek veilig in minder dan 1 minuut
-    pay_less: Bij nice2stay betaalt u nooit meer dan bij de eigenaar direct en wij vragen geen reserveringsksoten
+    pay_less: Bij nice2stay betaalt u nooit meer dan bij de eigenaar direct en wij vragen geen reserveringskosten
 
   calendar:
     legenda: Legenda kalender
@@ -930,7 +930,7 @@ nl:
     guests: gasten
     visibility: zichtbaar
     everyone: iedereen
-    only_members: aleen op uitnodiging
+    only_members: alleen op uitnodiging
     members: leden
     advise: Advies van nice2stay
     shareable_link: deelbare link
