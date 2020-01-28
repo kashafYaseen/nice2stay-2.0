@@ -735,3 +735,16 @@ of the accommodation."
     total: Total Amount
     tax: Tax
     additional_fee: Additional fee
+
+  trip:
+    name: name
+    budget: budget
+    dates: dates
+    guests: guests
+    visibility: visibility
+    everyone: everyone
+    only_members: members only
+    members: members
+    advise: advies van nice2stay
+    shareable_link: shareable link
+    need_help: Need help making choice? Please select this checkbox and our consultants will contact and help you
