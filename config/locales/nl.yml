@@ -922,3 +922,16 @@ nl:
     total: Totaal
     tax: Belasting
     additional_fee: Additional fee
+
+  trip:
+    name: naam
+    budget: budget
+    dates: periode
+    guests: gasten
+    visibility: zichtbaar
+    everyone: iedereen
+    only_members: aleen op uitnodiging
+    members: leden
+    advise: Advies van nice2stay
+    shareable_link: deelbare link
+    need_help: Hulp nodig bij het maken van keuzes? Schakel het selectievakje in en onze consultants gaan u  helpen

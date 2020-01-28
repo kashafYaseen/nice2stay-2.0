@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_09_110629) do
+ActiveRecord::Schema.define(version: 2020_01_27_124802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,8 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "ahoy_events", force: :cascade do |t|
+  create_table "ahoy_events", id: false, force: :cascade do |t|
+    t.bigserial "id", null: false
     t.bigint "visit_id"
     t.bigint "user_id"
     t.string "name"
@@ -82,7 +83,8 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.index ["visit_id"], name: "index_ahoy_events_on_visit_id"
   end
 
-  create_table "ahoy_visits", force: :cascade do |t|
+  create_table "ahoy_visits", id: false, force: :cascade do |t|
+    t.bigserial "id", null: false
     t.string "visit_token"
     t.string "visitor_token"
     t.bigint "user_id"
@@ -918,6 +920,29 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.index ["lodging_id"], name: "index_specifications_on_lodging_id"
   end
 
+  create_table "trip_members", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "trip_id"
+    t.boolean "admin", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_trip_members_on_trip_id"
+    t.index ["user_id"], name: "index_trip_members_on_user_id"
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.string "name"
+    t.integer "adults", default: 1
+    t.integer "children", default: 0
+    t.float "budget", default: 0.0
+    t.date "check_in"
+    t.date "check_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "visibility", default: 0
+    t.boolean "need_advise", default: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -949,9 +974,21 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invitations_count"], name: "index_users_on_invitations_count"
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -967,7 +1004,9 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
     t.string "name"
     t.text "notes"
     t.integer "status", default: 0
+    t.bigint "trip_id"
     t.index ["lodging_id"], name: "index_wishlists_on_lodging_id"
+    t.index ["trip_id"], name: "index_wishlists_on_trip_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
@@ -1014,7 +1053,10 @@ ActiveRecord::Schema.define(version: 2020_01_09_110629) do
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
+  add_foreign_key "trip_members", "trips", on_delete: :cascade
+  add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
+  add_foreign_key "wishlists", "trips", on_delete: :cascade
   add_foreign_key "wishlists", "users", on_delete: :cascade
 end

@@ -1,0 +1,69 @@
+<% content_for :body_class, "pr-3" %>
+
+<div class="row bg-secondary">
+  <div class="col-md-7">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row pl-3">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body bg-white">
+                <div class="row">
+                  <div class="col-12">
+                    <h3><%= @trip.name %></h3>
+
+                    <div class="row mt-2">
+                      <span class="col-md-4">
+                        <%= "#{@trip.adults} #{'Adult'.pluralize @trip.adults}" %>, <%= "#{@trip.children} #{'Child'.pluralize @trip.children}" %>
+                      </span>
+                      <span class="col-md-4"><%= "#{render_date @trip.check_in} - #{render_date @trip.check_out}" %></span>
+                      <span class="col-md-4"><%= render_rounded_price(@trip.budget) %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pl-3">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body bg-white">
+                <div class="row">
+                  <div class="col-12">
+                    <div id="trip-flash-messages"></div>
+                    <div class="row mt-2 trip-members">
+                      <%= render 'trip_members', trip: @trip %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pl-3 lodgings-list bg-secondary" id="lodgings-list">
+          <%= tag.div class: "lodgings-list-json", data: { features: @trip.lodgings.collect(&:feature), bounds: params[:bounds], ids: @trip.lodgings.pluck(:id) } %>
+
+          <%= render partial: 'lodging', collection: @trip.lodgings, as: :lodging, locals: { trip: @trip } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5 fixed-map d-none d-sm-block">
+    <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
+  </div>
+</div>
+
+<div id="lodging-quick-view"></div>
+
+<%= content_for :js_init do %>
+  Lodging.init();
+  Map.init();
+  Filters.switch_view('<%= params[:layout_view] %>');
+  Invoice.init();
+<% end %>
+
+<%= content_for :footer_class do 'd-none' end %>

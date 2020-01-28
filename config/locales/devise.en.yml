@@ -17,6 +17,8 @@ en:
       unauthenticated: "You need to sign in or sign up before continuing."
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
+      invitation_instruction:
+        invited_you: "%{name} has invited you to join a trip, you can accept it through the link below."
       confirmation_instructions:
         subject: "Confirmation instructions"
       reset_password_instructions:

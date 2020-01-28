@@ -3838,9 +3838,16 @@ button:focus {
   height: 250px;
 }
 
-.owl-carousel-full .card-img-top {
-  border-radius: 0;
-  height: 600px;
+.owl-carousel-full .item {
+  max-height: 600px;
+  margin-right: 1px;
+}
+
+@media (max-width: 576px) {
+  .owl-carousel-full .item {
+    max-height: 300px;
+    margin-right: 1px;
+  }
 }
 
 .card-text {
@@ -6079,6 +6086,17 @@ video {
   z-index: 10;
 }
 
+.noUi-tooltip {
+  position: relative;
+  top: -29px;
+  left: -42px;
+  border: 1px solid;
+  width: 100px;
+  text-align: center;
+  background: black;
+  color: white;
+}
+
 .noUi-state-tap .noUi-origin {
   transition: left .3s, top .3s;
 }
@@ -7888,4 +7906,8 @@ video {
 .text-dotted {
   text-decoration: underline;
   text-decoration-style: dotted;
+}
+
+.h-100vh {
+  height: 100vh;
 }

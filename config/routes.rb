@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   localized do
-    devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords' }
+    devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords', invitations: 'users/invitations' }
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
     draw :api_v2
@@ -33,10 +33,8 @@ Rails.application.routes.draw do
       get :remove, on: :member
       get :details, on: :member
     end
-    resource :wishlists do
-      get :remove, on: :member
-      post :checkout
-    end
+
+    resources :wishlists, only: [:new, :create, :destroy]
 
     resources :feedbacks, only: [:new, :create]
     resources :countries, only: [:index]
@@ -52,6 +50,11 @@ Rails.application.routes.draw do
       get :validate, on: :collection
     end
 
+    resources :trips do
+      get :public, on: :member
+      resources :trip_members, only: [:new, :create, :destroy]
+    end
+
     namespace :dashboard do
       resources :bookings, only: [:show] do
         resource :payment, only: [:create] do
@@ -63,11 +66,6 @@ Rails.application.routes.draw do
           post :accept_option
         end
         resources :reviews, except: [:show, :index]
-      end
-
-      resource :wishlists do
-        get :remove, on: :member
-        post :checkout
       end
 
       resources :notifications, only: [:index] do

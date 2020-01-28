@@ -181,11 +181,18 @@
                 <% end %>
 
                 <p class="text-sm text-dark" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></p>
-                  <%= button_tag class: "btn btn-primary col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}", data: { form_id: "#new_reservation_#{lodging.id}#{id_sufix}" } do %>
-                    <i class="material-icons add_shopping_cart"></i>&nbsp; Cart
+
+                <div class="row m-0">
+                  <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'col-md-1 my-auto pl-0' do %>
+                    <i class="fal fa-heart fa-2x"></i>
                   <% end %>
+
+                  <%= button_tag class: "btn btn-primary col-md-10 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}", data: { form_id: "#new_reservation_#{lodging.id}#{id_sufix}" } do %>
+                    <i class="material-icons add_shopping_cart"></i>&nbsp; Add To Cart
+                  <% end %>
+                </div>
+
                 <p class="text-xxxs text-center"><%= t 'cart.nice2stay' %></p>
-                <%= render 'wishlists/form',  lodging: lodging, id_sufix: id_sufix %>
               </div>
             </div>
           <% end %>

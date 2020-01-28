@@ -1,0 +1,75 @@
+<div class="col-md-12 lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>" data-cumulative-url="<%= cumulative_price_lodgings_path %>" >
+<div class="persisted-data" data-url="<%= price_details_lodging_path(lodging) %>" data-quick-view="<%= quick_view_lodging_path(lodging) %>" data-validate-url="<%= validate_reservations_path %>"></div>
+
+  <div class="card">
+    <div class="card-body bg-white">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-6">
+          <div class="owl-carousel">
+            <%= render_image_tags lodging, class: "card-img-top item" %>
+          </div>
+        </div>
+
+        <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-sm-12 col-md-12 col-lg-4" do %>
+          <h6 class="card-title mb-1"><%= lodging.name %></h6>
+          <p class="text-xxs"><i class="fal fa-map-marker-alt mr-1 text-primary"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
+
+          <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
+          <p class="text-xxs">
+            <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
+            <% if lodging.children.present? %>
+              / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
+            <% end %>
+            <br>
+            <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+          </p>
+
+          <ul class="list-icon">
+            <p class="text-xxs">
+              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_1' %><br>
+              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_2' %><br>
+              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_3' %>
+            </p>
+          </ul>
+          <hr class="mt-1">
+        <% end %>
+
+        <div class="col-sm-12 col-md-12 col-lg-2 text-left p-0 price-review-box-<%= lodging.id %> border-left pl-3">
+          <div class="price-details-box-<%= lodging.id %>">
+            <% lodging.cumulative_price({ check_in: trip.check_in.to_s, check_out: trip.check_out.to_s, adults: trip.adults, children: trip.children }) %>
+            <%= render_trip_price(lodging.calculated_price, lodging.dynamic_price, trip) if lodging.calculated_price.present? %>
+          </div>
+
+          <div class="review-box">
+            <% if lodging.average_rating > 0 %>
+              <%= render_stars_tag lodging.average_rating %>
+              <p class="text-xs"><%= pluralize(lodging.all_reviews.count, 'review', 'reviews') %></p>
+            <% end %>
+          </div>
+
+          <% if lodging.including_text.present? %>
+            <p class="text-info mt-2 mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= lodging.including_text %>" data-html="true"><i class="fal fa-check-square"></i> <span class="text-dotted text-xxs"><%= t('included') %></span></p>
+          <% end %>
+
+          <% if lodging.realtime_availability %>
+            <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
+          <% else %>
+            <p class="text-info mb-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.listing_on_request') %>"><i class="fal fa-calendar-alt"></i> <span class="text-dotted text-xxs"><%= t('bookings.booking_or_option') %></span></p>
+          <% end %>
+
+          <div class="links-box mb-2">
+            <%= link_to '#', class: "quick-view-btn text-xxs text-info", data: { lodging: lodging.id } do %>
+              <i class="fal fa-eye"></i> <span>Quick View</span>
+            <% end %>
+          </div>
+
+          <%= link_to wishlist_path(@trip, lodging_id: lodging.id), class: "text-xxs text-info", method: :delete, data: { confirm: "Are you sure you want to remove this?" } do %>
+            <i class="fal fa-heart"></i> <span>Remove from list</span>
+          <% end %>
+
+          <%= link_to t('details'), render_lodging_path(lodging), class: 'btn btn-md btn-primary float-right d-block d-sm-none' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,7 +27,7 @@
       <a class="toolbar-toggle toolbar-wishlist" href="#wishlist">
         <i>
           <span class="material-icons favorite_border"></span>
-          <span class="count wishlist-items-count"><%= wishlist_items_count(@wishlists) %></span>
+          <span class="count wishlist-items-count"><%= trip_items_count(@cart_trips) %></span>
         </i>
       </a>
 
@@ -162,7 +162,7 @@
       <!-- Shopping Cart Section-->
       <%= render 'shared/cart', reservations: @booking.try(:reservations) %>
       <!-- Wishlist Section-->
-      <%= render 'shared/wishlist', wishlists: @wishlists %>
+      <%= render 'shared/wishlist', trips: @cart_trips %>
     </div>
   </div>
 </header>

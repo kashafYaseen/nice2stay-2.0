@@ -1,6 +1,6 @@
 module WishlistsHelper
-  def wishlist_items_count(wishlists)
-    return wishlists.count if wishlists.present?
+  def trip_items_count(trips)
+    return trips.count if trips.present?
     0
   end
 end

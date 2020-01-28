@@ -1,0 +1,5 @@
+$('#wishlist').html("<%= j render 'navbar_wishlist_form', trips: @cart_trips, wishlist: @wishlist %>");
+$('#wishlist').addClass('current');
+$('.toolbar-dropdown').addClass('open');
+$('.toolbar-wishlist').addClass('active');
+Trip.init();

@@ -1,0 +1,35 @@
+<% content_for :body_class, "pr-3" %>
+
+<div class="row bg-secondary pt-4">
+  <div class="col-md-12 pl-5">
+    <h4>My Favorite Trips</h4>
+  </div>
+
+  <div class="col-md-12  h-100vh">
+    <div class="row pl-3">
+      <div class="col-md-7">
+        <div id="trip-flash-messages"></div>
+
+        <div class="row pl-3 trips-list bg-secondary" id="trips-list">
+          <%= render @trips %>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+        <div class="card">
+          <div class="card-body bg-white">
+            <div class="row">
+              <div class="col-12">
+                <h3>Create a favorite list for your next holiday and share with friends and family or invite them</h3>
+                <p class="mb-1">Create a list and if you want advice from our travel consultants?</p>
+                <p>Just change 'advice' tp yes and we will contact you. No extra charges.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for :footer_class do 'd-none' end %>
