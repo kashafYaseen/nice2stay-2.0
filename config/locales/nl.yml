@@ -207,7 +207,7 @@ nl:
     nights: Aantal nachten
     checkin: Check-in
     checkout: Check-out
-    guests: Aanal gasten
+    guests: Aantal gasten
     empty: Geen accommodaties geselecteerd
 
   reservations:
