@@ -22,7 +22,7 @@
                     GC in DB: <b><%= lodging.lodging_children.find_by(guest_centric_id: offer['roomOffer'].split('.')[0]).try(:name) %></b>
                   </div>
                 </div>
-              <% end %>
+              <% end if child['offers'].present? %>
             <% else %>
               <div class="row">
                 <div class="col-md-4">
