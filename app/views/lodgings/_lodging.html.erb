@@ -69,7 +69,7 @@
           </div>
 
           <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'text-xxs text-info' do %>
-            <i class="fal fa-heart"></i> <span>Add To List</span>
+            <i class="fal fa-heart"></i> <span>Add To Favorites</span>
           <% end %>
 
           <%= link_to t('details'), render_lodging_path(lodging), class: 'btn btn-md btn-primary float-right d-block d-sm-none' %>

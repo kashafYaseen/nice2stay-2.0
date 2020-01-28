@@ -19,16 +19,16 @@
 
                     <div class="row mt-2">
                       <div class="col-md-6">
-                        <span class="text-bold">Guests: </span> <span><%= "#{@trip.adults} #{'Adult'.pluralize @trip.adults}" %>, <%= "#{@trip.children} #{'Child'.pluralize @trip.children}" %></span><br>
-                        <span class="text-bold">Dates: </span><span><%= "#{render_date @trip.check_in} - #{render_date @trip.check_out}" %></span><br>
-                        <span class="text-bold">Budget per night: </span><span><%= render_rounded_price(@trip.budget) %></span><br>
-                        <span class="text-bold">Advice from nice2stay: </span><span>No</span><br>
+                        <span class="text-bold"><%= t('trip.guests').titleize %>: </span> <span><%= "#{@trip.adults} #{'Adult'.pluralize @trip.adults}" %>, <%= "#{@trip.children} #{'Child'.pluralize @trip.children}" %></span><br>
+                        <span class="text-bold"><%= t('trip.dates').titleize %>: </span><span><%= "#{render_date @trip.check_in} - #{render_date @trip.check_out}" %></span><br>
+                        <span class="text-bold"><%= t('trip.budget').titleize %>: </span><span><%= render_rounded_price(@trip.budget) %></span><br>
+                        <span class="text-bold"><%= t('trip.advise').titleize %>: </span><span>No</span><br>
                       </div>
 
                       <div class="col-md-6">
-                        <span class="text-bold">Visibility: </span> <span><%= @trip.visibility.titleize %></span><br>
+                        <span class="text-bold"><%= t('trip.visibility').titleize %>: </span> <span><%= @trip.visibility.titleize %></span><br>
                         <% if @trip.everyone? %>
-                          <span class="text-bold">Shareable Link: </span> <span><%= link_to 'link', public_trip_path(@trip), class: 'text-info', target: '_blank' %></span><br>
+                          <span class="text-bold"><%= t('trip.shareable_link').titleize %>: </span> <span><%= link_to 'link', public_trip_path(@trip), class: 'text-info', target: '_blank' %></span><br>
                         <% end %>
                       </div>
                     </div>

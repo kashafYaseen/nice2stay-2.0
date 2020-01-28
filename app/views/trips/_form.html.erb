@@ -6,12 +6,12 @@
       </div>
 
       <div class="form-group input-group">
-        <%= f.label :name %>
+        <%= f.label :name, t('trip.name') %>
         <%= f.text_field :name, autofocus: true, placeholder: 'Name', class: 'form-control' %>
       </div>
 
       <div class="form-group input-group">
-        <%= f.label :budget, 'budget (€)' %>
+        <%= f.label :budget, t('trip.budget') %>
 
         <div class="price-range-slider form-control border-0 pl-1 pr-1" data-min="0" data-max="1500" data-step="1" data-start-min="<%= trip.budget %>">
           <div class="ui-range-slider"></div>
@@ -29,7 +29,7 @@
       </div>
 
       <div class="form-group input-group">
-        <%= f.label :check_in, 'Dates' %>
+        <%= f.label :check_in, t('trip.dates') %>
 
         <div class="vue-app">
           <datepicker
@@ -49,7 +49,7 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :adults, 'Guests' %>
+        <%= f.label :adults, t('trip.guests') %>
 
         <div class="vue-app">
           <guests-dropdown
@@ -69,12 +69,18 @@
       </div>
 
       <div class="form-group input-group">
-        <%= f.label :visibility %>
-        <%= f.select :visibility, Trip.visibilities.keys.map{ |key| [key.titleize, key] }, {}, class: 'form-control' %>
+        <%= f.label :visibility, t('trip.visibility') %>
+        <%= f.select :visibility, Trip.visibilities.keys.map{ |key| [t("trip.#{key}"), key] }, {}, class: 'form-control' %>
       </div>
 
       <div class="form-group input-group">
-        <%= f.check_box :need_advise, { class: ''}, true, false %> <%= f.label :need_advise, 'Advice from nice2stay?' %>
+        <div class="custom-control custom-checkbox">
+          <%= f.check_box :need_advise, { class: 'custom-control-input' }, true, false %>
+
+          <label class="custom-control-label" for="trip_need_advise">
+            <%= t('trip.need_help') %>
+          </label>
+        </div>
       </div>
 
       <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
