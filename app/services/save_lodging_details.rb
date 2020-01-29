@@ -148,6 +148,7 @@ class SaveLodgingDetails
         { images: [] },
         { thumbnails: [] },
         { attachments: [] },
+        { gc_rooms: [] },
       )
     end
 
