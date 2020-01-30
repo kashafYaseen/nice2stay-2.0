@@ -7,7 +7,8 @@ class Api::V2::LodgingDetailsSerializer
              :minimum_adults, :minimum_children, :beds, :baths, :checked,:including_text,
              :particularities_text, :options_text, :payment_terms_text, :deposit_text,
              :highlight_1, :highlight_2, :highlight_3, :description, :customized_dates,
-             :setting, :quality, :interior, :service, :communication, :country_name, :region_name
+             :setting, :quality, :interior, :service, :communication, :country_name, :region_name,
+             :gc_rooms, :guest_centric_id, :guest_centric, :realtime_availability, :gc_username, :gc_password
 
   attribute :summary do |lodging|
     lodging.as_child? ? lodging.parent_summary : lodging.summary
