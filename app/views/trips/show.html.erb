@@ -22,7 +22,7 @@
                         <span class="text-bold"><%= t('trip.guests').titleize %>: </span> <span><%= "#{@trip.adults} #{'Adult'.pluralize @trip.adults}" %>, <%= "#{@trip.children} #{'Child'.pluralize @trip.children}" %></span><br>
                         <span class="text-bold"><%= t('trip.dates').titleize %>: </span><span><%= "#{render_date @trip.check_in} - #{render_date @trip.check_out}" %></span><br>
                         <span class="text-bold"><%= t('trip.budget').titleize %>: </span><span><%= render_rounded_price(@trip.budget) %></span><br>
-                        <span class="text-bold"><%= t('trip.advise').titleize %>: </span><span>No</span><br>
+                        <span class="text-bold"><%= t('trip.advise').titleize %>: </span><span><%= @trip.need_advise? ? 'Yes' : 'No' %></span><br>
                       </div>
 
                       <div class="col-md-6">

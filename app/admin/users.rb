@@ -100,17 +100,15 @@ ActiveAdmin.register User do
       end
     end
 
-    panel "Wishlists" do
-      table_for user.wishlists do
-        column :id do |wishlist|
-          link_to wishlist.id, admin_wishlist_path(wishlist)
+    panel "Trips" do
+      table_for user.trips do
+        column :id do |trip|
+          link_to trip.id, admin_trip_path(trip)
         end
 
-        column :lodging
-        column :check_in
-        column :check_out
-        column :adults
-        column :in_cart
+        column :name
+        column :visibility
+        column :need_advise
         column :created_at
       end
     end

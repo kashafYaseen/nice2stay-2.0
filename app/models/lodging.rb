@@ -311,6 +311,10 @@ class Lodging < ApplicationRecord
     date
   end
 
+  def find_gc_room gc_id
+    lodging_children.where("gc_rooms @> ?", "{#{gc_id}}").take
+  end
+
   private
     def add_availabilities
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
