@@ -8,8 +8,8 @@ class Amenity < ApplicationRecord
 
   before_save :name_downcase
 
-  scope :hot, -> { where(hot: true) }
-  scope :regular, -> { where(hot: false) }
+  scope :hot, -> { where(hot: true).distinct }
+  scope :regular, -> { where(hot: false).distinct }
 
   delegate :name, to: :amenity_category, prefix: true, allow_nil: true
 
