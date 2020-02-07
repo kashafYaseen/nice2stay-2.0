@@ -66,6 +66,8 @@
 
   filters = ->
     $('body').on 'click', '.btn-offer-filter', (e) ->
+      $('.btn-offer-filter').not(this).removeClass('selected btn-primary')
+
       $(this).toggleClass('selected')
       $(this).toggleClass('btn-primary')
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_112459) do
+ActiveRecord::Schema.define(version: 2020_02_07_114320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -413,6 +413,8 @@ ActiveRecord::Schema.define(version: 2020_02_06_112459) do
     t.string "name"
     t.text "short_description"
     t.text "description"
+    t.text "policy"
+    t.text "restrictions"
     t.index ["gc_offer_id"], name: "index_gc_offer_translations_on_gc_offer_id"
     t.index ["locale"], name: "index_gc_offer_translations_on_locale"
   end
@@ -425,6 +427,8 @@ ActiveRecord::Schema.define(version: 2020_02_06_112459) do
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "policy"
+    t.text "restrictions"
     t.index ["lodging_id"], name: "index_gc_offers_on_lodging_id"
   end
 
