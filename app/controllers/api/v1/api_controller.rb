@@ -24,6 +24,6 @@ class Api::V1::ApiController < ActionController::API
 
     def filter_ip
       return unless Rails.env.production?
-      not_authenticated unless '174.138.9.237' == request.remote_ip
+      not_authenticated unless '174.138.9.237' == request.remote_ip || '134.209.90.215' == request.remote_ip
     end
 end
