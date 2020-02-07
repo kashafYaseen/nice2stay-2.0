@@ -14,5 +14,6 @@ namespace :api do
     resources :custom_texts, only: [:create]
     resources :reviews, only: [:create]
     resources :places, only: [:create]
+    resources :gc_offers, only: [:create]
   end
 end

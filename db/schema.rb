@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_29_100509) do
+ActiveRecord::Schema.define(version: 2020_02_06_112459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,6 +403,29 @@ ActiveRecord::Schema.define(version: 2020_01_29_100509) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "gc_offer_translations", force: :cascade do |t|
+    t.integer "gc_offer_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "short_description"
+    t.text "description"
+    t.index ["gc_offer_id"], name: "index_gc_offer_translations_on_gc_offer_id"
+    t.index ["locale"], name: "index_gc_offer_translations_on_locale"
+  end
+
+  create_table "gc_offers", force: :cascade do |t|
+    t.string "name"
+    t.string "offer_id"
+    t.text "short_description"
+    t.text "description"
+    t.bigint "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_gc_offers_on_lodging_id"
   end
 
   create_table "lead_translations", force: :cascade do |t|
@@ -1025,6 +1048,7 @@ ActiveRecord::Schema.define(version: 2020_01_29_100509) do
   add_foreign_key "custom_texts", "experiences", on_delete: :cascade
   add_foreign_key "custom_texts", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
+  add_foreign_key "gc_offers", "lodgings", on_delete: :cascade
   add_foreign_key "leads", "admin_users"
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "leads_regions", "leads", on_delete: :cascade

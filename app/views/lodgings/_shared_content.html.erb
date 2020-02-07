@@ -111,7 +111,7 @@
       <h3 class="card-title"><%= t 'nav.amentities' %></h3>
       <hr class="margin-bottom-1x">
 
-      <% @lodging.amenities.includes(:amenity_category, :translations).group_by(&:amenity_category).each do |amenity_category, amenities| %>
+      <% @lodging.amenities.distinct.includes(:amenity_category, :translations).group_by(&:amenity_category).each do |amenity_category, amenities| %>
         <div class="row">
           <div class="col-md-3">
             <h5><%= amenity_category.try(:name) %></h5>
