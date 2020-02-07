@@ -41,6 +41,8 @@ class Synchronization::SaveGcOfferDetails
         :offer_id,
         :short_description,
         :description,
+        :policy,
+        :restrictions,
       )
     end
 
@@ -49,6 +51,8 @@ class Synchronization::SaveGcOfferDetails
         :name,
         :short_description,
         :description,
+        :policy,
+        :restrictions,
         :locale,
       )
     end
