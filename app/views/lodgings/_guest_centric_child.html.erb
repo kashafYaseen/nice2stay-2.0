@@ -2,9 +2,35 @@
 
   <% if child['isPromotion'] %>
     <% offers = [] %>
+    <% promotion = lodging.gc_offers.find_by(offer_id: child['packageId']) %>
+
     <div class="guest-centric-offer" data-offer-filter="<%= child['promotionId'] %>">
-      <h4 class="mt-4"><%= child['name'] %></h4>
-      <p><%= child['description'].try(:html_safe) %></p>
+      <h4 class="mt-4"><%= promotion.try(:name) || child['name'] %></h4>
+      <p>
+        <%= promotion.try(:short_description) || child['ShortDescription'] %>
+        <%= 'br'.html_safe if (promotion.try(:short_description).present? || child['ShortDescription'].present?) && (promotion.try(:description).present? || child['description'].present?) %>
+        <%= promotion.try(:description).try(:html_safe) || child['description'].try(:html_safe) %>
+      </p>
+
+      <div class="row">
+        <div class="col-md-12 p-3">
+          <div class="row">
+            <% if promotion.try(:restrictions).present? || child['restrictions'].present? %>
+              <div class="col-md-12">
+                <h5>Restrictions</h5>
+                <%= promotion.try(:restrictions).try(:html_safe) || child['restrictions'].try(:html_safe) %>
+              </div>
+            <% end %>
+
+            <% if promotion.present? && promotion.policy.present? %>
+              <div class="col-md-12">
+                <h5>Cancelation</h5>
+                <%= promotion.policy.try(:html_safe) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
 
       <% child['offers'].each do |offer| %>
         <% lodging_child = lodging.find_gc_room(offer['roomOffer'].split('.')[0]) %>
