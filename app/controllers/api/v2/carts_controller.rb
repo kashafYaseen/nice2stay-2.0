@@ -40,7 +40,27 @@ class Api::V2::CartsController < Api::V2::ApiController
 
   private
     def reservation_params
-      params.require(:reservation).permit(:check_in, :check_out, :lodging_id, :adults, :children, :infants, :booking_status, :cleaning_cost, :discount)
+      params.require(:reservation).permit(
+        :check_in,
+        :check_out,
+        :lodging_id,
+        :adults,
+        :children,
+        :infants,
+        :booking_status,
+        :cleaning_cost,
+        :discount,
+        :meal_tax,
+        :tax,
+        :additional_fee,
+        :room_type,
+        :rooms,
+        :gc_errors,
+        :gc_policy,
+        :guest_centric_booking_id,
+        :meal_id,
+        :offer_id,
+      )
     end
 
     def booking_params
