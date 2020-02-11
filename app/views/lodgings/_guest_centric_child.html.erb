@@ -17,14 +17,14 @@
           <div class="row">
             <% if promotion.try(:restrictions).present? || child['restrictions'].present? %>
               <div class="col-md-12">
-                <b>Restrictions</b>
+                <h5>Restrictions</h5>
                 <%= promotion.try(:restrictions).try(:html_safe) || child['restrictions'].try(:html_safe) %>
               </div>
             <% end %>
 
             <% if promotion.present? && promotion.policy.present? %>
               <div class="col-md-12">
-                <b>Cancelation</b>
+                <h5>Cancelation</h5>
                 <%= promotion.policy.try(:html_safe) %>
               </div>
             <% end %>
