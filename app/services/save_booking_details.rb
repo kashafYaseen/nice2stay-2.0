@@ -103,6 +103,16 @@ class SaveBookingDetails
         :booked_by,
         :created_at,
         :updated_at,
+        :meal_tax,
+        :tax,
+        :additional_fee,
+        :room_type,
+        :rooms,
+        :gc_errors,
+        :gc_policy,
+        :guest_centric_booking_id,
+        :meal_id,
+        :offer_id,
       )
     end
 
