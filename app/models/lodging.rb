@@ -235,7 +235,7 @@ class Lodging < ApplicationRecord
     dates.each do |date|
       availabilities_list << Availability.new(available_on: date, lodging_id: id, created_at: DateTime.now, updated_at: DateTime.now)
     end
-    Availability.import availabilities_list, on_duplicate_key_update: { conflict_target: [:lodging_id, :available_on], columns: [:updated_at] }
+    Availability.import availabilities_list, on_duplicate_key_update: { conflict_target: [:lodging_id, :available_on], columns: [:updated_at] }, batch_size: 150
   end
 
   def display_price_notice?
