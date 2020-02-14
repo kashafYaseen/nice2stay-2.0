@@ -27,6 +27,8 @@ class CartsController < ApplicationController
         end
       end
 
+      SendBookingDetailsJob.perform_later(@booking.id)
+
       cookies[:booking_details] = @booking.id
       redirect_to details_carts_path, notice: I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
     else

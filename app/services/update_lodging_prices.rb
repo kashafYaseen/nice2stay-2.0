@@ -99,7 +99,7 @@ class UpdateLodgingPrices
     end
 
     def end_date
-      return '31-12-2020'.to_date if 365.days.from_now < '31-12-2020'.to_date
+      return '31-12-2021'.to_date if 365.days.from_now < '31-12-2021'.to_date
       365.days.from_now
     end
 end

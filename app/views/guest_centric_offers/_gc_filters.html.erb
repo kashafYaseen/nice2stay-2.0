@@ -5,7 +5,9 @@
         <h4 class="filter-title">Filters</h4>
         <% hotel['offers'].each_with_index do |child, index| %>
           <% if child['isPromotion'] %>
-            <button class="btn btn-secondary btn-sm btn-offer-filter" data-offer="<%= child['promotionId'] %>"><%= "#{child['name']} (#{child['offers'].try(:count)})" %></button>
+          <% promotion = @lodging.gc_offers.find_by(offer_id: child['packageId']) %>
+
+            <button class="btn btn-secondary btn-sm btn-offer-filter" data-offer="<%= child['promotionId'] %>"><%= "#{promotion.try(:name) || child['name']} (#{child['offers'].try(:count)})" %></button>
           <% end %>
         <% end %>
       </div>
