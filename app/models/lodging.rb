@@ -115,7 +115,8 @@ class Lodging < ApplicationRecord
   searchkick batch_size: 200, locations: [:location], text_middle: [:name], merge_mappings: true, mappings: {
     lodging: {
       properties: {
-        rules: { type: :nested }
+        rules: { type: :nested },
+        availability_price: { type: :long },
       }
     }
   }
