@@ -61,6 +61,7 @@ class Api::V2::CartsController < Api::V2::ApiController
         :meal_id,
         :offer_id,
         :rent,
+        :meal_price,
       )
     end
 
