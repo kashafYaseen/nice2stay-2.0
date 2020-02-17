@@ -60,6 +60,7 @@ class Api::V2::CartsController < Api::V2::ApiController
         :guest_centric_booking_id,
         :meal_id,
         :offer_id,
+        :rent,
       )
     end
 
