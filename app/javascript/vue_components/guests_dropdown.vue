@@ -22,7 +22,7 @@
 
       <div class="dropdown-item mt-3 mb-3">
         <div class="row">
-          <label class="col-6 text-lg pt-2">{{ childrenTitle() }}</label>
+          <label class="col-6 text-lg pt-2">{{ childrenTitle() }}<br><span class="text-xxs text-capitalize">Ages 2–12</span></label>
           <number-input-spinner
             :min="0"
             :max="this.maxCalculatedChildren"
