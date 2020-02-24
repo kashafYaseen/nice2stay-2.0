@@ -45,7 +45,7 @@ class UpdateLodgingPrices
 
     def add_missing_availabilities
       lodging.availabilities.check_out_only.destroy_all
-      missing_dates = (Date.today..end_date).map(&:to_s) - lodging.availabilities.pluck(:available_on).map(&:to_s)
+      missing_dates = (Date.today..end_date).map(&:to_s) - lodging.availabilities.active.pluck(:available_on).map(&:to_s)
       lodging.add_availabilities_for missing_dates
     end
 
@@ -99,7 +99,7 @@ class UpdateLodgingPrices
     end
 
     def end_date
-      return '31-12-2020'.to_date if 365.days.from_now < '31-12-2020'.to_date
+      return '31-12-2021'.to_date if 365.days.from_now < '31-12-2021'.to_date
       365.days.from_now
     end
 end
