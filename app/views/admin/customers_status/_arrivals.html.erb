@@ -1,0 +1,20 @@
+<% User.arrival_status.each do |key, values| %>
+  <h3><%= Country.find(key).try(:name) %></h3>
+
+  <table>
+    <thead>
+      <th>Month</th>
+      <th>Arrivals</th>
+    </thead>
+
+    <tbody>
+      <% values.each do |value| %>
+        <% next if value[1] == 0 %>
+        <tr>
+          <td><%= value[0].strftime("%B %Y") %></td>
+          <td><%= value[1] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

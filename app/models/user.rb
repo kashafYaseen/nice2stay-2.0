@@ -95,6 +95,12 @@ class User < ApplicationRecord
     return "Accepted"
   end
 
+  def self.arrival_status
+    _arrivals = {}
+    User.joins(:reservations, :country).select("reservations.in_cart, reservations.check_out, countries.id").where("reservations.in_cart = ? and reservations.check_out >= ?", false, Date.today).group(:"countries.id").group_by_month("reservations.check_out").count("id").map { |arrival| _arrivals[arrival.first[0]].present? ? _arrivals[arrival.first[0]] << [arrival.first[1], arrival.last] : _arrivals[arrival.first[0]] = [[arrival.first[1], arrival.last]] }
+    _arrivals
+  end
+
   private
     def self.find_by_provider_and_uid provider, uid
       joins(:social_logins).where("social_logins.provider = ? and social_logins.uid = ? and social_logins.confirmed_at is not ?", provider, uid, nil).take
