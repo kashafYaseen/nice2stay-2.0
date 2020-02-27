@@ -143,7 +143,7 @@ module LodgingsHelper
 
   def item_columns
     return 'col-lg-12' if action_name == 'show'
-    return 'col-md-6' if params[:layout_view] == 'List View'
-    'col-md-12'
+    return 'col-md-12' if params[:layout_view] == 'Grid & Map'
+    'col-md-6'
   end
 end

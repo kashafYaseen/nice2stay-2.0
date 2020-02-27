@@ -4,8 +4,8 @@
       <span class="title">{{ guests() }}</span>
     </button>
 
-    <div class="dropdown-menu w-100" :aria-labelledby="this.dropdownId" @click="handleMenuClick">
-      <div class="dropdown-item mt-3 mb-3">
+    <div :class="inline ? 'position-relative' : 'dropdown-menu'" class="w-100" :aria-labelledby="this.dropdownId" @click="handleMenuClick">
+      <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3">
         <div class="row">
           <label class="col-6 text-lg pt-2">{{ adultsTitle() }}</label>
           <number-input-spinner
@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div class="dropdown-item mt-3 mb-3">
+      <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3">
         <div class="row">
           <label class="col-6 text-lg pt-2">{{ childrenTitle() }}<br><span class="text-xxs text-capitalize">Ages 2–12</span></label>
           <number-input-spinner
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="dropdown-item mt-3 mb-3" v-if="this.showInfants">
+      <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3" v-if="this.showInfants">
         <div class="row">
           <label class="col-6 text-lg pt-2">{{ infantsTitle() }}</label>
           <number-input-spinner
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="dropdown-item mt-3 mb-3" v-show="this.showApply">
+      <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3" v-show="this.showApply">
         <input type="button" name="done" class="btn btn-sm btn-secondary float-right mr-0" value="Done" @click="handleButtonClick" />
       </div>
     </div>
@@ -116,6 +116,10 @@
         default: true
       },
       highlightOnSelection: {
+        type: Boolean,
+        default: false
+      },
+      inline: {
         type: Boolean,
         default: false
       },
@@ -202,7 +206,8 @@
         e.preventDefault()
       },
       handleButtonClick() {
-        $(`#vue-${this.dropdownId}`).dropdown("toggle");
+        if(!this.inline)
+          $(`#vue-${this.dropdownId}`).dropdown("toggle");
 
         if(this.submitTarget && $(this.submitTarget).length > 0) {
           $('#loader').show();
