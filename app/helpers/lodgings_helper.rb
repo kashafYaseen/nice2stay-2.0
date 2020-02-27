@@ -124,8 +124,8 @@ module LodgingsHelper
   end
 
   def years_with_unconfirmed_prices lodging
-    return "2019 #{t('route.and')} 2020" unless lodging.confirmed_price_2020 || lodging.confirmed_price
-    return "2019" unless lodging.confirmed_price
+    return "2021 #{t('route.and')} 2020" unless lodging.confirmed_price_2020 || lodging.confirmed_price
+    return "2021" unless lodging.confirmed_price
     return "2020" unless lodging.confirmed_price_2020
   end
 
@@ -143,7 +143,7 @@ module LodgingsHelper
 
   def item_columns
     return 'col-lg-12' if action_name == 'show'
-    return 'col-md-6' if params[:layout_view] == 'List View'
-    'col-md-12'
+    return 'col-md-12' if params[:layout_view] == 'Grid & Map'
+    'col-md-6'
   end
 end
