@@ -3,7 +3,7 @@ $('.pagination').html('<%= j paginate @lodgings, window: 3, remote: true %>');
 $('.pagination-info').html('<%= j page_entries_info(@lodgings, entry_name: "Lodging" ) %>');
 $('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");
 $('#loader').hide();
-$('#filters-container').html("<%= j render 'secondary_navbar', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>");
+$('#filters-container').html("<%= j render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>");
 $('.seo-data').html("<%= j render 'seo_data', custom_text: @custom_text %>");
 $('.map-info-data').html("<%= j render 'map_info_alert', collection: @collection, lodgings: @lodgings %>");
 $('html').velocity('scroll', { offset: 0, duration: 1200, easing: 'easeOutExpo', mobileHA: false });

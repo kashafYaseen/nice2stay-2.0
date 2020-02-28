@@ -20,10 +20,9 @@
       <div class="card-body bg-white">
         <div class="row">
           <div class="col-8">
-            <p class="text-bold">
-              <i class="material-icons info_outline medium mr-2"></i>
-              <%= render_search_info %>
-            </p>
+            <div class="pagination-info">
+              <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+            </div>
           </div>
 
           <div class="col-4">
