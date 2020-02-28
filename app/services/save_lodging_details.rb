@@ -66,12 +66,12 @@ class SaveLodgingDetails
 
     def parent
       return unless params[:parent].present?
-
-      Lodging.find_or_create_by(slug: parent_params[:slug]) do |parent|
-        parent.owner = owner
-        parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
-        parent.attributes = parent_params.merge(lodging_type: lodging_type(params[:parent][:lodging_type]), crm_synced_at: DateTime.current)
-      end
+      parent = Lodging.find_by(crm_id: parent_params[:crm_id]) || Lodging.friendly.find(parent_params[:slug]) rescue Lodging.new
+      parent.owner = owner
+      parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
+      parent.attributes = parent_params.merge(lodging_type: lodging_type(params[:parent][:lodging_type]), crm_synced_at: DateTime.current)
+      parent.save
+      parent
     end
 
     def lodging_type(type)
@@ -172,6 +172,7 @@ class SaveLodgingDetails
 
     def parent_params
       params.require(:parent).permit(
+        :crm_id,
         :slug,
         :name,
         :title,
