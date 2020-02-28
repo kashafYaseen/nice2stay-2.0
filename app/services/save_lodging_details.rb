@@ -8,7 +8,7 @@ class SaveLodgingDetails
 
   def initialize(params)
     @params = params
-    @lodging = Lodging.find_or_initialize_by(slug: lodging_params[:slug])
+    @lodging = Lodging.find_by(crm_id: lodging_params[:crm_id]) || Lodging.friendly.find(lodging_params[:slug]) rescue Lodging.new
   end
 
   def call
@@ -149,6 +149,7 @@ class SaveLodgingDetails
         { thumbnails: [] },
         { attachments: [] },
         { gc_rooms: [] },
+        :crm_id,
       )
     end
 
