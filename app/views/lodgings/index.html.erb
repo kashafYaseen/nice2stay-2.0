@@ -18,8 +18,8 @@
         <%= render 'seo_data', custom_text: @custom_text %>
       </div>
 
-      <div class="map-info-data pl-3 bg-secondary w-100">
-        <%= render 'map_info_alert', collection: @collection, lodgings: @lodgings, lead: nil %>
+      <div class="bg-secondary w-100 pl-3">
+        <%= render 'search_information', collection: @collection, lodgings: @lodgings, lead: nil %>
       </div>
 
       <div class="col-md-12">
@@ -70,6 +70,7 @@
   Filters.switch_view('<%= params[:layout_view] %>');
   Lodging.calculate_price();
   Invoice.init();
+  Filters.remove_pill();
 <% end %>
 
 <%= content_for :footer_class do 'd-none' end %>
