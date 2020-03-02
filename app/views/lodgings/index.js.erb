@@ -1,6 +1,7 @@
 $('.lodgings-list').html("<%= j render 'lodgings_list', lodgings: @lodgings, regions: @regions %>");
 $('.pagination').html('<%= j paginate @lodgings, window: 3, remote: true %>');
 $('.pagination-info').html('<%= j page_entries_info(@lodgings, entry_name: "Lodging" ) %>');
+$('.filters-information').html('<%= j render "selected_filters" %>');
 $('.lodgings-heading').html("<%= j page_entries_info(@lodgings, entry_name: 'Lodging' ) %>");
 $('#loader').hide();
 $('#filters-container').html("<%= j render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>");
@@ -17,3 +18,4 @@ Url.update("<%= lodgings_path(locale: locale, page: params[:page]) %>");
 Lodging.calculate_price();
 Filters.switch_view('<%= params[:layout_view] %>');
 $('[data-toggle="tooltip"]').tooltip();
+Filters.remove_pill();

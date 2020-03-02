@@ -98,4 +98,12 @@
       $('#pagination-container, #map-container .secondary-navbar').addClass 'd-none'
       $('#map-container').removeClass 'd-sm-block'
 
+  Filters.remove_pill = ->
+    $('.close-filter-pill').click ->
+      $elem = $($(this).data('id'))
+      if $elem.is(':checkbox')
+        $elem.prop('checked', false)
+      $(this).parent().remove()
+      Filters.submit()
+
 ).call this

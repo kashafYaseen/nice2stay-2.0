@@ -1,0 +1,27 @@
+<% if params[:lodging_type_in].present? || params[:experiences_in].present? || params[:amenities_in].present? %>
+  <span class="mr-1">Selected Filters:</span>
+
+  <% params[:lodging_type_in].each do |type| %>
+    <span class="badge badge-pill badge-info">
+      <%= type %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#lodging_type_<%= type %>"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end if params[:lodging_type_in].present? %>
+
+  <% params[:experiences_in].each do |type| %>
+    <span class="badge badge-pill badge-info">
+      <% experience = @experiences.friendly.find(type) %>
+      <%= experience.name %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#experience_<%= experience.id %>"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end if params[:experiences_in].present? %>
+
+  <% params[:amenities_in].each do |type| %>
+    <span class="badge badge-pill badge-info">
+      <%= @amenities.friendly.find(type).name %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#amenity_<%= type %>"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end if params[:amenities_in].present? %>
+
+  <%= link_to 'Remove all filters', lodgings_path, class: 'text-info ml-2' %>
+<% end %>

@@ -1,0 +1,33 @@
+<div class="col-lg-12 p-3">
+  <div class="card">
+    <div class="card-body bg-white">
+      <div class="row">
+        <div class="col-8">
+          <div class="pagination-info">
+            <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+          </div>
+
+          <div class="filters-information">
+            <%= render 'selected_filters' %>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <section class="float-right">
+            <div class="view-dropdown dropdown">
+              <button class="dropdown-toggle w-100 btn btn-sm btn-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title">GRID</span>
+              </button>
+
+              <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
+                <a class="dropdown-item list-view layout-btn" href="#">GRID</a>
+                <a class="dropdown-item list-and-map layout-btn d-none d-sm-block" href="#">Grid & Map</a>
+                <a class="dropdown-item map-view layout-btn" href="#">Large Map</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
