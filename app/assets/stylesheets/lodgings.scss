@@ -80,9 +80,8 @@
 }
 
 .scrollable-content {
-  overflow: auto;
-  height: 100vh;
-  min-height: 400px;
+  overflow: scroll;
+  max-height: 100vh;
 }
 
 .scrollable-gallery {
