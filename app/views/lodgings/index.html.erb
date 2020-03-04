@@ -8,11 +8,11 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-2 bg-white scrollable-content" id="filters-container">
+  <div class="col-md-2 bg-white" id="filters-container">
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>
   </div>
 
-  <div class="col-md-10 scrollable-content" id="lodgings-container">
+  <div class="col-md-10" id="lodgings-container">
     <div class="row">
       <div class="seo-data bg-secondary w-100">
         <%= render 'seo_data', custom_text: @custom_text %>

@@ -26,6 +26,12 @@
     for experience in $('.experiences-list input:checked')
       params += "&experiences_in[]=#{$(experience).val()}"
 
+    for country in $('.countries-list input:checked')
+      params += "&countries_in[]=#{$(country).val()}"
+
+    for region in $('.regions-list input:checked')
+      params += "&regions_in[]=#{$(region).val()}"
+
     for amenity in $('.amenities-list input:checked')
       params += "&amenities_in[]=#{$(amenity).val()}"
 

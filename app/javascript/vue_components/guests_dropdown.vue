@@ -16,6 +16,7 @@
             :buttonClass="'vnis__button col-6'"
             :value="this.totalAdults"
             @input="handleAdults"
+            :class="inline ? 'mx-auto' : ''"
           />
         </div>
       </div>
@@ -31,6 +32,7 @@
             :inputClass="'vnis__input'"
             :value="this.totalChildren"
             :buttonClass="'vnis__button col-6'"
+            :class="inline ? 'mx-auto' : ''"
           />
         </div>
       </div>
@@ -46,6 +48,7 @@
             :inputClass="'vnis__input'"
             :value="this.totalInfants"
             :buttonClass="'vnis__button col-6'"
+            :class="inline ? 'mx-auto' : ''"
           />
         </div>
       </div>

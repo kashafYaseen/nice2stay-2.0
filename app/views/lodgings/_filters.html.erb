@@ -97,6 +97,24 @@
             </div>
           </section>
 
+          <section class="col-md-12 pt-3 countries-list d-none">
+            <p class="p-0 col-md-12 text-bold"><%= t 'filters.country' %> </p>
+            <% @countries_enabled.each do |country| %>
+              <div class="custom-control custom-checkbox col-md-12">
+                <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), id: "countries_#{country.id}", class: "custom-control-input" %>
+              </div>
+            <% end %>
+          </section>
+
+          <section class="col-md-12 pt-3 regions-list d-none">
+            <p class="p-0 col-md-12 text-bold"><%= t 'filters.region' %> </p>
+            <% @regions.each do |region| %>
+              <div class="custom-control custom-checkbox col-md-12">
+                <%= check_box_tag "regions_in[]", region.slug, is_checked?(region.slug, :regions_in), id: "regions_#{region.id}", class: "custom-control-input" %>
+              </div>
+            <% end %>
+          </section>
+
           <section class="col-md-12 pt-3 experiences-list">
             <p class="p-0 col-md-12 text-bold"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>
