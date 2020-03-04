@@ -1,5 +1,5 @@
 class LodgingsController < ApplicationController
-  skip_before_action :set_booking, :set_wishlists, :set_countries, :set_custom_texts, :set_pages, if: proc { |c| request.xhr? }
+  skip_before_action :set_booking, :set_wishlists, :set_custom_texts, :set_pages, if: proc { |c| request.xhr? }
   before_action :set_lodging, only: [:show]
   before_action :set_collection, only: [:index]
   skip_before_action :verify_authenticity_token, only: [:index]

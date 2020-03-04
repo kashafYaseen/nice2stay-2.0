@@ -1,4 +1,4 @@
-<% if params[:lodging_type_in].present? || params[:experiences_in].present? || params[:amenities_in].present? %>
+<% if params[:lodging_type_in].present? || params[:experiences_in].present? || params[:amenities_in].present? || params[:countries_in].present? || params[:regions_in].present? %>
   <span class="mr-1">Selected Filters:</span>
 
   <% params[:lodging_type_in].each do |type| %>
@@ -22,6 +22,22 @@
       <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#amenity_<%= type %>"><span aria-hidden="true">&times;</span></button>
     </span>
   <% end if params[:amenities_in].present? %>
+
+  <% params[:countries_in].each do |type| %>
+    <span class="badge badge-pill badge-info">
+      <% country = @countries_enabled.friendly.find(type) %>
+      <%= country.name %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#countries_<%= country.id %>"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end if params[:countries_in].present? %>
+
+  <% params[:regions_in].each do |type| %>
+    <span class="badge badge-pill badge-info">
+      <% region = @regions.friendly.find(type) %>
+      <%= region.name %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#regions_<%= region.id %>"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end if params[:regions_in].present? %>
 
   <%= link_to 'Remove all filters', lodgings_path, class: 'text-info ml-2' %>
 <% end %>

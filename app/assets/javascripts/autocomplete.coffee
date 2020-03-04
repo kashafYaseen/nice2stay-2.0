@@ -81,22 +81,9 @@
 
     $('.filters-autocomplete').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'country'
-        if $('.lodgings-filters #country').length == 0
-          $('<input>').attr(
-            type: 'hidden'
-            id: 'country'
-            name: 'country').appendTo '.lodgings-filters'
-
-        $('.lodgings-filters #country').val(datum.country)
-        $('.lodgings-filters #region').val('')
-        $('.lodgings-filters #bounds').val('')
-        $('.lodgings-filters #name_middle').val('')
+        $("#countries_#{datum.id}").prop('checked', true)
       else if datum.type == 'region'
-        if $('.lodgings-filters #region').length == 0
-          $('<input>').attr(
-            type: 'hidden'
-            id: 'region'
-            name: 'region').appendTo '.lodgings-filters'
+        $("#regions_#{datum.id}").prop('checked', true)
 
         $('.lodgings-filters #country').val('')
         $('.lodgings-filters #region').val(datum.region)
@@ -107,6 +94,7 @@
         $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val(datum.name)
+      Url.update("");
       Filters.submit()
 
   source = (url, type) ->
