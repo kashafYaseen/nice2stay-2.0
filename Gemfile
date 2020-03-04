@@ -49,7 +49,7 @@ gem "breadcrumbs_on_rails"
 gem 'mollie-api-ruby'
 gem 'devise-i18n'
 gem 'activeadmin_addons'
-gem 'ahoy_matey'
+gem 'ahoy_matey', '~> 3.0'
 gem 'starrr'
 gem 'premailer-rails'
 gem 'bootstrap-email'

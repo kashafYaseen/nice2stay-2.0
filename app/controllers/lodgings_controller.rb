@@ -84,6 +84,6 @@ class LodgingsController < ApplicationController
     end
 
     def track_action
-      ahoy.track "Lodgings Search", request.parameters.except('utf8') rescue nil
+      ahoy.track "Lodgings Search", request.parameters.except('utf8')
     end
 end

@@ -80,16 +80,11 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    ahoy_matey (2.2.0)
-      addressable
-      browser (~> 2.0)
+    ahoy_matey (3.0.1)
+      activesupport (>= 5)
       device_detector
       geocoder (>= 1.4.5)
-      railties (>= 4.2)
-      referer-parser (>= 0.3)
-      request_store
       safely_block (>= 0.2.1)
-      user_agent_parser
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     arbre (1.1.1)
@@ -136,7 +131,6 @@ GEM
       kaminari (>= 0.13)
       rails (>= 3.1)
     breadcrumbs_on_rails (3.0.1)
-    browser (2.5.3)
     builder (3.2.3)
     bullet (5.7.6)
       activesupport (>= 3.0.0)
@@ -192,7 +186,7 @@ GEM
     crass (1.0.4)
     css_parser (1.7.0)
       addressable
-    device_detector (1.0.1)
+    device_detector (1.0.2)
     devise (4.4.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -390,7 +384,6 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (4.0.1)
-    referer-parser (0.3.0)
     request_store (1.4.1)
       rack (>= 1.4)
     require_all (1.5.0)
@@ -402,8 +395,8 @@ GEM
       activesupport (>= 5.0.0.1, < 6)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
-    safely_block (0.2.1)
-      errbase
+    safely_block (0.2.2)
+      errbase (>= 0.1.1)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -463,7 +456,6 @@ GEM
     uglifier (4.1.11)
       execjs (>= 0.3.0, < 3)
     uniform_notifier (1.11.0)
-    user_agent_parser (2.5.1)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.6.2)
@@ -491,7 +483,7 @@ DEPENDENCIES
   activeadmin
   activeadmin_addons
   activerecord-import (~> 0.15.0)
-  ahoy_matey
+  ahoy_matey (~> 3.0)
   arctic_admin
   aws-sdk-s3
   bootsnap
