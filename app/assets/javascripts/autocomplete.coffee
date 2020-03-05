@@ -82,11 +82,16 @@
     $('.filters-autocomplete').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'country'
         $("#countries_#{datum.id}").prop('checked', true)
+
+        $('.lodgings-filters #country').val('')
+        $('.lodgings-filters #region').val('')
+        $('.lodgings-filters #bounds').val('')
+        $('.lodgings-filters #name_middle').val('')
       else if datum.type == 'region'
         $("#regions_#{datum.id}").prop('checked', true)
 
         $('.lodgings-filters #country').val('')
-        $('.lodgings-filters #region').val(datum.region)
+        $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val('')
       else
