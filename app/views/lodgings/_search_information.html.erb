@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body bg-white">
       <div class="row">
-        <div class="col-8">
+        <div class="col-7">
           <div class="pagination-info">
             <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
           </div>
@@ -12,10 +12,11 @@
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-5">
           <section class="float-right">
-            <div class="view-dropdown dropdown">
-              <button class="dropdown-toggle w-100 btn btn-sm btn-primary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="text-bold">View: </span>
+            <div class="view-dropdown dropdown d-inline">
+              <button class="dropdown-toggle btn btn-link-secondary" id="change-view-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="title">GRID</span>
               </button>
 
@@ -23,6 +24,21 @@
                 <a class="dropdown-item list-view layout-btn" href="#">GRID</a>
                 <a class="dropdown-item list-and-map layout-btn d-none d-sm-block" href="#">Grid & Map</a>
                 <a class="dropdown-item map-view layout-btn" href="#">Large Map</a>
+              </div>
+            </div>
+
+            <span class="text-bold">Sort: </span>
+            <div class="price-dropdown dropdown d-inline">
+              <button class="dropdown-toggle btn btn-link-secondary" id="PriceSortFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="title"><%= render_sort_text %></span>
+              </button>
+
+              <div class="dropdown-menu sorting-dropdown-menu" aria-labelledby="PriceSortFilter">
+                <a class="dropdown-item lowest-price" href="#"><%= t 'sorting.low_high' %></a>
+                <a class="dropdown-item highest-price" href="#"><%= t 'sorting.high_low' %></a>
+                <a class="dropdown-item highest-rating" href="#"><%= t 'sorting.high_rating' %></a>
+                <a class="dropdown-item newest" href="#"><%= t 'sorting.new' %></a>
+                <a class="dropdown-item default" href="#"><%= t 'sorting.default' %></a>
               </div>
             </div>
           </section>
