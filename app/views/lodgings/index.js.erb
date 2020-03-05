@@ -19,3 +19,4 @@ Lodging.calculate_price();
 Filters.switch_view('<%= params[:layout_view] %>');
 $('[data-toggle="tooltip"]').tooltip();
 Filters.remove_pill();
+Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
