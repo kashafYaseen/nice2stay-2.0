@@ -6,9 +6,15 @@
     </div>
 
     <aside class="sidebar sidebar-offcanvas position-left">
-     <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+
       <div class="col-md-12 p-0">
         <div class="row">
+          <section class="col-md-12 pt-2">
+            <p class="widget-title text-bold">Location</p>
+            <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
+          </section>
+
           <section class="col-md-12">
             <p class="widget-title text-bold">Guests</p>
 

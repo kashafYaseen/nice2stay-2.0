@@ -1,15 +1,5 @@
 <div class="toolbar-section">
-  <% if action_name == 'index' && controller_name == 'lodgings' %>
-    <div class="row">
-      <div class="col-md-5 pt-2">
-        <%= text_field_tag :query, params[:query], placeholder: "Search...", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
-      </div>
-    </div>
-
-    <% content_for :js_init do %>
-      Autocomplete.init_search("<%= autocompletes_path(locale: locale) %>");
-    <% end %>
-  <% else %>
+  <% unless action_name == 'index' && controller_name == 'lodgings' %>
     <%= form_tag lodgings_path, method: :get, id: 'searchbar_search_form' do %>
       <div class="row">
         <div class="col-md-5 pt-2">
