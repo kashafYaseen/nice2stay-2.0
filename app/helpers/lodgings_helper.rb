@@ -146,4 +146,8 @@ module LodgingsHelper
     return 'col-md-6' if params[:layout_view] == 'Grid & Map'
     'col-md-3'
   end
+
+  def some_filter_selected?
+    [:lodging_type_in, :experiences_in, :amenities_in, :countries_in, :regions_in, :check_in, :check_out, :children, :adults].any?{ |key| params.key? key }
+  end
 end

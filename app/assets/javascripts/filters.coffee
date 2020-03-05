@@ -103,6 +103,9 @@
       $elem = $($(this).data('id'))
       if $elem.is(':checkbox')
         $elem.prop('checked', false)
+      else
+        $elem.val('')
+
       $(this).parent().remove()
       Filters.submit()
 
