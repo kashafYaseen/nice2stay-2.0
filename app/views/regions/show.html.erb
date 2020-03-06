@@ -39,8 +39,8 @@
                   </div>
                 </div>
                 <%= hidden_field_tag :standalone, true %>
-                <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
-                <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
+                <%= hidden_field_tag 'countries_in[]', params[:countries_in], class: 'autocomplete-country' %>
+                <%= hidden_field_tag 'regions_in[]', params[:regions_in], class: 'autocomplete-region' %>
 
                 <%= submit_tag :submit, value: t('search.search_button'), class: 'btn btn-primary btn' , data: { disable_with: t('search.search_button') }
                 %>

@@ -24,20 +24,22 @@
   <% end if params[:amenities_in].present? %>
 
   <% params[:countries_in].each do |type| %>
+    <% next unless type.present? %>
     <span class="badge badge-pill badge-info">
       <% country = @countries_enabled.friendly.find(type) %>
       <%= country.name %>
       <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#countries_<%= country.id %>"><span aria-hidden="true">&times;</span></button>
     </span>
-  <% end if params[:countries_in].present? %>
+  <% end if params[:countries_in].present? && params[:bounds].blank? %>
 
   <% params[:regions_in].each do |type| %>
+    <% next unless type.present? %>
     <span class="badge badge-pill badge-info">
       <% region = @regions.friendly.find(type) %>
       <%= region.name %>
       <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#regions_<%= region.id %>"><span aria-hidden="true">&times;</span></button>
     </span>
-  <% end if params[:regions_in].present? %>
+  <% end if params[:regions_in].present? && params[:bounds].blank? %>
 
   <% if params[:check_in].present? && params[:check_out].present? %>
     <span class="badge badge-pill badge-info">

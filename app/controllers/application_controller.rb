@@ -33,7 +33,6 @@ class ApplicationController < ActionController::Base
   def set_countries
     @countries = Country.all.includes(:regions).ordered
     @countries_enabled = @countries.enabled
-    @regions = Region.active
   end
 
   def set_custom_texts
