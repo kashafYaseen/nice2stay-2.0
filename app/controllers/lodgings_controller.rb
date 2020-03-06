@@ -13,6 +13,7 @@ class LodgingsController < ApplicationController
     @total_lodgings = CountTotalLodgings.call()
     @amenities = Amenity.includes(:translations).all
     @experiences = Experience.includes(:translations).all
+    @regions = Region.active
     @title = @custom_text.try(:meta_title)
 
   rescue Searchkick::InvalidQueryError

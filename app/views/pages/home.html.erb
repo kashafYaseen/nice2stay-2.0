@@ -56,8 +56,8 @@
                         <%= hidden_field_tag :children, params[:children], class: 'children' %>
                         <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
                         <%= hidden_field_tag :standalone, true %>
-                        <%= hidden_field_tag :country, params[:country], class: 'autocomplete-country' %>
-                        <%= hidden_field_tag :region, params[:region], class: 'autocomplete-region' %>
+                        <%= hidden_field_tag 'countries_in[]', params[:countries_in], class: 'autocomplete-country' %>
+                        <%= hidden_field_tag 'regions_in[]', params[:regions_in], class: 'autocomplete-region' %>
 
                         <div class="float-left m-2">
                           <%= check_box_tag :flexible_arrival, true, false %>
