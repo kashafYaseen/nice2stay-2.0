@@ -52,12 +52,6 @@
               <%= label_tag :realtime_availability, t('search.realtime_availability_details'), class: 'text-xxxs custom-control-label' %>
                 &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'realtime_availability', total_lodgings) %>)</span>
             </div>
-
-            <div class="custom-control custom-checkbox col-md-12">
-              <%= check_box_tag :checked, true, params[:checked], class: "custom-control-input amenities" %>
-              <%= label_tag :checked, t('search.updated_availability'), class: 'text-xxxs custom-control-label' %>
-              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked', total_lodgings) %>)</span>
-            </div>
           </section>
 
           <section class="col-md-12">
