@@ -194,5 +194,5 @@
   <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
   <%= hidden_field_tag :name_middle, params[:name_middle] %>
-  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'List View' %>
+  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'list-view' %>
 <% end %>

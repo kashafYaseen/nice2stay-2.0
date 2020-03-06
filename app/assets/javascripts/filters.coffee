@@ -57,23 +57,23 @@
 
   Filters.switch_view = (layout) ->
     $('.layout-btn').removeClass 'text-bold'
-    if layout.includes('list-view') || layout.includes 'List View'
-      $('#lodgings-container').removeClass 'col-md-5 d-none'
-      $('#lodgings-container').addClass 'col-md-10'
-      $('#map-container').removeClass 'd-sm-block col-md-12'
-      $('#layout_view').val('List View')
+    if layout.includes('list-view')
+      $('#lodgings-container').removeClass 'col-md-6 d-none'
+      $('#lodgings-container').addClass 'col-md-12'
+      $('#map-container').removeClass 'd-sm-block col-md-10'
+      $('#layout_view').val('list-view')
       $('.view-dropdown .dropdown-toggle .title').text('GRID')
       $('.list-view').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-3'
       $('.lodging-container').removeClass 'col-md-6'
       Url.update("");
-    else if layout.includes('list-and-map') || layout.includes 'List & Map'
-      $('#lodgings-container').addClass 'col-md-5'
-      $('#lodgings-container').removeClass 'col-md-10 d-none'
-      $('#map-container').removeClass 'col-md-12'
-      $('#map-container').addClass 'd-none d-sm-block col-lg-5 col-xl-5'
-      $('#layout_view').val('List & Map')
+    else if layout.includes('list-and-map')
+      $('#lodgings-container').addClass 'col-md-6'
+      $('#lodgings-container').removeClass 'col-md-12 d-none'
+      $('#map-container').removeClass 'col-md-10'
+      $('#map-container').addClass 'd-none d-sm-block col-md-5'
+      $('#layout_view').val('list-and-map')
       $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
       $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
@@ -82,11 +82,11 @@
       map.remove()
       Map.init()
       Url.update("");
-    else if layout.includes('map-view') || layout.includes 'Map View'
+    else if layout.includes('map-view')
       $('#lodgings-container').addClass 'd-none'
-      $('#map-container').removeClass 'col-lg-5 col-xl-5 d-none'
-      $('#map-container').addClass 'col-md-12 d-sm-block'
-      $('#layout_view').val('Map View')
+      $('#map-container').removeClass 'col-md-5 d-none'
+      $('#map-container').addClass 'col-md-10 d-sm-block'
+      $('#layout_view').val('map-view')
       $('.view-dropdown .dropdown-toggle .title').text('LARGE MAP')
       $('.map-view').addClass 'text-bold'
       $('#pagination-container').removeClass 'd-none'
