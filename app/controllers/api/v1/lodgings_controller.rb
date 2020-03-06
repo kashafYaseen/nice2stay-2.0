@@ -14,6 +14,8 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     else
       unprocessable_entity(@lodging.errors)
     end
+  rescue ActiveRecord::RecordNotUnique
+    render json: { duplicated: true }, status: :unprocessable_entity
   end
 
   def update

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_07_114320) do
+ActiveRecord::Schema.define(version: 2020_02_27_123535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,8 +70,7 @@ ActiveRecord::Schema.define(version: 2020_02_07_114320) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "ahoy_events", id: false, force: :cascade do |t|
-    t.bigserial "id", null: false
+  create_table "ahoy_events", force: :cascade do |t|
     t.bigint "visit_id"
     t.bigint "user_id"
     t.string "name"
@@ -83,8 +82,7 @@ ActiveRecord::Schema.define(version: 2020_02_07_114320) do
     t.index ["visit_id"], name: "index_ahoy_events_on_visit_id"
   end
 
-  create_table "ahoy_visits", id: false, force: :cascade do |t|
-    t.bigserial "id", null: false
+  create_table "ahoy_visits", force: :cascade do |t|
     t.string "visit_token"
     t.string "visitor_token"
     t.bigint "user_id"
@@ -584,6 +582,8 @@ ActiveRecord::Schema.define(version: 2020_02_07_114320) do
     t.string "gc_username"
     t.string "gc_password"
     t.string "gc_rooms", default: [], array: true
+    t.integer "crm_id"
+    t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
