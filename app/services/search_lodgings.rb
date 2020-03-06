@@ -47,8 +47,7 @@ class SearchLodgings
       conditions << { term: { discounts: true } } if params[:discounts].present?
       conditions << { term: { realtime_availability: true } } if params[:realtime_availability].present?
 
-      conditions << { terms: { country: params[:countries_in] } } if params[:countries_in].present?
-      conditions << { terms: { region: params[:regions_in] } } if params[:regions_in].present?
+      conditions << { bool: { should: country_or_region }} if params[:countries_in].present? || params[:regions_in].present?
 
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { terms: { presentation: ['as_child', 'as_standalone'] } }
@@ -73,6 +72,12 @@ class SearchLodgings
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
       conditions
+    end
+
+    def country_or_region
+      terms = []
+      terms << { terms: { country: params[:countries_in] } } if params[:countries_in].present?
+      terms << { terms: { region: params[:regions_in] } } if params[:regions_in].present?
     end
 
     def aggregation
