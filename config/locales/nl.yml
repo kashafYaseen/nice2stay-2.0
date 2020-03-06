@@ -266,7 +266,7 @@ nl:
     check_in: aankomst
     check_out: vertrek
     date_filter: Aankomst en Vetrek
-    flexibility_text: flexibel qua data (-/+ 2 dagen)
+    flexibility_text: flexibel in checkin en verblijf (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     realtime_availability: Direct Reserveren
     realtime_availability_details: Accommodaties die je kunt reserveren zonder te wachten op goedkeuring van onze partners.
