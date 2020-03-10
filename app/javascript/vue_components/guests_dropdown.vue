@@ -12,8 +12,8 @@
             :min="0"
             :max="this.maxAdults"
             :integerOnly="true"
-            :inputClass="'vnis__input'"
-            :buttonClass="'vnis__button col-6'"
+            :inputClass="inline ? 'vnis__input bg-secondary' : 'vnis__input'"
+            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :value="this.totalAdults"
             @input="handleAdults"
             :class="inline ? 'mx-auto' : ''"
@@ -29,9 +29,9 @@
             :max="this.maxCalculatedChildren"
             :integerOnly="true"
             @input="handleChildren"
-            :inputClass="'vnis__input'"
+            :inputClass="inline ? 'vnis__input bg-secondary' : 'vnis__input'"
             :value="this.totalChildren"
-            :buttonClass="'vnis__button col-6'"
+            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :class="inline ? 'mx-auto' : ''"
           />
         </div>
@@ -45,9 +45,9 @@
             :max="this.maxInfants"
             :integerOnly="true"
             @input="handleInfants"
-            :inputClass="'vnis__input'"
+            :inputClass="inline ? 'vnis__input bg-secondary' : 'vnis__input'"
             :value="this.totalInfants"
-            :buttonClass="'vnis__button col-6'"
+            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :class="inline ? 'mx-auto' : ''"
           />
         </div>
