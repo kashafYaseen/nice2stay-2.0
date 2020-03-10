@@ -1,5 +1,5 @@
 <% if some_filter_selected? %>
-  <span class="mr-1">Selected Filters:</span>
+  <span class="mr-1"><%= t('filters.selected_filters') %>:</span>
 
   <% params[:lodging_type_in].each do |type| %>
     <span class="badge badge-pill badge-info">
@@ -48,6 +48,20 @@
     </span>
   <% end %>
 
+  <% if params[:flexible_arrival].present? %>
+    <span class="badge badge-pill badge-info">
+      <%= t('search.flexibility_text') %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#flexible_arrival"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end %>
+
+  <% if params[:realtime_availability].present? %>
+    <span class="badge badge-pill badge-info">
+      <%= t("bookings.direct") %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#realtime_availability"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end %>
+
   <% if params[:adults].present? %>
     <span class="badge badge-pill badge-info">
       <%= "#{params[:adults]} Adults" %>
@@ -64,5 +78,5 @@
     </span>
   <% end %>
 
-  <%= link_to 'Remove all filters', lodgings_path, class: 'text-info ml-2' %>
+  <%= link_to t('filters.remove_filters'), lodgings_path, class: 'text-info ml-2' %>
 <% end %>

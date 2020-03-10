@@ -283,6 +283,7 @@ nl:
     title: Locatie, Datum & Gasten
     price_info: Gebruik datum en aantal gasten om totaal prijs te zien
     map_info: Verplaats of zoom (in/uit) de kaart om meer resultaten te zien
+    date_and_guests: Datum en gasten voor totaalprijs
 
   footer:
     support: Wilt u direct contact? 
@@ -292,6 +293,8 @@ nl:
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
+    selected_filters: Geselecteerde filters
+    remove_filters: Verwijder alle filters
     guests: Reisgezelschap
     price: Prijs
     theme: Experience

@@ -102,7 +102,7 @@ module LodgingsHelper
 
   def render_price price, dynamic
     return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
-    "<p class='price-text-from price-text mb-0'> #{t('search.from')} </p> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> per #{t('search.night')}</p>".html_safe
+    "<p class='price-text-from price-text mb-0'> #{t('search.from')} </p> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.date_and_guests')}</p>".html_safe
   end
 
   def render_offer_price price, dynamic, offer
@@ -144,10 +144,10 @@ module LodgingsHelper
   def item_columns
     return 'col-lg-12' if action_name == 'show'
     return 'col-md-6' if params[:layout_view] == 'Grid & Map'
-    'col-md-3'
+    'col-md-6 col-lg-4'
   end
 
   def some_filter_selected?
-    [:lodging_type_in, :experiences_in, :amenities_in, :countries_in, :regions_in, :check_in, :check_out, :children, :adults].any?{ |key| params.key? key }
+    [:lodging_type_in, :experiences_in, :amenities_in, :countries_in, :regions_in, :check_in, :check_out, :children, :adults, :flexible_arrival, :realtime_availability].any?{ |key| params.key? key }
   end
 end

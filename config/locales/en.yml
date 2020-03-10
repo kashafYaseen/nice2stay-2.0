@@ -52,6 +52,8 @@ en:
   lodgings_index:
     carefree_booking: Carefree booking - We currently offer a very favorable cancellation insurance
   filters:
+    selected_filters: Selected Filters
+    remove_filters: Remove all filters
     guests: Traveling party
     price: Price
     theme: Experience
@@ -262,6 +264,7 @@ en:
     title: Location, Date & Guests
     price_info: Use date and number of guests to see total price
     map_info: Move or zoom (in/out) the map to see more results
+    date_and_guests: Date and guests for totalprice
 
   profile_account: 
      side_nav_home: Dashboard
