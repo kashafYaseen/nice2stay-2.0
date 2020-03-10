@@ -49,6 +49,8 @@ en:
 
   details: DETAILS
 
+  lodgings_index:
+    carefree_booking: Carefree booking - We currently offer a very favorable cancellation insurance
   filters:
     guests: Traveling party
     price: Price
