@@ -96,7 +96,15 @@
   </div>
 </div>
 
-<div class="col-sm-12 margin-top-1x price_box" id="availability-and-prices">
+<div class="row margin-top-3x">
+  <div class="col-md-12 bootstrap-default container">
+    <div class="alert alert-success" role="alert">
+      <%= t('lodgings_index.carefree_booking') %>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-12 price_box" id="availability-and-prices">
   <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation, id_sufix: '' %>
 </div>
 

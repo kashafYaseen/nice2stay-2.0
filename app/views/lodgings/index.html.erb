@@ -8,12 +8,18 @@
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-2 bg-white" id="filters-container">
+  <div class="col-md-2" id="filters-container">
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>
   </div>
 
   <div class="col-md-10 row">
     <%= render 'search_information', collection: @collection, lodgings: @lodgings, lead: nil %>
+
+    <div class="col-md-12 bootstrap-default">
+      <div class="alert alert-success" role="alert">
+        <%= t('lodgings_index.carefree_booking') %>
+      </div>
+    </div>
 
     <div class="col-md-12" id="lodgings-container">
       <div class="row">

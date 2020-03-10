@@ -89,6 +89,11 @@
 
       <div class="mt-3 col-md-9 mx-auto">
         <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
+        <div class="col-md-12 bootstrap-default">
+          <div class="alert alert-success" role="alert">
+            <%= t('lodgings_index.carefree_booking') %>
+          </div>
+        </div>
 
         <%= render partial: 'reservations/child_form_table', collection: @lodging_children, as: :lodging %>
 
