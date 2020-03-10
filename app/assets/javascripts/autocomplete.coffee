@@ -39,9 +39,13 @@
     $('.autocomplete-general').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'campaign'
         $('#homepage_search_form, #searchbar_search_form').attr('method', 'post')
-      else if datum.type == 'country' || datum.type == 'region'
+      else if datum.type == 'country'
         $('.autocomplete-country').val(datum.country)
+        $('.autocomplete-region').val('')
+        $('.autocomplete').val('')
+      else if datum.type == 'region'
         $('.autocomplete-region').val(datum.region)
+        $('.autocomplete-country').val('')
         $('.autocomplete').val('')
       $('#homepage_search_form, #searchbar_search_form').attr('action', datum.url)
 
