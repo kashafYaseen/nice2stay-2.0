@@ -2,14 +2,7 @@
   window.SortingDropdown or (window.SortingDropdown = {})
 
   SortingDropdown.init = ->
-    if $('.price-dropdown .dropdown-toggle .title').text() != "Sort" && $('.price-dropdown .dropdown-toggle .title').text() != "Sorteer"
-      $('.price-dropdown .dropdown-toggle').addClass 'btn-primary'
-      $('.price-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'
-
     $('.sorting-dropdown-menu .dropdown-item').click ->
-      $('.price-dropdown .dropdown-toggle').addClass 'btn-primary'
-      $('.price-dropdown .dropdown-toggle').removeClass 'btn-outline-primary'
-
       if $(this).hasClass 'lowest-price'
         $('#order').val('price_asc')
         $('.price-dropdown .dropdown-toggle .title').text('Lowest to Highest')
@@ -25,6 +18,8 @@
       else if $(this).hasClass 'default'
         $('#order').val('')
         $('.price-dropdown .dropdown-toggle .title').text('Sort')
+
+      $('.sorting-dropdown-menu').dropdown('toggle')
       Filters.submit()
 
 ).call this

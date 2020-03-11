@@ -39,9 +39,13 @@
     $('.autocomplete-general').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'campaign'
         $('#homepage_search_form, #searchbar_search_form').attr('method', 'post')
-      else if datum.type == 'country' || datum.type == 'region'
+      else if datum.type == 'country'
         $('.autocomplete-country').val(datum.country)
+        $('.autocomplete-region').val('')
+        $('.autocomplete').val('')
+      else if datum.type == 'region'
         $('.autocomplete-region').val(datum.region)
+        $('.autocomplete-country').val('')
         $('.autocomplete').val('')
       $('#homepage_search_form, #searchbar_search_form').attr('action', datum.url)
 
@@ -81,25 +85,17 @@
 
     $('.filters-autocomplete').bind 'typeahead:selected', (obj, datum) ->
       if datum.type == 'country'
-        if $('.lodgings-filters #country').length == 0
-          $('<input>').attr(
-            type: 'hidden'
-            id: 'country'
-            name: 'country').appendTo '.lodgings-filters'
+        $("#countries_#{datum.id}").prop('checked', true)
 
-        $('.lodgings-filters #country').val(datum.country)
+        $('.lodgings-filters #country').val('')
         $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val('')
       else if datum.type == 'region'
-        if $('.lodgings-filters #region').length == 0
-          $('<input>').attr(
-            type: 'hidden'
-            id: 'region'
-            name: 'region').appendTo '.lodgings-filters'
+        $("#regions_#{datum.id}").prop('checked', true)
 
         $('.lodgings-filters #country').val('')
-        $('.lodgings-filters #region').val(datum.region)
+        $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val('')
       else
@@ -107,6 +103,7 @@
         $('.lodgings-filters #region').val('')
         $('.lodgings-filters #bounds').val('')
         $('.lodgings-filters #name_middle').val(datum.name)
+      Url.update("");
       Filters.submit()
 
   source = (url, type) ->

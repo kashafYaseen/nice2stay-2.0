@@ -6,34 +6,18 @@
     </div>
 
     <aside class="sidebar sidebar-offcanvas position-left">
-     <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+      <span class="sidebar-close"><i class="material-icons icon_close"></i></span>
+
       <div class="col-md-12 p-0">
         <div class="row">
-          <section class="col-md-12">
-            <p class="widget-title text-bold"><%= t 'search.title' %></p>
-          </section>
-
-          <div class="col-md-12">
-            <%= text_field_tag :query, params[:query], placeholder: "Countries, regions or accommodation name", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
-          </div>
-
-          <section class="col-md-12">
-            <div class="vue-app">
-              <datepicker
-                :trigger-id="'trigger-range'"
-                :check-in="'<%= params[:check_in]%>'"
-                :check-out="'<%= params[:check_out]%>'"
-                :months="2"
-                :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
-                :full-screen="false"
-                :trigger-button="'btn btn-outline-primary btn-sm w-100'"
-                :inline="false"
-              />
-            </div>
+          <section class="col-md-12 pt-2">
+            <p class="widget-title text-bold">Location</p>
+            <%= text_field_tag :query, nil, placeholder: "Add location..", class: 'h6 form-control autocomplete autocomplete-field filters-autocomplete' %>
           </section>
 
           <section class="col-md-12">
+            <p class="widget-title text-bold">Guests</p>
+
             <div class="vue-app">
               <guests-dropdown
                 :adults="<%= params[:adults].to_i %>"
@@ -43,22 +27,46 @@
                 :children-target="'#children'"
                 :infants-target="'#infants'"
                 :dropdown-id="'<%= "guests-dropdown-filters" %>'"
-                :show-apply="false"
-                :button-classes="'btn btn-outline-primary dropdown-toggle btn-sm w-100'"
+                :show-apply="true"
+                :button-classes="'d-none w-100'"
                 :show-infants="false"
+                :inline="true"
+                :submit-target="'.lodgings-filters'"
               />
             </div>
+
             <%= hidden_field_tag :adults, params[:adults] %>
             <%= hidden_field_tag :children, params[:children] %>
             <%= hidden_field_tag :infants, params[:infants] %>
+          </section>
 
-            <button class="btn btn-primary btn-md w-100 mt-2 submit-filters" type="button">
-              Search
-            </button>
-
+          <section class="col-md-12">
+            <p class="widget-title text-bold">Period</p>
             <div class="custom-control custom-checkbox mt-2">
               <%= check_box_tag :flexible_arrival, true, params[:flexible_arrival], class: "custom-control-input submit-filters" %>
               <%= label_tag :flexible_arrival, t('search.flexibility_text'), class: 'custom-control-label' %>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+              <%= check_box_tag :realtime_availability, true, params[:realtime_availability], class: "custom-control-input realtime-availability" %>
+              <%= label_tag :realtime_availability, t('search.realtime_availability_details'), class: 'text-xxxs custom-control-label' %>
+                &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'realtime_availability', total_lodgings) %>)</span>
+            </div>
+          </section>
+
+          <section class="col-md-12">
+            <div class="vue-app">
+              <datepicker
+                :trigger-id="'trigger-range'"
+                :check-in="'<%= params[:check_in]%>'"
+                :check-out="'<%= params[:check_out]%>'"
+                :months="1"
+                :min-date="'<%= Date.yesterday %>'"
+                :action-buttons="true"
+                :full-screen="false"
+                :trigger-button="'btn btn-outline-primary btn-sm w-100'"
+                :inline="false"
+              />
             </div>
           </section>
 
@@ -101,6 +109,24 @@
             </div>
           </section>
 
+          <section class="col-md-12 pt-3 countries-list d-none">
+            <p class="p-0 col-md-12 text-bold"><%= t 'filters.country' %> </p>
+            <% @countries_enabled.each do |country| %>
+              <div class="custom-control custom-checkbox col-md-12">
+                <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), id: "countries_#{country.id}", class: "custom-control-input" %>
+              </div>
+            <% end %>
+          </section>
+
+          <section class="col-md-12 pt-3 regions-list d-none">
+            <p class="p-0 col-md-12 text-bold"><%= t 'filters.region' %> </p>
+            <% @regions.each do |region| %>
+              <div class="custom-control custom-checkbox col-md-12">
+                <%= check_box_tag "regions_in[]", region.slug, is_checked?(region.slug, :regions_in), id: "regions_#{region.id}", class: "custom-control-input" %>
+              </div>
+            <% end %>
+          </section>
+
           <section class="col-md-12 pt-3 experiences-list">
             <p class="p-0 col-md-12 text-bold"><%= t 'filters.theme' %> </p>
             <% experiences.each do |experience| %>
@@ -118,7 +144,7 @@
             <p class="p-0 col-md-12 text-bold"><%= t 'filters.amentities_pop' %></p>
             <% amenities.hot.each do |amenity| %>
               <div class="custom-control custom-checkbox col-md-12">
-                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities-hot" %>
+                <%= check_box_tag "amenities_in[]", amenity.id, is_checked?(amenity.id, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities-hot" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
                   <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
@@ -141,21 +167,11 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body p-5">
-          <section class="experiences-list row mb-4">
-            <p class="widget-title"><%= t('search.availability') %></h3>
-
-            <div class="custom-control custom-checkbox col-md-12">
-              <%= check_box_tag :checked, true, params[:checked], class: "custom-control-input amenities" %>
-              <%= label_tag :checked, t('search.updated_availability'), class: 'text-xxxs custom-control-label' %>
-              &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'checked', total_lodgings) %>)</span>
-            </div>
-          </section>
-
           <section class="row pt-2 amenities-list">
             <p class="p-0 col-md-12"><%= t 'filters.amentities' %></p>
             <% amenities.regular.each do |amenity| %>
               <div class="custom-control custom-checkbox col-md-6">
-                <%= check_box_tag "amenities_in[]", amenity.name, is_checked?(amenity.name, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input amenities" %>
+                <%= check_box_tag "amenities_in[]", amenity.id, is_checked?(amenity.id, :amenities_in), id: "amenity_#{amenity.id}", class: "custom-control-input" %>
 
                 <label class="custom-control-label" for="amenity_<%= amenity.id %>">
                   <%= amenity.name %>&nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, amenity.id, 'amenities', total_lodgings) %>)</span>
@@ -174,9 +190,7 @@
   </div>
 
   <%= hidden_field_tag :order, params[:order] %>
-  <%= hidden_field_tag :region, params[:region] unless params[:bounds].present? %>
-  <%= hidden_field_tag :country, params[:country] unless params[:bounds].present? %>
   <%= hidden_field_tag :bounds, params[:bounds] %>
   <%= hidden_field_tag :name_middle, params[:name_middle] %>
-  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'List & Map' %>
+  <%= hidden_field_tag :layout_view, params[:layout_view].presence || 'list-view' %>
 <% end %>

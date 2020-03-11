@@ -42,12 +42,8 @@ class SearchLodgings
       conditions << { term: { published: true } }
       conditions << { terms: { id: params[:lodging_ids] } } if params[:lodging_ids].present?
       conditions << { term: { checked: params[:checked] } } if params[:checked].present?
-      conditions << { term: { country: params[:country] } } if params[:country].present? && params[:bounds].blank?
-      conditions << { term: { region: params[:region] } } if params[:region].present? && params[:bounds].blank?
       conditions << { term: { discounts: true } } if params[:discounts].present?
       conditions << { term: { realtime_availability: true } } if params[:realtime_availability].present?
-
-      conditions << { terms: { country: params[:countries_in] } } if params[:countries_in].present?
 
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { terms: { presentation: ['as_child', 'as_standalone'] } }
@@ -58,6 +54,14 @@ class SearchLodgings
       conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } } if params[:adults].present?
       conditions << { range: { minimum_adults: { lte: params[:adults] } } } if params[:adults].present?
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
+
+      if params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:regions_in].present? && params[:bounds].blank?
+        conditions << { bool: { should: [countries_in, regions_in] }}
+      elsif params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:bounds].blank?
+        conditions << countries_in
+      elsif params[:regions_in].present? && params[:regions_in].reject(&:empty?).present? && params[:bounds].blank?
+        conditions << regions_in
+      end
 
       unless params[:flexible_arrival].present?
         conditions << flexibility_condition if params[:check_in].present?
@@ -72,6 +76,14 @@ class SearchLodgings
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
       conditions
+    end
+
+    def countries_in
+      { terms: { country: params[:countries_in] } }
+    end
+
+    def regions_in
+      { terms: { region: params[:regions_in] } }
     end
 
     def aggregation
@@ -246,8 +258,8 @@ class SearchLodgings
       return unless custom_text.present?
 
       params[:experiences_in] = [custom_text.experience_slug] if custom_text.experience.present?
-      params[:country] = custom_text.country_slug if custom_text.country.present?
-      params[:region] = custom_text.region_slug if custom_text.region.present?
+      params[:countries_in] = [custom_text.country_slug] if custom_text.country.present?
+      params[:regions_in] = [custom_text.region_slug] if custom_text.region.present?
       params[:lodging_type_in] = [lodging_type(custom_text.category)] if custom_text.category?
       params[:discounts] = true if custom_text.special_offer?
     end

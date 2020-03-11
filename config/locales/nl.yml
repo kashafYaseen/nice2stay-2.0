@@ -33,6 +33,9 @@ nl:
 
   details: BEKIJK
 
+  lodgings_index:
+    carefree_booking: Zorgeloos boeken - Wij bieden momenteel een zeer gunstige vergoeding voor een annuleringsverzekering
+
   lead:
     title: Wilt u advies voor uw vakantie?
     description: Onze bookings consultants Geralda Visscher en Julia van Baal luisteren graag naar u. Vertel ons alstublieft zoveel mogelijk over wat u belangrijk vindt, over uzelf en de mensen die met u reizen, de gewenste periode en uw budget.
@@ -266,7 +269,7 @@ nl:
     check_in: aankomst
     check_out: vertrek
     date_filter: Aankomst en Vetrek
-    flexibility_text: flexibel qua data (-/+ 2 dagen)
+    flexibility_text: flexibel in checkin en verblijf (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     realtime_availability: Direct Reserveren
     realtime_availability_details: Accommodaties die je kunt reserveren zonder te wachten op goedkeuring van onze partners.
@@ -280,6 +283,7 @@ nl:
     title: Locatie, Datum & Gasten
     price_info: Gebruik datum en aantal gasten om totaal prijs te zien
     map_info: Verplaats of zoom (in/uit) de kaart om meer resultaten te zien
+    date_and_guests: Datum en gasten voor totaalprijs
 
   footer:
     support: Wilt u direct contact? 
@@ -289,6 +293,8 @@ nl:
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
+    selected_filters: Geselecteerde filters
+    remove_filters: Verwijder alle filters
     guests: Reisgezelschap
     price: Prijs
     theme: Experience

@@ -80,9 +80,8 @@
 }
 
 .scrollable-content {
-  overflow: auto;
-  height: 100vh;
-  min-height: 400px;
+  overflow: scroll;
+  max-height: 100vh;
 }
 
 .scrollable-gallery {
@@ -129,7 +128,7 @@ div.top-50 {
 
 div.fixed-map {
   position: fixed;
-  right: 0;
+  right: 10px;
   padding: 0;
 }
 
@@ -420,12 +419,8 @@ div.nearby-places {
   height: 63px;
 }
 
-#lodgings-container, #map-container {
-  top: 30px;
-}
-
 #map-container {
-  top: 122px;
+  top: 165px;
 }
 
 @media only screen and (max-width: 767px) {
