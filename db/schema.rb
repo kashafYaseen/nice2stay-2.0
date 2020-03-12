@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_090608) do
+ActiveRecord::Schema.define(version: 2020_03_12_090729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,6 +188,9 @@ ActiveRecord::Schema.define(version: 2020_03_12_090608) do
     t.integer "crm_id"
     t.integer "created_by", default: 0
     t.boolean "canceled", default: false
+    t.date "final_payment_till"
+    t.date "free_cancelation_till"
+    t.boolean "free_cancelation", default: false
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 

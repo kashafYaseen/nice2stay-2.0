@@ -80,6 +80,9 @@ class SaveBookingDetails
         :booking_status,
         :crm_id,
         :canceled,
+        :final_payment_till,
+        :free_cancelation_till,
+        :free_cancelation,
       )
     end
 
