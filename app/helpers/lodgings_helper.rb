@@ -148,6 +148,6 @@ module LodgingsHelper
   end
 
   def some_filter_selected?
-    [:lodging_type_in, :experiences_in, :amenities_in, :countries_in, :regions_in, :check_in, :check_out, :children, :adults, :flexible_arrival, :realtime_availability].any?{ |key| params.key? key }
+    [:lodging_type_in, :experiences_in, :amenities_in, :countries_in, :regions_in, :check_in, :check_out, :children, :adults, :flexible_arrival, :realtime_availability, :free_cancelation].any?{ |key| params.key? key }
   end
 end

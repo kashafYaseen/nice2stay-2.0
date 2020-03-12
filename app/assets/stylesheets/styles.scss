@@ -7389,6 +7389,21 @@ video {
   opacity: 1;
 }
 
+.product-badge-danger {
+  display: block;
+  position: absolute;
+  top: 9px;
+  left: 23px;
+  height: 24px;
+  padding: 0px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 23px;
+  z-index: 2;
+  background-color: rgb(255, 129, 0);
+  color: #fff;
+}
+
 .product-badge {
   display: block;
   position: absolute;
@@ -7753,7 +7768,7 @@ video {
   position: relative;
 }
 
-.product-gallery .product-badge {
+.product-gallery .product-badge, .product-gallery .product-badge-danger,{
   top: 0;
   left: 0;
   z-index: 10;

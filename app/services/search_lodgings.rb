@@ -44,6 +44,7 @@ class SearchLodgings
       conditions << { term: { checked: params[:checked] } } if params[:checked].present?
       conditions << { term: { discounts: true } } if params[:discounts].present?
       conditions << { term: { realtime_availability: true } } if params[:realtime_availability].present?
+      conditions << { term: { free_cancelation: true } } if params[:free_cancelation].present?
 
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { terms: { presentation: ['as_child', 'as_standalone'] } }
@@ -95,6 +96,7 @@ class SearchLodgings
         discounts: { terms: { field: :discounts } },
         checked: { terms: { field: :checked } },
         realtime_availability: { terms: { field: :realtime_availability } },
+        free_cancelation: { terms: { field: :free_cancelation } },
       }
     end
 

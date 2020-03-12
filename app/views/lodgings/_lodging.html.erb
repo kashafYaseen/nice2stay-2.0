@@ -5,8 +5,12 @@
     <div class="card-body bg-white">
       <div class="row">
         <div class="col-md-12">
-          <% if hits[lodging_counter]['_source']['discounts'] %>
-            <span class="product-badge text-danger">Special offer</span>
+          <% if hits[lodging_counter]['_source']['discounts'] && hits[lodging_counter]['_source']['free_cancelation'] %>
+            <span class="product-badge-danger">Special offer & <%= t 'filters.free_cancelation' %></span>
+          <% elsif hits[lodging_counter]['_source']['discounts'] %>
+            <span class="product-badge-danger">Special offer</span>
+          <% elsif hits[lodging_counter]['_source']['free_cancelation'] %>
+            <span class="product-badge-danger"><%= t 'filters.free_cancelation' %></span>
           <% end %>
 
           <div class="owl-carousel">
