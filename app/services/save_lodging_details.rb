@@ -150,6 +150,7 @@ class SaveLodgingDetails
         { attachments: [] },
         { gc_rooms: [] },
         :crm_id,
+        :free_cancelation,
       )
     end
 
