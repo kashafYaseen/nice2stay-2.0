@@ -1,7 +1,6 @@
-ActiveAdmin.register Country do
-  permit_params :name, :title, :boost
+ActiveAdmin.register Region do
+  permit_params :name, :country_id, :title
 
-  filter :boost
   filter :name
   filter :title
   filter :created_at
@@ -20,7 +19,6 @@ ActiveAdmin.register Country do
     column :accommodations do |country|
       country.lodgings.count
     end
-    column :boost
     column :created_at
     actions
   end
@@ -29,7 +27,7 @@ ActiveAdmin.register Country do
     f.inputs do
       f.input :name
       f.input :title
-      f.input :boost
+      f.input :country
     end
     f.actions
   end

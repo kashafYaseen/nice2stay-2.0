@@ -55,6 +55,13 @@
     </span>
   <% end %>
 
+  <% if params[:free_cancelation].present? %>
+    <span class="badge badge-pill badge-info">
+      <%= t('filters.free_cancelation') %>
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#free_cancelation"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end %>
+
   <% if params[:realtime_availability].present? %>
     <span class="badge badge-pill badge-info">
       <%= t("bookings.direct") %>

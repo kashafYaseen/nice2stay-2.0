@@ -20,6 +20,7 @@ class CountTotalLodgings
         discounts: { terms: { field: :discounts } },
         checked: { terms: { field: :checked } },
         realtime_availability: { terms: { field: :realtime_availability } },
+        free_cancelation: { terms: { field: :free_cancelation } },
       }
     end
 end
