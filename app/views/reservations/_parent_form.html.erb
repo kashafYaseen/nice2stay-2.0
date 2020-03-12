@@ -57,4 +57,10 @@
       <%= link_to 'Check Availability', '#', class: "btn btn-primary btn-calculate-bill w-100", data: { lodging_ids: lodging.lodging_children.try(:ids) } %>
     </div>
   </div>
+
+  <% if lodging.free_cancelation? %>
+    <div class="col-md-12 container mt-3">
+      <p><b><%= t('lodgings_index.free_cancelation_title') %></b><br><%= t('lodgings_index.free_cancelation_text').html_safe %></p>
+    </div>
+  <% end %>
 </div>

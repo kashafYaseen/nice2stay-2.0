@@ -51,17 +51,21 @@ en:
 
   lodgings_index:
     carefree_booking: Carefree booking - We currently offer a very favorable cancellation insurance and custom cancellation policy
+    free_cancelation_title: Cancel for free
+    free_cancelation_text: Due to the uncertainty caused by the corona virus, we offer customers who wish to make a reservation the opportunity to cancel free of charge up to 42 days before the start of the stay.<br>It is important that this only applies to cancellations that are a direct result of the corona virus
   filters:
+    autocomplete_title: Destination / property name
+    autocomplete_placeholder: Enter a destination or property name
     selected_filters: Selected Filters
     remove_filters: Remove all filters
-    guests: Traveling party
     price: Price
     theme: Experience
     type: Accommodation type
     amentities_pop: Amentities popular
     amentities: Amentities
     dates: 'data'
-    guests: 'Guests'
+    guests: Guests
+    period: Period & Condition
     sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'more filters'
@@ -234,9 +238,11 @@ en:
     search_button: Zoek
 
   search:
-    adults: Adults (>12y)
+    adult: Adult
+    adults: Adults
     adutls_1: Adults
     child: Child
+    child_age: Ages 2 - 12
     children_1: Children
     children: Children (4-12y)
     babies: Babies (0-3y)
@@ -254,7 +260,7 @@ en:
     date_filter: Arrival and Departure
     special_offer: Special Offer
     realtime_availability: Direct Reservation
-    realtime_availability_details: Accommodations that you can reserve without waiting for approval from our partners.
+    realtime_availability_details: Instant booking & confirmation
     night: night
     updated_availability: Show only accommodations with up to date availability
     availability: Availabiltiy
@@ -265,7 +271,7 @@ en:
     title: Location, Date & Guests
     price_info: Use date and number of guests to see total price
     map_info: Move or zoom (in/out) the map to see more results
-    date_and_guests: Date and guests for totalprice
+    date_and_guests: Select dates and guests for the total price
 
   profile_account: 
      side_nav_home: Dashboard

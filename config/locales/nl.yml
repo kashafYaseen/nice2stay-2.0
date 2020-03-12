@@ -35,6 +35,8 @@ nl:
 
   lodgings_index:
     carefree_booking: Zorgeloos boeken - Wij bieden momenteel een zeer gunstige vergoeding voor een annuleringsverzekering en aangepaste annuleringsvoorwaarden
+    free_cancelation_title: Kostenloos annuleren
+    free_cancelation_text: Vanwege de onzekerheid rondom het coronavirus bieden wij klanten die willen reserveren de mogelijkheid om kostenloos te annuleren tot 42 dagen voor aanvang van het verblijf.<br>Belangrijk is dat dit enkel geldt voor annuleringen die een direct gevolg zijn van het coronavirus
 
   lead:
     title: Wilt u advies voor uw vakantie?
@@ -207,7 +209,7 @@ nl:
   nav_cart:
     type: Type
     price: Huurprijs
-    nights: Aantal nachten
+    nights: nachten
     checkin: Check-in
     checkout: Check-out
     guests: Aantal gasten
@@ -251,11 +253,13 @@ nl:
 
 
   search:
-    adults: Volwassenen (>12j)
+    adult: Volwassen
+    adults: Volwassenen
     adutls_1: Personen 
     children: Kinderen (4-12j)
     child: Kind
     children_1: Kinderen
+    child_age: leeftijd 2 - 12
     babies: Babies (0-3j)
     guests: Gasten
     guest: Gast
@@ -269,10 +273,10 @@ nl:
     check_in: aankomst
     check_out: vertrek
     date_filter: Aankomst en Vetrek
-    flexibility_text: flexibel in checkin en verblijf (-/+ 2 dagen)
+    flexibility_text: flexibiliteit qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     realtime_availability: Direct Reserveren
-    realtime_availability_details: Accommodaties die je kunt reserveren zonder te wachten op goedkeuring van onze partners.
+    realtime_availability_details: Direct reserveren en bevestiging
     night: nacht
     updated_availability: Toon enkel accommodaties met up to date beschikbaarheid
     availability: Beschikbaarheid
@@ -283,7 +287,7 @@ nl:
     title: Locatie, Datum & Gasten
     price_info: Gebruik datum en aantal gasten om totaal prijs te zien
     map_info: Verplaats of zoom (in/uit) de kaart om meer resultaten te zien
-    date_and_guests: Datum en gasten voor totaalprijs
+    date_and_guests: Selecteer data en aantal gasten voor totaal prijs
 
   footer:
     support: Wilt u direct contact? 
@@ -293,12 +297,15 @@ nl:
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
+    autocomplete_title: Bestemming / accommodatie naam
+    autocomplete_placeholder: Voer een bestemming of accommodatie naam in
     selected_filters: Geselecteerde filters
     remove_filters: Verwijder alle filters
-    guests: Reisgezelschap
+    guests: Gezelschap
     price: Prijs
     theme: Experience
     type: Type accommodatie
+    period: Periode
     amentities_pop: Faciliteiten populair
     amentities: Faciliteiten
     dates: 'data'
