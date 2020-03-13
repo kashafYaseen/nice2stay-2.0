@@ -184,11 +184,11 @@ en:
     collections: Our collections
     more_info: More information
     also_like: You may also like
-    reviews: Ratings & Latest Customer reviews
     home: Home
     gallary: Photo gallary 
     location: Location
-    reviews: Rating & Reviews 
+    reviews: Reviews
+    no_review: Accommodation does not have any review yet.
     info: Detailed information
     like: You also like
     back: Back

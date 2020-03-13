@@ -42,6 +42,23 @@
 
           <section class="col-md-12">
             <p class="widget-title text-bold"><%= t('filters.period') %></p>
+
+            <div class="vue-app">
+              <datepicker
+                :trigger-id="'trigger-range'"
+                :check-in="'<%= params[:check_in]%>'"
+                :check-out="'<%= params[:check_out]%>'"
+                :months="1"
+                :min-date="'<%= Date.yesterday %>'"
+                :action-buttons="true"
+                :full-screen="false"
+                :trigger-button="'btn btn-outline-primary btn-sm w-100'"
+                :inline="false"
+              />
+            </div>
+          </section>
+
+          <section class="col-md-12">
             <div class="custom-control custom-checkbox">
               <%= check_box_tag :free_cancelation, true, params[:free_cancelation], class: "custom-control-input submit-filters" %>
               <%= label_tag :free_cancelation, t('filters.free_cancelation'), class: 'text-xxxs custom-control-label' %>
@@ -57,22 +74,6 @@
               <%= check_box_tag :realtime_availability, true, params[:realtime_availability], class: "custom-control-input realtime-availability" %>
               <%= label_tag :realtime_availability, t('search.realtime_availability_details'), class: 'text-xxxs custom-control-label' %>
                 &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'realtime_availability', total_lodgings) %>)</span>
-            </div>
-          </section>
-
-          <section class="col-md-12">
-            <div class="vue-app">
-              <datepicker
-                :trigger-id="'trigger-range'"
-                :check-in="'<%= params[:check_in]%>'"
-                :check-out="'<%= params[:check_out]%>'"
-                :months="1"
-                :min-date="'<%= Date.yesterday %>'"
-                :action-buttons="true"
-                :full-screen="false"
-                :trigger-button="'btn btn-outline-primary btn-sm w-100'"
-                :inline="false"
-              />
             </div>
           </section>
 
