@@ -19,10 +19,10 @@
         </div>
 
         <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12" do %>
-          <h6 class="card-title text-bold mb-1"><%= lodging.name %></h6>
+          <h6 class="card-title text-bold mb-1 mt-2"><%= lodging.h1.presence || lodging.parent_h1 %></h6>
+
           <p class="text-xxs"><i class="fal fa-map-marker-alt mr-1 text-primary"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
 
-          <p><%= lodging.h1.presence || lodging.parent_h1 %></p>
           <p class="text-xxs">
             <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
             <% if lodging.children.present? %>
