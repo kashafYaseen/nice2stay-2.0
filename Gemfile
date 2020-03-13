@@ -55,6 +55,7 @@ gem 'premailer-rails'
 gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
+gem "i18n-js"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false

@@ -30,5 +30,6 @@
 //= require chosen-jquery
 //= require bootstrap-toggle.min
 //= require slick.min
+//= require i18n/translations
 
 //= require_tree .

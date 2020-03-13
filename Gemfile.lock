@@ -250,6 +250,8 @@ GEM
     htmlentities (4.3.4)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
+    i18n-js (3.6.0)
+      i18n (>= 0.6.6)
     inherited_resources (1.8.0)
       actionpack (>= 4.2, <= 5.2)
       has_scope (~> 0.6)
@@ -526,6 +528,7 @@ DEPENDENCIES
   globalize!
   globalize-accessors
   groupdate
+  i18n-js
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3.1)
   jquery-ui-rails
