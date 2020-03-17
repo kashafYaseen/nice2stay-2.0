@@ -47,7 +47,7 @@ class GetAutocompleteData
       Country.search(params[:query], {
         fields: ["name_#{locale}"],
         match: :text_middle,
-        limit: 5,
+        limit: 10,
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
@@ -58,7 +58,7 @@ class GetAutocompleteData
       Region.search(params[:query], {
         fields: ["name_#{locale}"],
         match: :text_middle,
-        limit: 5,
+        limit: 10,
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
