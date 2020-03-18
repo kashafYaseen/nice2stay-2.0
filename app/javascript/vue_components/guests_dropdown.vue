@@ -234,10 +234,10 @@
         }
       },
       adultsTitle() {
-        return this.totalAdults > 1 ? I18n.t('search.adults') : I18n.t('search.adult')
+        return I18n.t('search.adults')
       },
       childrenTitle() {
-        return this.totalChildren > 1 ? I18n.t('search.children_1') : I18n.t('search.child')
+        return I18n.t('search.children_1')
       },
       childrenAges() {
         return I18n.t('search.child_age');
