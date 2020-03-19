@@ -83,6 +83,8 @@ class SaveBookingDetails
         :final_payment_till,
         :free_cancelation_till,
         :free_cancelation,
+        :rebooked,
+        :rebooking_approved,
       )
     end
 
