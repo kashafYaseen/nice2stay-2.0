@@ -3,7 +3,7 @@ class NewsletterSubscriptionsController < ApplicationController
     subscription = NewsletterSubscription.find_or_initialize_by(newsletter_subscription_params)
     subscription.language = locale
     subscription.save
-    redirect_to root_path, notice: "Newsletter was subscribed successfully"
+    redirect_to root_path, notice: "Welcome! thanks for subscribing!"
   end
 
   private
