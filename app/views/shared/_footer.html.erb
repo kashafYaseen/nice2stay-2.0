@@ -27,14 +27,17 @@
       <%= t 'footer.newsletter' %><small><%= t 'footer.newsletter_details' %></small>
     </h3>
 
-    <form class="subscribe-form input-group" action="//rokaux.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;id=1194bb7544" method="post" novalidate=""><span class="input-group-btn">
-      <button type="submit"><i class="material-icons send"></i></button></span>
-      <input class="form-control" type="email" name="EMAIL" placeholder="Your e-mail">
+    <%= form_for :newsletter_subscription, url: newsletter_subscriptions_path, html: { class: 'subscribe-form input-group', novalidate: '' }, method: :post do |f| %>
+      <span class="input-group-btn">
+        <button type="submit"><i class="material-icons send"></i></button>
+      </span>
+
+      <%= f.email_field :email, class: 'form-control', placeholder: 'Your e-mail' %>
 
       <div style="position: absolute; left: -5000px;" aria-hidden="true">
         <input type="text" name="b_c7103e2c981361a6639545bd5_1194bb7544" tabindex="-1" value="">
       </div>
-    </form>
+    <% end %>
   </div>
 
   <div class="column">

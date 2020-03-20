@@ -74,6 +74,7 @@ Rails.application.routes.draw do
     end
 
     resources :pages, only: [:show]
+    resources :newsletter_subscriptions, only: [:create]
 
     get "dashboard", to: "dashboard#index"
     get '/lodgings/guest_centric', to: "guest_centric_offers#index"
