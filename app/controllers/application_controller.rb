@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_pages
-    @pages = Page.all.includes(:translations)
+    @pages = Page.not_private.includes(:translations)
   end
 
   def handle_token_authenticity

@@ -43,6 +43,7 @@ class SavePageDetails
         :header_dropdown,
         :rating_box,
         :homepage,
+        :private,
         { images: [] }
       )
     end
