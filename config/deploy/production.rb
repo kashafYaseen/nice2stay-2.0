@@ -1,6 +1,7 @@
 lock "~> 3.11.0"
 
 server '178.62.231.57', port: 22, roles: [:web, :app, :db], primary: true
+server '149.210.229.119', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:remcoz/geolocation.git'
 set :application,     'geolocation'
