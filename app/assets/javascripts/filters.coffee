@@ -65,7 +65,7 @@
       $('.view-dropdown .dropdown-toggle .title').text('GRID')
       $('.list-view').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
-      $('.lodging-container').addClass 'col-md-6 col-lg-4 col-xl-3'
+      $('.lodging-container').addClass 'col-md-6 col-lg-4 col-xl-4'
       Url.update("");
     else if layout.includes('list-and-map')
       $('#lodgings-container').addClass 'col-md-6'
@@ -76,7 +76,7 @@
       $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
       $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
-      $('.lodging-container').removeClass 'col-lg-4 col-xl-3'
+      $('.lodging-container').removeClass 'col-lg-4 col-xl-4'
       map.remove()
       Map.init()
       Url.update("");

@@ -3,16 +3,16 @@
 <div class="row">
 </div>
 
-<div class="row bg-secondary">
+<div class="row bg-secondary-dark">
   <div id="loader">
     <%= image_tag 'loader.gif', class: 'w-50' %>
   </div>
 
-  <div class="col-md-2" id="filters-container">
+  <div class="col-md-3" id="filters-container">
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>
   </div>
 
-  <div class="col-md-10 row">
+  <div class="col-md-9 row">
     <%= render 'search_information', collection: @collection, lodgings: @lodgings, lead: nil %>
 
     <div class="col-md-12 bootstrap-default">
@@ -23,19 +23,19 @@
 
     <div class="col-md-12" id="lodgings-container">
       <div class="row">
-        <div class="seo-data bg-secondary w-100">
+        <div class="seo-data bg-secondary-dark w-100">
           <%= render 'seo_data', custom_text: @custom_text %>
         </div>
 
         <div class="col-md-12">
-          <div class="row lodgings-list bg-secondary" id="lodgings-list">
+          <div class="row lodgings-list bg-secondary-dark" id="lodgings-list">
             <%= render 'lodgings_list', lodgings: @lodgings %>
           </div>
         </div>
 
         <%= render 'login_info_alert' %>
 
-        <div class="col-lg-12 mb-5 bg-secondary">
+        <div class="col-lg-12 mb-5 bg-secondary-dark">
           <div class="card ml-3 bg-white">
             <div class="card-body">
               <div class="pagination-info text-right">

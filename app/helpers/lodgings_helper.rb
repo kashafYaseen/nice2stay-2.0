@@ -144,7 +144,7 @@ module LodgingsHelper
   def item_columns
     return 'col-lg-12' if action_name == 'show'
     return 'col-md-6' if params[:layout_view] == 'Grid & Map'
-    'col-md-6 col-lg-4 col-xl-3'
+    'col-md-6 col-lg-4 col-xl-4'
   end
 
   def some_filter_selected?
