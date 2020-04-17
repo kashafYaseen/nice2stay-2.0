@@ -38,11 +38,13 @@
   ```sh
   rake searchkick:reindex:all
   ```
-9. Start rails server
+9. Copy environment variables to .env file
+  [View Slite Private Document](https://devden.slite.com/api/s/note/Eu9YBik6wabjwTw4Caejdz/Environment-variables)
+10. Start rails server
   ```sh
   rails s
   ```
-10. Start webpacker server
+11. Start webpacker server
   ```sh
   ruby bin/webpack-dev-server
   ```
