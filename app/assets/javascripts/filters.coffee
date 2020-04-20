@@ -87,7 +87,7 @@
       $('#layout_view').val('map-view')
       $('.view-dropdown .dropdown-toggle .title').text('LARGE MAP')
       $('.map-view').addClass 'text-bold'
-      $('#pagination-container').addClass 'd-none'
+      $('#pagination-container').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
