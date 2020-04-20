@@ -141,4 +141,4 @@
     `cp /home/deploy/hidden-sun-3354/current/config/nginx-fe.conf /etc/nginx/sites-enabled/nice2stay`
    - Restart nginx server
      `sudo service nginx restart`
-12. Install redis and sidekiq [LINK](https://thomasroest.com/2017/03/04/properly-setting-up-redis-and-sidekiq-in-production-ubuntu-16-04.html](https://thomasroest.com/2017/03/04/properly-setting-up-redis-and-sidekiq-in-production-ubuntu-16-04.html)
+12. Install redis and sidekiq [LINK](https://thomasroest.com/2017/03/04/properly-setting-up-redis-and-sidekiq-in-production-ubuntu-16-04.html)
