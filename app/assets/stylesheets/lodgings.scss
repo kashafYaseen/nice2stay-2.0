@@ -127,9 +127,9 @@ div.top-50 {
 }
 
 div.fixed-map {
-  position: fixed;
-  right: 10px;
-  padding: 0;
+  position: sticky;
+  padding-top: 10;
+  top: 60px;
 }
 
 nav.fixed-filters {
@@ -420,7 +420,7 @@ div.nearby-places {
 }
 
 #map-container {
-  top: 165px;
+  height: 70vh;
 }
 
 @media only screen and (max-width: 767px) {
