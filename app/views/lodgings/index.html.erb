@@ -12,51 +12,57 @@
     <%= render 'filters', lodgings: @lodgings, amenities: @amenities, experiences: @experiences, countries: @countries_enabled, total_lodgings: @total_lodgings %>
   </div>
 
-  <div class="col-md-9 row">
-    <%= render 'search_information', collection: @collection, lodgings: @lodgings, lead: nil %>
+  <div class="col-md-9">
+    <div class="row">
+      <%= render 'search_information', collection: @collection, lodgings: @lodgings, lead: nil %>
+    </div>
 
-    <div class="col-md-12 bootstrap-default">
-      <div class="alert alert-success" role="alert">
-        <%= t('lodgings_index.carefree_booking') %>
+    <div class="row">
+      <div class="col-md-12 bootstrap-default">
+        <div class="alert alert-success" role="alert">
+          <%= t('lodgings_index.carefree_booking') %>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-12" id="lodgings-container">
-      <div class="row">
-        <div class="seo-data w-100">
-          <%= render 'seo_data', custom_text: @custom_text %>
-        </div>
-
-        <div class="col-md-12">
-          <div class="row lodgings-list" id="lodgings-list">
-            <%= render 'lodgings_list', lodgings: @lodgings %>
+    <div class="row">
+      <div class="col-md-12" id="lodgings-container">
+        <div class="row">
+          <div class="seo-data w-100">
+            <%= render 'seo_data', custom_text: @custom_text %>
           </div>
-        </div>
 
-        <%= render 'login_info_alert' %>
+          <div class="col-md-12">
+            <div class="row lodgings-list" id="lodgings-list">
+              <%= render 'lodgings_list', lodgings: @lodgings %>
+            </div>
+          </div>
 
-        <div class="col-lg-12 mb-5">
-          <div class="card bg-white">
-            <div class="card-body">
-              <div class="pagination-info text-right">
-                <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
-              </div>
+          <%= render 'login_info_alert' %>
 
-              <div class="pagination">
-                <%= paginate @lodgings, remote: true, window: 3 %>
+          <div class="col-lg-12 mb-5">
+            <div class="card bg-white">
+              <div class="card-body">
+                <div class="pagination-info text-right">
+                  <%= page_entries_info(@lodgings, entry_name: 'Lodging' ) %>
+                </div>
+
+                <div class="pagination">
+                  <%= paginate @lodgings, remote: true, window: 3 %>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-md-5 fixed-map d-none d-sm-block" id="map-container">
-      <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
+      <div class="col-md-6 fixed-map d-none" id="map-container">
+        <%= tag.div nil, id: 'map', class: 'lodgings-map' %>
 
-      <div id="pagination-container" class="col-md-12">
-        <div class="pagination pagination bg-white col-md-2 mx-auto">
-          <%= paginate @lodgings, remote: true, window: 0 %>
+        <div id="pagination-container" class="col-md-12">
+          <div class="pagination pagination bg-white col-md-2 mx-auto">
+            <%= paginate @lodgings, remote: true, window: 0 %>
+          </div>
         </div>
       </div>
     </div>
