@@ -72,6 +72,7 @@
       $('#lodgings-container').removeClass 'col-md-12 d-none'
       $('#map-container').removeClass 'col-md-12 d-none'
       $('#map-container').addClass 'col-md-6'
+      $('#map').removeClass 'large-map-view'
       $('#layout_view').val('list-and-map')
       $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
       $('.list-and-map').addClass 'text-bold'
@@ -84,6 +85,7 @@
       $('#lodgings-container').addClass 'd-none'
       $('#map-container').removeClass 'col-md-6 d-none'
       $('#map-container').addClass 'col-md-12'
+      $('#map').addClass 'large-map-view'
       $('#layout_view').val('map-view')
       $('.view-dropdown .dropdown-toggle .title').text('LARGE MAP')
       $('.map-view').addClass 'text-bold'

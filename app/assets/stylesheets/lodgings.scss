@@ -371,7 +371,6 @@ div.nearby-places {
 #pagination-container {
   z-index: 2;
   position: absolute;
-  bottom: 120px;
   height: 60px;
   overflow: hidden;
 
@@ -421,6 +420,10 @@ div.nearby-places {
 
 #map-container {
   height: 70vh;
+}
+
+.large-map-view {
+  height: 60vh !important;
 }
 
 @media only screen and (max-width: 767px) {
