@@ -1,7 +1,11 @@
+
 ## Contents
 
 - [Setup Project Locally](#setup-project-locally)
--  [Setup Production Server](#setup-production-server)
+- [Setup Production Server](#setup-production-server)
+- [Useful production command](#useful-production-command)
+- [Sidekiq helping material](#sidekiq-helping-material)
+- [Useful capistrano commands](#useful-capistrano-commands)
 
 ## Setup Project Locally
 1. Clone Project
@@ -142,3 +146,69 @@
    - Restart nginx server
      `sudo service nginx restart`
 12. Install redis and sidekiq [LINK](https://thomasroest.com/2017/03/04/properly-setting-up-redis-and-sidekiq-in-production-ubuntu-16-04.html)
+
+## Useful production command
+1. Login to production server using ssh
+  ```sh
+  # using bash file
+  bash ssh-to.sh production
+  # or using ssh directly
+  ssh deploy@nice2stay.com
+  ```
+2. View production logs
+  ```sh
+  # change directory
+  cd hidden-sun-3354/current
+  # tail logs
+  tail -f log/production.log
+  ```
+3. Run rails console
+  ```sh
+  # change directory
+  cd hidden-sun-3354/current
+  # run console
+  rails c -e production
+  ```
+4. Run rake task
+  ```sh
+  # change directory
+  cd hidden-sun-3354/current
+  bundle exec rake rake_task_name RAILS_ENV=production
+  ```
+## Sidekiq Helping Material
+1. Sidekiq service [(view sudo passowrd)](https://devden.slite.com/api/s/note/BbmiM446BWXbvt2Z3V5HRY/Credentials)
+  ```sh
+  # restart service
+  service sidekiq restart
+  # check service status
+  service sidekiq status
+  ```
+2. Edit service configuration [(view configuration file sample)](https://devden.slite.com/api/s/note/B5P6TwFBRht1TpEVuoqKcV/Sidekiq)
+  ```sh
+  sudo vim /lib/systemd/system/sidekiq.service
+  ```
+3. View sidekiq logs
+  ```sh
+  tail -f /home/deploy/hidden-sun-3354/current/log/sidekiq.log
+  ```
+## Useful Capistrano Commands
+1. Deploy new release
+  ```sh
+  cap production deploy
+  ```
+2. Restart server
+  ```sh
+  cap production deploy:restart
+  ```
+3. Check puma status & restart
+  ```sh
+  # check puma status
+  cap production puma:status
+  # stop & start puma
+  cap production puma:stop
+  cap production puma:start
+  ```
+4. Pull production database locally
+  ```sh
+  cap production db:pull
+  ```
