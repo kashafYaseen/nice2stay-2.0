@@ -4,21 +4,13 @@
   <div class="card">
     <div class="card-body bg-white">
       <div class="row">
-        <div class="col-md-12">
-          <% if hits[lodging_counter]['_source']['discounts'] && hits[lodging_counter]['_source']['free_cancelation'] %>
-            <span class="product-badge-danger">Special offer & <%= t 'filters.free_cancelation' %></span>
-          <% elsif hits[lodging_counter]['_source']['discounts'] %>
-            <span class="product-badge-danger">Special offer</span>
-          <% elsif hits[lodging_counter]['_source']['free_cancelation'] %>
-            <span class="product-badge-danger"><%= t 'filters.free_cancelation' %></span>
-          <% end %>
-
+        <div class="col-md-12 lodging-images">
           <div class="owl-carousel">
             <%= render_image_tags lodging, class: "card-img-top item" %>
           </div>
         </div>
 
-        <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12" do %>
+        <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12 lodging-info" do %>
           <h6 class="card-title text-bold mb-1 mt-2"><%= lodging.h1.presence || lodging.parent_h1 %></h6>
 
           <p class="text-xxs"><i class="fal fa-map-marker-alt mr-1 text-primary"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
@@ -42,7 +34,61 @@
           <hr class="mt-1">
         <% end %>
 
-        <div class="col-md-12 p-0 price-review-box-<%= lodging.id %>">
+        <div class="col-md-12 p-0 price-review-box-<%= lodging.id %> lodging-links for-list-view">
+          <div class="row mt-2">
+            <div class="col-md-12 text-left pl-4">
+              <div class="price-details-box-<%= lodging.id %>">
+                <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
+
+                <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
+              </div>
+
+              <div class="review-box mb-2">
+                <% if lodging.average_rating > 0 %>
+                  <%= render_stars_tag lodging.average_rating %>
+                  <p class="text-xs"><%= pluralize( hits[lodging_counter]['_source']['total_reviews'], 'review', 'reviews' ) %></p>
+                <% end %>
+              </div>
+
+
+              <div class="mb-2">
+                <% if params && (params.keys.include?('check_in') && params.keys.include?('check_out') || params.keys.include?('adults') || params.keys.include?('children')) %>
+                  <p class="green-tag"><%= t('calendar.available') %></p>
+                <% end %>
+
+                <% if hits[lodging_counter]['_source']['discounts'] && hits[lodging_counter]['_source']['free_cancelation'] %>
+                  <p class="green-tag">Special offer & <%= t 'filters.free_cancelation' %></p>
+                <% elsif hits[lodging_counter]['_source']['discounts'] %>
+                  <p class="green-tag">Special offer</p>
+                <% elsif hits[lodging_counter]['_source']['free_cancelation'] %>
+                  <p class="green-tag"><%= t 'filters.free_cancelation' %></p>
+                <% end %>
+              </div>
+
+              <div class="d-flex mb-2">
+                <% if lodging.including_text.present? %>
+                  <p class="text-info mb-1 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= lodging.including_text %>" data-html="true"><span class="text-dotted text-xxs"><%= t('included') %></span></p>
+                <% end %>
+
+                <% if lodging.realtime_availability %>
+                  <p class="text-info ml-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.instant') %>"><span class="text-dotted text-xxs"><%= t('bookings.direct') %></span></p>
+                <% else %>
+                  <p class="text-info ml-2 cursor-pointer" data-toggle="tooltip" data-placement="bottom" data-original-title="<%= t('bookings.listing_on_request') %>"><span class="text-dotted text-xxs"><%= t('bookings.booking_or_option') %></span></p>
+                <% end %>
+              </div>
+
+              <div class="d-flex">
+                <%= link_to t('view'), render_lodging_path(lodging), class: 'btn btn-sm btn-primary d-block' %>
+
+                <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'btn btn-secondary btn-sm' do %>
+                  <i class="fal fa-heart"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 p-0 price-review-box-<%= lodging.id %> lodging-links for-all-views d-none">
           <div class="row mt-2">
             <div class="col-md-6 text-left pl-4">
               <% if lodging.including_text.present? %>

@@ -491,3 +491,18 @@ div.nearby-places {
   font-weight: 600;
   line-height: 1.2;
 }
+
+.fs-18 {
+  font-size: 18px !important;
+}
+
+.green-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 3px 8px;
+  width: fit-content;
+  margin: 5px 0px;
+}
