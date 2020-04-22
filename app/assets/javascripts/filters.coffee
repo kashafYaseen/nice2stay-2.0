@@ -99,7 +99,8 @@
       $('.view-dropdown .dropdown-toggle .title').text('LIST & MAP')
       $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
-      $('.lodging-container').removeClass 'col-lg-4 col-xl-4'
+      $('.lodging-container').addClass 'col-md-12'
+      $('.lodging-container').removeClass 'col-md-6 col-lg-4 col-xl-4'
       $('.lodging-links.for-list-view').addClass 'd-none'
       $('.lodging-links.for-all-views').removeClass 'd-none'
       map.remove()
