@@ -96,7 +96,7 @@
       $('#map-container').addClass 'col-md-6'
       $('#map').removeClass 'large-map-view'
       $('#layout_view').val('list-and-map')
-      $('.view-dropdown .dropdown-toggle .title').text('GRID & MAP')
+      $('.view-dropdown .dropdown-toggle .title').text('LIST & MAP')
       $('.list-and-map').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').removeClass 'col-lg-4 col-xl-4'
