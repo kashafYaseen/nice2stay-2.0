@@ -128,7 +128,7 @@ div.top-50 {
 
 div.fixed-map {
   position: sticky;
-  padding-top: 10;
+  padding-top: 10px;
   top: 60px;
 }
 
@@ -371,7 +371,6 @@ div.nearby-places {
 #pagination-container {
   z-index: 2;
   position: absolute;
-  bottom: 120px;
   height: 60px;
   overflow: hidden;
 
@@ -421,6 +420,10 @@ div.nearby-places {
 
 #map-container {
   height: 70vh;
+}
+
+.large-map-view {
+  height: 60vh !important;
 }
 
 @media only screen and (max-width: 767px) {
@@ -487,4 +490,19 @@ div.nearby-places {
   font-size: 34px;
   font-weight: 600;
   line-height: 1.2;
+}
+
+.fs-18 {
+  font-size: 18px !important;
+}
+
+.green-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 3px 8px;
+  width: fit-content;
+  margin: 5px 0px;
 }

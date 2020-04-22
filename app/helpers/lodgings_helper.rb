@@ -101,13 +101,13 @@ module LodgingsHelper
   end
 
   def render_price price, dynamic
-    return "<h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
-    "<p class='price-text-from price-text mb-0'> #{t('search.from')} </p> <h3 class='price'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.date_and_guests')}</p>".html_safe
+    return "<h3 class='price fs-18'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> #{t('search.for')} #{(params[:check_out].to_date - params[:check_in].to_date).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
+    "<p class='price-text-from price-text mb-0'> #{t('search.from')} </p> <h3 class='price fs-18'>#{render_rounded_price price}</h3><p class='price-text nights-text'> #{t('search.date_and_guests')}</p>".html_safe
   end
 
   def render_offer_price price, dynamic, offer
     return "<h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> #{t('search.for')} #{(offer.to - offer.from).to_i} #{t('nav_cart.nights').downcase}</p>".html_safe if dynamic
-    "<p class='price-text-from price-text d-inline'> #{t('search.from')} </p> <h3 class='price d-inline'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> per #{t('search.night')}</p>".html_safe
+    "<p class='price-text-from price-text d-inline'> #{t('search.from')} </p> <h3 class='price d-inline fs-18'>#{render_rounded_price price}</h3><p class='price-text nights-text d-inline'> per #{t('search.night')}</p>".html_safe
   end
 
   def render_trip_price price, dynamic, trip
