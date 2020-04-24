@@ -1105,7 +1105,7 @@ figure figcaption {
 }
 
 .bg-secondary-dark {
-  background-color: #EBEBE6 !important;
+  background-color: #F5F5F5 !important;
 }
 
 .bg-secondary-2 {
@@ -2919,7 +2919,11 @@ button:focus {
 }
 
 .btn-link-secondary {
-  color: #606060;
+  color: #000;
+  border-color: #EAEAEA;
+  border-radius: 0;
+  font-size: 12px;
+  background: white;
 }
 
 .btn-link-secondary:hover {
