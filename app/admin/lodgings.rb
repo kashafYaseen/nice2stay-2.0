@@ -6,7 +6,7 @@ ActiveAdmin.register Lodging do
   filter :owner, label: 'Partner'
   filter :country_id_eq, as: :select, collection: Country.all.collect{ |country| [country.name, country.id] }, label: 'Country'
   filter :published
-  filter :presentation, as: :select
+  filter :presentation, as: :select, collection: Lodging.presentations
 
   controller do
     def permitted_params
