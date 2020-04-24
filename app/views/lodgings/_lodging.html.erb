@@ -52,7 +52,7 @@
 
 
               <div class="mb-2">
-                <% if params && (params.keys.include?('check_in') && params.keys.include?('check_out') || params.keys.include?('adults') || params.keys.include?('children')) %>
+                <% if params && (params['check_in'] != "" && params['check_out'] != "" || params['adults'] != "" || params['children'] != "") %>
                   <p class="green-tag"><%= t('calendar.available') %></p>
                 <% end %>
 
