@@ -55,7 +55,7 @@
 
                 <div class="for-list-and-grid-view">
                   <div class="mb-2">
-                    <% if params && (params['check_in'] != "" && params['check_out'] != "" || params['adults'] != "" || params['children'] != "") %>
+                    <% if (params['check_in'].present? && params['check_out'].present?) || params['adults'].present? || params['children'].present? %>
                       <p class="green-tag"><%= t('calendar.available') %></p>
                     <% end %>
 
