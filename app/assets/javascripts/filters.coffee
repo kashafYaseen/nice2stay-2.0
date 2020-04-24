@@ -72,8 +72,9 @@
       $('.list-view').addClass 'text-bold'
       $('#layout_view').val('list-view')
       $('#pagination-container').addClass 'd-none'
-      $('.lodging-links.for-list-view').removeClass 'd-none'
-      $('.lodging-links.for-all-views').addClass 'd-none'
+      $('.for-list-view').removeClass 'col-md-6 d-none'
+      $('.for-list-and-grid-view').removeClass 'col-md-6'
+      $('.for-grid-view').addClass 'd-none'
       Url.update("");
     else if layout.includes('grid-view')
       $('#lodgings-container').removeClass 'col-md-6 d-none'
@@ -85,8 +86,10 @@
       $('.grid-view').addClass 'text-bold'
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-6 col-lg-4 col-xl-4'
-      $('.lodging-links.for-list-view').addClass 'd-none'
-      $('.lodging-links.for-all-views').removeClass 'd-none'
+      $('.for-list-view').addClass 'd-none'
+      $('.for-grid-view').addClass 'col-md-6'
+      $('.for-list-and-grid-view').addClass 'col-md-6'
+      $('.for-grid-view').removeClass 'd-none'
       Url.update("");
     else if layout.includes('list-and-map')
       $('#lodgings-container').addClass 'col-md-6'
@@ -101,8 +104,10 @@
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-12'
       $('.lodging-container').removeClass 'col-md-6 col-lg-4 col-xl-4'
-      $('.lodging-links.for-list-view').addClass 'd-none'
-      $('.lodging-links.for-all-views').removeClass 'd-none'
+      $('.for-list-view').addClass 'd-none'
+      $('.for-grid-view').addClass 'col-md-6'
+      $('.for-list-and-grid-view').addClass 'col-md-6'
+      $('.for-grid-view').removeClass 'd-none'
       map.remove()
       Map.init()
       Url.update("");
