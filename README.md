@@ -6,8 +6,8 @@
 - [Sidekiq Helping Material](#sidekiq-helping-material)
 - [Useful Capistrano Commands](#useful-capistrano-commands)
 - [Sync Services and Flow](#sync-services-and-flow)
-  - [Lodging Details](#sync-lodging-details)
-  - [Booking Details](#sync-booking-details)
+  - [Lodging Details](#user-content-1-sync-lodging-details)
+  - [Booking Details](#user-content-2-sync-booking-details)
 
 ## Setup Project Locally
 1. Clone Project
