@@ -1,11 +1,13 @@
-
 ## Contents
 
 - [Setup Project Locally](#setup-project-locally)
 - [Setup Production Server](#setup-production-server)
-- [Useful production command](#useful-production-command)
-- [Sidekiq helping material](#sidekiq-helping-material)
-- [Useful capistrano commands](#useful-capistrano-commands)
+- [Useful Production Command](#useful-production-command)
+- [Sidekiq Helping Material](#sidekiq-helping-material)
+- [Useful Capistrano Commands](#useful-capistrano-commands)
+- [Sync Services and Flow](#sync-services-and-flow)
+  - [Lodging Details](#sync-lodging-details)
+  - [Booking Details](#sync-booking-details)
 
 ## Setup Project Locally
 1. Clone Project
@@ -212,3 +214,11 @@
   ```sh
   cap production db:pull
   ```
+
+## Sync Services and Flow
+
+### 1. Sync Lodging Details
+![Sync Lodging Details](https://storage.googleapis.com/slite-api-files-production/files/85135b3e-1d6d-4b9c-9fdb-687ccc286f5e/sync-lodging-details.png)
+
+### 2. Sync Booking Details
+![Sync Booking Details](https://storage.googleapis.com/slite-api-files-production/files/fa959682-bb34-4afd-97fd-178addfd601b/sync-booking-details.png)
