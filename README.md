@@ -221,4 +221,4 @@
 ![Sync Lodging Details](https://storage.googleapis.com/slite-api-files-production/files/85135b3e-1d6d-4b9c-9fdb-687ccc286f5e/sync-lodging-details.png)
 
 ### 2. Sync Booking Details
-![Sync Booking Details](https://storage.googleapis.com/slite-api-files-production/files/fa959682-bb34-4afd-97fd-178addfd601b/sync-booking-details.png)
+![Sync Booking Details](https://storage.googleapis.com/slite-api-files-production/files/66600d31-29b5-4957-874e-e94681c08cf9/sync-booking-details.png)
