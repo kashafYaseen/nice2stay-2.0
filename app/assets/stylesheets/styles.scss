@@ -2919,7 +2919,11 @@ button:focus {
 }
 
 .btn-link-secondary {
-  color: #606060;
+  color: #000;
+  border-color: #EAEAEA;
+  border-radius: 0;
+  font-size: 12px;
+  background: white;
 }
 
 .btn-link-secondary:hover {
