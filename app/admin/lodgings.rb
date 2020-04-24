@@ -4,7 +4,8 @@ ActiveAdmin.register Lodging do
   filter :name
   filter :slug
   filter :owner, label: 'Partner'
-  filter :region
+  filter :country_id_eq, as: :select, collection: Country.all.collect{ |country| [country.name, country.id] }, label: 'Country'
+  filter :published
   filter :presentation, as: :select
 
   controller do
@@ -35,6 +36,9 @@ ActiveAdmin.register Lodging do
     column :total_prices
     column :total_rules
     column :total_children
+    column :created_at
+    column :published
+    column :country
 
     actions
   end
