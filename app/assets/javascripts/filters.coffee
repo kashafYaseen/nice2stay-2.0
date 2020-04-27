@@ -72,8 +72,8 @@
       $('.list-view').addClass 'text-bold'
       $('#layout_view').val('list-view')
       $('#pagination-container').addClass 'd-none'
-      $('.for-list-view').removeClass 'col-md-6 d-none'
-      $('.for-list-and-grid-view').removeClass 'col-md-6'
+      $('.for-list-view, .for-list-and-grid-view').removeClass 'col-6 d-none'
+      $('.for-list-view, .for-list-and-grid-view').addClass 'col-12'
       $('.for-grid-view').addClass 'd-none'
       Url.update("");
     else if layout.includes('grid-view')
@@ -87,8 +87,8 @@
       $('#pagination-container').addClass 'd-none'
       $('.lodging-container').addClass 'col-md-6 col-lg-4 col-xl-4'
       $('.for-list-view').addClass 'd-none'
-      $('.for-grid-view').addClass 'col-md-6'
-      $('.for-list-and-grid-view').addClass 'col-md-6'
+      $('.for-grid-view, .for-list-and-grid-view').addClass 'col-6'
+      $('.for-list-view, .for-list-and-grid-view').removeClass 'col-12'
       $('.for-grid-view').removeClass 'd-none'
       Url.update("");
     else if layout.includes('list-and-map')
@@ -105,8 +105,8 @@
       $('.lodging-container').addClass 'col-md-12'
       $('.lodging-container').removeClass 'col-md-6 col-lg-4 col-xl-4'
       $('.for-list-view').addClass 'd-none'
-      $('.for-grid-view').addClass 'col-md-6'
-      $('.for-list-and-grid-view').addClass 'col-md-6'
+      $('.for-grid-view, .for-list-and-grid-view').addClass 'col-6'
+      $('.for-list-view, .for-list-and-grid-view').removeClass 'col-12'
       $('.for-grid-view').removeClass 'd-none'
       map.remove()
       Map.init()
