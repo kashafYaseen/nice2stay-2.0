@@ -26,11 +26,11 @@ class UpdateLodgingPrices
         prices.each do |price_range|
           update_arrays(price_range)
           lodging.availabilities_for_range(price_range[:from], price_range[:to]).each do |availability|
-            import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults],
+            import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults], checkin: price_range[:checkin],
               infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
 
             if price_range[:weekly_price].present?
-              import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults],
+              import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults], checkin: price_range[:checkin],
                 infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
           end
@@ -83,9 +83,14 @@ class UpdateLodgingPrices
     end
 
     def day_price(price_range, available_on)
-      return price_range[:sunday_price] if available_on.wday == 0 && price_range[:sunday_price].present?
-      return price_range[:friday_price] if available_on.wday == 5 && price_range[:friday_price].present?
-      return price_range[:saturday_price] if available_on.wday == 6 && price_range[:saturday_price].present?
+      return price_range[:sunday_price]    if available_on.wday == 0 && price_range[:sunday_price].present?
+      return price_range[:monday_price]    if available_on.wday == 1 && price_range[:monday_price].present?
+      return price_range[:tuesday_price]   if available_on.wday == 2 && price_range[:tuesday_price].present?
+      return price_range[:wednesday_price] if available_on.wday == 3 && price_range[:wednesday_price].present?
+      return price_range[:thursday_price]  if available_on.wday == 4 && price_range[:thursday_price].present?
+      return price_range[:friday_price]    if available_on.wday == 5 && price_range[:friday_price].present?
+      return price_range[:saturday_price]  if available_on.wday == 6 && price_range[:saturday_price].present?
+
       price_range[:minimal_price_per_day] || price_range[:amount]
     end
 
