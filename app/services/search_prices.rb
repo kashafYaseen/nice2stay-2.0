@@ -48,9 +48,11 @@ class SearchPrices
       conditions[:adults]   = [params[:adults], 999]
       conditions[:lodging_id] = params[:lodging_id]
       conditions[:minimum_stay] = [params[:minimum_stay], 999]
+      conditions[:checkin] = checkin_day
 
       if flexible_children
         conditions[:children] = { gte: params[:children] }
+        conditions[:checkin] = [checkin_day, 'any']
       else
         conditions[:children] = params[:children]
       end
@@ -62,6 +64,11 @@ class SearchPrices
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       (Date.parse(check_in)..Date.parse(check_out).prev_day).map(&:to_s)
+    end
+
+    def checkin_day
+      check_in = params[:check_in].presence || params[:check_out]
+      Date.parse(check_in).strftime("%A").downcase
     end
 
     def dates_without_price(result, query_dates)
