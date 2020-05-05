@@ -34,7 +34,7 @@ class UpdateLodgingPrices
                 infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
           end
-          create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival])
+          create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival], price_range[:checkin])
         end
         Price.import import_list
         true
@@ -58,7 +58,7 @@ class UpdateLodgingPrices
       lodging.prices.reindex
     end
 
-    def create_rule(from, to, minimal_stay, flexible_arrival)
+    def create_rule(from, to, minimal_stay, flexible_arrival, checkin)
       from = from.to_date.change(year: 2017) if from.to_date.year == 20117
       to = to.to_date.change(year: 2017) if to.to_date.year == 20117
 
@@ -73,6 +73,13 @@ class UpdateLodgingPrices
 
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
+      rule.checkin |= [checkin.downcase]
+
+      unless rule.flexible_arrival
+        rule.checkin |= [lodging.check_in_day]
+        rule.checkin.delete('any')
+      end
+
       if minimal_stay.map(&:to_i).min == 999
         rule.minimum_stay = 7
       else
