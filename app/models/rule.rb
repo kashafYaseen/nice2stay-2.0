@@ -11,4 +11,8 @@ class Rule < ApplicationRecord
       minimum_stay: (minimum_stay || 7),
     )
   end
+
+  def humanize_checkin
+    checkin.join ", "
+  end
 end
