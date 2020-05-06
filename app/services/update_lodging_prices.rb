@@ -58,7 +58,7 @@ class UpdateLodgingPrices
       lodging.prices.reindex
     end
 
-    def create_rule(from, to, minimal_stay, flexible_arrival, checkin)
+    def create_rule(from, to, minimal_stay, flexible_arrival, checkin_day)
       from = from.to_date.change(year: 2017) if from.to_date.year == 20117
       to = to.to_date.change(year: 2017) if to.to_date.year == 20117
 
@@ -71,20 +71,17 @@ class UpdateLodgingPrices
       from = from.to_date.change(year: 2020) if from.to_date.year == 0202
       to = to.to_date.change(year: 2020) if to.to_date.year == 0202
 
-      rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
+      rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to, checkin_day: checkin_day)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
-      rule.checkin |= [checkin.downcase]
 
-      unless rule.flexible_arrival
-        rule.checkin |= [lodging.check_in_day]
-        rule.checkin.delete('any')
-      end
+      rule.checkin_day = rule.flexible_arrival ? 'any' : checkin_day
+
+      rule.minimum_stay |= minimal_stay
 
       if minimal_stay.map(&:to_i).min == 999
-        rule.minimum_stay = 7
+        rule.minimum_stay |= [7]
       else
-        rule.minimum_stay = minimal_stay.map(&:to_i).min unless rule.minimum_stay.present? && rule.minimum_stay < minimal_stay.map(&:to_i).min
-        rule.minimum_stay = 7 if rule.minimum_stay >= 8
+        rule.minimum_stay |= [7] if rule.minimum_stay.map(&:to_i).min >= 8
       end
       rule.save
     end
