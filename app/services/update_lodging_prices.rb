@@ -77,7 +77,10 @@ class UpdateLodgingPrices
       rule.checkin_day = rule.flexible_arrival ? 'any' : checkin_day
 
       rule.minimum_stay |= minimal_stay
-      rule.minimum_stay |= [7] if rule.minimum_stay.map(&:to_i).min >= 8
+      if rule.minimum_stay.map(&:to_i).min >= 8
+        rule.minimum_stay |= [7]
+        rule.minimum_stay.delete(999)
+      end
       rule.save
     end
 
