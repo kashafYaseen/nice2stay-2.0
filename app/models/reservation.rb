@@ -121,7 +121,7 @@ class Reservation < ApplicationRecord
       if active_rules.present?
         active_rules.each do |rule|
           errors.add(:check_in, "day should be #{rule.checkin_day}") unless rule.checkin_day == check_in.strftime("%A").downcase || rule.checkin_day.blank? || rule.any?
-          errors.add(:base, "The stay should be of #{rule.minimum_stay} or more nights") if rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights)
+          errors.add(:base, "The stay should be of #{rule.minimum_stay.to_sentence(last_word_connector: ' or ')} nights") if rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights)
         end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
