@@ -161,7 +161,7 @@ ActiveAdmin.register Lodging do
         column :start_date
         column :end_date
         column :minimum_stay
-        column :checkin
+        column :checkin_day
         column :flexible_arrival
 
         column 'Action' do |rule|
