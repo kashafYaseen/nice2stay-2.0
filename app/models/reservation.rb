@@ -14,7 +14,7 @@ class Reservation < ApplicationRecord
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
-  delegate :active, to: :rules, prefix: true, allow_nil: true
+  delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
   delegate :email, :full_name, to: :user, prefix: true
@@ -115,7 +115,7 @@ class Reservation < ApplicationRecord
     def accommodation_rules
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       nights = (check_out - check_in).to_i
-      active_rules = rules_active(check_in, check_out)
+      active_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
       if active_rules.present?
