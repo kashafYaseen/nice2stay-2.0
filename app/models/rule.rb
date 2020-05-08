@@ -5,6 +5,7 @@ class Rule < ApplicationRecord
 
   scope :active_flexible, -> (check_in, check_out) { where("((start_date is :nil and end_date is :nil) or (start_date <= :start_date and end_date >= :end_date) or (start_date <= :start_date and end_date >= :end_date)) AND (checkin_day = :checkin_day or checkin_day = 'any')", nil: nil, start_date: check_in, end_date: check_out, checkin_day: check_in.strftime("%A").downcase) }
   scope :active, -> (check_in, check_out) { where("((start_date is :nil and end_date is :nil) or (start_date <= :start_date and end_date >= :end_date) or (start_date <= :start_date and end_date >= :end_date)) AND (checkin_day = :checkin_day)", nil: nil, start_date: check_in, end_date: check_out, checkin_day: check_in.strftime("%A").downcase) }
+  scope :active_without_day, -> (check_in, check_out) { where("((start_date is :nil and end_date is :nil) or (start_date <= :start_date and end_date >= :end_date) or (start_date <= :start_date and end_date >= :end_date))", nil: nil, start_date: check_in, end_date: check_out) }
 
   enum checkin_day: {
     any: 'any',

@@ -74,7 +74,11 @@ class UpdateLodgingPrices
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to, checkin_day: checkin_day)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
 
-      rule.checkin_day = rule.flexible_arrival ? 'any' : checkin_day
+      if rule.flexible_arrival
+        rule.checkin_day = 'any'
+      else
+        rule.checkin_day = checkin_day == 'any' ? lodging.check_in_day : checkin_day
+      end
 
       rule.minimum_stay |= minimal_stay
       if rule.minimum_stay.map(&:to_i).min >= 8

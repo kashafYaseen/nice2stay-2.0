@@ -120,8 +120,9 @@ class Reservation < ApplicationRecord
 
       if active_rules.present?
         active_rules.each do |rule|
-          errors.add(:check_in, "day should be #{rule.checkin_day}") unless rule.checkin_day == check_in.strftime("%A").downcase || rule.checkin_day.blank? || rule.any?
-          errors.add(:base, "The stay should be of #{rule.minimum_stay.to_sentence(last_word_connector: ' or ')} nights") if rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights)
+          if (rule.checkin_day.present? && rule.checkin_day != check_in.strftime("%A").downcase && !rule.any?) || (rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights))
+            errors.add(:check_in, rules_validation_message(check_in, check_out))
+          end
         end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
@@ -141,6 +142,15 @@ class Reservation < ApplicationRecord
       return if skip_data_posting || offer_id.present?
       rent = calculate_rent
       update_columns rent: rent, total_price: (rent - discount.to_f)
+    end
+
+    def rules_validation_message check_in, check_out
+      message = " days are"
+      rules.active_without_day(check_in, check_out).each_with_index do |rule, index|
+        day = rule.any? ? 'any day' : rule.checkin_day
+        message += "#{',' if index > 0} #{day.upcase} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
+      end
+      message
     end
 
     # def send_reservation_details
