@@ -112,7 +112,7 @@ Rails.application.configure do
     email: {
       email_prefix: "Error",
       sender_address: %{"notifier" <notifier@nice2stay.com>},
-      exception_recipients: %w{ahmad@thedevden.co sikandar.tariq@thedevden.co}
+      exception_recipients: %w{ahmad@thedevden.co adnan.ashraf@thedevden.co}
     },
     error_grouping: true
 
