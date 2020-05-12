@@ -126,7 +126,7 @@ class Reservation < ApplicationRecord
         end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
-        errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0
+        errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || lodging.flexible_arrival
       end
     end
 
