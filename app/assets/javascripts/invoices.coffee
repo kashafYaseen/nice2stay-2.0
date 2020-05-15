@@ -103,7 +103,7 @@
             else if cost.price_per_day > 0
               total_cleaning_cost += (cost.price_per_day * nights)
               total += (cost.price_per_day * nights)
-              result += cleaning_cost_html(cost, -1, nights)
+              result += cleaning_cost_html(cost, index, nights)
 
           $("#cleaning_cost_#{lodging_id}, #cleaning_cost_#{lodging_id}_modal").val(total_cleaning_cost)
 
@@ -152,7 +152,7 @@
           if cost.fixed_price > 0
             total_cleaning_cost += cost.fixed_price
             total += cost.fixed_price
-            result += cleaning_cost_html(cost, -1, nights)
+            result += cleaning_cost_html(cost, index, nights)
           else if cost.price_per_day > 0
             total_cleaning_cost += (cost.price_per_day * nights)
             total += (cost.price_per_day * nights)
