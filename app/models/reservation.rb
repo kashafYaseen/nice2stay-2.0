@@ -119,10 +119,14 @@ class Reservation < ApplicationRecord
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
       if active_rules.present?
+        count = 0
         active_rules.each do |rule|
           if (rule.checkin_day.present? && rule.checkin_day != check_in.strftime("%A").downcase && !rule.any?) || (rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights))
-            errors.add(:check_in, rules_validation_message(check_in, check_out))
+            count += 1
           end
+        end
+        if count == active_rules.length
+          errors.add(:check_in, rules_validation_message(check_in, check_out))
         end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
@@ -145,10 +149,10 @@ class Reservation < ApplicationRecord
     end
 
     def rules_validation_message check_in, check_out
-      message = " days are"
-      rules.active_without_day(check_in, check_out).each_with_index do |rule, index|
+      message = " days should be"
+      rules.active(check_in, check_out).each_with_index do |rule, index|
         day = rule.any? ? 'any day' : rule.checkin_day
-        message += "#{',' if index > 0} #{day.upcase} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
+        message += "#{',' if index > 0} #{day.try(:upcase)} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
       end
       message
     end
