@@ -56,9 +56,6 @@
     <div class="col-md-12 col-sm-12 col-lg-12 container">
       <%= form_for reservation, url: reservations_path, remote: true, html: { id: "new_reservation#{id_sufix}" } do |f| %>
         <h4 class="margin-bottom-1x form-heading"><%= t 'cart.availability' %> </h4>
-        <div class="reservation-form-errors-<%= lodging.id %>">
-          <%= render 'reservations/errors', resource: reservation %>
-        </div>
 
         <div class="row">
           <div class="col-md-6">
@@ -121,6 +118,11 @@
 
               <p id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
               <div class="text-dark text-left line-height-2" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></div>
+
+              <div class="reservation-form-errors-<%= lodging.id %>">
+                <%= render 'reservations/errors', resource: reservation %>
+              </div>
+
               <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}" %>
               <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'col-md-2 my-auto pl-0' do %>
                 <i class="fal fa-heart fa-2x"></i>
