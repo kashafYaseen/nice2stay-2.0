@@ -119,7 +119,7 @@
               <p id="lbl-error-<%= "#{lodging.id}#{id_sufix}" %>"></p>
               <div class="text-dark text-left line-height-2" id="bill-<%= "#{lodging.id}#{id_sufix}" %>"></div>
 
-              <div class="reservation-form-errors-<%= lodging.id %>">
+              <div class="reservation-form-errors-<%= lodging.id %> text-left">
                 <%= render 'reservations/errors', resource: reservation %>
               </div>
 
