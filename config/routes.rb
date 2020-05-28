@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   localized do
     devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords', invitations: 'users/invitations' }
     devise_for :admin_users, ActiveAdmin::Devise.config
-    ActiveAdmin.routes(self)
+    ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
     draw :api_v2
 
     devise_scope :user do
