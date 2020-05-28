@@ -349,7 +349,7 @@ GEM
       actionmailer (>= 3)
       premailer (~> 1.7, >= 1.7.9)
     public_suffix (3.0.2)
-    puma (3.11.4)
+    puma (3.12.6)
     rack (2.0.5)
     rack-protection (2.0.3)
       rack
