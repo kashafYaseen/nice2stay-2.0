@@ -6,7 +6,8 @@ class Api::V1::LodgingsController < Api::V1::ApiController
   end
 
   def create
-    @lodging = SaveLodgingDetails.call(params)
+#    @lodging = SaveLodgingDetails.call(params)
+    @lodging = Lodging.new
     @lodging.reindex
 
     if @lodging.valid?
