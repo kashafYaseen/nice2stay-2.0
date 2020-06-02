@@ -20,4 +20,8 @@ class PagesController < ApplicationController
 
   def page_not_found
   end
+
+  def loader
+    render layout: false
+  end
 end
