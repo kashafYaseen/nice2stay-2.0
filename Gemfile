@@ -88,6 +88,7 @@ group :development do
   gem 'capistrano3-puma',    require: false
   gem 'capistrano-db-tasks', require: false
   gem 'bullet'
+  gem 'rb-readline'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
