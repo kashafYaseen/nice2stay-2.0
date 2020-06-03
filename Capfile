@@ -12,4 +12,5 @@ require 'capistrano/puma'
 require 'capistrano-db-tasks'
 
 install_plugin Capistrano::Puma
+install_plugin Capistrano::Puma::Workers
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
