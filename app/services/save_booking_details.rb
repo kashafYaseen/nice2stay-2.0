@@ -41,6 +41,8 @@ class SaveBookingDetails
           lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
         end
 
+        add_availabilities(reservation.check_in, reservation.check_out, lodging) if params[:booking][:rebooking_approved]
+
         next unless reservations_attribute[:review_attributes].present?
         review = reservation.review || reservation.build_review
         review.attributes = review_params(reservations_attribute[:review_attributes])
@@ -162,5 +164,14 @@ class SaveBookingDetails
     def created_by value
       return value if Booking.created_bies.keys.include?(value)
       'nice2stay'
+    end
+
+    def add_availabilities check_in, check_out, lodging
+      dates = (check_in..check_out).map(&:to_s)
+      dates.each do |date|
+        Availability.find_or_create_by(available_on: date, lodging_id: lodging.id) do |availability|
+          availability.created_at = availability.updated_at = DateTime.now
+        end
+      end
     end
 end
