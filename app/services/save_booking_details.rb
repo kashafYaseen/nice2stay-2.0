@@ -169,9 +169,7 @@ class SaveBookingDetails
     def add_availabilities check_in, check_out, lodging
       dates = (check_in..check_out).map(&:to_s)
       dates.each do |date|
-        Availability.find_or_create_by(available_on: date, lodging_id: lodging.id) do |availability|
-          availability.created_at = availability.updated_at = DateTime.now
-        end
+        a = Availability.find_or_create_by(available_on: date, lodging_id: lodging.id)
       end
     end
 end
