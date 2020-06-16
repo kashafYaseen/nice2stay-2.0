@@ -22,6 +22,7 @@ class SaveCountryDetails
     def save_country
       country.attributes = country_params
       country.save
+      country.reindex
     end
 
     def save_regions
@@ -31,6 +32,7 @@ class SaveCountryDetails
         _region.attributes = region_params(region)
         _region.save
         update_region_translations(_region, region)
+        _region.reindex
       end
     end
 

@@ -22,12 +22,14 @@ class SaveCampaignDetails
     def save_campaign
       campaign.attributes = campaign_params
       campaign.save
+      campaign.reindex
     end
 
     def save_regions
       return unless params[:regions].present?
       params[:regions].each do |region_params|
         region = Region.find_or_create_region(region_params[:country_name], region_params[:region_name])
+        region.reindex
         campaign.regions << region unless campaign.regions.find_by(id: region.id).present?
       end
     end
