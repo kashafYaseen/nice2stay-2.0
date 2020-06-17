@@ -37,7 +37,13 @@
     }
 
     $('.autocomplete-home').bind 'typeahead:selected', (obj, datum) ->
-      if datum.type == 'country'
+      if datum.type == 'campaign'
+        $('#homepage_search_form, #searchbar_search_form').attr('method', 'post')
+        $('.regions-list .region').each (index, region) ->
+          $(region).prop('checked', false)
+        $('.countries-list .country').each (index, country) ->
+          $(country).prop('checked', false)
+      else if datum.type == 'country'
         $('.regions-list .region').each (index, region) ->
           $(region).prop('checked', false)
         $('.countries-list .country').each (index, country) ->
@@ -51,6 +57,7 @@
           $(region).prop('checked', false)
 
         $("#regions_#{datum.id}").prop('checked', true)
+      $('#homepage_search_form, #searchbar_search_form').attr('action', datum.url)
 
   source = (url, type) ->
     return new Bloodhound(
