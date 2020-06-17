@@ -16,6 +16,7 @@ class PagesController < ApplicationController
     @custom_texts = CustomText.home_page
     @campaigns = Campaign.spotlight
     @slider_campaigns = Campaign.menu
+    @regions = Region.active
   end
 
   def page_not_found
