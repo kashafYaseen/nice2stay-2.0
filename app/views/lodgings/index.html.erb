@@ -64,6 +64,7 @@
 <div id="lodging-quick-view"></div>
 
 <%= content_for :js_init do %>
+  Url.update("");
   Lodging.init();
   <% unless params[:layout_view] == 'list-view' %>
     Map.init();
