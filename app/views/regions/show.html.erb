@@ -69,7 +69,7 @@
       </section>
 
       <section class="widget-tags">
-        <h5 class="mt-1 mb-10"><%= t 'collection.inspiration' %> in <%= @region.name.capitalize %></h5>
+        <h5 class="mt-1 mb-10"><%= t 'collection.inspiration' %> in <%= @region.name.try(:capitalize) %></h5>
         <% @custom_texts.inspiration.each do |custom_text| %>
           <%= link_to "#{custom_text.menu_title}", seo_url(custom_text.seo_path), class: 'tag' %>
         <% end %>
