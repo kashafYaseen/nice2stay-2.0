@@ -19,7 +19,7 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  
+
 
 development:
   <<: *default
@@ -85,3 +85,11 @@ production:
   host: 'localhost'
   username: geosearch
   password: <%= ENV['GEOSEARCH_DATABASE_PASSWORD'] %>
+
+staging:
+  <<: *default
+  database: nice2stay_staging
+  pool: 50
+  host: 'localhost'
+  username: deploy
+  password: <%= ENV['NICE2STAY_DATABASE_PASSWORD'] %>
