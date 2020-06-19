@@ -9,6 +9,17 @@ class Price < ApplicationRecord
 
   searchkick
 
+  enum checkin: {
+    any: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+    sunday: 7,
+  }
+
   def search_data
     attributes.merge(
       available_on: availability.try(:available_on),

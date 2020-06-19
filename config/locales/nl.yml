@@ -32,9 +32,12 @@ nl:
     en: Engels
 
   details: BEKIJK
+  view: BEKIJK
 
   lodgings_index:
-    carefree_booking: Zorgeloos boeken - Wij bieden momenteel een zeer gunstige vergoeding voor een annuleringsverzekering
+    carefree_booking: Zorgeloos boeken - Wij bieden in veel gevallen aangepaste annuleringsvoorwaarden
+    free_cancelation_title: Kostenloos annuleren
+    free_cancelation_text: Vanwege de onzekerheid rondom het coronavirus bieden wij klanten die willen reserveren de mogelijkheid om kostenloos te annuleren tot 42 dagen voor aanvang van het verblijf.<br>Belangrijk is dat dit enkel geldt voor annuleringen die een direct gevolg zijn van het coronavirus
 
   lead:
     title: Wilt u advies voor uw vakantie?
@@ -184,11 +187,11 @@ nl:
     collections: Onze collecties
     more_info: Meer informatie
     also_like: Ook leuk voor u
-    reviews: Gemiddelde score & laatste reviews van Nice2stay klanten
     home: Home
     gallary: Foto's 
     location: Locatie 
-    reviews: Beoordelingen & Rating
+    reviews: Reviews
+    no_review: Deze accommodatie heeft nog geen reviews
     amentities: Faciliteiten
     info: Uitgebreide informatie
     like: Ook leuk voor u 
@@ -207,7 +210,7 @@ nl:
   nav_cart:
     type: Type
     price: Huurprijs
-    nights: Aantal nachten
+    nights: nachten
     checkin: Check-in
     checkout: Check-out
     guests: Aantal gasten
@@ -251,12 +254,14 @@ nl:
 
 
   search:
-    adults: Volwassenen (>12j)
+    adult: Volwassen
+    adults: Volwassenen
     adutls_1: Personen 
     children: Kinderen (4-12j)
     child: Kind
     children_1: Kinderen
-    babies: Babies (0-3j)
+    child_age: leeftijd 2 - 12
+    babies: Babies
     guests: Gasten
     guest: Gast
     dates: Periode
@@ -269,10 +274,10 @@ nl:
     check_in: aankomst
     check_out: vertrek
     date_filter: Aankomst en Vetrek
-    flexibility_text: flexibel in checkin en verblijf (-/+ 2 dagen)
+    flexibility_text: flexibiliteit qua data (-/+ 2 dagen)
     special_offer: Speciale Aanbieding
     realtime_availability: Direct Reserveren
-    realtime_availability_details: Accommodaties die je kunt reserveren zonder te wachten op goedkeuring van onze partners.
+    realtime_availability_details: Direct reserveren en bevestiging
     night: nacht
     updated_availability: Toon enkel accommodaties met up to date beschikbaarheid
     availability: Beschikbaarheid
@@ -283,22 +288,25 @@ nl:
     title: Locatie, Datum & Gasten
     price_info: Gebruik datum en aantal gasten om totaal prijs te zien
     map_info: Verplaats of zoom (in/uit) de kaart om meer resultaten te zien
-    date_and_guests: Datum en gasten voor totaalprijs
+    date_and_guests: Selecteer data en aantal gasten voor totaal prijs
 
   footer:
     support: Wilt u direct contact? 
-    support_details: Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com
+    support_details: Wij zijn op maandag t/m vrijdag bereikbaar van 09.00 tot 13.00 uur (tijdelijk aangepaste tijden) op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons ook een email sturen
     support_bel: Bel
     newsletter: ONZE NIEUWSBRIEF IS GEWELDIG
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
+    autocomplete_title: Bestemming / accommodatie naam
+    autocomplete_placeholder: Voer een bestemming of accommodatie naam in
     selected_filters: Geselecteerde filters
     remove_filters: Verwijder alle filters
-    guests: Reisgezelschap
+    guests: Gezelschap
     price: Prijs
     theme: Experience
     type: Type accommodatie
+    period: Periode
     amentities_pop: Faciliteiten populair
     amentities: Faciliteiten
     dates: 'data'

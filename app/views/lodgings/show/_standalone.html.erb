@@ -96,13 +96,15 @@
   </div>
 </div>
 
-<div class="row margin-top-3x">
-  <div class="col-md-12 bootstrap-default container">
-    <div class="alert alert-success" role="alert">
-      <%= t('lodgings_index.carefree_booking') %>
+<% unless @lodging.free_cancelation? %>
+  <div class="row margin-top-3x">
+    <div class="col-md-12 bootstrap-default container">
+      <div class="alert alert-success" role="alert">
+        <%= t('lodgings_index.carefree_booking') %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <div class="col-sm-12 price_box" id="availability-and-prices">
   <%= render 'reservations/standalone_form', lodging: @lodging, reservation: @reservation, id_sufix: '' %>

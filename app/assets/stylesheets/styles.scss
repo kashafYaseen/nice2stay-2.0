@@ -1104,6 +1104,10 @@ figure figcaption {
   background-color: #fafafa !important;
 }
 
+.bg-secondary-dark {
+  background-color: #F5F5F5 !important;
+}
+
 .bg-secondary-2 {
   background-color: #f1f1f1 !important;
 }
@@ -1750,7 +1754,7 @@ h5, .h5 {
 
 h6, .h6 {
   margin-bottom: 12px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 2.0;
 }
@@ -2176,7 +2180,7 @@ select.form-control.form-control-sm:not([size]):not([multiple]) {
 .custom-control .custom-control-label {
   margin: 0;
   padding-left: 0;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: none;
 }
 
@@ -2915,7 +2919,12 @@ button:focus {
 }
 
 .btn-link-secondary {
-  color: #606060;
+  color: #000;
+  border-color: #EAEAEA;
+  border-radius: 0;
+  font-size: 12px;
+  background: white;
+  font-weight: 600;
 }
 
 .btn-link-secondary:hover {
@@ -7167,7 +7176,11 @@ video {
   background-size: cover;
 }
 
-.max-height-230 {
+.max-height-200 {
+  height: 200px;
+}
+
+.max-height-150 {
   height: 150px;
 }
 

@@ -28,9 +28,7 @@
     props: [
       "checkIn",
       "checkOut",
-      "months" ,
-      "checkInTitle",
-      "checkOutTitle",
+      "months",
       "lodgingId",
       "disabledDates",
       "customizedDates",
@@ -60,7 +58,7 @@
         let formattedDates = ''
 
         if (!dateTwo && !dateOne) {
-          formattedDates = `${this.checkInTitle} - ${this.checkOutTitle}`
+          formattedDates = `${I18n.t('search.check_in')} - ${I18n.t('search.check_out')}`
           if (this.highlightOnSelection) {
             $(`#${this.triggerId}`).addClass('btn-outline-primary');
             $(`#${this.triggerId}`).removeClass('btn-primary');
@@ -68,7 +66,7 @@
         }
 
         if (dateOne) {
-          formattedDates = `${format(dateOne, this.dateFormat)} - ${this.checkOutTitle}`
+          formattedDates = `${format(dateOne, this.dateFormat)} - ${I18n.t('search.check_out')}`
           if (this.highlightOnSelection) {
             $(`#${this.triggerId}`).removeClass('btn-outline-primary');
             $(`#${this.triggerId}`).addClass('btn-primary');

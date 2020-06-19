@@ -110,9 +110,9 @@ Rails.application.configure do
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     ignore_crawlers: %w{Googlebot bingbot Applebot SeznamBot SemrushBot AhrefsBot bot Baiduspider YandexBot facebookexternalhit facebot},
     email: {
-      email_prefix: "FE-STAGAING",
-      sender_address: %{"FE-STAGAING" <notifier@nice2stay.com>},
-      exception_recipients: %w{sikandar.tariq@thedevden.co}
+      email_prefix: "Error",
+      sender_address: %{"notifier" <notifier@nice2stay.com>},
+      exception_recipients: %w{ahmad@thedevden.co adnan.ashraf@thedevden.co}
     },
     error_grouping: true
 

@@ -22,13 +22,13 @@
         }
       };
 
+      Translation.init('<%= I18n.default_locale %>', '<%= I18n.locale %>');
       initDatePicker();
       Autocomplete.init("<%= autocompletes_path(locale: locale) %>");
       Custom.init();
 
       <% unless user_signed_in? || session[:asked_for_login] %>
         <% session[:asked_for_login] = true %>
-        Custom.ask_for_login();
       <% end %>
 
       <%= yield :js_init %>

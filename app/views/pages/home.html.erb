@@ -15,7 +15,7 @@
                   <%= form_tag lodgings_path, method: :get, data: { check_in: params[:check_in], check_out: params[:check_out] }, id: 'homepage_search_form' do %>
                     <div class="row">
                       <div class="col-12 pt-3">
-                        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-general', data: { skip_submission: true } %>
+                        <%= text_field_tag :query, params[:query], placeholder: t('usp.search'), class: 'h6 form-control autocomplete autocomplete-field autocomplete-home', data: { skip_submission: true } %>
                       </div>
 
                       <div class="col-6">
@@ -51,13 +51,23 @@
                         </div>
                       </div>
 
+                      <div class="countries-list d-none">
+                        <% @countries_enabled.each do |country| %>
+                          <%= check_box_tag "countries_in[]", country.slug, is_checked?(country.slug, :countries_in), id: "countries_#{country.id}", class: "country" %>
+                        <% end %>
+                      </div>
+
+                      <div class="regions-list d-none">
+                        <% @regions.each do |region| %>
+                          <%= check_box_tag "regions_in[]", region.slug, is_checked?(region.slug, :regions_in), id: "regions_#{region.id}", class: "region" %>
+                        <% end %>
+                      </div>
+
                       <div class="col-12 pr-1">
                         <%= hidden_field_tag :adults, params[:adults], class: 'adults' %>
                         <%= hidden_field_tag :children, params[:children], class: 'children' %>
                         <%= hidden_field_tag :infants, params[:infants], class: 'infants' %>
                         <%= hidden_field_tag :standalone, true %>
-                        <%= hidden_field_tag 'countries_in[]', params[:countries_in], class: 'autocomplete-country' %>
-                        <%= hidden_field_tag 'regions_in[]', params[:regions_in], class: 'autocomplete-region' %>
 
                         <div class="float-left m-2">
                           <%= check_box_tag :flexible_arrival, true, false %>
@@ -226,4 +236,5 @@
 
 <% content_for :js_init do %>
   Lodging.read_more();
+  Home.init("<%= autocompletes_path(locale: locale) %>");
 <% end %>

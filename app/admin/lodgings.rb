@@ -4,8 +4,9 @@ ActiveAdmin.register Lodging do
   filter :name
   filter :slug
   filter :owner, label: 'Partner'
-  filter :region
-  filter :presentation, as: :select
+  filter :country_id_eq, as: :select, collection: Country.all.collect{ |country| [country.name, country.id] }, label: 'Country'
+  filter :published
+  filter :presentation, as: :select, collection: Lodging.presentations
 
   controller do
     def permitted_params
@@ -35,6 +36,9 @@ ActiveAdmin.register Lodging do
     column :total_prices
     column :total_rules
     column :total_children
+    column :created_at
+    column :published
+    column :country
 
     actions
   end
@@ -157,6 +161,7 @@ ActiveAdmin.register Lodging do
         column :start_date
         column :end_date
         column :minimum_stay
+        column :checkin_day
         column :flexible_arrival
 
         column 'Action' do |rule|
@@ -204,6 +209,7 @@ ActiveAdmin.register Lodging do
             column :children
             column :infants
             column :minimum_stay
+            column :checkin
 
             column 'Action' do |price|
               link_to 'Edit Price', edit_admin_price_path(price)

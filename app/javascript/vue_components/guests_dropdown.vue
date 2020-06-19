@@ -12,7 +12,7 @@
             :min="0"
             :max="this.maxAdults"
             :integerOnly="true"
-            :inputClass="inline ? 'vnis__input bg-secondary' : 'vnis__input'"
+            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
             :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :value="this.totalAdults"
             @input="handleAdults"
@@ -23,13 +23,13 @@
 
       <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3">
         <div class="row">
-          <label class="col-6 text-lg pt-2">{{ childrenTitle() }}<br><span class="text-xxs text-capitalize">Ages 2–12</span></label>
+          <label class="col-6 text-lg pt-2">{{ childrenTitle() }}<br><span class="text-xxs text-capitalize">{{ childrenAges() }}</span></label>
           <number-input-spinner
             :min="0"
             :max="this.maxCalculatedChildren"
             :integerOnly="true"
             @input="handleChildren"
-            :inputClass="inline ? 'vnis__input bg-secondary' : 'vnis__input'"
+            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
             :value="this.totalChildren"
             :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :class="inline ? 'mx-auto' : ''"
@@ -45,7 +45,7 @@
             :max="this.maxInfants"
             :integerOnly="true"
             @input="handleInfants"
-            :inputClass="inline ? 'vnis__input bg-secondary' : 'vnis__input'"
+            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
             :value="this.totalInfants"
             :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :class="inline ? 'mx-auto' : ''"
@@ -234,13 +234,16 @@
         }
       },
       adultsTitle() {
-        return this.totalAdults > 1 ? 'adults' : 'adult'
+        return I18n.t('search.adults')
       },
       childrenTitle() {
-        return this.totalChildren > 1 ? 'children' : 'child'
+        return I18n.t('search.children_1')
+      },
+      childrenAges() {
+        return I18n.t('search.child_age');
       },
       infantsTitle() {
-        return this.totalInfants > 1 ? 'infants' : 'infant'
+        return I18n.t('search.babies')
       }
     }
   }

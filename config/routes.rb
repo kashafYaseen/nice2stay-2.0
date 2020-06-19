@@ -3,13 +3,14 @@ Rails.application.routes.draw do
   draw :seo
   draw :sidekiq
 
+  get 'loaderio-b3ee98d7d91b9f0724017998f831caf3', to: 'pages#loader' # This is used for stress testing through loader.io
   get '404', to: 'pages#page_not_found', as: :page_not_found
   devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   localized do
     devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations', sessions: 'users/sessions', passwords: 'users/passwords', invitations: 'users/invitations' }
     devise_for :admin_users, ActiveAdmin::Devise.config
-    ActiveAdmin.routes(self)
+    ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
     draw :api_v2
 
     devise_scope :user do
@@ -74,6 +75,7 @@ Rails.application.routes.draw do
     end
 
     resources :pages, only: [:show]
+    resources :newsletter_subscriptions, only: [:create]
 
     get "dashboard", to: "dashboard#index"
     get '/lodgings/guest_centric', to: "guest_centric_offers#index"

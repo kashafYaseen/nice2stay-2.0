@@ -26,15 +26,15 @@ class UpdateLodgingPrices
         prices.each do |price_range|
           update_arrays(price_range)
           lodging.availabilities_for_range(price_range[:from], price_range[:to]).each do |availability|
-            import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults],
+            import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults], checkin: price_range[:checkin],
               infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
 
             if price_range[:weekly_price].present?
-              import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults],
+              import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults], checkin: price_range[:checkin],
                 infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
           end
-          create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival])
+          create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival], price_range[:checkin])
         end
         Price.import import_list
         true
@@ -58,7 +58,7 @@ class UpdateLodgingPrices
       lodging.prices.reindex
     end
 
-    def create_rule(from, to, minimal_stay, flexible_arrival)
+    def create_rule(from, to, minimal_stay, flexible_arrival, checkin_day)
       from = from.to_date.change(year: 2017) if from.to_date.year == 20117
       to = to.to_date.change(year: 2017) if to.to_date.year == 20117
 
@@ -71,21 +71,40 @@ class UpdateLodgingPrices
       from = from.to_date.change(year: 2020) if from.to_date.year == 0202
       to = to.to_date.change(year: 2020) if to.to_date.year == 0202
 
-      rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to)
+      rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to, checkin_day: checkin_day)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
-      if minimal_stay.map(&:to_i).min == 999
-        rule.minimum_stay = 7
+
+      if rule.flexible_arrival
+        rule.checkin_day = 'any'
       else
-        rule.minimum_stay = minimal_stay.map(&:to_i).min unless rule.minimum_stay.present? && rule.minimum_stay < minimal_stay.map(&:to_i).min
-        rule.minimum_stay = 7 if rule.minimum_stay >= 8
+        rule.checkin_day = checkin_day == 'any' ? lodging.check_in_day : checkin_day
       end
+
+      rule.minimum_stay |= minimal_stay.map(&:to_i)
+      if rule.minimum_stay.min >= 8
+        rule.minimum_stay |= [7]
+        rule.minimum_stay.delete(999)
+      end
+
+      if minimal_stay.map(&:to_i).include?(999) && minimal_stay.length == 1
+        rule.minimum_stay |= [7, 14, 21]
+        rule.minimum_stay.delete(999)
+      end
+      rule.minimum_stay |= [7] if rule.minimum_stay.include?(6) && rule.minimum_stay.include?(8) && rule.minimum_stay.exclude?(7)
+      rule.minimum_stay |= [14] if rule.minimum_stay.include?(13) && rule.minimum_stay.include?(15) && rule.minimum_stay.exclude?(14)
+      rule.minimum_stay = rule.minimum_stay.sort.uniq
       rule.save
     end
 
     def day_price(price_range, available_on)
-      return price_range[:sunday_price] if available_on.wday == 0 && price_range[:sunday_price].present?
-      return price_range[:friday_price] if available_on.wday == 5 && price_range[:friday_price].present?
-      return price_range[:saturday_price] if available_on.wday == 6 && price_range[:saturday_price].present?
+      return price_range[:sunday_price]    if available_on.wday == 0 && price_range[:sunday_price].present?
+      return price_range[:monday_price]    if available_on.wday == 1 && price_range[:monday_price].present?
+      return price_range[:tuesday_price]   if available_on.wday == 2 && price_range[:tuesday_price].present?
+      return price_range[:wednesday_price] if available_on.wday == 3 && price_range[:wednesday_price].present?
+      return price_range[:thursday_price]  if available_on.wday == 4 && price_range[:thursday_price].present?
+      return price_range[:friday_price]    if available_on.wday == 5 && price_range[:friday_price].present?
+      return price_range[:saturday_price]  if available_on.wday == 6 && price_range[:saturday_price].present?
+
       price_range[:minimal_price_per_day] || price_range[:amount]
     end
 

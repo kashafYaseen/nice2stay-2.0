@@ -11,6 +11,7 @@ class Region < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
   translates :name, :content, :slug, :title, :meta_title
+  globalize_accessors
 
   searchkick text_middle: [:name_en, :name_nl]
 
@@ -24,22 +25,14 @@ class Region < ApplicationRecord
   delegate :region_page, to: :lodgings, prefix: true, allow_nil: true
 
   def search_data
-    attributes.merge(**associations_search_data, **translations_search_data)
-  end
-
-  def associations_search_data
-    { country_slug: country_slug, disable: country_disable }
-  end
-
-  def translations_search_data
-    data = {}
-    translations.each do |translation|
-      data.merge!({
-        "title_#{translation.locale}": (translation.title || title),
-        "name_#{translation.locale}": (translation.name || name),
-      })
-    end
-    data
+    attributes.merge(
+      name_en: name_en,
+      name_nl: name_nl,
+      title_en: title_en,
+      title_nl: title_nl,
+      country_slug: country.slug,
+      disable: country_disable,
+    )
   end
 
   def self.names_with_country

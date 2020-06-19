@@ -1,6 +1,6 @@
 <div class="col-md-12">
   <div class="d-flex flex-column py-5 px-5 align-items-center">
-    <p class="text-muted mb-4"><%= @page.content.html_safe %>
+    <p class="text-muted mb-4"><%= @page.content.try(:html_safe) %>
     </p>
   </div>
 </div>

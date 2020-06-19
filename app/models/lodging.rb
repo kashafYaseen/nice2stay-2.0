@@ -56,6 +56,7 @@ class Lodging < ApplicationRecord
   scope :country_page, -> { published.where(country_page: true) }
   scope :guest_centric, -> { published.where(guest_centric: true) }
   scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
+  scope :country_id_eq, -> (country) { joins(:region).where(regions: { country_id: country }) }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -73,6 +74,10 @@ class Lodging < ApplicationRecord
 
   after_create :add_availabilities, if: :published?
   after_create :reindex_prices
+
+  def self.ransackable_scopes(*)
+    %i(country_id_eq)
+  end
 
   def not_available_on
     (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
@@ -175,7 +180,7 @@ class Lodging < ApplicationRecord
   end
 
   def allow_check_in_days
-    days = rules_active(Date.today,Date.today).pluck(:check_in_days).join(',')
+    days = rules_active(Date.today, Date.today).pluck(:check_in_days).join(',')
     days.present? ? days : "All days"
   end
 

@@ -3,7 +3,10 @@
     <h3 class="widget-title text-center"><%= t 'footer.support' %>
     <small><%= t 'footer.support_details' %></small></h3>
 
-    <p class="text-sm mb-4"><%= t 'footer.support_bel' %><span class="text-primary">&nbsp;0031-238447005</span></p>
+    <p class="text-sm mb-1"><a href="mailto:info@nice2stay.com" class="text-info">info@nice2stay.com</a></p>
+
+    <p class="text-sm mb-4"><%= t 'footer.support_bel' %><a class="text-info" href="tel:0031-238447005">0031-238447005</a></p>
+
     <a class="social-button sb-facebook" href="https://www.facebook.com/nice2stay" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">
       <i class="fab fa-facebook-f"></i>
     </a>
@@ -12,9 +15,6 @@
       <i class="fab fa-pinterest"></i>
     </a>
 
-    <a class="social-button sb-twitter" href="https://twitter.com/nice2stay" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
-      <i class="fab fa-twitter"></i>
-    </a>
     <a class="social-button sb-instagram" href="https://www.instagram.com/nice2stay/" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram">
       <i class="fab fa-instagram"></i>
     </a>
@@ -27,14 +27,17 @@
       <%= t 'footer.newsletter' %><small><%= t 'footer.newsletter_details' %></small>
     </h3>
 
-    <form class="subscribe-form input-group" action="//rokaux.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;id=1194bb7544" method="post" target="_blank" novalidate=""><span class="input-group-btn">
-      <button type="submit"><i class="material-icons send"></i></button></span>
-      <input class="form-control" type="email" name="EMAIL" placeholder="Your e-mail">
-      <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <%= form_for :newsletter_subscription, url: newsletter_subscriptions_path, html: { class: 'subscribe-form input-group', novalidate: '' }, method: :post do |f| %>
+      <span class="input-group-btn">
+        <button type="submit"><i class="material-icons send"></i></button>
+      </span>
+
+      <%= f.email_field :email, class: 'form-control', placeholder: 'Your e-mail' %>
+
       <div style="position: absolute; left: -5000px;" aria-hidden="true">
         <input type="text" name="b_c7103e2c981361a6639545bd5_1194bb7544" tabindex="-1" value="">
       </div>
-    </form>
+    <% end %>
   </div>
 
   <div class="column">

@@ -39,6 +39,7 @@
     for amenity in $('.amenities-hot-list input:checked')
       params += "&amenities_in[]=#{$(amenity).val()}"
 
-    window.history.pushState(history.state, null, "#{base_url}?#{params}");
+    window.history.replaceState(history.state, null, "#{base_url}?#{params}");
+
 
 ).call this

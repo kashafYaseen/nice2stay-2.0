@@ -14,7 +14,7 @@ class Reservation < ApplicationRecord
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
-  delegate :active, to: :rules, prefix: true, allow_nil: true
+  delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
   delegate :email, :full_name, to: :user, prefix: true
@@ -115,18 +115,22 @@ class Reservation < ApplicationRecord
     def accommodation_rules
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       nights = (check_out - check_in).to_i
-      active_rules = rules_active(check_in, check_out)
+      active_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
       if active_rules.present?
+        count = 0
         active_rules.each do |rule|
-          errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || rule.flexible_arrival
-          errors.add(:base, "The stay should be of #{rule.minimum_stay} or more nights") if rule.minimum_stay.present? && nights < rule.minimum_stay
-          errors.add(:check_in, "and checkout must be on #{lodging.check_in_day.try(:titleize)}") unless nights % 7 == 0 || rule.flexible_arrival
+          if (rule.checkin_day.present? && rule.checkin_day != check_in.strftime("%A").downcase && !rule.any?) || (rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights))
+            count += 1
+          end
+        end
+        if count == active_rules.length
+          errors.add(:check_in, rules_validation_message(check_in, check_out))
         end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
-        errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0
+        errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || lodging.flexible_arrival
       end
     end
 
@@ -144,9 +148,18 @@ class Reservation < ApplicationRecord
       update_columns rent: rent, total_price: (rent - discount.to_f)
     end
 
-    def send_reservation_details
-      SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
+    def rules_validation_message check_in, check_out
+      message = " days should be"
+      rules.active(check_in, check_out).each_with_index do |rule, index|
+        day = rule.any? ? 'any day' : rule.checkin_day
+        message += "#{',' if index > 0} #{day.try(:upcase)} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
+      end
+      message
     end
+
+    # def send_reservation_details
+    #   SendBookingDetailsJob.perform_later(self.booking_id) unless skip_data_posting || in_cart
+    # end
 
     def send_reservation_removal_details
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart

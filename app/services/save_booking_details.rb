@@ -35,11 +35,13 @@ class SaveBookingDetails
         lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
         reservation.lodging = lodging
 
-        if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled?
+        if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled? && !booking.rebooking_approved?
           lodging.availabilities.check_out_only!(reservation.check_in)
           lodging.availabilities.where(available_on: (reservation.check_in+1.day..reservation.check_out-1.day).map(&:to_s)).destroy_all
           lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
         end
+
+       add_availabilities(reservation.check_in, reservation.check_out, lodging) if booking.rebooking_approved?
 
         next unless reservations_attribute[:review_attributes].present?
         review = reservation.review || reservation.build_review
@@ -83,6 +85,8 @@ class SaveBookingDetails
         :final_payment_till,
         :free_cancelation_till,
         :free_cancelation,
+        :rebooked,
+        :rebooking_approved,
       )
     end
 
@@ -160,5 +164,15 @@ class SaveBookingDetails
     def created_by value
       return value if Booking.created_bies.keys.include?(value)
       'nice2stay'
+    end
+
+    def add_availabilities check_in, check_out, lodging
+      a = Availability.find_or_create_by(available_on: check_in, lodging_id: lodging.id)
+      a.check_out_only = false
+      a.save
+      dates = (check_in + 1.day..check_out).map(&:to_s)
+      dates.each do |date|
+        a = Availability.find_or_create_by(available_on: date, lodging_id: lodging.id)
+      end
     end
 end

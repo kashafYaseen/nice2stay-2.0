@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_090729) do
+ActiveRecord::Schema.define(version: 2020_05_06_113655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,8 @@ ActiveRecord::Schema.define(version: 2020_03_12_090729) do
     t.date "final_payment_till"
     t.date "free_cancelation_till"
     t.boolean "free_cancelation", default: false
+    t.boolean "rebooked", default: false
+    t.boolean "rebooking_approved", default: false
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -626,6 +628,13 @@ ActiveRecord::Schema.define(version: 2020_03_12_090729) do
     t.string "name"
   end
 
+  create_table "newsletter_subscriptions", force: :cascade do |t|
+    t.string "email"
+    t.string "language"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "read_at"
@@ -711,6 +720,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_090729) do
     t.string "images", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "private", default: false
   end
 
   create_table "place_categories", force: :cascade do |t|
@@ -809,6 +819,7 @@ ActiveRecord::Schema.define(version: 2020_03_12_090729) do
     t.text "children", default: [], array: true
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
+    t.integer "checkin", default: 0
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
@@ -925,7 +936,8 @@ ActiveRecord::Schema.define(version: 2020_03_12_090729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "flexible_arrival", default: false
-    t.integer "minimum_stay"
+    t.integer "minimum_stay", default: [], array: true
+    t.string "checkin_day"
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
   end
 

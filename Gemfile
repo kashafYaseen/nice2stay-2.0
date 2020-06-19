@@ -55,6 +55,7 @@ gem 'premailer-rails'
 gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
+gem "i18n-js"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -87,6 +88,7 @@ group :development do
   gem 'capistrano3-puma',    require: false
   gem 'capistrano-db-tasks', require: false
   gem 'bullet'
+  gem 'rb-readline'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -120,3 +122,5 @@ gem "chartkick"
 gem 'groupdate'
 gem 'activerecord-import', '~> 0.15.0'
 gem 'globalize-accessors'
+gem 'newrelic_rpm'
+gem 'rack-cors'

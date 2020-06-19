@@ -7,3 +7,7 @@
 <% else %>
   <%= render 'lodgings/show/standalone' %>
 <% end %>
+
+<%= content_for :js_init do %>
+  Filters.switch_view('list-view');
+<% end %>
