@@ -1,5 +1,5 @@
 <div class="<%= item_columns %> lodging-container" data-lodging-id="<%= lodging.id %>" id="lodging-<%= lodging.id %>" data-cumulative-url="<%= cumulative_price_lodgings_path %>" >
-<div class="persisted-data" data-url="<%= price_details_lodging_path(lodging) %>" data-quick-view="<%= quick_view_lodging_path(lodging) %>" data-validate-url="<%= validate_reservations_path %>"></div>
+  <div class="persisted-data" data-url="<%= price_details_lodging_path(lodging) %>" data-quick-view="<%= quick_view_lodging_path(lodging) %>" data-validate-url="<%= validate_reservations_path %>"></div>
 
   <div class="card">
     <div class="card-body bg-white">
@@ -41,7 +41,6 @@
                 <div class="for-list-view">
                   <div class="price-details-box-<%= lodging.id %>">
                     <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
-
                     <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
                   </div>
 
@@ -92,7 +91,6 @@
                 <div class="for-grid-view d-none">
                   <div class="price-details-box-<%= lodging.id %>">
                     <div id="price-loader-<%= lodging.id %>" class="price-loader"><%= image_tag 'loader.gif', class: 'w-25' %></div>
-
                     <%= render_price(lodging.calculated_price, lodging.dynamic_price) if lodging.calculated_price.present? %>
                   </div>
 
