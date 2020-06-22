@@ -90,6 +90,6 @@ staging:
   <<: *default
   database: nice2stay_staging
   pool: 50
-  host: 'localhost'
+  host:
   username: deploy
-  password: 'n!c32stay'
+  password:
