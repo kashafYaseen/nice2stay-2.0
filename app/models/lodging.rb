@@ -179,11 +179,6 @@ class Lodging < ApplicationRecord
     self.dynamic_price = true
   end
 
-  def temporary_cumulative_price(params)
-    self.calculated_price = price.to_f.round(2)
-    return self.dynamic_price = false
-  end
-
   def allow_check_in_days
     days = rules_active(Date.today, Date.today).pluck(:check_in_days).join(',')
     days.present? ? days : "All days"
