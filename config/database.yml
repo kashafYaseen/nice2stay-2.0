@@ -92,4 +92,4 @@ staging:
   pool: 50
   host: 'localhost'
   username: deploy
-  password: <%= ENV['NICE2STAY_DATABASE_PASSWORD'] %>
+  password: 'n!c32stay'
