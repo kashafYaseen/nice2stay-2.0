@@ -90,6 +90,6 @@ staging:
   <<: *default
   database: nice2stay_staging
   pool: 50
-  host:
-  username: deploy
-  password:
+  host: 'localhost'
+  username: geosearch
+  password: <%= ENV['NICE2STAY_DATABASE_PASSWORD'] %>
