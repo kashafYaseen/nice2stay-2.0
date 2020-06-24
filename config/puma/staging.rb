@@ -1,12 +1,12 @@
-directory '/home/deploy/hidden-sun-3354/current'
-rackup "/home/deploy/hidden-sun-3354/current/config.ru"
+directory '/home/deploy/nice2stay/current'
+rackup "/home/deploy/nice2stay/current/config.ru"
 environment 'staging'
 
-pidfile "/home/deploy/hidden-sun-3354/shared/tmp/pids/puma.pid"
-state_path "/home/deploy/hidden-sun-3354/shared/tmp/pids/puma.state"
-stdout_redirect '/home/deploy/hidden-sun-3354/shared/log/puma_error.log', '/home/deploy/hidden-sun-3354/shared/log/puma_access.log', true
+pidfile "/home/deploy/nice2stay/shared/tmp/pids/puma.pid"
+state_path "/home/deploy/nice2stay/shared/tmp/pids/puma.state"
+stdout_redirect '/home/deploy/nice2stay/shared/log/puma_error.log', '/home/deploy/nice2stay/shared/log/puma_access.log', true
 
-bind 'unix:///home/deploy/hidden-sun-3354/shared/tmp/sockets/geolocation-puma.sock'
+bind 'unix:///home/deploy/nice2stay/shared/tmp/sockets/geolocation-puma.sock'
 
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
