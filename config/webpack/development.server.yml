@@ -12,6 +12,10 @@ test:
   <<: *default
   enabled: false
 
+staging:
+  <<: *default
+  enabled: false
+
 production:
   <<: *default
   enabled: false
