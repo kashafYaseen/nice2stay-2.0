@@ -29,5 +29,8 @@ test:
   <<: *default
   manifest: manifest-test.json
 
+staging:
+  <<: *default
+
 production:
   <<: *default
