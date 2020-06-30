@@ -3,7 +3,7 @@ lock "~> 3.11.0"
 server '149.210.238.137', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:remcoz/geolocation.git'
-set :branch,          :staging
+set :branch,          ENV.fetch("BRANCH", "staging")
 set :application,     'geolocation'
 set :user,            'deploy'
 set :puma_threads,    [2, 8]
