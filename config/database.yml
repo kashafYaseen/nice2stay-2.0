@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: geosearch_production
+  database: nice2stay_production
   pool: 50
   host: 'localhost'
   username: geosearch
