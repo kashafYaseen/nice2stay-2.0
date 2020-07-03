@@ -1,0 +1,20 @@
+<div class="col-md-12">
+  <% if booking_expert.present? && booking_expert['response'].present? %>
+    <% booking_expert['response']['hotels'].each do |hotel| %>
+      <% if hotel['offers'].present? %>
+        <% hotel['offers'].each_with_index do |child, index| %>
+          <%= render 'lodgings/booking_expert_child', child: child, lodging: lodging, index: index %>
+        <% end %>
+      <% else %>
+        <p>No Offer/Room Found! Please select different dates & guest details and try again.</p>
+      <% end %>
+    <% end %>
+  <% else %>
+    <% if booking_expert.present? && booking_expert['error_message'].present? %>
+      <p><%= booking_expert['error_message'] %></p>
+      <p>Please select different dates & guest details and try again.</p>
+    <% else %>
+      <p>Please select dates & guest details.</p>
+    <% end %>
+  <% end %>
+</div>

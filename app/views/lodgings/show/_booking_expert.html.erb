@@ -79,7 +79,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 p-2 margin-top-1x bg-white">
-        <%= render 'reservations/guest_centric_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
+        <%= render 'reservations/booking_expert_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
       </div>
 
       <div class="col-md-9 margin-top-1x padding-bottom-2x bg-white">
@@ -94,8 +94,8 @@
           </div>
         </div>
 
-        <div id="guest_centric_offers">
-          <%= render 'guest_centric', lodging: @lodging, guest_centric: @guest_centric %>
+        <div id="booking_expert_lodgings">
+          <%= render 'booking_expert', lodging: @lodging, booking_expert: @booking_expert %>
         </div>
       </div>
     </div>
@@ -247,7 +247,7 @@
   initDatePicker();
   OwlCarousel.init();
   Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
-  GuestCentric.init();
+  BookingExpert.init();
   $('#loader').hide();
   $('.price-loader').hide();
 <% end %>

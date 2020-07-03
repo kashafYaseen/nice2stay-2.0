@@ -1,0 +1,7 @@
+$('#booking_expert_lodgings').html("<%= j render 'lodgings/booking_expert', lodging: @lodging, booking_expert: @booking_expert %>");
+OwlCarousel.init();
+$('#loader').hide();
+$('.checkbox-toggler').bootstrapToggle()
+$('[data-toggle="tooltip"]').tooltip();
+if($('.btn-offer-filter').length == 0)
+  $('.filter-title').addClass('d-none');

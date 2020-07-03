@@ -1,0 +1,137 @@
+<div class="modal fade guest-centric-modal" id="offers-modal-<%= child['offer'].gsub('.', '-') %>" tabindex="-1">
+  <div class="modal-dialog modal-xlg">
+    <div class="modal-content">
+      <div class="modal-body p-0 pl-3">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="text-sm">
+              <div>
+                <h4 class="modal-title"><%= child['name'] %></h4>
+                <hr class="mt-2 mb-3">
+              </div>
+
+              <ul class="nav nav-tabs justify-content-start ml-0" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#photos-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.photos') %></a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#description-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.description') %></a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#policy-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.policy') %></a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#terms-tab-<%= child['beid'] %>" data-toggle="tab" role="tab"><%= t('guest_centric.payment') %></a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="photos-tab-<%= child['beid'] %>" role="tabpanel">
+                  <% if lodging_child.present? %>
+                    <div class="owl-carousel">
+                      <%= render_modal_slider_images lodging_child, class: "card-img-top item" %>
+                    </div>
+                  <% else %>
+                    <div class="owl-carousel">
+                      <%= render_guest_centric_images child, class: "modal-slider-img" %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="tab-pane fade show" id="description-tab-<%= child['beid'] %>" role="tabpanel">
+                  <div id="guest-centric-child-description">
+                    <p>Max: <%= "Adults #{child['MaxAdults']} - Children #{child['MaxChildren']}" %></p>
+
+                    <% if lodging_child.present? %>
+                      <p><%= lodging_child.short_desc.try(:html_safe) %></p>
+                    <% else %>
+                      <p><%= child['longDescription'].try(:html_safe) %></p>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade show" id="policy-tab-<%= child['beid'] %>" role="tabpanel">
+                  <%= cancel_policy %>
+                </div>
+
+                <div class="tab-pane fade show" id="terms-tab-<%= child['beid'] %>" role="tabpanel">
+                  <% if lodging_child.present? %>
+                    <p><%= lodging_child.payment_terms_text.try(:html_safe) %></p>
+                  <% end %>
+                </div>
+              </div>
+            </p>
+          </div>
+
+          <div class="col-md-6 price_box bg-white">
+            <h5><%= t('guest_centric.reservation_summary') %></h5>
+            <div class="rates row pl-2 mb-3"></div>
+
+            <div class="row p-2 mt-5">
+              <span class="col-md-8 text-left border-bottom border-black p-0">
+                <%= t('guest_centric.total_for_stay') %>
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black">
+                €<%= child['netValue'] %>
+              </span>
+            </div>
+
+            <div class="row row pl-2 pr-2 pt-0 meal-details">
+              <span class="col-md-8 text-left border-bottom border-black p-0 meal-title">
+                <%= render_meal_title(reservation.meal_id) %>
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black meal-price">
+                €<%= reservation.meal_price %>
+              </span>
+            </div>
+
+            <div class="row row pl-2 pr-2 pt-0">
+              <span class="col-md-8 text-left border-bottom border-black p-0">
+                <%= t('guest_centric.tax') %>
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black taxes">
+                €<%= child['tax'] %>
+              </span>
+            </div>
+
+            <div class="row row pl-2 pr-2 pt-0">
+              <span class="col-md-8 text-left border-bottom border-black p-0">
+                <%= t('guest_centric.additional_fee') %>
+              </span>
+
+              <span class="col-md-4 text-right border-bottom border-black">
+                €<%= child['additionalFees'] %>
+              </span>
+            </div>
+
+            <div class="row p-2 mb-5">
+              <span class="col-md-8 text-left p-0">
+                <%= t('guest_centric.total') %>
+              </span>
+
+              <span class="col-md-4 text-right price">
+                €<%= child['total'] %>
+              </span>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 p-0">
+                <%= button_tag class: "btn btn-primary btn-booking btn-md float-right", id: "cart-#{lodging.id}", data: { form_id: "#new_reservation_#{lodging.id}#{index}" }, value: "cart" do %>
+                  <i class="material-icons add_shopping_cart"></i>&nbsp; Add To Cart
+                <% end %>
+
+                <button class="close float-right btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

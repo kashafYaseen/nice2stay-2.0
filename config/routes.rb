@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       get :quick_view, on: :member
       get :cumulative_price, on: :collection
       get :calendar, on: :member
+      resources :booking_expert_lodgings, only: [:show]
     end
     resource :carts do
       get :remove, on: :member
