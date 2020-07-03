@@ -109,6 +109,16 @@ class Lodging < ApplicationRecord
     result['response'].collect { |r| r['day'] if r['value'].to_f <= 0 }.compact rescue []
   end
 
+  def booking_expert_not_available_on
+    availabilities = GetBookingExpertAvailabilities.call(self).pluck(:start_date)
+    disable_dates, date = [], Date.today
+    availabilities.length.times do
+      disable_dates << date.to_s unless availabilities.include? date.to_s
+      date = date.next
+    end
+    disable_dates
+  end
+
   def address
     [street, city, zip, state].compact.join(", ")
   end
