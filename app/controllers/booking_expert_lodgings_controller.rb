@@ -7,7 +7,7 @@ class BookingExpertLodgingsController < ApplicationController
   end
 
   def show
-    @booking_expert = GetBookingExpertAvailabilities.call(@lodging, params[:reservation].merge(locale: locale))
+    @be_availabilities = GetBookingExpertAvailabilities.call(@lodging, params[:reservation])
     @reservation = @lodging.reservations.build(reservation_params)
   end
 

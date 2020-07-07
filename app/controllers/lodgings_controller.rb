@@ -35,7 +35,7 @@ class LodgingsController < ApplicationController
       @disable_dates = @lodging.gc_not_available_on(params)
       @check_in = @lodging.first_available_date(@disable_dates)
     elsif @lodging.booking_expert?
-      @disable_dates = @lodging.booking_expert_not_available_on
+      @disable_dates = @lodging.be_not_available_on
       @check_in = @lodging.first_available_date(@disable_dates)
     end
   end

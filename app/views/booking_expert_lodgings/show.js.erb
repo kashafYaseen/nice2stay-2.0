@@ -1,4 +1,4 @@
-$('#booking_expert_lodgings').html("<%= j render 'lodgings/booking_expert', lodging: @lodging, booking_expert: @booking_expert %>");
+$('#booking_expert_lodgings').html("<%= j render 'lodgings/booking_expert', lodging: @lodging, be_availabilities: @be_availabilities %>");
 OwlCarousel.init();
 $('#loader').hide();
 $('.checkbox-toggler').bootstrapToggle()
