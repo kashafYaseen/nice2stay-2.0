@@ -186,6 +186,7 @@ GEM
     crass (1.0.4)
     css_parser (1.7.0)
       addressable
+    csv (3.1.5)
     device_detector (1.0.2)
     devise (4.4.3)
       bcrypt (~> 3.0)
@@ -511,6 +512,7 @@ DEPENDENCIES
   chartkick
   chosen-rails
   coffee-rails (~> 4.2)
+  csv
   devise (~> 4.4)
   devise-bootstrapped!
   devise-i18n
