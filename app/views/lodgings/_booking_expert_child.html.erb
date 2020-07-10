@@ -33,16 +33,13 @@
         <div class="col-md-4 col-border bg-white text-sm border-right">
           <%= render 'booking_expert_lodgings/modal', be_availability: be_availability, reservation: @reservation, child_lodging: child_lodging, index: index %>
 
-          <label
-            class="col-md-12 offer-item parent-<%= be_availability['id'] %>"
-            data-submit="#new_reservation_<%= "#{child_lodging.id}#{be_availability['id']}#{index}" %>"
-          >
+          <div class="col-md-12">
             <div class="mt-3">
               <span class="">
                 <%= "#{be_availability['attributes']['los']} #{be_availability['attributes']['los'] > 1 ? 'nights' : 'night'}" %>
               </span>
 
-              <span class="float-right"><%= "€ #{be_availability['attributes']['rent_price']}" %></span>
+              <span class="float-right"><%= "€ #{be_availability['attributes']['rent_price'].round(2)}" %></span>
             </div>
 
             <div class="row">
@@ -51,24 +48,24 @@
               </span>
 
               <span class="col-md-4 text-right">
-                € <%= (be_availability['attributes']['original_price'].to_f - be_availability['attributes']['original_rent_price'].to_f).round 2 %>
+                € <%= (be_availability['attributes']['original_price'].to_f - be_availability['attributes']['original_rent_price'].to_f).round(2) %>
               </span>
             </div>
 
             <div class="mt-3">
               <span class="text-bold">Total</span> <%= link_to "(#{t('guest_centric.price_details')})", '#', data: { target: "#be-lodging-modal-#{be_availability['id']}", toggle: 'modal' }, class: 'be-modal-btn text-xs text-info' %>
 
-              <span class="float-right offer-price text-bold <%= be_availability['id'] %>"><%= "€ #{be_availability['attributes']['original_price']}" %></span>
+              <span class="float-right text-bold"><%= "€ #{be_availability['attributes']['original_price'].round(2)}" %></span>
             </div>
 
             <%= link_to new_wishlist_path({ wishlist: { lodging_id: child_lodging.id } }), remote: true, class: 'col-md-2 my-auto pl-0 no-decoration' do %>
               <i class="fal fa-heart fa-1x"></i>
             <% end %>
 
-            <%= button_tag class: "btn btn-primary #{child_lodging.present? ? 'col-md-9' : 'col-md-12'} btn-booking btn-#{be_availability['id']}", id: "cart-#{child_lodging.id}", data: { form_id: "#new_reservation_#{child_lodging.id}#{be_availability['id']}#{index}" }, value: "cart" do %>
+            <%= button_tag class: "btn btn-primary col-md-9 btn-booking", id: "cart-#{child_lodging.id}", data: { form_id: "#new_reservation_#{child_lodging.id}_#{be_availability['id']}_#{index}" }, value: "cart" do %>
               <i class="material-icons add_shopping_cart"></i>&nbsp; Add to Cart
             <% end %>
-          </label>
+          </div>
         </div>
       </div>
     </div>
@@ -80,8 +77,6 @@
     <%= f.hidden_field :infants, value: (get_booking_expert_param(:infants) || f.object.infants), id: "infants_#{child_lodging.id}", class: 'infants' %>
     <%= f.hidden_field :rooms, value: get_booking_expert_param(:rooms), id: "rooms_#{child_lodging.id}", class: 'rooms' %>
     <%= f.hidden_field :lodging_id, value: child_lodging.id, id: "lodging_id_#{child_lodging.id}", class: 'gc-child-id' %>
-    <%= f.hidden_field :offer_id, class: 'offer-id' %>
-    <%= f.hidden_field :gc_policy, class: 'guest-centric-policy' %>
     <%= f.hidden_field :rent, class: 'offer-rent' %>
     <%= f.hidden_field :meal_price, class: 'meal-price' %>
     <%= f.hidden_field :meal_tax, class: 'meal-tax' %>

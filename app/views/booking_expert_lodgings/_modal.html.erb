@@ -60,7 +60,9 @@
 
           <div class="col-md-6 price_box bg-white">
             <h5><%= t('guest_centric.reservation_summary') %></h5>
-            <div class="rates row pl-2 mb-3"></div>
+            <div class="row pl-2 mb-3">
+              <%= render "booking_expert_lodgings/rate", reservation: @reservation, be_availability: be_availability %>
+            </div>
 
             <div class="row p-2 mt-5">
               <span class="col-md-8 text-left border-bottom border-black p-0">
@@ -68,7 +70,7 @@
               </span>
 
               <span class="col-md-4 text-right border-bottom border-black">
-                € <%= be_availability['attributes']['original_rent_price'] %>
+                € <%= be_availability['attributes']['original_rent_price'].round(2) %>
               </span>
             </div>
 
@@ -88,7 +90,7 @@
               </span>
 
               <span class="col-md-4 text-right price">
-                € <%= be_availability['attributes']['original_price'] %>
+                € <%= be_availability['attributes']['original_price'].round(2) %>
               </span>
             </div>
 
