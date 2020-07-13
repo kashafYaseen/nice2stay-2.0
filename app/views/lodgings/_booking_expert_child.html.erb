@@ -70,19 +70,14 @@
       </div>
     </div>
 
-    <%= f.hidden_field :check_in, value: get_booking_expert_param(:check_in), id: "check_in_#{child_lodging.id}", class: 'check_in' %>
-    <%= f.hidden_field :check_out, value: get_booking_expert_param(:check_out), id: "check_out_#{child_lodging.id}", class: 'check_out' %>
-    <%= f.hidden_field :adults, value: no_of_adults(get_booking_expert_param(:adults) || f.object.adults), id: "adults_#{child_lodging.id}", class: 'adults' %>
-    <%= f.hidden_field :children, value: (get_booking_expert_param(:children) || f.object.children), id: "children_#{child_lodging.id}", class: 'children' %>
-    <%= f.hidden_field :infants, value: (get_booking_expert_param(:infants) || f.object.infants), id: "infants_#{child_lodging.id}", class: 'infants' %>
-    <%= f.hidden_field :rooms, value: get_booking_expert_param(:rooms), id: "rooms_#{child_lodging.id}", class: 'rooms' %>
-    <%= f.hidden_field :lodging_id, value: child_lodging.id, id: "lodging_id_#{child_lodging.id}", class: 'gc-child-id' %>
-    <%= f.hidden_field :rent, class: 'offer-rent' %>
-    <%= f.hidden_field :meal_price, class: 'meal-price' %>
-    <%= f.hidden_field :meal_tax, class: 'meal-tax' %>
-    <%= f.hidden_field :tax, class: 'total-tax' %>
-    <%= f.hidden_field :additional_fee, class: 'additional-fee' %>
-    <%= f.hidden_field :room_type, class: 'room-type' %>
-    <%= hidden_field_tag :target_modal %>
+    <%= f.hidden_field :check_in, value: get_booking_expert_param(:check_in) %>
+    <%= f.hidden_field :check_out, value: get_booking_expert_param(:check_out) %>
+    <%= f.hidden_field :adults, value: no_of_adults(get_booking_expert_param(:adults) || f.object.adults) %>
+    <%= f.hidden_field :children, value: (get_booking_expert_param(:children) || f.object.children) %>
+    <%= f.hidden_field :infants, value: (get_booking_expert_param(:infants) || f.object.infants) %>
+    <%= f.hidden_field :rooms, value: get_booking_expert_param(:rooms) %>
+    <%= f.hidden_field :lodging_id, value: child_lodging.id %>
+    <%= f.hidden_field :rent, value: get_booking_expert_billing(be_availability) %>
+    <%= f.hidden_field :additional_fee, value: get_booking_expert_billing('add_fee', be_availability) %>
   <% end %>
 <% end %>
