@@ -77,6 +77,7 @@
     <%= f.hidden_field :infants, value: (get_booking_expert_param(:infants) || f.object.infants) %>
     <%= f.hidden_field :rooms, value: get_booking_expert_param(:rooms) %>
     <%= f.hidden_field :lodging_id, value: child_lodging.id %>
+    <%= f.hidden_field :be_category_id, value: child_lodging.be_category_id %>
     <%= f.hidden_field :rent, value: get_booking_expert_billing(be_availability) %>
     <%= f.hidden_field :additional_fee, value: get_booking_expert_billing('add_fee', be_availability) %>
   <% end %>

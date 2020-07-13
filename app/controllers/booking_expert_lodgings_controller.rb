@@ -28,6 +28,7 @@ class BookingExpertLodgingsController < ApplicationController
         :check_in,
         :check_out,
         :lodging_id,
+        :be_category_id,
         :adults,
         :children,
         :infants,

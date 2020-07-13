@@ -11,6 +11,7 @@
         <% if reservation.check_in == be_availability['attributes']['start_date'].to_date && reservation.check_out == be_availability['attributes']['start_date'].to_date + be_availability['attributes']['los'].day %>
           <%= render 'lodgings/booking_expert_child', be_availability: be_availability, child_lodging: child_lodging, index: index %>
         <% else %>
+          <% count += 1 %>
         <% end %>
       <% end %>
     <% end %>

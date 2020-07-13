@@ -8,7 +8,7 @@ module BookingExpertHelper
   end
 
   def get_booking_expert_billing(key = 'rent', be_availability)
-    return be_availability['attributes']['rent_price'] if key == 'rent'
-    be_availability['attributes']['original_price'].to_f - be_availability['attributes']['original_rent_price'].to_f
+    return be_availability['attributes']['original_rent_price'] if key == 'rent'
+    (be_availability['attributes']['original_price'].to_f - be_availability['attributes']['original_rent_price'].to_f)
   end
 end

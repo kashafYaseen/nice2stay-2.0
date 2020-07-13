@@ -5,7 +5,7 @@ class CartsController < ApplicationController
   before_action :set_booking_details, only: [:details]
 
   def show
-    @guest_centric = @booking.reservations.guest_centric.present?
+    @channel_manager = @booking.reservations.guest_centric.present? || @booking.reservations.booking_expert.present?
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
   end
 
