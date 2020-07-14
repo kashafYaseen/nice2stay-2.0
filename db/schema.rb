@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_13_093438) do
+ActiveRecord::Schema.define(version: 2020_07_14_125152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -891,6 +891,8 @@ ActiveRecord::Schema.define(version: 2020_07_13_093438) do
     t.string "room_type"
     t.text "gc_policy"
     t.string "be_category_id"
+    t.string "channel_manager_booking_id"
+    t.text "channel_manager_errors"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
