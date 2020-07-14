@@ -938,6 +938,9 @@ nl:
     tax: Belasting
     additional_fee: Additional fee
 
+  booking_expert:
+    additional_fee_with_tax: Additional Fee (Inc. Belastingen)
+
   trip:
     name: naam
     budget: budget

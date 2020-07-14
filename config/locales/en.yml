@@ -749,6 +749,9 @@ of the accommodation."
     tax: Tax
     additional_fee: Additional fee
 
+  booking_expert:
+    additional_fee_with_tax: Additional Fee (Inc. Taxes)
+
   trip:
     name: name
     budget: budget
