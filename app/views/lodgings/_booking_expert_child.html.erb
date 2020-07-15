@@ -39,7 +39,7 @@
                 <%= "#{be_availability['attributes']['los']} #{be_availability['attributes']['los'] > 1 ? 'nights' : 'night'}" %>
               </span>
 
-              <span class="float-right"><%= "€ #{be_availability['attributes']['rent_price'].round(2)}" %></span>
+              <span class="float-right"><%= "€ #{be_availability['attributes']['original_rent_price'].round(2)}" %></span>
             </div>
 
             <div class="row">

@@ -9,6 +9,7 @@ class BookingExpertLodgingsController < ApplicationController
 
   def rates
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
+    @reservation.total_price = @reservation.rent + @reservation.additional_fee
 
     if params['button'] == 'cart'
       @reservation.save(validate: false)
