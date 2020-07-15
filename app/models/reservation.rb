@@ -10,7 +10,7 @@ class Reservation < ApplicationRecord
   validate :accommodation_rules
 
   after_validation :update_lodging_availability
-  after_commit :send_reservation_details
+  # after_commit :send_reservation_details
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
