@@ -18,5 +18,9 @@
     <%= render_reservation_type t("bookings.#{reservation.booking_status}") %>
   </td>
 
-  <td class="align-middle"><span class="text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span></td>
+  <% if reservation.booking_expert? %>
+    <td class="align-middle"><span class="text-medium"><%= render_rounded_price reservation.total_price %></span></td>
+  <% else %>
+    <td class="align-middle"><span class="text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span></td>
+  <% end %>
 </tr>
