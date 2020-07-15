@@ -52,11 +52,15 @@ class Booking < ApplicationRecord
   end
 
   def pre_payment_amount
-    reservations.sum(:rent) * 0.3
+    reservations.inject(0) do |sum, reservation|
+      reservation.booking_expert? ? sum += reservation.total_price : sum += reservation.rent
+    end * 0.3
   end
 
   def final_payment_amount
-    reservations.sum(:rent) * 0.7
+    reservations.inject(0) do |sum, reservation|
+      reservation.booking_expert? ? sum += reservation.total_price : sum += reservation.rent
+    end * 0.7
   end
 
   def step_passed?(step)
