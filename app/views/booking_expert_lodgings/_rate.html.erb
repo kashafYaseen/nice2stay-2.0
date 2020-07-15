@@ -34,6 +34,6 @@
   </span>
 
   <span class="col-md-6 border-bottom border-black">
-    <b>€<%= (reservation.rent / reservation.total_nights).round(2) if reservation.total_nights.to_i > 0 %></b>
+    <b>€<%= (be_availability['attributes']['original_rent_price'] / reservation.total_nights).round(2) if reservation.total_nights.to_i > 0 %></b>
   </span>
 </div>

@@ -82,6 +82,49 @@
       </div>
     </div>
   </div>
+<% elsif reservation.booking_expert? %>
+  <div class="mb-3">
+    <span class="text-bold"><%= t('bookings.instant_booking') %></span><br>
+    <span class="text-xs"><%= t('bookings.instant') %></span>
+  </div>
+
+  <div class="row row border-grey border-bottom mb-5">
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          <%= "#{reservation.rooms} #{'Room'.pluralize reservation.rooms}" %>
+        </span>
+
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price reservation.rent %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          <%= t('booking_expert.additional_fee_with_tax') %>
+        </span>
+
+        <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+          <%= render_rounded_price reservation.tax_and_additional_fee %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+          <%= t('cart.total_charges') %>
+        </span>
+
+        <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
+          <%= render_rounded_price (reservation.rent + reservation.tax_and_additional_fee) %>
+        </span>
+      </div>
+    </div>
+  </div>
 <% else %>
   <% if reservation.option? %>
     <div class="mb-3">

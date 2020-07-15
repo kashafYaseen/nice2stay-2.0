@@ -1,15 +1,25 @@
 <div class="col-md-12">
   <% if be_availabilities.present? && be_availabilities['data'].present? %>
+    <% count = 0 %>
+
     <% be_availabilities['data'].each do |be_availability, index| %>
       <% child_lodging = get_be_lodging(be_availability) %>
-      <% next if child_lodging.nil? %>
-      <%= render 'lodgings/booking_expert_child', be_availability: be_availability, child_lodging: child_lodging, index: index %>
+
+      <% if child_lodging.nil? %>
+        <% count += 1 %>
+      <% else %>
+        <% if reservation.check_in == be_availability['attributes']['start_date'].to_date && reservation.check_out == be_availability['attributes']['start_date'].to_date + be_availability['attributes']['los'].day %>
+          <%= render 'lodgings/booking_expert_child', be_availability: be_availability, child_lodging: child_lodging, index: index %>
+        <% else %>
+          <% count += 1 %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if count == be_availabilities['data'].length %>
+      <p>Please select different dates & guest details and try again.</p>
     <% end %>
   <% else %>
-    <% if be_availabilities.present? && be_availabilities['data'].present? && be_availabilities['data'].length == 0 %>
-      <p>Please select different dates & guest details and try again.</p>
-    <% else %>
-      <p>Please select dates & guest details.</p>
-    <% end %>
+    <p>Please select different dates & guest details and try again.</p>
   <% end %>
 </div>

@@ -1,10 +1,6 @@
 class BookingExpertLodgingsController < ApplicationController
-  before_action :set_lodging, except: [:index]
+  before_action :set_lodging
   before_action :set_booking_and_cookie, only: [:rates]
-
-  def index
-    @lodgings = Lodging.guest_centric
-  end
 
   def show
     @be_availabilities = GetBookingExpertAvailabilities.call(@lodging, params[:reservation])
@@ -13,7 +9,7 @@ class BookingExpertLodgingsController < ApplicationController
 
   def rates
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
-    @reservation.rent += @reservation.total_meal_price + @reservation.total_meal_tax
+    @reservation.total_price = @reservation.rent + @reservation.additional_fee
 
     if params['button'] == 'cart'
       @reservation.save(validate: false)
@@ -33,6 +29,7 @@ class BookingExpertLodgingsController < ApplicationController
         :check_in,
         :check_out,
         :lodging_id,
+        :be_category_id,
         :adults,
         :children,
         :infants,
