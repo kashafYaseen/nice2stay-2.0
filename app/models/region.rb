@@ -40,8 +40,8 @@ class Region < ApplicationRecord
   end
 
   def self.find_or_create_region(country_name, region_name)
-    country = Country.find_or_create_by(name: country_name)
-    country.regions.find_or_create_by(name: region_name)
+    country = Country.find_by(name: country_name)
+    country.regions.find_by(name: region_name) if country.present?
   end
 
   def translated_slugs
