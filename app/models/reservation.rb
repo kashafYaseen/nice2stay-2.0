@@ -98,7 +98,7 @@ class Reservation < ApplicationRecord
   end
 
   def is_managed_by_n2s?
-    cleaning_costs.first.manage_by
+    cleaning_costs.try(:first).try(:manage_by)
   end
 
   private
