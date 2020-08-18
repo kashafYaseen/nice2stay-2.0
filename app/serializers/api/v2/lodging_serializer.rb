@@ -10,6 +10,10 @@ class Api::V2::LodgingSerializer
     lodging.all_reviews.count
   end
 
+  attribute :lowest_child_price do |lodging|
+    lodging.lowest_child_price
+  end
+
   attributes :amenities, if: Proc.new { |lodging, params| params.present? && params[:amenities].present? } do |lodging, params|
     Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations).uniq)
   end

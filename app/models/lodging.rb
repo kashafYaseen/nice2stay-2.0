@@ -322,6 +322,10 @@ class Lodging < ApplicationRecord
     lodging_children.where("gc_rooms @> ?", "{#{gc_id}}").take
   end
 
+  def lowest_child_price
+    lodging_children.published.pluck(:price).min
+  end
+
   private
     def add_availabilities
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
