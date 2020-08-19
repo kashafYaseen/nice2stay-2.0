@@ -25,7 +25,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       lodgings << lodging
     end
 
-    render json: Api::V2::LodgingSerializer.new(lodgings).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { reviews: true } }).serialized_json, status: :ok
   end
 
   private
