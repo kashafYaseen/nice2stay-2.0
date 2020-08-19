@@ -4,7 +4,7 @@ class Api::V2::LodgingSerializer
              :latitude, :longitude, :adults, :children, :infants, :country_name, :region_name,
              :price, :calculated_price, :dynamic_price, :summary, :description, :short_desc,
              :images, :thumbnails, :average_rating, :created_at, :updated_at, :highlight_1,
-             :highlight_2, :highlight_3
+             :highlight_2, :highlight_3, :beds, :baths
 
   attribute :total_reviews do |lodging|
     lodging.all_reviews.count
