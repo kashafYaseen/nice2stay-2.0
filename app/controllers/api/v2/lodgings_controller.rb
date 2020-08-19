@@ -5,7 +5,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
   def index
     @lodgings = SearchLodgings.call(params, @custom_text, true)
-    render json: Api::V2::LodgingSerializer.new(@lodgings, { params: { amenities: true, current_user: current_user } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(@lodgings, { params: { amenities: true, reviews: true, current_user: current_user } }).serialized_json, status: :ok
   end
 
   def show
