@@ -2,7 +2,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_user_if_present
   before_action :set_lodging, only: [:show, :options]
   before_action :set_custom_text, only: [:index]
-  before_action :set_total_lodgings, only: [:index, :cumulative_price]
+  before_action :set_total_lodgings, only: [:index]
 
   def index
     @lodgings = SearchLodgings.call(params, @custom_text, true)
@@ -26,7 +26,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       lodgings << lodging
     end
 
-    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { amenities: true, reviews: true, lodgings: lodgings, total_lodgings: @total_lodgings } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { amenities: true, reviews: true } }).serialized_json, status: :ok
   end
 
   private
