@@ -16,4 +16,13 @@ class Amenity < ApplicationRecord
   def name_downcase
     self.name.downcase!
   end
+
+  def amenities_count_for lodgings
+    buckets = lodgings.aggregations['amenities']['buckets']
+    count = 0
+    buckets.each do |bucket|
+      count = bucket['doc_count'] if bucket['key'] == self.id
+    end if buckets.present?
+    count
+  end
 end
