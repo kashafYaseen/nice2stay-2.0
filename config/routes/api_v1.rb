@@ -1,5 +1,9 @@
 namespace :api do
   namespace :v1 do
+    namespace :room_raccoon do
+      resources :lodgings
+    end
+
     resources :lodgings do
       get :reindex, on: :collection
     end
