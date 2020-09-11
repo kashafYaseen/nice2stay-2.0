@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_113655) do
+ActiveRecord::Schema.define(version: 2020_09_11_095135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -589,6 +589,8 @@ ActiveRecord::Schema.define(version: 2020_05_06_113655) do
     t.string "gc_rooms", default: [], array: true
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
+    t.string "rr_room_type_code"
+    t.string "rr_room_type_description"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
