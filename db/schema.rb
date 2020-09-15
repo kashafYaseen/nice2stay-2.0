@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_095135) do
+ActiveRecord::Schema.define(version: 2020_09_14_131557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -589,12 +589,12 @@ ActiveRecord::Schema.define(version: 2020_09_11_095135) do
     t.string "gc_rooms", default: [], array: true
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
-    t.string "rr_room_type_code"
-    t.string "rr_room_type_description"
+    t.bigint "room_type_id"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
+    t.index ["room_type_id"], name: "index_lodgings_on_room_type_id"
   end
 
   create_table "lodgings_amenities", force: :cascade do |t|
@@ -931,6 +931,15 @@ ActiveRecord::Schema.define(version: 2020_09_11_095135) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "room_types", force: :cascade do |t|
+    t.string "code"
+    t.string "description"
+    t.bigint "parent_lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
+  end
+
   create_table "rules", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -1077,6 +1086,7 @@ ActiveRecord::Schema.define(version: 2020_09_11_095135) do
   add_foreign_key "leads_regions", "regions", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
+  add_foreign_key "lodgings", "room_types"
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
@@ -1097,6 +1107,7 @@ ActiveRecord::Schema.define(version: 2020_09_11_095135) do
   add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users", on_delete: :cascade
+  add_foreign_key "room_types", "lodgings", column: "parent_lodging_id", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
