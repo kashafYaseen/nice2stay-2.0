@@ -1,10 +1,10 @@
-class API::V1::RoomRaccoon::LodgingSerializer
-  attr_accessor :lodgings
+class API::V1::RoomRaccoon::RetrieveRooms
+  attr_accessor :rooms
   attr_accessor :xml_doc
   attr_accessor :request_body
 
-  def initialize(lodgings, body)
-    @lodgings = lodgings
+  def initialize(rooms, body)
+    @rooms = rooms
     @request_body = body
     @xml_doc = Ox::Document.new
   end
@@ -18,17 +18,17 @@ class API::V1::RoomRaccoon::LodgingSerializer
     header
   end
 
-  def retrieve_rooms
+  def call
     header = room_retrieval_header
     header << Ox::Element.new('Success')
     room_stays = Ox::Element.new('RoomStays')
-    lodgings.each do |lodging|
+    rooms.each do |room|
       room_stay = Ox::Element.new('RoomStay')
       room_types = Ox::Element.new('RoomTypes')
       room_type = Ox::Element.new('RoomType')
-      room_type['RoomTypeCode'] = lodging.rr_room_type_code
+      room_type['RoomTypeCode'] = room.room_type_code
       room_description = Ox::Element.new('RoomDescription')
-      room_description['Name'] = lodging.rr_room_type_description
+      room_description['Name'] = room.room_type_description
       room_type << room_description
       room_types << room_type
       room_stay << room_types

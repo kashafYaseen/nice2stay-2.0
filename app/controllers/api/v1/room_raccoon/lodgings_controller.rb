@@ -2,13 +2,11 @@ class Api::V1::RoomRaccoon::LodgingsController < Api::V1::RoomRaccoon::ApiContro
   def index
     @body = Hash.from_xml request.body.read
     hotel_id = @body['OTA_HotelAvailRQ']['AvailRequestSegments']['AvailRequestSegment']['HotelSearchCriteria']['Criterion']['HotelRef']['HotelCode']
-    @lodgings = Lodging.find_by(id: hotel_id)&.lodging_children
-    if @lodgings.present?
-      @response = API::V1::RoomRaccoon::LodgingSerializer.new(@lodgings, @body).retrieve_rooms
-      render xml: @response, status: :ok
+    @rooms = Lodging.find_by(id: hotel_id)&.lodging_children
+    if @rooms.present?
+      render xml: API::V1::RoomRaccoon::RetrieveRooms.new(@rooms, @body).call, status: :ok
     else
-      @response = API::V1::RoomRaccoon::LodgingSerializer.new(@lodgings, @body).errors
-      render xml: @response, status: :unprocessable_entity
+      render xml: API::V1::RoomRaccoon::RetrieveRooms.new(@rooms, @body).errors, status: :unprocessable_entity
     end
   end
 end
