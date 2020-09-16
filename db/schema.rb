@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_131557) do
+ActiveRecord::Schema.define(version: 2020_09_16_101805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -822,6 +822,8 @@ ActiveRecord::Schema.define(version: 2020_09_14_131557) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
+    t.boolean "rr_check_in_closed", default: false
+    t.boolean "rr_check_out_closed", default: false
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
