@@ -165,8 +165,6 @@ ActiveRecord::Schema.define(version: 2020_09_17_103250) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
-    t.boolean "rr_check_in_closed", default: false
-    t.boolean "rr_check_out_closed", default: false
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
   end
@@ -953,6 +951,8 @@ ActiveRecord::Schema.define(version: 2020_09_17_103250) do
     t.boolean "flexible_arrival", default: false
     t.integer "minimum_stay", default: [], array: true
     t.string "checkin_day"
+    t.boolean "rr_check_in_closed", default: false
+    t.boolean "rr_check_out_closed", default: false
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
   end
 
