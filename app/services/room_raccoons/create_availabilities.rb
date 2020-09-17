@@ -14,27 +14,27 @@ class RoomRaccoons::CreateAvailabilities
   def call
     begin
       @body['OTA_HotelAvailNotifRQ']['AvailStatusMessages']['AvailStatusMessage'].each do |avail_status_message|
-        start_date, end_date, room_type_code, status, restriction, stays = parse_data(avail_status_message)
+        start_date, end_date, room_id, rate_plan_code, status, restriction, stays = parse_data(avail_status_message)
 
-        num_of_availabilities = (end_date - start_date).to_i + 1
-        rooms = hotel.room_types.find_by(code: room_type_code).child_lodgings
-        rooms.each do |room|
-          num_of_availabilities.times do |index|
-            availability = room.availabilities.find_or_create_by(available_on: (start_date + index.day))
-            res = restriction_status(status, restriction)
+        dates = (end_date..start_date).map(&:to_s)
+        stays = stays.length == 2 ? (stays[0]..stays[1]).map(&:to_s) : stays
+        room = hotel.lodging_children.find(room_id)
+        dates.each do |date|
+          availability = room.availabilities.find_or_create_by(available_on: date)
 
-            if res.present? || stays.present?
-              availability.prices.find_or_create_by(
-                rr_check_in_closed: "#{ res == "check_in_closed" ? true : false }",
-                rr_check_out_closed: "#{ res == "check_out_closed" ? true : false }",
-                minimum_stay: stays
-              )
-            end
+          price = availability.prices.find_or_initialize_by(rr_rate_plan_code: rate_plan_code) { |price|  price.minimum_stay = stays }
+          price.save
+
+          check_response = restriction_status(status, restriction)
+          if check_response.present?
+            rule = room.rules.find_or_initialize_by(start_date: start_date, end_date: end_date) { |rule| rule.minimum_stay = stays }
+            check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
+            rule.save
           end
         end
       end
       return true
-    rescue Exception => e
+    rescue
       return false
     end
   end
@@ -45,7 +45,8 @@ class RoomRaccoons::CreateAvailabilities
       if status_application_control.present?
         @start = status_application_control["Start"]&.to_date
         @end = status_application_control["End"]&.to_date
-        @room_type_code = status_application_control["InvTypeCode"]
+        @room_id = status_application_control["InvTypeCode"]
+        @rate_plan_code = status_application_control["RatePlanCode"]
       end
 
       restriction_status = data['RestrictionStatus']
@@ -55,14 +56,14 @@ class RoomRaccoons::CreateAvailabilities
       end
 
       length_of_stays = data['LengthsOfStay']
+      @stays = []
       if length_of_stays.present?
-        @stays = []
         length_of_stays["LengthOfStay"].each do |length_of_stay|
           @stays << length_of_stay["Time"]
         end
       end
 
-      return @start, @end, @room_type_code, @status, @restriction, @stays&.sort
+      return @start, @end, @room_id, @rate_plan_code, @status, @restriction, @stays&.sort
     end
 
     def restriction_status(status, restriction)
