@@ -3,6 +3,7 @@ namespace :api do
     namespace :room_raccoon do
       resources :lodgings
       resources :availabilities, only: [:create]
+      resources :prices, only: [:create]
     end
 
     resources :lodgings do
