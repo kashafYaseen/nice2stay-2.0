@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_103250) do
+ActiveRecord::Schema.define(version: 2020_09_18_120139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -372,6 +372,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_103250) do
     t.integer "value"
     t.integer "crm_id"
     t.integer "guests"
+    t.string "rr_rate_plan_code"
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
   end
 
