@@ -38,7 +38,11 @@
             <% if reservation.booking_expert? %>
               <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.total_price %></td>
             <% else %>
-              <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
+              <% if reservation.is_managed_by_n2s? %>
+                <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.rent.to_f %></td>
+              <% else %>
+                <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
+              <% end %>
             <% end %>
 
             <td class="text-center text-lg text-medium"><%= render_request_status reservation.request_status %></td>

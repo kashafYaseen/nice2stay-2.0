@@ -2,6 +2,7 @@ class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
   has_many :rules, through: :lodging
+  has_many :cleaning_costs, through: :lodging
   has_one :review
 
   validates :check_in, :check_out, presence: true
@@ -103,6 +104,10 @@ class Reservation < ApplicationRecord
     _arrivals = {}
     joins(lodging: { region: :country }).select("in_cart, check_in, countries.id").where("in_cart = ? and check_in >= ? and request_status = ?", false, Date.today, 1).group(:"countries.id").group_by_month(:check_in).count("id").map { |arrival| _arrivals[arrival.first[0]].present? ? _arrivals[arrival.first[0]] << [arrival.first[1], arrival.last] : _arrivals[arrival.first[0]] = [[arrival.first[1], arrival.last]] }
     _arrivals
+  end
+
+  def is_managed_by_n2s?
+    cleaning_costs.try(:first).try(:manage_by)
   end
 
   private
