@@ -11,7 +11,7 @@ class API::V1::RoomRaccoon::RetrieveRooms
 
   def room_retrieval_header
     header = Ox::Element.new('OTA_HotelAvailRS')
-    header['Version'] = '1.0'
+    header['Version'] = request_body['OTA_HotelAvailRQ']['Version']
     header['xmlns'] = request_body['OTA_HotelAvailRQ']['xmlns']
     header['TimeStamp'] = DateTime.current
     header['EchoToken'] = request_body['OTA_HotelAvailRQ']['EchoToken']
