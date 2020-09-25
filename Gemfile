@@ -49,7 +49,7 @@ gem "breadcrumbs_on_rails"
 gem 'mollie-api-ruby'
 gem 'devise-i18n'
 gem 'activeadmin_addons'
-gem 'ahoy_matey'
+gem 'ahoy_matey', '~> 3.0'
 gem 'starrr'
 gem 'premailer-rails'
 gem 'bootstrap-email'
@@ -70,6 +70,10 @@ group :development, :test do
 end
 
 group :production do
+  gem 'exception_notification'
+end
+
+group :staging do
   gem 'exception_notification'
 end
 
@@ -125,3 +129,4 @@ gem 'globalize-accessors'
 gem 'newrelic_rpm'
 gem 'rack-cors'
 gem 'ox', '~> 2.13', '>= 2.13.3'
+gem 'csv'

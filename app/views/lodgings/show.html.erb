@@ -2,6 +2,8 @@
 
 <% if @lodging.as_parent? && @lodging.guest_centric? %>
   <%= render 'lodgings/show/guest_centric' %>
+<% elsif @lodging.as_parent? && @lodging.booking_expert? %>
+  <%= render 'lodgings/show/booking_expert' %>
 <% elsif @lodging.as_parent? %>
   <%= render 'lodgings/show/parent' %>
 <% else %>
