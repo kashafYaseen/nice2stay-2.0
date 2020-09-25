@@ -97,14 +97,14 @@
                       <div class="col-sm-12">
                         <div class="form-group">
                           <%= user_fields.label :city %>
-                          <%= user_fields.text_field :city, class: "form-control", required: @guest_centric %>
+                          <%= user_fields.text_field :city, class: "form-control", required: @channel_manager %>
                         </div>
                       </div>
 
                       <div class="col-sm-12">
                         <div class="form-group">
                           <%= user_fields.label :zipcode %>
-                          <%= user_fields.text_field :zipcode, class: "form-control", required: @guest_centric %>
+                          <%= user_fields.text_field :zipcode, class: "form-control", required: @channel_manager %>
                         </div>
                       </div>
                     </div>
@@ -113,14 +113,14 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <%= user_fields.label :country %>
-                          <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country), required: @guest_centric %>
+                          <%= user_fields.select :country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Select Country' }, class: 'form-control', id: rendom_id(resource, :country), required: @channel_manager %>
                         </div>
                       </div>
 
                       <div class="col-sm-12">
                         <div class="form-group">
                           <%= user_fields.label :address %>
-                          <%= user_fields.text_field :address, class: "form-control", required: @guest_centric %>
+                          <%= user_fields.text_field :address, class: "form-control", required: @channel_manager %>
                         </div>
                       </div>
                     </div>

@@ -591,6 +591,10 @@ ActiveRecord::Schema.define(version: 2020_09_18_120139) do
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
     t.bigint "room_type_id"
+    t.string "be_category_id"
+    t.string "be_admin_id"
+    t.string "be_org_id"
+    t.boolean "booking_expert", default: false
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -891,6 +895,9 @@ ActiveRecord::Schema.define(version: 2020_09_18_120139) do
     t.float "additional_fee", default: 0.0
     t.string "room_type"
     t.text "gc_policy"
+    t.string "be_category_id"
+    t.string "channel_manager_booking_id"
+    t.text "channel_manager_errors"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
