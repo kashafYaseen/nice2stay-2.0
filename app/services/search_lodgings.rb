@@ -1,14 +1,15 @@
 class SearchLodgings
   attr_accessor :params
-  attr_reader :custom_text
+  attr_reader :custom_text, :only_parent
 
-  def self.call(params, custom_text=nil)
-    self.new(params, custom_text).call
+  def self.call(params, custom_text=nil, only_parent=false)
+    self.new(params, custom_text, only_parent).call
   end
 
-  def initialize(params, custom_text=nil)
+  def initialize(params, custom_text=nil, only_parent=false)
     @params = params
     @custom_text = custom_text
+    @only_parent = only_parent
   end
 
   def call
@@ -47,7 +48,9 @@ class SearchLodgings
       conditions << { term: { free_cancelation: true } } if params[:free_cancelation].present?
 
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
-      conditions << { terms: { presentation: ['as_child', 'as_standalone'] } }
+
+      conditions << { terms: { presentation: ['as_child', 'as_standalone'] } } unless only_parent
+      conditions << { term: { presentation: 'as_parent' } } if only_parent
 
       conditions << { range: { beds: { gte: params[:beds] } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths] } } } if params[:baths].present?

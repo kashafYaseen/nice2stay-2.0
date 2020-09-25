@@ -1,13 +1,17 @@
 class CountTotalLodgings
-  def self.call()
-    self.new().call
+  attr_reader :only_parent
+
+  def self.call(only_parent=false)
+    self.new(only_parent).call
   end
 
-  def initialize()
+  def initialize(only_parent=false)
+    @only_parent = only_parent
   end
 
   def call
-    Lodging.search body: { query: { bool: { filter: { terms: { presentation: ['as_child', 'as_standalone'] } } } }, aggs: aggregation }
+    return Lodging.search body: { query: { bool: { filter: { terms: { presentation: ['as_child', 'as_standalone'] } } } }, aggs: aggregation } unless only_parent
+    Lodging.search body: { query: { bool: { filter: { term: { presentation: 'as_parent' } } } }, aggs: aggregation } if only_parent
   end
 
   private

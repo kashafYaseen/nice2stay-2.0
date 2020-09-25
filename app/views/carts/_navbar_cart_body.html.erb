@@ -57,7 +57,11 @@
               <span><em><strong><%= t "nav_cart.guests" %>:</strong></em> <%= reservation.adults.to_i + reservation.children.to_i %></span>
               <span><em><strong><%= t "carts.cleaning" %>: </strong></em> <%= render_rounded_price reservation.cleaning_cost %></span>
               <span><em><strong>Discount:</strong></em> <%= render_rounded_price reservation.discount.to_f %></span>
-              <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span>
+              <% if reservation.booking_expert? %>
+                <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price reservation.total_price.to_f %></span>
+              <% else %>
+                <span><em><strong><%= t "nav_cart.price" %>:</strong></em> <%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span>
+              <% end %>
             </div>
           </div>
         <% end %>

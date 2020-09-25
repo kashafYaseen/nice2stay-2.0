@@ -1,0 +1,68 @@
+<% if id_sufix == '' %>
+  <%= link_to 'Check Availability', '#', class: "btn scroll-to-btn", data: { target: '.form-heading' } %>
+<% else %>
+  <div class="persisted-data"
+      data-url="<%= price_details_lodging_path(lodging) %>"
+      data-validate-url="<%= validate_reservations_path %>">
+  </div>
+
+  <div class="row <%= 'pl-4' unless id_sufix.present? %> sticky-top" id="availability-and-prices">
+    <div class="col-md-12 <%= 'container' unless id_sufix.present? %>">
+      <div class="row" data-lodging-id="<%= lodging.id %>">
+        <div class="col-md-12">
+          <div class="vue-app" data-id="vue_datepicker<%= id_sufix %>">
+            <reservation-datepicker
+              :check-in="'<%= params[:check_in].presence || @check_in %>'"
+              :check-out="'<%= params[:check_out].presence || @check_in.next %>'"
+              :months="1"
+              :lodging-id="<%= lodging.id %>"
+              :disabled-dates="<%= @disable_dates %>"
+              :min-date="'<%= Date.today %>'"
+              :customized-dates="<%= lodging.customized_dates %>"
+              :trigger-id="'<%= "datepicker-trigger-#{lodging.id}#{id_sufix}" %>'"
+              :show-action-buttons="false"
+              :inline="true"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="vue-app" data-id="vue_guest_dropdown<%= id_sufix %>">
+            <guests-dropdown
+              :adults="<%= no_of_adults(params[:adults].to_i) %>"
+              :children="<%= params[:children].to_i %>"
+              :infants="<%= params[:infants].to_i %>"
+              :adults-target="'.adults'"
+              :children-target="'.children'"
+              :infants-target="'.infants'"
+              :dropdown-id="'<%= "guests-dropdown-#{lodging.id}#{id_sufix}" %>'"
+              :show-apply="false"
+              :button-classes="'btn btn-outline-primary dropdown-toggle w-100'"
+              :max-adults="20"
+              :max-children="20"
+              :max-infants="20"
+              title-suffix=" (Per Room)"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-12 pt-2">
+          <%= select_tag :rooms, options_for_select((1..9).map{ |room| ["#{room} #{'Room'.pluralize(room)} ", room] }), class: 'form-control total-rooms rooms text-uppercase w-100' %>
+        </div>
+
+        <%= form_for reservation, url: lodging_booking_expert_lodging_path(lodging), remote: true, method: :get, html: { id: "new_reservation#{id_sufix}", class: 'col-md-12' } do |f| %>
+
+          <%= f.hidden_field :check_in, value: params[:check_in].presence || @check_in, id: "check_in#{id_sufix}", class: 'check_in' %>
+          <%= f.hidden_field :check_out, value: params[:check_out].presence || @check_in.next, id: "check_out#{id_sufix}", class: 'check_out' %>
+          <%= f.hidden_field :rooms, value: params[:rooms].presence || 1, id: "rooms#{id_sufix}", class: 'rooms' %>
+          <%= f.hidden_field "adults", value: no_of_adults(params[:adults] || f.object.adults), class: 'adults', id: "adults#{id_sufix}" %>
+          <%= f.hidden_field "children", value: (params[:children] || f.object.children), class: 'children', id: "children#{id_sufix}" %>
+          <%= f.hidden_field "infants", value: (params[:infants] || f.object.infants), class: 'infants', id: "infants#{id_sufix}" %>
+          <%= f.hidden_field "lodging_id#{id_sufix}", value: lodging.id %>
+
+          <%= f.submit('Check Availability', class: "btn btn-primary w-100") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
