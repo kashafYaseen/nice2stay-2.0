@@ -28,6 +28,7 @@ class API::V1::RoomRaccoon::CreateAvailabilitiesResponse
     error['Code'] = 392
     error << "Something went wrong!"
     errors << error
+    header << errors
     body << header
     envelope << body
     xml_doc << envelope
