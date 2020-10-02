@@ -7,9 +7,9 @@ class Api::V1::RoomRaccoon::PricesController < Api::V1::RoomRaccoon::ApiControll
     response = RoomRaccoons::CreatePrices.call(@body, hotel)
 
     if response
-      render xml: API::V1::RoomRaccoon::CreatePricesResponse.new(@body).success, status: :ok
+      render xml: API::V1::RoomRaccoon::CreatePricesResponse.new(@body).success, status: :ok, content_type: 'text/xml; charset=UTF-8'
     else
-      render xml: API::V1::RoomRaccoon::CreatePricesResponse.new(@body).errors, status: :unprocessable_entity
+      render xml: API::V1::RoomRaccoon::CreatePricesResponse.new(@body).errors, status: :unprocessable_entity, content_type: 'text/xml; charset=UTF-8'
     end
   end
 end
