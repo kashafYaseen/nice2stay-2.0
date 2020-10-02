@@ -7,9 +7,9 @@ class Api::V1::RoomRaccoon::AvailabilitiesController < Api::V1::RoomRaccoon::Api
     response = RoomRaccoons::CreateAvailabilities.call(@body, hotel)
 
     if response
-      render xml: API::V1::RoomRaccoon::CreateAvailabilitiesResponse.new(@body).success, status: :ok
+      render xml: API::V1::RoomRaccoon::CreateAvailabilitiesResponse.new(@body).success, status: :ok, content_type: 'text/xml; charset=UTF-8'
     else
-      render xml: API::V1::RoomRaccoon::CreateAvailabilitiesResponse.new(@body).errors, status: :unprocessable_entity
+      render xml: API::V1::RoomRaccoon::CreateAvailabilitiesResponse.new(@body).errors, status: :unprocessable_entity, content_type: 'text/xml; charset=UTF-8'
     end
   end
 end
