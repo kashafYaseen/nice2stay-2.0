@@ -1,5 +1,5 @@
 class Api::V1::RoomRaccoon::LodgingsController < Api::V1::RoomRaccoon::ApiController
-  def index
+  def create
     @body = Hash.from_xml request.body.read
     @body = @body['Envelope']['Body']
     hotel_id = @body['OTA_HotelAvailRQ']['AvailRequestSegments']['AvailRequestSegment']['HotelSearchCriteria']['Criterion']['HotelRef']['HotelCode']
