@@ -23,7 +23,7 @@ nl:
   collection:
     populair: Populaire collecties
     normal: Onze collecties
-    holiday: Unieke vakantie 
+    holiday: Unieke vakantie
     inspiration: Inspiratie collecties
     country: Landen
 
@@ -37,7 +37,7 @@ nl:
   lodgings_index:
     carefree_booking: Zorgeloos boeken - Wij bieden in veel gevallen aangepaste annuleringsvoorwaarden
     free_cancelation_title: Kostenloos annuleren
-    free_cancelation_text: Vanwege de onzekerheid rondom het coronavirus bieden wij klanten die willen reserveren de mogelijkheid om kostenloos te annuleren tot 42 dagen voor aanvang van het verblijf.<br>Belangrijk is dat dit enkel geldt voor annuleringen die een direct gevolg zijn van het coronavirus
+    free_cancelation_text: Boek uw verblijf zorgenvrij met gratis annuleren tot en met 18 december 2020. Dit geldt voor boekingen voor 2020 en 2021.
 
   lead:
     title: Wilt u advies voor uw vakantie?
@@ -49,9 +49,9 @@ nl:
     login_modal_title: Log in of registreer voor een betere website ervaring
     login_modal_subtitle: Overal toegang tot winkelwagentje en favorietenlijst - beheer uw boekingen - vereenvoudigde checkout - nieuwsbrief
 
-  profile: 
+  profile:
     name: Uw gegevens
-    messages: Belangrijke berichten 
+    messages: Belangrijke berichten
 
   prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
   availability_not_confirmed: de beschikbaarheid is op aanvraag
@@ -67,14 +67,14 @@ nl:
     reviews: REVIEWS
     description: Omschrijving
 
-  profile_account: 
+  profile_account:
      side_nav_home: Dashboard
      side_nav_bookings: Boekingen & opties
      side_nav_profile: Wachtwoord wijzigen
      side_nav_wishlist: Favorieten
      side_nav_password: Wachtwoord bewerken
      account: Nice2stay account
-     new_customers: Bent u nieuw? Vul hier dan uw gegevens in. 
+     new_customers: Bent u nieuw? Vul hier dan uw gegevens in.
      customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen
      create_new_account: Maak direct een Nice2stay account aan
      bookings_options_header: Uw aanvraag overzicht
@@ -111,7 +111,7 @@ nl:
     zip: Postcode
     country: Land
     overview:  Uw overzicht
-    send: Uw boekingen of opties zijn verzonden naar nice2stay 
+    send: Uw boekingen of opties zijn verzonden naar nice2stay
     gasten:  Uw gegevens
     name: Accommodatie
     checkin: Checkin
@@ -156,7 +156,7 @@ nl:
     advice: Wij geven u graag deskundig advies
     advice_details: Deskundig advies en persoonlijke service, ook na uw boeking
     payment: Online beveiligd betalen
-    payment_details: Bij ons kunt u online betalen met Ideal, SOFORT, SEPA, Bancontact en meer 
+    payment_details: Bij ons kunt u online betalen met Ideal, SOFORT, SEPA, Bancontact en meer
     search: Zoek naar unieke vakantiehuizen, appartementen en ​boutique hotels en meer...
     intro: Een selectie villa's, appartenten en B&B's die door ons bezocht en geselecteert zijn op kwaliteit & comfortzocht.
     intro_details: Nice2stay is de specialist in het aanbieden van de mooiste, stijlvolle vakantiehuizen, appartementen & boutique hotels in Italië, Spanje, Portugal, Frankrijk en Griekenland. Elke accommodatie is uniek, hetzij door het bijzondere interieur, de setting, de gastvrije eigenaren of de services die worden aangeboden. Onze buitengewone collectie is zorgvuldig door ons team samengesteld en iedere plek wordt door ons bezocht.
@@ -166,15 +166,15 @@ nl:
     vragen_show_header: Heeft u vragen over
     help_acco_show: Wij geven graag antwoord op uw vraag of helpen u bij het reserveren..
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
-    region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio 
+    region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio
 
   opens:
-    week: maandag - vrijdag - 9.00 tot 18.00 
+    week: maandag - vrijdag - 9.00 tot 18.00
     weekend: zaterdag - 10.00 - 13.00
-    address: Korte Zijlweg 9, 2051 DB Overveeen 
+    address: Korte Zijlweg 9, 2051 DB Overveeen
 
   reviews:
-    title: Gemiddelde score & laatste reviews van Nice2stay 
+    title: Gemiddelde score & laatste reviews van Nice2stay
     quality: Kwaliteit
     interior: Interieur & Stijl
     service: Gastvrijheid
@@ -188,17 +188,17 @@ nl:
     more_info: Meer informatie
     also_like: Ook leuk voor u
     home: Home
-    gallary: Foto's 
-    location: Locatie 
+    gallary: Foto's
+    location: Locatie
     reviews: Reviews
     no_review: Deze accommodatie heeft nog geen reviews
     amentities: Faciliteiten
     info: Uitgebreide informatie
-    like: Ook leuk voor u 
+    like: Ook leuk voor u
     back: Terug
     price_availabiltiy: Prijzen & Beschikbaarheid
 
-  nav_mobile: 
+  nav_mobile:
     overview: Overzicht
     availability: Beschikbaarheid & Prijzen
     photo: Foto’s
@@ -222,7 +222,7 @@ nl:
 
   cart:
     details: Meer informatie & beschikbaarheid
-    price: Specificaties, inclusief, optioneel & voorwaarden 
+    price: Specificaties, inclusief, optioneel & voorwaarden
     availability: Beschikbaarheid & Prijzen
     shopping_cart: Vraag aan
     nice2stay: Geen reserveringskosten bij Nice2stay
@@ -248,7 +248,7 @@ nl:
     informatie: Belangrijke informatie
     included_header: Inclusief
     informatie_header: Extra Informatie
-    extra_service: Optionele services 
+    extra_service: Optionele services
     payment_conditions:  Annulerings- & betalingsvoorwaarden
     deposit:  Waarborgsom
 
@@ -256,7 +256,7 @@ nl:
   search:
     adult: Volwassen
     adults: Volwassenen
-    adutls_1: Personen 
+    adutls_1: Personen
     children: Kinderen (4-12j)
     child: Kind
     children_1: Kinderen
@@ -265,7 +265,7 @@ nl:
     guests: Gasten
     guest: Gast
     dates: Periode
-    legenda: 
+    legenda:
     search_button: Zoek nu
     bedrooms: Slaapkamers
     bedroom: Slaapkamer
@@ -291,7 +291,7 @@ nl:
     date_and_guests: Selecteer data en aantal gasten voor totaal prijs
 
   footer:
-    support: Wilt u direct contact? 
+    support: Wilt u direct contact?
     support_details: Wij zijn op maandag t/m vrijdag bereikbaar van 09.00 tot 13.00 uur (tijdelijk aangepaste tijden) op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons ook een email sturen
     support_bel: Bel
     newsletter: ONZE NIEUWSBRIEF IS GEWELDIG
@@ -320,15 +320,15 @@ nl:
     flexible_text: Flexibele aankomst -3/+3 dagen
     free_cancelation: Gratis annuleren
 
-  sorting: 
+  sorting:
     low_high: Laagste prijs
     high_low: Hoogste prijs
     high_rating: Hoogste waardering
     new: Nieuwste
     default: Standaard
 
-  zoomed: 
-    part_1: U bekijkt het aanbod in 
+  zoomed:
+    part_1: U bekijkt het aanbod in
     part_2: Om breder of gerichter te zoeken kunt u de kaart rechts gebruiken (in of uitzoomen of verplaatsen).
 
 

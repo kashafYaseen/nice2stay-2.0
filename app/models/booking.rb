@@ -35,6 +35,7 @@ class Booking < ApplicationRecord
     customer: 0,
     houseowner: 1,
     nice2stay: 2,
+    hotelandbeyond: 3,
   }
 
   attr_accessor :skip_data_posting

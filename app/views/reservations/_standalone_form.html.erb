@@ -124,6 +124,13 @@
               </div>
 
               <%= f.submit t('cart.shopping_cart'), class: "btn btn-primary btn ml-0 col-md-12 btn-booking disabled", id: "cart-#{lodging.id}#{id_sufix}" %>
+
+              <% if lodging.free_cancelation? %>
+                <div class="my-3">
+                  <p class="bg-white green-tag"><%= t('lodgings_index.free_cancelation_text') %></p>
+                </div>
+              <% end %>
+
               <%= link_to new_wishlist_path({ wishlist: { lodging_id: lodging.id } }), remote: true, class: 'col-md-2 my-auto pl-0' do %>
                 <i class="fal fa-heart fa-2x"></i>
               <% end %>
@@ -134,11 +141,5 @@
         </div>
       <% end %>
     </div>
-
-    <% if lodging.free_cancelation? %>
-      <div class="col-md-12 container mt-3">
-        <p><b><%= t('lodgings_index.free_cancelation_title') %></b><br><%= t('lodgings_index.free_cancelation_text').html_safe %></p>
-      </div>
-    <% end %>
   </div>
 <% end %>

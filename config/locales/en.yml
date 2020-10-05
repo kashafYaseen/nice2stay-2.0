@@ -53,7 +53,7 @@ en:
   lodgings_index:
     carefree_booking: Carefree booking - for many accommodations, we offer custom cancellation policies
     free_cancelation_title: Cancel for free
-    free_cancelation_text: Due to the uncertainty caused by the corona virus, we offer customers who wish to make a reservation the opportunity to cancel free of charge up to 42 days before the start of the stay.<br>It is important that this only applies to cancellations that are a direct result of the corona virus
+    free_cancelation_text: Book your stay worry-free with free cancellation up to December 18, 2020. This applies to bookings for 2020 and 2021.
   filters:
     autocomplete_title: Destination / property name
     autocomplete_placeholder: Enter a destination or property name
@@ -82,8 +82,8 @@ en:
     high_rating: Highest rating
     new: Newest
     default: Default
-  zoomed: 
-    part_1: You are viewing accommodations in 
+  zoomed:
+    part_1: You are viewing accommodations in
     part_2: To search broader or more specific, you can use the map on the right (zoom in + out or move)
 
   lead:
@@ -94,7 +94,7 @@ en:
     populair: Populair collections
     normal: Our collections
     holiday: Unique holiday
-    inspiration: Inspiring collections 
+    inspiration: Inspiring collections
     country: Countries
 
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
@@ -138,7 +138,7 @@ en:
     preferred_language: Preferred Language
     guest_details: Guest Details
 
-  indicator: 
+  indicator:
     gasten:  Your data
     send: Your request has been sent
     confirmation: Confirmation
@@ -167,7 +167,7 @@ en:
     advice: Advice & Support
     payment: Online secure payments
     payment_details: With us you can pay online with Ideal, SOFORT, SEPA, Bancontact and more
-    advice_details: Expert advice and attentive service 
+    advice_details: Expert advice and attentive service
     search: Search for unique holiday homes, apartments and boutique hotels and more ...
     intro: A selection of villa's, apartments and B&B's who visited by us and selected on quality & comfort
     intro_details: Nice2stay offers you the finest holiday villas, apartments and boutique hotels located in Italy, Spain, Portugal, France and Greece. All accommodations have been personally selected and visited by our team. Each accommodation is unique, either because of the tasteful interior design, the surroundings, the hospitable owners or the services that are offered.
@@ -186,7 +186,7 @@ en:
     more_info: More information
     also_like: You may also like
     home: Home
-    gallary: Photo gallary 
+    gallary: Photo gallary
     location: Location
     reviews: Reviews
     no_review: Accommodation does not have any review yet.
@@ -194,7 +194,7 @@ en:
     like: You also like
     back: Back
     price_availabiltiy: Prices & Availabiltiy
-  nav_mobile: 
+  nav_mobile:
     overview: Overview
     availability:  Availability & Prices
     photo:  Gallery
@@ -203,11 +203,11 @@ en:
     reviews: Reviews
     alternative: Alternatives
 
-  nav_cart: 
+  nav_cart:
     type: Type
     price: Price
     nights: Nights
-    From: From 
+    From: From
     To: To
     guests: Guests
     checkin: Check-in
@@ -230,12 +230,12 @@ en:
     deposit: SECURITY DEPOSIT
 
   footer:
-    support: Direct contact? 
+    support: Direct contact?
     support_details: You can reach our multilingual team by phone from 9 AM - 1 PM (temporarily adjusted) on weekdays and via the chat function on our website​. ​And you can always send an email to
     support_bel: Call
     newsletter: OUR NEWSLETTER IS AWESOME
     newsletter_details: Browse new additions, last-minute deals, and special offers right from your inbox.
-  
+
     search_button: Zoek
 
   search:
@@ -274,7 +274,7 @@ en:
     map_info: Move or zoom (in/out) the map to see more results
     date_and_guests: Select dates and guests for the total price
 
-  profile_account: 
+  profile_account:
      side_nav_home: Dashboard
      side_nav_bookings: Bookings & Options
      side_nav_profile: Edit profile
@@ -284,8 +284,8 @@ en:
      account: Nice2stay account
      new_customers: Are you new? Enter your details here.
      customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
-     create_new_account: Create also a Nice2stay account 
-     
+     create_new_account: Create also a Nice2stay account
+
      bookings_options_header: Your request overview
      old_bookings_header: Previous bookings
      next_bookings_header: Upcoming bookings
