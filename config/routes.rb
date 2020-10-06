@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
     draw :api_v2
+    draw :api_v3
 
     devise_scope :user do
       get "users/edit/password", to: 'users/registrations#edit_password', as: :user_edit_password
