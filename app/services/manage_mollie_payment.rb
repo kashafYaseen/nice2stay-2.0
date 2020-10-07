@@ -20,7 +20,7 @@ class ManageMolliePayment
       return update_redirect_url(payment) if payment.status == 'open'
     end
 
-    payment = create_payment((booking.pre_payment || booking.pre_payment_amount), "#{booking.identifier} - Pre Payment")
+    payment = create_payment(pre_payment_amount, "#{booking.identifier} - Pre Payment")
     booking.update_column :pre_payment_mollie_id, payment.id
     payment
   end
@@ -33,7 +33,7 @@ class ManageMolliePayment
       return update_redirect_url(payment) if payment.status == 'open'
     end
 
-    payment = create_payment((booking.final_payment || booking.final_payment_amount), "#{booking.identifier} - Final Payment")
+    payment = create_payment(final_payment_amount, "#{booking.identifier} - Final Payment")
     booking.update_column :final_payment_mollie_id, payment.id
     payment
   end
@@ -94,5 +94,13 @@ class ManageMolliePayment
       return redirect_custom_url if redirect_custom_url.present?
       return dashboard_booking_url(booking, host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
       dashboard_booking_url(booking, host: 'localhost', port: 3000)
+    end
+
+    def pre_payment_amount
+      booking.pre_payment > 0 ? booking.pre_payment : booking.pre_payment_amount
+    end
+
+    def final_payment_amount
+      booking.final_payment > 0 ? booking.final_payment : booking.final_payment_amount
     end
 end
