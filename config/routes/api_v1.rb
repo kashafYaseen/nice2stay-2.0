@@ -1,10 +1,6 @@
 namespace :api do
   namespace :v1 do
-    namespace :room_raccoon do
-      resources :lodgings, only: [:create]
-      resources :availabilities, only: [:create]
-      resources :prices, only: [:create]
-    end
+    resource :room_raccoon, only: :create, module: :room_raccoon
 
     resources :lodgings do
       get :reindex, on: :collection
