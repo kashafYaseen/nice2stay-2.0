@@ -57,6 +57,7 @@ class Lodging < ApplicationRecord
   scope :guest_centric, -> { published.where(guest_centric: true) }
   scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
   scope :country_id_eq, -> (country) { joins(:region).where(regions: { country_id: country }) }
+  scope :published_parents_count, -> { as_parent.published.count }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -73,7 +74,7 @@ class Lodging < ApplicationRecord
   }
 
   after_create :add_availabilities, if: :published?
-  after_create :reindex_prices
+  after_create :reindex_prices, :reindex_experiences_and_region
 
   def self.ransackable_scopes(*)
     %i(country_id_eq)
@@ -343,5 +344,9 @@ class Lodging < ApplicationRecord
 
     def reindex_prices
       prices.reindex
+    end
+
+    def reindex_experiences_and_region
+      experiences.reindex && region.reindex
     end
 end
