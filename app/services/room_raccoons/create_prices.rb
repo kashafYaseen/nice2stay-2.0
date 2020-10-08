@@ -82,7 +82,7 @@ class RoomRaccoons::CreatePrices
         availabilities.each do |availability|
           rates.each do |rate|
             price = availability.prices.new(amount: rate[:amount])
-            (rate[:age_qualifying_code].present? && rate[:age_qualifying_code] == "10") ? price.adults = [rate[:guests]] : price.children = [rate[:guests]]
+            (rate[:age_qualifying_code].present? && rate[:age_qualifying_code] == "8") ? price.children = [rate[:guests]] : price.adults = [rate[:guests]]
             price.rr_rate_plan_code = rate_plan_code
             price.save
           end
