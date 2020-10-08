@@ -15,24 +15,10 @@ class RoomRaccoons::CreatePrices
     begin
       if @body['OTA_HotelRateAmountNotifRQ']['RateAmountMessages']['RateAmountMessage'].kind_of?(Array)
         @body['OTA_HotelRateAmountNotifRQ']['RateAmountMessages']['RateAmountMessage'].each do |rate_amount_message|
-          room_type_code,
-          rate_plan_code,
-          start_date,
-          end_date,
-          rates,
-          additional_amounts = parse_data(rate_amount_message)
-
-          create_prices_and_discounts(room_type_code, rate_plan_code, start_date, end_date, rates, additional_amounts)
+          create_prices_and_cleaning_costs(rate_amount_message)
         end
       else
-        room_type_code,
-        rate_plan_code,
-        start_date,
-        end_date,
-        rates,
-        additional_amounts = parse_data(@body['OTA_HotelRateAmountNotifRQ']['RateAmountMessages']['RateAmountMessage'])
-
-        create_prices_and_discounts(room_type_code, rate_plan_code, start_date, end_date, rates, additional_amounts)
+        create_prices_and_cleaning_costs(@body['OTA_HotelRateAmountNotifRQ']['RateAmountMessages']['RateAmountMessage'])
       end
 
       true
@@ -81,7 +67,13 @@ class RoomRaccoons::CreatePrices
       return room_type_code, rate_plan_code, start_date, end_date, rates, additional_amounts
     end
 
-    def create_prices_and_discounts(room_type_code, rate_plan_code, start_date, end_date, rates, additional_amounts)
+    def create_prices_and_cleaning_costs(rate_amount_message)
+      room_type_code,
+      rate_plan_code,
+      start_date,
+      end_date,
+      rates,
+      additional_amounts = parse_data(rate_amount_message)
       rooms = hotel.room_types.find_by(code: room_type_code).child_lodgings
 
       rooms.each do |room|
@@ -90,11 +82,8 @@ class RoomRaccoons::CreatePrices
         availabilities.each do |availability|
           rates.each do |rate|
             price = availability.prices.new(amount: rate[:amount])
-            if rate[:age_qualifying_code].present?
-              rate[:age_qualifying_code] == "10" ? price.adults = [rate[:guests]] : price.children = [rate[:guests]]
-            else
-              price.adults = [rate[:guests]]
-            end
+            (rate[:age_qualifying_code].present? && rate[:age_qualifying_code] == "10") ? price.adults = [rate[:guests]] : price.children = [rate[:guests]]
+            price.rr_rate_plan_code = rate_plan_code
             price.save
           end
         end
