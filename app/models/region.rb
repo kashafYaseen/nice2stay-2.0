@@ -32,6 +32,7 @@ class Region < ApplicationRecord
       title_nl: title_nl,
       country_slug: country.slug,
       disable: country_disable,
+      lodging_count: lodgings.published_parents_count,
     )
   end
 

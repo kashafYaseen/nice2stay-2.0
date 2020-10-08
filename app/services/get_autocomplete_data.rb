@@ -18,6 +18,8 @@ class GetAutocompleteData
     return campaigns if params[:type] == 'campaigns'
     return countries if params[:type] == 'countries'
     return regions if params[:type] == 'regions'
+    return themes if params[:type] == 'themes'
+    return hotels if params[:type] == 'hotels'
   end
 
   private
@@ -62,6 +64,28 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |region| { name: region.send("name_#{locale}"), id: region.id, type: 'region', country: region.country_slug, region: region.slug, url: lodgings_path(locale: locale) } }
+      }).map{ |region| { name: region.send("name_#{locale}"), id: region.id, type: 'region', country: region.country_slug, region: region.slug, lodging_count: region.lodging_count, url: lodgings_path(locale: locale) } }
+    end
+
+    def themes
+      Experience.search(params[:query], {
+        fields: ["name_#{locale}"],
+        match: :text_middle,
+        limit: 10,
+        load: false,
+        misspellings: {below: 5},
+        where: { publish: true }
+      }).map{ |experience| { name: experience.send("name_#{locale}"), id: experience.id, count: experience.lodging_count, experience: experience.send("slug_#{locale}"), url: lodgings_path(locale: locale) } }
+    end
+
+    def hotels
+      Lodging.search(params[:query], {
+        fields: [:name],
+        match: :text_middle,
+        limit: 6,
+        load: false,
+        misspellings: {below: 5},
+        where: { presentation: 'as_parent', published: true }
+      }).map{ |lodging| { name: lodging.name, id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
     end
 end
