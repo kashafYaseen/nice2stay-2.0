@@ -68,6 +68,7 @@ class Api::V2::CartsController < Api::V2::ApiController
     def booking_params
       params.require(:booking).permit(
         :in_cart,
+        :created_by,
         user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
         reservations_attributes: [:id, :booking_id, :in_cart]
       )
