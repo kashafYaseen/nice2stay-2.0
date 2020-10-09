@@ -34,7 +34,8 @@ class Country < ApplicationRecord
       name_nl: name_nl,
       title_en: title_en,
       title_nl: title_nl,
-      regions: regions.collect(&:name)
+      regions: regions.collect(&:name),
+      lodging_count: lodgings.published_parents_count,
     )
   end
 
