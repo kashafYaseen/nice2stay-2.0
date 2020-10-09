@@ -75,7 +75,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { publish: true }
-      }).map{ |experience| { name: experience.send("name_#{locale}"), id: experience.id, lodging_count: experience.lodging_count, experience: experience.send("slug_#{locale}"), url: lodgings_path(locale: locale) } }
+      }).map{ |experience| { name: experience.send("name_#{locale}"), id: experience.id, type: 'experience', lodging_count: experience.lodging_count, experience: experience.send("slug_#{locale}"), url: lodgings_path(locale: locale) } }
     end
 
     def hotels
@@ -86,6 +86,6 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { presentation: 'as_parent', published: true }
-      }).map{ |lodging| { name: lodging.name, id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
+      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'hotel', url: lodging_path(lodging.slug, locale: locale) } }
     end
 end
