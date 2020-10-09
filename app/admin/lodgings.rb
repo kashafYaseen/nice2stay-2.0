@@ -29,6 +29,11 @@ ActiveAdmin.register Lodging do
     column :title
     column :name
     column :address
+
+    column :room_type do |lodging|
+      link_to lodging.room_type_code, admin_room_type_path(lodging.room_type) if lodging.room_type.present?
+    end
+
     column :beds
     column :baths
     column :sq__ft
@@ -114,6 +119,11 @@ ActiveAdmin.register Lodging do
       row :city
       row :zip
       row :state
+
+      row :room_type do |lodging|
+        link_to lodging.room_type_code, admin_room_type_path(lodging.room_type) if lodging.room_type.present?
+      end
+
       row :beds
       row :baths
       row :sq__ft
