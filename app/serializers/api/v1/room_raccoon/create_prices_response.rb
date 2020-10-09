@@ -38,10 +38,10 @@ class API::V1::RoomRaccoon::CreatePricesResponse
   private
     def response_header
       header = Ox::Element.new('OTA_HotelRateAmountNotifRS')
-      header['Version'] = request_body['OTA_HotelRateAmountNotifRQ']['Version']
-      header['xmlns'] = request_body['OTA_HotelRateAmountNotifRQ']['xmlns']
+      header['Version'] = request_body['ota_hotelrateamountnotifrq']['version']
+      header['xmlns'] = request_body['ota_hotelrateamountnotifrq']['xmlns']
       header['TimeStamp'] = DateTime.current
-      header['EchoToken'] = request_body['OTA_HotelRateAmountNotifRQ']['EchoToken']
+      header['EchoToken'] = request_body['ota_hotelrateamountnotifrq']['echotoken']
       header
     end
 

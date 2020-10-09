@@ -38,10 +38,10 @@ class API::V1::RoomRaccoon::CreateAvailabilitiesResponse
   private
     def response_header
       header = Ox::Element.new('OTA_HotelAvailNotifRS')
-      header['Version'] = request_body['OTA_HotelAvailNotifRQ']['Version']
-      header['xmlns'] = request_body['OTA_HotelAvailNotifRQ']['xmlns']
+      header['Version'] = request_body['ota_hotelavailnotifrq']['version']
+      header['xmlns'] = request_body['ota_hotelavailnotifrq']['xmlns']
       header['TimeStamp'] = DateTime.current
-      header['EchoToken'] = request_body['OTA_HotelAvailNotifRQ']['EchoToken']
+      header['EchoToken'] = request_body['ota_hotelavailnotifrq']['echotoken']
       header
     end
 
