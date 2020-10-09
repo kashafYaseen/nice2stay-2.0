@@ -86,6 +86,6 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { presentation: 'as_parent', published: true }
-      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'hotel', url: lodging_path(lodging.slug, locale: locale) } }
+      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'hotel', slug: lodging.slug, url: lodging_path(lodging.slug, locale: locale) } }
     end
 end
