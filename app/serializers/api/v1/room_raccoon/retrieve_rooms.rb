@@ -40,10 +40,10 @@ class API::V1::RoomRaccoon::RetrieveRooms
 
   def room_retrieval_header
     header = Ox::Element.new('OTA_HotelAvailRS')
-    header['Version'] = request_body['OTA_HotelAvailRQ']['Version']
-    header['xmlns'] = request_body['OTA_HotelAvailRQ']['xmlns']
+    header['Version'] = request_body['ota_hotelavailrq']['version']
+    header['xmlns'] = request_body['ota_hotelavailrq']['xmlns']
     header['TimeStamp'] = DateTime.current
-    header['EchoToken'] = request_body['OTA_HotelAvailRQ']['EchoToken']
+    header['EchoToken'] = request_body['ota_hotelavailrq']['echotoken']
     header
   end
 
