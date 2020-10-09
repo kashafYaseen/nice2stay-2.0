@@ -46,9 +46,9 @@ class RoomRaccoons::CreatePrices
         end
       else
         rates << {
-          age_qualifying_code: base_by_guest_amt['agequalifyingcode'],
-          guests: base_by_guest_amt['numberofguests'],
-          amount: base_by_guest_amt['amountaftertax']
+          age_qualifying_code: base_by_guest_amts['agequalifyingcode'],
+          guests: base_by_guest_amts['numberofguests'],
+          amount: base_by_guest_amts['amountaftertax']
         }
       end
 
@@ -74,9 +74,9 @@ class RoomRaccoons::CreatePrices
       end_date,
       rates,
       additional_amounts = parse_data(rate_amount_message)
-      rooms = hotel.room_types.find_by(code: room_type_code).child_lodgings
+      rooms = hotel.room_types.find_by(code: room_type_code)&.child_lodgings
 
-      rooms.each do |room|
+      rooms&.each do |room|
         availabilities = room.availabilities.for_range(start_date, end_date)
 
         availabilities.each do |availability|
