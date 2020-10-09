@@ -11,7 +11,7 @@ class Reservation < ApplicationRecord
   validate :accommodation_rules
 
   after_validation :update_lodging_availability
-  #after_commit :send_reservation_details
+  # after_commit :send_reservation_details
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
@@ -29,6 +29,7 @@ class Reservation < ApplicationRecord
   scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ? and canceled = ?', Date.today, false).pluck(:booking_id).uniq }
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
+  scope :booking_expert, -> { where.not(be_category_id: nil) }
 
   accepts_nested_attributes_for :review
 
@@ -83,12 +84,20 @@ class Reservation < ApplicationRecord
     offer_id.present?
   end
 
+  def booking_expert?
+    be_category_id.present?
+  end
+
   def step_passed?(step)
     Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
   end
 
   def total_rent
     rent.to_f + cleaning_cost.to_f - discount.to_f
+  end
+
+  def booking_expert_total
+    rent.to_f + tax_and_additional_fee.to_f
   end
 
   def self.arrival_status
@@ -148,7 +157,7 @@ class Reservation < ApplicationRecord
     end
 
     def update_price_details
-      return if skip_data_posting || offer_id.present?
+      return if skip_data_posting || offer_id.present? || be_category_id.present?
       rent = calculate_rent
       update_columns rent: rent, total_price: (rent - discount.to_f)
     end

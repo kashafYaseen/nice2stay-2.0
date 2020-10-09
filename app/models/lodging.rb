@@ -17,6 +17,8 @@ class Lodging < ApplicationRecord
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
 
   belongs_to :parent, class_name: 'Lodging', optional: true
+  has_many :room_types, foreign_key: :parent_lodging_id
+  belongs_to :room_type, optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
 
   include ImageHelper
@@ -48,6 +50,7 @@ class Lodging < ApplicationRecord
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
   delegate :admin_user, to: :owner, allow_nil: true
   delegate :summary, :location_description, :h1, to: :parent, allow_nil: true, prefix: true
+  delegate :code, :description, to: :room_type, prefix: true
 
   scope :published, -> { where(published: true) }
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
@@ -58,6 +61,7 @@ class Lodging < ApplicationRecord
   scope :search_import, -> { published.includes({ amenities: :translations }, { experiences: :translations }, :availabilities, :rules) }
   scope :country_id_eq, -> (country) { joins(:region).where(regions: { country_id: country }) }
   scope :published_parents_count, -> { as_parent.published.count }
+  scope :by_rate_code, ->(rate_plan_code) { joins(:prices).where("prices.rr_rate_plan_code = ?", rate_plan_code) }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -108,6 +112,16 @@ class Lodging < ApplicationRecord
   def gc_not_available_on params = {}
     result = GetGuestCentricRates.call self, params
     result['response'].collect { |r| r['day'] if r['value'].to_f <= 0 }.compact rescue []
+  end
+
+  def be_not_available_on
+    availabilities = GetBookingExpertAvailabilities.call(self).pluck(:start_date)
+    disable_dates, date = [], Date.today
+    availabilities.length.times do
+      disable_dates << date.to_s unless availabilities.include? date.to_s
+      date = date.next
+    end
+    disable_dates
   end
 
   def address
