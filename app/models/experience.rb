@@ -23,4 +23,13 @@ class Experience < ApplicationRecord
   def translated_slugs
     translations.pluck(:slug)
   end
+
+  def experiences_count_for lodgings
+    buckets = lodgings.aggregations['experiences']['buckets']
+    count = 0
+    buckets.each do |bucket|
+      count = bucket['doc_count'] if bucket['key'] == self.id
+    end if buckets.present?
+    count
+  end
 end
