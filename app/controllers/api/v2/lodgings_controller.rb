@@ -6,8 +6,11 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
   def index
     @lodgings = SearchLodgings.call(params, @custom_text, true)
-    render json: Api::V2::LodgingSerializer.new(@lodgings, { params: { amenities: true, experiences: true, reviews: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings } }).serializable_hash
-      .merge(experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })), status: :ok
+    debugger
+    render json: {
+      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { amenities: true, experiences: true, reviews: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
+      experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })
+    } , status: :ok
   end
 
   def show
