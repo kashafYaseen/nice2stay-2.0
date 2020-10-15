@@ -11,7 +11,7 @@ class CountTotalLodgings
 
   def call
     return Lodging.search body: { query: { bool: { filter: { terms: { presentation: ['as_child', 'as_standalone'] } } } }, aggs: aggregation } unless only_parent
-    Lodging.search body: { query: { bool: { filter: { term: { presentation: 'as_parent' } } } }, aggs: aggregation } if only_parent
+    Lodging.search body: { query: { bool: { filter: { term: { presentation: 'as_parent' } } } }, aggs: aggregation }
   end
 
   private
