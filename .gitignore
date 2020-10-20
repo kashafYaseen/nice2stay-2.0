@@ -47,3 +47,6 @@ yarn-debug.log*
 
 .yarn/
 .yarnrc
+.idea/
+.rakeTasks
+n2s_erd.pdf
