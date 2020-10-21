@@ -64,7 +64,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |region| { name: region.send("name_#{locale}"), id: region.id, type: 'region', country: region.country_slug, region: region.slug, lodging_count: region.lodging_count, url: lodgings_path(locale: locale) } }
+      }).map{ |region| { name: region.send("name_#{locale}"), id: region.id, type: 'region', country: region.country_slug, country_slug: region.country_slug, country_name: region.send("country_name_#{locale}"), region: region.slug, lodging_count: region.lodging_count, url: lodgings_path(locale: locale) } }
     end
 
     def themes
@@ -86,6 +86,6 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { presentation: 'as_parent', published: true }
-      }).map{ |lodging| { name: lodging.name, id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
+      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'hotel', slug: lodging.slug } }
     end
 end
