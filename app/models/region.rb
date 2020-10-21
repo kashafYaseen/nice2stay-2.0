@@ -22,7 +22,7 @@ class Region < ApplicationRecord
   scope :active, -> { joins(:country).where(countries: { disable: false }) }
 
   delegate :name, :regions, :disable, :slug, to: :country, prefix: true, allow_nil: true
-  delegate :region_page, to: :lodgings, prefix: true, allow_nil: true
+  delegate :region_page, :published_parents_count, to: :lodgings, prefix: true, allow_nil: true
 
   def search_data
     attributes.merge(
