@@ -62,6 +62,7 @@ class Lodging < ApplicationRecord
   scope :country_id_eq, -> (country) { joins(:region).where(regions: { country_id: country }) }
   scope :published_parents_count, -> { as_parent.published.count }
   scope :by_rate_code, ->(rate_plan_code) { joins(:prices).where("prices.rr_rate_plan_code = ?", rate_plan_code) }
+  scope :parent_lodgings, -> { where(parent_id: nil) }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 

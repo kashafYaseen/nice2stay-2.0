@@ -53,7 +53,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { disable: false }
-      }).map{ |country| { name: country.send("name_#{locale}"), id: country.id, type: 'country', country: country.slug, url: lodgings_path(locale: locale) } }
+      }).map{ |country| { name: country.send("name_#{locale}"), id: country.id, type: 'country', country: country.slug, lodging_count: country.lodging_count, url: lodgings_path(locale: locale) } }
     end
 
     def regions
@@ -75,7 +75,7 @@ class GetAutocompleteData
         load: false,
         misspellings: {below: 5},
         where: { publish: true }
-      }).map{ |experience| { name: experience.send("name_#{locale}"), id: experience.id, count: experience.lodging_count, experience: experience.send("slug_#{locale}"), url: lodgings_path(locale: locale) } }
+      }).map{ |experience| { name: experience.send("name_#{locale}"), id: experience.id, type: 'experience', lodging_count: experience.lodging_count, experience: experience.send("slug_#{locale}"), url: lodgings_path(locale: locale) } }
     end
 
     def hotels
