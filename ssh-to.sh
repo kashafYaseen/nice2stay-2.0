@@ -5,7 +5,7 @@ production() {
 }
 
 staging() {
-  ssh deploy@134.209.90.215
+  ssh deploy@149.210.238.137
 }
 
 "$@"
