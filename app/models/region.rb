@@ -31,6 +31,8 @@ class Region < ApplicationRecord
       title_en: title_en,
       title_nl: title_nl,
       country_slug: country.slug,
+      country_name_en: country.name_en,
+      country_name_nl: country.name_nl,
       disable: country_disable,
       lodging_count: lodgings.published_parents_count,
     )
