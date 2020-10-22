@@ -13,17 +13,17 @@ class RoomRaccoons::CreatePrices
 
   def call
     begin
-      if @body['ota_hotelrateamountnotifrq']['rateamountmessages']['rateamountmessage'].kind_of?(Array)
-        @body['ota_hotelrateamountnotifrq']['rateamountmessages']['rateamountmessage'].each do |rate_amount_message|
+      if @body['rateamountmessages']['rateamountmessage'].kind_of?(Array)
+        @body['rateamountmessages']['rateamountmessage'].each do |rate_amount_message|
           create_prices_and_cleaning_costs(rate_amount_message)
         end
       else
-        create_prices_and_cleaning_costs(@body['ota_hotelrateamountnotifrq']['rateamountmessages']['rateamountmessage'])
+        create_prices_and_cleaning_costs(@body['rateamountmessages']['rateamountmessage'])
       end
 
-      true
+      return true
     rescue
-      false
+      return false
     end
   end
 
@@ -74,28 +74,39 @@ class RoomRaccoons::CreatePrices
       end_date,
       rates,
       additional_amounts = parse_data(rate_amount_message)
-      rooms = hotel.room_types.find_by(code: room_type_code)&.child_lodgings
+      rooms = hotel.room_types.find_by(code: room_type_code)&.child_lodgings.includes(:availabilities, :cleaning_costs).where('availabilities.available_on >= ? and availabilities.available_on <= ?', start_date, end_date).references(:availabilities)
 
+      prices = []
+      cleaning_costs = []
       rooms&.each do |room|
-        availabilities = room.availabilities.for_range(start_date, end_date)
-
-        availabilities.each do |availability|
+        room.availabilities.each do |availability|
           rates.each do |rate|
-            price = availability.prices.new(amount: rate[:amount])
+            price = availability.prices.new(amount: rate[:amount], rr_rate_plan_code: rate_plan_code, created_at: DateTime.now, updated_at: DateTime.now)
             (rate[:age_qualifying_code].present? && rate[:age_qualifying_code] == "8") ? price.children = [rate[:guests]] : price.adults = [rate[:guests]]
             price.rr_rate_plan_code = rate_plan_code
-            price.save
+            # price.save
+            prices << price
           end
         end
 
         if additional_amounts.present?
           additional_amounts.each do |additional_amount|
-            room.cleaning_costs.create(
+            cleaning_costs << room.cleaning_costs.new(
               fixed_price: additional_amount[:amount],
-              name: additional_amount[:age_qualifying_code] == "10" ? "Adults" : "Children"
+              name: additional_amount[:age_qualifying_code] == "10" ? "Adults" : "Children",
+              created_at: DateTime.now,
+              updated_at: DateTime.now
             )
           end
         end
+      end
+
+      if prices.present?
+        Price.import prices, batch_size: 150
+      end
+
+      if cleaning_costs.present?
+        CleaningCost.import cleaning_costs, batch: 150
       end
     end
 end
