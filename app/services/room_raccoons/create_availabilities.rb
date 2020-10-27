@@ -100,12 +100,7 @@ class RoomRaccoons::CreateAvailabilities
         end
       end
 
-      if availabilities.present?
-        Availability.import availabilities, batch_size: 150
-      end
-
-      if rules.present?
-        Rule.import rules, batch: 150
-      end
+      Availability.import availabilities, batch_size: 150 if availabilities.present?
+      Rule.import rules, batch: 150 if rules.present?
     end
 end

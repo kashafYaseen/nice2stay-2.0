@@ -38,10 +38,10 @@ class RoomRaccoons::CreatePrices
       rates = []
       if base_by_guest_amts.kind_of?(Array)
         base_by_guest_amts.each do |base_by_guest_amt|
-          rates << base_by_guests_hash(base_by_guest_amt)
+          rates << guests_base_amount(base_by_guest_amt)
         end
       else
-        rates << base_by_guests_hash(base_by_guest_amts)
+        rates << guests_base_amount(base_by_guest_amts)
       end
 
       additional_guest_amounts = data['rates']['rate']['additionalguestamounts']
@@ -51,10 +51,10 @@ class RoomRaccoons::CreatePrices
 
         if additional_guest_amounts.kind_of?(Array)
           additional_guest_amounts.each do |additional_guest_amount|
-            additional_amounts << additional_guests_hash(additional_guest_amount)
+            additional_amounts << guests_additional_amount(additional_guest_amount)
           end
         else
-          additional_amounts << additional_guests_hash(additional_guest_amounts)
+          additional_amounts << guests_additional_amount(additional_guest_amounts)
         end
       end
 
@@ -75,7 +75,7 @@ class RoomRaccoons::CreatePrices
       new_cleaning_costs = []
 
       @rooms.each do |room|
-        rule_index = room.rules.find_index {|rule| rule.start_date == start_date && rule.end_date == end_date }
+        rule_index = room.rules.find_index { |rule| rule.start_date == start_date && rule.end_date == end_date }
         if rule_index.present?
           @rule = room.rules[rule_index]
         end
@@ -85,13 +85,13 @@ class RoomRaccoons::CreatePrices
 
           rates.each do |rate|
             if rate[:age_qualifying_code].present? && rate[:guests].present?
-              @price_index = prices.find_index {|price|
+              @price_index = prices.find_index { |price|
                 (rate[:age_qualifying_code] == "7" && price.infants == [rate[:guests]]) ||
                 (rate[:age_qualifying_code] == "8" && price.children == [rate[:guests]]) ||
                 (rate[:age_qualifying_code] == "10" && price.adults == [rate[:guests]])
               }
             else
-              @price_index = prices.find_index {|price| !(price.children.present? || price.adults.present? || price.infants.present?) }
+              @price_index = prices.find_index { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
             end
 
             if @price_index.present?
@@ -116,13 +116,8 @@ class RoomRaccoons::CreatePrices
               @price.adults = ["999"]
             end
 
-            if @rule.present?
-              @price.minimum_stay = @rule.minimum_stay
-            end
-
-            if @price.new_record? || @price.changed?
-              new_prices << @price
-            end
+            @price.minimum_stay = @rule.minimum_stay if @rule.present?
+            new_prices << @price if @price.new_record? || @price.changed?
           end
         end
 
@@ -130,7 +125,7 @@ class RoomRaccoons::CreatePrices
           cleaning_costs = room.cleaning_costs
 
           additional_amounts.each do |additional_amount|
-            cleaning_cost_index = cleaning_costs.find_index {|cleaning_cost|
+            cleaning_cost_index = cleaning_costs.find_index { |cleaning_cost|
               (additional_amount[:age_qualifying_code] == "7" && cleaning_cost.name == "Infants") ||
               (additional_amount[:age_qualifying_code] == "8" && cleaning_cost.name == "Children") ||
               (additional_amount[:age_qualifying_code] == "10" && cleaning_cost.name == "Adults")
@@ -151,34 +146,27 @@ class RoomRaccoons::CreatePrices
               @cleaning_cost.name = "Adults"
             end
 
-            if @cleaning_cost.new_record? || @cleaning_cost.changed?
-              new_cleaning_costs << @cleaning_cost
-            end
+            new_cleaning_costs << @cleaning_cost if @cleaning_cost.new_record? || @cleaning_cost.changed?
           end
         end
       end
 
-      if new_prices.present?
-        Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] }
-      end
-
-      if new_cleaning_costs.present?
-        CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] }
-      end
+      Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
+      CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
     end
 
-    def base_by_guests_hash base_by_guest_amt
+    def guests_base_amount params
       {
-        age_qualifying_code: base_by_guest_amt['agequalifyingcode'],
-        guests: base_by_guest_amt['numberofguests'],
-        amount: base_by_guest_amt['amountaftertax']
+        age_qualifying_code: params['agequalifyingcode'],
+        guests: params['numberofguests'],
+        amount: params['amountaftertax']
       }
     end
 
-    def additional_guests_hash additional_guest_amount
+    def guests_additional_amount params
       {
-        age_qualifying_code: additional_guest_amount['agequalifyingcode'],
-        amount: additional_guest_amount['amount']
+        age_qualifying_code: params['agequalifyingcode'],
+        amount: params['amount']
       }
     end
 end
