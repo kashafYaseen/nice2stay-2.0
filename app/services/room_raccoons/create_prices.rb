@@ -97,6 +97,7 @@ class RoomRaccoons::CreatePrices
             if @price_index.present?
               @price = prices[@price_index]
               @price.amount = rate[:amount]
+              @price.rr_rate_plan_code = rate_plan_code
             else
               @price = availability.prices.new(amount: rate[:amount], rr_rate_plan_code: rate_plan_code, created_at: DateTime.now, updated_at: DateTime.now)
             end
