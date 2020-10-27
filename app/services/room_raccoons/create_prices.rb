@@ -69,12 +69,17 @@ class RoomRaccoons::CreatePrices
       rates,
       additional_amounts = parse_data(rate_amount_message)
 
-      @rooms = hotel.room_types.find_by(code: room_type_code)&.child_lodgings.includes(:cleaning_costs, availabilities: :prices).where('availabilities.available_on >= ? and availabilities.available_on <= ?', start_date, end_date).references(:availabilities)
+      @rooms = hotel.room_types.find_by(code: room_type_code)&.child_lodgings.includes(:cleaning_costs, :rules, availabilities: :prices).where('availabilities.available_on >= ? and availabilities.available_on <= ?', start_date, end_date).references(:availabilities)
 
       new_prices = []
       new_cleaning_costs = []
 
       @rooms.each do |room|
+        rule_index = room.rules.find_index {|rule| rule.start_date == start_date && rule.end_date == end_date }
+        if rule_index.present?
+          @rule = room.rules[rule_index]
+        end
+
         room.availabilities.each do |availability|
           prices = availability.prices
 
@@ -104,12 +109,18 @@ class RoomRaccoons::CreatePrices
               else
                 @price.adults = [rate[:guests]]
               end
+            else
+              @price.infants = ["999"]
+              @price.children = ["999"]
+              @price.adults = ["999"]
             end
 
-            if @price.new_record?
+            if @rule.present?
+              @price.minimum_stay = @rule.minimum_stay
+            end
+
+            if @price.new_record? || @price.changed?
               new_prices << @price
-            elsif @price.changed?
-              @price.save
             end
           end
         end
@@ -125,31 +136,33 @@ class RoomRaccoons::CreatePrices
             }
 
             if cleaning_cost_index.present?
-              cleaning_cost = cleaning_costs[cleaning_cost_index]
-              cleaning_cost.amount = additional_amount[:amount]
-              cleaning_cost.save
+              @cleaning_cost = cleaning_costs[cleaning_cost_index]
+              @cleaning_cost.fixed_price = additional_amount[:amount]
             else
-              cleaning_cost = cleaning_costs.new( fixed_price: additional_amount[:amount], created_at: DateTime.now, updated_at: DateTime.now)
-              if additional_amount[:age_qualifying_code] == "7"
-                cleaning_cost.name = "Infants"
-              elsif additional_amount[:age_qualifying_code] == "8"
-                cleaning_cost.name = "Children"
-              else
-                cleaning_cost.name = "Adults"
-              end
+              @cleaning_cost = cleaning_costs.new(fixed_price: additional_amount[:amount], created_at: DateTime.now, updated_at: DateTime.now)
+            end
 
-              new_cleaning_costs << cleaning_cost
+            if additional_amount[:age_qualifying_code] == "7"
+              @cleaning_cost.name = "Infants"
+            elsif additional_amount[:age_qualifying_code] == "8"
+              @cleaning_cost.name = "Children"
+            else
+              @cleaning_cost.name = "Adults"
+            end
+
+            if @cleaning_cost.new_record? || @cleaning_cost.changed?
+              new_cleaning_costs << @cleaning_cost
             end
           end
         end
       end
 
       if new_prices.present?
-        Price.import new_prices, batch_size: 150
+        Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] }
       end
 
       if new_cleaning_costs.present?
-        CleaningCost.import new_cleaning_costs, batch: 150
+        CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] }
       end
     end
 
