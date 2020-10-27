@@ -49,6 +49,13 @@
                     <span class="glyphicon-class"><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %></span>
                   </li>
 
+                  <% if @lodging.children.present? %>
+                    <li>
+                      <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-users fa-2x"></i></span>
+                      <span class="glyphicon-class"><%= @lodging.minimum_children %> - <%= pluralize @lodging.children, t('search.child'), t('search.children') %></span>
+                    </li>
+                  <% end %>
+
                   <li>
                     <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-bed fa-2x"></i></span>
                     <span class="glyphicon-class"><%= pluralize @lodging.beds, t('search.bedroom'), t('search.bedrooms') %></span>
