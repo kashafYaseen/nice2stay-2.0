@@ -2,13 +2,13 @@ class RoomRaccoons::CreateAvailabilities
   attr_reader :body
   attr_reader :hotel
 
-  def initialize(body, hotel)
+  def initialize(body, hotel_id)
     @body = body
-    @hotel = hotel
+    @hotel = Lodging.find_by(id: hotel_id)
   end
 
-  def self.call(body, hotel)
-    self.new(body, hotel).call
+  def self.call(body, hotel_id)
+    self.new(body, hotel_id).call
   end
 
   def call
