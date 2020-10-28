@@ -84,7 +84,7 @@ class RoomRaccoons::CreatePrices
           prices = availability.prices
 
           rates.each do |rate|
-            if rate[:age_qualifying_code].present? && rate[:guests].present?
+            if rate[:age_qualifying_code].present?
               @price_index = prices.find_index { |price|
                 (rate[:age_qualifying_code] == "7" && price.infants == [rate[:guests]]) ||
                 (rate[:age_qualifying_code] == "8" && price.children == [rate[:guests]]) ||
@@ -102,18 +102,12 @@ class RoomRaccoons::CreatePrices
               @price = availability.prices.new(amount: rate[:amount], rr_rate_plan_code: rate_plan_code, created_at: DateTime.now, updated_at: DateTime.now)
             end
 
-            if rate[:guests].present?
-              if rate[:age_qualifying_code] == "7"
-                @price.infants = [rate[:guests]]
-              elsif rate[:age_qualifying_code] == "8"
-                @price.children = [rate[:guests]]
-              else
-                @price.adults = [rate[:guests]]
-              end
+            if rate[:age_qualifying_code] == "7"
+              @price.infants = [rate[:guests]]
+            elsif rate[:age_qualifying_code] == "8"
+              @price.children = [rate[:guests]]
             else
-              @price.infants = ["999"]
-              @price.children = ["999"]
-              @price.adults = ["999"]
+              @price.adults = [rate[:guests]]
             end
 
             @price.minimum_stay = @rule.minimum_stay if @rule.present?
@@ -158,7 +152,7 @@ class RoomRaccoons::CreatePrices
     def guests_base_amount params
       {
         age_qualifying_code: params['agequalifyingcode'],
-        guests: params['numberofguests'],
+        guests: params['numberofguests'].present? ? params['numberofguests'] : ["999"],
         amount: params['amountaftertax']
       }
     end
