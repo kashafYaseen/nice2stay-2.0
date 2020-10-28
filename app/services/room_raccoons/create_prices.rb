@@ -152,7 +152,7 @@ class RoomRaccoons::CreatePrices
     def guests_base_amount params
       {
         age_qualifying_code: params['agequalifyingcode'],
-        guests: params['numberofguests'].present? ? params['numberofguests'] : ["999"],
+        guests: params['numberofguests'].present? ? params['numberofguests'] : "999",
         amount: params['amountaftertax']
       }
     end
