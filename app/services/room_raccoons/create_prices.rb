@@ -99,7 +99,7 @@ class RoomRaccoons::CreatePrices
               @price.amount = rate[:amount]
               @price.rr_rate_plan_code = rate_plan_code
             else
-              @price = availability.prices.new(amount: rate[:amount], rr_rate_plan_code: rate_plan_code, created_at: DateTime.now, updated_at: DateTime.now)
+              @price = availability.prices.new(amount: rate[:amount], created_at: DateTime.now, updated_at: DateTime.now)
             end
 
             if rate[:age_qualifying_code] == "7"

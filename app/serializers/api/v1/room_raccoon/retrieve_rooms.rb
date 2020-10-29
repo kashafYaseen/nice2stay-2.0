@@ -58,17 +58,17 @@ class API::V1::RoomRaccoon::RetrieveRooms
       room_types << room_type
       room_stay << room_types
 
-      if room.prices.present?
-        price = room.prices[0]
-        rate_plans = Ox::Element.new('RatePlans')
-        rate_plan = Ox::Element.new('RatePlan')
-        rate_plan['RatePlanCode'] = price.rr_rate_plan_code
-        rate_plan_description = Ox::Element.new('RatePlanDescription')
-        rate_plan_description['Name'] = price.rr_rate_plan_description
-        rate_plan << rate_plan_description
-        rate_plans << rate_plan
-        room_stay << rate_plans
-      end
+      # if room.prices.present?
+      #   price = room.prices[0]
+      #   rate_plans = Ox::Element.new('RatePlans')
+      #   rate_plan = Ox::Element.new('RatePlan')
+      #   rate_plan['RatePlanCode'] = price.rr_rate_plan_code
+      #   rate_plan_description = Ox::Element.new('RatePlanDescription')
+      #   rate_plan_description['Name'] = price.rr_rate_plan_description
+      #   rate_plan << rate_plan_description
+      #   rate_plans << rate_plan
+      #   room_stay << rate_plans
+      # end
 
       room_stays << room_stay
     end
