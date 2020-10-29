@@ -85,9 +85,10 @@ class RoomRaccoons::CreateAvailabilities
           rule_index = room.rules.find_index {|rule| rule.start_date == start_date.to_date && rule.end_date == end_date.to_date }
           rule = rule_index.present? ?
                   room.rules[rule_index] :
-                  room.rules.new(start_date: start_date, end_date: end_date, minimum_stay: stays, created_at: DateTime.now, updated_at: DateTime.now)
+                  room.rules.new(start_date: start_date, end_date: end_date, created_at: DateTime.now, updated_at: DateTime.now)
 
           check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
+          rule.minimum_stay = stays
           rules << rule if rule.new_record? || rule.changed?
         end
       end
