@@ -68,9 +68,7 @@ class RoomRaccoons::CreateAvailabilities
       dates = (start_date..end_date).map(&:to_s)
       stays = stays.length == 2 ? (stays[0]..stays[1]).map(&:to_s) : stays
 
-      rooms = rate_plan_code.present? ?
-               hotel.room_types.find_by(code: room_type_code).child_lodgings.by_rate_code(rate_plan_code.upcase).includes(:availabilities, :rules) :
-               hotel.room_types.find_by(code: room_type_code).child_lodgings.includes(:availabilities, :rules)
+      rooms = hotel.room_types.find_by(code: room_type_code).child_lodgings.includes(:availabilities, :rules)
 
       availabilities = []
       rules = []
