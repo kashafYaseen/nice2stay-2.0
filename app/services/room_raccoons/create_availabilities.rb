@@ -68,39 +68,32 @@ class RoomRaccoons::CreateAvailabilities
       dates = (start_date..end_date).map(&:to_s)
       stays = stays.length == 2 ? (stays[0]..stays[1]).map(&:to_s) : stays
 
-      if rate_plan_code.present?
-        @rooms = hotel.room_types.find_by(code: room_type_code).child_lodgings.by_rate_code(rate_plan_code.upcase).includes(:availabilities, :rules)
-      else
-        @rooms = hotel.room_types.find_by(code: room_type_code).child_lodgings.includes(:availabilities, :rules)
-      end
+      rooms = rate_plan_code.present? ?
+               hotel.room_types.find_by(code: room_type_code).child_lodgings.by_rate_code(rate_plan_code.upcase).includes(:availabilities, :rules) :
+               hotel.room_types.find_by(code: room_type_code).child_lodgings.includes(:availabilities, :rules)
 
       availabilities = []
       rules = []
-      @rooms.each do |room|
+      rooms.each do |room|
         available_on_dates = room.availabilities.pluck(:available_on)
-
         dates.each do |date|
-          unless available_on_dates.include?(date.to_date)
-            availabilities << room.availabilities.new(available_on: date, created_at: DateTime.now, updated_at: DateTime.now)
-          end
+          availabilities << room.availabilities.new(available_on: date, created_at: DateTime.now, updated_at: DateTime.now) unless available_on_dates.include?(date.to_date)
         end
 
         check_response = restriction_status(status, restriction)
         if check_response.present?
           rule_index = room.rules.find_index {|rule| rule.start_date == start_date.to_date && rule.end_date == end_date.to_date }
-          if rule_index.present?
-            rule = room.rules[rule_index]
-            check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
-            rule.save
-          else
-            rule = room.rules.new(start_date: start_date, end_date: end_date, minimum_stay: stays, created_at: DateTime.now, updated_at: DateTime.now)
-            check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
-            rules << rule
-          end
+          rule = rule_index.present? ?
+                  room.rules[rule_index] :
+                  room.rules.new(start_date: start_date, end_date: end_date, created_at: DateTime.now, updated_at: DateTime.now)
+
+          check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
+          rule.minimum_stay = stays
+          rules << rule if rule.new_record? || rule.changed?
         end
       end
 
       Availability.import availabilities, batch_size: 150 if availabilities.present?
-      Rule.import rules, batch: 150 if rules.present?
+      Rule.import rules, batch: 150, on_duplicate_key_update: { columns: [ :rr_check_in_closed, :rr_check_out_closed, :start_date, :end_date, :minimum_stay ] } if rules.present?
     end
 end
