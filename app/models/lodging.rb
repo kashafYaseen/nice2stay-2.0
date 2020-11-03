@@ -71,6 +71,8 @@ class Lodging < ApplicationRecord
     villa: 1,
     apartment: 2,
     bnb: 3,
+    small_resort: 4,
+    boutique_hotels: 5,
   }
 
   enum presentation: {
