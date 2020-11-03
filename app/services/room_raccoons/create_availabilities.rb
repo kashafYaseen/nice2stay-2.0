@@ -74,7 +74,7 @@ class RoomRaccoons::CreateAvailabilities
     end
 
     def create_availabilities parsed_data
-      rooms = hotel.lodging_children.joins(:room_type).distinct.includes(:availabilities, :rules).where(room_types: { code: parsed_data.map {|data| data[:room_type_code].uniq! } })
+      rooms = hotel.lodging_children.joins(:room_type).distinct.includes(:availabilities, :rules).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
       availabilities = []
       rules = []
 
