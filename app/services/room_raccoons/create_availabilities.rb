@@ -24,7 +24,8 @@ class RoomRaccoons::CreateAvailabilities
 
       create_availabilities parsed_data
       return true
-    rescue
+    rescue => e
+      Rails.logger.info "Error============>: #{ e }"
       return false
     end
   end
