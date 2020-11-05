@@ -79,6 +79,12 @@ class Lodging < ApplicationRecord
     as_child: 3,
   }
 
+  enum channel: {
+    standard: 0,
+    room_raccoon: 1,
+    open_gds: 2,
+  }
+
   after_create :add_availabilities, if: :published?
   after_create :reindex_prices, :reindex_experiences_and_region
 
