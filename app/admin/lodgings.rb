@@ -44,6 +44,7 @@ ActiveAdmin.register Lodging do
     column :created_at
     column :published
     column :country
+    column(:channel) { |lodging| lodging.channel.titleize }
 
     actions
   end
@@ -68,6 +69,7 @@ ActiveAdmin.register Lodging do
       f.input :longitude
       f.input :images, as: :file, input_html: { multiple: true }
       f.input :lodging_type
+      f.input(:channel) { |lodging| lodging.channel.titleize }
       f.input :adults
       f.input :children
       f.input :infants
@@ -133,6 +135,7 @@ ActiveAdmin.register Lodging do
       row :longitude
       row :description
       row :lodging_type
+      row :channel
       row :adults
       row :children
       row :infants
