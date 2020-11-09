@@ -22,13 +22,12 @@ class RoomRaccoons::CreateAvailabilities
         parsed_data << parse_data(@body['availstatusmessages']['availstatusmessage'])
       end
 
-      # create_availabilities parsed_data
-      rooms = hotel.lodging_children.joins(:room_type).distinct.includes(:availabilities, :rules).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
+      rooms = hotel.lodging_children.joins(:room_type).distinct.where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
       return false if rooms.size == 0
       RrCreateAvailabilitiesJob.perform_later hotel, parsed_data
       return true
     rescue => e
-      Rails.logger.info "Error============>: #{ e }"
+      Rails.logger.info "Error in Room Raccoon Availabilities============>: #{ e }"
       return false
     end
   end
@@ -70,13 +69,4 @@ class RoomRaccoons::CreateAvailabilities
         stays: @stays&.sort
       }
     end
-
-    # def restriction_status(status, restriction)
-    #   return "check_out_closed" if status == "close" && restriction == "departure"
-    #   return "check_in_closed" if status == "close" && restriction == "arrival"
-    # end
-    #
-    # def create_availabilities parsed_data
-    #   rooms = hotel.lodging_children.joins(:room_type).distinct.includes(:availabilities, :rules).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
-    # end
 end

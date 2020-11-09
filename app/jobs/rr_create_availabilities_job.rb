@@ -35,8 +35,9 @@ class RrCreateAvailabilitiesJob < ApplicationJob
     Rule.import rules, batch: 150, on_duplicate_key_update: { columns: [ :rr_check_in_closed, :rr_check_out_closed, :start_date, :end_date, :minimum_stay ] } if rules.present?
   end
 
-  def restriction_status(status, restriction)
-    return "check_out_closed" if status == "close" && restriction == "departure"
-    return "check_in_closed" if status == "close" && restriction == "arrival"
-  end
+  private
+    def restriction_status(status, restriction)
+      return "check_out_closed" if status == "close" && restriction == "departure"
+      return "check_in_closed" if status == "close" && restriction == "arrival"
+    end
 end
