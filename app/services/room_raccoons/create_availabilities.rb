@@ -22,10 +22,12 @@ class RoomRaccoons::CreateAvailabilities
         parsed_data << parse_data(@body['availstatusmessages']['availstatusmessage'])
       end
 
-      create_availabilities parsed_data
+      rooms = hotel.lodging_children.joins(:room_type).distinct.where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
+      return false if rooms.size == 0
+      RrCreateAvailabilitiesJob.perform_later hotel, parsed_data
       return true
     rescue => e
-      Rails.logger.info "Error============>: #{ e }"
+      Rails.logger.info "Error in Room Raccoon Availabilities============>: #{ e }"
       return false
     end
   end
@@ -34,8 +36,8 @@ class RoomRaccoons::CreateAvailabilities
     def parse_data data
       status_application_control = data['statusapplicationcontrol']
       if status_application_control.present?
-        @start = status_application_control["start"]&.to_date
-        @end = status_application_control["end"]&.to_date
+        @start = status_application_control["start"]
+        @end = status_application_control["end"]
         @room_type_code = status_application_control["invtypecode"]
         @rate_plan_code = status_application_control["rateplancode"]
       end
@@ -66,44 +68,5 @@ class RoomRaccoons::CreateAvailabilities
         restriction: @restriction&.downcase,
         stays: @stays&.sort
       }
-    end
-
-    def restriction_status(status, restriction)
-      return "check_out_closed" if status == "close" && restriction == "departure"
-      return "check_in_closed" if status == "close" && restriction == "arrival"
-    end
-
-    def create_availabilities parsed_data
-      rooms = hotel.lodging_children.joins(:room_type).distinct.includes(:availabilities, :rules).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
-      availabilities = []
-      rules = []
-
-      parsed_data.each do |data|
-        dates = (data[:start_date]..data[:end_date]).map(&:to_s)
-        stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
-        rooms.each do |room|
-          available_on_dates = room.availabilities.pluck(:available_on)
-          dates.each do |date|
-            availabilities << room.availabilities.new(available_on: date, created_at: DateTime.now, updated_at: DateTime.now) unless available_on_dates.include?(date.to_date)
-          end
-
-          check_response = restriction_status(data[:status], data[:restriction])
-          if stays.present? || check_response.present?
-            rule_index = room.rules.find_index {|rule| rule.start_date == data[:start_date] && rule.end_date == data[:end_date] }
-            rule = rule_index.present? ?
-                    room.rules[rule_index] :
-                    room.rules.new(start_date: data[:start_date], end_date: data[:end_date], created_at: DateTime.now, updated_at: DateTime.now)
-
-            if check_response.present?
-              check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
-            end
-            rule.minimum_stay = stays
-            rules << rule if rule.new_record? || rule.changed?
-          end
-        end
-      end
-
-      Availability.import availabilities, batch_size: 150 if availabilities.present?
-      Rule.import rules, batch: 150, on_duplicate_key_update: { columns: [ :rr_check_in_closed, :rr_check_out_closed, :start_date, :end_date, :minimum_stay ] } if rules.present?
     end
 end
