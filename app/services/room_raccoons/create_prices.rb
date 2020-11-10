@@ -25,7 +25,7 @@ class RoomRaccoons::CreatePrices
       dates = parsed_data.map { |data| (data[:start_date]..data[:end_date]).map(&:to_s) }.flatten.uniq.sort
       @rooms = hotel.lodging_children.joins(:room_type, :availabilities).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq }, availabilities: { available_on: dates }).distinct
       return false if @rooms.size == 0
-      RrCreatePricesJob.perform_later hotel, parsed_data
+      RrCreatePricesJob.set(queue: :rr_prices_queue).perform_later hotel, parsed_data
       return true
     rescue => e
       Rails.logger.info "Error in Room Raccoon Prices============>: #{ e }"
