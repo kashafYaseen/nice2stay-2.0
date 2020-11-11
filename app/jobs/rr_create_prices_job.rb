@@ -2,13 +2,13 @@ class RrCreatePricesJob < ApplicationJob
   queue_as :rr_prices_queue
 
   def perform(hotel, parsed_data)
-    dates = parsed_data.map {|data| (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s) }.flatten.uniq
-    @rooms = hotel.lodging_children.joins(:room_type).includes(:cleaning_costs, :rules, availabilities: :prices).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
+    @hotel_rooms = hotel.lodging_children.includes(:cleaning_costs, :rules, :room_type, availabilities: :prices)
 
     parsed_data.each do |data|
       new_prices = []
       new_cleaning_costs = []
-      dates = (data[:start_date]..data[:end_date]).map(&:to_s)
+      dates = (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s)
+      @rooms = @hotel_rooms.map { |room| room if room.room_type_code == data[:room_type_code] }.delete_if {|room| room.blank? }
 
       @rooms.each do |room|
         rule_index = room.rules.find_index { |rule| rule.start_date == data[:start_date].to_date && rule.end_date == data[:end_date].to_date }
@@ -34,7 +34,6 @@ class RrCreatePricesJob < ApplicationJob
             if @price_index.present?
               @price = prices[@price_index]
               @price.amount = rate[:amount]
-              @price.rr_rate_plan_code = data[:rate_plan_code]
             else
               @price = availability.prices.new(amount: rate[:amount], created_at: DateTime.now, updated_at: DateTime.now)
             end
