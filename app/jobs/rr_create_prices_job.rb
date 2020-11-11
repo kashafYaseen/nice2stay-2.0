@@ -5,9 +5,9 @@ class RrCreatePricesJob < ApplicationJob
     dates = parsed_data.map {|data| (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s) }.flatten.uniq
     @rooms = hotel.lodging_children.joins(:room_type).includes(:cleaning_costs, :rules, availabilities: :prices).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
 
-    new_prices = []
-    new_cleaning_costs = []
     parsed_data.each do |data|
+      new_prices = []
+      new_cleaning_costs = []
       dates = (data[:start_date]..data[:end_date]).map(&:to_s)
 
       @rooms.each do |room|
@@ -81,9 +81,9 @@ class RrCreatePricesJob < ApplicationJob
           end
         end
       end
-    end
 
-    Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
-    CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
+      Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
+      CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
+    end
   end
 end
