@@ -4,11 +4,13 @@ class RrCreateAvailabilitiesJob < ApplicationJob
   def perform(hotel, parsed_data)
     availabilities = []
     rules = []
+    hotel_rooms = hotel.lodging_children.includes(:availabilities, :rules, :room_type)
 
-    rooms = hotel.lodging_children.joins(:room_type).distinct.includes(:availabilities, :rules).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
     parsed_data.each do |data|
       dates = (data[:start_date]..data[:end_date]).map(&:to_s)
       stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
+      rooms = hotel_rooms.map { |room| room if room.room_type_code == data[:room_type_code] }.delete_if {|room| room.blank? }
+
       rooms.each do |room|
         available_on_dates = room.availabilities.pluck(:available_on)
         dates.each do |date|
