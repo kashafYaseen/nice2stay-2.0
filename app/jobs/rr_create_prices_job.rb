@@ -1,11 +1,14 @@
 class RrCreatePricesJob < ApplicationJob
-  queue_as :default
+  queue_as :rr_prices_queue
 
   def perform(hotel, parsed_data)
+    dates = parsed_data.map {|data| (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s) }.flatten.uniq
+    @rooms = hotel.lodging_children.joins(:room_type).includes(:cleaning_costs, :rules, availabilities: :prices).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
+
+    new_prices = []
+    new_cleaning_costs = []
     parsed_data.each do |data|
-      @rooms = hotel.room_types.find_by(code: data[:room_type_code])&.child_lodgings.includes(:cleaning_costs, :rules, availabilities: :prices).where('availabilities.available_on >= ? and availabilities.available_on <= ?', data[:start_date], data[:end_date]).references(:availabilities)
-      new_prices = []
-      new_cleaning_costs = []
+      dates = (data[:start_date]..data[:end_date]).map(&:to_s)
 
       @rooms.each do |room|
         rule_index = room.rules.find_index { |rule| rule.start_date == data[:start_date].to_date && rule.end_date == data[:end_date].to_date }
@@ -13,7 +16,8 @@ class RrCreatePricesJob < ApplicationJob
           @rule = room.rules[rule_index]
         end
 
-        room.availabilities.each do |availability|
+        availabilities = room.availabilities.map {|availability| availability if dates.include?(availability.available_on.to_s)}.delete_if { |availability| availability.blank? }
+        availabilities.each do |availability|
           prices = availability.prices
 
           data[:rates].each do |rate|
@@ -77,9 +81,9 @@ class RrCreatePricesJob < ApplicationJob
           end
         end
       end
-
-      Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
-      CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
     end
+
+    Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
+    CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
   end
 end
