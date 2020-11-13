@@ -3,6 +3,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_lodging, only: [:show, :options]
   before_action :set_custom_text, only: [:index]
   before_action :set_total_lodgings, only: [:index]
+  before_action :authenticate, only: [:recommendations]
 
   def index
     @lodgings = SearchLodgings.call(params, @custom_text, true)
@@ -30,6 +31,13 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     end
 
     render json: Api::V2::LodgingSerializer.new(lodgings, { params: { amenities: true, reviews: true } }).serialized_json, status: :ok
+  end
+
+  def recommendations
+    lodging_slugs, lodgings = current_user.recommended_lodgings, []
+    lodging_slugs.each { |lodging_slug| lodgings << Lodging.friendly.find(lodging_slug[0]) }
+
+    render json: Api::V2::LodgingSerializer.new(lodgings).serialized_json, status: :ok
   end
 
   private
