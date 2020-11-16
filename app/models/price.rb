@@ -1,5 +1,6 @@
 class Price < ApplicationRecord
   belongs_to :availability
+  belongs_to :rate_plan, optional: true
   has_one :lodging, through: :availability
 
   scope :of_child, -> (child_id) { joins(:availability).where('lodging_id = ?', child_id) }
