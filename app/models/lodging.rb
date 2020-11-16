@@ -20,6 +20,8 @@ class Lodging < ApplicationRecord
   has_many :room_types, foreign_key: :parent_lodging_id
   belongs_to :room_type, optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
+  has_many :rate_plans, through: :room_types
+  has_many :room_rate_plans, through: :room_type, source: :rate_plans
 
   include ImageHelper
 
