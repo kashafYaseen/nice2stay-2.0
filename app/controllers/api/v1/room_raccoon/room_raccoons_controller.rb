@@ -6,8 +6,8 @@ class Api::V1::RoomRaccoon::RoomRaccoonsController < ActionController::API
 
     if @body['ota_hotelavailrq'].present?
       hotel_id = @body['ota_hotelavailrq']['availrequestsegments']['availrequestsegment']['hotelsearchcriteria']['criterion']['hotelref']['hotelcode']
-      @rooms = Lodging.find_by(id: hotel_id)&.lodging_children&.includes(:room_type)
-      render xml: API::V1::RoomRaccoon::RetrieveRooms.call(@rooms, @body), status: @rooms.present? ? :ok : :unprocessable_entity, content_type: 'text/xml; charset=UTF-8'
+      response, response_flag = API::V1::RoomRaccoon::RetrieveRooms.call(hotel_id, @body)
+      render xml: response, status: response_flag ? :ok : :unprocessable_entity, content_type: 'text/xml; charset=UTF-8'
     elsif @body['ota_hotelavailnotifrq'].present?
       hotel_id = @body['ota_hotelavailnotifrq']['availstatusmessages']['hotelcode']
       response = RoomRaccoons::CreateAvailabilities.call(@body['ota_hotelavailnotifrq'], hotel_id)
