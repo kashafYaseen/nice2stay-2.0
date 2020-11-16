@@ -1,5 +1,7 @@
 class Availability < ApplicationRecord
-  belongs_to :lodging
+  belongs_to :lodging, optional: true
+  belongs_to :rate_plan, optional: true
+  belongs_to :room_type, optional: true
   has_many :prices
 
   after_commit :reindex_lodging
