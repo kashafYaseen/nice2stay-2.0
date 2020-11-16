@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_122502) do
+ActiveRecord::Schema.define(version: 2020_11_16_124848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_122502) do
     t.bigint "lodging_id"
     t.bigint "rate_plan_id"
     t.bigint "room_type_id"
+    t.string "minimum_stay", default: [], array: true
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
     t.index ["rate_plan_id"], name: "index_availabilities_on_rate_plan_id"
