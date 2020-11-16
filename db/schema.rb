@@ -165,8 +165,10 @@ ActiveRecord::Schema.define(version: 2020_11_16_094147) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
+    t.bigint "rate_plan_id"
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+    t.index ["rate_plan_id"], name: "index_availabilities_on_rate_plan_id"
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -829,9 +831,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_094147) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
-    t.bigint "rate_plan_id"
     t.index ["availability_id"], name: "index_prices_on_availability_id"
-    t.index ["rate_plan_id"], name: "index_prices_on_rate_plan_id"
   end
 
   create_table "rate_plans", force: :cascade do |t|
@@ -1090,6 +1090,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_094147) do
 
   add_foreign_key "amenities", "amenity_categories", on_delete: :cascade
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
+  add_foreign_key "availabilities", "rate_plans", on_delete: :cascade
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
@@ -1125,7 +1126,6 @@ ActiveRecord::Schema.define(version: 2020_11_16_094147) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
-  add_foreign_key "prices", "rate_plans", on_delete: :cascade
   add_foreign_key "rate_plans", "room_types", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
