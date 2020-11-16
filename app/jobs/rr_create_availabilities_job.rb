@@ -4,7 +4,7 @@ class RrCreateAvailabilitiesJob < ApplicationJob
   def perform(hotel, parsed_data)
     availabilities = []
     rules = []
-    hotel_rooms = hotel.lodging_children.includes(:availabilities, :rules, :room_type)
+    hotel_rooms = hotel.room_types.includes(:availabilities, :rate_plans)
 
     parsed_data.each do |data|
       dates = (data[:start_date]..data[:end_date]).map(&:to_s)
