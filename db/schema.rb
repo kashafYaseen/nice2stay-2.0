@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_092259) do
+ActiveRecord::Schema.define(version: 2020_11_16_094147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,7 +257,9 @@ ActiveRecord::Schema.define(version: 2020_11_16_092259) do
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rate_plan_id"
     t.index ["lodging_id"], name: "index_cleaning_costs_on_lodging_id"
+    t.index ["rate_plan_id"], name: "index_cleaning_costs_on_rate_plan_id"
   end
 
   create_table "collections", force: :cascade do |t|
@@ -827,7 +829,18 @@ ActiveRecord::Schema.define(version: 2020_11_16_092259) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
+    t.bigint "rate_plan_id"
     t.index ["availability_id"], name: "index_prices_on_availability_id"
+    t.index ["rate_plan_id"], name: "index_prices_on_rate_plan_id"
+  end
+
+  create_table "rate_plans", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.bigint "room_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_type_id"], name: "index_rate_plans_on_room_type_id"
   end
 
   create_table "region_translations", force: :cascade do |t|
@@ -1081,6 +1094,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_092259) do
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
   add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
+  add_foreign_key "cleaning_costs", "rate_plans", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "parent_id", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "relative_id", on_delete: :cascade
   add_foreign_key "countries_leads", "countries", on_delete: :cascade
@@ -1111,6 +1125,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_092259) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "prices", "rate_plans", on_delete: :cascade
+  add_foreign_key "rate_plans", "room_types", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
