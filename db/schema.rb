@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_124848) do
     t.string "rr_minimum_stay", default: [], array: true
     t.boolean "rr_check_in_closed", default: false
     t.boolean "rr_check_out_closed", default: false
+    t.integer "rr_booking_limit", default: 0
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
     t.index ["rate_plan_id"], name: "index_availabilities_on_rate_plan_id"
