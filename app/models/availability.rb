@@ -5,7 +5,7 @@ class Availability < ApplicationRecord
   has_many :prices
 
   after_commit :reindex_lodging
-  validates :available_on, uniqueness: { scope: :lodging }
+  validates :available_on, uniqueness: { scope: :lodging }, if: Proc.new { |availability| availability.lodging.present? }
 
   accepts_nested_attributes_for :prices, allow_destroy: true
 
@@ -13,6 +13,8 @@ class Availability < ApplicationRecord
   scope :for_range, -> (from, to) { where('available_on >= ? and available_on <= ?', from, to) }
   scope :check_out_only, -> { where(check_out_only: true) }
   scope :active, -> { where('available_on >= ?', Date.today) }
+
+  delegate :code, to: :rate_plan, allow_nil: true, prefix: true
 
   def reindex_lodging
     lodging.reindex
