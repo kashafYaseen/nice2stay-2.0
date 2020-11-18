@@ -1,4 +1,7 @@
+require './lib/recommendation.rb'
+
 class User < ApplicationRecord
+  include Reccommendation
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -12,6 +15,7 @@ class User < ApplicationRecord
   has_many :leads
   has_many :bookings
   has_many :reservations, through: :bookings
+  has_many :reserved_lodgings, through: :reservations, source: :lodging
   has_many :notifications
   has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
@@ -93,6 +97,10 @@ class User < ApplicationRecord
   def invitation_status
     return "Pending"  if invitation_accepted_at.blank? && !invitation_sent_at.blank?
     return "Accepted"
+  end
+
+  def reserved_lodging_slugs
+    reserved_lodgings.map(&:slug).uniq
   end
 
   private
