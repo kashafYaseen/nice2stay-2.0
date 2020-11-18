@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_124848) do
+ActiveRecord::Schema.define(version: 2020_11_18_111102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,9 +265,9 @@ ActiveRecord::Schema.define(version: 2020_11_16_124848) do
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "rate_plan_id"
+    t.bigint "availability_id"
+    t.index ["availability_id"], name: "index_cleaning_costs_on_availability_id"
     t.index ["lodging_id"], name: "index_cleaning_costs_on_lodging_id"
-    t.index ["rate_plan_id"], name: "index_cleaning_costs_on_rate_plan_id"
   end
 
   create_table "collections", force: :cascade do |t|
@@ -1100,8 +1100,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_124848) do
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
+  add_foreign_key "cleaning_costs", "availabilities", on_delete: :cascade
   add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
-  add_foreign_key "cleaning_costs", "rate_plans", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "parent_id", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "relative_id", on_delete: :cascade
   add_foreign_key "countries_leads", "countries", on_delete: :cascade
