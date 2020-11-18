@@ -3,6 +3,7 @@ class Availability < ApplicationRecord
   belongs_to :rate_plan, optional: true
   belongs_to :room_type, optional: true
   has_many :prices
+  has_many :cleaning_costs
 
   after_commit :reindex_lodging
   validates :available_on, uniqueness: { scope: :lodging }, if: Proc.new { |availability| availability.lodging.present? }

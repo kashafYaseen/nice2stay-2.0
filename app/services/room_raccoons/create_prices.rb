@@ -23,8 +23,9 @@ class RoomRaccoons::CreatePrices
       end
 
       dates = parsed_data.map { |data| (data[:start_date]..data[:end_date]).map(&:to_s) }.flatten.uniq.sort
-      @rooms = hotel.lodging_children.joins(:room_type, :availabilities).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq }, availabilities: { available_on: dates }).distinct
-      return false if @rooms.size == 0
+      rooms = hotel.room_types.joins(availabilities: :rate_plan).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq }, rate_plans: { code: parsed_data.map {|data| data[:rate_plan_code] }.uniq }).select("availabilities.available_on as available_on")
+      rooms = rooms.map { |room| room if dates.include?(room.available_on.to_s) }.delete_if { |room| room.blank? }
+      return false if rooms.size == 0
       RrCreatePricesJob.perform_later hotel, parsed_data
       return true
     rescue => e
