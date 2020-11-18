@@ -34,7 +34,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def recommendations
-    lodging_slugs, lodgings = current_user.recommended_lodgings, []
+    lodging_slugs, lodgings = current_user.recommended_lodgings_for(params[:id]), []
     lodging_slugs.each { |lodging_slug| lodgings << Lodging.friendly.find(lodging_slug[0]) }
 
     render json: Api::V2::LodgingSerializer.new(lodgings).serialized_json, status: :ok

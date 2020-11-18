@@ -2,6 +2,7 @@ class Lodging < ApplicationRecord
   belongs_to :owner, optional: true
   belongs_to :region
   has_many :reservations
+  has_many :users, through: :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities
   has_many :rules

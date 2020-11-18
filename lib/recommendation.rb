@@ -1,6 +1,7 @@
 module Reccommendation
-  def recommended_lodgings
-    other_users = User.where.not(id: self.id).includes(:reservations, :reserved_lodgings, reserved_lodgings: [:translations])
+  def recommended_lodgings_for(lodging_id)
+    current_lodging = Lodging.friendly.find(lodging_id)
+    other_users = current_lodging.users.distinct.not(id: self.id).includes(:reservations, :reserved_lodgings, reserved_lodgings: [:translations])
     recommended = Hash.new(0)
 
     other_users.each do |user|
