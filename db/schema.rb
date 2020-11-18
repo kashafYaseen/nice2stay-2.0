@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_044716) do
+ActiveRecord::Schema.define(version: 2020_11_18_111102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,8 +165,16 @@ ActiveRecord::Schema.define(version: 2020_11_05_044716) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
+    t.bigint "rate_plan_id"
+    t.bigint "room_type_id"
+    t.string "rr_minimum_stay", default: [], array: true
+    t.boolean "rr_check_in_closed", default: false
+    t.boolean "rr_check_out_closed", default: false
+    t.integer "rr_booking_limit", default: 0
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
+    t.index ["rate_plan_id"], name: "index_availabilities_on_rate_plan_id"
+    t.index ["room_type_id"], name: "index_availabilities_on_room_type_id"
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -257,6 +265,8 @@ ActiveRecord::Schema.define(version: 2020_11_05_044716) do
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "availability_id"
+    t.index ["availability_id"], name: "index_cleaning_costs_on_availability_id"
     t.index ["lodging_id"], name: "index_cleaning_costs_on_lodging_id"
   end
 
@@ -372,7 +382,6 @@ ActiveRecord::Schema.define(version: 2020_11_05_044716) do
     t.integer "value"
     t.integer "crm_id"
     t.integer "guests"
-    t.string "rr_rate_plan_code"
     t.index ["lodging_id"], name: "index_discounts_on_lodging_id"
   end
 
@@ -828,9 +837,16 @@ ActiveRecord::Schema.define(version: 2020_11_05_044716) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
-    t.string "rr_rate_plan_code"
-    t.string "rr_rate_plan_description"
     t.index ["availability_id"], name: "index_prices_on_availability_id"
+  end
+
+  create_table "rate_plans", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.bigint "room_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_type_id"], name: "index_rate_plans_on_room_type_id"
   end
 
   create_table "region_translations", force: :cascade do |t|
@@ -1080,9 +1096,11 @@ ActiveRecord::Schema.define(version: 2020_11_05_044716) do
 
   add_foreign_key "amenities", "amenity_categories", on_delete: :cascade
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
+  add_foreign_key "availabilities", "rate_plans", on_delete: :cascade
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
+  add_foreign_key "cleaning_costs", "availabilities", on_delete: :cascade
   add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "parent_id", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "relative_id", on_delete: :cascade
@@ -1114,6 +1132,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_044716) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "rate_plans", "room_types", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade

@@ -22,7 +22,7 @@ class RoomRaccoons::CreateAvailabilities
         parsed_data << parse_data(@body['availstatusmessages']['availstatusmessage'])
       end
 
-      rooms = hotel.lodging_children.joins(:room_type).distinct.where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
+      rooms = hotel.room_types.by_codes_and_rate_plans(parsed_data.map {|data| data[:room_type_code] }.uniq, parsed_data.map {|data| data[:rate_plan_code] }.uniq)
       return false if rooms.size == 0
       RrCreateAvailabilitiesJob.perform_later hotel, parsed_data
       return true
@@ -34,6 +34,7 @@ class RoomRaccoons::CreateAvailabilities
 
   private
     def parse_data data
+      booking_limit = data["bookinglimit"]
       status_application_control = data['statusapplicationcontrol']
       if status_application_control.present?
         @start = status_application_control["start"]
@@ -64,9 +65,11 @@ class RoomRaccoons::CreateAvailabilities
         start_date: @start,
         end_date: @end,
         room_type_code: @room_type_code&.upcase,
+        rate_plan_code: @rate_plan_code&.upcase,
         status: @status&.upcase,
         restriction: @restriction&.downcase,
-        stays: @stays&.sort
+        stays: @stays&.sort,
+        booking_limit: booking_limit
       }
     end
 end

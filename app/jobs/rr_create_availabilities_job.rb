@@ -2,39 +2,32 @@ class RrCreateAvailabilitiesJob < ApplicationJob
   queue_as :default
 
   def perform(hotel, parsed_data)
-    availabilities = []
-    rules = []
-    hotel_rooms = hotel.lodging_children.includes(:availabilities, :rules, :room_type)
+    hotel_room_types = hotel.room_types.includes(:rate_plans, availabilities: :rate_plan).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq })
 
     parsed_data.each do |data|
+      availabilities = []
       dates = (data[:start_date]..data[:end_date]).map(&:to_s)
       stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
-      rooms = hotel_rooms.map { |room| room if room.room_type_code == data[:room_type_code] }.delete_if {|room| room.blank? }
+      room_types = hotel_room_types.map { |room_type| room_type if room_type.code == data[:room_type_code] }.delete_if { |room_type| room_type.blank? }
 
-      rooms.each do |room|
-        available_on_dates = room.availabilities.pluck(:available_on)
+      room_types.each do |room_type|
+        rate_plan = room_type.rate_plans.map { |rate_plan| rate_plan if rate_plan.code == data[:rate_plan_code] }.delete_if { |rate_plan| rate_plan.blank? }&.first
         dates.each do |date|
-          availabilities << room.availabilities.new(available_on: date, created_at: DateTime.now, updated_at: DateTime.now) unless available_on_dates.include?(date.to_date)
-        end
-
-        check_response = restriction_status(data[:status], data[:restriction])
-        if stays.present? || check_response.present?
-          rule_index = room.rules.find_index {|rule| rule.start_date == data[:start_date].to_date && rule.end_date == data[:end_date].to_date }
-          rule = rule_index.present? ?
-                  room.rules[rule_index] :
-                  room.rules.new(start_date: data[:start_date], end_date: data[:end_date], created_at: DateTime.now, updated_at: DateTime.now)
-
+          @availability = room_type.availabilities.map { |availability| availability if availability.available_on.to_s == date && availability.rate_plan_code == data[:rate_plan_code] }.delete_if { |availability| availability.blank? }&.first
+          @availability = room_type.availabilities.new(available_on: date, rate_plan: rate_plan, created_at: DateTime.now, updated_at: DateTime.now) unless @availability.present?
+          @availability.rr_minimum_stay = stays
+          @availability.rr_booking_limit = data[:booking_limit]
+          check_response = restriction_status(data[:status], data[:restriction])
           if check_response.present?
-            check_response == "check_in_closed" ? rule.rr_check_in_closed = true : rule.rr_check_out_closed = true
+            check_response == "check_in_closed" ? @availability.rr_check_in_closed = true : @availability.rr_check_out_closed = true
           end
-          rule.minimum_stay = stays
-          rules << rule if rule.new_record? || rule.changed?
+
+          availabilities << @availability if @availability.new_record? || @availability.changed?
         end
       end
-    end
 
-    Availability.import availabilities, batch_size: 150 if availabilities.present?
-    Rule.import rules, batch: 150, on_duplicate_key_update: { columns: [ :rr_check_in_closed, :rr_check_out_closed, :start_date, :end_date, :minimum_stay ] } if rules.present?
+      Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: [ :rr_booking_limit, :rr_check_in_closed, :rr_check_out_closed, :rr_minimum_stay ] } if availabilities.present?
+    end
   end
 
   private
