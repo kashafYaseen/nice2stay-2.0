@@ -6,7 +6,7 @@ class RrCreateAvailabilitiesJob < ApplicationJob
 
     parsed_data.each do |data|
       availabilities = []
-      dates = (data[:start_date]..data[:end_date]).map(&:to_s)
+      dates = (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s)
       stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
       room_types = hotel_room_types.map { |room_type| room_type if room_type.code == data[:room_type_code] }.delete_if { |room_type| room_type.blank? }
 
