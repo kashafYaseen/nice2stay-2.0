@@ -228,6 +228,7 @@ en:
     extra_service: Additional services
     payment_conditions: CANCELLATION & PAYMENT CONDITIONS
     deposit: SECURITY DEPOSIT
+    pay_text: 'TO BE PAID ON LOCATION'
 
   footer:
     support: Direct contact?
