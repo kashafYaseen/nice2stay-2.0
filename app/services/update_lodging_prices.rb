@@ -29,7 +29,7 @@ class UpdateLodgingPrices
             import_list << Price.new(amount: day_price(price_range, availability.available_on).to_f, children: price_range[:children], adults: price_range[:adults], checkin: price_range[:checkin],
               infants: price_range[:infants], minimum_stay: price_range[:minimal_stay], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
 
-            if price_range[:weekly_price].present?
+            if price_range[:weekly_price].present? && price_range[:minimal_stay].exclude?('7')
               import_list << Price.new(amount: price_range[:amount].to_f, children: price_range[:children], adults: price_range[:adults], checkin: price_range[:checkin],
                 infants: price_range[:infants], minimum_stay: ['7'], availability_id: availability.id, weekly_price: nil, created_at: Date.current, updated_at: Date.current)
             end
