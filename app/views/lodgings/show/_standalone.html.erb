@@ -46,7 +46,7 @@
                 <ul class="bs-glyphicons-list">
                   <li>
                     <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-users fa-2x"></i></span>
-                    <span class="glyphicon-class"><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %></span>
+                    <span class="glyphicon-class"><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.adult'), t('search.adults') %></span>
                   </li>
 
                   <% if @lodging.children.present? %>
