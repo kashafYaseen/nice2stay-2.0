@@ -251,6 +251,7 @@ nl:
     extra_service: Optionele services
     payment_conditions:  Annulerings- & betalingsvoorwaarden
     deposit:  Waarborgsom
+    pay_text: 'Ter plaatse te betalen'
 
 
   search:
