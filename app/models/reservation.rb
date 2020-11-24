@@ -1,6 +1,8 @@
 class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
+  belongs_to :room_type, optional: true
+  belongs_to :rate_plan, optional: true
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
   has_one :review
@@ -18,8 +20,10 @@ class Reservation < ApplicationRecord
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
-  delegate :email, :full_name, to: :user, prefix: true
+  delegate :email, :first_name, :last_name, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
+  delegate :code, :description, to: :room_type, prefix: true
+  delegate :code, to: :rate_plan, prefix: true
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :in_cart, -> { where(in_cart: true) }
