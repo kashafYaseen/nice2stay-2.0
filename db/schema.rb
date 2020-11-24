@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_18_111102) do
+ActiveRecord::Schema.define(version: 2020_11_23_120301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -915,8 +915,12 @@ ActiveRecord::Schema.define(version: 2020_11_18_111102) do
     t.string "be_category_id"
     t.string "channel_manager_booking_id"
     t.text "channel_manager_errors"
+    t.bigint "room_type_id"
+    t.bigint "rate_plan_id"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
+    t.index ["rate_plan_id"], name: "index_reservations_on_rate_plan_id"
+    t.index ["room_type_id"], name: "index_reservations_on_room_type_id"
   end
 
   create_table "review_translations", force: :cascade do |t|
@@ -1136,6 +1140,8 @@ ActiveRecord::Schema.define(version: 2020_11_18_111102) do
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
+  add_foreign_key "reservations", "rate_plans"
+  add_foreign_key "reservations", "room_types"
   add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users", on_delete: :cascade
