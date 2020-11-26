@@ -119,7 +119,7 @@ class RoomRaccoons::SendReservations
         room_stay << total(reservation)
         room_stay << basic_property_info(reservation)
         room_stay << res_guest_rphs(reservation)
-        room_stays << room_stay(reservation)
+        room_stays << room_stay
       end
 
       room_stays
