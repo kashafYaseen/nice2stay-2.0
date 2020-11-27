@@ -16,6 +16,21 @@
   <!-- Toolbar-->
   <div class="toolbar">
     <div class="inner">
+      <div class="locale-toggle dropdown">
+        <button class="dropdown-toggle btn mr-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <% if I18n.locale == :nl %>
+            <span><%= image_tag('rsz_1netherlands-flag.png', width: '16', height: '12', alt: 'Dutch') %> </span>
+          <% else %>
+            <span><%= image_tag('rsz_1american-flag.png', width: '16', height: '12', alt: 'English') %> </span>
+          <% end %>
+        </button>
+
+        <div class="dropdown-menu view-dropdown-menu" aria-labelledby="change-view-dropdown">
+          <%= link_to 'Dutch', { locale: 'nl' }, class: 'dropdown-item' %>
+          <%= link_to 'English', { locale: 'en' }, class: 'dropdown-item' %>
+        </div>
+      </div>
+
       <a class="toolbar-toggle" href="#mobileMenu">
         <i class="material-icons menu"></i>
       </a>
