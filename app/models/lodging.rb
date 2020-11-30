@@ -86,8 +86,9 @@ class Lodging < ApplicationRecord
 
   enum channel: {
     standard: 0,
-    room_raccoon: 1,
-    open_gds: 2,
+    guest_centric: 1,
+    room_raccoon: 2,
+    open_gds: 3,
   }
 
   after_create :add_availabilities, if: :published?
