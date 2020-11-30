@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_120301) do
+ActiveRecord::Schema.define(version: 2020_11_30_101323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -599,11 +599,11 @@ ActiveRecord::Schema.define(version: 2020_11_23_120301) do
     t.string "gc_rooms", default: [], array: true
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
-    t.bigint "room_type_id"
     t.string "be_category_id"
     t.string "be_admin_id"
     t.string "be_org_id"
     t.boolean "booking_expert", default: false
+    t.bigint "room_type_id"
     t.integer "channel", default: 0
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
@@ -846,6 +846,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_120301) do
     t.bigint "room_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "default_rate", default: "0.0"
     t.index ["room_type_id"], name: "index_rate_plans_on_room_type_id"
   end
 
