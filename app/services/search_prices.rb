@@ -46,7 +46,8 @@ class SearchPrices
       conditions[:_or] = []
       conditions[:available_on] = dates
       conditions[:adults]   = [params[:adults], 999]
-      conditions[:lodging_id] = params[:lodging_id]
+      conditions[:lodging_id] = params[:lodging_id]  if params[:lodging_id].present?
+      conditions[:rate_plan_id] = params[:rate_plan_id] if params[:rate_plan_id].present?
       conditions[:minimum_stay] = [params[:minimum_stay], 999]
       conditions[:checkin] = checkin_day
 

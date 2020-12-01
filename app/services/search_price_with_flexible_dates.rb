@@ -1,21 +1,27 @@
 class SearchPriceWithFlexibleDates
   attr_reader :params
   attr_reader :lodging
+  attr_reader :rate_plan
 
   FLEXIBILITY = 3
 
-  def self.call(params, lodging)
-    self.new(params, lodging).call
+  def self.call(params, lodging, rate_plan = nil)
+    self.new(params, lodging, rate_plan).call
   end
 
-  def initialize(params, lodging)
+  def initialize(params, lodging, rate_plan = nil)
     @params = params
     @lodging = lodging
+    @rate_plan = rate_plan
   end
 
   def call
-    return search_price_with_defaults unless lodging.as_child? && params[:flexible]
-    flexible_search
+    if @lodging.present?
+      return search_price_with_defaults unless lodging.as_child? && params[:flexible]
+      return flexible_search
+    end
+
+    search_price_with_defaults
   end
 
   def flexible_search
@@ -61,9 +67,10 @@ class SearchPriceWithFlexibleDates
 
   private
     def search_price_with_defaults
-      lodging.flexible_search = false
       price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
-      price_list = price_list + [lodging.price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
+      price = lodging.present? ? lodging.price : rate_plan.price
+      lodging.flexible_search = false if lodging.present?
+      price_list = price_list + [price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
       reservation = build_reservation params
       return { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
     end
@@ -97,6 +104,7 @@ class SearchPriceWithFlexibleDates
     end
 
     def build_reservation(params)
-      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging, booking: Booking.new)
+      return Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging, booking: Booking.new) if lodging.present?
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: rate_plan.parent_lodging, rate_plan: rate_plan, room_type: rate_plan.room_type, booking: Booking.new)
     end
 end
