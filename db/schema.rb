@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_101323) do
+ActiveRecord::Schema.define(version: 2020_12_01_055126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -846,7 +846,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_101323) do
     t.bigint "room_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "default_rate", default: "0.0"
+    t.decimal "price", default: "0.0"
     t.index ["room_type_id"], name: "index_rate_plans_on_room_type_id"
   end
 
@@ -969,6 +969,9 @@ ActiveRecord::Schema.define(version: 2020_11_30_101323) do
     t.bigint "parent_lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "adults", default: 0
+    t.integer "children", default: 0
+    t.integer "infants", default: 0
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
