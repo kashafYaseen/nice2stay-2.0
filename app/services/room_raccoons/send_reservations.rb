@@ -1,19 +1,24 @@
 class RoomRaccoons::SendReservations
-  attr_reader :hotel
-  attr_reader :room_types
-  attr_reader :booking
-  attr_reader :reservations
+  # attr_reader :hotel
+  attr_reader :room_types, :lodging, :user, :room_type, :rate_plan
+  # attr_reader :booking
+  attr_reader :reservation
+  # attr_reader :reservations
   attr_reader :uri
   attr_reader :xml_doc
 
-  def self.call(booking)
-    self.new(booking).call
+  def self.call(reservation)
+    self.new(reservation).call
   end
 
-  def initialize(booking)
+  def initialize(reservation)
     # @hotel = hotel
-    @booking = booking
-    @reservations = @booking.reservations.includes(:room_type, :rate_plan)
+    # @lodging = reservation.lodging
+    # @user = reservation.user
+    @reservation = reservation
+    # @room_type = reservation.room_type
+    # @rate_plan = reservation.rate_plan
+    # @reservations = @booking.reservations.includes(:room_type, :rate_plan)
     # @room_types = room_types
     @uri = URI.parse("https://api.roomraccoon.com/api/")
     @xml_doc = Ox::Document.new
@@ -99,7 +104,7 @@ class RoomRaccoons::SendReservations
       hotel_reservation['CreateDateTime'] = DateTime.current
       unique_id = Ox::Element.new('UniqueID')
       unique_id['Type'] = "14"
-      unique_id['ID'] = booking.id
+      unique_id['ID'] = reservation.id
       hotel_reservation << unique_id
       hotel_reservation << room_stays
       hotel_reservation << res_guests
@@ -109,35 +114,35 @@ class RoomRaccoons::SendReservations
     end
 
     def room_stays
-      room_stays = Ox::Element.new("RoomStays")
-      reservations.each do |reservation|
+      _room_stays = Ox::Element.new("RoomStays")
+      # reservations.each do |reservation|
         room_stay = Ox::Element.new("RoomStay")
-        room_stay << room_types(reservation)
-        room_stay << room_rates(reservation)
-        room_stay << guest_counts(reservation)
-        room_stay << time_span(reservation)
-        room_stay << total(reservation)
-        room_stay << basic_property_info(reservation)
-        room_stay << res_guest_rphs(reservation)
-        room_stays << room_stay
-      end
+        room_stay << room_types
+        room_stay << room_rates
+        room_stay << guest_counts
+        room_stay << time_span
+        room_stay << total
+        room_stay << basic_property_info
+        room_stay << res_guest_rphs
+        _room_stays << room_stay
+      # end
 
-      room_stays
+      _room_stays
     end
 
-    def room_types reservation
-      room_types = Ox::Element.new("RoomTypes")
+    def room_types
+      _room_types = Ox::Element.new("RoomTypes")
       room_type = Ox::Element.new("RoomType")
       room_type['RoomTypeCode'] = reservation.room_type_code
       room_description = Ox::Element.new("RoomDescription")
       room_description['Name'] = reservation.room_type_description
       room_type << room_description
-      room_types << room_type
-      room_types
+      _room_types << room_type
+      _room_types
     end
 
-    def room_rates reservation
-      room_rates = Ox::Element.new("RoomRates")
+    def room_rates
+      _room_rates = Ox::Element.new("RoomRates")
       room_rate = Ox::Element.new("RoomRate")
       room_rate['RoomTypeCode'] = reservation.room_type_code
       room_rate['RatePlanCode'] = reservation.rate_plan_code
@@ -156,60 +161,60 @@ class RoomRaccoons::SendReservations
       rate << base_rate
       rates << rate
       room_rate << rates
-      room_rates << room_rate
-      room_rates
+      _room_rates << room_rate
+      _room_rates
     end
 
-    def guest_counts reservation
-      guest_counts = Ox::Element.new("GuestCounts")
-      total_guests(reservation).each do |guest|
+    def guest_counts
+      _guest_counts = Ox::Element.new("GuestCounts")
+      total_guests.each do |guest|
         guest_count = Ox::Element.new("GuestCount")
         guest_count['AgeQualifyingCode'] = guest[0]
         guest_count['Count'] = guest[1]
-        guest_counts << guest_count
+        _guest_counts << guest_count
       end
 
-      guest_counts
+      _guest_counts
     end
 
-    def time_span reservation
-      time_span = Ox::Element.new("TimeSpan")
-      time_span['Start'] = reservation.check_in
-      time_span['End'] = reservation.check_out
-      time_span
+    def time_span
+      _time_span = Ox::Element.new("TimeSpan")
+      _time_span['Start'] = reservation.check_in
+      _time_span['End'] = reservation.check_out
+      _time_span
     end
 
-    def total reservation
-      total = Ox::Element.new("Total")
-      total['AmountAfterTax'] = reservation.total_price
-      total['CurrencyCode'] = "EUR"
-      total
+    def total
+      _total = Ox::Element.new("Total")
+      _total['AmountAfterTax'] = reservation.total_price
+      _total['CurrencyCode'] = "EUR"
+      _total
     end
 
-    def basic_property_info reservation
-      basic_property_info = Ox::Element.new("BasicPropertyInfo")
-      basic_property_info["HotelCode"] = reservation.lodging_id
-      basic_property_info
+    def basic_property_info
+      _basic_property_info = Ox::Element.new("BasicPropertyInfo")
+      _basic_property_info["HotelCode"] = reservation.lodging_id
+      _basic_property_info
     end
 
-    def res_guest_rphs reservation
-      res_guest_rphs = Ox::Element.new("ResGuestRPHs")
+    def res_guest_rphs
+      _res_guest_rphs = Ox::Element.new("ResGuestRPHs")
       res_guest_rph = Ox::Element.new("ResGuestRPH")
       res_guest_rph['RPH'] = reservation.id
-      res_guest_rphs << res_guest_rph
-      res_guest_rphs
+      _res_guest_rphs << res_guest_rph
+      _res_guest_rphs
     end
 
     def res_guests
-      res_guests = Ox::Element.new("ResGuests")
-      reservations.each do |reservation|
+      _res_guests = Ox::Element.new("ResGuests")
+      # reservations.each do |reservation|
         res_guest = Ox::Element.new("ResGuest")
         res_guest['ResGuestRPH'] = reservation.id
         res_guest << get_profiles
-        res_guests << res_guest
-      end
+        _res_guests << res_guest
+      # end
 
-      res_guests
+      _res_guests
     end
 
     def res_global_info
@@ -217,11 +222,11 @@ class RoomRaccoons::SendReservations
       hotel_reservation_ids = Ox::Element.new("HotelReservationIDs")
       hotel_reservation_id = Ox::Element.new("HotelReservationID")
       hotel_reservation_id['ResID_Type'] = 14
-      hotel_reservation_id['ResID_Value'] = booking.id
+      hotel_reservation_id['ResID_Value'] = reservation.id
       hotel_reservation_ids << hotel_reservation_id
 
       total = Ox::Element.new("Total")
-      total['AmountAfterTax'] = booking.total_payment
+      total['AmountAfterTax'] = reservation.total_price
       total['CurrencyCode'] = "EUR"
 
       res_global_info << hotel_reservation_ids
@@ -231,7 +236,7 @@ class RoomRaccoons::SendReservations
     end
 
 
-    def total_guests reservation
+    def total_guests
       guest_count = []
       guest_count << ["10", reservation.adults] if reservation.adults > 0
       guest_count << ["8", reservation.children] if reservation.children > 0
@@ -248,9 +253,9 @@ class RoomRaccoons::SendReservations
       customer = Ox::Element.new("Customer")
       person_name = Ox::Element.new("PersonName")
       given_name = Ox::Element.new("GivenName")
-      given_name << booking.user_first_name
+      given_name << reservation.user_first_name
       sur_name = Ox::Element.new("SurName")
-      sur_name << booking.user_last_name
+      sur_name << reservation.user_last_name
 
       person_name << given_name
       person_name << sur_name
