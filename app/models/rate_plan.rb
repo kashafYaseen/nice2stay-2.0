@@ -6,6 +6,7 @@ class RatePlan < ApplicationRecord
 
   attr_accessor :calculated_price
   attr_accessor :dynamic_price
+  attr_accessor :price_errors, :price_valid
 
   delegate :adults, :parent_lodging, to: :room_type
 
@@ -16,8 +17,10 @@ class RatePlan < ApplicationRecord
       return self.dynamic_price = false
     end
 
-    total_price = price_list(params.merge(flexible: false))[:rates].sum
-    self.calculated_price = total_price.round(2)
+    prices = price_list(params.merge(flexible: false))
+    self.calculated_price = prices[:rates].sum.round(2)
+    self.price_valid = prices[:valid]
+    self.price_errors = prices[:errors]
     self.dynamic_price = true
   end
 
