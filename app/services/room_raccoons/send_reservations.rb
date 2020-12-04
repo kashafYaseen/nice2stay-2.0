@@ -1,25 +1,15 @@
 class RoomRaccoons::SendReservations
-  # attr_reader :hotel
-  attr_reader :room_types, :lodging, :user, :room_type, :rate_plan
-  # attr_reader :booking
-  attr_reader :reservation
-  # attr_reader :reservations
+  attr_reader :reservation, :reservation_status
   attr_reader :uri
   attr_reader :xml_doc
 
-  def self.call(reservation)
-    self.new(reservation).call
+  def self.call(reservation:, reservation_status: "Commit")
+    self.new(reservation: reservation, reservation_status: reservation_status).call
   end
 
-  def initialize(reservation)
-    # @hotel = hotel
-    # @lodging = reservation.lodging
-    # @user = reservation.user
+  def initialize(reservation:, reservation_status: "Commit")
     @reservation = reservation
-    # @room_type = reservation.room_type
-    # @rate_plan = reservation.rate_plan
-    # @reservations = @booking.reservations.includes(:room_type, :rate_plan)
-    # @room_types = room_types
+    @reservation_status = reservation_status
     @uri = URI.parse("https://api.roomraccoon.com/api/")
     @xml_doc = Ox::Document.new
   end
@@ -31,7 +21,13 @@ class RoomRaccoons::SendReservations
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     response = http.request(request)
-    response.body
+    api_response = parse_response(response.body)
+    if api_response[:errors].present?
+      reservation.update_attributes(rr_errors: api_response[:errors], request_status: 'rejected') if reservation_status == "Commit"
+      reservation.update_attributes(rr_errors: api_response[:errors]) if reservation_status == "Cancel"
+    else
+      reservation.update_attributes(rr_res_id_value: api_response[:res_id_value], request_status: "#{ reservation_status == "Commit" ? "confirmed" : "canceled" }", booking_status: "booked")
+    end
   end
 
   def form_data
@@ -71,7 +67,7 @@ class RoomRaccoons::SendReservations
       ota_hotel_res_notif_rq['xmlns'] = "http://www.opentravel.org/OTA/2003/05"
       ota_hotel_res_notif_rq['Version'] = "1.0"
       ota_hotel_res_notif_rq['EchoToken'] = SecureRandom.uuid
-      ota_hotel_res_notif_rq['ResStatus'] = "commit"
+      ota_hotel_res_notif_rq['ResStatus'] = reservation_status
       ota_hotel_res_notif_rq['TimeStamp'] = DateTime.current
 
       ota_hotel_res_notif_rq << get_pos
@@ -115,17 +111,15 @@ class RoomRaccoons::SendReservations
 
     def room_stays
       _room_stays = Ox::Element.new("RoomStays")
-      # reservations.each do |reservation|
-        room_stay = Ox::Element.new("RoomStay")
-        room_stay << room_types
-        room_stay << room_rates
-        room_stay << guest_counts
-        room_stay << time_span
-        room_stay << total
-        room_stay << basic_property_info
-        room_stay << res_guest_rphs
-        _room_stays << room_stay
-      # end
+      room_stay = Ox::Element.new("RoomStay")
+      room_stay << room_types
+      room_stay << room_rates
+      room_stay << guest_counts
+      room_stay << time_span
+      room_stay << total
+      room_stay << basic_property_info
+      room_stay << res_guest_rphs
+      _room_stays << room_stay
 
       _room_stays
     end
@@ -207,12 +201,10 @@ class RoomRaccoons::SendReservations
 
     def res_guests
       _res_guests = Ox::Element.new("ResGuests")
-      # reservations.each do |reservation|
-        res_guest = Ox::Element.new("ResGuest")
-        res_guest['ResGuestRPH'] = reservation.id
-        res_guest << get_profiles
-        _res_guests << res_guest
-      # end
+      res_guest = Ox::Element.new("ResGuest")
+      res_guest['ResGuestRPH'] = reservation.id
+      res_guest << get_profiles
+      _res_guests << res_guest
 
       _res_guests
     end
@@ -264,5 +256,16 @@ class RoomRaccoons::SendReservations
       profile_info << profile
       profiles << profile_info
       profiles
+    end
+
+    def parse_response response
+      response_body = Hash.from_xml(response).deep_transform_keys(&:downcase)['envelope']['body']['ota_hotelresnotifrs']
+      if response_body.has_key?('success')
+        res_id_value = response_body['hotelreservations']['hotelreservation']['resglobalinfo']['hotelreservationids']['hotelreservationid']['resid_value']
+        return { res_id_value: res_id_value,  errors: nil }
+      else
+        errors = response_body['errors']['error']
+        return { res_id_value: nil, errors: errors.is_a?(Array) ? errors.join(", ") : errors }
+      end
     end
 end

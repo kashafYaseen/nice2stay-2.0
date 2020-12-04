@@ -23,9 +23,7 @@ class Api::V2::CartsController < Api::V2::ApiController
       end
 
       @booking.reservations.room_raccoon.includes(:room_type, :rate_plan).each do |reservation|
-        response = RoomRaccoons::SendReservations.call(reservation)
-        render xml: response, status: :ok, content_type: 'text/xml; charset=UTF-8'
-        return
+        RoomRaccoons::SendReservations.call(reservation: reservation)
       end
 
       render json: Api::V2::BookingSerializer.new(@booking, { params: { reservations: true, auth: true } }).serialized_json, status: :ok

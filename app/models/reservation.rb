@@ -117,6 +117,10 @@ class Reservation < ApplicationRecord
     cleaning_costs.try(:first).try(:manage_by)
   end
 
+  def room_raccoon?
+    lodging.as_parent? && room_type.present? && rate_plan.present?
+  end
+
   private
     def update_lodging_availability
       return if in_cart? || prebooking? || option? || offer_id.present?
@@ -126,7 +130,7 @@ class Reservation < ApplicationRecord
     end
 
     def update_room_type_availability
-      return if in_cart? || prebooking? || option? || offer_id.present?
+      return if in_cart? || prebooking? || option?
       _availabilities = room_type.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), rate_plan: rate_plan)
       _availabilities.each do |availability|
         availability.rr_booking_limit -= rooms
@@ -198,10 +202,6 @@ class Reservation < ApplicationRecord
 
     def send_reservation_removal_details
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
-    end
-
-    def room_raccoon?
-      lodging.as_parent?
     end
 
     def validate_room_type_availabilities
