@@ -116,7 +116,7 @@
                 <% @countries_enabled.each do |country| %>
                   <li class="has-children">
                     <span>
-                      <%= link_to country_path(country, locale: locale) do %>
+                      <%= link_to lodgings_path('countries_in[]': country.slug, locale: locale) do %>
                         <span><%= country.name %></span>
                       <% end %>
                       <span class="sub-menu-toggle"></span>
@@ -124,7 +124,7 @@
 
                     <ul class="slideable-submenu">
                       <% country.regions.each do | region | %>
-                        <li><%= link_to region.name, country_region_path(country, region, locale: locale) %></li>
+                        <li><%= link_to region.name, lodgings_path('regions_in[]': region.slug, locale: locale) %></li>
                       <% end %>
                     </ul>
                   </li>
