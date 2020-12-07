@@ -287,6 +287,8 @@ ActiveRecord::Schema.define(version: 2020_05_06_113655) do
     t.string "images", default: [], array: true
     t.integer "boost", default: 0
     t.string "code"
+    t.integer "crm_id"
+    t.index ["crm_id"], name: "index_countries_on_crm_id", unique: true
   end
 
   create_table "countries_leads", force: :cascade do |t|
