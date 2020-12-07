@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_18_111102) do
+ActiveRecord::Schema.define(version: 2020_12_07_053721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -297,6 +297,8 @@ ActiveRecord::Schema.define(version: 2020_11_18_111102) do
     t.string "images", default: [], array: true
     t.integer "boost", default: 0
     t.string "code"
+    t.integer "crm_id"
+    t.index ["crm_id"], name: "index_countries_on_crm_id", unique: true
   end
 
   create_table "countries_leads", force: :cascade do |t|
