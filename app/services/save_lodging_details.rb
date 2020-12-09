@@ -19,7 +19,7 @@ class SaveLodgingDetails
   private
     def save_lodging
       lodging.owner = owner
-      lodging.region = region(params[:lodging][:country_name], params[:lodging][:region_name])
+      lodging.region = region(params[:lodging][:country_crm_id], params[:lodging][:region_crm_id])
       lodging.parent = parent
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
@@ -60,15 +60,16 @@ class SaveLodgingDetails
       admin
     end
 
-    def region(country_name, region_name)
-      Region.find_or_create_region(country_name, region_name)
+    def region(country_crm_id, region_crm_id)
+      country = Country.find_by(crm_id: country_crm_id)
+      country.regions.find_by(crm_id: region_crm_id) if country.present?
     end
 
     def parent
       return unless params[:parent].present?
       _parent = Lodging.find_by(crm_id: parent_params[:crm_id]) || Lodging.friendly.find(parent_params[:slug]) rescue Lodging.new
       _parent.owner = owner
-      _parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
+      _parent.region = region(params[:parent][:country_crm_id], params[:parent][:region_crm_id])
       _parent.attributes = parent_params.merge(lodging_type: lodging_type(params[:parent][:lodging_type]), crm_synced_at: DateTime.current)
       _parent.save
       _parent
