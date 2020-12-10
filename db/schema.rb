@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_113655) do
+ActiveRecord::Schema.define(version: 2020_12_10_123839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -855,6 +855,7 @@ ActiveRecord::Schema.define(version: 2020_05_06_113655) do
     t.string "thumbnails", default: [], array: true
     t.string "images", default: [], array: true
     t.integer "crm_id"
+    t.boolean "published", default: false
     t.index ["country_id"], name: "index_regions_on_country_id"
     t.index ["crm_id"], name: "index_regions_on_crm_id", unique: true
   end

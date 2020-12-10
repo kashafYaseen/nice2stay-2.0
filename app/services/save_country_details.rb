@@ -90,6 +90,7 @@ class SaveCountryDetails
       region.permit(
         :crm_id,
         :name,
+        :published,
         :content,
         :slug,
         :title,
