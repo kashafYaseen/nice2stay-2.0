@@ -123,7 +123,7 @@
                     </span>
 
                     <ul class="slideable-submenu">
-                      <% country.regions.each do | region | %>
+                      <% country.regions.published.each do | region | %>
                         <li><%= link_to region.name, lodgings_path('regions_in[]': region.slug, locale: locale) %></li>
                       <% end %>
                     </ul>
