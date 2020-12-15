@@ -221,8 +221,8 @@ class Reservation < ApplicationRecord
         if count == _availabilities.length
           message = "days should be "
           _availabilities.each_with_index do |availability, index|
-            check_day = availability.available_on.strftime("%A")
-            message += "#{ ', ' if index > 0 } #{ check_day.try(:upcase) } (#{ availability.rr_minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ') } nights)"
+            available_day = availability.available_on.strftime("%A")
+            message += "#{ ', ' if index > 0 } #{ available_day.try(:upcase) } (#{ availability.rr_minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ') } nights)"
           end
           errors.add(:base, message)
         end
