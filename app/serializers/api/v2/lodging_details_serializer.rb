@@ -53,4 +53,8 @@ class Api::V2::LodgingDetailsSerializer
   attributes :reviews, if: Proc.new { |lodging, params| params.present? && params[:reviews].present? } do |lodging, params|
     Api::V2::ReviewSerializer.new(lodging.all_reviews.limit(5))
   end
+
+  attributes :room_types, if: Proc.new { |lodging, params|  params.present? && params[:action_name] == "show" && lodging.room_raccoon? } do |lodging, params|
+    Api::V2::RoomTypeSerializer.new(lodging.room_types)
+  end
 end

@@ -1,6 +1,8 @@
 class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
+  belongs_to :room_type, optional: true
+  belongs_to :rate_plan, optional: true
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
   has_one :review
@@ -8,10 +10,11 @@ class Reservation < ApplicationRecord
 
   validates :check_in, :check_out, presence: true
   validate :availability
-  validate :no_of_guests
-  validate :accommodation_rules
+  validate :no_of_guests, unless: :room_raccoon?
+  validate :accommodation_rules, unless: :room_raccoon?
 
-  after_validation :update_lodging_availability
+  after_validation :update_lodging_availability, unless: :room_raccoon?
+  after_validation :update_room_type_availability, if: :room_raccoon?
   # after_commit :send_reservation_details
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
@@ -19,8 +22,10 @@ class Reservation < ApplicationRecord
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
-  delegate :email, :full_name, to: :user, prefix: true
+  delegate :email, :first_name, :last_name, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
+  delegate :code, :description, to: :room_type, prefix: true
+  delegate :code, to: :rate_plan, prefix: true
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :in_cart, -> { where(in_cart: true) }
@@ -31,6 +36,7 @@ class Reservation < ApplicationRecord
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
   scope :booking_expert, -> { where.not(be_category_id: nil) }
+  scope :room_raccoon, -> { where.not(room_type_id: nil, rate_plan_id: nil) }
 
   accepts_nested_attributes_for :review
 
@@ -66,7 +72,8 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum
+    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless room_raccoon?
+    self.rent = rate_plan.price_details([check_in.to_s, check_out.to_s, adults, children, infants])[:rates].sum
   end
 
   def total_meal_price
@@ -111,6 +118,10 @@ class Reservation < ApplicationRecord
     cleaning_costs.try(:first).try(:manage_by)
   end
 
+  def room_raccoon?
+    lodging.as_parent? && room_type.present? && rate_plan.present?
+  end
+
   private
     def update_lodging_availability
       return if in_cart? || prebooking? || option? || offer_id.present?
@@ -119,12 +130,26 @@ class Reservation < ApplicationRecord
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
+    def update_room_type_availability
+      return if in_cart? || prebooking? || option?
+      _availabilities = room_type.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), rate_plan: rate_plan)
+      _availabilities.each do |availability|
+        availability.rr_booking_limit -= rooms
+      end
+
+      Availability.import _availabilities.to_ary, batch_size: 150, on_duplicate_key_update: { columns: [:rr_booking_limit] } if _availabilities.present?
+    end
+
     def availability
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
-      check_out_days = _availabilities.where(check_out_only: true)
-      errors.add(:base, "Not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
+      if room_raccoon?
+        validate_room_type_availabilities
+      else
+        _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
+        check_out_days = _availabilities.where(check_out_only: true)
+        errors.add(:base, "Not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
+      end
     end
 
     def accommodation_rules
@@ -178,5 +203,31 @@ class Reservation < ApplicationRecord
 
     def send_reservation_removal_details
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
+    end
+
+    def validate_room_type_availabilities
+      _availabilities = room_type.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), rate_plan: rate_plan).order(:available_on)
+      nights = (check_out - check_in).to_i
+      if _availabilities.present?
+        min_booking_limit = _availabilities.pluck(:rr_booking_limit).min
+        errors.add(:rooms, "Minimum rooms available from #{ check_in } to #{ check_out } are #{ min_booking_limit }") if rooms > min_booking_limit
+        errors.add(:check_in, "Check-in not possible on #{ check_in }")  if _availabilities.first.rr_check_in_closed && _availabilities.first.available_on == check_in
+        errors.add(:check_out, "Check-out not possible on #{ check_out }")  if _availabilities.last.rr_check_out_closed && _availabilities.last.available_on == check_out
+        count = 0
+        _availabilities.each do |availability|
+          count += 1 if (availability.rr_minimum_stay.present? && availability.rr_minimum_stay.exclude?(nights.to_s))
+        end
+
+        if count == _availabilities.length
+          message = "days should be "
+          _availabilities.each_with_index do |availability, index|
+            available_day = availability.available_on.strftime("%A")
+            message += "#{ ', ' if index > 0 } #{ available_day.try(:upcase) } (#{ availability.rr_minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ') } nights)"
+          end
+          errors.add(:base, message)
+        end
+      end
+
+      errors.add(:base, "Not available for selected dates") if check_in < Date.today && _availabilities.blank?
     end
 end

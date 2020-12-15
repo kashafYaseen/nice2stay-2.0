@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :user, optional: true
   has_many :reservations
+  has_many :room_types, through: :reservations
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false, canceled: false) }
@@ -16,7 +17,7 @@ class Booking < ApplicationRecord
 
   # after_update :send_details
 
-  delegate :full_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
+  delegate :full_name, :first_name, :last_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
 
   enum booking_status: {
     prebooking: 0,
@@ -54,13 +55,13 @@ class Booking < ApplicationRecord
 
   def pre_payment_amount
     reservations.inject(0) do |sum, reservation|
-      reservation.booking_expert? ? sum += reservation.total_price : sum += reservation.rent
+      (reservation.booking_expert? || reservation.room_type_id.present?) ? sum += reservation.total_price : sum += reservation.rent
     end * 0.3
   end
 
   def final_payment_amount
     reservations.inject(0) do |sum, reservation|
-      reservation.booking_expert? ? sum += reservation.total_price : sum += reservation.rent
+      (reservation.booking_expert? || reservation.room_type_id.present?) ? sum += reservation.total_price : sum += reservation.rent
     end * 0.7
   end
 

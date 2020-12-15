@@ -22,6 +22,10 @@ class Api::V2::CartsController < Api::V2::ApiController
         BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
       end
 
+      @booking.reservations.room_raccoon.includes(:room_type, :rate_plan).each do |reservation|
+        RoomRaccoons::SendReservations.call(reservation: reservation)
+      end
+
       render json: Api::V2::BookingSerializer.new(@booking, { params: { reservations: true, auth: true } }).serialized_json, status: :ok
     else
       unprocessable_entity(@booking.errors)
@@ -62,6 +66,8 @@ class Api::V2::CartsController < Api::V2::ApiController
         :offer_id,
         :rent,
         :meal_price,
+        :room_type_id,
+        :rate_plan_id
       )
     end
 

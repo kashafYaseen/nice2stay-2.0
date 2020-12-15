@@ -5,7 +5,7 @@ class Availability < ApplicationRecord
   has_many :prices
   has_many :cleaning_costs
 
-  after_commit :reindex_lodging
+  after_commit :reindex_lodging, if: Proc.new { |availability| availability.lodging.present? }
   validates :available_on, uniqueness: { scope: :lodging }, if: Proc.new { |availability| availability.lodging.present? }
 
   accepts_nested_attributes_for :prices, allow_destroy: true
