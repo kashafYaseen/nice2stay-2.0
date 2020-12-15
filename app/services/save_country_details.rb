@@ -8,7 +8,7 @@ class SaveCountryDetails
 
   def initialize(params)
     @params = params
-    @country = Country.find_or_initialize_by(slug: country_params[:slug])
+    @country = Country.find_by(crm_id: country_params[:crm_id]) || Country.friendly.find(country_params[:slug]) rescue Country.new
   end
 
   def call
@@ -28,7 +28,7 @@ class SaveCountryDetails
     def save_regions
       return unless params[:regions].present?
       params[:regions].each do |region|
-        _region = country.regions.find_or_initialize_by(slug: region[:slug])
+        _region = country.regions.find_or_initialize_by(crm_id: region[:crm_id])
         _region.attributes = region_params(region)
         _region.save
         update_region_translations(_region, region)
@@ -56,6 +56,7 @@ class SaveCountryDetails
 
     def country_params
       params.require(:country).permit(
+        :crm_id,
         :name,
         :content,
         :disable,
@@ -87,6 +88,7 @@ class SaveCountryDetails
 
     def region_params(region)
       region.permit(
+        :crm_id,
         :name,
         :content,
         :slug,

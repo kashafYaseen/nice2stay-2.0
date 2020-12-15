@@ -162,7 +162,8 @@ en:
     inspect: Visited & inspected
     homepage: Search our unique collection holiday villas, apartments and boutique hotels
     inspect_details: Our team has inspected every property
-    price: Transparant prices
+    visit_and_inspect_details: Our team has visited and inspected
+    price: Transparent prices
     price_details: Same prices as booking direct, no booking fees
     advice: Advice & Support
     payment: Online secure payments
@@ -228,6 +229,7 @@ en:
     extra_service: Additional services
     payment_conditions: CANCELLATION & PAYMENT CONDITIONS
     deposit: SECURITY DEPOSIT
+    pay_text: 'TO BE PAID ON LOCATION'
 
   footer:
     support: Direct contact?
@@ -245,7 +247,7 @@ en:
     child: Child
     child_age: Ages 2 - 12
     children_1: Children
-    children: Children (4-12y)
+    children: Children
     babies: Babies
     guests: Guests
     guest: Guest

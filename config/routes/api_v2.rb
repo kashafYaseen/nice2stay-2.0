@@ -15,8 +15,12 @@ namespace :api do
         get :cumulative_price, on: :collection
       end
 
-      get :cumulative_price, on: :collection
       get :options, on: :member
+
+      collection do
+        get :cumulative_price
+        get :recommendations
+      end
     end
     resources :pages, only: [] do
       get :home, on: :collection

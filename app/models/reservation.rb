@@ -6,6 +6,7 @@ class Reservation < ApplicationRecord
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
   has_one :review
+  has_one :user, through: :booking
 
   validates :check_in, :check_out, presence: true
   validate :availability

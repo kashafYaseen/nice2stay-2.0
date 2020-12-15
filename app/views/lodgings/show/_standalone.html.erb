@@ -46,7 +46,7 @@
                 <ul class="bs-glyphicons-list">
                   <li>
                     <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-users fa-2x"></i></span>
-                    <span class="glyphicon-class"><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.guest'), t('search.guests') %></span>
+                    <span class="glyphicon-class"><%= @lodging.minimum_adults %> - <%= pluralize @lodging.adults, t('search.adult'), t('search.adults') %></span>
                   </li>
 
                   <% if @lodging.children.present? %>
@@ -231,6 +231,21 @@
           <div class="collapse" id="collapseTen" data-parent="#accordion2" role="tabpanel">
             <div class="card-body">
               <%= @lodging.deposit_text.try(:html_safe) %>
+            </div>
+          </div>
+
+          <div class="card-header" role="tab">
+            <h6>
+              <a class="collapsed" href="#collapseEleven" data-toggle="collapse">
+               <i class="material-icons monetization_on"></i>
+                <%= t 'information.pay_text' %>
+              </a>
+            </h6>
+          </div>
+
+          <div class="collapse" id="collapseEleven" data-parent="#accordion2" role="tabpanel">
+            <div class="card-body">
+              <%= @lodging.pay_text.try(:html_safe) %>
             </div>
           </div>
         </div>

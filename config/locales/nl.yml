@@ -151,6 +151,7 @@ nl:
     inspect: Door ons bezocht en geinspecteerd
     homepage: Ontdek onze persoonlijk geselecteerde collectie vakantiehuizen, appartementen & boutique hotels.
     inspect_details: Elke accommodatie is door ons team bezocht & geïnspecteerd
+    visit_and_inspect_details: is door ons team persoonlijk geselecteerd
     price: Transparante prijzen
     price_details: Transparante prijzen, bij ons geen verborgen boekingskosten
     advice: Wij geven u graag deskundig advies
@@ -251,13 +252,14 @@ nl:
     extra_service: Optionele services
     payment_conditions:  Annulerings- & betalingsvoorwaarden
     deposit:  Waarborgsom
+    pay_text: 'Ter plaatse te betalen'
 
 
   search:
     adult: Volwassen
     adults: Volwassenen
     adutls_1: Personen
-    children: Kinderen (4-12j)
+    children: Kinderen
     child: Kind
     children_1: Kinderen
     child_age: leeftijd 2 - 12
