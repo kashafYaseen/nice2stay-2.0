@@ -51,6 +51,7 @@ ActiveAdmin.register RoomType do
       table_for room_type.availabilities.order(:available_on) do
         column :id
         column :available_on
+        column 'Booking Limit', :rr_booking_limit
         column 'Check-in Closed', :rr_check_in_closed
         column 'Check-out Closed', :rr_check_out_closed
         column :rate_plan
