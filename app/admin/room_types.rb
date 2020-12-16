@@ -40,6 +40,10 @@ ActiveAdmin.register RoomType do
       table_for room_type.rate_plans do
         column :code
         column :name
+        column :price
+        column 'Action' do |rate_plan|
+          link_to 'Edit', edit_admin_rate_plan_path(rate_plan)
+        end
       end
     end
 
@@ -49,7 +53,7 @@ ActiveAdmin.register RoomType do
         column :available_on
         column 'Check-in Closed', :rr_check_in_closed
         column 'Check-out Closed', :rr_check_out_closed
-        column :rate_plan_code
+        column :rate_plan
 
         column 'Prices' do |availability|
           table_for availability.prices do
