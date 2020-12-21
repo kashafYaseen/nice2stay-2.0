@@ -6,6 +6,10 @@ class Api::V2::LodgingSerializer
              :images, :thumbnails, :average_rating, :created_at, :updated_at, :highlight_1,
              :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text
 
+  attribute :cleaning_cost do |lodging, params|
+    lodging.cleaning_cost_for((params[:adults].to_i + params[:children].to_i), params[:nights])
+  end
+
   attribute :total_reviews do |lodging|
     lodging.all_reviews.count
   end
