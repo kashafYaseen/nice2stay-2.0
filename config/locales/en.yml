@@ -53,7 +53,7 @@ en:
   lodgings_index:
     carefree_booking: Carefree booking - for many accommodations, we offer custom cancellation policies
     free_cancelation_title: Cancel for free
-    free_cancelation_text: Book your stay worry-free with free cancellation up to December 18, 2020. This applies to bookings for 2020 and 2021.
+    free_cancelation_text: "Book your stay worry-free with free cancellation up to April 1, 2021. This applies to bookings for %{current_year} and %{next_year}."
   filters:
     autocomplete_title: Destination / property name
     autocomplete_placeholder: Enter a destination or property name

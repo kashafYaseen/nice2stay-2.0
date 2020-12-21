@@ -56,7 +56,7 @@
 
       <% if lodging.free_cancelation? %>
         <div class="m-2">
-          <p class="bg-white green-tag"><%= t('lodgings_index.free_cancelation_text') %></p>
+          <p class="bg-white green-tag"><%= t('lodgings_index.free_cancelation_text', current_year: DateTime.now.year, next_year: DateTime.now.year.next).html_safe %></p>
         </div>
       <% end %>
     </div>

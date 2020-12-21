@@ -37,7 +37,7 @@ nl:
   lodgings_index:
     carefree_booking: Zorgeloos boeken - Wij bieden in veel gevallen aangepaste annuleringsvoorwaarden
     free_cancelation_title: Kostenloos annuleren
-    free_cancelation_text: Boek uw verblijf zorgenvrij met gratis annuleren tot en met 18 december 2020. Dit geldt voor boekingen voor 2020 en 2021.
+    free_cancelation_text: "Boek uw verblijf zorgenvrij met gratis annuleren tot en met 1 april 2021. Dit geldt voor boekingen voor %{current_year} en %{next_year}."
 
   lead:
     title: Wilt u advies voor uw vakantie?
