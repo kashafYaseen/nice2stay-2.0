@@ -55,7 +55,7 @@ en:
     free_cancelation_title: Cancel for free
     free_cancelation_text: Book your stay worry-free with free cancellation up to December 18, 2020. This applies to bookings for 2020 and 2021.
   filters:
-    autocomplete_title: Destination / property name
+    autocomplete_title: Search for your perfect villa or hotel
     autocomplete_placeholder: Enter a destination or property name
     selected_filters: Selected Filters
     remove_filters: Remove all filters
@@ -66,7 +66,7 @@ en:
     amentities: Amentities
     dates: 'data'
     guests: Guests
-    period: Period & Condition
+    period: Check-in - check-out
     sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'
     more_filters: 'more filters'
@@ -74,7 +74,7 @@ en:
     villa: Villas
     bnb: Boutique hotels
     flexible_tooltip: when you select this option, you get more results. By example when flex arrival is on and you select checkin friday then you'll also see results with checkin as saterday or sunday
-    flexible_text: Flexible arrivale -3/+3 days
+    flexible_text: Flexible arrival -3/+3 days
     free_cancelation: Free cancellation
   sorting:
     low_high: Lowest price
