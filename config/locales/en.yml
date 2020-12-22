@@ -89,6 +89,7 @@ en:
   lead:
     title: Do you want advice for your holiday?
     description: Our booking consultants Julia van Baal (English, Dutch) and Geralda Visscher (English, Dutch, Italian) are longing to talk to you about your holiday. Understanding your requirements is the first and most vital stage in our relationship with you. Please tell us as much as possible about what you like, about yourself and the people travelling with you, the desired period and your budget. Our team gives you honest advice based on our expertise about the accommodations. We visit every accommodation extensively, you’ll always be able to speak to someone who has spent time at the accommodation you will stay in, seen the areas you will visit, and sometimes done the things you’d like to do. You can expect honesty from us we know how precious your vacation is and and we want to make sure you go to the place that suits you best.
+    submit: SEND ENQUIRY
 
   collection:
     populair: Populair collections
@@ -233,7 +234,7 @@ en:
 
   footer:
     support: Direct contact?
-    support_details: You can reach our multilingual team by phone from 9 AM - 1 PM (temporarily adjusted) on weekdays and via the chat function on our website​. ​And you can always send an email to
+    support_details: You can reach our multilingual team by phone from 9 AM - 5:30 PM on weekdays and via the chat function on our website​. ​And you can always send an email to
     support_bel: Call
     newsletter: OUR NEWSLETTER IS AWESOME
     newsletter_details: Browse new additions, last-minute deals, and special offers right from your inbox.
