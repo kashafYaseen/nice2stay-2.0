@@ -44,6 +44,7 @@ nl:
     description: Onze bookings consultants Geralda Visscher en Julia van Baal luisteren graag naar u. Vertel ons alstublieft zoveel mogelijk over wat u belangrijk vindt, over uzelf en de mensen die met u reizen, de gewenste periode en uw budget.
                   Ons team geeft u deskundig advies op basis van onze expertise over de accommodaties. Wij bezoeken iedere accommodatie uitgebreid, zodat u altijd met iemand kunt praten met kennis over de plek en de omgeving.
                   U kunt van ons eerlijk advies verwachten, we weten hoe waardevol uw vakantie is en willen ervoor zorgen dat u naar de plek gaat die het beste bij u past.
+    submit: AANVRAAG VERSTUREN
 
   users:
     login_modal_title: Log in of registreer voor een betere website ervaring
@@ -294,13 +295,13 @@ nl:
 
   footer:
     support: Wilt u direct contact?
-    support_details: Wij zijn op maandag t/m vrijdag bereikbaar van 09.00 tot 13.00 uur (tijdelijk aangepaste tijden) op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons ook een email sturen
+    support_details: Wij zijn op maandag t/m vrijdag bereikbaar van 09.00 tot 17.30 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons ook een email sturen
     support_bel: Bel
     newsletter: ONZE NIEUWSBRIEF IS GEWELDIG
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
-    autocomplete_title: Zoek uw perfecte villa of hotel
+    autocomplete_title: Zoek uw perfecte vakantiehuis, appartement of hotel
     autocomplete_placeholder: Voer een bestemming of accommodatie naam in
     selected_filters: Geselecteerde filters
     remove_filters: Verwijder alle filters
