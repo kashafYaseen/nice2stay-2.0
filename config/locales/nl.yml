@@ -300,7 +300,7 @@ nl:
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
 
   filters:
-    autocomplete_title: Bestemming / accommodatie naam
+    autocomplete_title: Zoek uw perfecte villa of hotel
     autocomplete_placeholder: Voer een bestemming of accommodatie naam in
     selected_filters: Geselecteerde filters
     remove_filters: Verwijder alle filters
@@ -308,7 +308,7 @@ nl:
     price: Prijs
     theme: Experience
     type: Type accommodatie
-    period: Periode
+    period: Check-in - check-out
     amentities_pop: Faciliteiten populair
     amentities: Faciliteiten
     dates: 'data'
