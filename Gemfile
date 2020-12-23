@@ -129,3 +129,4 @@ gem 'newrelic_rpm'
 gem 'rack-cors'
 gem 'ox', '~> 2.13', '>= 2.13.3'
 gem 'csv'
+gem "recaptcha"
