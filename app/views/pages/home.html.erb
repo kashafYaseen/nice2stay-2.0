@@ -181,7 +181,7 @@
 
           <% @countries_enabled.each do |country| %>
             <div class="grid-item gallery-item">
-              <%= link_to country_path(country, locale: locale) do %>
+              <%= link_to lodgings_path('countries_in[]': country.slug, locale: locale) do %>
                 <%= image_tag country.image, style: 'min-height: 200px' if country.image.present? %>
                 <h2 class="image-title-box"><%= country.name %></h2>
               <% end %>
