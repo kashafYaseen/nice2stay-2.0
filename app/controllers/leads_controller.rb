@@ -8,7 +8,7 @@ class LeadsController < ApplicationController
 
   def create
     @lead = @user.leads.build(lead_params)
-    return redirect_to root_path, notice: "Lead was created successfully." if @lead.save && @user.valid?
+    return redirect_to root_path, notice: "Lead was created successfully." if verify_recaptcha(model: @lead) && @lead.save && @user.valid?
   end
 
   private
