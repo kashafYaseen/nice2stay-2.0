@@ -331,7 +331,7 @@ class Lodging < ApplicationRecord
       if cleaning_cost.fixed_price > 0
         total_cost += cleaning_cost.fixed_price
       elsif cleaning_cost.price_per_day > 0
-        total_cost += (cleaning_cost.price_per_day * nights)
+        total_cost += (cleaning_cost.price_per_day * nights.to_f)
       end
     end
     total_cost
