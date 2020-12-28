@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_101235) do
+ActiveRecord::Schema.define(version: 2020_12_28_094352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -607,6 +607,8 @@ ActiveRecord::Schema.define(version: 2020_12_16_101235) do
     t.boolean "booking_expert", default: false
     t.bigint "room_type_id"
     t.integer "channel", default: 0
+    t.integer "open_gds_property_id"
+    t.integer "open_gds_accomodation_id"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -839,6 +841,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_101235) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
+    t.integer "open_gds_rate_id"
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
