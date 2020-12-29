@@ -608,7 +608,6 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.bigint "room_type_id"
     t.integer "channel", default: 0
     t.integer "open_gds_property_id"
-    t.integer "open_gds_accomodation_id"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -841,7 +840,6 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
-    t.integer "open_gds_rate_id"
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
@@ -853,6 +851,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.datetime "updated_at", null: false
     t.decimal "price", default: "0.0"
     t.text "description"
+    t.integer "open_gds_rate_id"
     t.index ["room_type_id"], name: "index_rate_plans_on_room_type_id"
   end
 
@@ -982,6 +981,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.integer "adults", default: 0
     t.integer "children", default: 0
     t.integer "infants", default: 0
+    t.integer "open_gds_accomodation_id"
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
