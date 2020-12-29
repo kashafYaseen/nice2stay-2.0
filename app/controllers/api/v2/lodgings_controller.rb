@@ -55,7 +55,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     end
 
     def serializer_params
-      _params = { amenities: true, reviews: true }
+      _params = { reviews: true }
 
       return _params.merge(experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings) if action_name == 'index'
       _params.merge(adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f)
