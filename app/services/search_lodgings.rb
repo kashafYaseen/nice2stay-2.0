@@ -75,7 +75,7 @@ class SearchLodgings
       conditions << frame_coordinates if params[:bounds].present?
       conditions << near_latlong_condition if params[:within].present?
 
-      availability_condition conditions if params[:check_in].present? || params[:check_out].present?
+      availability_condition(conditions, params[:flexible_days]) if params[:check_in].present? || params[:check_out].present?
       all(:amenities_ids, params[:amenities_in], conditions) if params[:amenities_in].present?
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
@@ -230,13 +230,13 @@ class SearchLodgings
       }
     end
 
-    def availability_condition conditions
+    def availability_condition conditions, flexible_days=3
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       return all(:available_on, (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s), conditions) unless params[:flexible_arrival].present?
 
       dates = []
-      3.times do |index|
+      flexible_days.to_i.times do |index|
         dates << all(:available_on, ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s), [])
         next if index == 0
         dates << all(:available_on, ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s), [])
