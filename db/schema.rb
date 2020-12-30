@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_28_094352) do
+ActiveRecord::Schema.define(version: 2020_12_29_100335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -840,6 +840,9 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
+    t.integer "open_gds_single_rate_type", default: 0
+    t.decimal "open_gds_single_rate", default: "0.0"
+    t.decimal "open_gds_extra_night_rate", default: "0.0"
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
@@ -852,6 +855,10 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.decimal "price", default: "0.0"
     t.text "description"
     t.integer "open_gds_rate_id"
+    t.boolean "rate_enabled", default: false
+    t.boolean "open_gds_valid_permanent", default: false
+    t.decimal "open_gds_res_fee", default: "0.0"
+    t.integer "open_gds_rate_type"
     t.index ["room_type_id"], name: "index_rate_plans_on_room_type_id"
   end
 
@@ -981,7 +988,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.integer "adults", default: 0
     t.integer "children", default: 0
     t.integer "infants", default: 0
-    t.integer "open_gds_accomodation_id"
+    t.integer "open_gds_accommodation_id"
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
@@ -996,7 +1003,12 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
     t.string "checkin_day"
     t.boolean "rr_check_in_closed", default: false
     t.boolean "rr_check_out_closed", default: false
+    t.integer "open_gds_restriction_type"
+    t.integer "open_gds_restriction_days", default: 0
+    t.string "open_gds_arrival_days", default: [], array: true
+    t.bigint "rate_plan_id"
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
+    t.index ["rate_plan_id"], name: "index_rules_on_rate_plan_id"
   end
 
   create_table "social_logins", force: :cascade do |t|
@@ -1161,6 +1173,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_094352) do
   add_foreign_key "reviews", "users", on_delete: :cascade
   add_foreign_key "room_types", "lodgings", column: "parent_lodging_id", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
+  add_foreign_key "rules", "rate_plans", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
   add_foreign_key "trip_members", "trips", on_delete: :cascade
