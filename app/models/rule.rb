@@ -1,5 +1,7 @@
 class Rule < ApplicationRecord
   belongs_to :lodging
+  belongs_to :room_type, optional: true
+  belongs_to :rate_plan, optional: true
 
   DAY_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -16,6 +18,12 @@ class Rule < ApplicationRecord
     saturday: 'saturday',
     sunday: 'sunday',
   }
+
+  enum open_gds_restriction_type: {
+    disabled: 0,
+    till: 1,
+    from: 2
+  }, _prefix: :restriction_type
 
   def search_data
     attributes.merge(

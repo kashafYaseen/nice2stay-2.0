@@ -3,12 +3,27 @@ class RatePlan < ApplicationRecord
   has_many :availabilities
   has_many :prices, through: :availabilities
   has_many :reservations
+  has_one :rule
 
   attr_accessor :calculated_price
   attr_accessor :dynamic_price
   attr_accessor :price_errors, :price_valid
 
-  delegate :adults, :parent_lodging, to: :room_type
+  delegate :adults, :parent_lodging, to: :room_type, allow_nil: true
+
+  enum open_gds_rate_type: {
+    pppn: 0,
+    papn: 1,
+    pp: 2,
+    ps: 3,
+    pppd: 4,
+    papd: 5
+  }
+
+  enum open_gds_single_rate_type: {
+    single_supplement: 0,
+    single_rate: 1
+  }
 
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0
