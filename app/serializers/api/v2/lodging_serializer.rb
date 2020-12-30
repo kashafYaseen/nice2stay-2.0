@@ -18,15 +18,7 @@ class Api::V2::LodgingSerializer
     lodging.lowest_child_price
   end
 
-  attributes :amenities, if: Proc.new { |lodging, params| params.present? && params[:amenities].present? } do |lodging, params|
-    Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations).uniq, params: { lodgings: params[:lodgings], total_lodgings: params[:total_lodgings] })
-  end
-
   attributes :wishlist_id, if: Proc.new { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
     lodging.wishlists.find_by(user: params[:current_user]).try(:id)
-  end
-
-  attributes :reviews, if: Proc.new { |lodging, params| params.present? && params[:reviews].present? } do |lodging, params|
-    Api::V2::ReviewSerializer.new(lodging.all_reviews.limit(2))
   end
 end

@@ -8,7 +8,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   def index
     @lodgings = SearchLodgings.call(params, @custom_text, params[:only_parent])
     render json: {
-      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: serializer_params }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
+      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
       experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })
     } , status: :ok
   end
@@ -30,7 +30,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       lodgings << lodging
     end
 
-    render json: Api::V2::LodgingSerializer.new(lodgings, { params: serializer_params }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f } }).serialized_json, status: :ok
   end
 
   def recommendations
@@ -52,12 +52,5 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
     def set_total_lodgings
       @total_lodgings = CountTotalLodgings.call(true)
-    end
-
-    def serializer_params
-      _params = { amenities: true, reviews: true }
-
-      return _params.merge(experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings) if action_name == 'index'
-      _params.merge(adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f)
     end
 end

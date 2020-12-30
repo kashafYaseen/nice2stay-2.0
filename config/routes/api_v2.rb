@@ -43,5 +43,6 @@ namespace :api do
     resources :reservations, only: [] do
       resources :reviews, only: [:create]
     end
+    resources :amenities, only: [:index]
   end
 end
