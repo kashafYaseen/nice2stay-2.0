@@ -231,12 +231,13 @@ class SearchLodgings
     end
 
     def availability_condition conditions
+      flexible_days = params[:flexible_days].presence || 3
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       return all(:available_on, (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s), conditions) unless params[:flexible_arrival].present?
 
       dates = []
-      3.times do |index|
+      flexible_days.to_i.times do |index|
         dates << all(:available_on, ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s), [])
         next if index == 0
         dates << all(:available_on, ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s), [])
