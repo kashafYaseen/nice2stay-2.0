@@ -45,5 +45,6 @@ namespace :api do
     end
 
     resource :open_gds, only: :create
+    resources :amenities, only: [:index]
   end
 end
