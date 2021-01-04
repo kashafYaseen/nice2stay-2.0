@@ -43,6 +43,8 @@ namespace :api do
     resources :reservations, only: [] do
       resources :reviews, only: [:create]
     end
+
+    resource :open_gds, only: :create
     resources :amenities, only: [:index]
   end
 end
