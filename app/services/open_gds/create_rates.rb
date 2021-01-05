@@ -7,10 +7,6 @@ class OpenGds::CreateRates
 
   def self.call(rates)
     new(rates).call
-    { status: true, message: 'success' }
-  rescue StandardError => e
-    Rails.logger.info "Error OpenGDS PUSH API ==========================>: #{e}"
-    { status: false, message: e.message }
   end
 
   def call
