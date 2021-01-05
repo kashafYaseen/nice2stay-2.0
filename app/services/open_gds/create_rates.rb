@@ -71,6 +71,7 @@ class OpenGds::CreateRates
       rate_params: rate_params, accom_params: accom_params, room_type: room_type, rate_plan: rate_plan
     )
     rule = update_rule rate_params: rate_params, rate_plan: rate_plan, lodging: lodging
+    availabilities = room_type.availabilities if availabilities.blank?
     update_availabilities_by_status(
       accom_params: accom_params, availabilities: availabilities, prices: prices, rate_plan: rate_plan
     )
