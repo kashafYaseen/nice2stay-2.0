@@ -25,8 +25,10 @@ class OpenGds::CreateRates
     prices = []
     dates = if params[:rate_enabled]
               (Date.today..365.days.from_now).map(&:to_s)
-            else
+            elsif params[:valid_from].present? && params[:valid_till].present?
               (params[:valid_from].to_date..params[:valid_till].to_date).map(&:to_s)
+            else
+              []
             end
 
     lodging = Lodging.find_by(open_gds_property_id: params[:property_id])
