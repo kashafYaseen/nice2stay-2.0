@@ -23,7 +23,7 @@ class OpenGds::CreateRates
     rules = []
     availabilities = []
     prices = []
-    dates = if params[:rate_enabled]
+    dates = if params[:valid_pernament]
               (Date.today..365.days.from_now).map(&:to_s)
             elsif params[:valid_from].present? && params[:valid_till].present?
               (params[:valid_from].to_date..params[:valid_till].to_date).map(&:to_s)
