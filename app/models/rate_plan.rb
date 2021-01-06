@@ -9,7 +9,7 @@ class RatePlan < ApplicationRecord
   attr_accessor :dynamic_price
   attr_accessor :price_errors, :price_valid
 
-  delegate :adults, :parent_lodging, to: :room_type, allow_nil: true
+  delegate :adults, :parent_lodging, :open_gds_accommodation_id, to: :room_type, allow_nil: true
 
   enum open_gds_rate_type: {
     pppn: 0,

@@ -18,7 +18,7 @@ class OpenGds::CreateRates
 
   private
 
-  def update_rate params
+  def update_rate(params)
     rate_plans = []
     rules = []
     availabilities = []
@@ -34,23 +34,37 @@ class OpenGds::CreateRates
     lodging = Lodging.find_by(open_gds_property_id: params[:property_id])
     room_types = lodging.room_types.includes(availabilities: :prices, rate_plans: :rule)
     params[:accommodations].each do |accommodation|
-      rate = update_rate_plan(rate_params: params.merge({ dates: dates }), accom_params: accommodation, room_types: room_types, lodging: lodging)
+      rate = update_rate_plan(rate_params: params.merge({ dates: dates }), accom_params: accommodation,
+                              room_types: room_types, lodging: lodging)
       rate_plans << rate[:rate_plan]
       availabilities << rate[:availabilities]
       prices << rate[:prices]
       rules << rate[:rule]
     end
 
-    RatePlan.import rate_plans, batch_size: 150, on_duplicate_key_update: { columns: %i[rate_enabled open_gds_valid_permanent open_gds_res_fee open_gds_rate_type updated_at] } if rate_plans.present?
+    if rate_plans.present?
+      RatePlan.import rate_plans, batch_size: 150,
+                                  on_duplicate_key_update: { columns: %i[rate_enabled open_gds_valid_permanent open_gds_res_fee open_gds_rate_type updated_at] }
+    end
     if availabilities.present?
-      availabilities = availabilities.flatten.select { |availability| availability.new_record? || availability.changed? }
+      availabilities = availabilities.flatten.select do |availability|
+        availability.new_record? || availability.changed?
+      end
       Availability.import availabilities.each { |availability|
                             availability.rate_plan_id = availability.rate_plan.id
                           }, batch_size: 150, on_duplicate_key_update: { columns: %i[available_on rr_booking_limit rr_minimum_stay rr_check_in_closed rr_check_out_closed updated_at] }
     end
 
-    Rule.import rules.each { |rule| rule.rate_plan_id = rule.rate_plan.id }, batch_size: 150, on_duplicate_key_update: { columns: %i[start_date end_date open_gds_restriction_type open_gds_restriction_days open_gds_arrival_days updated_at] } if rules.present?
-    Price.import prices.flatten.each { |price| price.availability_id = price.availability.id }, batch_size: 150, on_duplicate_key_update: { columns: %i[amount minimum_stay open_gds_single_rate_type open_gds_single_rate open_gds_extra_night_rate adults children infants updated_at] } if prices.present?
+    if rules.present?
+      Rule.import rules.each { |rule|
+                    rule.rate_plan_id = rule.rate_plan.id
+                  }, batch_size: 150, on_duplicate_key_update: { columns: %i[start_date end_date open_gds_restriction_type open_gds_restriction_days open_gds_arrival_days updated_at] }
+    end
+    if prices.present?
+      Price.import prices.flatten.each { |price|
+                     price.availability_id = price.availability.id
+                   }, batch_size: 150, on_duplicate_key_update: { columns: %i[amount minimum_stay open_gds_single_rate_type open_gds_single_rate open_gds_extra_night_rate adults children infants updated_at] }
+    end
   end
 
   def update_rate_plan(rate_params:, accom_params:, room_types:, lodging:)
@@ -189,6 +203,21 @@ class OpenGds::CreateRates
     reload_rates = rates.select { |rate| rate[:init] }
     return unless reload_rates.present?
 
-    RatePlan.where(open_gds_rate_id: reload_rates.map { |rate| rate[:rate_id] }).destroy_all
+    accommodation_ids = []
+    rate_ids = []
+    reload_rates.each do |rate|
+      rate_ids << rate[:rate_id]
+      accommodation_ids << rate[:accommodations].map { |accom| accom[:accom_id] }
+    end
+
+    rate_plans = RatePlan.where(open_gds_rate_id: rate_ids).includes(:room_type)
+    rate_plans_accommodation_ids = rate_plans.map(&:open_gds_accommodation_id).delete_if(&:blank?)
+    accommodation_ids = rate_plans_accommodation_ids - accommodation_ids.flatten
+    return unless accommodation_ids.present?
+
+    deletable_rate_plans = rate_plans.select do |rate_plan|
+      accommodation_ids.include?(rate_plan.open_gds_accommodation_id)
+    end
+    deletable_rate_plans.each(&:destroy)
   end
 end
