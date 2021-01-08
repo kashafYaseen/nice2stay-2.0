@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: nice2stay_production
+  database: <%= ENV['NICE2STAY_DATABASE_NAME'] %>
   pool: 50
   host: 'localhost'
   username: geosearch
