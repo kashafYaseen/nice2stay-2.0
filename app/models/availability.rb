@@ -18,8 +18,6 @@ class Availability < ApplicationRecord
   scope :check_out_only, -> { where(check_out_only: true) }
   scope :active, -> { where('available_on >= ?', Date.today) }
 
-  delegate :code, to: :rate_plan, allow_nil: true, prefix: true
-
   def reindex_lodging
     lodging.reindex
   end
