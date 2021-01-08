@@ -4,8 +4,6 @@ class CreateRoomRates < ActiveRecord::Migration[5.2]
       t.integer :default_booking_limit, default: 0
       t.decimal :default_rate, default: 0
       t.string :currency_code
-      t.integer :default_min_stay, default: 0
-      t.integer :default_max_stay, default: 0
       t.string :default_single_rate, default: 0
       t.integer :default_single_rate_type
       t.decimal :default_single_rate, default: 0
