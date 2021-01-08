@@ -1,4 +1,4 @@
-lock "~> 3.11.0"
+lock '~> 3.14.0'
 
 server '149.210.238.137', port: 22, roles: [:web, :app, :db], primary: true
 
@@ -14,7 +14,7 @@ set :pty,             true
 set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
-set :deploy_to,       "/home/deploy/nice2stay"
+set :deploy_to,       '/home/deploy/nice2stay'
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
@@ -28,6 +28,7 @@ set :puma_init_active_record, false  # Change to true if using ActiveRecord
 
 ## Defaults:
 # set :scm,           :git
+# set :branch,        :master
 # set :format,        :pretty
 # set :log_level,     :debug
 # set :keep_releases, 5
@@ -49,12 +50,12 @@ namespace :puma do
 end
 
 namespace :deploy do
-  desc "Make sure local git is in sync with remote."
+  desc 'Make sure local git is in sync with remote.'
   task :check_revision do
     on roles(:app) do
       unless `git rev-parse HEAD` == `git rev-parse origin/staging`
-        puts "WARNING: HEAD is not the same as origin/staging"
-        puts "Run `git push` to sync changes."
+        puts 'WARNING: HEAD is not the same as origin/staging'
+        puts 'Run `git push` to sync changes.'
         exit
       end
     end
@@ -78,5 +79,4 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
