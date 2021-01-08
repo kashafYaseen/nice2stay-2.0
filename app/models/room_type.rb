@@ -3,8 +3,8 @@ class RoomType < ApplicationRecord
   has_many :child_lodgings, class_name: 'Lodging'
   has_many :room_rates
   has_many :rate_plans, through: :room_rates
-  has_many :availabilities
-  has_many :reservations
+  has_many :availabilities, through: :room_rates
+  has_many :reservations, through: :room_rates
   has_many :cleaning_costs, through: :rate_plans
   has_many :rules, through: :rate_plans
 
