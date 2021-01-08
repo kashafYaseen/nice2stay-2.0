@@ -1,8 +1,9 @@
-lock '~> 3.14.1'
+lock '~> 3.14.0'
 
-server '149.210.229.119', port: 22, roles: [:web, :app, :db], primary: true
+server '149.210.238.137', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:remcoz/geolocation.git'
+set :branch,          :staging
 set :application,     'geolocation'
 set :user,            'deploy'
 set :puma_threads,    [2, 8]
@@ -13,7 +14,7 @@ set :pty,             true
 set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache
-set :deploy_to,       '/home/deploy/hidden-sun-3354'
+set :deploy_to,       '/home/deploy/nice2stay'
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
@@ -52,8 +53,8 @@ namespace :deploy do
   desc 'Make sure local git is in sync with remote.'
   task :check_revision do
     on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse origin/master`
-        puts 'WARNING: HEAD is not the same as origin/master'
+      unless `git rev-parse HEAD` == `git rev-parse origin/staging`
+        puts 'WARNING: HEAD is not the same as origin/staging'
         puts 'Run `git push` to sync changes.'
         exit
       end
@@ -78,5 +79,4 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
