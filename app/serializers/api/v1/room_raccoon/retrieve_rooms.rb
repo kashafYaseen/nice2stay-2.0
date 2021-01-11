@@ -1,8 +1,5 @@
 class API::V1::RoomRaccoon::RetrieveRooms
-  attr_accessor :rooms
-  attr_accessor :xml_doc
-  attr_accessor :request_body
-  attr_accessor :response_body
+  attr_accessor :rooms, :xml_doc, :request_body, :response_body
 
   def initialize(hotel_id, body)
     @rooms = RoomType.where(parent_lodging_id: hotel_id).joins(:rate_plans)&.select("room_types.code as room_code, room_types.description as room_description, rate_plans.code as rate_code, rate_plans.name as rate_name")

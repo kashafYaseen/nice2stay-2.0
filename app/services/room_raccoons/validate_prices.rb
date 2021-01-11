@@ -66,8 +66,8 @@
       end
 
       {
-        room_type_code: room_type_code&.upcase,
-        rate_plan_code: rate_plan_code&.upcase,
+        room_type_code: room_type_code,
+        rate_plan_code: rate_plan_code,
         start_date: start_date,
         end_date: end_date,
         rates: rates,
