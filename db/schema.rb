@@ -856,6 +856,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_104302) do
     t.integer "open_gds_rate_type"
     t.integer "min_stay", default: 0
     t.integer "max_stay", default: 0
+    t.text "open_gds_daily_supplements"
   end
 
   create_table "region_translations", force: :cascade do |t|
