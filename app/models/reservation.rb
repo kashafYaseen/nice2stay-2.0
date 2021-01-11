@@ -1,8 +1,9 @@
 class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
-  belongs_to :room_type, optional: true
-  belongs_to :rate_plan, optional: true
+  belongs_to :room_rate, optional: true
+  has_one :room_type
+  has_one :rate_plan
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
   has_one :review
@@ -36,7 +37,7 @@ class Reservation < ApplicationRecord
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
   scope :booking_expert, -> { where.not(be_category_id: nil) }
-  scope :room_raccoon, -> { where.not(room_type_id: nil, rate_plan_id: nil) }
+  scope :room_raccoon, -> { where.not(room_rate_id: nil) }
 
   accepts_nested_attributes_for :review
 
@@ -119,7 +120,7 @@ class Reservation < ApplicationRecord
   end
 
   def room_raccoon?
-    lodging.as_parent? && room_type.present? && rate_plan.present?
+    ["room_raccoon"].include?(loging.channel)
   end
 
   private
