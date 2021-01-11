@@ -41,11 +41,11 @@ class OpenGds::CreateRates
   def destroy_rate_plan_details(params:, rate_plans:)
     accommodation_ids = params[:accommodations].map { |accomdation| accomdation[:accom_id] }
     if params[:init]
-      RoomRate.joins(:room_type,
-                     :rate_plan).where(room_types: { open_gds_accommodation_id: accommodation_ids }, rate_plans: { open_gds_rate_id: params[:rate_id] }).destroy_all
+      RoomRate.joins(:rate_plan,
+                     room_type: :parent_lodging).where(room_types: { open_gds_accommodation_id: accommodation_ids }, rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
     else
-      RoomRate.joins(:room_type,
-                     :rate_plan).where.not(room_types: { open_gds_accommodation_id: accommodation_ids }).where(rate_plans: { open_gds_rate_id: params[:rate_id] }).destroy_all
+      RoomRatejoins(:rate_plan,
+                     room_type: :parent_lodging).where.not(room_types: { open_gds_accommodation_id: accommodation_ids }).where(rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
       dates = if params[:valid_permanent]
                 (Date.today..365.days.from_now).map(&:to_s)
               elsif params[:valid_from].present? && params[:valid_till].present?
@@ -56,7 +56,7 @@ class OpenGds::CreateRates
 
       byebug
       rate_plan = rate_plans.find { |rp| rp[:open_gds_rate_id] == params[:rate_id] }
-      rate_plan.availabilities.joins(room_type: :parent_lodging).where('available_on < ? or available_on > ? and lodging.channel = 3', dates[0], dates[-1]).destroy_all
+      rate_plan.availabilities.joins(room_type: :parent_lodging).where('available_on < ? or available_on > ? and lodgings.channel = 3', dates[0], dates[-1]).destroy_all
     end
   end
 
