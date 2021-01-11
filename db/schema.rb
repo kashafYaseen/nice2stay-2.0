@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_104302) do
+ActiveRecord::Schema.define(version: 2021_01_11_064300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,16 @@ ActiveRecord::Schema.define(version: 2021_01_08_104302) do
     t.bigint "region_id"
     t.index ["campaign_id"], name: "index_campaigns_regions_on_campaign_id"
     t.index ["region_id"], name: "index_campaigns_regions_on_region_id"
+  end
+
+  create_table "child_rates", force: :cascade do |t|
+    t.integer "children"
+    t.decimal "rate"
+    t.integer "rate_type"
+    t.bigint "rate_plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rate_plan_id"], name: "index_child_rates_on_rate_plan_id"
   end
 
   create_table "cleaning_cost_translations", force: :cascade do |t|
@@ -1142,6 +1152,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_104302) do
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
+  add_foreign_key "child_rates", "rate_plans", on_delete: :cascade
   add_foreign_key "cleaning_costs", "availabilities", on_delete: :cascade
   add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "parent_id", on_delete: :cascade
