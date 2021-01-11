@@ -44,7 +44,7 @@ class OpenGds::CreateRates
       RoomRate.joins(:rate_plan,
                      room_type: :parent_lodging).where(room_types: { open_gds_accommodation_id: accommodation_ids }, rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
     else
-      RoomRatejoins(:rate_plan,
+      RoomRate.joins(:rate_plan,
                      room_type: :parent_lodging).where.not(room_types: { open_gds_accommodation_id: accommodation_ids }).where(rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
       dates = if params[:valid_permanent]
                 (Date.today..365.days.from_now).map(&:to_s)
