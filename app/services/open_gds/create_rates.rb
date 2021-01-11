@@ -145,7 +145,7 @@ class OpenGds::CreateRates
     )
     availabilities = room_rate.availabilities if availabilities.blank?
     update_availabilities_by_status(
-      rate_plan: rate_plan, accom_params: accom_params, availabilities: availabilities, prices: prices
+      rate_plan: rate_plan, accom_params: accom_params, room_rate: room_rate, availabilities: availabilities, prices: prices
     )
 
     { room_rate: room_rate, availabilities: availabilities, prices: prices }
@@ -192,11 +192,12 @@ class OpenGds::CreateRates
     rule
   end
 
-  def update_availabilities_by_status(rate_plan:, accom_params:, availabilities:, prices:)
+  def update_availabilities_by_status(rate_plan:, accom_params:, room_rate:, availabilities:, prices:)
     accom_params[:status]&.each do |accommodation_status|
       availability = availabilities.find do |avail|
         avail[:available_on] == accommodation_status[:date].to_date
       end
+      availability ||= room_rate.availabilities.new(available_on: accommodation_status[:date])
 
       params = {
         available: accommodation_status[:available],
