@@ -53,8 +53,10 @@ class OpenGds::CreateRates
               else
                 []
               end
+
+      byebug
       rate_plan = rate_plans.find { |rp| rp[:open_gds_rate_id] == params[:rate_id] }
-      rate_plan.availabilities.where('available_on < ? or available_on > ?', dates[0], dates[-1]).destroy_all
+      rate_plan.availabilities.joins(room_type: :parent_lodging).where('available_on < ? or available_on > ? and lodging.channel = 3', dates[0], dates[-1]).destroy_all
     end
   end
 
