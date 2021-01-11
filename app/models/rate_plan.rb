@@ -6,6 +6,7 @@ class RatePlan < ApplicationRecord
   has_many :reservations, through: :room_rates
   has_many :prices, through: :availabilities
   has_one :rule
+  has_many :child_rates
 
   attr_accessor :calculated_price, :dynamic_price, :price_errors, :price_valid
 
