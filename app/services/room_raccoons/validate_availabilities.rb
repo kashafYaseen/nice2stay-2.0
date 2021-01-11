@@ -25,6 +25,7 @@ class RoomRaccoons::ValidateAvailabilities
 
       rooms = RoomType.where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
       return false if rooms.size.zero?
+
       RrCreateAvailabilitiesJob.perform_later hotel_id, room_type_codes, availabilities
       true
     rescue => e
