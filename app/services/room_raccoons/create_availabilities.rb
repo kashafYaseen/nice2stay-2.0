@@ -1,7 +1,5 @@
 class RoomRaccoons::CreateAvailabilities
-  attr_reader :hotel_id
-  attr_reader :room_type_codes
-  attr_reader :rr_availabilities
+  attr_reader :hotel_id, :room_type_codes, :rr_availabilities
 
   def self.call(hotel_id, room_type_codes, rr_availabilities)
     self.new(hotel_id, room_type_codes, rr_availabilities).call

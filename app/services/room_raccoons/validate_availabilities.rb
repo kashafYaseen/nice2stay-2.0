@@ -1,7 +1,5 @@
 class RoomRaccoons::ValidateAvailabilities
-  attr_reader :body
-  attr_reader :hotel_id
-  attr_reader :availabilities
+  attr_reader :body, :hotel_id, :availabilities
 
   def initialize(body, hotel_id)
     @body = body
