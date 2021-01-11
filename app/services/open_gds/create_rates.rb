@@ -79,7 +79,7 @@ class OpenGds::CreateRates
     rate_plan.open_gds_rate_type = params[:rate_type] if params[:rate_type].present?
     rate_plan.min_stay = params[:default_minlos] if params[:default_minlos].present?
     rate_plan.max_stay = params[:default_maxlos] if params[:default_maxlos].present?
-    rate_plan.open_gds_daily_supplements = params[:daily_supplement].to_unsafe_h if params[:daily_supplement].present?
+    rate_plan.open_gds_daily_supplements = params[:daily_supplement] if params[:daily_supplement].present?
     if rate_plan.new_record?
       rate_plan.created_at = DateTime.current
     elsif rate_plan.changed?

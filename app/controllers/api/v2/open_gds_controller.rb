@@ -7,9 +7,8 @@ class Api::V2::OpenGdsController < Api::V2::ApiController
       accommodation_ids << rate[:accommodations].map { |accom| accom[:accom_id] }
     end
 
-    lodgings = Lodging.where(open_gds_property_id: property_ids).joins(:room_types).where(room_types: { open_gds_accommodation_id: accommodation_ids.flatten })
-    # OpenGdsCreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h) if lodgings.present?
-    OpenGds::CreateRates.call params[:_json]
-    render json: { response: lodgings.present? }, status: lodgings.present? ? :ok : :unprocessable_entity
+    room_types = RoomType.joins(:parent_lodging).where(lodgings: { open_gds_property_id: property_ids }, room_types: { open_gds_accommodation_id: accommodation_ids.flatten })
+    OpenGdsCreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h) if room_types.present?
+    render json: { response: room_types.present? }, status: room_types.present? ? :ok : :unprocessable_entity
   end
 end
