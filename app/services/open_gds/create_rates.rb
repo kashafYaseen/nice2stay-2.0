@@ -16,7 +16,9 @@ class OpenGds::CreateRates
     room_rates = []
     availabilities = []
     prices = []
-    lodgings = Lodging.where(open_gds_property_id: rates.map{ |rate| rate[:property_id] }).includes(room_types: { room_rates: [availabilities: :prices] })
+    lodgings = Lodging.where(open_gds_property_id: rates.map do |rate|
+                                                     rate[:property_id]
+                                                   end).includes(room_types: { room_rates: [availabilities: :prices] })
     db_rate_plans = RatePlan.includes(:rule)
     rates.each do |rate|
       destroy_rate_plan_details params: rate, rate_plans: db_rate_plans
@@ -35,16 +37,22 @@ class OpenGds::CreateRates
   private
 
   def destroy_rate_plan_details(params:, rate_plans:)
-    if rate[:init]
-      accommodation_ids = rate[:accommodations].map { |accomdation| accomdation[:accom_id] }
+    accommodation_ids = params[:accommodations].map { |accomdation| accomdation[:accom_id] }
+    if params[:init]
       RoomRate.joins(:room_type,
                      :rate_plan).where(room_types: { open_gds_accommodation_id: accommodation_ids }, rate_plans: { open_gds_rate_id: params[:rate_id] }).destroy_all
     else
-      accommodation_ids = rate[:accommodations].map { |accomdation| accomdation[:accom_id] }
       RoomRate.joins(:room_type,
                      :rate_plan).where.not(room_types: { open_gds_accommodation_id: accommodation_ids }).where(rate_plans: { open_gds_rate_id: params[:rate_id] }).destroy_all
+      dates = if params[:valid_permanent]
+                (Date.today..365.days.from_now).map(&:to_s)
+              elsif params[:valid_from].present? && params[:valid_till].present?
+                (params[:valid_from].to_date..params[:valid_till].to_date).map(&:to_s)
+              else
+                []
+              end
       rate_plan = rate_plans.find { |rp| rp[:open_gds_rate_id] == params[:rate_id] }
-      rate_plan.availabilities.where("available_on < ? and available_on > ?", params[:valid_from], params[:valid_till]).destroy_all
+      rate_plan.availabilities.where('available_on < ? or available_on > ?', dates[0], dates[-1]).destroy_all
     end
   end
 
@@ -52,7 +60,7 @@ class OpenGds::CreateRates
     room_rates = []
     availabilities = []
     prices = []
-    dates = if params[:valid_pernament]
+    dates = if params[:valid_permanent]
               (Date.today..365.days.from_now).map(&:to_s)
             elsif params[:valid_from].present? && params[:valid_till].present?
               (params[:valid_from].to_date..params[:valid_till].to_date).map(&:to_s)
@@ -116,7 +124,7 @@ class OpenGds::CreateRates
     )
     availabilities = room_rate.availabilities if availabilities.blank?
     update_availabilities_by_status(
-      accom_params: accom_params, availabilities: availabilities, prices: prices
+      rate_plan: rate_plan, accom_params: accom_params, availabilities: availabilities, prices: prices
     )
 
     { room_rate: room_rate, availabilities: availabilities, prices: prices }
@@ -163,15 +171,16 @@ class OpenGds::CreateRates
     rule
   end
 
-  def update_availabilities_by_status(accom_params:, availabilities:, prices:)
+  def update_availabilities_by_status(rate_plan:, accom_params:, availabilities:, prices:)
     accom_params[:status]&.each do |accommodation_status|
       availability = availabilities.find do |avail|
         avail[:available_on] == accommodation_status[:date].to_date
       end
+
       params = {
         available: accommodation_status[:available],
-        minlos: accommodation_status[:minlos],
-        maxlos: accommodation_status[:maxlos],
+        minlos: accommodation_status[:minlos] || rate_plan.min_stay,
+        maxlos: accommodation_status[:maxlos] || rate_plan.max_stay,
         rate: accommodation_status[:daily_rate],
         single_rate: accommodation_status[:daily_single_rate],
         close_out: accommodation_status[:close_out],
