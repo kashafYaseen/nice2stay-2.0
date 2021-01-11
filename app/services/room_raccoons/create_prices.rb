@@ -1,92 +1,92 @@
 class RoomRaccoons::CreatePrices
-  attr_reader :body
-  attr_reader :hotel
+  attr_reader :hotel_id, :room_type_codes, :rate_plan_codes, :rr_prices
 
-  def initialize(body, hotel_id)
-    @body = body
-    @hotel = Lodging.find_by(id: hotel_id)
+  def self.call(hotel_id, room_type_codes, rate_plan_codes, rr_prices)
+    self.new(hotel_id, room_type_codes, rate_plan_codes, rr_prices).call
   end
 
-  def self.call(body, hotel_id)
-    self.new(body, hotel_id).call
+  def initialize(hotel_id, room_type_codes, rate_plan_codes, rr_prices)
+    @hotel_id = hotel_id
+    @room_type_codes = room_type_codes
+    @rate_plan_codes = rate_plan_codes
+    @rr_prices = rr_prices
   end
 
   def call
-    begin
-      parsed_data = []
-      if @body['rateamountmessages']['rateamountmessage'].kind_of?(Array)
-        @body['rateamountmessages']['rateamountmessage'].each do |rate_amount_message|
-          parsed_data << parse_data(rate_amount_message)
-        end
-      else
-        parsed_data << parse_data(@body['rateamountmessages']['rateamountmessage'])
-      end
+    hotel_room_types = RoomType.includes(availabilities: [:rate_plan, :prices, :cleaning_costs]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
+    new_prices = []
+    new_cleaning_costs = []
 
-      dates = parsed_data.map { |data| (data[:start_date]..data[:end_date]).map(&:to_s) }.flatten.uniq.sort
-      rooms = hotel.room_types.joins(availabilities: :rate_plan).where(room_types: { code: parsed_data.map {|data| data[:room_type_code] }.uniq }, rate_plans: { code: parsed_data.map {|data| data[:rate_plan_code] }.uniq }).select("availabilities.available_on as available_on")
-      rooms = rooms.map { |room| room if dates.include?(room.available_on.to_s) }.delete_if { |room| room.blank? }
-      return false if rooms.size == 0
-      RrCreatePricesJob.perform_later hotel, parsed_data
-      return true
-    rescue => e
-      Rails.logger.info "Error in Room Raccoon Prices============>: #{ e }"
-      return false
-    end
-  end
+    rr_prices.each do |rr_price|
+      dates = (rr_price[:start_date].to_date..rr_price[:end_date].to_date).map(&:to_s)
+      current_room_type = hotel_room_types.find { |room_type| room_type.code == rr_price[:room_type_code] }
+      current_room_rate = current_room_type.room_rates.find { |room_rate| room_rate.rate_plan_code == rr_price[:rate_plan_code] }
+      availabilities = current_room_rate.availabilities.select { |availability| dates.include?(availability.available_on.to_s) }
 
-  private
-    def parse_data(data)
-      room_type_code = data['statusapplicationcontrol']['invtypecode']
-      rate_plan_code = data['statusapplicationcontrol']['rateplancode']
-      start_date = data['statusapplicationcontrol']['start']
-      end_date = data['statusapplicationcontrol']['end']
-
-      base_by_guest_amts = data['rates']['rate']['basebyguestamts']['basebyguestamt']
-      rates = []
-      if base_by_guest_amts.kind_of?(Array)
-        base_by_guest_amts.each do |base_by_guest_amt|
-          rates << guests_base_amount(base_by_guest_amt)
-        end
-      else
-        rates << guests_base_amount(base_by_guest_amts)
-      end
-
-      additional_guest_amounts = data['rates']['rate']['additionalguestamounts']
-      if additional_guest_amounts.present?
-        additional_amounts = []
-        additional_guest_amounts = data['rates']['rate']['additionalguestamounts']['additionalguestamount']
-
-        if additional_guest_amounts.kind_of?(Array)
-          additional_guest_amounts.each do |additional_guest_amount|
-            additional_amounts << guests_additional_amount(additional_guest_amount)
+      availabilities.each do |availability|
+        prices = availability.prices
+        rr_price[:rates].each do |rate|
+          if rate[:age_qualifying_code].present?
+            @price_index = prices.find_index { |price|
+              (rate[:age_qualifying_code] == '7' && price.infants == [rate[:guests]]) ||
+              (rate[:age_qualifying_code] == '8' && price.children == [rate[:guests]]) ||
+              (rate[:age_qualifying_code] == '10' && price.adults == [rate[:guests]])
+            }
+          else
+            @price_index = prices.find_index { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
           end
-        else
-          additional_amounts << guests_additional_amount(additional_guest_amounts)
+
+          if @price_index.present?
+            @price = prices[@price_index]
+            @price.amount = rate[:amount]
+          else
+            @price = availability.prices.new(amount: rate[:amount], created_at: DateTime.now, updated_at: DateTime.now)
+          end
+
+          if rate[:age_qualifying_code] == '7'
+            @price.infants = [rate[:guests]]
+          elsif rate[:age_qualifying_code] == '8'
+            @price.children = [rate[:guests]]
+          else
+            @price.adults = [rate[:guests]]
+          end
+
+          @price.minimum_stay = availability.rr_minimum_stay
+          new_prices << @price if @price.new_record? || @price.changed?
+        end
+
+        if rr_price[:additional_amounts].present?
+          cleaning_costs = availability.cleaning_costs
+
+          rr_price[:additional_amounts].each do |additional_amount|
+            cleaning_cost_index = cleaning_costs.find_index { |cleaning_cost|
+              (additional_amount[:age_qualifying_code] == '7' && cleaning_cost.name == 'Infants') ||
+              (additional_amount[:age_qualifying_code] == '8' && cleaning_cost.name == 'Children') ||
+              (additional_amount[:age_qualifying_code] == '10' && cleaning_cost.name == 'Adults')
+            }
+
+            if cleaning_cost_index.present?
+              @cleaning_cost = cleaning_costs[cleaning_cost_index]
+              @cleaning_cost.fixed_price = additional_amount[:amount]
+            else
+              @cleaning_cost = cleaning_costs.new(fixed_price: additional_amount[:amount], created_at: DateTime.now, updated_at: DateTime.now)
+            end
+
+            if additional_amount[:age_qualifying_code] == '7'
+              @cleaning_cost.name = 'Infants'
+            elsif additional_amount[:age_qualifying_code] == '8'
+              @cleaning_cost.name = 'Children'
+            else
+              @cleaning_cost.name = 'Adults'
+            end
+
+            new_cleaning_costs << @cleaning_cost if @cleaning_cost.new_record? || @cleaning_cost.changed?
+          end
         end
       end
-
-      return {
-        room_type_code: room_type_code&.upcase,
-        rate_plan_code: rate_plan_code&.upcase,
-        start_date: start_date,
-        end_date: end_date,
-        rates: rates,
-        additional_amounts: additional_amounts
-      }
     end
 
-    def guests_base_amount params
-      {
-        age_qualifying_code: params['agequalifyingcode'],
-        guests: params['numberofguests'].present? ? params['numberofguests'] : "999",
-        amount: params['amountaftertax']
-      }
-    end
-
-    def guests_additional_amount params
-      {
-        age_qualifying_code: params['agequalifyingcode'],
-        amount: params['amount']
-      }
-    end
+    Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
+    CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
+  end
 end

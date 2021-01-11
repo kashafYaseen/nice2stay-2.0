@@ -1,75 +1,48 @@
 class RoomRaccoons::CreateAvailabilities
-  attr_reader :body
-  attr_reader :hotel
+  attr_reader :hotel_id
+  attr_reader :room_type_codes
+  attr_reader :rr_availabilities
 
-  def initialize(body, hotel_id)
-    @body = body
-    @hotel = Lodging.find_by(id: hotel_id)
+  def self.call(hotel_id, room_type_codes, rr_availabilities)
+    self.new(hotel_id, room_type_codes, rr_availabilities).call
   end
 
-  def self.call(body, hotel_id)
-    self.new(body, hotel_id).call
+  def initialize(hotel_id, room_type_codes, rr_availabilities)
+    @hotel_id = hotel_id
+    @room_type_codes = room_type_codes
+    @rr_availabilities = rr_availabilities
   end
 
   def call
-    begin
-      parsed_data = []
-      if @body['availstatusmessages']['availstatusmessage'].is_a?(Array)
-        @body['availstatusmessages']['availstatusmessage'].each do |avail_status_message|
-          parsed_data << parse_data(avail_status_message)
-        end
-      else
-        parsed_data << parse_data(@body['availstatusmessages']['availstatusmessage'])
-      end
+    availabilities = []
+    room_types = RoomType.includes(room_rates: %i[availabilities rate_plan]).where(parent_lodging_id: hotel_id, room_types: { code: room_type_codes })
 
-      rooms = hotel.room_types.by_codes_and_rate_plans(parsed_data.map {|data| data[:room_type_code] }.uniq, parsed_data.map {|data| data[:rate_plan_code] }.uniq)
-      return false if rooms.size == 0
-      RrCreateAvailabilitiesJob.perform_later hotel, parsed_data
-      return true
-    rescue => e
-      Rails.logger.info "Error in Room Raccoon Availabilities============>: #{ e }"
-      return false
+    rr_availabilities.each do |data|
+      dates = (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s)
+      stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
+      current_room_type = room_types.find { |room_type| room_type.code == data[:room_type_code] }
+      current_room_rate = current_room_type.room_rates.find { |room_rate| room_rate.rate_plan_code == data[:rate_plan_code] }
+
+      dates.each do |date|
+        availability = current_room_rate.availabilities.find { |room_rate_availability| room_rate_availability.available_on.to_s == date }
+        availability = current_room_rate.availabilities.new(available_on: date, room_rate: current_room_rate, created_at: DateTime.now, updated_at: DateTime.now) unless availability.present?
+        availability.rr_minimum_stay = stays
+        availability.rr_booking_limit = data[:booking_limit]
+        check_response = restriction_status(data[:status], data[:restriction])
+        if check_response.present?
+          check_response == 'check_in_closed' ? availability.rr_check_in_closed = true : availability.rr_check_out_closed = true
+        end
+
+        availabilities << availability if availability.new_record? || availability.changed?
+      end
     end
+
+    Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: [ :rr_booking_limit, :rr_check_in_closed, :rr_check_out_closed, :rr_minimum_stay ] } if availabilities.present?
   end
 
   private
-    def parse_data data
-      booking_limit = data["bookinglimit"]
-      status_application_control = data['statusapplicationcontrol']
-      if status_application_control.present?
-        @start = status_application_control["start"]
-        @end = status_application_control["end"]
-        @room_type_code = status_application_control["invtypecode"]
-        @rate_plan_code = status_application_control["rateplancode"]
-      end
-
-      restriction_status = data['restrictionstatus']
-      if restriction_status.present?
-        @status = restriction_status['status']
-        @restriction = restriction_status['restriction']
-      end
-
-      length_of_stays = data['lengthsofstay']
-      @stays = []
-      if length_of_stays.present?
-        if length_of_stays['lengthofstay'].is_a?(Array)
-          length_of_stays["lengthofstay"].each do |length_of_stay|
-            @stays << length_of_stay["time"]
-          end
-        else
-          @stays << length_of_stays['lengthofstay']["time"]
-        end
-      end
-
-      return {
-        start_date: @start,
-        end_date: @end,
-        room_type_code: @room_type_code&.upcase,
-        rate_plan_code: @rate_plan_code&.upcase,
-        status: @status&.upcase,
-        restriction: @restriction&.downcase,
-        stays: @stays&.sort,
-        booking_limit: booking_limit
-      }
+    def restriction_status(status, restriction)
+      return 'check_out_closed' if status == 'close' && restriction == 'departure'
+      return 'check_in_closed' if status == 'close' && restriction == 'arrival'
     end
 end

@@ -14,4 +14,6 @@ class RoomRate < ApplicationRecord
     fixed_rate: 0,
     percentage: 1
   }, _prefix: true
+
+  delegate :code, to: :rate_plan, prefix: true, allow_nil: true
 end

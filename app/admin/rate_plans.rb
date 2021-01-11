@@ -11,11 +11,6 @@ ActiveAdmin.register RatePlan do
     def permitted_params
       params.permit!
     end
-
-    def scoped_collection
-      return RatePlan.includes(:room_type) if action_name == "index"
-      RatePlan.all
-    end
   end
 
   index do
@@ -24,7 +19,8 @@ ActiveAdmin.register RatePlan do
     column :code
     column :name
     column :price
-    column :room_type
+    column :created_at
+    column :updated_at
 
     actions
   end
@@ -35,7 +31,6 @@ ActiveAdmin.register RatePlan do
       f.input :name
       f.input :price
       f.input :description
-      f.input :room_type, collection: RoomType.pluck(:code, :id), as: :select
     end
 
     f.actions do
@@ -50,7 +45,6 @@ ActiveAdmin.register RatePlan do
       row :name
       row :price
       row :description
-      row :room_type
     end
 
     active_admin_comments
