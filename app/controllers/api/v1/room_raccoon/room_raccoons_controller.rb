@@ -19,7 +19,7 @@ class Api::V1::RoomRaccoon::RoomRaccoonsController < ActionController::API
       end
     elsif @body['ota_hotelrateamountnotifrq'].present?
       hotel_id = @body['ota_hotelrateamountnotifrq']['rateamountmessages']['hotelcode']
-      response = RoomRaccoons::CreatePrices.call(@body['ota_hotelrateamountnotifrq'], hotel_id)
+      response = RoomRaccoons::ValidatePrices.call(@body['ota_hotelrateamountnotifrq'], hotel_id)
 
       if response
         render xml: API::V1::RoomRaccoon::CreatePricesResponse.new(@body).success, status: :ok, content_type: 'text/xml; charset=UTF-8'
