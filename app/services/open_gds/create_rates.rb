@@ -16,22 +16,24 @@ class OpenGds::CreateRates
     room_rates = []
     availabilities = []
     prices = []
+    child_rates = []
     lodgings = Lodging.where(open_gds_property_id: rates.map do |rate|
                                                      rate[:property_id]
                                                    end).includes(room_types: { room_rates: [availabilities: :prices] })
-    db_rate_plans = RatePlan.includes(:rule)
+    db_rate_plans = RatePlan.includes(:child_rates, rule: :lodging)
     rates.each do |rate|
       destroy_rate_plan_details params: rate, rate_plans: db_rate_plans
       rate_details = update_rate_plan params: rate, lodgings: lodgings, rate_plans: db_rate_plans
       rate_plans << rate_details[:rate_plan]
       rules << rate_details[:rule]
+      child_rates << rate_details[:child_rates]
       room_rates << rate_details[:room_rates]
       availabilities << rate_details[:availabilities]
       prices << rate_details[:prices]
     end
 
-    insert_rate rate_plans: rate_plans, rules: rules, room_rates: room_rates.flatten, availabilities: availabilities.flatten,
-                prices: prices.flatten
+    insert_rate rate_plans: rate_plans, rules: rules, child_rates: child_rates.flatten, room_rates: room_rates.flatten,
+                availabilities: availabilities.flatten, prices: prices.flatten
   end
 
   private
@@ -85,6 +87,7 @@ class OpenGds::CreateRates
     end
 
     rule = update_rule rate_params: params, rate_plan: rate_plan, lodging_id: lodging.id
+    child_rates = update_child_rates rate_params: params, rate_plan: rate_plan
     params[:accommodations].each do |accommodation|
       rate = update_room_rates(rate_params: params.merge({ dates: dates }), accom_params: accommodation,
                                room_types: lodging.room_types, rate_plan: rate_plan)
@@ -96,10 +99,26 @@ class OpenGds::CreateRates
     {
       rate_plan: rate_plan,
       rule: rule,
+      child_rates: child_rates,
       room_rates: room_rates,
       availabilities: availabilities,
       prices: prices
     }
+  end
+
+  def update_child_rates(rate_params:, rate_plan:)
+    child_rates = []
+    if rate_params[:child_rate].present?
+      rate_params[:child_rate].keys.map(&:to_s).each do |child_key|
+        child_rate = rate_plan.child_rates.find { |cr| cr[:children].to_s == child_key }
+        child_rate = rate_plan.child_rates.new(children: child_key) unless child_rate.present?
+        child_rate_params = rate_params[:child_rate][:"#{child_key}"]
+        child_rate.rate = child_rate_params[:rate] if child_rate_params[:rate].present?
+        child_rate.rate_type = child_rate_params[:type] if child_rate_params[:type].present?
+        child_rates << child_rate
+      end
+    end
+    child_rates
   end
 
   def update_room_rates(rate_params:, accom_params:, room_types:, rate_plan:)
@@ -232,7 +251,7 @@ class OpenGds::CreateRates
     price
   end
 
-  def insert_rate(rate_plans:, rules:, room_rates:, availabilities:, prices:)
+  def insert_rate(rate_plans:, rules:, child_rates:, room_rates:, availabilities:, prices:)
     if rate_plans.present?
       RatePlan.import rate_plans, batch_size: 150,
                                   on_duplicate_key_update: { columns: %i[rate_enabled open_gds_valid_permanent open_gds_res_fee open_gds_rate_type min_stay max_stay open_gds_daily_supplements updated_at] }
@@ -241,6 +260,11 @@ class OpenGds::CreateRates
       Rule.import rules.each { |rule|
                     rule.rate_plan_id = rule.rate_plan.id
                   }, batch_size: 150, on_duplicate_key_update: { columns: %i[start_date end_date open_gds_restriction_type open_gds_restriction_days open_gds_arrival_days updated_at] }
+    end
+    if child_rates.present?
+      ChildRate.import child_rates.each { |child_rate|
+                    child_rate.rate_plan_id = child_rate.rate_plan.id
+                  }, batch_size: 150, on_duplicate_key_update: { columns: %i[rate rate_type] }
     end
     if room_rates.present?
       RoomRate.import room_rates.each { |room_rate|
@@ -262,4 +286,14 @@ class OpenGds::CreateRates
                    }, batch_size: 150, on_duplicate_key_update: { columns: %i[amount minimum_stay open_gds_single_rate adults children infants updated_at] }
     end
   end
+
+  # def number_of_adults(rate_plan)
+  #   if rate_plan.new_record? && %i[pppn pp pppd].include?(rate_plan.open_gds_rate_type)
+  #     return '1'
+  #   elsif !rate_plan.new_record? && %i[pppn pp pppd].include?(rate_plan.open_gds_rate_type_was)
+  #     return '1'
+  #   end
+  #
+  #   '999'
+  # end
 end
