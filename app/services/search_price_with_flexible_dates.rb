@@ -1,18 +1,18 @@
 class SearchPriceWithFlexibleDates
   attr_reader :params
   attr_reader :lodging
-  attr_reader :rate_plan
+  attr_reader :room_rate
 
   FLEXIBILITY = 3
 
-  def self.call(params, lodging, rate_plan = nil)
-    self.new(params, lodging, rate_plan).call
+  def self.call(params, lodging, room_rate = nil)
+    self.new(params, lodging, room_rate).call
   end
 
-  def initialize(params, lodging, rate_plan = nil)
+  def initialize(params, lodging, room_rate = nil)
     @params = params
     @lodging = lodging
-    @rate_plan = rate_plan
+    @room_rate = room_rate
   end
 
   def call
@@ -68,7 +68,7 @@ class SearchPriceWithFlexibleDates
   private
     def search_price_with_defaults
       price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
-      price = lodging.present? ? lodging.price : rate_plan.price
+      price = lodging.present? ? lodging.price : room_rate.default_rate
       lodging.flexible_search = false if lodging.present?
       price_list = price_list + [price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
       reservation = build_reservation params
@@ -105,6 +105,6 @@ class SearchPriceWithFlexibleDates
 
     def build_reservation(params)
       return Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: lodging, booking: Booking.new) if lodging.present?
-      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: rate_plan.parent_lodging, rate_plan: rate_plan, room_type: rate_plan.room_type, booking: Booking.new)
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: room_rate.parent_lodging, room_rate: room_rate, booking: Booking.new)
     end
 end

@@ -2,6 +2,7 @@ class Price < ApplicationRecord
   belongs_to :availability
   has_one :lodging, through: :availability
   has_one :room_type, through: :availability
+  has_one :room_rate, through: :availability
   has_one :rate_plan, through: :availability
 
   scope :of_child, -> (child_id) { joins(:availability).where('lodging_id = ?', child_id) }
@@ -32,8 +33,7 @@ class Price < ApplicationRecord
       available_on: availability.try(:available_on),
       lodging_id: lodging.try(:id),
       adults_and_children: adults_and_children,
-      room_type_id: room_type.try(:id),
-      rate_plan_id: rate_plan.try(:id)
+      room_rate_id: room_rate.try(:id),
     )
   end
 
