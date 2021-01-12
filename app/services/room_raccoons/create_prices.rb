@@ -13,7 +13,7 @@ class RoomRaccoons::CreatePrices
   end
 
   def call
-    hotel_room_types = RoomType.includes(availabilities: [:rate_plan, :prices, :cleaning_costs]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
+    hotel_room_types = RoomType.includes(availabilities: %i[rate_plan prices cleaning_costs]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
     new_prices = []
     new_cleaning_costs = []
 
@@ -43,9 +43,10 @@ class RoomRaccoons::CreatePrices
             @price = availability.prices.new(amount: rate[:amount], created_at: DateTime.now, updated_at: DateTime.now)
           end
 
-          if rate[:age_qualifying_code] == '7'
+          case rate[:age_qualifying_code]
+          when '7'
             @price.infants = [rate[:guests]]
-          elsif rate[:age_qualifying_code] == '8'
+          when '8'
             @price.children = [rate[:guests]]
           else
             @price.adults = [rate[:guests]]
@@ -55,38 +56,41 @@ class RoomRaccoons::CreatePrices
           new_prices << @price if @price.new_record? || @price.changed?
         end
 
-        if rr_price[:additional_amounts].present?
-          cleaning_costs = availability.cleaning_costs
+        next unless rr_price[:additional_amounts].present?
 
-          rr_price[:additional_amounts].each do |additional_amount|
-            cleaning_cost_index = cleaning_costs.find_index { |cleaning_cost|
-              (additional_amount[:age_qualifying_code] == '7' && cleaning_cost.name == 'Infants') ||
+        cleaning_costs = availability.cleaning_costs
+        rr_price[:additional_amounts].each do |additional_amount|
+          cleaning_cost_index = cleaning_costs.find_index { |cleaning_cost|
+            (additional_amount[:age_qualifying_code] == '7' && cleaning_cost.name == 'Infants') ||
               (additional_amount[:age_qualifying_code] == '8' && cleaning_cost.name == 'Children') ||
               (additional_amount[:age_qualifying_code] == '10' && cleaning_cost.name == 'Adults')
-            }
+          }
 
-            if cleaning_cost_index.present?
-              @cleaning_cost = cleaning_costs[cleaning_cost_index]
-              @cleaning_cost.fixed_price = additional_amount[:amount]
-            else
-              @cleaning_cost = cleaning_costs.new(fixed_price: additional_amount[:amount], created_at: DateTime.now, updated_at: DateTime.now)
-            end
-
-            if additional_amount[:age_qualifying_code] == '7'
-              @cleaning_cost.name = 'Infants'
-            elsif additional_amount[:age_qualifying_code] == '8'
-              @cleaning_cost.name = 'Children'
-            else
-              @cleaning_cost.name = 'Adults'
-            end
-
-            new_cleaning_costs << @cleaning_cost if @cleaning_cost.new_record? || @cleaning_cost.changed?
+          if cleaning_cost_index.present?
+            @cleaning_cost = cleaning_costs[cleaning_cost_index]
+            @cleaning_cost.fixed_price = additional_amount[:amount]
+          else
+            @cleaning_cost = cleaning_costs.new(fixed_price: additional_amount[:amount], created_at: DateTime.now, updated_at: DateTime.now)
           end
+
+          case additional_amount[:age_qualifying_code]
+          when '7'
+            @cleaning_cost.name = 'Infants'
+          when '8'
+            @cleaning_cost.name = 'Children'
+          else
+            @cleaning_cost.name = 'Adults'
+          end
+
+          new_cleaning_costs << @cleaning_cost if @cleaning_cost.new_record? || @cleaning_cost.changed?
         end
       end
     end
 
-    Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: [:amount, :children, :infants, :adults, :minimum_stay] } if new_prices.present?
-    CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: [:fixed_price, :name] } if new_cleaning_costs.present?
+    if new_prices.present?
+      Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay] }
+      new_prices.each(&:reindex)
+    end
+    CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: %i[fixed_price name] } if new_cleaning_costs.present?
   end
 end
