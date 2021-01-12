@@ -2,8 +2,8 @@ class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
   belongs_to :room_rate, optional: true
-  has_one :room_type
-  has_one :rate_plan
+  has_one :room_type, through: :room_rate
+  has_one :rate_plan, through: :room_rate
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
   has_one :review
@@ -120,7 +120,7 @@ class Reservation < ApplicationRecord
   end
 
   def room_raccoon?
-    ["room_raccoon"].include?(loging.channel)
+    ["room_raccoon"].include?(lodging.channel)
   end
 
   private
