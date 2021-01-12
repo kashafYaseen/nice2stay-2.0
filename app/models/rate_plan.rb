@@ -1,10 +1,12 @@
 class RatePlan < ApplicationRecord
+  serialize :open_gds_daily_supplements
   has_many :room_rates
   has_many :room_types, through: :room_rates
   has_many :availabilities, through: :room_rates
   has_many :reservations, through: :room_rates
   has_many :prices, through: :availabilities
   has_one :rule
+  has_many :child_rates
 
   enum open_gds_rate_type: {
     pppn: 0,
