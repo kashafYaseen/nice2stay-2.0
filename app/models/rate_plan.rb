@@ -21,8 +21,4 @@ class RatePlan < ApplicationRecord
     single_supplement: 0,
     single_rate: 1
   }
-
-  def price_details(values)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4] })
-  end
 end
