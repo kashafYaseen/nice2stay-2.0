@@ -3,6 +3,7 @@ class Api::V1::RoomRaccoon::RoomRaccoonsController < ActionController::API
     @body = Hash.from_xml request.body.read
     @body = @body.deep_transform_keys(&:downcase)
     @body = @body['envelope']['body']
+    Rails.logger.info "ROOM RACCOON PARAMS ==================>>>>>>>>>>> #{@body}"
 
     if @body['ota_hotelavailrq'].present?
       hotel_id = @body['ota_hotelavailrq']['availrequestsegments']['availrequestsegment']['hotelsearchcriteria']['criterion']['hotelref']['hotelcode']
