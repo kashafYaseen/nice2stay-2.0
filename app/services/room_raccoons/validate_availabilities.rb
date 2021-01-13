@@ -66,7 +66,7 @@ class RoomRaccoons::ValidateAvailabilities
         end_date: @end,
         room_type_code: @room_type_code,
         rate_plan_code: @rate_plan_code,
-        status: @status&.upcase,
+        status: @status&.downcase,
         restriction: @restriction&.downcase,
         stays: @stays&.sort,
         booking_limit: booking_limit

@@ -29,8 +29,8 @@ class RoomRaccoons::CreatePrices
           if rate[:age_qualifying_code].present?
             @price_index = prices.find_index { |price|
               (rate[:age_qualifying_code] == '7' && price.infants == [rate[:guests]]) ||
-              (rate[:age_qualifying_code] == '8' && price.children == [rate[:guests]]) ||
-              (rate[:age_qualifying_code] == '10' && price.adults == [rate[:guests]])
+                (rate[:age_qualifying_code] == '8' && price.children == [rate[:guests]]) ||
+                (rate[:age_qualifying_code] == '10' && price.adults == [rate[:guests]])
             }
           else
             @price_index = prices.find_index { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
@@ -53,7 +53,16 @@ class RoomRaccoons::CreatePrices
           end
 
           @price.minimum_stay = availability.rr_minimum_stay
-          new_prices << @price if @price.new_record? || @price.changed?
+          price_index = new_prices.index do |new_price|
+            new_price.availability_id == @price.availability_id &&
+              (new_price.infants == @price.infants || new_price.children == @price.children || new_price.adults == @price.adults || new_price.minimum_stay == @price.minimum_stay)
+          end
+
+          if price_index.present?
+            new_prices[price_index] = @price
+          elsif @price.new_record? || @price.changed?
+            new_prices << @price
+          end
         end
 
         next unless rr_price[:additional_amounts].present?
@@ -82,7 +91,16 @@ class RoomRaccoons::CreatePrices
             @cleaning_cost.name = 'Adults'
           end
 
-          new_cleaning_costs << @cleaning_cost if @cleaning_cost.new_record? || @cleaning_cost.changed?
+          cleaning_cost_index = new_cleaning_costs.index do |new_cleaning_cost|
+            new_cleaning_cost.availability_id == @cleaning_cost.availability_id &&
+              new_cleaning_cost.name == @cleaning_cost.name
+          end
+
+          if cleaning_cost_index.present?
+            new_cleaning_costs[cleaning_cost_index] = @cleaning_cost
+          elsif @cleaning_cost.new_record? || @cleaning_cost.changed?
+            new_cleaning_costs << @cleaning_cost
+          end
         end
       end
     end
