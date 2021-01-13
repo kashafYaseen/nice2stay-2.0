@@ -355,6 +355,10 @@ class Lodging < ApplicationRecord
     lodging_children.published.pluck(:price).min
   end
 
+  def belongs_to_channel?
+    %w[room_raccoon open_gds].include?(channel)
+  end
+
   private
     def add_availabilities
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)

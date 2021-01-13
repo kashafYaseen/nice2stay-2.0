@@ -11,17 +11,17 @@ class Reservation < ApplicationRecord
 
   validates :check_in, :check_out, presence: true
   validate :availability
-  validate :no_of_guests, unless: :room_raccoon?
-  validate :accommodation_rules, unless: :room_raccoon?
+  validate :no_of_guests, unless: :belongs_to_channel?
+  validate :accommodation_rules, unless: :belongs_to_channel?
 
-  after_validation :update_lodging_availability, unless: :room_raccoon?
-  after_validation :update_room_type_availability, if: :room_raccoon?
+  after_validation :update_lodging_availability, unless: :belongs_to_channel?
+  after_validation :update_room_rate_availability, if: :belongs_to_channel?
   # after_commit :send_reservation_details
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
+  delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, :belongs_to_channel?, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
   delegate :email, :first_name, :last_name, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
@@ -37,7 +37,7 @@ class Reservation < ApplicationRecord
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
   scope :booking_expert, -> { where.not(be_category_id: nil) }
-  scope :room_raccoon, -> { where.not(room_rate_id: nil) }
+  scope :room_raccoon, -> { joins(:lodging).where(lodgings: { channel: 2 }) }
 
   accepts_nested_attributes_for :review
 
@@ -73,8 +73,9 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless room_raccoon?
-    self.rent = rate_plan.price_details([check_in.to_s, check_out.to_s, adults, children, infants])[:rates].sum
+    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
+
+    self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants])[:rates].sum
   end
 
   def total_meal_price
@@ -119,8 +120,8 @@ class Reservation < ApplicationRecord
     cleaning_costs.try(:first).try(:manage_by)
   end
 
-  def room_raccoon?
-    ["room_raccoon"].include?(lodging.channel)
+  def belongs_to_channel?
+    lodging_belongs_to_channel?
   end
 
   private
@@ -131,9 +132,10 @@ class Reservation < ApplicationRecord
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
-    def update_room_type_availability
+    def update_room_rate_availability
       return if in_cart? || prebooking? || option?
-      _availabilities = room_type.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), rate_plan: rate_plan)
+
+      _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
       _availabilities.each do |availability|
         availability.rr_booking_limit -= rooms
       end
@@ -143,9 +145,10 @@ class Reservation < ApplicationRecord
 
     def availability
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
+
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      if room_raccoon?
-        validate_room_type_availabilities
+      if belongs_to_channel?
+        validate_room_rate_availabilities
       else
         _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
         check_out_days = _availabilities.where(check_out_only: true)
@@ -155,6 +158,7 @@ class Reservation < ApplicationRecord
 
     def accommodation_rules
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
+
       nights = (check_out - check_in).to_i
       active_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
@@ -185,6 +189,7 @@ class Reservation < ApplicationRecord
 
     def update_price_details
       return if skip_data_posting || offer_id.present? || be_category_id.present?
+
       rent = calculate_rent
       update_columns rent: rent, total_price: (rent - discount.to_f)
     end
@@ -206,8 +211,8 @@ class Reservation < ApplicationRecord
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
     end
 
-    def validate_room_type_availabilities
-      _availabilities = room_type.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s), rate_plan: rate_plan).order(:available_on)
+    def validate_room_rate_availabilities
+      _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s)).order(:available_on)
       nights = (check_out - check_in).to_i
       if _availabilities.present?
         min_booking_limit = _availabilities.pluck(:rr_booking_limit).min

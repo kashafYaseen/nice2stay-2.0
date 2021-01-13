@@ -35,7 +35,7 @@ class RoomRaccoons::CreateAvailabilities
       end
     end
 
-    Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: [ :rr_booking_limit, :rr_check_in_closed, :rr_check_out_closed, :rr_minimum_stay ] } if availabilities.present?
+    Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[rr_booking_limit rr_check_in_closed rr_check_out_closed rr_minimum_stay ] } if availabilities.present?
   end
 
   private
