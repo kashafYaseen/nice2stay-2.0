@@ -31,7 +31,12 @@ class RoomRaccoons::CreateAvailabilities
           check_response == 'check_in_closed' ? availability.rr_check_in_closed = true : availability.rr_check_out_closed = true
         end
 
-        availabilities << availability if availability.new_record? || availability.changed?
+        availability_index = availabilities.index { |avail| avail.available_on == availability.available_on && avail.room_rate_id == availability.room_rate_id }
+        if availability_index.present?
+          availabilities[availability_index] = availability
+        elsif availability.new_record? || availability.changed?
+          availabilities << availability
+        end
       end
     end
 

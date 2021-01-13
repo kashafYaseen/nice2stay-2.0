@@ -13,7 +13,8 @@ ActiveAdmin.register RoomType do
     end
 
     def scoped_collection
-      return RoomType.includes(:parent_lodging) if action_name == "index"
+      return RoomType.includes(parent_lodging: :translations) if action_name == 'index'
+
       RoomType.includes(availabilities: [{ cleaning_costs: :translations }, :prices, :rate_plan])
     end
   end
