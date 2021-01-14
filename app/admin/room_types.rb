@@ -23,7 +23,7 @@ ActiveAdmin.register RoomType do
     selectable_column
     id_column
     column :code
-    column :description
+    column :name
     column :parent_lodging
 
     actions
@@ -33,6 +33,7 @@ ActiveAdmin.register RoomType do
   show do
     attributes_table do
       row :code
+      row :name
       row :description
       row :parent_lodging
     end

@@ -8,6 +8,10 @@ class RatePlan < ApplicationRecord
   has_one :rule
   has_many :child_rates
 
+  validates_associated :room_rates
+
+  accepts_nested_attributes_for :room_rates, allow_destroy: true, reject_if: :all_blank
+
   enum open_gds_rate_type: {
     pppn: 0,
     papn: 1,
