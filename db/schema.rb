@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_11_064300) do
+ActiveRecord::Schema.define(version: 2021_01_14_120215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1011,6 +1011,7 @@ ActiveRecord::Schema.define(version: 2021_01_11_064300) do
     t.integer "children", default: 0
     t.integer "infants", default: 0
     t.integer "open_gds_accommodation_id"
+    t.string "name"
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 

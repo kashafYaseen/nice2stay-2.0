@@ -15,7 +15,7 @@ ActiveAdmin.register RoomType do
     def scoped_collection
       return RoomType.includes(parent_lodging: :translations) if action_name == 'index'
 
-      RoomType.includes(availabilities: [{ cleaning_costs: :translations }, :prices, :rate_plan])
+      RoomType.includes(room_rates: :rate_plan, availabilities: [:rate_plan, :prices, { cleaning_costs: :translations }])
     end
   end
 
@@ -23,7 +23,7 @@ ActiveAdmin.register RoomType do
     selectable_column
     id_column
     column :code
-    column :description
+    column :name
     column :parent_lodging
 
     actions
@@ -33,23 +33,24 @@ ActiveAdmin.register RoomType do
   show do
     attributes_table do
       row :code
+      row :name
       row :description
       row :parent_lodging
     end
 
     panel "Rate Plans" do
-      table_for room_type.rate_plans do
-        column :code
-        column :name
-        column :price
-        column 'Action' do |rate_plan|
-          link_to 'Edit', edit_admin_rate_plan_path(rate_plan)
+      table_for room_type.room_rates do
+        column :rate_plan_code
+        column :rate_plan_name
+        column :default_rate
+        column 'Action' do |room_rate|
+          link_to 'Edit', edit_admin_rate_plan_path(room_rate.rate_plan)
         end
       end
     end
 
     panel "Availabilities" do
-      table_for room_type.availabilities.order(:available_on) do
+      table_for room_type.availabilities.sort_by(&:available_on) do
         column :id
         column :available_on
         column 'Booking Limit', :rr_booking_limit

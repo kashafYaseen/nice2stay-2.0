@@ -7,6 +7,8 @@ class RoomRate < ApplicationRecord
   has_many :reservations
   has_many :prices, through: :availabilities
 
+  validates :room_type, uniqueness: { scope: :rate_plan }
+
   enum default_single_rate_type: {
     fixed_rate: 0,
     percentage: 1
@@ -17,8 +19,9 @@ class RoomRate < ApplicationRecord
     percentage: 1
   }, _prefix: true
 
-  delegate :code, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :code, :name, to: :rate_plan, prefix: true, allow_nil: true
   delegate :adults, :parent_lodging, :open_gds_accommodation_id, to: :room_type, allow_nil: true
+  delegate :code, :name,:description, to: :room_type, prefix: true, allow_nil: true
 
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0

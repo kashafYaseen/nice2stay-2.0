@@ -11,6 +11,12 @@ ActiveAdmin.register RatePlan do
     def permitted_params
       params.permit!
     end
+
+    def scoped_collection
+      return RatePlan.all if action_name == 'index'
+
+      RatePlan.includes(room_rates: :room_type)
+    end
   end
 
   index do
@@ -18,7 +24,6 @@ ActiveAdmin.register RatePlan do
     id_column
     column :code
     column :name
-    column :price
     column :created_at
     column :updated_at
 
@@ -29,8 +34,13 @@ ActiveAdmin.register RatePlan do
     inputs 'RatePlan' do
       f.input :code
       f.input :name
-      f.input :price
       f.input :description
+      f.inputs do
+        f.has_many :room_rates, heading: 'Linked Room Types', allow_destroy: true, new_record: 'Link Another Room Type' do |rr_form|
+          rr_form.input :room_type
+          rr_form.input :default_rate
+        end
+      end
     end
 
     f.actions do
@@ -38,13 +48,22 @@ ActiveAdmin.register RatePlan do
     end
   end
 
-
   show do
     attributes_table do
       row :code
       row :name
-      row :price
       row :description
+    end
+
+    panel 'Room Types' do
+      table_for rate_plan.room_rates do
+        column :room_type_code
+        column :room_type_name
+        column :default_rate
+        column 'Action' do |room_rate|
+          link_to 'View', admin_room_type_path(room_rate.room_type)
+        end
+      end
     end
 
     active_admin_comments
