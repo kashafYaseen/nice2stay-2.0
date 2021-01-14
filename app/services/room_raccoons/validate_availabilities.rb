@@ -21,9 +21,11 @@ class RoomRaccoons::ValidateAvailabilities
         availabilities << parse_data(@body['availstatusmessages']['availstatusmessage'])
       end
 
+      Rails.logger.info "PARSED AVAILABILITIES ===============================>>>>>>>>>> #{availabilities}"
       rooms = RoomType.where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
       return false if rooms.size.zero?
 
+      Rails.logger.info '===============================>>>>>>>>>>In Availabilities JOB'
       RrCreateAvailabilitiesJob.perform_later hotel_id, room_type_codes, availabilities
       true
     rescue => e
