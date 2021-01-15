@@ -15,7 +15,7 @@ ActiveAdmin.register RatePlan do
     def scoped_collection
       return RatePlan.all if action_name == 'index'
 
-      RatePlan.includes(room_rates: :room_type)
+      RatePlan.includes(:child_rates, :rule, room_rates: :room_type)
     end
   end
 
@@ -54,8 +54,24 @@ ActiveAdmin.register RatePlan do
     attributes_table do
       row :code
       row :name
-      row :open_gds_rate_id
+      row('OpenGDS Rate ID') { |rate_plan| rate_plan.open_gds_rate_id }
       row :description
+      row :rate_enabled
+      row('Permanent Valid') { |rate_plan| rate_plan.open_gds_valid_permanent }
+      row :min_stay
+      row :max_stay
+      row :open_gds_rate_type
+      row :open_gds_daily_supplements
+    end
+
+    panel 'Rule' do
+      table_for rate_plan.rule do
+        column :start_date
+        column :end_date
+        column :open_gds_restriction_type
+        column :open_gds_restriction_days
+        column :open_gds_arrival_days
+      end
     end
 
     panel 'Room Types' do
@@ -66,6 +82,14 @@ ActiveAdmin.register RatePlan do
         column 'Action' do |room_rate|
           link_to 'View', admin_room_type_path(room_rate.room_type)
         end
+      end
+    end
+
+    panel 'Child Rates' do
+      table_for rate_plan.child_rates do
+        column :children
+        column :rate_type
+        column :rate
       end
     end
 

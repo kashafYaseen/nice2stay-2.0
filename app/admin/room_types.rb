@@ -38,18 +38,19 @@ ActiveAdmin.register RoomType do
       row :parent_lodging
     end
 
-    panel "Rate Plans" do
+    panel 'Rate Plans' do
       table_for room_type.room_rates do
         column :rate_plan_code
         column :rate_plan_name
         column :default_rate
+
         column 'Action' do |room_rate|
           link_to 'Edit', edit_admin_rate_plan_path(room_rate.rate_plan)
         end
       end
     end
 
-    panel "Availabilities" do
+    panel 'Availabilities' do
       table_for room_type.availabilities.sort_by(&:available_on) do
         column :id
         column :available_on
