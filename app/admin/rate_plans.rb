@@ -24,6 +24,7 @@ ActiveAdmin.register RatePlan do
     id_column
     column :code
     column :name
+    column :open_gds_rate_id
     column :created_at
     column :updated_at
 
@@ -35,6 +36,7 @@ ActiveAdmin.register RatePlan do
       f.input :code
       f.input :name
       f.input :description
+      f.input :open_gds_rate_id
       f.inputs do
         f.has_many :room_rates, heading: 'Linked Room Types', allow_destroy: true, new_record: 'Link Another Room Type' do |rr_form|
           rr_form.input :room_type
@@ -52,6 +54,7 @@ ActiveAdmin.register RatePlan do
     attributes_table do
       row :code
       row :name
+      row :open_gds_rate_id
       row :description
     end
 
