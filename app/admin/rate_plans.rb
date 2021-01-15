@@ -4,7 +4,7 @@ ActiveAdmin.register RatePlan do
   filter :code
   filter :room_type
   permit_params :code, :name, :room_type
-  actions :show, :index, :edit, :update
+  actions :show, :index, :edit, :update, :new, :create
 
 
   controller do
