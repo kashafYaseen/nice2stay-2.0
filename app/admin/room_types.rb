@@ -46,7 +46,7 @@ ActiveAdmin.register RoomType do
         column :default_rate
 
         column 'Action' do |room_rate|
-          link_to 'Edit', edit_admin_rate_plan_path(room_rate.rate_plan)
+          link_to 'View', admin_rate_plan_path(room_rate.rate_plan)
         end
       end
     end
