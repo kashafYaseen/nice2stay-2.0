@@ -78,6 +78,7 @@ ActiveAdmin.register RatePlan do
       table_for rate_plan.room_rates do
         column :room_type_code
         column :room_type_name
+        column :open_gds_accommodation_id
         column :default_rate
         column 'Action' do |room_rate|
           link_to 'View', admin_room_type_path(room_rate.room_type)

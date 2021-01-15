@@ -34,6 +34,7 @@ ActiveAdmin.register RoomType do
     attributes_table do
       row :code
       row :name
+      row :open_gds_accommodation_id
       row :description
       row :parent_lodging
     end
