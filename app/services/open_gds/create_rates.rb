@@ -35,12 +35,13 @@ class OpenGds::CreateRates
   private
     def destroy_rate_plan_details params, rate_plans
       accommodation_ids = params[:accommodations].map { |accomdation| accomdation[:accom_id] }
+      rate_plan = rate_plans.find { |rp| rp[:open_gds_rate_id] == params[:rate_id] }
       if params[:init]
         RoomRate.joins(:rate_plan, room_type: :parent_lodging).where(room_types: { open_gds_accommodation_id: accommodation_ids }, rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
+        rate_plan.child_rates.destroy_all
       else
         RoomRate.joins(:rate_plan, room_type: :parent_lodging).where.not(room_types: { open_gds_accommodation_id: accommodation_ids }).where(rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
         dates = get_dates params
-        rate_plan = rate_plans.find { |rp| rp[:open_gds_rate_id] == params[:rate_id] }
         rate_plan.availabilities.joins(room_type: :parent_lodging).where('available_on < ? or available_on > ? and lodgings.channel = 3', dates[0], dates[-1]).destroy_all
       end
     end
@@ -118,7 +119,7 @@ class OpenGds::CreateRates
 
       availabilities, prices = update_availabilities rate_params, room_rate, rate_plan
       availabilities = room_rate.availabilities if availabilities.blank?
-      update_availabilities_by_status rate_plan, accom_params, room_rate, availabilities, prices
+      update_availabilities_by_status rate_plan, accom_params, room_rate, availabilities, prices.flatten
       { room_rate: room_rate, availabilities: availabilities, prices: prices }
     end
 
@@ -130,7 +131,8 @@ class OpenGds::CreateRates
         rate: room_rate.default_rate,
         single_rate: room_rate.default_single_rate,
         minlos: rate_plan.min_stay,
-        maxlos: rate_plan.max_stay
+        maxlos: rate_plan.max_stay,
+        checkin_days: rate_plan.open_gds_arrival_days
       }
 
       rate_params[:dates].each do |date|
@@ -141,8 +143,8 @@ class OpenGds::CreateRates
         availability ||= room_rate.availabilities.new(available_on: date)
         availability = set_availability params, availability
         availabilities << availability
-        price = set_prices params, availability
-        prices << price if price.new_record? || price.changed?
+        new_prices = set_prices params, availability, rate_plan.child_rates
+        prices << new_prices
       end
 
       [availabilities, prices]
@@ -154,7 +156,7 @@ class OpenGds::CreateRates
       rule.end_date = rate_params[:valid_till] if rate_params[:valid_till].present?
       rule.open_gds_restriction_type = rate_params[:restriction_type] if rate_params[:restriction_type].present?
       rule.open_gds_restriction_days = rate_params[:restriction_days] if rate_params[:restriction_days].present?
-      rule.open_gds_arrival_days = rate_params[:arrival_days] if rate_params[:arrival_days].present?
+      rule.open_gds_arrival_days = checkin_days(rate_params[:arrival_days]) if rate_params[:arrival_days].present?
       if rule.new_record?
         rule.created_at = DateTime.current
       elsif rule.changed?
@@ -180,12 +182,13 @@ class OpenGds::CreateRates
           single_rate: accommodation_status[:daily_single_rate],
           close_out: accommodation_status[:close_out],
           cta: accommodation_status[:cta],
-          ctd: accommodation_status[:ctd]
+          ctd: accommodation_status[:ctd],
+          checkin_days: rate_plan.open_gds_arrival_days
         }
 
         availability = set_availability params, availability
-        price = set_prices params, availability
-        prices << price unless prices.include?(price)
+        new_prices = set_prices params, availability, rate_plan.child_rates
+        prices << new_prices.select { |price| prices.exclude?(price) }
       end
     end
 
@@ -210,20 +213,52 @@ class OpenGds::CreateRates
       availability
     end
 
-    def set_prices params, availability
-      price = availability.prices.find { |p| p[:adults] == ['999'] && p[:children] == ['999'] && p[:infants] == ['999'] }.presence || availability.prices.new(adults: ['999'], children: ['999'], infants: ['999'])
+    def set_prices params, availability, rate_plan_child_rates
+      prices = []
+      price = set_adult_rate(params, availability)
+      prices << price if price.changed? || price.new_record?
+      prices << set_child_prices(params, availability, rate_plan_child_rates)
+      prices
+    end
+
+    def set_adult_rate params, availability
+      price = availability.prices.find { |p| p[:adults] == ['999'] && p[:children] == ['0'] && p[:infants] == ['0'] }.presence || availability.prices.new(adults: ['999'], children: ['0'], infants: ['0'])
       stays = []
       stays << params[:minlos] if params[:minlos].present?
       stays << params[:maxlos] if params[:maxlos].present?
       price.amount = params[:rate] if params[:rate].present?
       price.minimum_stay = (stays[0]..stays[-1]).map(&:to_s) if stays.present?
       price.open_gds_single_rate = params[:single_rate] if params[:single_rate].present?
+      price.multiple_checkin_days = params[:checkin_days] if params[:checkin_days].present?
       if price.new_record?
         price.created_at = DateTime.current
       elsif price.changed?
         price.updated_at = DateTime.current
       end
       price
+    end
+
+    def set_child_prices(params, availability, rate_plan_child_rates)
+      prices = []
+      stays = []
+      stays << params[:minlos] if params[:minlos].present?
+      stays << params[:maxlos] if params[:maxlos].present?
+      rate_plan_child_rates.each do |child_rate|
+        price = availability.prices.find { |p| p[:adults] == ['0'] && p[:children] == [child_rate.children.to_s] && p[:infants] == ['0'] }.presence ||
+                availability.prices.new(adults: ['0'], children: [child_rate.children.to_s], infants: ['0'])
+
+        price.amount = child_rate.rate
+        price.minimum_stay = (stays[0]..stays[-1]).map(&:to_s) if stays.present?
+        price.multiple_checkin_days = params[:checkin_days] if params[:checkin_days].present?
+        if price.new_record?
+          price.created_at = DateTime.current
+          prices << price
+        elsif price.changed?
+          price.updated_at = DateTime.current
+          prices << price
+        end
+      end
+      prices
     end
 
     def get_dates params
@@ -233,6 +268,29 @@ class OpenGds::CreateRates
         (params[:valid_from].to_date..params[:valid_till].to_date).map(&:to_s)
       else
         []
+      end
+    end
+
+    def checkin_days params
+      params.map { |arrival_day| get_full_day_name(arrival_day) }
+    end
+
+    def get_full_day_name day
+      case day
+      when 'Mon'
+        'monday'
+      when 'Tue'
+        'tuesday'
+      when 'Wed'
+        'wednesday'
+      when 'Thu'
+        'thursday'
+      when 'Fri'
+        'friday'
+      when 'Sat'
+        'saturday'
+      else
+        'sunday'
       end
     end
 

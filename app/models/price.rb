@@ -20,7 +20,7 @@ class Price < ApplicationRecord
     thursday: 4,
     friday: 5,
     saturday: 6,
-    sunday: 7,
+    sunday: 7
   }
 
   enum open_gds_single_rate_type: {
@@ -33,7 +33,7 @@ class Price < ApplicationRecord
       available_on: availability.try(:available_on),
       lodging_id: lodging.try(:id),
       adults_and_children: adults_and_children,
-      room_rate_id: room_rate.try(:id),
+      room_rate_id: room_rate.try(:id)
     )
   end
 
