@@ -143,8 +143,8 @@ class OpenGds::CreateRates
         availability ||= room_rate.availabilities.new(available_on: date)
         availability = set_availability params, availability
         availabilities << availability
-        new_prices = set_prices params, availability, rate_plan.child_rates
-        prices << new_prices
+        price = set_prices params, availability
+        prices << price if price.new_record? || price.changed?
       end
 
       [availabilities, prices]
@@ -187,8 +187,8 @@ class OpenGds::CreateRates
         }
 
         availability = set_availability params, availability
-        new_prices = set_prices params, availability, rate_plan.child_rates
-        prices << new_prices.select { |price| prices.exclude?(price) }
+        price = set_prices params, availability
+        prices << price if prices.exclude?(price)
       end
     end
 
@@ -213,15 +213,7 @@ class OpenGds::CreateRates
       availability
     end
 
-    def set_prices params, availability, rate_plan_child_rates
-      prices = []
-      price = set_adult_rate(params, availability)
-      prices << price if price.changed? || price.new_record?
-      prices << set_child_prices(params, availability, rate_plan_child_rates)
-      prices
-    end
-
-    def set_adult_rate params, availability
+    def set_prices params, availability
       price = availability.prices.find { |p| p[:adults] == ['999'] && p[:children] == ['0'] && p[:infants] == ['0'] }.presence || availability.prices.new(adults: ['999'], children: ['0'], infants: ['0'])
       stays = []
       stays << params[:minlos] if params[:minlos].present?
@@ -236,29 +228,6 @@ class OpenGds::CreateRates
         price.updated_at = DateTime.current
       end
       price
-    end
-
-    def set_child_prices(params, availability, rate_plan_child_rates)
-      prices = []
-      stays = []
-      stays << params[:minlos] if params[:minlos].present?
-      stays << params[:maxlos] if params[:maxlos].present?
-      rate_plan_child_rates.each do |child_rate|
-        price = availability.prices.find { |p| p[:adults] == ['0'] && p[:children] == [child_rate.children.to_s] && p[:infants] == ['0'] }.presence ||
-                availability.prices.new(adults: ['0'], children: [child_rate.children.to_s], infants: ['0'])
-
-        price.amount = child_rate.rate
-        price.minimum_stay = (stays[0]..stays[-1]).map(&:to_s) if stays.present?
-        price.multiple_checkin_days = params[:checkin_days] if params[:checkin_days].present?
-        if price.new_record?
-          price.created_at = DateTime.current
-          prices << price
-        elsif price.changed?
-          price.updated_at = DateTime.current
-          prices << price
-        end
-      end
-      prices
     end
 
     def get_dates params
