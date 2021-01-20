@@ -61,6 +61,7 @@ class OpenGds::CreateRates
       rate_plan.min_stay = params[:default_minlos] if params[:default_minlos].present?
       rate_plan.max_stay = params[:default_maxlos] if params[:default_maxlos].present?
       rate_plan.open_gds_daily_supplements = params[:daily_supplement] if params[:daily_supplement].present?
+      rate_plan.open_gds_single_rate_type = params[:single_rate_type] if params[:single_rate_type].present?
       if rate_plan.new_record?
         rate_plan.created_at = DateTime.current
       elsif rate_plan.changed?
@@ -265,7 +266,7 @@ class OpenGds::CreateRates
 
     def insert_rate rate_plans, rules, child_rates, room_rates, availabilities, prices
       if rate_plans.present?
-        RatePlan.import rate_plans, batch_size: 150, on_duplicate_key_update: { columns: %i[rate_enabled open_gds_valid_permanent open_gds_res_fee open_gds_rate_type min_stay max_stay open_gds_daily_supplements updated_at] }
+        RatePlan.import rate_plans, batch_size: 150, on_duplicate_key_update: { columns: %i[rate_enabled open_gds_valid_permanent open_gds_res_fee open_gds_rate_type min_stay max_stay open_gds_daily_supplements open_gds_single_rate_type updated_at] }
       end
 
       if rules.present?

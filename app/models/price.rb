@@ -23,11 +23,6 @@ class Price < ApplicationRecord
     sunday: 7
   }
 
-  enum open_gds_single_rate_type: {
-    fixed_price: 0,
-    percentage: 1
-  }
-
   def search_data
     attributes.merge(
       available_on: availability.try(:available_on),
