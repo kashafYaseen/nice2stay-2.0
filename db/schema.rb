@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_20_094511) do
+ActiveRecord::Schema.define(version: 2021_01_20_114440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,7 +244,7 @@ ActiveRecord::Schema.define(version: 2021_01_20_094511) do
   end
 
   create_table "child_rates", force: :cascade do |t|
-    t.integer "children"
+    t.integer "open_gds_category"
     t.decimal "rate"
     t.integer "rate_type"
     t.bigint "rate_plan_id"
