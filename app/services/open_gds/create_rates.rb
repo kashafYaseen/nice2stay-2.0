@@ -91,8 +91,8 @@ class OpenGds::CreateRates
       child_rates = []
       if rate_params[:child_rate].present?
         rate_params[:child_rate].keys.map(&:to_s).each do |child_key|
-          child_rate = rate_plan.child_rates.find { |cr| cr[:children].to_s == child_key }
-          child_rate = rate_plan.child_rates.new(children: child_key) unless child_rate.present?
+          child_rate = rate_plan.child_rates.find { |cr| cr[:open_gds_category].to_s == child_key }
+          child_rate = rate_plan.child_rates.new(open_gds_category: child_key) unless child_rate.present?
           child_rate_params = rate_params[:child_rate][:"#{child_key}"]
           child_rate.rate = child_rate_params[:rate] if child_rate_params[:rate].present?
           child_rate.rate_type = child_rate_params[:type] if child_rate_params[:type].present?
