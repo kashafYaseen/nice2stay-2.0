@@ -41,7 +41,7 @@ class OpenGds::CreateRates
         RoomRate.joins(room_type: :parent_lodging).where.not(room_type_id: accommodation_ids).where(rate_plan_id: params[:rate_interface_id], lodgings: { channel: 3 }).destroy_all
         dates = get_dates params
         rate_plans = rate_plans.select { |rp| params[:rate_interface_id].map(&:to_i).include?(rp[:id]) }
-        Availability.join(:rate_plan, room_type: :parent_lodging).where('available_on < ? or available_on > ? and rate_plans.id IN(?) and lodgings.channel = 3', dates[0], dates[-1], rate_plans.map(&:id)).destroy_all
+        Availability.joins(:rate_plan, room_type: :parent_lodging).where('available_on < ? or available_on > ? and rate_plans.id IN(?) and lodgings.channel = 3', dates[0], dates[-1], rate_plans.map(&:id)).destroy_all
       end
     end
 
