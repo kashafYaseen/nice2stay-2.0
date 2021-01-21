@@ -13,7 +13,6 @@ class SearchPrices
   end
 
   def call
-    byebug
     result = Price.search(query, where: first_condition, order: { amount: :asc }, includes: [:availability]).results
     query_dates = dates_without_price(result, availability_condition)
     return result unless query_dates.present?
@@ -51,10 +50,10 @@ class SearchPrices
       conditions[:room_rate_id] = params[:room_rate_id] if params[:room_rate_id].present?
       conditions[:minimum_stay] = [params[:minimum_stay], 999]
       if params[:multiple_checkin_days]
-        conditions[:multiple_checkin_days] = [checkin_day]
+        conditions[:multiple_checkin_days] = checkin_day
+        conditions[:children] = flexible_children ? { gte: params[:children] } : params[:children]
       else
         conditions[:checkin] = checkin_day
-
         if flexible_children
           conditions[:children] = { gte: params[:children] }
           conditions[:checkin] = [checkin_day, 'any']

@@ -38,7 +38,7 @@ class OpenGds::CreateRates
       rate_plan = rate_plans.find { |rp| rp[:open_gds_rate_id] == params[:rate_id] }
       if params[:init]
         RoomRate.joins(:rate_plan, room_type: :parent_lodging).where(room_types: { open_gds_accommodation_id: accommodation_ids }, rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
-        rate_plan.child_rates.destroy_all
+        # rate_plan.child_rates.destroy_all
       else
         RoomRate.joins(:rate_plan, room_type: :parent_lodging).where.not(room_types: { open_gds_accommodation_id: accommodation_ids }).where(rate_plans: { open_gds_rate_id: params[:rate_id] }, lodgings: { channel: 3 }).destroy_all
         dates = get_dates params
