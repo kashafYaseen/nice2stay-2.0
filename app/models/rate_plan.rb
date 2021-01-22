@@ -8,7 +8,6 @@ class RatePlan < ApplicationRecord
   has_one :rule
   has_many :child_rates
 
-  validates :open_gds_rate_id, uniqueness: true, if: -> { open_gds_rate_id.present? }
   validates_associated :room_rates
 
   accepts_nested_attributes_for :room_rates, allow_destroy: true, reject_if: :all_blank
