@@ -21,8 +21,8 @@ class RoomRate < ApplicationRecord
     percentage: 1
   }, _prefix: true
 
-  delegate :code, :name, to: :rate_plan, prefix: true, allow_nil: true
-  delegate :open_gds_daily_supplements, :single_supplement?, :single_rate?, :open_gds_rate_type, :min_stay, to: :rate_plan, allow_nil: true
+  delegate :code, :name, :pppn?, :papn?, :pp?, :ps?, :pppd?, :papd?, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :open_gds_daily_supplements, :single_supplement?, :single_rate?, :min_stay, :open_gds_res_fee, to: :rate_plan, allow_nil: true
   delegate :adults, :open_gds_accommodation_id, :extra_beds, :extra_beds_for_children_only, to: :room_type, allow_nil: true
   delegate :code, :name, :description, to: :room_type, prefix: true, allow_nil: true
   delegate :channel, to: :parent_lodging, prefix: true
@@ -51,22 +51,8 @@ class RoomRate < ApplicationRecord
       return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
 
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      if parent_lodging.open_gds?
-        # for adults price only
-        adult_prices = OpenGds::SearchPriceWithDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i, multiple_checkin_days: true), self)
-        adult_prices = calculate_opengds_rate(adult_prices)
-      else
-        SearchPriceWithFlexibleDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i), nil, self)
-      end
-    end
+      return OpenGds::SearchPriceWithDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i, multiple_checkin_days: true), self) if parent_lodging.open_gds?
 
-    def calculate_opengds_rate(adult_prices, check_in, check_out)
-      return adult_prices unless open_gds_daily_supplements.present?
-
-      (check_out..check_in).map(&:to_date).each_with_index do |date, index|
-        adult_prices[index] += open_gds_daily_supplements[date.strftime('%a')]
-        adult_prices[index]
-      end
-      adult_prices
+      SearchPriceWithFlexibleDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i), nil, self)
     end
 end
