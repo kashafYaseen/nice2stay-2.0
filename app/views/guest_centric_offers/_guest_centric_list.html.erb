@@ -9,33 +9,39 @@
           <% hotel['offers'].each_with_index do |child, index| %>
             <% if child['isPromotion'] %>
               <% child['offers'].each do |offer| %>
-                <div class="row">
-                  <div class="col-md-4">
-                    Name: <b><%= offer['name'].try(:capitalize) %></b>
-                  </div>
+                <% offer_name = lodging.find_gc_room(offer['roomOffer'].split('.')[0]).try(:name) %>
+                <% if offer_name.present? %>
+                  <div class="row">
+                    <div class="col-md-5">
+                      Name: <b><%= offer['name'].try(:capitalize) %></b>
+                    </div>
 
-                  <div class="col-md-4">
-                    GC ID: <b><%= offer['roomOffer'].split('.')[0] %></b>
-                  </div>
+                    <div class="col-md-2">
+                      GC ID: <b><%= offer['roomOffer'].split('.')[0] %></b>
+                    </div>
 
-                  <div class="col-md-4">
-                    GC in DB: <b><%= lodging.find_gc_room(offer['roomOffer'].split('.')[0]).try(:name) %></b>
+                    <div class="col-md-5">
+                      GC in DB: <b><%= offer_name %></b>
+                    </div>
                   </div>
-                </div>
+                <% end %>
               <% end if child['offers'].present? %>
             <% else %>
-              <div class="row">
-                <div class="col-md-4">
-                  Name: <b><%= child['name'] %></b>
-                </div>
+              <% child_name = lodging.find_gc_room(child['id_package']).try(:name) %>
+              <% if child_name.present? %>
+                <div class="row">
+                  <div class="col-md-5">
+                    Name: <b><%= child['name'] %></b>
+                  </div>
 
-                <div class="col-md-4">
-                  GC ID: <b><%= child['id_package'] %></b>
-                </div>
+                  <div class="col-md-2">
+                    GC ID: <b><%= child['id_package'] %></b>
+                  </div>
 
-                <div class="col-md-4">
-                  GC in DB: <b><%= lodging.find_gc_room(child['id_package']).try(:name) %></b>
-                </div>
+                  <div class="col-md-5">
+                    GC in DB: <b><%= child_name %></b>
+                  </div>
+                <% end %>
               </div>
             <% end %>
           <% end %>
