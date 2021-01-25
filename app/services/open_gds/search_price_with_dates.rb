@@ -17,13 +17,15 @@ class OpenGds::SearchPriceWithDates
 
   private
     def search_price_with_defaults
-      # prices = SearchPrices.call(params.merge(children: 0)).uniq(&:available_on)
-      # price_list = prices.pluck(:amount)
       if room_rate.rate_plan_ps?
-        @price_list = adult_rate_by_single_rate_type
+        @price_list = calculate_adult_rates_with_defaults
         @price_list += calculate_child_rates(@price_list)
-        @price_list += [room_rate.open_gds_res_fee]
+      else
+        @prices = SearchPrices.call(params.merge(children: 0)).uniq(&:available_on)
+        @price_list = calculate_adult_rates(@prices)
+        # @price_list = prices.pluck(:amount)
       end
+      @price_list += [room_rate.open_gds_res_fee]
       # if room_rate.single_supplement? && params[:adult] == '1' && params[:children] == '0'
       #   @single_rate = prices.pluck(:open_gds_single_rate).sum
       # elsif room_rate.single_rate? && params[:adult] == '1' && params[:children] == '0'
@@ -36,6 +38,39 @@ class OpenGds::SearchPriceWithDates
       # price_list += get_daily_supplements
       reservation = build_reservation params
       { rates: @price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
+    end
+
+    def calculate_adult_rates_with_defaults
+      if params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_supplement?
+        @adults_rates = ([(room_rate.default_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements] + [room_rate.default_single_rate]
+      elsif params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_rate?
+        @adults_rates = ([(room_rate.default_single_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements]
+      else
+        @adults_rates = ([(room_rate.default_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements]
+      end
+
+      return @adults_rates if room_rate.extra_beds_for_children_only
+
+      @adults_rates += [room_rate.extra_bed_rate * extra_beds_used_by_adults]
+    end
+
+    def calculate_adult_rates prices
+      if params[:adults] == '1' && params[:children] == '0' && room_rate.single_supplement?
+        @adults_rates = prices.pluck(:amount).map { |amount| amount / params[:minimum_stay] } + [get_daily_supplements] + [room_rate.default_single_rate]
+      elsif params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_rate?
+        @adults_rates = prices.pluck(:open_gds_single_rate).map { |amount| amount / params[:minimum_stay] } + [get_daily_supplements]
+      else
+        @adults_rates = prices.pluck(:amount).map { |amount| ((amount / params[:minimum_stay]) + [get_daily_supplements]) * total_adults }
+      end
+
+      return @adults_rates if room_rate.extra_beds_for_children_only
+
+      extra_beds = extra_beds_used_by_adults
+      return @adults_rates if extra_beds.zero?
+
+      byebug
+      extra_bed_rate = room_rate.extra_bed_rate.zero? ? room_rate.extra_bed_rate : @adults_rates.sum / total_adults
+      @adults_rates += [extra_bed_rate * extra_beds]
     end
 
     def build_reservation(params)
@@ -90,20 +125,6 @@ class OpenGds::SearchPriceWithDates
       [@child_rate * extra_beds_used_by_children(@total_children)]
     end
 
-    def adult_rate_by_single_rate_type
-      if params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_supplement?
-        @adults_rates = ([(room_rate.default_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements] + [room_rate.default_single_rate]
-      elsif params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_rate?
-        @adults_rates = ([(room_rate.default_single_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements]
-      else
-        @adults_rates = ([(room_rate.default_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements]
-      end
-
-      return @adults_rates if room_rate.extra_beds_for_children_only
-
-      @adults_rates += [room_rate.extra_bed_rate * extra_beds_used_by_adults]
-    end
-
     def extra_beds_used_by_adults
       return 0 if params[:adults].to_i <= params[:max_adults].to_i
 
@@ -114,6 +135,12 @@ class OpenGds::SearchPriceWithDates
       return 0 if params[:adults].to_i + num_of_children <= params[:max_adults].to_i
 
       (params[:adults].to_i + num_of_children) - params[:max_adults].to_i
+    end
+
+    def total_adults
+      return params[:adults].to_i if params[:adults].to_i <= params[:max_adults].to_i
+
+      params[:max_adults].to_i
     end
 end
 
