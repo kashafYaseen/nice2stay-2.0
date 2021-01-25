@@ -114,6 +114,8 @@ class OpenGds::CreateRates
       room_rate.currency_code = accom_params[:currency_code] if accom_params[:currency_code].present?
       room_rate.default_single_rate_type = accom_params[:default_single_rate_type] if accom_params[:default_single_rate_type].present?
       room_rate.default_single_rate = accom_params[:default_single_rate] if accom_params[:default_single_rate].present?
+      room_rate.extra_bed_rate = accom_params[:extra_bed_rate] if accom_params[:extra_bed_rate].present?
+      room_rate.extra_bed_rate_type = accom_params[:extra_bed_rate_type] if accom_params[:extra_bed_rate_type].present?
       room_rate.extra_night_rate = accom_params[:extra_night_rate] if accom_params[:extra_night_rate].present?
       if room_rate.new_record?
         room_rate.created_at = DateTime.current
