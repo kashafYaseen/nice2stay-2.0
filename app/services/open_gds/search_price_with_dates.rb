@@ -54,7 +54,7 @@ class OpenGds::SearchPriceWithDates
     end
 
     def calculate_child_rates price_list
-      return if params[:children] == '0' && params[:infants] == '0'
+      return [] if params[:children] == '0' && params[:infants] == '0'
 
       if params[:children] != '0' && params[:infants] != '0'
         children_rate = room_rate.child_rates_children.order(rate: :desc).first
@@ -64,11 +64,11 @@ class OpenGds::SearchPriceWithDates
           return [child_rate * extra_beds_used_by_children(params[:children].to_i + params[:infants].to_i)]
         end
 
-        infant_rate = infant_rates&.rate || room_rate.extra_bed_rate
-        infants_rate = infant_rate.zero? ? price_list.sum : infant_rate
+        infant_rate = infants_rate&.rate || room_rate.extra_bed_rate
+        infant_rate = infant_rate.zero? ? price_list.sum : infant_rate
         child_rate = children_rate&.rate || room_rate.extra_bed_rate
-        child_rate = children_rate.zero? ? price_list.sum : child_rate
-        if infants_rate.category.to_i > children_rate.category.to_i
+        child_rate = child_rate.zero? ? price_list.sum : child_rate
+        if infants_rate.open_gds_category.to_i > children_rate.open_gds_category.to_i
           infant_rate *= extra_beds_used_by_children(params[:infants].to_i)
           child_rate *= extra_beds_used_by_children(params[:children].to_i + params[:infants].to_i)
         else
@@ -76,38 +76,32 @@ class OpenGds::SearchPriceWithDates
           infant_rate *= extra_beds_used_by_children(params[:children].to_i + params[:infants].to_i)
         end
 
-        [infant_rate + child_rate]
+        return [infant_rate + child_rate]
       elsif params[:children] != '0' && params[:infants] == '0'
         @child_rate = room_rate.child_rates_children.order(rate: :desc).first&.rate || room_rate.extra_bed_rate
-        child_rate = child_rate.zero? ? price_list.sum : child_rate
-        [child_rate * extra_beds_used_by_children(params[:children].to_i)]
+        @total_children = params[:children].to_i
       else
-        child_rate = room_rate.child_rates_infants.order(rate: :desc).first&.rate || room_rate.extra_bed_rate
-        child_rate = child_rate.zero? ? price_list.sum : child_rate
-        [child_rate * extra_beds_used_by_children(params[:infants].to_i)]
+        @child_rate = room_rate.child_rates_infants.order(rate: :desc).first&.rate || room_rate.extra_bed_rate
+        @total_children = params[:infants].to_i
       end
-    end
 
-    def calculate_infants_rate price_list
-      return unless params[:infants].present? || params[:infants] == '0'
-
-      infants_rate = room_rate.child_rates_infants.order(rate: :desc).first&.rate || room_rate.extra_bed_rate
-      infants_rate = infants_rate.zero? ? price_list.sum : infants_rate
-      [child_rate * extra_beds_used_by_children]
+      @child_rate ||= room_rate.extra_bed_rate
+      @child_rate = @child_rate.zero? ? price_list.sum : @child_rate
+      [@child_rate * extra_beds_used_by_children(@total_children)]
     end
 
     def adult_rate_by_single_rate_type
-      if params[:adults] == '1' && params[:children] == '0' && room_rate.single_supplement?
+      if params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_supplement?
         @adults_rates = ([(room_rate.default_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements] + [room_rate.default_single_rate]
-      elsif params[:adults] == '1' && params[:children] == '0' && room_rate.single_rate?
+      elsif params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_rate?
         @adults_rates = ([(room_rate.default_single_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements]
       else
         @adults_rates = ([(room_rate.default_rate / params[:minimum_stay])] * params[:minimum_stay]) + [get_daily_supplements]
       end
 
-      return @adult_rates if room_rate.extra_beds_for_children_only
+      return @adults_rates if room_rate.extra_beds_for_children_only
 
-      @adults_rates += [room_rate.extra_beds * extra_beds_used_by_adults]
+      @adults_rates += [room_rate.extra_bed_rate * extra_beds_used_by_adults]
     end
 
     def extra_beds_used_by_adults
