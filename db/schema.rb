@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_064437) do
+ActiveRecord::Schema.define(version: 2021_01_26_072646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -994,8 +994,8 @@ ActiveRecord::Schema.define(version: 2021_01_21_064437) do
     t.decimal "default_single_rate", default: "0.0"
     t.integer "default_single_rate_type"
     t.integer "extra_bed_rate_type", default: 0
-    t.decimal "extra_bed_rate", default: "0.0"
-    t.decimal "extra_night_rate", default: "0.0"
+    t.decimal "extra_bed_rate"
+    t.decimal "extra_night_rate"
     t.bigint "room_type_id"
     t.bigint "rate_plan_id"
     t.datetime "created_at", null: false
