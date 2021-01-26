@@ -44,12 +44,16 @@ class OpenGds::SearchPriceWithDates
     end
 
     def calculate_adult_rates prices
-      if params[:adults] == '1' && params[:children] == '0' && room_rate.single_supplement?
-        @adults_rates = prices.pluck(:amount).map { |amount| amount / params[:minimum_stay] } + [get_daily_supplements] + [room_rate.default_single_rate]
-      elsif params[:adults] == '1' && params[:children] == '0' && params[:infants] == '0' && room_rate.single_rate?
-        @adults_rates = prices.pluck(:open_gds_single_rate).map { |amount| amount / params[:minimum_stay] } + [get_daily_supplements]
+      if params[:adults] == '1' && params[:children] == '0' && room_rate.single_rate?
+        @price_list = prices.map { |price| { amount: price.open_gds_single_rate, date: price.available_on } }
       else
-        @adults_rates = prices.map { |price| ((price.amount / params[:minimum_stay]) + get_daily_supplements(price.available_on)) } * total_adults
+        @price_list = prices.map { |price| { amount: price.amount, date: price.available_on } }
+        @default_single_rate = room_rate.default_single_rate if params[:adults] == '1' && params[:children] == '0' && room_rate.single_supplement?
+      end
+      if room_rate.rate_plan_pp?
+        @adults_rates = @price_list.map { |price| ((price[:amount] / params[:minimum_stay]) + get_daily_supplements(price[:date])) } * total_adults + [@default_single_rate.to_i]
+      else
+        @adults_rates = @price_list.map { |price| price[:amount] + get_daily_supplements(price[:date]) } * total_adults + [@default_single_rate.to_i * params[:minimum_stay]]
       end
 
       return @adults_rates if room_rate.extra_beds_for_children_only
@@ -93,8 +97,17 @@ class OpenGds::SearchPriceWithDates
       end
 
       price = room_rate.rate_plan_ps? ? price_list.sum : price_list.sum / total_adults
-      @child_rate ||= room_rate.extra_bed_rate || price
-      [@child_rate * extra_beds_used_by_children(@total_children)]
+      extra_beds = extra_beds_used_by_children(@total_children)
+      if extra_beds.positive?
+        @child_rate ||= room_rate.extra_bed_rate || price
+        @child_rate += price if total_adults == 1
+        [@child_rate * extra_beds]
+      else
+        @child_rate ||= price
+        [@child_rate * @total_children]
+      end
+      # @child_rate ||= extra_beds.positive? ? room_rate.extra_bed_rate || price : price
+      # @child_rate += price if total_adults == 1
     end
 
     def get_daily_supplements date = nil
