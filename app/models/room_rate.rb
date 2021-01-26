@@ -6,6 +6,8 @@ class RoomRate < ApplicationRecord
   has_many :availabilities
   has_many :reservations
   has_many :prices, through: :availabilities
+  has_one :parent_lodging, through: :room_type
+  has_many :child_rates, through: :rate_plan
 
   validates :room_type, uniqueness: { scope: :rate_plan }
 
@@ -19,9 +21,16 @@ class RoomRate < ApplicationRecord
     percentage: 1
   }, _prefix: true
 
-  delegate :code, :name, to: :rate_plan, prefix: true, allow_nil: true
-  delegate :adults, :parent_lodging, :open_gds_accommodation_id, to: :room_type, allow_nil: true
-  delegate :code, :name,:description, to: :room_type, prefix: true, allow_nil: true
+  delegate :code, :name, :pppn?, :papn?, :pp?, :ps?, :pppd?, :papd?, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :open_gds_daily_supplements, :single_supplement?, :single_rate?, :min_stay, :open_gds_res_fee, to: :rate_plan, allow_nil: true
+  delegate :adults, :open_gds_accommodation_id, :extra_beds, :extra_beds_for_children_only, to: :room_type, allow_nil: true
+  delegate :code, :name, :description, to: :room_type, prefix: true, allow_nil: true
+  delegate :channel, to: :parent_lodging, prefix: true
+  delegate :children, :infants, to: :child_rates, prefix: true, allow_nil: true
+
+  scope :include_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where(room_type_id: room_type_ids, rate_plan_id: rate_plan_id) }
+  scope :exclude_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where.not(room_type_id: room_type_ids, rate_plan_id: rate_plan_id) }
+  scope :lodging_channel, ->(channel) { joins(:parent_lodging).where(lodgings: { channel: channel }) }
 
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0
@@ -46,6 +55,8 @@ class RoomRate < ApplicationRecord
       return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
 
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      SearchPriceWithFlexibleDates.call(params.merge(rate_plan_id: id, minimum_stay: total_nights, max_adults: adults.to_i), nil, self)
+      return OpenGds::SearchPriceWithDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i, multiple_checkin_days: true), self) if parent_lodging.open_gds?
+
+      SearchPriceWithFlexibleDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i), nil, self)
     end
 end
