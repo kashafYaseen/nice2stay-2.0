@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_14_120215) do
+ActiveRecord::Schema.define(version: 2021_01_26_101541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -869,6 +869,21 @@ ActiveRecord::Schema.define(version: 2021_01_14_120215) do
     t.text "open_gds_daily_supplements"
   end
 
+  create_table "recent_searches", force: :cascade do |t|
+    t.date "check_in"
+    t.date "check_out"
+    t.integer "adults"
+    t.integer "children"
+    t.integer "infants"
+    t.bigint "searchable_id"
+    t.string "searchable_type"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_id", "searchable_type"], name: "index_recent_searches_on_searchable_id_and_searchable_type"
+    t.index ["user_id"], name: "index_recent_searches_on_user_id"
+  end
+
   create_table "region_translations", force: :cascade do |t|
     t.integer "region_id", null: false
     t.string "locale", null: false
@@ -1186,6 +1201,7 @@ ActiveRecord::Schema.define(version: 2021_01_14_120215) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "recent_searches", "users", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
