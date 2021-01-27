@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_101541) do
+ActiveRecord::Schema.define(version: 2021_01_27_122016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1142,6 +1142,12 @@ ActiveRecord::Schema.define(version: 2021_01_26_101541) do
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "visited_lodgings", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "lodging_id", null: false
+    t.index ["user_id", "lodging_id"], name: "index_visited_lodgings_on_user_id_and_lodging_id"
   end
 
   create_table "wishlists", force: :cascade do |t|

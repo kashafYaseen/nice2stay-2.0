@@ -17,6 +17,7 @@ class Lodging < ApplicationRecord
   has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
+  has_and_belongs_to_many :visited_users, join_table: 'visited_lodgings'
 
   belongs_to :parent, class_name: 'Lodging', optional: true
   has_many :room_types, foreign_key: :parent_lodging_id
