@@ -55,7 +55,14 @@ class RoomRate < ApplicationRecord
       return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
 
       total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
-      return OpenGds::SearchPriceWithDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i, multiple_checkin_days: true), self) if parent_lodging.open_gds?
+      if parent_lodging.open_gds?
+        if rate_plan_pppd?
+          total_nights += 1
+          params = params.merge(check_out: params[:check_out].to_date.next_day.to_s)
+        end
+
+        return OpenGds::SearchPriceWithDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i, multiple_checkin_days: true), self)
+      end
 
       SearchPriceWithFlexibleDates.call(params.merge(room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i), nil, self)
     end
