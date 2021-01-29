@@ -11,4 +11,9 @@ class Api::V2::VisitedLodgingsController < Api::V2::ApiController
     visited_lodgings << lodging unless visited_lodgings.include? lodging
     render json: { message: 'success'}, status: :created
   end
+
+  def destroy
+    current_user.visited_lodgings.destroy_all
+    head :no_content
+  end
 end

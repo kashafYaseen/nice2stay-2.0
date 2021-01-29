@@ -14,6 +14,11 @@ class Api::V2::RecentSearchesController < Api::V2::ApiController
     end
   end
 
+  def destroy
+    current_user.recent_searches.destroy_all
+    head :no_content
+  end
+
   private
     def recent_search_params
       params.require(:recent_search).permit(
