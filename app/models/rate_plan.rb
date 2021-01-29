@@ -12,6 +12,8 @@ class RatePlan < ApplicationRecord
 
   accepts_nested_attributes_for :room_rates, allow_destroy: true, reject_if: :all_blank
 
+  delegate :open_gds_arrival_days, to: :rule, allow_nil: true
+
   enum open_gds_rate_type: {
     pppn: 0,
     papn: 1,

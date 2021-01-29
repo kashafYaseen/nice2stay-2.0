@@ -244,12 +244,13 @@ ActiveRecord::Schema.define(version: 2021_01_27_122016) do
   end
 
   create_table "child_rates", force: :cascade do |t|
-    t.integer "children"
+    t.integer "open_gds_category"
     t.decimal "rate"
     t.integer "rate_type"
     t.bigint "rate_plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age_group"
     t.index ["rate_plan_id"], name: "index_child_rates_on_rate_plan_id"
   end
 
@@ -849,6 +850,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_122016) do
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
     t.decimal "open_gds_single_rate", default: "0.0"
+    t.string "multiple_checkin_days", default: [], array: true
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
@@ -867,6 +869,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_122016) do
     t.integer "min_stay", default: 0
     t.integer "max_stay", default: 0
     t.text "open_gds_daily_supplements"
+    t.integer "open_gds_single_rate_type"
   end
 
   create_table "recent_searches", force: :cascade do |t|
@@ -1006,8 +1009,8 @@ ActiveRecord::Schema.define(version: 2021_01_27_122016) do
     t.decimal "default_single_rate", default: "0.0"
     t.integer "default_single_rate_type"
     t.integer "extra_bed_rate_type", default: 0
-    t.decimal "extra_bed_rate", default: "0.0"
-    t.decimal "extra_night_rate", default: "0.0"
+    t.decimal "extra_bed_rate"
+    t.decimal "extra_night_rate"
     t.bigint "room_type_id"
     t.bigint "rate_plan_id"
     t.datetime "created_at", null: false
@@ -1027,6 +1030,8 @@ ActiveRecord::Schema.define(version: 2021_01_27_122016) do
     t.integer "infants", default: 0
     t.integer "open_gds_accommodation_id"
     t.string "name"
+    t.integer "extra_beds", default: 0
+    t.boolean "extra_beds_for_children_only", default: false
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
