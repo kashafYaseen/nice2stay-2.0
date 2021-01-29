@@ -20,9 +20,10 @@ class User < ApplicationRecord
   has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
-
   has_many :trip_members
   has_many :trips, through: :trip_members
+  has_many :recent_searches
+  has_and_belongs_to_many :visited_lodgings, class_name: 'Lodging', join_table: 'visited_lodgings'
 
   has_one :first_visit, -> (user) { order(:started_at).where("started_at < ?", user.created_at) }, class_name: 'Ahoy::Visit'
 
@@ -33,6 +34,7 @@ class User < ApplicationRecord
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
   delegate :recent, to: :notifications, allow_nil: true, prefix: true
   delegate :name, :code, :slug, to: :country, allow_nil: true, prefix: true
+  delegate :with_lodgings, to: :history_lodgings, allow_nil: true, prefix: :history
 
   validates :email, uniqueness: { message: "has an account. Click here to <input type='button' name='login-form' value='Login' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#login-form-modal'>or here to <input type='button' name='reset-password-form' value='Reset password' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#reset-pass-form-modal'>" }, allow_blank: true
   validates :first_name, :last_name, :phone, presence: true, unless: :encrypted_password_changed?

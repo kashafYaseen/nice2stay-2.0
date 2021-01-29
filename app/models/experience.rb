@@ -1,4 +1,5 @@
 class Experience < ApplicationRecord
+  has_many :recent_searches, as: :searchable
   has_and_belongs_to_many :lodgings, join_table: 'lodgings_experiences'
   translates :name, :slug
   globalize_accessors
