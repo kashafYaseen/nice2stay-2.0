@@ -23,8 +23,7 @@ class User < ApplicationRecord
   has_many :trip_members
   has_many :trips, through: :trip_members
   has_many :recent_searches
-  has_and_belongs_to_many :visited_lodgings
-
+  has_and_belongs_to_many :visited_lodgings, class_name: 'Lodging', join_table: 'visited_lodgings'
 
   has_one :first_visit, -> (user) { order(:started_at).where("started_at < ?", user.created_at) }, class_name: 'Ahoy::Visit'
 
