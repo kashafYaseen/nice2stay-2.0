@@ -75,55 +75,106 @@ class OpenGds::SearchPriceWithDates
       if params[:children] != '0' && params[:infants] != '0'
         children_rate = room_rate.child_rates_children.order(rate: :desc).first
         infants_rate = room_rate.child_rates_infants.order(rate: :desc).first
-        if children_rate.nil? && infants_rate.nil?
-          @total_children = params[:children].to_i + params[:infants].to_i
+        price = room_rate.rate_plan_ps? ? price_list.sum : price_list.sum / total_adults
+        children_rates = []
+        children_rates = [price] if can_charge_adult_rate_to_children?
+
+        child_rate = children_rate&.rate
+        infant_rate = infants_rate&.rate
+        num_of_stays = params[:minimum_stay].to_i if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn?
+        if infants_rate&.open_gds_category.to_i > children_rate&.open_gds_category.to_i
+          num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
+          children_rates += [(child_rate || room_rate.extra_bed_rate || price) * num_of_stays] * num_of_children_with_extrabeds
+          @children_without_extrabeds = params[:children].to_i - num_of_children_with_extrabeds
+          # num_of_children = num_of_children_with_extrabeds.zero? ? params[:children].to_i : params[:children].to_i +
+          children_rates += [(infant_rate || room_rate.extra_bed_rate || price) * num_of_stays] * extra_beds_used_by_children(num_of_children_with_extrabeds + params[:infants].to_i)
+          @infants_without_extrabeds = params[:infants].to_i - extra_beds_used_by_children(num_of_children_with_extrabeds + params[:infants].to_i)
         else
-          infant_rate = infants_rate&.rate || room_rate.extra_bed_rate
-          infant_rate = infant_rate.zero? ? price_list.sum : infant_rate
-          child_rate = children_rate&.rate || room_rate.extra_bed_rate
-          child_rate = child_rate.zero? ? price_list.sum : child_rate
-          if infants_rate.open_gds_category.to_i > children_rate.open_gds_category.to_i
-            child_rate *= extra_beds_used_by_children(params[:children].to_i)
-            num_of_children = params[:infants].to_i if child_rate.zero?
-            infant_rate *= extra_beds_used_by_children(num_of_children.to_i + params[:infants].to_i)
-          else
-            infant_rate *= extra_beds_used_by_children(params[:infants].to_i)
-            num_of_infants = params[:infants].to_i if infant_rate.zero?
-            child_rate *= extra_beds_used_by_children(params[:children].to_i + num_of_infants.to_i)
-          end
-
-          price = price_list.sum if total_adults == 1 && (!room_rate.rate_plan_ps? && !room_rate.rate_plan_papn?)
-          num_of_stays = params[:minimum_stay].to_i if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn?
-          return [infant_rate + child_rate + price.to_f] * num_of_stays.to_i
+          num_of_infants_with_extrabeds = extra_beds_used_by_children(params[:infants].to_i)
+          @infants_without_extrabeds = params[:infants].to_i - num_of_infants_with_extrabeds
+          children_rates += [(infant_rate || room_rate.extra_bed_rate || price) * num_of_stays] * num_of_infants_with_extrabeds
+          children_rates += [(child_rate || room_rate.extra_bed_rate || price) * num_of_stays] * extra_beds_used_by_children(params[:children].to_i + num_of_infants_with_extrabeds)
+          @children_without_extrabeds = params[:children].to_i - extra_beds_used_by_children(params[:children].to_i + num_of_infants_with_extrabeds)
         end
-      elsif params[:children] != '0' && params[:infants] == '0'
-        @child_rate = room_rate.child_rates_children.order(rate: :desc).first&.rate
-        @total_children = params[:children].to_i
-      else
-        @child_rate = room_rate.child_rates_infants.order(rate: :desc).first&.rate
-        @total_children = params[:infants].to_i
+
+        if @children_without_extrabeds.positive?
+          can_charge_adult_rate_to_children? && @children_without_extrabeds -= 1
+          children_rates += [(child_rate || price) * num_of_stays] * @children_without_extrabeds
+        end
+
+        unless @infants_without_extrabeds.positive?
+          can_charge_adult_rate_to_children? && @infants_without_extrabeds -= 1
+          children_rates += [(child_rate || price) * num_of_stays] * @infants_without_extrabeds
+        end
+
+        # @child_rate *= params[:minimum_stay].to_i if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn?
+        # num_of_children_without_extra_beds = total_children - extra_beds_used_by_children(params[:children].to_i + params[:infants].to_i)
+        # num_of_children -= 1 if total_adults == 1 && (!room_rate.rate_plan_ps? && !room_rate.rate_plan_papn?)
+        # @child_rate
       end
 
-      price = room_rate.rate_plan_ps? ? price_list.sum : price_list.sum / total_adults
-      children_with_extra_beds = extra_beds_used_by_children(@total_children)
-      if children_with_extra_beds.positive?
-        @child_rate ||= room_rate.extra_bed_rate || price
-        @child_rate += price if total_adults == 1 && !room_rate.rate_plan_ps?
-        @total_children = children_with_extra_beds
-        # [@child_rate * extra_beds]
-      else
-        # @child_rate ||= price
-        @child_rate = price
-        @total_children = 0 if room_rate.rate_plan_ps?
-        # [@child_rate * (room_rate.rate_plan_ps? ? extra_beds : @total_children)]
-      end
-
-      num_of_stays = params[:minimum_stay].to_i if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn?
-      if room_rate.rate_plan_papn?
-        [@child_rate * total_extra_beds_used] * num_of_stays.to_i
-      else
-        [@child_rate * @total_children] * num_of_stays.to_i
-      end
+      # if params[:children] != '0' && params[:infants] != '0'
+      #   children_rate = room_rate.child_rates_children.order(rate: :desc).first
+      #   infants_rate = room_rate.child_rates_infants.order(rate: :desc).first
+      #   if children_rate.nil? && infants_rate.nil?
+      #     @total_children = params[:children].to_i + params[:infants].to_i
+      #   else
+      #     price = price_list.sum if total_adults == 1 && (!room_rate.rate_plan_ps? && !room_rate.rate_plan_papn?)
+      #     infant_rate = infants_rate&.rate || room_rate.extra_bed_rate || price
+      #     # infant_rate = infant_rate.zero? ? price_list.sum : infant_rate
+      #     child_rate = children_rate&.rate || room_rate.extra_bed_rate || price
+      #     # child_rate = child_rate.zero? ? price_list.sum : child_rate
+      #     if infants_rate.open_gds_category.to_i > children_rate.open_gds_category.to_i
+      #       child_rate *= extra_beds_used_by_children(params[:children].to_i)
+      #       num_of_children = params[:children].to_i if child_rate.zero?
+      #       infant_rate *= extra_beds_used_by_children(num_of_children.to_i + params[:infants].to_i)
+      #     else
+      #       infant_rate *= extra_beds_used_by_children(params[:infants].to_i)
+      #       num_of_infants = params[:infants].to_i if infant_rate.zero?
+      #       child_rate *= extra_beds_used_by_children(params[:children].to_i + num_of_infants.to_i)
+      #     end
+      #
+      #     price = price_list.sum if total_adults == 1 && (!room_rate.rate_plan_ps? && !room_rate.rate_plan_papn?)
+      #     num_of_stays = params[:minimum_stay].to_i if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn?
+      #     return [infant_rate + child_rate + price.to_f] * num_of_stays.to_i
+      #   end
+      # elsif params[:children] != '0' && params[:infants] == '0'
+      #   @child_rate = room_rate.child_rates_children.order(rate: :desc).first&.rate
+      #   @total_children = params[:children].to_i
+      # else
+      #   @child_rate = room_rate.child_rates_infants.order(rate: :desc).first&.rate
+      #   @total_children = params[:infants].to_i
+      # end
+      #
+      # price = room_rate.rate_plan_ps? ? price_list.sum : price_list.sum / total_adults
+      # # @child_rate += price if total_adults == 1 && !room_rzate.rate_plan_ps?
+      # children_with_extra_beds = extra_beds_used_by_children(@total_children)
+      # if children_with_extra_beds.positive?
+      #   @child_rate ||= room_rate.extra_bed_rate || price
+      #   # @child_rate += price if total_adults == 1 && !room_rzate.rate_plan_ps?
+      #   @children = children_with_extra_beds
+      #   # [@child_rate * extra_beds]
+      # else
+      #   # @child_rate ||= price
+      #   @child_rate = price
+      #   @children = 0 if room_rate.rate_plan_ps?
+      #   # [@child_rate * (room_rate.rate_plan_ps? ? extra_beds : @total_children)]
+      # end
+      #
+      # byebug
+      # num_of_stays = params[:minimum_stay].to_i if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn?
+      # # if room_rate.rate_plan_papn?
+      # #   [@child_rate * total_extra_beds_used] * num_of_stays.to_i
+      # # else
+      # @child_rate = [@child_rate * @children] * num_of_stays.to_i
+      # # if @total_children - children_with_extra_beds.positive?
+      # # end
+      # @child_rate += [price] if total_adults == 1 && !room_rate.rate_plan_ps?
+      #
+      # # [@child_rate * @total_children] * num_of_stays.to_i
+      # # end
+      # @child_rate
+      children_rates
     end
 
     def get_daily_supplements date = nil
@@ -146,20 +197,30 @@ class OpenGds::SearchPriceWithDates
     end
 
     def extra_beds_used_by_children num_of_children
+      return 0 if num_of_children.zero?
+
       adults_without_extra_beds = extra_beds_used_by_adults[-1]
-      total_extra_beds = (adults_without_extra_beds - num_of_children).abs
-      total_extra_beds -= adults_without_extra_beds.abs if adults_without_extra_beds.negative?
-      total_extra_beds
+      children_with_extra_beds = (adults_without_extra_beds - num_of_children).abs
+      children_with_extra_beds -= adults_without_extra_beds.abs if adults_without_extra_beds.negative?
+      children_with_extra_beds
     end
 
-    def total_extra_beds_used
-      (((params[:max_adults].to_i + room_rate.extra_beds) - (params[:adults].to_i + params[:children].to_i)) - room_rate.extra_beds).abs
-    end
+    # def total_extra_beds_used
+    #   (((params[:max_adults].to_i + room_rate.extra_beds) - (params[:adults].to_i + params[:children].to_i)) - room_rate.extra_beds).abs
+    # end
 
     def total_adults
       return params[:adults].to_i if params[:adults].to_i <= params[:max_adults].to_i
 
       params[:max_adults].to_i
+    end
+
+    def total_children
+      params[:children].to_i + params[:infants].to_i
+    end
+
+    def can_charge_adult_rate_to_children?
+      room_rate.rate_plan_pppd? && total_adults == 1
     end
 
     def build_reservation(params)
