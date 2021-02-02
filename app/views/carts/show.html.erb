@@ -236,3 +236,11 @@
 <% content_for :js_init do %>
   Cart.init();
 <% end %>
+
+<% content_for :gtag_event do %>
+  gtag('event', 'conversion', {
+  'send_to': 'AW-1008769333/HCQmCNOS1AIQtbKC4QM',
+  'value': 1.0,
+  'currency': 'EUR'
+  });
+<% end %>
