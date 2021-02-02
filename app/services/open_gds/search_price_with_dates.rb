@@ -90,7 +90,7 @@ class OpenGds::SearchPriceWithDates
           @infants_without_extrabeds = params[:infants].to_i - extra_beds_used_by_children(@num_of_children_with_extrabeds + params[:infants].to_i)
           @amounts = [child_rate || room_rate.extra_bed_rate]
           @amounts += [infant_rate || room_rate.extra_bed_rate]
-          @children = params[:infants].to_i
+          @children = @children_without_extrabeds.zero? ? params[:children].to_i + params[:infants].to_i : params[:infants].to_i
         else
           @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:infants].to_i)
           @infants_without_extrabeds = params[:infants].to_i - @num_of_children_with_extrabeds
@@ -98,7 +98,7 @@ class OpenGds::SearchPriceWithDates
           @children_without_extrabeds = params[:children].to_i - extra_beds_used_by_children(params[:children].to_i + @num_of_children_with_extrabeds)
           @amounts = [infant_rate || room_rate.extra_bed_rate]
           @amounts += [child_rate || room_rate.extra_bed_rate]
-          @children = @children = params[:children].to_i
+          @children = @children_without_extrabeds.zero? ? params[:children].to_i + params[:infants].to_i : params[:children].to_i
         end
       elsif params[:children].to_i.positive? && params[:infants].to_i.zero?
         @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
@@ -116,20 +116,21 @@ class OpenGds::SearchPriceWithDates
       can_charge_adult_rate_to_children? && @occupant_is_child && @children_without_extrabeds -= 1
       can_charge_adult_rate_to_children? && @occupant_is_infant && @infants_without_extrabeds -= 1
 
-      if @children_without_extrabeds&.positive?
+      if @children_without_extrabeds&.positive? && !room_rate.rate_plan_ps?
         children_rates += children_rates_by_rate_type child_rate, price, num_of_stays, @children_without_extrabeds
         # children_rates += [(child_rate || price / num_of_stays) * num_of_stays] * @children_without_extrabeds
         # children_rates += [(child_rate || room_rate.extra_bed_rate || price / num_of_stays) * num_of_stays] * @children_without_extrabeds
       end
 
-      if @infants_without_extrabeds&.positive?
+      if @infants_without_extrabeds&.positive? && !room_rate.rate_plan_ps?
         children_rates += children_rates_by_rate_type infant_rate, price, num_of_stays, @infants_without_extrabeds
         # children_rates += [(infant_rate || price / num_of_stays) * num_of_stays] * @infants_without_extrabeds
         # children_rates += [(infant_rate || room_rate.extra_bed_rate || price / num_of_stays) * num_of_stays] * @infants_without_extrabeds
       end
       return children_rates unless params[:children].to_i.positive? && params[:infants].to_i.positive?
 
-      children_rates += [(@amounts[1] || price / num_of_stays) * num_of_stays] * extra_beds_used_by_children(@num_of_children_with_extrabeds + @children)
+      children_rates += children_rates_by_rate_type @amounts[1], price, num_of_stays, extra_beds_used_by_children(@children)
+      # children_rates += [(@amounts[1] || price / num_of_stays) * num_of_stays] * extra_beds_used_by_children(@num_of_children_with_extrabeds + @children)
       children_rates
     end
 
@@ -181,7 +182,7 @@ class OpenGds::SearchPriceWithDates
     end
 
     def children_rates_by_rate_type(amount, single_adult_amount, num_of_stays, num_of_children)
-      if room_rate.rate_plan_pp?
+      if room_rate.rate_plan_pp? || room_rate.rate_plan_ps?
         [amount || single_adult_amount] * num_of_children
       else
         [(amount || single_adult_amount / num_of_stays) * num_of_stays] * num_of_children
