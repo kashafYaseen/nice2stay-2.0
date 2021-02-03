@@ -100,11 +100,11 @@ class OpenGds::SearchPriceWithDates
       can_charge_adult_rate_to_children? && @occupant_is_child && @children_without_extrabeds -= 1
       can_charge_adult_rate_to_children? && @occupant_is_infant && @infants_without_extrabeds -= 1
 
-      if @children_without_extrabeds&.positive? && !room_rate.rate_plan_ps?
+      if @children_without_extrabeds&.positive? && can_charge_children_without_extrabeds?
         children_rates += children_rates_by_rate_type child_rate, price, num_of_stays, @children_without_extrabeds
       end
 
-      if @infants_without_extrabeds&.positive? && !room_rate.rate_plan_ps?
+      if @infants_without_extrabeds&.positive? && can_charge_children_without_extrabeds?
         children_rates += children_rates_by_rate_type infant_rate, price, num_of_stays, @infants_without_extrabeds
       end
       return children_rates unless params[:children].to_i.positive? && params[:infants].to_i.positive?
@@ -149,8 +149,13 @@ class OpenGds::SearchPriceWithDates
       params[:children].to_i + params[:infants].to_i
     end
 
+
     def can_charge_adult_rate_to_children?
-      (room_rate.rate_plan_pppd? || room_rate.rate_plan_pppn? || room_rate.rate_plan_pp?) && total_adults == 1
+      can_charge_children_without_extrabeds? && total_adults == 1
+    end
+
+    def can_charge_children_without_extrabeds?
+      room_rate.rate_plan_pppd? || room_rate.rate_plan_pppn? || room_rate.rate_plan_pp?
     end
 
     def children_rates_by_rate_type(amount, single_adult_amount, num_of_stays, num_of_children)
