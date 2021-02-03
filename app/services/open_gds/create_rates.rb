@@ -137,7 +137,7 @@ class OpenGds::CreateRates
         rate: room_rate.default_rate,
         single_rate: room_rate.default_single_rate,
         minlos: rate_plan.min_stay,
-        maxlos: maximum_stay(rate_plan),
+        maxlos: rate_plan.max_stay,
         checkin_days: rate_plan.open_gds_arrival_days
       }
 
@@ -182,7 +182,7 @@ class OpenGds::CreateRates
         params = {
           available: accommodation_status[:available],
           minlos: accommodation_status[:minlos] || rate_plan.min_stay,
-          maxlos: accommodation_status[:maxlos] || maximum_stay(rate_plan),
+          maxlos: accommodation_status[:maxlos] || rate_plan.max_stay,
           rate: accommodation_status[:daily_rate],
           single_rate: accommodation_status[:daily_single_rate],
           close_out: accommodation_status[:close_out],
@@ -258,10 +258,6 @@ class OpenGds::CreateRates
       else
         'sunday'
       end
-    end
-
-    def maximum_stay(rate_plan)
-      rate_plan.pppd? || rate_plan.papd? ? rate_plan.max_stay + 1 : rate_plan.max_stay
     end
 
     def insert_rate(rate_plans, rules, child_rates, room_rates, availabilities, prices)
