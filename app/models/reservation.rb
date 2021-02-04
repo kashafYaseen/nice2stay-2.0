@@ -8,6 +8,7 @@ class Reservation < ApplicationRecord
   has_many :cleaning_costs, through: :lodging
   has_one :review
   has_one :user, through: :booking
+  has_many :child_rates, through: :rate_plan
 
   validates :check_in, :check_out, presence: true
   validate :availability
@@ -24,10 +25,13 @@ class Reservation < ApplicationRecord
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, :belongs_to_channel?, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
-  delegate :email, :first_name, :last_name, :full_name, to: :user, prefix: true
+  delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
   delegate :code, :description, to: :room_type, prefix: true
   delegate :code, :rule, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
+  delegate :open_gds_accommodation_id, to: :room_type, allow_nil: true
+  delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :in_cart, -> { where(in_cart: true) }
@@ -250,6 +254,6 @@ class Reservation < ApplicationRecord
       required_check_in = Date.current + rule.open_gds_restriction_days
       return errors.add(:check_in, "Check-in possible from #{rule.open_gds_restriction_days.days.from_now.to_date}") if rule.restriction_type_till? && check_in < required_check_in
 
-      errors.add(:check_in, "Check-in possible till #{rule.open_gds_restriction_days.days.from_now}") if check_in > required_check_in
+      errors.add(:check_in, "Check-in possible till #{rule.open_gds_restriction_days.days.from_now}") if rule.restriction_type_from? && check_in > required_check_in
     end
 end
