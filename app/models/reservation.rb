@@ -13,6 +13,7 @@ class Reservation < ApplicationRecord
   validate :availability
   validate :no_of_guests, unless: :belongs_to_channel?
   validate :accommodation_rules, unless: :belongs_to_channel?
+  validate :accommodation_rate_plan_rule, if: :belongs_to_channel?
 
   after_validation :update_lodging_availability, unless: :belongs_to_channel?
   after_validation :update_room_rate_availability, if: :belongs_to_channel?
@@ -26,7 +27,7 @@ class Reservation < ApplicationRecord
   delegate :email, :first_name, :last_name, :full_name, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
   delegate :code, :description, to: :room_type, prefix: true
-  delegate :code, to: :rate_plan, prefix: true
+  delegate :code, :rule, to: :rate_plan, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :in_cart, -> { where(in_cart: true) }
@@ -216,9 +217,9 @@ class Reservation < ApplicationRecord
       nights = (check_out - check_in).to_i
       if _availabilities.present?
         min_booking_limit = _availabilities.pluck(:rr_booking_limit).min
-        errors.add(:rooms, "Minimum rooms available from #{ check_in } to #{ check_out } are #{ min_booking_limit }") if rooms > min_booking_limit
-        errors.add(:check_in, "Check-in not possible on #{ check_in }")  if _availabilities.first.rr_check_in_closed && _availabilities.first.available_on == check_in
-        errors.add(:check_out, "Check-out not possible on #{ check_out }")  if _availabilities.last.rr_check_out_closed && _availabilities.last.available_on == check_out
+        errors.add(:rooms, "Minimum rooms available from #{check_in} to #{check_out} are #{min_booking_limit}") if rooms > min_booking_limit
+        errors.add(:check_in, "Check-in not possible on #{check_in}")  if _availabilities.first.rr_check_in_closed && _availabilities.first.available_on == check_in
+        errors.add(:check_out, "Check-out not possible on #{check_out}")  if _availabilities.last.rr_check_out_closed && _availabilities.last.available_on == check_out
         count = 0
         _availabilities.each do |availability|
           count += 1 if (availability.rr_minimum_stay.present? && availability.rr_minimum_stay.exclude?(nights.to_s))
@@ -235,5 +236,20 @@ class Reservation < ApplicationRecord
       end
 
       errors.add(:base, "Not available for selected dates") if check_in < Date.today && _availabilities.blank?
+    end
+
+    def accommodation_rate_plan_rule
+      return unless check_in.present? && check_out.present? && lodging.present?
+
+      rule = rate_plan_rule
+      errors.add(:check_in, "Check-in not possible on #{check_in}") if check_in < rule.start_date || check_in > rule.end_date
+      errors.add(:check_out, "Check-out not possible on #{check_out}") if check_out < rule.start_date || check_out > rule.end_date
+      errors.add(:check_in, "Check-in Possible only on #{rule.open_gds_arrival_days}") if rule.open_gds_arrival_days.exclude?(check_in.strftime('%A').downcase)
+      return if rule.restriction_type_disabled?
+
+      required_check_in = Date.current + rule.open_gds_restriction_days
+      return errors.add(:check_in, "Check-in possible from #{rule.open_gds_restriction_days.days.from_now.to_date}") if rule.restriction_type_till? && check_in < required_check_in
+
+      errors.add(:check_in, "Check-in possible till #{rule.open_gds_restriction_days.days.from_now}") if check_in > required_check_in
     end
 end
