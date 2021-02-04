@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_072646) do
+ActiveRecord::Schema.define(version: 2021_02_04_114302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -872,6 +872,21 @@ ActiveRecord::Schema.define(version: 2021_01_26_072646) do
     t.integer "open_gds_single_rate_type"
   end
 
+  create_table "recent_searches", force: :cascade do |t|
+    t.date "check_in"
+    t.date "check_out"
+    t.integer "adults"
+    t.integer "children"
+    t.integer "infants"
+    t.bigint "searchable_id"
+    t.string "searchable_type"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_id", "searchable_type"], name: "index_recent_searches_on_searchable_id_and_searchable_type"
+    t.index ["user_id"], name: "index_recent_searches_on_user_id"
+  end
+
   create_table "region_translations", force: :cascade do |t|
     t.integer "region_id", null: false
     t.string "locale", null: false
@@ -943,6 +958,11 @@ ActiveRecord::Schema.define(version: 2021_01_26_072646) do
     t.text "rr_errors"
     t.integer "rr_res_id_value"
     t.bigint "room_rate_id"
+    t.string "open_gds_res_id"
+    t.string "open_gds_error_name"
+    t.string "open_gds_error_message"
+    t.integer "open_gds_error_code"
+    t.integer "open_gds_error_status"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"
@@ -1134,6 +1154,12 @@ ActiveRecord::Schema.define(version: 2021_01_26_072646) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "visited_lodgings", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "lodging_id", null: false
+    t.index ["user_id", "lodging_id"], name: "index_visited_lodgings_on_user_id_and_lodging_id"
+  end
+
   create_table "wishlists", force: :cascade do |t|
     t.bigint "lodging_id"
     t.bigint "user_id"
@@ -1191,6 +1217,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_072646) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "recent_searches", "users", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
