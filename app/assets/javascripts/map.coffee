@@ -3,9 +3,9 @@
 
   Map.init = ->
     if $('#map').length
-      L.mapbox.accessToken = 'pk.eyJ1IjoiYWRuYW5hc2hyYWYxMDciLCJhIjoiY2sxYnRteWQzMml1dTNucWozb2NiZXh5ZyJ9.pQZBD5hVIt95UXkINLhWnQ'
+      L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
       map = window.map = L.mapbox.map 'map'
-      map.addLayer L.mapbox.styleLayer('mapbox://styles/adnanashraf107/ckgrrfszv0iir19nqnd3caoc4')
+      map.addLayer L.mapbox.styleLayer('mapbox://styles/nice2stay/cjsvvl18i09ag1grrhejr2e5s')
       map.setView [38.5816, -121.4944], 12
       window.markers = markers = L.mapbox.featureLayer().addTo(map)._leaflet_id
       bounds_changed = window.bounds_changed = false
@@ -97,7 +97,7 @@
       map.fitBounds bounds_box
 
   Map.init_with = (feature, selector) ->
-    L.mapbox.accessToken = 'pk.eyJ1IjoiYWRuYW5hc2hyYWYxMDciLCJhIjoiY2sxYnRteWQzMml1dTNucWozb2NiZXh5ZyJ9.pQZBD5hVIt95UXkINLhWnQ'
+    L.mapbox.accessToken = 'pk.eyJ1IjoibmljZTJzdGF5IiwiYSI6ImNqcmx5bzN4MzA3NnQ0OW1vb25oNWZpYnQifQ.M-2JMwQg14gQzFxBDivSIg'
     features = $('.lodgings-list-json').map(-> JSON.parse @dataset.feature).get()
     categories = $('.lodgings-list-json').map(-> JSON.parse @dataset.categories).get()
 
@@ -106,7 +106,7 @@
       markers_layer = map._layers[window.markers]
     else
       map = window.map = L.mapbox.map selector
-      map.addLayer L.mapbox.styleLayer('mapbox://styles/adnanashraf107/ckgrrfszv0iir19nqnd3caoc4')
+      map.addLayer L.mapbox.styleLayer('mapbox://styles/nice2stay/cjsvvl18i09ag1grrhejr2e5s')
 
       RadiousControl = L.Control.extend(
         options: position: 'topright'
