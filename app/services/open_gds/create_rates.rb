@@ -57,6 +57,7 @@ class OpenGds::CreateRates
 
       lodging = lodgings.find { |lod| lod[:id] == params[:property_interface_id].to_i }
       selected_rate_plans = rate_plans.select { |rp| params[:rate_interface_id].map(&:to_i).include?(rp[:id]) }
+      params = params.merge({ dates: get_dates(params) })
       selected_rate_plans.each do |rate_plan|
         rate_plan.rate_enabled = params[:rate_enabled] if params[:rate_enabled].present?
         rate_plan.open_gds_rate_type = params[:rate_type] if params[:rate_type].present?
@@ -72,7 +73,7 @@ class OpenGds::CreateRates
         rule = update_rule params, rate_plan, lodging.id
         new_child_rates = update_child_rates params, rate_plan
         params[:accommodations].each do |accommodation|
-          rate = update_room_rate(params.merge({ dates: get_dates(params) }), accommodation, lodging.room_types, rate_plan)
+          rate = update_room_rate(params, accommodation, lodging.room_types, rate_plan)
           updated_room_rates << rate[:room_rate]
           updated_availabilities << rate[:availabilities]
           updated_prices << rate[:prices]
@@ -158,8 +159,8 @@ class OpenGds::CreateRates
 
     def update_rule(rate_params, rate_plan, lodging_id)
       rule = rate_plan.rule.presence || rate_plan.build_rule
-      rule.start_date = rate_params[:valid_from] if rate_params[:valid_from].present?
-      rule.end_date = rate_params[:valid_till] if rate_params[:valid_till].present?
+      rule.start_date = rate_params[:dates][0] if rate_params[:dates][0].present?
+      rule.end_date = rate_params[:dates][-1] if rate_params[:dates][-1].present?
       rule.open_gds_restriction_type = rate_params[:restriction_type] if rate_params[:restriction_type].present?
       rule.open_gds_restriction_days = rate_params[:restriction_days] if rate_params[:restriction_days].present?
       rule.open_gds_arrival_days = checkin_days(rate_params[:arrival_days]) if rate_params[:arrival_days].present?
