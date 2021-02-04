@@ -13,10 +13,10 @@ class SearchPrices
   end
 
   def call
-    result = Price.search(query, where: first_condition, order: { amount: :asc }, includes: [:availability]).results
+    result = Price.search(query, where: first_condition, order: order_by_attribute, includes: [:availability]).results
     query_dates = dates_without_price(result, availability_condition)
     return result unless query_dates.present?
-    result += Price.search(query, where: second_condition, order: { amount: :asc }, includes: [:availability]).results
+    result += Price.search(query, where: second_condition, order: order_by_attribute, includes: [:availability]).results
   end
 
   private
@@ -78,5 +78,11 @@ class SearchPrices
     def checkin_day
       check_in = params[:check_in].presence || params[:check_out]
       Date.parse(check_in).strftime("%A").downcase
+    end
+
+    def order_by_attribute
+      return { available_on: :asc } if params[:channel] == 'open_gds'
+
+      { amount: :asc }
     end
 end
