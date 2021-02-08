@@ -29,7 +29,7 @@ class RoomRate < ApplicationRecord
   delegate :children, :infants, to: :child_rates, prefix: true, allow_nil: true
 
   scope :include_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where(room_type_id: room_type_ids, rate_plan_id: rate_plan_id) }
-  scope :exclude_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where.not(room_type_id: room_type_ids, rate_plan_id: rate_plan_id) }
+  scope :exclude_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where.not(room_type_id: room_type_ids).where(rate_plan_id: rate_plan_id) }
   scope :lodging_channel, ->(channel) { joins(:parent_lodging).where(lodgings: { channel: channel }) }
 
   def cumulative_price(params)
