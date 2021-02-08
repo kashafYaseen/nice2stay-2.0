@@ -139,7 +139,7 @@ class Reservation < ApplicationRecord
     end
 
     def update_room_rate_availability
-      return if in_cart? || prebooking? || option?
+      return if in_cart? || prebooking? || option? || lodging.open_gds?
 
       _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
       _availabilities.each do |availability|
