@@ -88,7 +88,7 @@ ActiveAdmin.register RatePlan do
 
     panel 'Child Rates' do
       table_for rate_plan.child_rates do
-        column :children
+        column :age_group
         column :rate_type
         column :rate
       end
