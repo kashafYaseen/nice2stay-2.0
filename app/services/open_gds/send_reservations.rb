@@ -2,11 +2,11 @@ class OpenGds::SendReservations
   attr_reader :reservation,
               :uri
 
-  def self.call(reservation)
-    new(reservation).call
+  def self.call(reservation:)
+    new(reservation: reservation).call
   end
 
-  def initialize(reservation)
+  def initialize(reservation:)
     @reservation = reservation
     @uri = URI.parse("https://api.opengds.com/core/v1/acc-reservation/create?#{credentials}")
   end
@@ -18,14 +18,14 @@ class OpenGds::SendReservations
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     response = JSON.parse(http.request(request).body)
-    if response[:res_id].present?
-      reservation.update_attributes(open_gds_res_id: response[:res_id], request_status: 'confirmed', booking_status: 'booked')
+    if response['res_id'].present?
+      reservation.update_attributes(open_gds_res_id: response['res_id'], request_status: 'confirmed', booking_status: 'booked')
     else
       reservation.update_attributes(
-        open_gds_error_name: response[:name],
-        open_gds_error_message: response[:message],
-        open_gds_error_code: response[:code],
-        open_gds_error_status: response[:status],
+        open_gds_error_name: response['name'],
+        open_gds_error_message: response['message'],
+        open_gds_error_code: response['code'],
+        open_gds_error_status: response['status'],
         request_status: 'rejected'
       )
     end
@@ -51,11 +51,7 @@ class OpenGds::SendReservations
     end
 
     def occupancy
-      "[#{adults}#{children}]"
-    end
-
-    def adults
-      reservation.adults
+      "[#{reservation.adults}#{children}]"
     end
 
     def children

@@ -43,6 +43,7 @@ class Reservation < ApplicationRecord
   scope :guest_centric, -> { where.not(offer_id: nil) }
   scope :booking_expert, -> { where.not(be_category_id: nil) }
   scope :room_raccoon, -> { joins(:lodging).where(lodgings: { channel: 2 }) }
+  scope :open_gds, -> { joins(:lodging).where(lodgings: { channel: 3 }) }
 
   accepts_nested_attributes_for :review
 
