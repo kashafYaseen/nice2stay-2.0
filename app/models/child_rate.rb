@@ -10,11 +10,7 @@ class ChildRate < ApplicationRecord
   }
 
   enum age_group: {
-    'Infants (0-1 year)': 0,
-    'Toddlers (1-3 years)': 1,
-    'Preschoolers (3-5 years)': 2,
-    'Middle Childhood (6-11 years)': 3,
-    'Young Teens (12-14 years)': 4,
-    'Teenagers (15-17 years)': 5
+    infants: 0,
+    children: 1
   }
 end

@@ -100,6 +100,7 @@ class OpenGds::CreateRates
           child_rate_params = rate_params[:child_rate][:"#{child_key}"]
           child_rate.rate = child_rate_params[:rate] if child_rate_params[:rate].present?
           child_rate.rate_type = child_rate_params[:type] if child_rate_params[:type].present?
+          child_rate.age_group = child_age_group child_key
           child_rates << child_rate if child_rate.new_record? || child_rate.changed?
         end
       end
@@ -261,10 +262,16 @@ class OpenGds::CreateRates
       end
     end
 
+    def child_age_group category
+      return 0 if %w[1 2].include? category
+
+      1
+    end
+
     def insert_rate(rate_plans, rules, child_rates, room_rates, availabilities, prices)
       RatePlan.import rate_plans, batch_size: 150, on_duplicate_key_update: { columns: RatePlan.column_names - %w[id updated_at] } if rate_plans.present?
       Rule.import rules, batch_size: 150, on_duplicate_key_update: { columns: Rule.column_names - %w[id updated_at] } if rules.present?
-      ChildRate.import child_rates, batch_size: 150, on_duplicate_key_update: { columns: %i[rate rate_type] } if child_rates.present?
+      ChildRate.import child_rates, batch_size: 150, on_duplicate_key_update: { columns: %i[rate rate_type age_group] } if child_rates.present?
       RoomRate.import room_rates, batch_size: 150, on_duplicate_key_update: { columns: RoomRate.column_names - %w[id updated_at] } if room_rates.present?
 
       if availabilities.present?
