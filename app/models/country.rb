@@ -3,6 +3,7 @@ class Country < ApplicationRecord
   has_many :campaigns, through: :regions
   has_many :lodgings, through: :regions
   has_many :custom_texts
+  has_many :recent_searches, as: :searchable
   has_and_belongs_to_many :leads
 
   include ImageHelper

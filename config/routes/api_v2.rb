@@ -46,5 +46,11 @@ namespace :api do
 
     resource :open_gds, only: :create
     resources :amenities, only: [:index]
+    resources :recent_searches, only: [:index, :create] do
+      delete :destroy, on: :collection
+    end
+    resources :visited_lodgings, only: [:index, :create] do
+      delete :destroy, on: :collection
+    end
   end
 end
