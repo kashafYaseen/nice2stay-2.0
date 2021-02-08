@@ -111,6 +111,7 @@ class OpenGds::CreateRates
       Rails.logger.info "ACCOMMODATION PARAMS ==================>>>>>>>>>>> #{accom_params}"
       room_type = room_types.find { |rt| rt[:id] == accom_params[:accom_interface_id].to_i }
       room_rate = room_type.room_rates.find { |rr| rr[:rate_plan_id] == rate_plan.id }.presence || room_type.room_rates.new(rate_plan: rate_plan)
+      Rails.logger.info "ROOM RATE BEFORE ==================>>>>>>>>>>> #{room_rate}"
       room_rate.default_booking_limit = accom_params[:default_available] if accom_params[:default_available].present?
       room_rate.default_rate = accom_params[:default_rate] if accom_params[:default_rate].present?
       room_rate.currency_code = accom_params[:currency_code] if accom_params[:currency_code].present?
@@ -124,6 +125,7 @@ class OpenGds::CreateRates
         room_rate.updated_at = DateTime.current
       end
 
+      Rails.logger.info "ROOM RATE AFTER ==================>>>>>>>>>>> #{room_rate}"
       availabilities, prices = update_availabilities rate_params, room_rate, rate_plan
       availabilities = room_rate.availabilities if availabilities.blank?
       prices = prices.flatten
