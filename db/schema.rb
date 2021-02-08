@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_122016) do
+ActiveRecord::Schema.define(version: 2021_02_04_114302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -958,6 +958,11 @@ ActiveRecord::Schema.define(version: 2021_01_27_122016) do
     t.text "rr_errors"
     t.integer "rr_res_id_value"
     t.bigint "room_rate_id"
+    t.string "open_gds_res_id"
+    t.string "open_gds_error_name"
+    t.string "open_gds_error_message"
+    t.integer "open_gds_error_code"
+    t.integer "open_gds_error_status"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"

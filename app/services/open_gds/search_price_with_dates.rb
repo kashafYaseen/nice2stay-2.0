@@ -17,7 +17,7 @@ class OpenGds::SearchPriceWithDates
 
   private
     def search_price_with_defaults
-      @prices = SearchPrices.call(params.merge(children: 0, channel: room_rate.parent_lodging_channel)).uniq(&:available_on)
+      @prices = SearchPrices.call(params.merge(children: 0, channel: room_rate.parent_lodging_channel, check_out: check_out)).uniq(&:available_on)
       @price_list = calculate_adult_rates(@prices)
       @price_list += calculate_child_rates(@price_list)
       @price_list += [room_rate.open_gds_res_fee]
@@ -174,5 +174,9 @@ class OpenGds::SearchPriceWithDates
 
     def build_reservation(params)
       Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: room_rate.parent_lodging, room_rate: room_rate, booking: Booking.new)
+    end
+
+    def check_out
+      room_rate.rate_plan_pppd? || room_rate.rate_plan_papd? ? params[:check_out].to_date.next_day.to_s : params[:check_out]
     end
 end
