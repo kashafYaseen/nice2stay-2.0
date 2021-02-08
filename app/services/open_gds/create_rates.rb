@@ -108,6 +108,7 @@ class OpenGds::CreateRates
     end
 
     def update_room_rate(rate_params, accom_params, room_types, rate_plan)
+      Rails.logger.info "ACCOMMODATION PARAMS ==================>>>>>>>>>>> #{accom_params}"
       room_type = room_types.find { |rt| rt[:id] == accom_params[:accom_interface_id].to_i }
       room_rate = room_type.room_rates.find { |rr| rr[:rate_plan_id] == rate_plan.id }.presence || room_type.room_rates.new(rate_plan: rate_plan)
       room_rate.default_booking_limit = accom_params[:default_available] if accom_params[:default_available].present?
