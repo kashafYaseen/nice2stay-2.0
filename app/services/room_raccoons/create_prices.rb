@@ -13,17 +13,18 @@ class RoomRaccoons::CreatePrices
   end
 
   def call
-    hotel_room_types = RoomType.includes(availabilities: %i[rate_plan prices cleaning_costs]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
+    hotel_room_types = RoomType.includes(availabilities: [:rate_plan, { cleaning_costs: :availability }, { prices: :availability }]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
     new_prices = []
     new_cleaning_costs = []
+    availabilities = []
 
     rr_prices.each do |rr_price|
       dates = (rr_price[:start_date].to_date..rr_price[:end_date].to_date).map(&:to_s)
       current_room_type = hotel_room_types.find { |room_type| room_type.code == rr_price[:room_type_code] }
       current_room_rate = current_room_type.room_rates.find { |room_rate| room_rate.rate_plan_code == rr_price[:rate_plan_code] }
-      availabilities = current_room_rate.availabilities.select { |availability| dates.include?(availability.available_on.to_s) }
+      availabilities << find_or_create_availabilities(current_room_rate, dates)
 
-      availabilities.each do |availability|
+      availabilities.flatten.each do |availability|
         prices = availability.prices
         rr_price[:rates].each do |rate|
           if rate[:age_qualifying_code].present?
@@ -50,7 +51,7 @@ class RoomRaccoons::CreatePrices
 
           @price.minimum_stay = availability.rr_minimum_stay
           price_index = new_prices.index do |new_price|
-            new_price.availability_id == @price.availability_id &&
+            new_price.availability == @price.availability &&
               (new_price.infants == @price.infants || new_price.children == @price.children || new_price.adults == @price.adults || new_price.minimum_stay == @price.minimum_stay)
           end
 
@@ -84,7 +85,7 @@ class RoomRaccoons::CreatePrices
           end
 
           cleaning_cost_index = new_cleaning_costs.index do |new_cleaning_cost|
-            new_cleaning_cost.availability_id == @cleaning_cost.availability_id &&
+            new_cleaning_cost.availability == @cleaning_cost.availability &&
               new_cleaning_cost.name == @cleaning_cost.name
           end
 
@@ -97,10 +98,33 @@ class RoomRaccoons::CreatePrices
       end
     end
 
+    if availabilities.present?
+      availabilities = availabilities.flatten.select do |availability|
+        availability.new_record? || availability.changed?
+      end
+      Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[available_on] }
+    end
+
     if new_prices.present?
+      new_prices.each { |price| price.availability_id = price.availability.id }
       Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay] }
       new_prices.each(&:reindex)
     end
-    CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: %i[fixed_price name] } if new_cleaning_costs.present?
+
+    if new_cleaning_costs.present?
+      cleaning_costs.each { |cleaning_cost| cleaning_cost.availability_id = cleaning_cost.availability.id }
+      CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: %i[fixed_price name] }
+    end
   end
+
+  private
+    def find_or_create_availabilities room_rate, dates
+      availabilities = []
+      dates.each do |date|
+        availability = room_rate.availabilities.find { |avail| avail.available_on.to_s == date } || room_rate.availabilities.new(available_on: date)
+        availabilities << availability
+      end
+
+      availabilities
+    end
 end

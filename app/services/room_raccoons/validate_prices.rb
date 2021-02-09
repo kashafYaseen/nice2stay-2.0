@@ -24,7 +24,7 @@
       Rails.logger.info "PARSED PRICES ===============================>>>>>>>>>> #{prices}"
       dates = prices.map { |price| (price[:start_date]..price[:end_date]).map(&:to_s) }.flatten.uniq.sort
       rooms = RoomType.where(parent_lodging_id: hotel_id).joins(:availabilities).by_codes(room_type_codes, rate_plan_codes).select('availabilities.available_on as available_on')
-      rooms = rooms.select { |room| dates.include?(room.available_on.to_s) }
+      # rooms = rooms.select { |room| dates.include?(room.available_on.to_s) }
       return false if rooms.size.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In PRICES JOB'
