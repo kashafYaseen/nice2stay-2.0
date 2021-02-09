@@ -1,14 +1,14 @@
   class RoomRaccoons::ValidatePrices
   attr_reader :body, :hotel_id, :prices
 
-  def initialize(body, hotel_id)
+  def initialize(body:, hotel_id:)
     @body = body
     @prices = []
     @hotel_id = hotel_id
   end
 
-  def self.call(body, hotel_id)
-    self.new(body, hotel_id).call
+  def self.call(body:, hotel_id:)
+    new(body: body, hotel_id: hotel_id).call
   end
 
   def call
@@ -28,10 +28,15 @@
       return false if rooms.size.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In PRICES JOB'
-      RrCreatePricesJob.perform_later hotel_id, room_type_codes, rate_plan_codes, prices
+      RrCreatePricesJob.perform_later(
+        hotel_id: hotel_id,
+        room_type_codes: room_type_codes,
+        rate_plan_codes: rate_plan_codes,
+        rr_prices: prices
+      )
       true
     rescue => e
-      Rails.logger.info "Error in Room Raccoon Prices============>: #{ e }"
+      Rails.logger.info "Error in Room Raccoon Prices============>: #{e}"
       false
     end
   end

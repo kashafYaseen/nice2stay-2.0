@@ -1,11 +1,11 @@
 class RoomRaccoons::CreatePrices
   attr_reader :hotel_id, :room_type_codes, :rate_plan_codes, :rr_prices
 
-  def self.call(hotel_id, room_type_codes, rate_plan_codes, rr_prices)
-    self.new(hotel_id, room_type_codes, rate_plan_codes, rr_prices).call
+  def self.call(hotel_id:, room_type_codes:, rate_plan_codes:, rr_prices:)
+    new(hotel_id: hotel_id, room_type_codes: room_type_codes, rate_plan_codes: rate_plan_codes, rr_prices: rr_prices).call
   end
 
-  def initialize(hotel_id, room_type_codes, rate_plan_codes, rr_prices)
+  def initialize(hotel_id:, room_type_codes:, rate_plan_codes:, rr_prices:)
     @hotel_id = hotel_id
     @room_type_codes = room_type_codes
     @rate_plan_codes = rate_plan_codes
@@ -27,21 +27,17 @@ class RoomRaccoons::CreatePrices
         prices = availability.prices
         rr_price[:rates].each do |rate|
           if rate[:age_qualifying_code].present?
-            @price_index = prices.find_index { |price|
+            @price = prices.find { |price|
               (rate[:age_qualifying_code] == '7' && price.infants == [rate[:guests]]) ||
                 (rate[:age_qualifying_code] == '8' && price.children == [rate[:guests]]) ||
                 (rate[:age_qualifying_code] == '10' && price.adults == [rate[:guests]])
             }
           else
-            @price_index = prices.find_index { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
+            @price = prices.find { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
           end
 
-          if @price_index.present?
-            @price = prices[@price_index]
-            @price.amount = rate[:amount]
-          else
-            @price = availability.prices.new(amount: rate[:amount], created_at: DateTime.now, updated_at: DateTime.now)
-          end
+          @price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
+          @price.amount = rate[:amount]
 
           case rate[:age_qualifying_code]
           when '7'
@@ -69,18 +65,14 @@ class RoomRaccoons::CreatePrices
 
         cleaning_costs = availability.cleaning_costs
         rr_price[:additional_amounts].each do |additional_amount|
-          cleaning_cost_index = cleaning_costs.find_index { |cleaning_cost|
+          @cleaning_cost = cleaning_costs.find { |cleaning_cost|
             (additional_amount[:age_qualifying_code] == '7' && cleaning_cost.name == 'Infants') ||
               (additional_amount[:age_qualifying_code] == '8' && cleaning_cost.name == 'Children') ||
               (additional_amount[:age_qualifying_code] == '10' && cleaning_cost.name == 'Adults')
           }
 
-          if cleaning_cost_index.present?
-            @cleaning_cost = cleaning_costs[cleaning_cost_index]
-            @cleaning_cost.fixed_price = additional_amount[:amount]
-          else
-            @cleaning_cost = cleaning_costs.new(fixed_price: additional_amount[:amount], created_at: DateTime.now, updated_at: DateTime.now)
-          end
+          @cleaning_cost ||= cleaning_costs.new(created_at: DateTime.now, updated_at: DateTime.now)
+          @cleaning_cost.fixed_price = additional_amount[:amount]
 
           case additional_amount[:age_qualifying_code]
           when '7'
