@@ -1,14 +1,14 @@
 class RoomRaccoons::ValidateAvailabilities
   attr_reader :body, :hotel_id, :availabilities
 
-  def initialize(body, hotel_id)
+  def initialize(body:, hotel_id:)
     @body = body
     @availabilities = []
     @hotel_id = hotel_id
   end
 
-  def self.call(body, hotel_id)
-    self.new(body, hotel_id).call
+  def self.call(body:, hotel_id:)
+    new(body: body, hotel_id: hotel_id).call
   end
 
   def call
@@ -26,7 +26,11 @@ class RoomRaccoons::ValidateAvailabilities
       return false if rooms.size.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In Availabilities JOB'
-      RrCreateAvailabilitiesJob.perform_later hotel_id, room_type_codes, availabilities
+      RrCreateAvailabilitiesJob.perform_later(
+        hotel_id: hotel_id,
+        room_type_codes: room_type_codes,
+        rr_availabilities: availabilities
+      )
       true
     rescue => e
       Rails.logger.info "Error in Room Raccoon Availabilities============>: #{ e }"

@@ -1,14 +1,14 @@
 class API::V1::RoomRaccoon::RetrieveRooms
   attr_accessor :rooms, :xml_doc, :request_body, :response_body
 
-  def initialize(hotel_id, body)
+  def initialize(hotel_id:, body:)
     @rooms = RoomType.where(parent_lodging_id: hotel_id).joins(:rate_plans)&.select('room_types.code as room_code, room_types.name as room_name, room_types.description as room_description, rate_plans.code as rate_code, rate_plans.name as rate_name, rate_plans.description as rate_description')
     @request_body = body
     @xml_doc = Ox::Document.new
   end
 
-  def self.call(hotel_id, body)
-    self.new(hotel_id, body).call
+  def self.call(hotel_id:, body:)
+    new(hotel_id: hotel_id, body: body).call
   end
 
   def call

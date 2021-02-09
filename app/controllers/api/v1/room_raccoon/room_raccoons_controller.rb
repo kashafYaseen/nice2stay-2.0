@@ -7,11 +7,11 @@ class Api::V1::RoomRaccoon::RoomRaccoonsController < ActionController::API
 
     if @body['ota_hotelavailrq'].present?
       hotel_id = @body['ota_hotelavailrq']['availrequestsegments']['availrequestsegment']['hotelsearchcriteria']['criterion']['hotelref']['hotelcode']
-      response, response_flag = API::V1::RoomRaccoon::RetrieveRooms.call(hotel_id, @body)
+      response, response_flag = API::V1::RoomRaccoon::RetrieveRooms.call(hotel_id: hotel_id, body: @body)
       render xml: response, status: response_flag ? :ok : :unprocessable_entity, content_type: 'text/xml; charset=UTF-8'
     elsif @body['ota_hotelavailnotifrq'].present?
       hotel_id = @body['ota_hotelavailnotifrq']['availstatusmessages']['hotelcode']
-      response = RoomRaccoons::ValidateAvailabilities.call(@body['ota_hotelavailnotifrq'], hotel_id)
+      response = RoomRaccoons::ValidateAvailabilities.call(body: @body['ota_hotelavailnotifrq'], hotel_id: hotel_id)
 
       if response
         render xml: API::V1::RoomRaccoon::CreateAvailabilitiesResponse.new(@body).success, status: :ok, content_type: 'text/xml; charset=UTF-8'
@@ -20,7 +20,7 @@ class Api::V1::RoomRaccoon::RoomRaccoonsController < ActionController::API
       end
     elsif @body['ota_hotelrateamountnotifrq'].present?
       hotel_id = @body['ota_hotelrateamountnotifrq']['rateamountmessages']['hotelcode']
-      response = RoomRaccoons::ValidatePrices.call(@body['ota_hotelrateamountnotifrq'], hotel_id)
+      response = RoomRaccoons::ValidatePrices.call(body: @body['ota_hotelrateamountnotifrq'], hotel_id: hotel_id)
 
       if response
         render xml: API::V1::RoomRaccoon::CreatePricesResponse.new(@body).success, status: :ok, content_type: 'text/xml; charset=UTF-8'
