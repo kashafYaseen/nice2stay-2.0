@@ -263,9 +263,9 @@ class OpenGds::CreateRates
     end
 
     def child_age_group category
-      return 0 if %w[1 2].include? category
+      return 1 if %w[1 2 3].include? category
 
-      1
+      0
     end
 
     def insert_rate(rate_plans, rules, child_rates, room_rates, availabilities, prices)
