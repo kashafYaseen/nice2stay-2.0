@@ -71,7 +71,8 @@ class OpenGds::SearchPriceWithDates
           @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
           @children_without_extrabeds = params[:children].to_i - @num_of_children_with_extrabeds
           @occupant_is_child = @children_without_extrabeds.positive?
-          @infants_without_extrabeds = params[:infants].to_i - extra_beds_used_by_children(@num_of_children_with_extrabeds + params[:infants].to_i)
+          num_of_children = @num_of_children_with_extrabeds.positive? ? @num_of_children_with_extrabeds : params[:children].to_i
+          @infants_without_extrabeds = params[:infants].to_i - extra_beds_used_by_children(num_of_children + params[:infants].to_i)
           @amounts = [child_rate || room_rate.extra_bed_rate]
           @amounts += [infant_rate || room_rate.extra_bed_rate]
           @children = @children_without_extrabeds + params[:infants].to_i
@@ -79,7 +80,8 @@ class OpenGds::SearchPriceWithDates
           @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:infants].to_i)
           @infants_without_extrabeds = params[:infants].to_i - @num_of_children_with_extrabeds
           @occupant_is_infant = @infants_without_extrabeds.positive?
-          @children_without_extrabeds = params[:children].to_i - extra_beds_used_by_children(params[:children].to_i + @num_of_children_with_extrabeds)
+          num_of_infants = @num_of_children_with_extrabeds.positive? ? @num_of_children_with_extrabeds : params[:infants].to_i
+          @children_without_extrabeds = params[:children].to_i - extra_beds_used_by_children(params[:children].to_i + num_of_infants)
           @amounts = [infant_rate || room_rate.extra_bed_rate]
           @amounts += [child_rate || room_rate.extra_bed_rate]
           @children = @infants_without_extrabeds + params[:children].to_i
