@@ -124,15 +124,12 @@ class Reservation < ApplicationRecord
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
       if active_rules.present?
-        count = 0
-        active_rules.each do |rule|
-          if (rule.checkin_day.present? && rule.checkin_day != check_in.strftime("%A").downcase && !rule.any?) || (rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights))
-            count += 1
-          end
-        end
-        if count == active_rules.length
-          errors.add(:check_in, rules_validation_message(check_in, check_out))
-        end
+        common_rules = rules.active(check_in, check_out)
+        check_in_rule = common_rules.find { |rule| rule.start_date <= check_in && rule.end_date >= check_in }
+        min_allowed_nights = common_rules.map(&:minimum_stay).flatten.min
+
+        errors.add(:check_in, " day should be #{check_in_rule.checkin_day.try(:upcase)}") unless check_in.strftime("%A").downcase == check_in_rule.checkin_day || check_in_rule.any? # check in rule's check in day not equal to any day
+        errors.add(:base, "Minimum stay of #{min_allowed_nights} nights applies") if nights < min_allowed_nights
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
         errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || lodging.flexible_arrival
@@ -151,15 +148,6 @@ class Reservation < ApplicationRecord
       return if skip_data_posting || offer_id.present?
       rent = calculate_rent
       update_columns rent: rent, total_price: (rent - discount.to_f)
-    end
-
-    def rules_validation_message check_in, check_out
-      message = " days should be"
-      rules.active(check_in, check_out).each_with_index do |rule, index|
-        day = rule.any? ? 'any day' : rule.checkin_day
-        message += "#{',' if index > 0} #{day.try(:upcase)} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
-      end
-      message
     end
 
     # def send_reservation_details
