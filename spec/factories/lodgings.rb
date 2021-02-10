@@ -1,9 +1,5 @@
 FactoryBot.define do
   factory :lodging do
-    before(:create) do |_lodging|
-      Lodging.reindex
-    end
-
     lodging_type { 1 }
     region { create(:region) }
     name { 'OpenGDS Test Hotel' }

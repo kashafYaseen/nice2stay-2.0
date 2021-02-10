@@ -1,9 +1,5 @@
 FactoryBot.define do
   factory :country do
-    before(:create) do |_country|
-      Country.reindex
-    end
-
     name { 'frankrijk' }
     dropdown { true }
     sidebar { true }
