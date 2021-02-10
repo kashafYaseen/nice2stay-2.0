@@ -12,7 +12,7 @@ FactoryBot.define do
     name { 'Best Available Rate' }
     description { 'Best Available Rate Plan' }
     open_gds_res_fee { 20 }
-    open_gds_daily_supplements { { 'Fri' => '4', 'Mon' => '4', 'Sat' => '5', 'Sun' => '5', 'Thu' => '4', 'Tue' => '4', 'Wed' => '4' } }
+    open_gds_daily_supplements { { 'Fri' => '4', 'Mon' => '4', 'Sat' => '4', 'Sun' => '4', 'Thu' => '4', 'Tue' => '4', 'Wed' => '4' } }
 
     factory :rate_plan_with_child_rates_and_rule do
       transient do
