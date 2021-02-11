@@ -12,7 +12,7 @@ class Reservation < ApplicationRecord
 
   validates :check_in, :check_out, presence: true
   validate :availability
-  validate :no_of_guests, unless: :belongs_to_channel?
+  validate :no_of_guests
   validate :accommodation_rules, unless: :belongs_to_channel?
   validate :accommodation_rate_plan_rule, if: :belongs_to_channel?
 
@@ -186,11 +186,22 @@ class Reservation < ApplicationRecord
     end
 
     def no_of_guests
-      return unless lodging.present? && lodging.adults.present? && offer_id.blank?
-      return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults.to_i
+      return if lodging.present? && lodging.room_raccoon?
 
-      children_vacancies = lodging.children.to_i + lodging.adults - adults.to_i
-      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
+      if lodging.open_gds?
+        max_occupants = room_type.adults + room_type.extra_beds
+        occupants = adults.to_i + children.to_i + infants.to_i
+        return errors.add(:base, "Maximum #{max_occupants} occupants are allowed") if max_occupants < occupants
+        return unless room_type.extra_beds_for_children_only && extra_bed_used?
+
+        errors.add(:base, 'Extra Beds are only available for children / infants') if room_type.adults < adults.to_i
+      else
+        return unless lodging.adults.present? && offer_id.blank?
+        return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults.to_i
+
+        children_vacancies = lodging.children.to_i + lodging.adults - adults.to_i
+        errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
+      end
     end
 
     def update_price_details
@@ -244,7 +255,7 @@ class Reservation < ApplicationRecord
     end
 
     def accommodation_rate_plan_rule
-      return unless check_in.present? && check_out.present? && lodging.present?
+      return unless check_in.present? && check_out.present? && lodging.present? && lodging.open_gds?
 
       rule = rate_plan_rule
       errors.add(:check_in, "Check-in not possible on #{check_in}") if check_in < rule.start_date || check_in > rule.end_date
@@ -256,5 +267,9 @@ class Reservation < ApplicationRecord
       return errors.add(:check_in, "Check-in possible from #{rule.open_gds_restriction_days.days.from_now.to_date}") if rule.restriction_type_till? && check_in < required_check_in
 
       errors.add(:check_in, "Check-in possible till #{rule.open_gds_restriction_days.days.from_now}") if rule.restriction_type_from? && check_in > required_check_in
+    end
+
+    def extra_bed_used?
+      (room_type.adults - (adults + children + infants)).negative?
     end
 end
