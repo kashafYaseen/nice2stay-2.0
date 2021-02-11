@@ -50,6 +50,7 @@ class OpenGds::SearchPriceWithDates
 
       if rate_type_involve_person?
         extra_bed_rate = room_rate.extra_bed_rate || @adults_rates.sum / total_adults
+        extra_bed_rate *= total_stay if room_rate.extra_bed_rate.present? && !room_rate.rate_plan_pp?
       else
         extra_bed_rate = room_rate.extra_bed_rate.to_f
         extra_bed_rate *= total_stay if room_rate.rate_plan_papd? || room_rate.rate_plan_papn?
