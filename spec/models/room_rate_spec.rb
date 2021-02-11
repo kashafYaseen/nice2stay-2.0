@@ -5,381 +5,58 @@ RSpec.describe RoomRate, type: :model do
     context 'When Lodging is a OpenGDS Hotel' do
       let(:lodging) { create(:lodging, :reindex, channel: 3) }
       let(:room_type) { create(:room_type, parent_lodging: lodging) }
-      let(:params) do
-        {
-          check_in: Date.today.to_s,
-          check_out: (Date.today + 3.days).to_s,
-          adults: 1,
-          children: 0,
-          infants: 0
-        }
-      end
 
       context 'When Rate Type = \'Per Stay\'' do
-        # no infant rate present
         let(:rate_plan) { create(:rate_plan_with_child_rates_and_rule, open_gds_rate_type: 3, open_gds_single_rate_type: 0, min_stay: 3, max_stay: 3, categories: [1, 2], rates: [10, 20], lodging_id: lodging.id) }
-        let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: ['3']) }
 
-        context 'When Single Rate Type = \'Single Supplement\'' do
-          it 'should return price for only 1 adult' do
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(252)
-          end
-
-          it 'should return price for 1 adult and 1 child' do
-            room_rate.cumulative_price(params.merge(children: 1))
-            expect(room_rate.calculated_price).to eq(232)
-          end
-
-          context 'When Extra Beds are used' do
-            it 'should return price for 2 adult and 1 child' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1))
-              expect(room_rate.calculated_price).to eq(252)
-            end
-
-            it 'should return price for 2 adult and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, infants: 1))
-              expect(room_rate.calculated_price).to eq(444)
-            end
-
-            it 'should return price for 2 adult and 2 children' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 2))
-              expect(room_rate.calculated_price).to eq(272)
-            end
-
-            it 'should return price for 2 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(464)
-            end
-
-            it 'should return price for 1 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(444)
-            end
-
-            it 'should return price for 4 adults' do
-              room_rate.cumulative_price(params.merge(adults: 4))
-              expect(room_rate.calculated_price).to eq(232)
-            end
-          end
-        end
-
-        context 'When Single Rate Type = \'Single Rate\'' do
-          it 'should return price for only 1 adult' do
-            rate_plan.open_gds_single_rate_type = 1
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(52)
-          end
+        include_examples 'Calculate Prices For Opengds' do
+          let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: ['3']) }
+          let(:expected_prices) { [252, 232, 232, 252, 444, 272, 464, 444, 232, 52] }
         end
       end
 
       context 'When Rate Type = \'Per Person\'' do
         let(:rate_plan) { create(:rate_plan_with_child_rates_and_rule, open_gds_rate_type: 2, open_gds_single_rate_type: 0, min_stay: 3, max_stay: 3, categories: [1, 2], rates: [10, 20], lodging_id: lodging.id) }
-        let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: ['3']) }
 
-        context 'When Single Rate Type = \'Single Supplement\'' do
-          it 'should return price for only 1 adult' do
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(252)
-          end
-
-          it 'should return price for 1 adult and 1 child' do
-            room_rate.cumulative_price(params.merge(children: 1))
-            expect(room_rate.calculated_price).to eq(444)
-          end
-
-          it 'should return price for 1 adult and 1 infant' do
-            room_rate.cumulative_price(params.merge(infants: 1))
-            expect(room_rate.calculated_price).to eq(444)
-          end
-
-          context 'When Extra Beds are used' do
-            it 'should return price for 2 adult and 1 child' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1))
-              expect(room_rate.calculated_price).to eq(464)
-            end
-
-            it 'should return price for 2 adult and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, infants: 1))
-              expect(room_rate.calculated_price).to eq(656)
-            end
-
-            it 'should return price for 2 adult and 2 children' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 2))
-              expect(room_rate.calculated_price).to eq(484)
-            end
-
-            it 'should return price for 2 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(676)
-            end
-
-            it 'should return price for 1 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(656)
-            end
-
-            it 'should return price for 4 adults' do
-              room_rate.cumulative_price(params.merge(adults: 4))
-              expect(room_rate.calculated_price).to eq(868)
-            end
-          end
-        end
-
-        context 'When Single Rate Type = \'Single Rate\'' do
-          it 'should return price for only 1 adult' do
-            rate_plan.open_gds_single_rate_type = 1
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(52)
-          end
+        include_examples 'Calculate Prices For Opengds' do
+          let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: ['3']) }
+          let(:expected_prices) { [252, 444, 444, 464, 656, 484, 676, 656, 868, 52] }
         end
       end
 
       context "When Rate Type = \'Per Person Per Night\'" do
         let(:rate_plan) { create(:rate_plan_with_child_rates_and_rule, open_gds_rate_type: 0, open_gds_single_rate_type: 0, min_stay: 1, max_stay: 3, categories: [1, 2], rates: [10, 20], lodging_id: lodging.id) }
-        let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
 
-        context 'When Single Rate Type = \'Single Supplement\'' do
-          it 'should return price for only 1 adult' do
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(692)
-          end
-
-          it 'should return price for 1 adult and 1 child' do
-            room_rate.cumulative_price(params.merge(children: 1))
-            expect(room_rate.calculated_price).to eq(1244)
-          end
-
-          it 'should return price for 1 adult and 1 infant' do
-            room_rate.cumulative_price(params.merge(infants: 1))
-            expect(room_rate.calculated_price).to eq(1244)
-          end
-
-          context 'When Extra Beds are used' do
-            it 'should return price for 2 adult and 1 child' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1))
-              expect(room_rate.calculated_price).to eq(1304)
-            end
-
-            it 'should return price for 2 adult and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, infants: 1))
-              expect(room_rate.calculated_price).to eq(1856)
-            end
-
-            it 'should return price for 2 adult and 2 children' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 2))
-              expect(room_rate.calculated_price).to eq(1364)
-            end
-
-            it 'should return price for 2 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(1916)
-            end
-
-            it 'should return price for 1 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(1856)
-            end
-
-            it 'should return price for 4 adults' do
-              room_rate.cumulative_price(params.merge(adults: 4))
-              expect(room_rate.calculated_price).to eq(2468)
-            end
-          end
-        end
-
-        context 'When Single Rate Type = \'Single Rate\'' do
-          it 'should return price for only 1 adult' do
-            rate_plan.open_gds_single_rate_type = 1
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(92)
-          end
+        include_examples 'Calculate Prices For Opengds' do
+          let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
+          let(:expected_prices) { [692, 1244, 1244, 1304, 1856, 1364, 1916, 1856, 2468, 92] }
         end
       end
 
       context "When Rate Type = \'Per Person Per Day\'" do
         let(:rate_plan) { create(:rate_plan_with_child_rates_and_rule, open_gds_rate_type: 4, open_gds_single_rate_type: 0, min_stay: 1, max_stay: 3, categories: [1, 2], rates: [10, 20], lodging_id: lodging.id) }
-        let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
 
-        context 'And Single Rate Type = \'Single Supplement\'' do
-          it 'should return price for only 1 adult' do
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(916)
-          end
-
-          it 'should return price for 1 adult and 1 child' do
-            room_rate.cumulative_price(params.merge(children: 1))
-            expect(room_rate.calculated_price).to eq(1652)
-          end
-
-          it 'should return price for 1 adult and 1 infant' do
-            room_rate.cumulative_price(params.merge(infants: 1))
-            expect(room_rate.calculated_price).to eq(1652)
-          end
-
-          context 'And Extra Beds are used' do
-            it 'should return price for 2 adult and 1 child' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1))
-              expect(room_rate.calculated_price).to eq(1732)
-            end
-
-            it 'should return price for 2 adult and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, infants: 1))
-              expect(room_rate.calculated_price).to eq(2468)
-            end
-
-            it 'should return price for 2 adult and 2 children' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 2))
-              expect(room_rate.calculated_price).to eq(1812)
-            end
-
-            it 'should return price for 2 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(2548)
-            end
-
-            it 'should return price for 1 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(2468)
-            end
-
-            it 'should return price for 4 adults' do
-              room_rate.cumulative_price(params.merge(adults: 4))
-              expect(room_rate.calculated_price).to eq(3284)
-            end
-          end
-        end
-
-        context 'And Single Rate Type = \'Single Rate\'' do
-          it 'should return price for only 1 adult' do
-            rate_plan.open_gds_single_rate_type = 1
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(116)
-          end
+        include_examples 'Calculate Prices For Opengds' do
+          let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
+          let(:expected_prices) { [916, 1652, 1652, 1732, 2468, 1812, 2548, 2468, 3284, 116] }
         end
       end
 
       context "When Rate Type = \'Per Accommodation Per Night\'" do
         let(:rate_plan) { create(:rate_plan_with_child_rates_and_rule, open_gds_rate_type: 1, open_gds_single_rate_type: 0, min_stay: 1, max_stay: 3, categories: [1, 2], rates: [10, 20], lodging_id: lodging.id) }
-        let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
 
-        context 'And Single Rate Type = \'Single Supplement\'' do
-          it 'should return price for only 1 adult' do
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(692)
-          end
-
-          it 'should return price for 1 adult and 1 child' do
-            room_rate.cumulative_price(params.merge(children: 1))
-            expect(room_rate.calculated_price).to eq(632)
-          end
-
-          it 'should return price for 1 adult and 1 infant' do
-            room_rate.cumulative_price(params.merge(infants: 1))
-            expect(room_rate.calculated_price).to eq(632)
-          end
-
-          context 'And Extra Beds are used' do
-            it 'should return price for 2 adult and 1 child' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1))
-              expect(room_rate.calculated_price).to eq(692)
-            end
-
-            it 'should return price for 2 adult and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, infants: 1))
-              expect(room_rate.calculated_price).to eq(1244)
-            end
-
-            it 'should return price for 2 adult and 2 children' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 2))
-              expect(room_rate.calculated_price).to eq(752)
-            end
-
-            it 'should return price for 2 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(1304)
-            end
-
-            it 'should return price for 1 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(1244)
-            end
-
-            it 'should return price for 4 adults' do
-              room_rate.cumulative_price(params.merge(adults: 4))
-              expect(room_rate.calculated_price).to eq(632)
-            end
-          end
-        end
-
-        context 'And Single Rate Type = \'Single Rate\'' do
-          it 'should return price for only 1 adult' do
-            rate_plan.open_gds_single_rate_type = 1
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(92)
-          end
+        include_examples 'Calculate Prices For Opengds' do
+          let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
+          let(:expected_prices) { [692, 632, 632, 692, 1244, 752, 1304, 1244, 632, 92] }
         end
       end
 
       context "When Rate Type = \'Per Accommodation Per Day\'" do
         let(:rate_plan) { create(:rate_plan_with_child_rates_and_rule, open_gds_rate_type: 5, open_gds_single_rate_type: 0, min_stay: 1, max_stay: 3, categories: [1, 2], rates: [10, 20], lodging_id: lodging.id) }
-        let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
 
-        context 'And Single Rate Type = \'Single Supplement\'' do
-          it 'should return price for only 1 adult' do
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(916)
-          end
-
-          it 'should return price for 1 adult and 1 child' do
-            room_rate.cumulative_price(params.merge(children: 1))
-            expect(room_rate.calculated_price).to eq(836)
-          end
-
-          it 'should return price for 1 adult and 1 infant' do
-            room_rate.cumulative_price(params.merge(infants: 1))
-            expect(room_rate.calculated_price).to eq(836)
-          end
-
-          context 'And Extra Beds are used' do
-            it 'should return price for 2 adults and 1 child' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1))
-              expect(room_rate.calculated_price).to eq(916)
-            end
-
-            it 'should return price for 2 adults and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, infants: 1))
-              expect(room_rate.calculated_price).to eq(1652)
-            end
-
-            it 'should return price for 2 adults and 2 children' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 2))
-              expect(room_rate.calculated_price).to eq(996)
-            end
-
-            it 'should return price for 2 adults and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(adults: 2, children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(1732)
-            end
-
-            it 'should return price for 1 adult and 1 child and 1 infant' do
-              room_rate.cumulative_price(params.merge(children: 1, infants: 1))
-              expect(room_rate.calculated_price).to eq(1652)
-            end
-
-            it 'should return price for 4 adults' do
-              room_rate.cumulative_price(params.merge(adults: 4))
-              expect(room_rate.calculated_price).to eq(836)
-            end
-          end
-        end
-
-        context 'And Single Rate Type = \'Single Rate\'' do
-          it 'should return price for only 1 adult' do
-            rate_plan.open_gds_single_rate_type = 1
-            room_rate.cumulative_price(params)
-            expect(room_rate.calculated_price).to eq(116)
-          end
+        include_examples 'Calculate Prices For Opengds' do
+          let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
+          let(:expected_prices) { [916, 836, 836, 916, 1652, 996, 1732, 1652, 836, 116] }
         end
       end
     end
