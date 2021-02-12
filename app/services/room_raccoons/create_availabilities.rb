@@ -42,8 +42,9 @@ class RoomRaccoons::CreateAvailabilities
     return unless availabilities.present?
 
     Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[rr_booking_limit rr_check_in_closed rr_check_out_closed rr_minimum_stay ] }
-    prices = availabilities.map do |availability|
-      availability.prices.map { |price| price.minimum_stay = availability.rr_minimum_stay }
+    prices = []
+    availabilities.each do |availability|
+      prices << availability.prices.map { |price| price.minimum_stay = availability.rr_minimum_stay } unless availability.new_record?
     end
     prices = prices.flatten
     return if prices.blank?
