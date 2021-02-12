@@ -89,8 +89,12 @@ ActiveAdmin.register RatePlan do
     panel 'Child Rates' do
       table_for rate_plan.child_rates do
         column :age_group
-        column :rate_type
+        column :open_gds_category
         column :rate
+        column :rate_type
+        column 'Action' do |child_rate|
+          link_to 'Edit', edit_admin_child_rate_path(child_rate)
+        end
       end
     end
 
