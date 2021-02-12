@@ -9,6 +9,7 @@ class GuestCentricOffersController < ApplicationController
   def show
     @guest_centric = GetGuestCentricOffers.call(@lodging, params[:reservation].merge(locale: locale))
     @reservation = @lodging.reservations.build(reservation_params)
+    @children_gc_ids = @lodging.lodging_children.pluck(:guest_centric_id)
   end
 
   def rates

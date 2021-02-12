@@ -1,4 +1,4 @@
-$('#guest_centric_offers').html("<%= j render 'lodgings/guest_centric', lodging: @lodging, guest_centric: @guest_centric %>");
+$('#guest_centric_offers').html("<%= j render 'lodgings/guest_centric', lodging: @lodging, guest_centric: @guest_centric, children_gc_ids: @children_gc_ids %>");
 $('#gc-filters').html("<%= j render 'gc_filters', guest_centric: @guest_centric %>");
 OwlCarousel.init();
 $('#loader').hide();
