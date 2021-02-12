@@ -13,8 +13,7 @@ class RoomRaccoons::CreateAvailabilities
 
   def call
     availabilities = []
-    room_types = RoomType.includes(room_rates: %i[availabilities rate_plan]).where(parent_lodging_id: hotel_id, room_types: { code: room_type_codes })
-
+    room_types = RoomType.includes(room_rates: [:rate_plan, availabilities: :prices]).where(parent_lodging_id: hotel_id, room_types: { code: room_type_codes })
     rr_availabilities.each do |data|
       dates = (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s)
       stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
@@ -40,7 +39,18 @@ class RoomRaccoons::CreateAvailabilities
       end
     end
 
-    Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[rr_booking_limit rr_check_in_closed rr_check_out_closed rr_minimum_stay ] } if availabilities.present?
+    return unless availabilities.present?
+
+    Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[rr_booking_limit rr_check_in_closed rr_check_out_closed rr_minimum_stay ] }
+    prices = availabilities.map do |availability|
+      availability.prices.each { |price| price.minimum_stay = availability.rr_minimum_stay }
+    end
+
+    return unless prices.present?
+
+    prices = prices.flatten
+    Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[minimum_stay] }
+    prices.each(&:reindex)
   end
 
   private

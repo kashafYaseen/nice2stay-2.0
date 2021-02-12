@@ -16,13 +16,14 @@ class RoomRaccoons::CreatePrices
     hotel_room_types = RoomType.includes(availabilities: [:rate_plan, { cleaning_costs: :availability }, { prices: :availability }]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
     new_prices = []
     new_cleaning_costs = []
-    availabilities = []
+    new_availabilities = []
 
     rr_prices.each do |rr_price|
       dates = (rr_price[:start_date].to_date..rr_price[:end_date].to_date).map(&:to_s)
       current_room_type = hotel_room_types.find { |room_type| room_type.code == rr_price[:room_type_code] }
       current_room_rate = current_room_type.room_rates.find { |room_rate| room_rate.rate_plan_code == rr_price[:rate_plan_code] }
-      availabilities << find_or_create_availabilities(current_room_rate, dates)
+      availabilities = find_or_create_availabilities(current_room_rate, dates)
+      new_availabilities << availabilities unless availabilities_exists?(new_availabilities.flatten, availabilities)
 
       availabilities.flatten.each do |availability|
         prices = availability.prices
@@ -98,11 +99,11 @@ class RoomRaccoons::CreatePrices
       end
     end
 
-    if availabilities.present?
-      availabilities = availabilities.flatten.select do |availability|
+    if new_availabilities.present?
+      new_availabilities = new_availabilities.flatten.select do |availability|
         availability.new_record? || availability.changed?
       end
-      Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[available_on] }
+      Availability.import new_availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[available_on] }
     end
 
     if new_prices.present?
@@ -126,5 +127,16 @@ class RoomRaccoons::CreatePrices
       end
 
       availabilities
+    end
+
+    def availabilities_exists? new_availabilities, availabilities
+      dates = availabilities.map(&:available_on)
+      room_rate_ids = availabilities.map(&:room_type_id)
+      availability_index = new_availabilities.index do |new_availability|
+        dates.include?(new_availability.available_on) &&
+          room_rate_ids.include?(new_availability.room_type_id)
+      end
+
+      availability_index.present?
     end
 end
