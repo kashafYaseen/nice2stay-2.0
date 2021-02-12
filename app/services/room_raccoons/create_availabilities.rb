@@ -45,10 +45,9 @@ class RoomRaccoons::CreateAvailabilities
     prices = availabilities.map do |availability|
       availability.prices.each { |price| price.minimum_stay = availability.rr_minimum_stay }
     end
-
-    return unless prices.present?
-
     prices = prices.flatten
+    return if prices.blank?
+
     Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[minimum_stay] }
     prices.each(&:reindex)
   end
