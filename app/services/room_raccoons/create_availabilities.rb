@@ -23,8 +23,8 @@ class RoomRaccoons::CreateAvailabilities
       dates.each do |date|
         availability = current_room_rate.availabilities.find { |room_rate_availability| room_rate_availability.available_on.to_s == date }
         availability = current_room_rate.availabilities.new(available_on: date, room_rate: current_room_rate, created_at: DateTime.now, updated_at: DateTime.now) unless availability.present?
-        availability.rr_minimum_stay = stays
-        availability.rr_booking_limit = data[:booking_limit]
+        availability.rr_minimum_stay = stays if stays.present?
+        availability.rr_booking_limit = data[:booking_limit] if data[:booking_limit].present?
         check_response = restriction_status(data[:status], data[:restriction])
         if check_response.present?
           check_response == 'check_in_closed' ? availability.rr_check_in_closed = true : availability.rr_check_out_closed = true
@@ -58,6 +58,7 @@ class RoomRaccoons::CreateAvailabilities
 
   private
     def restriction_status(status, restriction)
+      return unless status.present? && restriction.present?
       return 'check_out_closed' if status == 'close' && restriction == 'departure'
       return 'check_in_closed' if status == 'close' && restriction == 'arrival'
     end
