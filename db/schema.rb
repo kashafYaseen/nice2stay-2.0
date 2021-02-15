@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_114302) do
+ActiveRecord::Schema.define(version: 2021_02_15_113054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -851,6 +851,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_114302) do
     t.integer "checkin", default: 0
     t.decimal "open_gds_single_rate", default: "0.0"
     t.string "multiple_checkin_days", default: [], array: true
+    t.boolean "rr_addition_amount_flag", default: false
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 

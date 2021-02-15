@@ -13,6 +13,7 @@ class SearchPrices
   end
 
   def call
+    byebug
     result = Price.search(query, where: first_condition, order: order_by_attribute, includes: [:availability]).results
     query_dates = dates_without_price(result, availability_condition)
     return result unless query_dates.present?
