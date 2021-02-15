@@ -9,5 +9,5 @@ class RoomType < ApplicationRecord
   has_many :rules, through: :rate_plans
   has_many :prices, through: :availabilities
 
-  scope :by_codes, -> (room_type_codes, rate_plan_codes) { joins(:rate_plans).where(room_types: { code: room_type_codes, rate_plans: { code: rate_plan_codes } }) }
+  scope :by_codes, -> (room_type_codes, rate_plan_codes) { joins(:rate_plans).where(code: room_type_codes, rate_plans: { code: rate_plan_codes }) }
 end
