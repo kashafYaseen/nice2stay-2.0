@@ -34,7 +34,6 @@ class RoomRaccoons::CreatePrices
             end
           else
             @price = prices.find { |price| price.adults == [rate[:guests] || '999'] }
-            # @price = prices.find { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
           end
 
           @price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)

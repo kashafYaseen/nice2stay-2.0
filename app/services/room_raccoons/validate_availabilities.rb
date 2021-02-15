@@ -22,7 +22,7 @@ class RoomRaccoons::ValidateAvailabilities
       end
 
       Rails.logger.info "PARSED AVAILABILITIES ===============================>>>>>>>>>> #{availabilities}"
-      rooms = RoomType.where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
+      rooms = RoomType.where(parent_lodging_id: hotel_id, code: room_type_codes)
       return false if rooms.size.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In Availabilities JOB'
