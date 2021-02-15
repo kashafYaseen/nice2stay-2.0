@@ -14,8 +14,6 @@ class RoomRaccoons::CreatePrices
 
   def call
     hotel_room_types = RoomType.includes(availabilities: [:rate_plan, { cleaning_costs: :availability }, { prices: :availability }]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
-    new_prices = []
-    new_cleaning_costs = []
     new_availabilities = []
 
     rr_prices.each do |rr_price|
@@ -51,16 +49,6 @@ class RoomRaccoons::CreatePrices
           end
 
           @price.minimum_stay = availability.rr_minimum_stay
-          price_index = new_prices.index do |new_price|
-            new_price.availability == @price.availability &&
-              (new_price.infants == @price.infants || new_price.children == @price.children || new_price.adults == @price.adults || new_price.minimum_stay == @price.minimum_stay)
-          end
-
-          if price_index.present?
-            new_prices[price_index] = @price
-          elsif @price.new_record? || @price.changed?
-            new_prices << @price
-          end
         end
 
         next unless rr_price[:additional_amounts].present?
@@ -84,37 +72,31 @@ class RoomRaccoons::CreatePrices
           else
             @cleaning_cost.name = 'Adults'
           end
-
-          cleaning_cost_index = new_cleaning_costs.index do |new_cleaning_cost|
-            new_cleaning_cost.availability == @cleaning_cost.availability &&
-              new_cleaning_cost.name == @cleaning_cost.name
-          end
-
-          if cleaning_cost_index.present?
-            new_cleaning_costs[cleaning_cost_index] = @cleaning_cost
-          elsif @cleaning_cost.new_record? || @cleaning_cost.changed?
-            new_cleaning_costs << @cleaning_cost
-          end
         end
       end
     end
 
     if new_availabilities.present?
-      new_availabilities = new_availabilities.flatten.select do |availability|
+      availabilities = new_availabilities.flatten.select do |availability|
         availability.new_record? || availability.changed?
       end
-      Availability.import new_availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[available_on] }
-    end
+      Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[available_on] }
+      prices = []
+      cleaning_costs = []
 
-    if new_prices.present?
-      new_prices.each { |price| price.availability_id = price.availability.id }
-      Price.import new_prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay] }
-      new_prices.each(&:reindex)
-    end
+      new_availabilities.flatten.each do |availability|
+        availability.prices.each { |price| price.availability_id = availability.id }
+        availability.cleaning_costs.each { |cleaning_cost| cleaning_cost.availability_id = availability.id }
+        prices << availability.prices
+        cleaning_costs << availability.cleaning_costs
+      end
 
-    if new_cleaning_costs.present?
-      cleaning_costs.each { |cleaning_cost| cleaning_cost.availability_id = cleaning_cost.availability.id }
-      CleaningCost.import new_cleaning_costs, batch: 150, on_duplicate_key_update: { columns: %i[fixed_price name] }
+      prices = prices.flatten
+      Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay] } if prices.present?
+      prices.each(&:reindex)
+
+      cleaning_costs = cleaning_costs.flatten
+      CleaningCost.import cleaning_costs, batch: 150, on_duplicate_key_update: { columns: %i[fixed_price name] } if cleaning_costs.present?
     end
   end
 
@@ -131,10 +113,10 @@ class RoomRaccoons::CreatePrices
 
     def availabilities_exists? new_availabilities, availabilities
       dates = availabilities.map(&:available_on)
-      room_rate_ids = availabilities.map(&:room_type_id)
+      room_rate_ids = availabilities.map(&:room_rate_id)
       availability_index = new_availabilities.index do |new_availability|
         dates.include?(new_availability.available_on) &&
-          room_rate_ids.include?(new_availability.room_type_id)
+          room_rate_ids.include?(new_availability.room_rate_id)
       end
 
       availability_index.present?
