@@ -49,10 +49,9 @@ class RoomRaccoons::CreateAvailabilities
         prices << availability.prices
       end
     end
-
-    return unless prices.present?
-
     prices = prices.flatten
+    return if prices.blank?
+
     Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[minimum_stay] }
     prices.each(&:reindex)
   end
