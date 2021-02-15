@@ -45,7 +45,7 @@ class RoomRaccoons::CreateAvailabilities
     prices = []
     availabilities.each do |availability|
       unless availability.new_record?
-        availability.prices.map { |price| price.minimum_stay = availability.rr_minimum_stay }
+        availability.prices.each { |price| price.minimum_stay = availability.rr_minimum_stay }
         prices << availability.prices
       end
     end
