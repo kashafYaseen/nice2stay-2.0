@@ -27,28 +27,31 @@ class RoomRaccoons::CreatePrices
         prices = availability.prices
         rr_price[:rates].each do |rate|
           if rate[:age_qualifying_code].present?
-            @price = prices.find { |price|
-              (rate[:age_qualifying_code] == '7' && price.infants == [rate[:guests]]) ||
-                (rate[:age_qualifying_code] == '8' && price.children == [rate[:guests]]) ||
-                (rate[:age_qualifying_code] == '10' && price.adults == [rate[:guests]])
-            }
+            @price = prices.find do |price|
+              (rate[:age_qualifying_code] == '7' && price.infants == [rate[:guests] || '999']) ||
+                (rate[:age_qualifying_code] == '8' && price.children == [rate[:guests] || '999']) ||
+                (rate[:age_qualifying_code] == '10' && price.adults == [rate[:guests] || '999'])
+            end
           else
-            @price = prices.find { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
+            @price = prices.find { |price| price.adults == [rate[:guests] || '999'] }
+            # @price = prices.find { |price| !(price.children.present? || price.adults.present? || price.infants.present?) }
           end
 
           @price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
           @price.amount = rate[:amount]
+          @price.minimum_stay = availability.rr_minimum_stay
+          num_of_guests = rate[:guests].presence || (@price.new_record? && '999')
+
+          next unless num_of_guests.present?
 
           case rate[:age_qualifying_code]
           when '7'
-            @price.infants = [rate[:guests]]
+            @price.infants = [num_of_guests]
           when '8'
-            @price.children = [rate[:guests]]
+            @price.children = [num_of_guests]
           else
-            @price.adults = [rate[:guests]]
+            @price.adults = [num_of_guests]
           end
-
-          @price.minimum_stay = availability.rr_minimum_stay
         end
 
         next unless rr_price[:additional_amounts].present?
@@ -62,7 +65,9 @@ class RoomRaccoons::CreatePrices
           }
 
           @cleaning_cost ||= cleaning_costs.new(created_at: DateTime.now, updated_at: DateTime.now)
-          @cleaning_cost.fixed_price = additional_amount[:amount]
+          @cleaning_cost.fixed_price = additional_amount[:amount] if additional_amount[:amount].present?
+
+          next unless additional_amount[:age_qualifying_code].present?
 
           case additional_amount[:age_qualifying_code]
           when '7'
