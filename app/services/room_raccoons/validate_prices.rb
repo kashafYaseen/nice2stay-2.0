@@ -64,7 +64,7 @@
         additional_amounts = []
         additional_guest_amounts = data['rates']['rate']['additionalguestamounts']['additionalguestamount']
 
-        if additional_guest_amounts.kind_of?(Array)
+        if additional_guest_amounts.is_a?(Array)
           additional_guest_amounts.each do |additional_guest_amount|
             additional_amounts << guests_additional_amount(additional_guest_amount)
           end
