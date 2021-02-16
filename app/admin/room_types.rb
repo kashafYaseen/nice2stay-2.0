@@ -67,22 +67,7 @@ ActiveAdmin.register RoomType do
             column :children
             column :infants
             column :minimum_stay
-            column :checkin
-
-            column 'Action' do |price|
-              link_to 'Edit Price', edit_admin_price_path(price)
-            end
-          end
-        end
-
-        column 'Cleaning Costs' do |availability|
-          table_for availability.cleaning_costs do
-            column :name
-            column :fixed_price
-
-            column 'Action' do |cleaning_cost|
-              link_to 'Edit Cleaning Cost', edit_admin_cleaning_cost_path(cleaning_cost)
-            end
+            column('Additional Amount') { |price| price.rr_additional_amount_flag }
           end
         end
 
