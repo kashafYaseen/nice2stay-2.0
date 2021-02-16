@@ -851,7 +851,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_113054) do
     t.integer "checkin", default: 0
     t.decimal "open_gds_single_rate", default: "0.0"
     t.string "multiple_checkin_days", default: [], array: true
-    t.boolean "rr_addition_amount_flag", default: false
+    t.boolean "rr_additional_amount_flag", default: false
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
