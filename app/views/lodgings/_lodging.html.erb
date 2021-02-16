@@ -11,31 +11,36 @@
         </div>
 
         <%= link_to render_lodging_path(lodging), class: "text-decoration-none col-md-12 lodging-info" do %>
-          <h6 class="card-title text-bold mb-1 mt-2"><%= lodging.h1.presence || lodging.parent_h1 %></h6>
+          <div class="d-flex flex-column justify-content-between h-100">
+              <div>
+                <h6 class="card-title text-bold mb-1"><%= lodging.h1.presence || lodging.parent_h1 %></h6>
 
-          <p class="text-xxs"><i class="fal fa-map-marker-alt mr-1 text-primary"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
+              <p class="text-xxs"><i class="fal fa-map-marker-alt mr-1 text-primary"></i><%= lodging.region_name %>, <%= lodging.country_name %></p>
 
-          <p class="text-xxs">
-            <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
-            <% if lodging.children.present? %>
-              / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
-            <% end %>
-            <br>
-            <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
-          </p>
+              <p class="text-xxs">
+                <%= lodging.minimum_adults %> - <%= pluralize lodging.adults, t('search.guest'), t('search.guests') %>
+                <% if lodging.children.present? %>
+                  / <%= lodging.minimum_children %> - <%= pluralize lodging.children, t('search.child'), t('search.children_1') %>
+                <% end %>
+                <br>
+                <%= pluralize lodging.beds, t('search.bedroom'), t('search.bedrooms') %> - <%= pluralize lodging.baths, t('search.bathroom'), t('search.bathrooms') %>
+              </p>
 
-          <ul class="list-icon">
-            <p class="text-xxs">
-              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_1' %><br>
-              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_2' %><br>
-              <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_3' %>
-            </p>
-          </ul>
-          <hr class="mt-1">
+              <ul class="list-icon">
+                <p class="text-xxs">
+                  <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_1' %><br>
+                  <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_2' %><br>
+                  <i class="material-icons md-18 done text-primary"></i> <%= render_highlight lodging, 'highlight_3' %>
+                </p>
+              </ul>
+            </div>
+
+            <hr class="mt-1">
+          </div>
         <% end %>
 
         <div class="col-md-12 p-0 price-review-box-<%= lodging.id %> lodging-links">
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-md-12 text-left pl-4">
               <div class="row">
                 <div class="for-list-view">

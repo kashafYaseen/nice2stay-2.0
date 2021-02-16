@@ -3846,6 +3846,16 @@ button:focus {
   border-radius: 0;
   height: 250px;
 }
+.lodging-container {
+  .card-body {
+    padding-bottom: .8rem;
+  }
+  .row {
+    h6 {
+      line-height: 20px;
+    }
+  }
+}
 
 .owl-carousel-full .item {
   max-height: 600px;
