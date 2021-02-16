@@ -24,22 +24,17 @@ class RoomRaccoons::CreatePrices
       new_availabilities << availabilities unless availabilities_exists?(new_availabilities.flatten, availabilities)
 
       availabilities.each do |availability|
-        byebug
         rr_price[:rates].each do |rate|
           add_prices_for rate, availability
         end
-
         next unless rr_price[:additional_amounts].present?
 
-        # rr_price[:additional_amounts].each do |additional_amount|
-        #   add_prices_for additional_amount, availability, true
-        # end
-
-        byebug
+        rr_price[:additional_amounts].each do |additional_amount|
+          add_prices_for additional_amount, availability, true
+        end
       end
     end
 
-    byebug
     new_availabilities = new_availabilities.flatten
     return unless new_availabilities.present?
 
@@ -57,7 +52,7 @@ class RoomRaccoons::CreatePrices
     prices = prices.flatten
     return unless prices.present?
 
-    Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay rr_addition_amount_flag] }
+    Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay rr_additional_amount_flag] }
     prices.each(&:reindex)
   end
 
@@ -90,31 +85,27 @@ class RoomRaccoons::CreatePrices
     end
 
     def set_base_price(params, availability)
-      prices = availability.prices
+      prices = availability.prices.reject(&:rr_additional_amount_flag)
       price = search_price(prices, params)
 
       price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
       price.amount = params[:amount] if params[:amount].present?
       price.minimum_stay = availability.rr_minimum_stay
-      price.rr_addition_amount_flag = false
+      price.rr_additional_amount_flag = false
       num_of_guests = params[:guests].presence || (price.new_record? && '999')
-
       return unless num_of_guests.present?
 
       set_guests price, params, num_of_guests
     end
 
     def set_additional_price(params, availability)
-      prices = availability.prices.reject(&:rr_addition_amount_flag)
-      prices.each do |price|
-        additional_price = search_price(prices, params.merge(guests: price.adults[0]), true)
-        additional_price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
-        additional_price.amount = price.amount + params[:amount].to_f
-        additional_price.minimum_stay = availability.rr_minimum_stay
-        additional_price.rr_addition_amount_flag = true
-        set_guests additional_price, params, '999'
-        additional_price.adults = price.adults
-      end
+      prices = availability.prices.select(&:rr_additional_amount_flag)
+      additional_price = search_price(prices, params, true)
+      additional_price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
+      additional_price.amount = params[:amount].to_f
+      additional_price.minimum_stay = availability.rr_minimum_stay
+      additional_price.rr_additional_amount_flag = true
+      set_guests additional_price, params, '1'
     end
 
     def search_price prices, params, additional_guest_amount = false
@@ -125,15 +116,15 @@ class RoomRaccoons::CreatePrices
     end
 
     def base_price_condition_with price, params
-      (params[:age_qualifying_code] == '10' && price.adults == [params[:guests] || '999']) ||
-        (params[:age_qualifying_code] == '8' && price.children == [params[:guests] || '999']) &&
-          price.rr_addition_amount_flag
+      !price.rr_additional_amount_flag &&
+        (params[:age_qualifying_code] == '10' && price.adults == [params[:guests] || '999']) ||
+        (params[:age_qualifying_code] == '8' && price.children == [params[:guests] || '999'])
     end
 
     def additional_price_condition_with price, params
-      price.adults == [params[:guests]] &&
-        (params[:age_qualifying_code] == '10' && price.children == ['0']) ||
-        (params[:age_qualifying_code] == '8' && price.children == ['999'])
+      price.rr_additional_amount_flag &&
+        (params[:age_qualifying_code] == '10' && price.adults == ['1'] && price.children == ['0']) ||
+        (params[:age_qualifying_code] == '8' && price.adults == ['0'] && price.children == ['1'])
     end
 
     def set_guests price, params, guests
