@@ -21,7 +21,7 @@ class SearchPriceWithFlexibleDates
       return flexible_search
     end
 
-    search_price_with_defaults
+    search_price_for_room_rate
   end
 
   def flexible_search
@@ -68,8 +68,8 @@ class SearchPriceWithFlexibleDates
   private
     def search_price_with_defaults
       price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
-      price = lodging.present? ? lodging.price : room_rate.default_rate
-      lodging.flexible_search = false if lodging.present?
+      price = lodging.price
+      lodging.flexible_search = false
       price_list = price_list + [price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
       reservation = build_reservation params
       return { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
@@ -80,6 +80,23 @@ class SearchPriceWithFlexibleDates
       price_list = price_list + [lodging.price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
       reservation = build_reservation params
       return { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
+    end
+
+    def search_price_for_room_rate
+      price_list = RoomRaccoons::SearchPrices.call(params.merge(adults: adults, extra_adults: extra_adults))
+      price_list_without_additional_price = price_list.reject(&:rr_additional_amount_flag).uniq(&:available_on).pluck(:amount)
+      price_list_without_additional_price += [room_rate.default_rate.to_f] * (params[:minimum_stay] - price_list_without_additional_price.size) if price_list_without_additional_price.size < params[:minimum_stay]
+      price_list_with_additional_price = price_list.select(&:rr_additional_amount_flag)
+      price_list_with_additional_price.each do |price|
+        price.amount *= extra_adults if price.adults.sum.to_i.positive?
+        price.amount *= params[:children].to_i if price.children.sum.to_i.positive?
+      end
+
+      price_list_with_additional_price = price_list_with_additional_price.pluck(:amount)
+      price_list = price_list_without_additional_price + price_list_with_additional_price
+
+      reservation = build_reservation params
+      { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
     end
 
     def available_for?(check_in, check_out)
@@ -101,6 +118,15 @@ class SearchPriceWithFlexibleDates
       all = availabilities.pluck(:available_on).map(&:to_s)
       check_out_only = availabilities.check_out_only.pluck(:available_on).map(&:to_s)
       all - (check_out_only - [check_out])
+    end
+
+    def extra_adults
+      extra_adults = params[:max_adults].to_i - params[:adults].to_i
+      extra_adults.negative? ? extra_adults.abs : 0
+    end
+
+    def adults
+      params[:adults].to_i - extra_adults
     end
 
     def build_reservation(params)
