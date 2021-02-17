@@ -31,7 +31,9 @@ class RoomRaccoons::CreateAvailabilities
           availability.rr_minimum_stay = stays if stays.present?
           availability.rr_booking_limit = data[:booking_limit] if data[:booking_limit].present?
           check_response = restriction_status(data[:status], data[:restriction])
-          if check_response.present?
+          if check_response.present? && check_response == 'booking_limit'
+            availability.rr_booking_limit = 0
+          elsif check_response.present?
             check_response == 'check_in_closed' ? availability.rr_check_in_closed = true : availability.rr_check_out_closed = true
           end
 
@@ -65,6 +67,7 @@ class RoomRaccoons::CreateAvailabilities
   private
     def restriction_status(status, restriction)
       return unless status.present? && restriction.present?
+      return 'booking_limit' if status == 'close' && restriction.blank?
       return 'check_out_closed' if status == 'close' && restriction == 'departure'
       return 'check_in_closed' if status == 'close' && restriction == 'arrival'
     end
