@@ -11,7 +11,7 @@ RSpec.describe RoomRate, type: :model do
 
         include_examples 'Calculate Prices For Opengds' do
           let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: ['3']) }
-          let(:expected_prices) { [252, 232, 232, 252, 444, 272, 464, 444, 232, 252, 272, 272, 292, 272, 312, 52] }
+          let(:expected_prices) { [252, 232, 252, 252, 272, 232, 252, 252, 272, 312, 52] }
         end
       end
 
@@ -20,7 +20,7 @@ RSpec.describe RoomRate, type: :model do
 
         include_examples 'Calculate Prices For Opengds' do
           let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: ['3']) }
-          let(:expected_prices) { [252, 444, 444, 464, 656, 484, 676, 656, 868, 464, 484, 484, 504, 484, 524, 52] }
+          let(:expected_prices) { [252, 444, 464, 464, 484, 868, 464, 464, 484, 524, 52] }
         end
       end
 
@@ -29,7 +29,7 @@ RSpec.describe RoomRate, type: :model do
 
         include_examples 'Calculate Prices For Opengds' do
           let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
-          let(:expected_prices) { [692, 1244, 1244, 1304, 1856, 1364, 1916, 1856, 2468, 1304, 1364, 1364, 1424, 1364, 1484, 92] }
+          let(:expected_prices) { [692, 1244, 1304, 1304, 1364, 2468, 1304, 1304, 1364, 1484, 92] }
         end
       end
 
@@ -38,7 +38,7 @@ RSpec.describe RoomRate, type: :model do
 
         include_examples 'Calculate Prices For Opengds' do
           let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
-          let(:expected_prices) { [916, 1652, 1652, 1732, 2468, 1812, 2548, 2468, 3284, 1732, 1812, 1812, 1892, 1812, 1972, 116] }
+          let(:expected_prices) { [916, 1652, 1732, 1732, 1812, 3284, 1732, 1732, 1812, 1972, 116] }
         end
       end
 
@@ -47,7 +47,7 @@ RSpec.describe RoomRate, type: :model do
 
         include_examples 'Calculate Prices For Opengds' do
           let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
-          let(:expected_prices) { [692, 632, 632, 692, 1244, 752, 1304, 1244, 632, 692, 752, 752, 812, 752, 872, 92] }
+          let(:expected_prices) { [692, 632, 692, 692, 752, 632, 692, 692, 752, 872, 92] }
         end
       end
 
@@ -56,7 +56,7 @@ RSpec.describe RoomRate, type: :model do
 
         include_examples 'Calculate Prices For Opengds' do
           let(:room_rate) { create(:room_rate_with_availabilities, room_type: room_type, rate_plan: rate_plan, min_stay: %w[1 2 3]) }
-          let(:expected_prices) { [916, 836, 836, 916, 1652, 996, 1732, 1652, 836, 916, 996, 996, 1076, 996, 1156, 116] }
+          let(:expected_prices) { [916, 836, 916, 916, 996, 836, 916, 916, 996, 1156, 116] }
         end
       end
     end
