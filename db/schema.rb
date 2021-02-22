@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_062027) do
+ActiveRecord::Schema.define(version: 2021_02_22_100415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1044,6 +1044,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_062027) do
     t.integer "minimum_adults", default: 1
     t.integer "minimum_children", default: 0
     t.integer "minimum_infants", default: 0
+    t.datetime "opengds_push_time"
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
