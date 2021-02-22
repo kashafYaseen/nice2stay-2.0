@@ -119,19 +119,25 @@ class Reservation < ApplicationRecord
 
     def accommodation_rules
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
-      nights = (check_out - check_in).to_i
-      active_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
-      errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
+      applied_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
+      errors.add(:base, "The maximum allowed stay is 21 nights") if total_nights > 21
 
-      if active_rules.present?
-        check_in_rule = active_rules.find { |rule| rule.start_date <= check_in && rule.end_date >= check_in }
-        min_allowed_nights = active_rules.map(&:minimum_stay).flatten.min
-        errors.add(:check_in, " day should be #{check_in_rule.checkin_day.try(:upcase)}") unless check_in_rule.blank? || check_in.strftime("%A").downcase == check_in_rule.checkin_day || check_in_rule.any? # check in rule's check in day not equal to any day
-        errors.add(:base, "Minimum stay of #{min_allowed_nights} nights applies") if nights < min_allowed_nights
+      if applied_rules.present?
+        check_in_rule = applied_rules.find { |rule| rule.start_date <= check_in && rule.end_date >= check_in && rule.checkin_day == check_in_day }
+        if check_in_rule.present?
+          min_allowed_nights = check_in_rule.minimum_stay.min
+          errors.add(:base, "Minimum stay of #{min_allowed_nights} nights applies") if total_nights < min_allowed_nights
+          errors.add(:base, "Stay should be #{check_in_rule.minimum_stay.to_sentence(last_word_connector: ' or ')} nights from #{check_in_day.capitalize}") if check_in_rule.minimum_stay.exclude?(total_nights) && total_nights > min_allowed_nights
+          errors.add(:check_in, " day should be #{check_in_rule.checkin_day.try(:upcase)}") unless check_in_rule.blank? || check_in_day == check_in_rule.checkin_day || check_in_rule.any? # check in rule's check in day not equal to any day
+        else
+          check_in_rules = applied_rules.select { |rule| rule.start_date <= check_in && rule.end_date >= check_in && rule.checkin_day != 'any' }
+          possible_checkin_days = check_in_rules.map(&:checkin_day).map(&:capitalize).to_sentence(two_words_connector: ' or ', last_word_connector: ' or ')
+          errors.add(:check_in, " days should be #{possible_checkin_days}") unless check_in_rules.map(&:checkin_day).flatten.include?(check_in_day)
+        end
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
+        errors.add(:base, "The stay should be in multiple of 7 nights") unless total_nights % 7 == 0 || lodging.flexible_arrival
       end
-      errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || lodging.flexible_arrival
     end
 
     def no_of_guests
@@ -154,5 +160,9 @@ class Reservation < ApplicationRecord
 
     def send_reservation_removal_details
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
+    end
+
+    def check_in_day
+      check_in.strftime('%A').downcase rescue ''
     end
 end
