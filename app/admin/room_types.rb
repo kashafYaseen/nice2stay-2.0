@@ -4,7 +4,7 @@ ActiveAdmin.register RoomType do
   filter :code
   filter :parent_lodging
   permit_params :code, :description, :parent_lodging_id
-  actions :show, :index
+  actions :show, :index, :new, :create, :edit, :update
 
 
   controller do
@@ -24,9 +24,40 @@ ActiveAdmin.register RoomType do
     id_column
     column :code
     column :name
+    column :adults
+    column :minimum_adults
+    column :baths
+    column :num_of_accommodations
+    column :extra_beds
+    column :num_of_accommodations
     column :parent_lodging
+    column :open_gds_accommodation_id
+
+    column 'Channel' do |room_type|
+      room_type.parent_lodging_channel.humanize
+    end
 
     actions
+  end
+
+  form do |f|
+    inputs 'Room Type' do
+      f.input :code
+      f.input :name
+      f.input :adults
+      f.input :minimum_adults
+      f.input :baths
+      f.input :num_of_accommodations
+      f.input :extra_beds
+      f.input :short_description
+      f.input :description
+      f.input :open_gds_accommodation_id
+      f.input :extra_beds_for_children_only, as: :boolean
+    end
+
+    f.actions do
+      f.action :submit
+    end
   end
 
 
@@ -34,7 +65,12 @@ ActiveAdmin.register RoomType do
     attributes_table do
       row :code
       row :name
+      row :adults
+      row :minimum_adults
+      row :baths
+      row :extra_beds_for_children_only
       row :open_gds_accommodation_id
+      row :short_description
       row :description
       row :parent_lodging
     end
