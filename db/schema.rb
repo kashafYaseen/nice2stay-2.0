@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_062027) do
+ActiveRecord::Schema.define(version: 2021_02_22_100415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -870,6 +870,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_062027) do
     t.integer "max_stay", default: 0
     t.text "open_gds_daily_supplements"
     t.integer "open_gds_single_rate_type"
+    t.datetime "opengds_pushed_at"
   end
 
   create_table "recent_searches", force: :cascade do |t|
