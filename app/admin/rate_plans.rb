@@ -62,6 +62,8 @@ ActiveAdmin.register RatePlan do
       row :max_stay
       row :open_gds_rate_type
       row :open_gds_daily_supplements
+      row :created_at
+      row :updated_at
     end
 
     panel 'Rule' do
@@ -80,6 +82,9 @@ ActiveAdmin.register RatePlan do
         column :room_type_name
         column :open_gds_accommodation_id
         column :default_rate
+        column :created_at
+        column :updated_at
+
         column 'Action' do |room_rate|
           link_to 'View', admin_room_type_path(room_rate.room_type)
         end
