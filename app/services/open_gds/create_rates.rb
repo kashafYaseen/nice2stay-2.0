@@ -7,6 +7,7 @@ class OpenGds::CreateRates
     @rates = rates
     @lodgings = Lodging.where(id: rates.pluck(:property_interface_id)).includes(room_types: { room_rates: [availabilities: :prices] })
     @rate_plans = RatePlan.includes(:room_rates, :child_rates, rule: :lodging)
+    @rate_plans.update_all(opengds_pushed_at: DateTime.current)
   end
 
   def self.call(rates)
