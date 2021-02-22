@@ -36,7 +36,8 @@ ActiveAdmin.register RoomType do
     column 'Channel' do |room_type|
       room_type.parent_lodging_channel.humanize
     end
-
+    column :created_at
+    column :updated_at
     actions
   end
 
@@ -73,6 +74,8 @@ ActiveAdmin.register RoomType do
       row :short_description
       row :description
       row :parent_lodging
+      row :created_at
+      row :updated_at
     end
 
     panel 'Rate Plans' do
@@ -80,6 +83,8 @@ ActiveAdmin.register RoomType do
         column :rate_plan_code
         column :rate_plan_name
         column :default_rate
+        column :created_at
+        column :updated_at
 
         column 'Action' do |room_rate|
           link_to 'View', admin_rate_plan_path(room_rate.rate_plan)
