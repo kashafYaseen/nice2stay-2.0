@@ -870,6 +870,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_100415) do
     t.integer "max_stay", default: 0
     t.text "open_gds_daily_supplements"
     t.integer "open_gds_single_rate_type"
+    t.datetime "opengds_pushed_at"
   end
 
   create_table "recent_searches", force: :cascade do |t|
@@ -1044,7 +1045,6 @@ ActiveRecord::Schema.define(version: 2021_02_22_100415) do
     t.integer "minimum_adults", default: 1
     t.integer "minimum_children", default: 0
     t.integer "minimum_infants", default: 0
-    t.datetime "opengds_push_time"
     t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
