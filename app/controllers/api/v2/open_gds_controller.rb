@@ -7,7 +7,11 @@ class Api::V2::OpenGdsController < Api::V2::ApiController
     end
 
     room_types = RoomType.where(id: accommodation_ids.flatten)
-    OpenGdsCreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h) if room_types.present?
-    render json: { response: room_types.present? }, status: room_types.present? ? :ok : :unprocessable_entity
+    if room_types.present?
+      OpenGdsCreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h)
+      render json: { response: 'Success' }, status: :ok
+    else
+      render json: { response: 'Property/Accommodations Not Found!' }, status: :unprocessable_entity
+    end
   end
 end
