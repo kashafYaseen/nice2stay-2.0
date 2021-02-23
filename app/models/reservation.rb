@@ -120,13 +120,13 @@ class Reservation < ApplicationRecord
     def accommodation_rules
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       nights = (check_out - check_in).to_i
-      active_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
+      applied_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
-      if active_rules.present?
-        check_in_rule = active_rules.find { |rule| rule.start_date <= check_in && rule.end_date >= check_in }
-        min_allowed_nights = active_rules.map(&:minimum_stay).flatten.min
-        errors.add(:check_in, " day should be #{check_in_rule.checkin_day.try(:upcase)}") unless check_in_rule.blank? || check_in.strftime("%A").downcase == check_in_rule.checkin_day || check_in_rule.any? # check in rule's check in day not equal to any day
+      if applied_rules.present?
+        check_in_rule = applied_rules.find { |rule| rule.start_date <= check_in && rule.end_date >= check_in }
+        min_allowed_nights = applied_rules.map(&:minimum_stay).flatten.min
+        errors.add(:check_in, " day should be #{check_in_rule.checkin_day.try(:upcase)}") unless check_in_rule.blank? || check_in_rule.checkin_day.blank? || check_in.strftime("%A").downcase == check_in_rule.checkin_day || check_in_rule.any? # check in rule's check in day not equal to any day
         errors.add(:base, "Minimum stay of #{min_allowed_nights} nights applies") if nights < min_allowed_nights
       else
         errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
