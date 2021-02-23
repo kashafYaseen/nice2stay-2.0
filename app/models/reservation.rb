@@ -134,7 +134,7 @@ class Reservation < ApplicationRecord
           errors.add(:check_in, rules_validation_message(check_in, check_out))
         end
       else
-        errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
+        errors.add(:check_in, "day should be #{lodging.check_in_day}") unless lodging.check_in_day.blank? || check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
         errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || lodging.flexible_arrival
       end
     end
