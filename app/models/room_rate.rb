@@ -1,12 +1,13 @@
 class RoomRate < ApplicationRecord
   attr_accessor :calculated_price, :dynamic_price, :price_errors, :price_valid
 
-  belongs_to :room_type
+  belongs_to :room_type, optional: true
   belongs_to :rate_plan
+  belongs_to :child_lodging, class_name: 'Lodging'
   has_many :availabilities
   has_many :reservations
   has_many :prices, through: :availabilities
-  has_one :parent_lodging, through: :room_type
+  has_one :parent_lodging, through: :child_lodging, source: :parent
   has_many :child_rates, through: :rate_plan
 
   validates :room_type, uniqueness: { scope: :rate_plan }
@@ -27,9 +28,11 @@ class RoomRate < ApplicationRecord
   delegate :code, :name, :description, to: :room_type, prefix: true, allow_nil: true
   delegate :channel, to: :parent_lodging, prefix: true
   delegate :children, :infants, to: :child_rates, prefix: true, allow_nil: true
+  delegate :name, to: :child_lodging, prefix: true, allow_nil: true
+  delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
 
-  scope :include_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where(room_type_id: room_type_ids, rate_plan_id: rate_plan_id) }
-  scope :exclude_room_types_by_rate_plan, ->(room_type_ids, rate_plan_id) { where.not(room_type_id: room_type_ids).where(rate_plan_id: rate_plan_id) }
+  scope :include_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where(child_lodging_id: lodging_ids, rate_plan_id: rate_plan_id) }
+  scope :exclude_lodgings_by_rate_plan, ->(lodgings_ids, rate_plan_id) { where.not(child_lodging_id: lodging_ids).where(rate_plan_id: rate_plan_id) }
   scope :lodging_channel, ->(channel) { joins(:parent_lodging).where(lodgings: { channel: channel }) }
 
   def cumulative_price(params)

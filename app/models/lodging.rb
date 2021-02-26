@@ -5,6 +5,9 @@ class Lodging < ApplicationRecord
   has_many :users, through: :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities
+  has_many :room_rates, foreign_key: :child_lodging_id
+  has_many :room_rate_availabilities, through: :room_rates, source: :availabilities
+  has_many :room_rate_prices, through: :room_rate_availabilities, source: :prices
   has_many :rules
   has_many :discounts
   has_many :reviews

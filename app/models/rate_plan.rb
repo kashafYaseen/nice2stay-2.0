@@ -1,7 +1,9 @@
 class RatePlan < ApplicationRecord
   serialize :open_gds_daily_supplements
   has_many :room_rates
-  has_many :room_types, through: :room_rates
+  has_one :parent_lodging, through: :room_rates
+  has_many :child_lodgings, through: :room_rates
+  # has_many :room_types, through: :room_rates
   has_many :availabilities, through: :room_rates
   has_many :reservations, through: :room_rates
   has_many :prices, through: :availabilities
