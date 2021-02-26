@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_100415) do
+ActiveRecord::Schema.define(version: 2021_02_26_070907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -617,6 +617,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_100415) do
     t.bigint "room_type_id"
     t.integer "channel", default: 0
     t.integer "open_gds_property_id"
+    t.string "open_gds_accommodation_id"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
