@@ -188,6 +188,7 @@ class SaveLodgingDetails
         :children,
         :infants,
         :presentation,
+        :confirmed_price,
         { images: [] },
       )
     end
