@@ -1,3 +1,4 @@
+
 class SaveLodgingDetails
   attr_reader :params
   attr_reader :lodging
@@ -21,6 +22,7 @@ class SaveLodgingDetails
       lodging.owner = owner
       lodging.region = region(params[:lodging][:country_name], params[:lodging][:region_name])
       lodging.parent = parent
+      lodging.channel = 'open_gds' if params[:lodging][:open_gds]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
       UpdateLodgingTranslations.call(lodging, params[:translations])
@@ -151,6 +153,8 @@ class SaveLodgingDetails
         { gc_rooms: [] },
         :crm_id,
         :free_cancelation,
+        :open_gds_property_id,
+        :open_gds_accommodation_id,
       )
     end
 
