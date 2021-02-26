@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_26_070907) do
+ActiveRecord::Schema.define(version: 2021_02_26_095407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1022,6 +1022,8 @@ ActiveRecord::Schema.define(version: 2021_02_26_070907) do
     t.bigint "rate_plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "child_lodging_id"
+    t.index ["child_lodging_id"], name: "index_room_rates_on_child_lodging_id"
     t.index ["rate_plan_id"], name: "index_room_rates_on_rate_plan_id"
     t.index ["room_type_id"], name: "index_room_rates_on_room_type_id"
   end
@@ -1234,6 +1236,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_070907) do
   add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users", on_delete: :cascade
+  add_foreign_key "room_rates", "lodgings", column: "child_lodging_id", on_delete: :cascade
   add_foreign_key "room_rates", "rate_plans", on_delete: :cascade
   add_foreign_key "room_rates", "room_types", on_delete: :cascade
   add_foreign_key "room_types", "lodgings", column: "parent_lodging_id", on_delete: :cascade
