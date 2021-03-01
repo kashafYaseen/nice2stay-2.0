@@ -46,13 +46,13 @@ class SearchPrices
       conditions[:_or] = []
       conditions[:available_on] = dates
       conditions[:adults] = [params[:adults], 999]
-      conditions[:lodging_id] = params[:lodging_id] if params[:lodging_id].present?
-      conditions[:room_rate_id] = params[:room_rate_id] if params[:room_rate_id].present?
+      if params[:channel] == 'open_gds'
+      conditions[:room_rate_id] = params[:room_rate_id]
       conditions[:minimum_stay] = [params[:minimum_stay], 999]
-      if params[:multiple_checkin_days]
-        conditions[:multiple_checkin_days] = checkin_day
-        conditions[:children] = flexible_children ? { gte: params[:children] } : params[:children]
+      conditions[:multiple_checkin_days] = checkin_day
+      conditions[:children] = flexible_children ? { gte: params[:children] } : params[:children]
       else
+        conditions[:lodging_id] = params[:lodging_id]
         conditions[:checkin] = checkin_day
         if flexible_children
           conditions[:children] = { gte: params[:children] }

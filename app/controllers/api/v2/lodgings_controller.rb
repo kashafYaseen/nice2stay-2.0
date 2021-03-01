@@ -22,12 +22,15 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
-    lodgings = []
-
-    params[:ids].try(:split, ',').each do |id|
-      lodging = Lodging.find(id)
-      lodging.cumulative_price(params.clone)
-      lodgings << lodging
+    lodgings = Lodging.where(id: ids).includes(room_rates: %i[parent_lodging rate_plan])
+    lodgings.each do |lodging|
+      if lodging.belongs_to_channel?
+        lodging.room_rates.each do |room_rate|
+          room_rate.cumulative_price(params.clone)
+        end
+      else
+        lodging.cumulative_price(params.clone)
+      end
     end
 
     render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f } }).serialized_json, status: :ok
@@ -52,5 +55,9 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
     def set_total_lodgings
       @total_lodgings = CountTotalLodgings.call(true)
+    end
+
+    def ids
+      params[:ids].try(:split, ',')
     end
 end
