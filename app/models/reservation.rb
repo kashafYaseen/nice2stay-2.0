@@ -2,7 +2,7 @@ class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
   belongs_to :room_rate, optional: true
-  has_one :room_type, through: :room_rate
+  has_one :child_lodging, through: :room_rate
   has_one :rate_plan, through: :room_rate
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
@@ -27,10 +27,10 @@ class Reservation < ApplicationRecord
   delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
   delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
-  delegate :code, :description, to: :room_type, prefix: true
+  # delegate :code, :description, to: :room_type, prefix: true
   delegate :code, :rule, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
-  delegate :open_gds_accommodation_id, to: :room_type, allow_nil: true
+  delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
@@ -189,12 +189,12 @@ class Reservation < ApplicationRecord
       return if lodging.present? && lodging.room_raccoon?
 
       if lodging.open_gds?
-        max_occupants = room_type.adults + room_type.extra_beds
+        max_occupants = child_lodging.adults + child_lodging.extra_beds
         occupants = adults.to_i + children.to_i + infants.to_i
         return errors.add(:base, "Maximum #{max_occupants} occupants are allowed") if max_occupants < occupants
-        return unless room_type.extra_beds_for_children_only && extra_bed_used?
+        return unless child_lodging.extra_beds_for_children_only && extra_bed_used?
 
-        errors.add(:base, 'Extra Beds are only available for children / infants') if room_type.adults < adults.to_i
+        errors.add(:base, 'Extra Beds are only available for children / infants') if child_lodging.adults < adults.to_i
       else
         return unless lodging.adults.present? && offer_id.blank?
         return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults.to_i
@@ -270,6 +270,6 @@ class Reservation < ApplicationRecord
     end
 
     def extra_bed_used?
-      (room_type.adults - (adults + children + infants)).negative?
+      (child_lodging.adults - (adults + children + infants)).negative?
     end
 end
