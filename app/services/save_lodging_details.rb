@@ -25,11 +25,16 @@ class SaveLodgingDetails
       lodging.channel = 'open_gds' if params[:lodging][:open_gds]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
+
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?
-      UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
-      UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
+
+      unless lodging.belongs_to_channel?
+        UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
+        UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
+      end
+
       UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs], params[:cleaning_cost_ids])
       UpdateLodgingDiscounts.call(lodging, params[:discounts], params[:discount_ids])
       update_amenities
@@ -155,6 +160,8 @@ class SaveLodgingDetails
         :free_cancelation,
         :open_gds_property_id,
         :open_gds_accommodation_id,
+        :extra_beds,
+        :extra_beds_for_children_only
       )
     end
 
