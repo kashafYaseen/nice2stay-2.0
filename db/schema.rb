@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_01_054138) do
+ActiveRecord::Schema.define(version: 2021_03_01_125602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -874,6 +874,8 @@ ActiveRecord::Schema.define(version: 2021_03_01_054138) do
     t.text "open_gds_daily_supplements"
     t.integer "open_gds_single_rate_type"
     t.datetime "opengds_pushed_at"
+    t.bigint "parent_lodging_id"
+    t.index ["parent_lodging_id"], name: "index_rate_plans_on_parent_lodging_id"
   end
 
   create_table "recent_searches", force: :cascade do |t|
@@ -1230,6 +1232,7 @@ ActiveRecord::Schema.define(version: 2021_03_01_054138) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "rate_plans", "lodgings", column: "parent_lodging_id", on_delete: :cascade
   add_foreign_key "recent_searches", "users", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
