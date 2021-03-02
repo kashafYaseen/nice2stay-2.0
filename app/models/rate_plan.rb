@@ -3,7 +3,6 @@ class RatePlan < ApplicationRecord
 
   belongs_to :parent_lodging, class_name: 'Lodging'
   has_many :room_rates
-  has_one :parent_lodging, through: :room_rates
   has_many :child_lodgings, through: :room_rates
   # has_many :room_types, through: :room_rates
   has_many :availabilities, through: :room_rates
@@ -12,7 +11,7 @@ class RatePlan < ApplicationRecord
   has_one :rule
   has_many :child_rates
 
-  validates_associated :room_rates
+  # validates_associated :room_rates
 
   accepts_nested_attributes_for :room_rates, allow_destroy: true, reject_if: :all_blank
 

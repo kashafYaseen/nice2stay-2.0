@@ -23,6 +23,7 @@ ActiveAdmin.register RatePlan do
     id_column
     column :code
     column :name
+    column :parent_lodging
     column :open_gds_rate_id
     column :created_at
     column :updated_at

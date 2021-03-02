@@ -26,6 +26,7 @@ class SaveLodgingDetails
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
 
+      UpdateLodgingRatePlans.call(lodging: lodging, rate_plans: params[:lodging][:parent_rate_plans]) if lodging.as_parent?
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?
