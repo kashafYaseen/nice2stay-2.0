@@ -124,9 +124,10 @@ module LodgingsHelper
   end
 
   def years_with_unconfirmed_prices lodging
-    return "2021 #{t('route.and')} 2020" unless lodging.confirmed_price_2020 || lodging.confirmed_price
+    # using confirmed_price_2020 to display '2022' in price notice
+    return "2021 #{t('route.and')} 2022" unless lodging.confirmed_price_2020 || lodging.confirmed_price
     return "2021" unless lodging.confirmed_price
-    return "2020" unless lodging.confirmed_price_2020
+    return "2022" unless lodging.confirmed_price_2020
   end
 
   def render_price_notice lodging
