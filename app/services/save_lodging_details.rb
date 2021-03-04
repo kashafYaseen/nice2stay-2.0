@@ -125,6 +125,7 @@ class SaveLodgingDetails
         :heads,
         :confirmed_price,
         :confirmed_price_2020,
+        :dynamic_prices,
         :include_cleaning,
         :include_deposit,
         :checked,

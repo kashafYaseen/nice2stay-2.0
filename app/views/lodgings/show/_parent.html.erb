@@ -88,7 +88,11 @@
       </div>
 
       <div class="mt-3 col-md-9 mx-auto">
-        <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
+        <% if @lodging.dynamic_prices? %>
+          <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('dynamic_prices') %>
+        <% else %>
+          <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
+        <% end %>
 
         <% unless @lodging.free_cancelation? %>
           <div class="col-md-12 bootstrap-default">

@@ -100,6 +100,7 @@ en:
 
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
   availability_not_confirmed: the availability is on request
+  dynamic_prices: The prices are dynamic and may vary
 
   amenities:
     popular: Popular amenities
