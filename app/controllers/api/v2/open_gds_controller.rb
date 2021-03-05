@@ -6,8 +6,8 @@ class Api::V2::OpenGdsController < Api::V2::ApiController
       accommodation_ids << rate[:accommodations].map { |accom| accom[:accom_interface_id] }
     end
 
-    room_types = RoomType.where(id: accommodation_ids.flatten)
-    if room_types.present?
+    lodgings = Lodging.where(id: accommodation_ids.flatten)
+    if lodgings.present?
       OpenGdsCreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h)
       render json: { response: 'Success' }, status: :ok
     else
