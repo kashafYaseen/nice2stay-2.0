@@ -55,23 +55,10 @@ class OpenGds::SendReservations
     end
 
     def children
-      return if reservation.children.zero? && reservation.infants.zero?
+      return if reservation.children.zero?
 
-      result = ', {'
-      if reservation.children.positive?
-        child_rate = reservation.child_rates_children.order(rate: :desc).first
-        @child_category = child_rate&.open_gds_category || 1
-        result += "\"#{@child_category}\": #{reservation.children}"
-      end
-
-      if reservation.infants.positive?
-        infant_rate = reservation.child_rates_infants.order(rate: :desc).first
-        @infant_category = infant_rate&.open_gds_category || 2
-        result += ',' if result.length > 1
-        result += "\"#{@infant_category}\": #{reservation.infants}"
-      end
-
-      result += '}'
-      result
+      child_rate = reservation.child_rates.order(rate: :desc).first
+      @child_category = child_rate&.open_gds_category || 1
+      ", {\"#{@child_category}\": #{reservation.children}}"
     end
 end

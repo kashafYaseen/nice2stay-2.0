@@ -34,7 +34,7 @@ FactoryBot.define do
           :rule,
           start_date: evaluator.start_date,
           end_date: evaluator.end_date,
-          lodging_id: evaluator.lodging_id,
+          lodging_id: evaluator.parent_lodging_id,
           open_gds_arrival_days: evaluator.open_gds_arrival_days,
           rate_plan: rate_plan
         )

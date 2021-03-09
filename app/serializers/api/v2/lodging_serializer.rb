@@ -4,7 +4,8 @@ class Api::V2::LodgingSerializer
             :region_name, :address, :latitude, :longitude, :adults, :children, :infants,
              :price, :calculated_price, :dynamic_price, :summary, :description, :short_desc, :including_text,
              :images, :thumbnails, :average_rating, :created_at, :updated_at, :highlight_1,
-             :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text
+             :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text,
+             :open_gds_property_id, :open_gds_accommodation_id
 
   attribute :cleaning_cost do |lodging, params|
     lodging.cleaning_cost_for((params[:adults].to_i + params[:children].to_i), params[:nights])
@@ -20,5 +21,9 @@ class Api::V2::LodgingSerializer
 
   attributes :wishlist_id, if: Proc.new { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
     lodging.wishlists.find_by(user: params[:current_user]).try(:id)
+  end
+
+  attributes :room_rates do |lodging|
+    Api::V2::RoomRateSerializer.new(lodging.room_rates)
   end
 end

@@ -2,8 +2,7 @@ ActiveAdmin.register RatePlan do
   config.per_page = 15
 
   filter :code
-  filter :room_type
-  permit_params :code, :name, :room_type
+  filter :lodging
   actions :show, :index, :edit, :update, :new, :create
 
 
@@ -15,7 +14,7 @@ ActiveAdmin.register RatePlan do
     def scoped_collection
       return RatePlan.all if action_name == 'index'
 
-      RatePlan.includes(:child_rates, :rule, room_rates: :room_type)
+      RatePlan.includes(:child_rates, :rule, room_rates: %i[child_lodging parent_lodging])
     end
   end
 
@@ -24,9 +23,11 @@ ActiveAdmin.register RatePlan do
     id_column
     column :code
     column :name
+    column :parent_lodging
     column :open_gds_rate_id
     column :created_at
     column :updated_at
+    column :opengds_pushed_at
 
     actions
   end
@@ -38,8 +39,8 @@ ActiveAdmin.register RatePlan do
       f.input :description
       f.input :open_gds_rate_id
       f.inputs do
-        f.has_many :room_rates, heading: 'Linked Room Types', allow_destroy: true, new_record: 'Link Another Room Type' do |rr_form|
-          rr_form.input :room_type
+        f.has_many :room_rates, heading: 'Linked Accommodations', allow_destroy: true, new_record: 'Link Another Accommodation' do |rr_form|
+          rr_form.input :child_lodging
           rr_form.input :default_rate
         end
       end
@@ -62,6 +63,7 @@ ActiveAdmin.register RatePlan do
       row :max_stay
       row :open_gds_rate_type
       row :open_gds_daily_supplements
+      row :opengds_pushed_at
     end
 
     panel 'Rule' do
@@ -74,23 +76,27 @@ ActiveAdmin.register RatePlan do
       end
     end
 
-    panel 'Room Types' do
+    panel 'Lodgings' do
       table_for rate_plan.room_rates do
-        column :room_type_code
-        column :room_type_name
+        # column :room_type_code
+        column :child_lodging
         column :open_gds_accommodation_id
         column :default_rate
-        column 'Action' do |room_rate|
-          link_to 'View', admin_room_type_path(room_rate.room_type)
-        end
+        column :parent_lodging
+        column :created_at
+        column :updated_at
       end
     end
 
     panel 'Child Rates' do
       table_for rate_plan.child_rates do
         column :age_group
-        column :rate_type
+        column :open_gds_category
         column :rate
+        column :rate_type
+        column 'Action' do |child_rate|
+          link_to 'Edit', edit_admin_child_rate_path(child_rate)
+        end
       end
     end
 

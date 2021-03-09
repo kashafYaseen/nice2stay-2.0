@@ -22,8 +22,9 @@
       end
 
       Rails.logger.info "PARSED PRICES ===============================>>>>>>>>>> #{prices}"
-      dates = prices.map { |price| (price[:start_date]..price[:end_date]).map(&:to_s) }.flatten.uniq.sort
-      rooms = RoomType.where(parent_lodging_id: hotel_id).joins(:availabilities).by_codes(room_type_codes, rate_plan_codes).select('availabilities.available_on as available_on')
+      # dates = prices.map { |price| (price[:start_date]..price[:end_date]).map(&:to_s) }.flatten.uniq.sort
+      # rooms = RoomType.where(parent_lodging_id: hotel_id).joins(:availabilities).by_codes(room_type_codes, rate_plan_codes).select('availabilities.available_on as available_on')
+      rooms = RoomType.where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
       # rooms = rooms.select { |room| dates.include?(room.available_on.to_s) }
       return false if rooms.size.zero?
 
@@ -63,7 +64,7 @@
         additional_amounts = []
         additional_guest_amounts = data['rates']['rate']['additionalguestamounts']['additionalguestamount']
 
-        if additional_guest_amounts.kind_of?(Array)
+        if additional_guest_amounts.is_a?(Array)
           additional_guest_amounts.each do |additional_guest_amount|
             additional_amounts << guests_additional_amount(additional_guest_amount)
           end
@@ -85,7 +86,8 @@
     def guests_base_amount params
       {
         age_qualifying_code: params['agequalifyingcode'],
-        guests: params['numberofguests'].present? ? params['numberofguests'] : '999',
+        # guests: params['numberofguests'].present? ? params['numberofguests'] : '999',
+        guests: params['numberofguests'],
         amount: params['amountaftertax']
       }
     end

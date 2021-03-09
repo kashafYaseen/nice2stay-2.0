@@ -3,7 +3,8 @@ class Availability < ApplicationRecord
   belongs_to :room_rate, optional: true
   has_one :rate_plan, through: :room_rate
   has_one :room_type, through: :room_rate
-  has_one :parent_lodging, through: :room_type
+  has_one :child_lodging, through: :room_rate
+  has_one :parent_lodging, through: :room_rate
   has_many :prices
   has_many :cleaning_costs
 
