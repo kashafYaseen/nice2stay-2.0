@@ -75,7 +75,9 @@ class SaveLodgingDetails
     end
 
     def parent
+      Rails.logger.info "Params[:parent] ==================> #{params[:parent].present?}"
       return unless params[:parent].present?
+
       _parent = Lodging.find_by(crm_id: parent_params[:crm_id]) || Lodging.friendly.find(parent_params[:slug]) rescue Lodging.new
       _parent.owner = owner
       _parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
