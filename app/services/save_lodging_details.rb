@@ -32,6 +32,8 @@ class SaveLodgingDetails
       return unless lodging.published?
 
       unless lodging.belongs_to_channel?
+        Rails.logger.info "Sync Lodging In UpdatePrices Block ==================>>>>>>>>>>> #{lodging.name}"
+        Rails.logger.info "Sync Lodging Channel ==================>>>>>>>>>>> #{lodging.channel} =======> OpenGDS: #{params[:lodging][:open_gds]}"
         UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
         UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
       end
