@@ -50,3 +50,4 @@ yarn-debug.log*
 .idea/
 .rakeTasks
 n2s_erd.pdf
+/vendor/bundle/
