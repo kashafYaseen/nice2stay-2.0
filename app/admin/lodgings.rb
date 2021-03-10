@@ -21,7 +21,7 @@ ActiveAdmin.register Lodging do
       return Lodging.includes(:translations) if action_name == "index"
 
       lodging = Lodging.friendly.find(params[:id])
-      return Lodging.includes({ room_rate_availabilities: :prices }, { room_rates: :rate_plan }, :discounts, :rules) if lodging.belongs_to_channel?
+      return Lodging.includes({ room_rate_availabilities: %i[prices rate_plan] }, { room_rates: :rate_plan }, :discounts, :rules) if lodging.belongs_to_channel?
 
       Lodging.includes({availabilities: :prices}, :discounts, :rules)
     end
@@ -230,6 +230,7 @@ ActiveAdmin.register Lodging do
         column :check_out_only
 
         if lodging.belongs_to_channel?
+          column :rate_plan
           column 'Availability' do |availability|
             availability.rr_booking_limit
           end
