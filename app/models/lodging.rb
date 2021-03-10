@@ -365,6 +365,12 @@ class Lodging < ApplicationRecord
     %w[room_raccoon open_gds].include?(channel)
   end
 
+  def availabilities_wrt_channel
+    return room_rate_availabilities if belongs_to_channel?
+
+    availabilities
+  end
+
   private
     def add_availabilities
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
