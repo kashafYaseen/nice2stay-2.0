@@ -33,7 +33,7 @@ class RoomRate < ApplicationRecord
   # delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
 
   scope :include_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where(child_lodging_id: lodging_ids, rate_plan_id: rate_plan_id) }
-  scope :exclude_lodgings_by_rate_plan, ->(lodgings_ids, rate_plan_id) { where.not(child_lodging_id: lodging_ids).where(rate_plan_id: rate_plan_id) }
+  scope :exclude_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where.not(child_lodging_id: lodging_ids).where(rate_plan_id: rate_plan_id) }
   scope :lodging_channel, ->(channel) { joins(:parent_lodging).where(lodgings: { channel: channel }) }
 
   def cumulative_price(params)
