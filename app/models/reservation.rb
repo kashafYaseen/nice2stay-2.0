@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
   validate :accommodation_rate_plan_rule, if: :belongs_to_channel?
 
   after_validation :update_lodging_availability, unless: :belongs_to_channel?
-  after_validation :update_room_rate_availability, if: :belongs_to_channel?
+  # after_validation :update_room_rate_availability, if: :belongs_to_channel?, on: :update
   # after_commit :send_reservation_details
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
@@ -138,16 +138,16 @@ class Reservation < ApplicationRecord
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
-    def update_room_rate_availability
-      return if in_cart? || prebooking? || option?
-
-      _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
-      _availabilities.each do |availability|
-        availability.rr_booking_limit -= rooms
-      end
-
-      Availability.import _availabilities.to_ary, batch_size: 150, on_duplicate_key_update: { columns: [:rr_booking_limit] } if _availabilities.present?
-    end
+    # def update_room_rate_availability
+    #   return if in_cart? || prebooking? || option?
+    #
+    #   _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
+    #   _availabilities.each do |availability|
+    #     availability.rr_booking_limit -= rooms
+    #   end
+    #
+    #   Availability.import _availabilities.to_ary, batch_size: 150, on_duplicate_key_update: { columns: [:rr_booking_limit] } if _availabilities.present?
+    # end
 
     def availability
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
