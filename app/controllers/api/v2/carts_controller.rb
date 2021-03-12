@@ -26,7 +26,7 @@ class Api::V2::CartsController < Api::V2::ApiController
         RoomRaccoons::SendReservations.call(reservation: reservation)
       end
 
-      @booking.reservations_open_gds.includes(room_rate: %i[room_type rate_plan child_rates]).each do |reservation|
+      @booking.reservations_open_gds.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
         OpenGds::SendReservations.call(reservation: reservation)
       end
 
