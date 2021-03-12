@@ -168,7 +168,7 @@ class Lodging < ApplicationRecord
       country: country.translated_slugs,
       region: region.translated_slugs,
       extended_name: extended_name,
-      available_on: availabilities.pluck(:available_on),
+      available_on: availabilities_wrt_channel.pluck(:available_on),
       availability_price: availability_price,
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
@@ -186,7 +186,9 @@ class Lodging < ApplicationRecord
   end
 
   def availability_price
-    prices.pluck(:amount).presence || [price]
+    return prices.pluck(:amount).presence || [price] unless belongs_to_channel?
+
+    room_rate_prices.pluck(:amount).presence || [price]
   end
 
   def adults_plus_children
