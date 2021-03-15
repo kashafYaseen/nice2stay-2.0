@@ -972,6 +972,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_101712) do
     t.boolean "open_gds_online_payment", default: false
     t.string "open_gds_payment_hash"
     t.decimal "open_gds_deposit_amount", default: "0.0"
+    t.integer "open_gds_payment_status", default: 0
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"
