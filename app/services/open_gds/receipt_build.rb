@@ -12,7 +12,6 @@ class OpenGds::ReceiptBuild
   end
 
   def call
-    byebug
     request = Net::HTTP::Post.new(uri.request_uri)
     request.content_type = 'application/x-www-form-urlencoded; charset=UTF-8'
     request.set_form_data form_data
