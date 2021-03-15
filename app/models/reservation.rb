@@ -45,6 +45,7 @@ class Reservation < ApplicationRecord
   scope :room_raccoon, -> { joins(:lodging).where(lodgings: { channel: 2 }) }
   scope :open_gds, -> { joins(:child_lodging).where(lodgings: { channel: 3 }) }
   scope :open_gds_without_online_payment, -> { open_gds.where(open_gds_online_payment: false) }
+  scope :open_gds_with_online_payment, -> { open_gds.where(open_gds_online_payment: true) }
 
   accepts_nested_attributes_for :review
 
@@ -69,6 +70,16 @@ class Reservation < ApplicationRecord
     rejected: 2,
     canceled: 3,
   }
+
+  enum open_gds_payment_status: {
+    open: 0,
+    pending: 1,
+    paid: 2,
+    failed: 3,
+    cancelled: 4,
+    expired: 5,
+    refunded: 6
+  }, _prefix: true
 
   def can_review? user
     user == self.user && review.blank?
