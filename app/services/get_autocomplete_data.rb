@@ -88,7 +88,7 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { presentation: 'as_parent', published: true }
-      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'hotel', slug: lodging.slug } }
+      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'lodging', slug: lodging.slug } }
     end
 
     def visited_lodgings
@@ -105,6 +105,7 @@ class GetAutocompleteData
     def recent_searches
       User.find_by(id: params[:user_id]).recent_searches.last(5).map do |recent_search|
         { name: recent_search.searchable.name,
+          searchable_type: recent_search.searchable_type.downcase,
           type: 'recent_search',
           check_in: recent_search.check_in,
           check_out: recent_search.check_out,
