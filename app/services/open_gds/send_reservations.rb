@@ -1,14 +1,16 @@
 class OpenGds::SendReservations
   attr_reader :reservation,
-              :uri
+              :uri,
+              :booking_status
 
-  def self.call(reservation:)
-    new(reservation: reservation).call
+  def self.call(reservation:, booking_status: 'booked')
+    new(reservation: reservation, booking_status: booking_status).call
   end
 
-  def initialize(reservation:)
+  def initialize(reservation:, booking_status: 'booked')
     @reservation = reservation
     @uri = URI.parse("https://api.opengds.com/core/v1/acc-reservation/create?#{credentials}")
+    @booking_status = booking_status
   end
 
   def call
@@ -22,7 +24,7 @@ class OpenGds::SendReservations
       reservation.update_attributes(
         open_gds_res_id: response['res_id'],
         request_status: 'confirmed',
-        booking_status: 'booked',
+        booking_status: booking_status,
         open_gds_payment_hash: response['hash']
       )
     else
