@@ -11,8 +11,9 @@ class Api::V2::CartsController < Api::V2::ApiController
     if reservation.save
       OpenGds::ReceiptBuild.call(reservation: reservation) if reservation.open_gds?
       if reservation.open_gds_online_payment
-        OpenGds::SendReservations.call(reservation: reservation)
+        OpenGds::SendReservations.call(reservation: reservation, booking_status: reservation.booking_status)
         OpenGds::PaymentsRead.call(reservation: reservation)
+        OpenGds::UpdatePaymentStatus.call(reservation: reservation)
       end
 
       render json: Api::V2::ReservationSerializer.new(@booking.reservations).serializable_hash.merge(booking_id: @booking.id), status: :ok
@@ -32,8 +33,12 @@ class Api::V2::CartsController < Api::V2::ApiController
         RoomRaccoons::SendReservations.call(reservation: reservation)
       end
 
-      @booking.open_gds_without_online_payment.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
+      @booking.reservations_open_gds_without_online_payment.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
         OpenGds::SendReservations.call(reservation: reservation)
+      end
+
+      @booking.reservations_open_gds_with_online_payment.each do |reservation|
+        OpenGds::UpdatePaymentStatus.call(reservation: reservation, payment_status: 'paid')
       end
 
       render json: Api::V2::BookingSerializer.new(@booking, { params: { reservations: true, auth: true } }).serialized_json, status: :ok
