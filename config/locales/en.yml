@@ -66,6 +66,7 @@ en:
     amentities: Amentities
     dates: 'data'
     guests: Guests
+    rooms: Rooms
     period: Check-in - check-out
     sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'

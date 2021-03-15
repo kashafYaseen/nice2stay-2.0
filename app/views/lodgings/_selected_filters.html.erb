@@ -85,5 +85,21 @@
     </span>
   <% end %>
 
+  <% if params[:beds].present? %>
+    <span class="badge badge-pill badge-info">
+      <%= "#{params[:beds]} Beds" %>
+
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#beds"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end %>
+
+  <% if params[:baths].present? %>
+    <span class="badge badge-pill badge-info">
+      <%= "#{params[:baths]} Baths" %>
+
+      <button type="button" class="close text-white pr-0 close-filter-pill" aria-label="Close" data-id="#baths"><span aria-hidden="true">&times;</span></button>
+    </span>
+  <% end %>
+
   <%= link_to t('filters.remove_filters'), lodgings_path, class: 'text-info ml-2' %>
 <% end %>
