@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_101712) do
+ActiveRecord::Schema.define(version: 2021_03_16_052158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1031,6 +1031,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_101712) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "child_lodging_id"
+    t.boolean "publish", default: true
     t.index ["child_lodging_id"], name: "index_room_rates_on_child_lodging_id"
     t.index ["rate_plan_id"], name: "index_room_rates_on_rate_plan_id"
     t.index ["room_type_id"], name: "index_room_rates_on_room_type_id"
