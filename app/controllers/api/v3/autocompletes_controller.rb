@@ -1,22 +1,38 @@
 class Api::V3::AutocompletesController < Api::V2::ApiController
+  before_action :set_user_if_present
+
   def index
     render json: [
       {
+        title: 'Visited Accommodations',
+        type: 'visited_lodgings',
+        data: GetAutocompleteData.call(query_params.merge(type: 'visited_lodgings'), locale)
+      },{
+        title: 'Recent Searches',
+        type: 'recent_searches',
+        data: GetAutocompleteData.call(query_params.merge(type: 'recent_searches'), locale)
+      },{
         title: 'Countries',
-        data: GetAutocompleteData.call({ query: params[:query], type: 'countries' }, locale)
-      },
-      {
+        type: 'countries',
+        data: GetAutocompleteData.call(query_params.merge(type: 'countries'), locale)
+      },{
         title: 'Regions',
-        data: GetAutocompleteData.call({ query: params[:query], type: 'regions' }, locale),
-      },
-      {
+        type: 'regions',
+        data: GetAutocompleteData.call(query_params.merge(type: 'regions'), locale),
+      },{
         title: 'Theme',
-        data: GetAutocompleteData.call({ query: params[:query], type: 'themes' }, locale)
-      },
-      {
+        type: 'themes',
+        data: GetAutocompleteData.call(query_params.merge(type: 'themes'), locale)
+      },{
         title: 'Hotel',
-        data: GetAutocompleteData.call({ query: params[:query], type: 'hotels' }, locale),
+        type: 'hotels',
+        data: GetAutocompleteData.call(query_params.merge(type: 'hotels'), locale),
       },
     ]
   end
+
+  private
+    def query_params
+      { query: params[:query], user_id: current_user.try(:id) }
+    end
 end

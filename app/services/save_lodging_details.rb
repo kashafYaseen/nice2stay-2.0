@@ -32,6 +32,8 @@ class SaveLodgingDetails
       return unless lodging.published?
 
       unless lodging.belongs_to_channel?
+        Rails.logger.info "Sync Lodging In UpdatePrices Block ==================>>>>>>>>>>> #{lodging.name}"
+        Rails.logger.info "Sync Lodging Channel ==================>>>>>>>>>>> #{lodging.channel} =======> OpenGDS: #{params[:lodging][:open_gds]}"
         UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
         UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
       end
@@ -73,7 +75,9 @@ class SaveLodgingDetails
     end
 
     def parent
+      Rails.logger.info "Params[:parent] ==================> #{params[:parent].present?}"
       return unless params[:parent].present?
+
       _parent = Lodging.find_by(crm_id: parent_params[:crm_id]) || Lodging.friendly.find(parent_params[:slug]) rescue Lodging.new
       _parent.owner = owner
       _parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
