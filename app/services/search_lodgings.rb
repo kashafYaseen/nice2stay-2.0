@@ -52,8 +52,8 @@ class SearchLodgings
       conditions << { terms: { presentation: ['as_child', 'as_standalone'] } } unless only_parent
       conditions << { term: { presentation: 'as_parent' } } if only_parent
 
-      conditions << { range: { beds: { gte: params[:beds] } } } if params[:beds].present?
-      conditions << { range: { baths: { gte: params[:baths] } } } if params[:baths].present?
+      conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
+      conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
       conditions << { range: { adults: { gte: params[:adults] } } } if params[:adults].present?
       conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } } if params[:adults].present?
       conditions << { range: { minimum_adults: { lte: params[:adults] } } } if params[:adults].present?
