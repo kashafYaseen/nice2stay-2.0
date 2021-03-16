@@ -93,7 +93,7 @@ class Reservation < ApplicationRecord
   def calculate_rent
     return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
 
-    self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants])[:rates].sum
+    self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i
   end
 
   def total_meal_price

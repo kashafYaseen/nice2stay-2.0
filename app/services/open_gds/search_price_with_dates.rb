@@ -127,7 +127,7 @@ class OpenGds::SearchPriceWithDates
     end
 
     def build_reservation(params)
-      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: room_rate.parent_lodging, room_rate: room_rate, booking: Booking.new)
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: room_rate.parent_lodging, room_rate: room_rate, booking: Booking.new, rooms: params[:rooms])
     end
 
     def check_out
