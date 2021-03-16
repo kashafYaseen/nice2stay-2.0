@@ -18,7 +18,7 @@ class Booking < ApplicationRecord
   # after_update :send_details
 
   delegate :full_name, :first_name, :last_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
-  delegate :open_gds, to: :reservations, prefix: true, allow_nil: true
+  delegate :open_gds, :open_gds_without_online_payment, :open_gds_with_online_payment, to: :reservations, prefix: true, allow_nil: true
 
   enum booking_status: {
     prebooking: 0,
@@ -55,15 +55,23 @@ class Booking < ApplicationRecord
   end
 
   def pre_payment_amount
-    reservations.inject(0) do |sum, reservation|
-      reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent
-    end * 0.3
+    reservations.includes(:child_lodging).inject(0) do |sum, reservation|
+      if reservation.open_gds?
+        reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + reservation.open_gds_deposit_amount : (sum + reservation.total_price) * 0.3
+      else
+        0.3 * reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent
+      end
+    end
   end
 
   def final_payment_amount
-    reservations.inject(0) do |sum, reservation|
-      reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent
-    end * 0.7
+    reservations.includes(:child_lodging).inject(0) do |sum, reservation|
+      if reservation.open_gds?
+        reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + (reservation.total_price - reservation.open_gds_deposit_amount) : sum + reservation.total_price * 0.7
+      else
+        0.7 * reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent
+      end
+    end
   end
 
   def step_passed?(step)

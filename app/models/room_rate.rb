@@ -10,7 +10,7 @@ class RoomRate < ApplicationRecord
   has_one :parent_lodging, through: :child_lodging, source: :parent
   has_many :child_rates, through: :rate_plan
 
-  validates :room_type, uniqueness: { scope: :rate_plan }
+  # validates :child_lodging, uniqueness: { scope: :rate_plan }
 
   enum default_single_rate_type: {
     fixed_rate: 0,
@@ -35,6 +35,7 @@ class RoomRate < ApplicationRecord
   scope :include_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where(child_lodging_id: lodging_ids, rate_plan_id: rate_plan_id) }
   scope :exclude_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where.not(child_lodging_id: lodging_ids).where(rate_plan_id: rate_plan_id) }
   scope :lodging_channel, ->(channel) { joins(:parent_lodging).where(lodgings: { channel: channel }) }
+  scope :published, -> { where(publish: true) }
 
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0
