@@ -30,7 +30,7 @@ class Reservation < ApplicationRecord
   # delegate :code, :description, to: :room_type, prefix: true
   delegate :code, :rule, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
-  delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
+  delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
@@ -43,7 +43,9 @@ class Reservation < ApplicationRecord
   scope :guest_centric, -> { where.not(offer_id: nil) }
   scope :booking_expert, -> { where.not(be_category_id: nil) }
   scope :room_raccoon, -> { joins(:lodging).where(lodgings: { channel: 2 }) }
-  scope :open_gds, -> { joins(:lodging).where(lodgings: { channel: 3 }) }
+  scope :open_gds, -> { joins(:child_lodging).where(lodgings: { channel: 3 }) }
+  scope :open_gds_without_online_payment, -> { open_gds.where(open_gds_online_payment: false) }
+  scope :open_gds_with_online_payment, -> { open_gds.where(open_gds_online_payment: true) }
 
   accepts_nested_attributes_for :review
 
@@ -68,6 +70,16 @@ class Reservation < ApplicationRecord
     rejected: 2,
     canceled: 3,
   }
+
+  enum open_gds_payment_status: {
+    open: 0,
+    pending: 1,
+    paid: 2,
+    failed: 3,
+    cancelled: 4,
+    expired: 5,
+    refunded: 6
+  }, _prefix: true
 
   def can_review? user
     user == self.user && review.blank?
@@ -128,6 +140,12 @@ class Reservation < ApplicationRecord
 
   def belongs_to_channel?
     lodging_belongs_to_channel?
+  end
+
+  def lodging_wrt_channel
+    return child_lodging if lodging_belongs_to_channel?
+
+    lodging
   end
 
   private

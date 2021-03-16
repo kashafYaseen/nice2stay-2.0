@@ -215,6 +215,7 @@ ActiveAdmin.register Lodging do
         column :rate_plan_code
         column :rate_plan_name
         column :default_rate
+        column :publish
         column :rate_plan_opengds_pushed_at
 
         column 'Action' do |room_rate|
