@@ -56,6 +56,6 @@ class Api::V2::LodgingDetailsSerializer
   end
 
   attribute :room_rates, if: proc { |lodging| lodging.belongs_to_channel? } do |lodging|
-    Api::V2::RoomRateSerializer.new(lodging.room_rates)
+    Api::V2::RoomRateSerializer.new(lodging.room_rates.select(&:publish))
   end
 end

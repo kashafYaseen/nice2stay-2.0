@@ -83,6 +83,7 @@ ActiveAdmin.register RatePlan do
         column :open_gds_accommodation_id
         column :default_rate
         column :parent_lodging
+        column :publish
         column :created_at
         column :updated_at
       end
