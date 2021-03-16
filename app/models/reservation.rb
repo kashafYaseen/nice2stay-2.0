@@ -142,6 +142,12 @@ class Reservation < ApplicationRecord
     lodging_belongs_to_channel?
   end
 
+  def lodging_wrt_channel
+    return child_lodging if lodging_belongs_to_channel?
+
+    lodging
+  end
+
   private
     def update_lodging_availability
       return if in_cart? || prebooking? || option? || offer_id.present?
