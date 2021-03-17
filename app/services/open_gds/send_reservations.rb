@@ -58,17 +58,17 @@ class OpenGds::SendReservations
     end
 
     def accommodation_ids
-      reservation.rooms.to_i.times.map { reservation.open_gds_accommodation_id }
+      reservation.rooms.to_i.times.map { reservation.open_gds_accommodation_id.to_i }.to_s
     end
 
     def occupancy
-      persons = ''
+      persons = '['
       reservation.rooms.to_i.times do |index|
         persons += adults_and_children
         persons += ',' if index < reservation.rooms.to_i - 1
       end
 
-      persons
+      persons += ']'
     end
 
     def adults_and_children

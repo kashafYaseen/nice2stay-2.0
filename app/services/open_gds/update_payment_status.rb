@@ -20,7 +20,7 @@ class OpenGds::UpdatePaymentStatus
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     response = JSON.parse(http.request(request).body)
-    reservation.update(open_gds_payment_status: payment_status) if response['success']
+    reservation.update(open_gds_payment_status: payment_status, booking_status: 'booked') if response['success']
     response
   end
 

@@ -44,15 +44,15 @@ class RoomRate < ApplicationRecord
       return self.dynamic_price = false
     end
 
-    prices = price_list(params.merge(flexible: false))
-    self.calculated_price = prices[:rates].sum.round(2)
+    prices = price_list(params.merge(flexible: false, rooms: params[:rooms] || 1))
+    self.calculated_price = prices[:rates].sum.round(2) * (params[:rooms] || 1).to_i
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
     self.dynamic_price = true
   end
 
   def price_details(values)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4] })
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5] })
   end
 
   private

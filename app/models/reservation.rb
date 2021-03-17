@@ -96,7 +96,7 @@ class Reservation < ApplicationRecord
   def calculate_rent
     return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
 
-    self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants])[:rates].sum
+    self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i
   end
 
   def total_meal_price
@@ -263,16 +263,12 @@ class Reservation < ApplicationRecord
         errors.add(:check_out, "Check-out not possible on #{check_out}")  if _availabilities.last.rr_check_out_closed && _availabilities.last.available_on == check_out
         count = 0
         _availabilities.each do |availability|
-          count += 1 if (availability.rr_minimum_stay.present? && availability.rr_minimum_stay.exclude?(nights.to_s))
+          count += 1 if availability.rr_minimum_stay.present? && availability.rr_minimum_stay.exclude?(nights.to_s)
         end
 
         if count == _availabilities.length
-          message = "days should be "
-          _availabilities.each_with_index do |availability, index|
-            available_day = availability.available_on.strftime("%A")
-            message += "#{ ', ' if index > 0 } #{ available_day.try(:upcase) } (#{ availability.rr_minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ') } nights)"
-          end
-          errors.add(:base, message)
+          min_stay = _availabilities.find { |avail| avail.available_on == check_in }.rr_minimum_stay.sort
+          errors.add(:base, "Minimum Stay can be of #{min_stay[0]} and Maximum Stay can be of #{min_stay[-1]}")
         end
       end
 
