@@ -23,6 +23,9 @@ ActiveAdmin.register Reservation, as: "Cart" do
     selectable_column
     id_column
     column :lodging
+    column 'Expired' do |reservation|
+      reservation.expired? ? 'Yes' : 'No'
+    end
     column :user
     column :check_in
     column :check_out
