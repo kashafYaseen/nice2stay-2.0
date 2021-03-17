@@ -892,6 +892,7 @@ ActiveRecord::Schema.define(version: 2021_03_04_074030) do
     t.float "additional_fee", default: 0.0
     t.string "room_type"
     t.text "gc_policy"
+    t.date "expired_at"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
