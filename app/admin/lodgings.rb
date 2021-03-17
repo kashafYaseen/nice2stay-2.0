@@ -19,6 +19,10 @@ ActiveAdmin.register Lodging do
 
     def scoped_collection
       return Lodging.includes(:translations) if action_name == "index"
+
+      lodging = Lodging.friendly.find(params[:id])
+      return Lodging.includes({ room_rate_availabilities: %i[prices rate_plan] }, { room_rates: :rate_plan }, :discounts, :rules) if lodging.belongs_to_channel?
+
       Lodging.includes({availabilities: :prices}, :discounts, :rules)
     end
   end
@@ -29,11 +33,8 @@ ActiveAdmin.register Lodging do
     column :title
     column :name
     column :address
-
-    column :room_type do |lodging|
-      link_to lodging.room_type_code, admin_room_type_path(lodging.room_type) if lodging.room_type.present?
-    end
-
+    column :open_gds_property_id
+    column :open_gds_accommodation_id
     column :beds
     column :baths
     column :sq__ft
@@ -42,6 +43,7 @@ ActiveAdmin.register Lodging do
     column :total_rules
     column :total_children
     column :created_at
+    column :updated_at
     column :published
     column :country
     column(:channel) { |lodging| lodging.channel.titleize }
@@ -121,11 +123,6 @@ ActiveAdmin.register Lodging do
       row :city
       row :zip
       row :state
-
-      row :room_type do |lodging|
-        link_to lodging.room_type_code, admin_room_type_path(lodging.room_type) if lodging.room_type.present?
-      end
-
       row :beds
       row :baths
       row :sq__ft
@@ -150,6 +147,10 @@ ActiveAdmin.register Lodging do
       row :region_page
       row :country_page
       row :home_page
+      row :open_gds_property_id
+      row :open_gds_accommodation_id
+      row :extra_beds
+      row :extra_beds_for_children_only
       row :created_at
       row :updated_at
     end
@@ -209,11 +210,40 @@ ActiveAdmin.register Lodging do
       end
     end
 
+    panel 'Linked Rate Plans' do
+      table_for lodging.room_rates do
+        column :rate_plan_code
+        column :rate_plan_name
+        column :default_rate
+        column :publish
+        column :rate_plan_opengds_pushed_at
+
+        column 'Action' do |room_rate|
+          link_to 'View', admin_rate_plan_path(room_rate.rate_plan)
+        end
+      end
+    end
+
     panel "Availabilities" do
-      table_for lodging.availabilities.order(:available_on) do
+      table_for lodging.availabilities_wrt_channel.sort_by(&:available_on) do
         column :id
         column :available_on
         column :check_out_only
+
+        if lodging.belongs_to_channel?
+          column :rate_plan
+          column 'Availability' do |availability|
+            availability.rr_booking_limit
+          end
+
+          column 'Check-In Closed' do |availability|
+            availability.rr_check_in_closed
+          end
+
+          column 'Check-Out Closed' do |availability|
+            availability.rr_check_out_closed
+          end
+        end
 
         column 'Prices' do |availability|
           table_for availability.prices do

@@ -26,11 +26,11 @@ class OpenGds::SearchPriceWithDates
     end
 
     def calculate_adult_rates prices
-      if params[:adults].to_i == 1 && params[:children].to_i.zero? && params[:infants].to_i.zero? && room_rate.single_rate?
+      if params[:adults].to_i == 1 && params[:children].to_i.zero? && room_rate.single_rate?
         @price_list = prices.map { |price| { amount: price.open_gds_single_rate, date: price.available_on } }
       else
         @price_list = prices.map { |price| { amount: price.amount, date: price.available_on } }
-        @default_single_rate = room_rate.default_single_rate if  params[:adults].to_i == 1 && params[:children].to_i.zero? && params[:infants].to_i.zero? && room_rate.single_supplement?
+        @default_single_rate = room_rate.default_single_rate if  params[:adults].to_i == 1 && params[:children].to_i.zero? && room_rate.single_supplement?
       end
 
       if room_rate.rate_plan_ps? && @price_list.present?
@@ -60,63 +60,23 @@ class OpenGds::SearchPriceWithDates
     end
 
     def calculate_child_rates price_list
-      return [] if params[:children].to_i.zero? && params[:infants].to_i.zero?
+      return [] if params[:children].to_i.zero?
 
-      children_rate = room_rate.child_rates_children.order(rate: :desc).first if params[:children].to_i.positive?
-      infants_rate = room_rate.child_rates_infants.order(rate: :desc).first if params[:infants].to_i.positive?
+      children_rate = room_rate.child_rates.order(rate: :desc).first
       price = rate_type_involve_person? ? price_list.sum / total_adults : price_list.sum
       children_rates = []
       children_rates = [price] if can_charge_adult_rate_to_children?
       child_rate = children_rate&.rate
-      infant_rate = infants_rate&.rate
       num_of_stays = total_stay if room_rate.rate_plan_pppn? || room_rate.rate_plan_pppd? || room_rate.rate_plan_papn? || room_rate.rate_plan_papd?
-
-      if params[:children].to_i.positive? && params[:infants].to_i.positive?
-        if infants_rate&.open_gds_category.to_i > children_rate&.open_gds_category.to_i || infants_rate.blank?
-          @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
-          @children_without_extrabeds = params[:children].to_i - @num_of_children_with_extrabeds
-          @occupant_is_child = @children_without_extrabeds.positive?
-          num_of_children = @num_of_children_with_extrabeds.positive? ? @num_of_children_with_extrabeds : params[:children].to_i
-          @infants_without_extrabeds = params[:infants].to_i - extra_beds_used_by_children(num_of_children + params[:infants].to_i)
-          @amounts = [child_rate || room_rate.extra_bed_rate]
-          @amounts += [infant_rate || room_rate.extra_bed_rate]
-          @children = @children_without_extrabeds + params[:infants].to_i
-        else
-          @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:infants].to_i)
-          @infants_without_extrabeds = params[:infants].to_i - @num_of_children_with_extrabeds
-          @occupant_is_infant = @infants_without_extrabeds.positive?
-          num_of_infants = @num_of_children_with_extrabeds.positive? ? @num_of_children_with_extrabeds : params[:infants].to_i
-          @children_without_extrabeds = params[:children].to_i - extra_beds_used_by_children(params[:children].to_i + num_of_infants)
-          @amounts = [infant_rate || room_rate.extra_bed_rate]
-          @amounts += [child_rate || room_rate.extra_bed_rate]
-          @children = @infants_without_extrabeds + params[:children].to_i
-        end
-      elsif params[:children].to_i.positive? && params[:infants].to_i.zero?
-        @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
-        @children_without_extrabeds = params[:children].to_i - @num_of_children_with_extrabeds
-        @occupant_is_child = @children_without_extrabeds.positive?
-        @amounts = [child_rate || room_rate.extra_bed_rate]
-      else
-        @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:infants].to_i)
-        @infants_without_extrabeds = params[:infants].to_i - @num_of_children_with_extrabeds
-        @occupant_is_infant = @infants_without_extrabeds.positive?
-        @amounts = [infant_rate || room_rate.extra_bed_rate]
-      end
-
-      children_rates += children_rates_by_rate_type @amounts[0], price, num_of_stays, @num_of_children_with_extrabeds
+      @num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
+      @children_without_extrabeds = params[:children].to_i - @num_of_children_with_extrabeds
+      @occupant_is_child = @children_without_extrabeds.positive?
+      children_rates += children_rates_by_rate_type(child_rate || room_rate.extra_bed_rate, price, num_of_stays, @num_of_children_with_extrabeds)
       can_charge_adult_rate_to_children? && @occupant_is_child && @children_without_extrabeds -= 1
-      can_charge_adult_rate_to_children? && @occupant_is_infant && @infants_without_extrabeds -= 1
-
       if @children_without_extrabeds&.positive? && rate_type_involve_person?
         children_rates += children_rates_by_rate_type child_rate, price, num_of_stays, @children_without_extrabeds
       end
 
-      if @infants_without_extrabeds&.positive? && rate_type_involve_person?
-        children_rates += children_rates_by_rate_type infant_rate, price, num_of_stays, @infants_without_extrabeds
-      end
-      return children_rates unless params[:children].to_i.positive? && params[:infants].to_i.positive?
-
-      children_rates += children_rates_by_rate_type @amounts[1], price, num_of_stays, extra_beds_used_by_children(@children)
       children_rates
     end
 
@@ -148,11 +108,6 @@ class OpenGds::SearchPriceWithDates
       params[:max_adults].to_i
     end
 
-    def total_children
-      params[:children].to_i + params[:infants].to_i
-    end
-
-
     def can_charge_adult_rate_to_children?
       rate_type_involve_person? && total_adults == 1
     end
@@ -172,7 +127,7 @@ class OpenGds::SearchPriceWithDates
     end
 
     def build_reservation(params)
-      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: room_rate.parent_lodging, room_rate: room_rate, booking: Booking.new)
+      Reservation.new(check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], lodging: room_rate.parent_lodging, room_rate: room_rate, booking: Booking.new, rooms: params[:rooms])
     end
 
     def check_out

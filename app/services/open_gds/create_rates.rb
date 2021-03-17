@@ -5,7 +5,7 @@ class OpenGds::CreateRates
 
   def initialize(rates)
     @rates = rates
-    @lodgings = Lodging.where(id: rates.pluck(:property_interface_id)).includes(room_types: { room_rates: [availabilities: :prices] })
+    @lodgings = Lodging.where(id: rates.pluck(:property_interface_id)).includes(room_rates: [availabilities: :prices])
     @rate_plans = RatePlan.includes(:room_rates, :child_rates, rule: :lodging)
   end
 
@@ -38,12 +38,14 @@ class OpenGds::CreateRates
     def destroy_rate_plan_details(params)
       accommodation_ids = params[:accommodations].map { |accomdation| accomdation[:accom_interface_id] }
       if params[:init]
-        RoomRate.include_room_types_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).destroy_all
+        # RoomRate.include_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).destroy_all
+        RoomRate.include_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).update_all(publish: false)
       else
-        RoomRate.exclude_room_types_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).destroy_all
+        # RoomRate.exclude_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).destroy_all
+        RoomRate.exclude_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).update_all(publish: false)
         dates = get_dates params
         selected_rate_plans = rate_plans.select { |rp| params[:rate_interface_id].map(&:to_i).include?(rp[:id]) }
-        Availability.joins(:parent_lodging, :rate_plan).with_in(dates[0], dates[-1]).where(rate_plans: { id: selected_rate_plans.map(&:id) }, lodgings: { channel: 3 }).destroy_all
+        Availability.joins(:child_lodging, :rate_plan).with_in(dates[0], dates[-1]).where(rate_plans: { id: selected_rate_plans.map(&:id) }, lodgings: { channel: 3 }).destroy_all
       end
     end
 
@@ -66,14 +68,15 @@ class OpenGds::CreateRates
         rate_plan.open_gds_rate_type = params[:rate_type] if params[:rate_type].present?
         rate_plan.min_stay = params[:default_minlos] if params[:default_minlos].present?
         rate_plan.max_stay = params[:default_maxlos] if params[:default_maxlos].present?
-        rate_plan.open_gds_daily_supplements = params[:daily_supplement].to_h if params[:daily_supplement].present?
+        rate_plan.open_gds_daily_supplements = params[:daily_supplement]&.to_h || rate_plan.open_gds_daily_supplements
         rate_plan.open_gds_single_rate_type = params[:single_rate_type] if params[:single_rate_type].present?
         rate_plan.open_gds_rate_id = params[:rate_id]
+        rate_plan.opengds_pushed_at = DateTime.current
 
         rule = update_rule params, rate_plan, lodging.id
         new_child_rates = update_child_rates params, rate_plan
         params[:accommodations].each do |accommodation|
-          rate = update_room_rate(params, accommodation, lodging.room_types, rate_plan)
+          rate = update_room_rate(params, accommodation, lodging.lodging_children, rate_plan)
           updated_room_rates << rate[:room_rate]
           updated_availabilities << rate[:availabilities]
           updated_prices << rate[:prices]
@@ -108,9 +111,9 @@ class OpenGds::CreateRates
       child_rates
     end
 
-    def update_room_rate(rate_params, accom_params, room_types, rate_plan)
-      room_type = room_types.find { |rt| rt[:id] == accom_params[:accom_interface_id].to_i }
-      room_rate = room_type.room_rates.find { |rr| rr[:rate_plan_id] == rate_plan.id } || room_type.room_rates.new(rate_plan: rate_plan)
+    def update_room_rate(rate_params, accom_params, lodgings, rate_plan)
+      lodging = lodgings.find { |lodging| lodging.id == accom_params[:accom_interface_id].to_i }
+      room_rate = lodging.room_rates.find { |rr| rr.rate_plan_id == rate_plan.id } || lodging.room_rates.new(rate_plan: rate_plan)
       room_rate.default_booking_limit = accom_params[:default_available] if accom_params[:default_available].present?
       room_rate.default_rate = accom_params[:default_rate] if accom_params[:default_rate].present?
       room_rate.currency_code = accom_params[:currency_code] if accom_params[:currency_code].present?
@@ -119,6 +122,7 @@ class OpenGds::CreateRates
       room_rate.extra_bed_rate = accom_params[:extra_bed_rate] if accom_params[:extra_bed_rate].present?
       room_rate.extra_bed_rate_type = accom_params[:extra_bed_rate_type] if accom_params[:extra_bed_rate_type].present?
       room_rate.extra_night_rate = accom_params[:extra_night_rate] if accom_params[:extra_night_rate].present?
+      room_rate.publish = true
       if room_rate.new_record?
         room_rate.created_at = DateTime.current
         room_rate.updated_at = DateTime.current

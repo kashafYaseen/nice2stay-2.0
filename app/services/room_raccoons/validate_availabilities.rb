@@ -33,7 +33,7 @@ class RoomRaccoons::ValidateAvailabilities
       )
       true
     rescue => e
-      Rails.logger.info "Error in Room Raccoon Availabilities============>: #{ e }"
+      Rails.logger.info "Error in Room Raccoon Availabilities============>: #{e}"
       false
     end
   end
@@ -74,7 +74,7 @@ class RoomRaccoons::ValidateAvailabilities
         rate_plan_code: @rate_plan_code,
         status: @status&.downcase,
         restriction: @restriction&.downcase,
-        stays: @stays&.sort,
+        stays: @stays.include?('999') ? ['999'] : @stays&.sort,
         booking_limit: booking_limit
       }
     end

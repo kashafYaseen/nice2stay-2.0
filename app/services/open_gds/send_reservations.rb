@@ -1,14 +1,16 @@
 class OpenGds::SendReservations
   attr_reader :reservation,
-              :uri
+              :uri,
+              :booking_status
 
-  def self.call(reservation:)
-    new(reservation: reservation).call
+  def self.call(reservation:, booking_status: 'booked')
+    new(reservation: reservation, booking_status: booking_status).call
   end
 
-  def initialize(reservation:)
+  def initialize(reservation:, booking_status: 'booked')
     @reservation = reservation
     @uri = URI.parse("https://api.opengds.com/core/v1/acc-reservation/create?#{credentials}")
+    @booking_status = booking_status
   end
 
   def call
@@ -19,7 +21,12 @@ class OpenGds::SendReservations
     http.use_ssl = true
     response = JSON.parse(http.request(request).body)
     if response['res_id'].present?
-      reservation.update_attributes(open_gds_res_id: response['res_id'], request_status: 'confirmed', booking_status: 'booked')
+      reservation.update_attributes(
+        open_gds_res_id: response['res_id'],
+        request_status: 'confirmed',
+        booking_status: booking_status,
+        open_gds_payment_hash: response['hash']
+      )
     else
       reservation.update_attributes(
         open_gds_error_name: response['name'],
@@ -35,7 +42,7 @@ class OpenGds::SendReservations
     def form_data
       {
         rate_id: reservation.open_gds_rate_id,
-        accom_id: reservation.open_gds_accommodation_id,
+        accom_id: accommodation_ids,
         arrival: reservation.check_in,
         depart: reservation.check_out,
         occupancy: occupancy,
@@ -50,28 +57,29 @@ class OpenGds::SendReservations
       "privkey=#{ENV['OPENGDS_PRIV_KEY']}&apikey=#{ENV['OPENGDS_API_KEY']}"
     end
 
+    def accommodation_ids
+      reservation.rooms.to_i.times.map { reservation.open_gds_accommodation_id.to_i }.to_s
+    end
+
     def occupancy
+      persons = '['
+      reservation.rooms.to_i.times do |index|
+        persons += adults_and_children
+        persons += ',' if index < reservation.rooms.to_i - 1
+      end
+
+      persons += ']'
+    end
+
+    def adults_and_children
       "[#{reservation.adults}#{children}]"
     end
 
     def children
-      return if reservation.children.zero? && reservation.infants.zero?
+      return if reservation.children.zero?
 
-      result = ', {'
-      if reservation.children.positive?
-        child_rate = reservation.child_rates_children.order(rate: :desc).first
-        @child_category = child_rate&.open_gds_category || 1
-        result += "\"#{@child_category}\": #{reservation.children}"
-      end
-
-      if reservation.infants.positive?
-        infant_rate = reservation.child_rates_infants.order(rate: :desc).first
-        @infant_category = infant_rate&.open_gds_category || 2
-        result += ',' if result.length > 1
-        result += "\"#{@infant_category}\": #{reservation.infants}"
-      end
-
-      result += '}'
-      result
+      child_rate = reservation.child_rates.order(rate: :desc).first
+      @child_category = child_rate&.open_gds_category || 1
+      ", {\"#{@child_category}\": #{reservation.children}}"
     end
 end

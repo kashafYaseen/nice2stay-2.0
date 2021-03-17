@@ -8,7 +8,8 @@ class Api::V2::LodgingDetailsSerializer
              :particularities_text, :options_text, :payment_terms_text, :deposit_text,
              :highlight_1, :highlight_2, :highlight_3, :description, :customized_dates,
              :setting, :quality, :interior, :service, :communication, :country_name, :region_name,
-             :gc_rooms, :guest_centric_id, :guest_centric, :realtime_availability, :gc_username, :gc_password, :channel
+             :gc_rooms, :guest_centric_id, :guest_centric, :realtime_availability, :gc_username, :gc_password, :channel,
+             :extra_beds, :extra_beds_for_children_only
 
   attribute :summary do |lodging|
     lodging.as_child? ? lodging.parent_summary : lodging.summary
@@ -39,7 +40,7 @@ class Api::V2::LodgingDetailsSerializer
   end
 
   attributes :options, if: Proc.new { |lodging| lodging.as_parent? } do |lodging|
-    Api::V2::LodgingDetailsSerializer.new(lodging.lodging_children.published.includes(:parent, :translations, { price_text: :translations }))
+    Api::V2::LodgingDetailsSerializer.new(lodging.lodging_children.published.includes(:parent, :translations, { price_text: :translations }, { room_rates: :rate_plan }))
   end
 
   attributes :price_details, if: Proc.new { |lodging, params| params.present? && params[:price_params].present? } do |lodging, params|
@@ -54,7 +55,7 @@ class Api::V2::LodgingDetailsSerializer
     Api::V2::ReviewSerializer.new(lodging.all_reviews.limit(5))
   end
 
-  attributes :room_types, if: Proc.new { |lodging, params|  params.present? && params[:action_name] == "show" && lodging.belongs_to_channel? } do |lodging, params|
-    Api::V2::RoomTypeSerializer.new(lodging.room_types)
+  attribute :room_rates, if: proc { |lodging| lodging.belongs_to_channel? } do |lodging|
+    Api::V2::RoomRateSerializer.new(lodging.room_rates.published)
   end
 end

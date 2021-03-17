@@ -5,6 +5,9 @@ class Lodging < ApplicationRecord
   has_many :users, through: :reservations
   has_many :availabilities
   has_many :prices, through: :availabilities
+  has_many :room_rates, foreign_key: :child_lodging_id
+  has_many :room_rate_availabilities, through: :room_rates, source: :availabilities
+  has_many :room_rate_prices, through: :room_rate_availabilities, source: :prices
   has_many :rules
   has_many :discounts
   has_many :reviews
@@ -23,7 +26,8 @@ class Lodging < ApplicationRecord
   has_many :room_types, foreign_key: :parent_lodging_id
   belongs_to :room_type, optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
-  has_many :rate_plans, through: :room_types
+  # has_many :rate_plans, through: :room_types
+  has_many :parent_rate_plans, class_name: 'RatePlan', foreign_key: :parent_lodging_id
   has_many :room_rate_plans, through: :room_type, source: :rate_plans
 
   include ImageHelper
@@ -164,7 +168,7 @@ class Lodging < ApplicationRecord
       country: country.translated_slugs,
       region: region.translated_slugs,
       extended_name: extended_name,
-      available_on: availabilities.pluck(:available_on),
+      available_on: availabilities_wrt_channel.pluck(:available_on),
       availability_price: availability_price,
       adults_and_children: adults_plus_children,
       amenities: amenities.collect(&:name),
@@ -182,7 +186,9 @@ class Lodging < ApplicationRecord
   end
 
   def availability_price
-    prices.pluck(:amount).presence || [price]
+    return prices.pluck(:amount).presence || [price] unless belongs_to_channel?
+
+    room_rate_prices.pluck(:amount).presence || [price]
   end
 
   def adults_plus_children
@@ -359,6 +365,12 @@ class Lodging < ApplicationRecord
 
   def belongs_to_channel?
     %w[room_raccoon open_gds].include?(channel)
+  end
+
+  def availabilities_wrt_channel
+    return room_rate_availabilities if belongs_to_channel?
+
+    availabilities
   end
 
   private

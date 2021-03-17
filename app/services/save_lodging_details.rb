@@ -1,3 +1,4 @@
+
 class SaveLodgingDetails
   attr_reader :params
   attr_reader :lodging
@@ -21,13 +22,22 @@ class SaveLodgingDetails
       lodging.owner = owner
       lodging.region = region(params[:lodging][:country_name], params[:lodging][:region_name])
       lodging.parent = parent
+      lodging.channel = 'open_gds' if params[:lodging][:open_gds]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
+
+      UpdateLodgingRatePlans.call(lodging: lodging, rate_plans: params[:lodging][:parent_rate_plans]) if lodging.as_parent?
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?
-      UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
-      UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
+
+      unless lodging.belongs_to_channel?
+        Rails.logger.info "Sync Lodging In UpdatePrices Block ==================>>>>>>>>>>> #{lodging.name}"
+        Rails.logger.info "Sync Lodging Channel ==================>>>>>>>>>>> #{lodging.channel} =======> OpenGDS: #{params[:lodging][:open_gds]}"
+        UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
+        UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
+      end
+
       UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs], params[:cleaning_cost_ids])
       UpdateLodgingDiscounts.call(lodging, params[:discounts], params[:discount_ids])
       update_amenities
@@ -65,7 +75,9 @@ class SaveLodgingDetails
     end
 
     def parent
+      Rails.logger.info "Params[:parent] ==================> #{params[:parent].present?}"
       return unless params[:parent].present?
+
       _parent = Lodging.find_by(crm_id: parent_params[:crm_id]) || Lodging.friendly.find(parent_params[:slug]) rescue Lodging.new
       _parent.owner = owner
       _parent.region = region(params[:parent][:country_name], params[:parent][:region_name])
@@ -151,6 +163,10 @@ class SaveLodgingDetails
         { gc_rooms: [] },
         :crm_id,
         :free_cancelation,
+        :open_gds_property_id,
+        :open_gds_accommodation_id,
+        :extra_beds,
+        :extra_beds_for_children_only
       )
     end
 
