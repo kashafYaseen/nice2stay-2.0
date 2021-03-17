@@ -12,6 +12,7 @@ class Reservation < ApplicationRecord
 
   after_validation :update_lodging_availability
   #after_commit :send_reservation_details
+  before_create :set_expired_at
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
@@ -27,6 +28,7 @@ class Reservation < ApplicationRecord
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
   scope :confirmed_options, -> { requests.option.confirmed }
   scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ? and canceled = ?', Date.today, false).pluck(:booking_id).uniq }
+  scope :unexpired, -> { where.not(request_status: 'expired') }
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
 
@@ -52,6 +54,7 @@ class Reservation < ApplicationRecord
     confirmed: 1,
     rejected: 2,
     canceled: 3,
+    expired: 4,
   }
 
   def can_review? user
@@ -160,6 +163,10 @@ class Reservation < ApplicationRecord
         message += "#{',' if index > 0} #{day.try(:upcase)} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
       end
       message
+    end
+
+    def set_expired_at
+      self.expired_at = 1.day.from_now.to_date if in_cart?
     end
 
     # def send_reservation_details
