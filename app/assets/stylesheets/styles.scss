@@ -827,6 +827,7 @@ figure figcaption {
   border: 2px solid #eaeaea;
   border-radius: 0;
   background-color: #ffffff;
+  object-fit: cover;
 }
 
 .img-thumbnail.rounded-circle {
@@ -3845,6 +3846,16 @@ button:focus {
 .card-img-bottom {
   border-radius: 0;
   height: 250px;
+}
+.lodging-container {
+  .card-body {
+    padding-bottom: .8rem;
+  }
+  .row {
+    h6 {
+      line-height: 20px;
+    }
+  }
 }
 
 .owl-carousel-full .item {

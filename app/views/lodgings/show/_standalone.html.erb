@@ -123,7 +123,11 @@
       <div class="col-md-6">
         <div class="col-md-12 mt-1">
           <div class="bg-white mt-3">
-            <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? || !@lodging.checked? %>
+            <% if @lodging.dynamic_prices? %>
+              <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('dynamic_prices') %>
+            <% else %>
+              <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? || !@lodging.checked? %>
+            <% end %>
           </div>
 
           <p class="margin-top-1x">

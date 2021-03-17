@@ -620,6 +620,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_052158) do
     t.string "open_gds_accommodation_id"
     t.integer "extra_beds", default: 0
     t.boolean "extra_beds_for_children_only", default: false
+    t.boolean "dynamic_prices", default: false
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -923,6 +924,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_052158) do
     t.string "thumbnails", default: [], array: true
     t.string "images", default: [], array: true
     t.integer "crm_id"
+    t.boolean "published", default: false
     t.index ["country_id"], name: "index_regions_on_country_id"
     t.index ["crm_id"], name: "index_regions_on_crm_id", unique: true
   end
@@ -973,6 +975,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_052158) do
     t.string "open_gds_payment_hash"
     t.decimal "open_gds_deposit_amount", default: "0.0"
     t.integer "open_gds_payment_status", default: 0
+    t.date "expired_at"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"

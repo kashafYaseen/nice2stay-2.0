@@ -34,6 +34,7 @@ class LodgingsController < ApplicationController
     if @lodging.guest_centric?
       @disable_dates = @lodging.gc_not_available_on(params)
       @check_in = @lodging.first_available_date(@disable_dates)
+      @children_gc_ids = @lodging.lodging_children.pluck(:guest_centric_id)
     elsif @lodging.booking_expert?
       @disable_dates = @lodging.be_not_available_on
       @check_in = @lodging.first_available_date(@disable_dates)

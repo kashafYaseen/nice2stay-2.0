@@ -21,6 +21,7 @@ class Region < ApplicationRecord
   default_scope { includes(:translations) }
 
   scope :active, -> { joins(:country).where(countries: { disable: false }) }
+  scope :published, -> { where(published: true) }
 
   delegate :name, :regions, :disable, :slug, to: :country, prefix: true, allow_nil: true
   delegate :region_page, :published_parents_count, to: :lodgings, prefix: true, allow_nil: true

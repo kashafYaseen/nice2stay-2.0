@@ -19,6 +19,7 @@ class Reservation < ApplicationRecord
   after_validation :update_lodging_availability, unless: :belongs_to_channel?
   # after_validation :update_room_rate_availability, if: :belongs_to_channel?, on: :update
   # after_commit :send_reservation_details
+  before_create :set_expired_at
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
 
@@ -39,6 +40,7 @@ class Reservation < ApplicationRecord
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
   scope :confirmed_options, -> { requests.option.confirmed }
   scope :future_booking_ids, -> (booking_ids) { where(booking_id: booking_ids).where('check_out >= ? and canceled = ?', Date.today, false).pluck(:booking_id).uniq }
+  scope :unexpired, -> { where.not(request_status: 'expired') }
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
   scope :booking_expert, -> { where.not(be_category_id: nil) }
@@ -69,6 +71,7 @@ class Reservation < ApplicationRecord
     confirmed: 1,
     rejected: 2,
     canceled: 3,
+    expired: 4,
   }
 
   enum open_gds_payment_status: {
@@ -184,21 +187,21 @@ class Reservation < ApplicationRecord
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
 
       nights = (check_out - check_in).to_i
-      active_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
+      applied_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
-      if active_rules.present?
+      if applied_rules.present?
         count = 0
-        active_rules.each do |rule|
+        applied_rules.each do |rule|
           if (rule.checkin_day.present? && rule.checkin_day != check_in.strftime("%A").downcase && !rule.any?) || (rule.minimum_stay.present? && rule.minimum_stay.exclude?(nights))
             count += 1
           end
         end
-        if count == active_rules.length
+        if count == applied_rules.length
           errors.add(:check_in, rules_validation_message(check_in, check_out))
         end
       else
-        errors.add(:check_in, "day should be #{lodging.check_in_day}") unless check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
+        errors.add(:check_in, "day should be #{lodging.check_in_day}") unless lodging.check_in_day.blank? || check_in.strftime("%A") == lodging.check_in_day.try(:titleize) || lodging.flexible_arrival
         errors.add(:base, "The stay should be in multiple of 7 nights") unless nights % 7 == 0 || lodging.flexible_arrival
       end
     end
@@ -236,6 +239,10 @@ class Reservation < ApplicationRecord
         message += "#{',' if index > 0} #{day.try(:upcase)} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
       end
       message
+    end
+
+    def set_expired_at
+      self.expired_at = 1.day.from_now.to_date if in_cart?
     end
 
     # def send_reservation_details

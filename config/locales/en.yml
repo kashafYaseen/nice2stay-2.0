@@ -53,7 +53,7 @@ en:
   lodgings_index:
     carefree_booking: Carefree booking - for many accommodations, we offer custom cancellation policies
     free_cancelation_title: Cancel for free
-    free_cancelation_text: Book your stay worry-free with free cancellation up to December 18, 2020. This applies to bookings for 2020 and 2021.
+    free_cancelation_text: "Book your stay worry-free with free cancellation up to April 1, 2021. This applies to bookings for %{current_year} and %{next_year}."
   filters:
     autocomplete_title: Search for your perfect villa or hotel
     autocomplete_placeholder: Enter a destination or property name
@@ -66,6 +66,7 @@ en:
     amentities: Amentities
     dates: 'data'
     guests: Guests
+    rooms: Rooms
     period: Check-in - check-out
     sort_by: 'Sort'
     accommodation_type: 'Accommodatie Type'
@@ -100,6 +101,7 @@ en:
 
   prices_not_confirmed: The prices shown for %{years} are subject to interim changes
   availability_not_confirmed: the availability is on request
+  dynamic_prices: The prices are dynamic and may vary
 
   amenities:
     popular: Popular amenities
@@ -328,6 +330,7 @@ en:
     total_charges: Total Rent
     book_securely: Book securely in less than 2 minutes
     pay_less: With nice2stay you never pay more than directly with the owner and we do not request booking costs
+    validity: Your shopping cart will be saved for 24 hours
 
   calendar:
     legenda: Calendar Legenda

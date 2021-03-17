@@ -45,7 +45,7 @@ class SendBookingDetails
 
     def booking_accommodations
       reservations = []
-      booking.reservations.not_canceled.order(:id).each do |reservation|
+      booking.reservations.not_canceled.unexpired.order(:id).each do |reservation|
         reservations << {
           id: reservation.crm_booking_id,
           front_end_id: reservation.id,

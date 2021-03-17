@@ -9,6 +9,8 @@
     if $('#adults').val()    then params += "&adults=#{$('#adults').val()}"
     if $('#children').val()  then params += "&children=#{$('#children').val()}"
     if $('#infants').val()   then params += "&infants=#{$('#infants').val()}"
+    if parseInt($('#beds').val()) > 0  then params += "&beds=#{$('#beds').val()}"
+    if parseInt($('#baths').val()) > 0 then params += "&baths=#{$('#baths').val()}"
     if $('#min_price').val() then params += "&min_price=#{$('#min_price').val()}"
     if $('#max_price').val() then params += "&max_price=#{$('#max_price').val()}"
     if $('#order').val()     then params += "&order=#{$('#order').val()}"
