@@ -15,6 +15,10 @@ namespace :api do
         get :cumulative_price, on: :collection
       end
 
+      resources :room_rates do
+        get :cumulative_price, on: :member
+      end
+
       get :options, on: :member
 
       collection do
