@@ -18,6 +18,7 @@ namespace :api do
       resources :room_rates do
         get :cumulative_price, on: :member
         get :calendar_build, on: :member
+        get :calendar_departure, on: :member
       end
 
       get :options, on: :member
