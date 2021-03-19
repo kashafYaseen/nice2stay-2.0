@@ -19,10 +19,10 @@ class UpdateLodgingRatePlans
 
   private
     def update_rate_plans
-      existing_rate_plans = lodging.parent_rate_plans
+      existing_rate_plans = lodging.rate_plans
       new_rate_plans = []
       rate_plans.each do |rp|
-        rate_plan = existing_rate_plans.find { |erp| erp.code == rp[:code] } || lodging.parent_rate_plans.new(created_at: DateTime.current, updated_at: DateTime.current)
+        rate_plan = existing_rate_plans.find { |erp| erp.code == rp[:code] } || lodging.rate_plans.new(created_at: DateTime.current, updated_at: DateTime.current)
         rate_plan.code = rp[:code]
         rate_plan.name = rp[:name]
         rate_plan.description = rp[:description]
