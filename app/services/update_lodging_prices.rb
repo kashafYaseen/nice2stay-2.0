@@ -36,6 +36,7 @@ class UpdateLodgingPrices
           end
           create_rule(price_range[:from], price_range[:to], price_range[:minimal_stay], price_range[:flexible_arrival], price_range[:checkin])
         end
+        Rails.logger.debug "LOG::Import List: #{import_list}"
         Price.import import_list
         true
       rescue
@@ -70,6 +71,9 @@ class UpdateLodgingPrices
 
       from = from.to_date.change(year: 2020) if from.to_date.year == 0202
       to = to.to_date.change(year: 2020) if to.to_date.year == 0202
+
+      from = from.to_date.change(year: 2021) if from.to_date.year == 20021
+      to = to.to_date.change(year: 2021) if to.to_date.year == 20021
 
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to, checkin_day: checkin_day)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
@@ -118,7 +122,7 @@ class UpdateLodgingPrices
     end
 
     def end_date
-      return '31-12-2021'.to_date if 365.days.from_now < '31-12-2021'.to_date
+      return '31-12-2022'.to_date if 365.days.from_now < '31-12-2022'.to_date
       365.days.from_now
     end
 end

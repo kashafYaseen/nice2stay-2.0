@@ -32,8 +32,10 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'UA-899429-5');
+  gtag('config', 'AW-1008769333');
+
+  <%= yield :gtag_event %>
 </script>
 
 <script src="https://kit.fontawesome.com/063d6af4b9.js" crossorigin="anonymous"></script>

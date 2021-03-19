@@ -10,7 +10,7 @@
             <div id="cart-flash-messages"><%= render 'shared/bootstrap_notices' %></div>
 
             <div id="cart-body">
-              <%= render partial: 'cart_booked_reservation', collection: @booking_details.reservations, as: :reservation %>
+              <%= render partial: 'cart_booked_reservation', collection: @booking_details.reservations.unexpired, as: :reservation %>
             </div>
           </div>
 

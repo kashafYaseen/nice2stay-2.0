@@ -37,7 +37,7 @@ nl:
   lodgings_index:
     carefree_booking: Zorgeloos boeken - Wij bieden in veel gevallen aangepaste annuleringsvoorwaarden
     free_cancelation_title: Kostenloos annuleren
-    free_cancelation_text: Boek uw verblijf zorgenvrij met gratis annuleren tot en met 18 december 2020. Dit geldt voor boekingen voor 2020 en 2021.
+    free_cancelation_text: "Boek uw verblijf zorgenvrij met gratis annuleren tot en met 1 april 2021. Dit geldt voor boekingen voor %{current_year} en %{next_year}."
 
   lead:
     title: Wilt u advies voor uw vakantie?
@@ -56,6 +56,7 @@ nl:
 
   prices_not_confirmed: De getoonde prijzen voor %{years} zijn onder voorbehoud van tussentijdse wijzigingen
   availability_not_confirmed: de beschikbaarheid is op aanvraag
+  dynamic_prices: De prijzen zijn dynamisch en kunnen variëren
 
   amenities:
     popular: Populaire faciliteiten
@@ -237,6 +238,7 @@ nl:
     total_charges: Totale huursom
     book_securely: Boek veilig in minder dan 1 minuut
     pay_less: Bij nice2stay betaalt u nooit meer dan bij de eigenaar direct en wij vragen geen reserveringskosten
+    validity: Uw winkelmandje wordt na 24 uur automatisch geleegd
 
   calendar:
     legenda: Legenda kalender
@@ -266,6 +268,7 @@ nl:
     child_age: leeftijd 2 - 12
     babies: Babies
     guests: Gasten
+    rooms: kamers
     guest: Gast
     dates: Periode
     legenda:

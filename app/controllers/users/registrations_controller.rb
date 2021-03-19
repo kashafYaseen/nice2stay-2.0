@@ -3,6 +3,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :set_title, only: [:edit, :update]
   layout 'dashboard', only: [:edit, :update, :edit_password, :update_password]
 
+  def create
+    build_resource(sign_up_params)
+    if verify_recaptcha(model: resource) && resource.valid? && resource.save
+      redirect_to root_path(locale: params[:locale]), notice: I18n.t('devise.registrations.signed_up_but_unconfirmed')
+    else
+      render :new
+    end
+  end
+
   def edit_password
     self.resource = current_user
   end

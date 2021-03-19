@@ -210,16 +210,29 @@ ActiveAdmin.register Lodging do
       end
     end
 
-    panel 'Linked Rate Plans' do
-      table_for lodging.room_rates do
-        column :rate_plan_code
-        column :rate_plan_name
-        column :default_rate
-        column :publish
-        column :rate_plan_opengds_pushed_at
+    panel 'Rate Plans' do
+      if lodging.as_parent?
+        table_for lodging.rate_plans do
+          column('Rate Plan Code') { |rate_plan| rate_plan.code }
+          column('Rate Plan Name') { |rate_plan| rate_plan.name }
+          column('Rate Plan Enabled') { |rate_plan| rate_plan.rate_enabled }
+          column('OpenGDS Pushed At') { |rate_plan| rate_plan.opengds_pushed_at }
 
-        column 'Action' do |room_rate|
-          link_to 'View', admin_rate_plan_path(room_rate.rate_plan)
+          column 'Action' do |rate_plan|
+            link_to 'View', admin_rate_plan_path(rate_plan)
+          end
+        end
+      else
+        table_for lodging.room_rates do
+          column :rate_plan_code
+          column :rate_plan_name
+          column :default_rate
+          column :publish
+          column :rate_plan_opengds_pushed_at
+
+          column 'Action' do |room_rate|
+            link_to 'View', admin_rate_plan_path(room_rate.rate_plan)
+          end
         end
       end
     end

@@ -42,11 +42,43 @@
           <label class="col-6 text-lg pt-2">{{ infantsTitle() }}</label>
           <number-input-spinner
             :min="0"
-            :max="this.maxInfants"
+            :max="12"
             :integerOnly="true"
             @input="handleInfants"
             :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
             :value="this.totalInfants"
+            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
+            :class="inline ? 'mx-auto' : ''"
+          />
+        </div>
+      </div>
+
+      <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3" v-if="this.showBeds">
+        <div class="row">
+          <label class="col-6 text-lg pt-2">{{ bedsTitle() }}</label>
+          <number-input-spinner
+            :min="0"
+            :max="10"
+            :integerOnly="true"
+            @input="handleBeds"
+            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
+            :value="this.totalBeds"
+            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
+            :class="inline ? 'mx-auto' : ''"
+          />
+        </div>
+      </div>
+
+      <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3" v-if="this.showBaths">
+        <div class="row">
+          <label class="col-6 text-lg pt-2">{{ bathsTitle() }}</label>
+          <number-input-spinner
+            :min="0"
+            :max="12"
+            :integerOnly="true"
+            @input="handleBaths"
+            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
+            :value="this.totalBaths"
             :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
             :class="inline ? 'mx-auto' : ''"
           />
@@ -76,6 +108,14 @@
         type: Number,
         default: 0,
       },
+      beds: {
+        type: Number,
+        default: 0,
+      },
+      baths: {
+        type: Number,
+        default: 0,
+      },
       adultsTarget:{
         type: String
       },
@@ -83,6 +123,12 @@
         type: String
       },
       infantsTarget:{
+        type: String
+      },
+      bedsTarget:{
+        type: String
+      },
+      bathsTarget:{
         type: String
       },
       dropdownId: {
@@ -118,6 +164,14 @@
         type: Boolean,
         default: true
       },
+      showBeds: {
+        type: Boolean,
+        default: false
+      },
+      showBaths: {
+        type: Boolean,
+        default: false
+      },
       highlightOnSelection: {
         type: Boolean,
         default: false
@@ -142,6 +196,8 @@
         totalAdults: this.adults ? this.adults : 0,
         totalChildren: this.children ? this.children : 0,
         totalInfants: this.infants ? this.infants : 0,
+        totalBeds: this.beds ? this.beds : 0,
+        totalBaths: this.baths ? this.baths : 0,
         maxCalculatedChildren: (this.maxAdults - this.totalAdults) + this.maxChildren,
       }
     },
@@ -171,6 +227,14 @@
         this.totalInfants = value
         if (this.bindWith)
           window[this.bindWith].$children[0].totalInfants = value
+      },
+      handleBeds(value) {
+        $(this.bedsTarget).val(value)
+        this.totalBeds = value
+      },
+      handleBaths(value) {
+        $(this.bathsTarget).val(value)
+        this.totalBaths = value
       },
       guests() {
         var guestsTitle = "";
@@ -238,6 +302,12 @@
       },
       childrenTitle() {
         return I18n.t('search.children_1')
+      },
+      bedsTitle() {
+        return I18n.t('search.bedrooms')
+      },
+      bathsTitle() {
+        return I18n.t('search.bathrooms')
       },
       childrenAges() {
         return I18n.t('search.child_age');
