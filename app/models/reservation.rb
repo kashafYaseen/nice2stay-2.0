@@ -267,7 +267,7 @@ class Reservation < ApplicationRecord
         end
 
         if count == _availabilities.length
-          min_stay = _availabilities.find { |avail| avail.available_on == check_in }.rr_minimum_stay.sort
+          min_stay = _availabilities.find { |avail| avail.available_on == check_in }.rr_minimum_stay
           errors.add(:base, "Minimum Stay can be of #{min_stay[0]} and Maximum Stay can be of #{min_stay[-1]}")
         end
       end

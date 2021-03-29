@@ -55,6 +55,12 @@ class RoomRate < ApplicationRecord
     price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5] })
   end
 
+  def minimum_booking_limit(params)
+    return 0 unless params[:check_in].present? || params[:check_out].present?
+
+    availabilities.for_range(params[:check_in], params[:check_out]).order(rr_booking_limit: :desc).minimum(:rr_booking_limit).presence || 0
+  end
+
   private
     def price_list(params)
       return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
