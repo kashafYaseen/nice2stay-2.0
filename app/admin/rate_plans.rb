@@ -34,6 +34,7 @@ ActiveAdmin.register RatePlan do
 
   form do |f|
     inputs 'RatePlan' do
+      f.input :parent_lodging
       f.input :code
       f.input :name
       f.input :description
