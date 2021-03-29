@@ -33,7 +33,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       end
     end
 
-    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f, check_in: params[:check_in], check_out: params[:check_out] } }).serialized_json, status: :ok
   end
 
   def recommendations

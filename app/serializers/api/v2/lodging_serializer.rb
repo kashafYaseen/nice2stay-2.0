@@ -23,7 +23,7 @@ class Api::V2::LodgingSerializer
     lodging.wishlists.find_by(user: params[:current_user]).try(:id)
   end
 
-  attributes :room_rates do |lodging|
-    Api::V2::RoomRateSerializer.new(lodging.room_rates)
+  attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? } do |lodging, params|
+    Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
   end
 end
