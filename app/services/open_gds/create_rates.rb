@@ -38,10 +38,8 @@ class OpenGds::CreateRates
     def destroy_rate_plan_details(params)
       accommodation_ids = params[:accommodations].map { |accomdation| accomdation[:accom_interface_id] }
       if params[:init]
-        # RoomRate.include_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).destroy_all
         RoomRate.include_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).update_all(publish: false)
       else
-        # RoomRate.exclude_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).destroy_all
         RoomRate.exclude_lodgings_by_rate_plan(accommodation_ids, params[:rate_interface_id]).lodging_channel(3).update_all(publish: false)
         dates = get_dates params
         selected_rate_plans = rate_plans.select { |rp| params[:rate_interface_id].map(&:to_i).include?(rp[:id]) }
@@ -122,20 +120,19 @@ class OpenGds::CreateRates
       room_rate.extra_bed_rate = accom_params[:extra_bed_rate] if accom_params[:extra_bed_rate].present?
       room_rate.extra_bed_rate_type = accom_params[:extra_bed_rate_type] if accom_params[:extra_bed_rate_type].present?
       room_rate.extra_night_rate = accom_params[:extra_night_rate] if accom_params[:extra_night_rate].present?
-      room_rate.publish = true
+      room_rate.publish = accom_params[:accom_enabled] if accom_params[:accom_enabled].present?
       if room_rate.new_record?
         room_rate.created_at = DateTime.current
         room_rate.updated_at = DateTime.current
       end
 
-      availabilities, prices = update_availabilities rate_params, room_rate, rate_plan
-      availabilities = room_rate.availabilities if availabilities.blank?
+      prices = update_availabilities_and_prices rate_params, room_rate, rate_plan
       prices = prices.flatten
-      update_availabilities_by_status rate_plan, accom_params, room_rate, availabilities, prices
-      { room_rate: room_rate, availabilities: availabilities, prices: prices }
+      update_availabilities_by_status rate_plan, accom_params, room_rate, prices
+      { room_rate: room_rate, availabilities: room_rate.availabilities, prices: prices }
     end
 
-    def update_availabilities(rate_params, room_rate, rate_plan)
+    def update_availabilities_and_prices(rate_params, room_rate, rate_plan)
       availabilities = []
       prices = []
       params = {
@@ -154,12 +151,11 @@ class OpenGds::CreateRates
 
         availability ||= room_rate.availabilities.new(available_on: date)
         availability = set_availability params, availability
-        availabilities << availability
         price = set_price params, availability
         prices << price if price.new_record? || price.changed?
       end
 
-      [availabilities, prices]
+      prices
     end
 
     def update_rule(rate_params, rate_plan, lodging_id)
@@ -178,9 +174,9 @@ class OpenGds::CreateRates
       rule
     end
 
-    def update_availabilities_by_status(rate_plan, accom_params, room_rate, availabilities, prices)
+    def update_availabilities_by_status(rate_plan, accom_params, room_rate, prices)
       accom_params[:status]&.each do |accommodation_status|
-        availability = availabilities.find do |avail|
+        availability = room_rate.availabilities.find do |avail|
           avail[:available_on] == accommodation_status[:date].to_date
         end
 
@@ -189,7 +185,7 @@ class OpenGds::CreateRates
           available: accommodation_status[:available],
           minlos: accommodation_status[:minlos] || rate_plan.min_stay,
           maxlos: accommodation_status[:maxlos] || rate_plan.max_stay,
-          rate: accommodation_status[:daily_rate],
+          rate: accommodation_status[:daily_rate] || (room_rate.default_rate if availability.new_record?),
           single_rate: accommodation_status[:daily_single_rate],
           close_out: accommodation_status[:close_out],
           cta: accommodation_status[:cta],
@@ -220,6 +216,7 @@ class OpenGds::CreateRates
         availability.created_at = DateTime.current
         availability.updated_at = DateTime.current
       end
+
       availability
     end
 
@@ -233,6 +230,7 @@ class OpenGds::CreateRates
         price.created_at = DateTime.current
         price.updated_at = DateTime.current
       end
+
       price
     end
 

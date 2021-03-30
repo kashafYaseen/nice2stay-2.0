@@ -4,7 +4,7 @@ class RoomRate < ApplicationRecord
   belongs_to :room_type, optional: true
   belongs_to :rate_plan
   belongs_to :child_lodging, class_name: 'Lodging'
-  has_many :availabilities
+  has_many :availabilities, -> { active }
   has_many :reservations
   has_many :prices, through: :availabilities
   has_one :parent_lodging, through: :child_lodging, source: :parent
