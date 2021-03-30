@@ -18,6 +18,9 @@ class Availability < ApplicationRecord
   scope :check_out_only, -> { where(check_out_only: true) }
   scope :active, -> { where('available_on >= ?', Date.today) }
 
+  # for channel managers and opengds using booking limit
+  scope :not_available, -> { active.having("SUM(rr_booking_limit) = 0").group(:available_on, :id) }
+
   def reindex_lodging
     lodging.reindex
   end

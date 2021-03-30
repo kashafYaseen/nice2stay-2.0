@@ -61,6 +61,7 @@ class Lodging < ApplicationRecord
   delegate :admin_user, to: :owner, allow_nil: true
   delegate :summary, :location_description, :h1, to: :parent, allow_nil: true, prefix: true
   delegate :code, :description, to: :room_type, prefix: true
+  delegate :not_available, to: :room_rate_availabilities, prefix: true, allow_nil: true
 
   scope :published, -> { where(published: true) }
   scope :searchable, -> { where('presentation = ? or presentation = ?', 1, 2) }
@@ -106,7 +107,9 @@ class Lodging < ApplicationRecord
   end
 
   def not_available_on
-    (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s)
+    return (Date.today..2.years.from_now).map(&:to_s) - availabilities.pluck(:available_on).map(&:to_s) unless belongs_to_channel?
+
+    room_rate_availabilities_not_available.pluck(:available_on).uniq.map(&:to_s)
   end
 
   def discount_dates
@@ -124,10 +127,21 @@ class Lodging < ApplicationRecord
   def children_not_available_on
     return not_available_on unless lodging_children.present?
     _availabilities = []
-    lodging_children.includes(:availabilities).each do |lodging_child|
-      _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
+
+    if belongs_to_channel?
+      total_children = lodging_children.count
+      lodging_children.each do |lodging_child|
+        _availabilities += lodging_child.room_rate_availabilities_not_available.pluck(:available_on).uniq
+      end
+
+      not_available_dates = _availabilities
+      _availabilities.reject { |availability| not_available_dates.count(availability) < total_children }.uniq
+    else
+      lodging_children.includes(:availabilities).each do |lodging_child|
+        _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
+      end
+      (Date.today..2.years.from_now).map(&:to_s) - _availabilities
     end
-    (Date.today..2.years.from_now).map(&:to_s) - _availabilities
   end
 
   def gc_not_available_on params = {}
