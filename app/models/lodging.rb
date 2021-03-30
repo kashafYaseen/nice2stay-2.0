@@ -135,7 +135,7 @@ class Lodging < ApplicationRecord
       end
 
       not_available_dates = _availabilities
-      _availabilities.reject { |availability| not_available_dates.count(availability) < total_children }.uniq
+      _availabilities.reject { |availability| not_available_dates.count(availability) < total_children }.uniq.sort
     else
       lodging_children.includes(:availabilities).each do |lodging_child|
         _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
