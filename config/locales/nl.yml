@@ -896,6 +896,7 @@ nl:
     request_sent: Uw boekingsaanvraag is succesvol verzonden naar nice2stay en onze partner. Uw reservering moet worden aanvaard door de eigenaar van de accommodatie. Na goedkeuring is dit een definitieve reservering en ontvangt u onmiddellijk een bevestiging van uw boeking.
     gc_sent: U heeft de accommodatie geboekt en de periode is voor u gereserveerd. De bevestiging wordt u toegestuurd via email.
     created: Uw boeking %{identifier} is succesvol verzonden. Onderstaand kunt u per accommodatie de status vinden en in uw <a href="%{link}">profiel</a>
+    rebooking: De status van uw boeking is gewijzigd naar "omboeking". De origineel geboekte datum wordt niet meer voor u vastgehouden. Wij horen het graag zodra u een nieuwe datum heeft gekozen. Wij zullen dan om akkoord vragen bij de eigenaar en uw reservering definitief omboeken naar de nieuwe datum. De nieuwe datum zult u dan terug zien in uw account met de eventuele nieuwe prijs.
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!

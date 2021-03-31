@@ -24,6 +24,11 @@ module ReservationsHelper
     guests
   end
 
+  def render_reservation_status(reservation)
+    return "<span class='d-inline-block bg-danger text-white text-xs p-1'>Waiting for rebooking</span>".html_safe if reservation.rebooking_approved
+    render_request_status reservation.request_status
+  end
+
   def render_request_status(status)
     status_classes = ['bg-warning', 'bg-success', 'bg-danger']
     "<span class='d-inline-block #{status_classes[Reservation.request_statuses[status]]} text-white text-xs p-1'>#{status.humanize}</span>".html_safe
