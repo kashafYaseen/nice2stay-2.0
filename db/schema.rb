@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_081734) do
+ActiveRecord::Schema.define(version: 2021_04_02_095833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -871,8 +871,8 @@ ActiveRecord::Schema.define(version: 2021_03_16_081734) do
     t.boolean "open_gds_valid_permanent", default: false
     t.decimal "open_gds_res_fee", default: "0.0"
     t.integer "open_gds_rate_type"
-    t.integer "min_stay", default: 0
-    t.integer "max_stay", default: 0
+    t.integer "min_stay", default: 1
+    t.integer "max_stay", default: 1
     t.text "open_gds_daily_supplements"
     t.integer "open_gds_single_rate_type"
     t.datetime "opengds_pushed_at"
