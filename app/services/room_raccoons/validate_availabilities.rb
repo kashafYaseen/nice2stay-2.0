@@ -22,8 +22,7 @@ class RoomRaccoons::ValidateAvailabilities
       end
 
       Rails.logger.info "PARSED AVAILABILITIES ===============================>>>>>>>>>> #{availabilities}"
-      lodgings = Lodging.where(id: lodging_ids)
-      return false if lodgings.size.zero?
+      return false if Lodging.where(id: lodging_ids).count.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In Availabilities JOB'
       RrCreateAvailabilitiesJob.perform_later(

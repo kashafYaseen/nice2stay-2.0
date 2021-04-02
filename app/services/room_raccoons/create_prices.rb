@@ -1,36 +1,49 @@
 class RoomRaccoons::CreatePrices
-  attr_reader :hotel_id, :room_type_codes, :rate_plan_codes, :rr_prices
+  attr_reader :hotel_id,
+              :lodging_ids,
+              :rate_plan_ids,
+              :rr_prices
 
-  def self.call(hotel_id:, room_type_codes:, rate_plan_codes:, rr_prices:)
-    new(hotel_id: hotel_id, room_type_codes: room_type_codes, rate_plan_codes: rate_plan_codes, rr_prices: rr_prices).call
+  def self.call(hotel_id:, lodging_ids:, rate_plan_ids:, rr_prices:)
+    new(hotel_id: hotel_id, lodging_ids: lodging_ids, rate_plan_ids: rate_plan_ids, rr_prices: rr_prices).call
   end
 
-  def initialize(hotel_id:, room_type_codes:, rate_plan_codes:, rr_prices:)
+  def initialize(hotel_id:, lodging_ids:, rate_plan_ids:, rr_prices:)
     @hotel_id = hotel_id
-    @room_type_codes = room_type_codes
-    @rate_plan_codes = rate_plan_codes
+    @lodging_ids = lodging_ids
+    @rate_plan_ids = rate_plan_ids
     @rr_prices = rr_prices
   end
 
   def call
-    hotel_room_types = RoomType.includes(availabilities: [:rate_plan, { cleaning_costs: :availability }, { prices: :availability }]).where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
+    lodgings = Lodging.where(id: lodging_ids).includes(room_rates: [{ availabilities: :prices }, :rate_plan])
     new_availabilities = []
 
     rr_prices.each do |rr_price|
       dates = (rr_price[:start_date].to_date..rr_price[:end_date].to_date).map(&:to_s)
-      current_room_type = hotel_room_types.find { |room_type| room_type.code == rr_price[:room_type_code] }
-      current_room_rate = current_room_type.room_rates.find { |room_rate| room_rate.rate_plan_code == rr_price[:rate_plan_code] }
-      availabilities = find_or_create_availabilities(current_room_rate, dates).flatten
-      new_availabilities << availabilities unless availabilities_exists?(new_availabilities.flatten, availabilities)
+      current_lodging = lodgings.find { |lodging| lodging.id == rr_price[:lodging_id].to_i }
 
-      availabilities.each do |availability|
-        rr_price[:rates].each do |rate|
-          add_prices_for rate, availability
-        end
-        next unless rr_price[:additional_amounts].present?
+      # If rate_plan_id is not present, then updates are for all room_rates against current_lodging
+      if rr_price[:rate_plan_id].present?
+        @room_rates = current_lodging.room_rates.select { |room_rate| room_rate.rate_plan_id == rr_price[:rate_plan_id].to_i }
+      else
+        @room_rates = current_lodging.room_rates
+      end
 
-        rr_price[:additional_amounts].each do |additional_amount|
-          add_prices_for additional_amount, availability, true
+      @room_rates.each do |current_room_rate|
+        availabilities = find_or_create_availabilities(current_room_rate, dates).flatten
+        new_availabilities << availabilities unless availabilities_exists?(new_availabilities.flatten, availabilities)
+
+        availabilities.each do |availability|
+          rr_price[:rates].each do |rate|
+            add_prices_for rate, availability
+          end
+
+          next unless rr_price[:additional_amounts].present?
+
+          rr_price[:additional_amounts].each do |additional_amount|
+            add_prices_for additional_amount, availability, true
+          end
         end
       end
     end
@@ -136,5 +149,7 @@ class RoomRaccoons::CreatePrices
         price.adults = [guests]
         price.children = ['0']
       end
+
+      price.infants = ['0']
     end
 end

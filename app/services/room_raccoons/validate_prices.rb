@@ -22,17 +22,13 @@
       end
 
       Rails.logger.info "PARSED PRICES ===============================>>>>>>>>>> #{prices}"
-      # dates = prices.map { |price| (price[:start_date]..price[:end_date]).map(&:to_s) }.flatten.uniq.sort
-      # rooms = RoomType.where(parent_lodging_id: hotel_id).joins(:availabilities).by_codes(room_type_codes, rate_plan_codes).select('availabilities.available_on as available_on')
-      rooms = RoomType.where(parent_lodging_id: hotel_id).by_codes room_type_codes, rate_plan_codes
-      # rooms = rooms.select { |room| dates.include?(room.available_on.to_s) }
-      return false if rooms.size.zero?
+      return false if Lodging.where(id: lodging_ids).count.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In PRICES JOB'
       RrCreatePricesJob.perform_later(
         hotel_id: hotel_id,
-        room_type_codes: room_type_codes,
-        rate_plan_codes: rate_plan_codes,
+        lodging_ids: lodging_ids,
+        rate_plan_ids: rate_plan_ids,
         rr_prices: prices
       )
       true
@@ -44,8 +40,8 @@
 
   private
     def parse_data(data)
-      room_type_code = data['statusapplicationcontrol']['invtypecode']
-      rate_plan_code = data['statusapplicationcontrol']['rateplancode']
+      lodging_id = data['statusapplicationcontrol']['invtypecode']
+      rate_plan_id = data['statusapplicationcontrol']['rateplancode']
       start_date = data['statusapplicationcontrol']['start']
       end_date = data['statusapplicationcontrol']['end']
 
@@ -74,8 +70,8 @@
       end
 
       {
-        room_type_code: room_type_code,
-        rate_plan_code: rate_plan_code,
+        lodging_id: lodging_id,
+        rate_plan_id: rate_plan_id,
         start_date: start_date,
         end_date: end_date,
         rates: rates,
@@ -99,11 +95,11 @@
       }
     end
 
-    def room_type_codes
-      prices.map { |data| data[:room_type_code] }.uniq
+    def lodging_ids
+      prices.map { |data| data[:lodging_id] }.uniq
     end
 
-    def rate_plan_codes
-      prices.map { |data| data[:rate_plan_code] }.uniq
+    def rate_plan_ids
+      prices.map { |data| data[:rate_plan_id] }.uniq
     end
 end

@@ -1,5 +1,7 @@
 class RoomRaccoons::CreateAvailabilities
-  attr_reader :hotel_id, :lodging_ids, :rr_availabilities
+  attr_reader :hotel_id,
+              :lodging_ids,
+              :rr_availabilities
 
   def self.call(hotel_id:, lodging_ids:, rr_availabilities:)
     new(hotel_id: hotel_id, lodging_ids: lodging_ids, rr_availabilities: rr_availabilities).call
@@ -19,6 +21,7 @@ class RoomRaccoons::CreateAvailabilities
       stays = data[:stays].length == 2 ? (data[:stays][0]..data[:stays][1]).map(&:to_s) : data[:stays]
       current_lodging = lodgings.find { |lodging| lodging.id == data[:lodging_id].to_i }
 
+      # If rate_plan_id is not present, then updates are for all room_rates against current_lodging
       if data[:rate_plan_id].present?
         @room_rates = current_lodging.room_rates.select { |room_rate| room_rate.rate_plan_id == data[:rate_plan_id].to_i }
       else
@@ -54,11 +57,12 @@ class RoomRaccoons::CreateAvailabilities
     Availability.import availabilities, batch_size: 150, on_duplicate_key_update: { columns: %i[rr_booking_limit rr_check_in_closed rr_check_out_closed rr_minimum_stay ] }
     prices = []
     availabilities.each do |availability|
-      unless availability.new_record?
-        availability.prices.each { |price| price.minimum_stay = availability.rr_minimum_stay }
-        prices << availability.prices
-      end
+      next if availability.new_record?
+
+      availability.prices.each { |price| price.minimum_stay = availability.rr_minimum_stay }
+      prices << availability.prices
     end
+
     prices = prices.flatten
     return if prices.blank?
 
