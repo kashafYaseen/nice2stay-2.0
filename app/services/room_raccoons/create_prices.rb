@@ -22,28 +22,21 @@ class RoomRaccoons::CreatePrices
     rr_prices.each do |rr_price|
       dates = (rr_price[:start_date].to_date..rr_price[:end_date].to_date).map(&:to_s)
       current_lodging = lodgings.find { |lodging| lodging.id == rr_price[:lodging_id].to_i }
+      current_room_rate = current_lodging.room_rates.find { |room_rate| room_rate.rate_plan_id == rr_price[:rate_plan_id]&.to_i }
+      next if current_room_rate.blank?
 
-      # If rate_plan_id is not present, then updates are for all room_rates against current_lodging
-      if rr_price[:rate_plan_id].present?
-        @room_rates = current_lodging.room_rates.select { |room_rate| room_rate.rate_plan_id == rr_price[:rate_plan_id].to_i }
-      else
-        @room_rates = current_lodging.room_rates
-      end
+      availabilities = find_or_create_availabilities(current_room_rate, dates).flatten
+      new_availabilities << availabilities unless availabilities_exists?(new_availabilities.flatten, availabilities)
 
-      @room_rates.each do |current_room_rate|
-        availabilities = find_or_create_availabilities(current_room_rate, dates).flatten
-        new_availabilities << availabilities unless availabilities_exists?(new_availabilities.flatten, availabilities)
+      availabilities.each do |availability|
+        rr_price[:rates].each do |rate|
+          add_prices_for rate, availability
+        end
 
-        availabilities.each do |availability|
-          rr_price[:rates].each do |rate|
-            add_prices_for rate, availability
-          end
+        next unless rr_price[:additional_amounts].present?
 
-          next unless rr_price[:additional_amounts].present?
-
-          rr_price[:additional_amounts].each do |additional_amount|
-            add_prices_for additional_amount, availability, true
-          end
+        rr_price[:additional_amounts].each do |additional_amount|
+          add_prices_for additional_amount, availability, true
         end
       end
     end
