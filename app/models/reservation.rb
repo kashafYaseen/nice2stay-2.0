@@ -209,12 +209,7 @@ class Reservation < ApplicationRecord
     def no_of_guests
       return unless lodging.present? && offer_id.blank?
 
-      if lodging.room_raccoon?
-        return errors.add(:base, "Maximum #{room_type.adults} adults are allowed") if room_type.adults < adults.to_i
-
-        children_vacancies = room_type.children.to_i + room_type.adults - adults.to_i
-        errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
-      elsif lodging.open_gds?
+      if child_lodging.present? && child_lodging.belongs_to_channel?
         max_occupants = child_lodging.adults + child_lodging.extra_beds
         occupants = adults.to_i + children.to_i + infants.to_i
         return errors.add(:base, "Maximum #{max_occupants} occupants are allowed") if max_occupants < occupants
