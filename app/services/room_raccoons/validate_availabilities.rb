@@ -22,13 +22,12 @@ class RoomRaccoons::ValidateAvailabilities
       end
 
       Rails.logger.info "PARSED AVAILABILITIES ===============================>>>>>>>>>> #{availabilities}"
-      rooms = RoomType.where(parent_lodging_id: hotel_id, code: room_type_codes)
-      return false if rooms.size.zero?
+      return false if Lodging.where(id: lodging_ids).count.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In Availabilities JOB'
       RrCreateAvailabilitiesJob.perform_later(
         hotel_id: hotel_id,
-        room_type_codes: room_type_codes,
+        lodging_ids: lodging_ids,
         rr_availabilities: availabilities
       )
       true
@@ -45,8 +44,8 @@ class RoomRaccoons::ValidateAvailabilities
       if status_application_control.present?
         @start = status_application_control['start']
         @end = status_application_control['end']
-        @room_type_code = status_application_control['invtypecode']
-        @rate_plan_code = status_application_control['rateplancode']
+        @lodging_id = status_application_control['invtypecode']
+        @rate_plan_id = status_application_control['rateplancode']
       end
 
       restriction_status = data['restrictionstatus']
@@ -70,8 +69,8 @@ class RoomRaccoons::ValidateAvailabilities
       {
         start_date: @start,
         end_date: @end,
-        room_type_code: @room_type_code,
-        rate_plan_code: @rate_plan_code,
+        lodging_id: @lodging_id,
+        rate_plan_id: @rate_plan_id,
         status: @status&.downcase,
         restriction: @restriction&.downcase,
         stays: @stays.include?('999') ? ['999'] : @stays&.sort,
@@ -79,11 +78,11 @@ class RoomRaccoons::ValidateAvailabilities
       }
     end
 
-    def room_type_codes
-      availabilities.map { |data| data[:room_type_code] }.uniq
+    def lodging_ids
+      availabilities.map { |data| data[:lodging_id] }.uniq
     end
 
-    def rate_plan_codes
-      availabilities.map { |data| data[:rate_plan_code] }.uniq
+    def rate_plan_ids
+      availabilities.map { |data| data[:rate_plan_id] }.uniq
     end
 end

@@ -207,9 +207,9 @@ class Reservation < ApplicationRecord
     end
 
     def no_of_guests
-      return if lodging.present? && lodging.room_raccoon?
+      return unless lodging.present? && offer_id.blank?
 
-      if lodging.open_gds?
+      if child_lodging.present? && child_lodging.belongs_to_channel?
         max_occupants = child_lodging.adults + child_lodging.extra_beds
         occupants = adults.to_i + children.to_i + infants.to_i
         return errors.add(:base, "Maximum #{max_occupants} occupants are allowed") if max_occupants < occupants

@@ -266,6 +266,7 @@ ActiveAdmin.register Lodging do
             column :infants
             column :minimum_stay
             column :checkin
+            column('Additional Guest Amount') { |price| price.rr_additional_amount_flag }
 
             column 'Action' do |price|
               link_to 'Edit Price', edit_admin_price_path(price)
