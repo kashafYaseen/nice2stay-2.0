@@ -29,7 +29,7 @@ class Api::V2::CartsController < Api::V2::ApiController
         BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
       end
 
-      @booking.reservations.room_raccoon.includes(room_rate: %i[room_type rate_plan]).each do |reservation|
+      @booking.reservations.room_raccoon.includes(room_rate: %i[child_lodging rate_plan]).each do |reservation|
         RoomRaccoons::SendReservations.call(reservation: reservation)
       end
 
