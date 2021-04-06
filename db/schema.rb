@@ -872,7 +872,7 @@ ActiveRecord::Schema.define(version: 2021_04_02_095833) do
     t.decimal "open_gds_res_fee", default: "0.0"
     t.integer "open_gds_rate_type"
     t.integer "min_stay", default: 1
-    t.integer "max_stay", default: 1
+    t.integer "max_stay", default: 45
     t.text "open_gds_daily_supplements"
     t.integer "open_gds_single_rate_type"
     t.datetime "opengds_pushed_at"
