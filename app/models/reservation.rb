@@ -29,9 +29,10 @@ class Reservation < ApplicationRecord
   delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
   # delegate :code, :description, to: :room_type, prefix: true
-  delegate :code, :rule, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :code, :id, :rule, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
   delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
+  delegate :id, :name, to: :child_lodging, allow_nil: true, prefix: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }

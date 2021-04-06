@@ -128,9 +128,9 @@ class RoomRaccoons::SendReservations
     def room_types
       _room_types = Ox::Element.new('RoomTypes')
       room_type = Ox::Element.new('RoomType')
-      room_type['RoomTypeCode'] = reservation.room_type_code
+      room_type['RoomTypeCode'] = reservation.child_lodging_id
       room_description = Ox::Element.new('RoomDescription')
-      room_description['Name'] = reservation.room_type_description
+      room_description['Name'] = reservation.child_lodging_name
       room_type << room_description
       _room_types << room_type
       _room_types
@@ -139,8 +139,8 @@ class RoomRaccoons::SendReservations
     def room_rates
       _room_rates = Ox::Element.new('RoomRates')
       room_rate = Ox::Element.new('RoomRate')
-      room_rate['RoomTypeCode'] = reservation.room_type_code
-      room_rate['RatePlanCode'] = reservation.rate_plan_code
+      room_rate['RoomTypeCode'] = reservation.child_lodging_id
+      room_rate['RatePlanCode'] = reservation.rate_plan_id
       room_rate['NumberOfUnits'] = 1
 
       rates = Ox::Element.new('Rates')
