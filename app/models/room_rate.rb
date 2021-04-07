@@ -24,13 +24,10 @@ class RoomRate < ApplicationRecord
 
   delegate :code, :name, :pppn?, :papn?, :pp?, :ps?, :pppd?, :papd?, :opengds_pushed_at, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_daily_supplements, :single_supplement?, :single_rate?, :min_stay, :max_stay, :open_gds_res_fee, :open_gds_rate_id, to: :rate_plan, allow_nil: true
-  # delegate :adults, :open_gds_accommodation_id, :extra_beds, :extra_beds_for_children_only, to: :room_type, allow_nil: true
   delegate :adults, :open_gds_accommodation_id, :extra_beds, :extra_beds_for_children_only, to: :child_lodging, allow_nil: true
-  # delegate :code, :name, :description, to: :room_type, prefix: true, allow_nil: true
   delegate :channel, to: :parent_lodging, prefix: true
   delegate :children, :infants, to: :child_rates, prefix: true, allow_nil: true
   delegate :name, :description, to: :child_lodging, prefix: true, allow_nil: true
-  # delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
 
   scope :include_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where(child_lodging_id: lodging_ids, rate_plan_id: rate_plan_id) }
   scope :exclude_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where.not(child_lodging_id: lodging_ids).where(rate_plan_id: rate_plan_id) }
