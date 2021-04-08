@@ -82,7 +82,7 @@
           <section class="col-md-12">
             <p class="widget-title text-bold">Extra</p>
 
-            <div class="custom-control custom-checkbox">
+            <div class="custom-control custom-checkbox d-none">
               <%= check_box_tag :free_cancelation, true, params[:free_cancelation], class: "custom-control-input submit-filters" %>
               <%= label_tag :free_cancelation, t('filters.free_cancelation'), class: 'text-xxxs custom-control-label' %>
                 &nbsp; <span class="text-muted">(<%= render_lodgings_count_for(lodgings, 1, 'free_cancelation', total_lodgings) %>)</span>
