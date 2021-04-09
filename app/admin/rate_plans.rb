@@ -1,8 +1,7 @@
 ActiveAdmin.register RatePlan do
   config.per_page = 15
 
-  filter :code
-  filter :lodging
+  filter :parent_lodging
   actions :show, :index, :edit, :update, :new, :create
 
 
@@ -21,7 +20,6 @@ ActiveAdmin.register RatePlan do
   index do
     selectable_column
     id_column
-    column :code
     column :name
     column :parent_lodging
     column :open_gds_rate_id
@@ -35,7 +33,6 @@ ActiveAdmin.register RatePlan do
   form do |f|
     inputs 'RatePlan' do
       f.input :parent_lodging
-      f.input :code
       f.input :name
       f.input :description
       f.input :open_gds_rate_id
@@ -54,7 +51,6 @@ ActiveAdmin.register RatePlan do
 
   show do
     attributes_table do
-      row :code
       row :name
       row('OpenGDS Rate ID') { |rate_plan| rate_plan.open_gds_rate_id }
       row :description
