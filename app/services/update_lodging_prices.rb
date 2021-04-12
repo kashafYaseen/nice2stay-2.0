@@ -72,8 +72,8 @@ class UpdateLodgingPrices
       from = from.to_date.change(year: 2020) if from.to_date.year == 0202
       to = to.to_date.change(year: 2020) if to.to_date.year == 0202
 
-      from = from.to_date.change(year: 2021) if from.to_date.year == 20021
-      to = to.to_date.change(year: 2021) if to.to_date.year == 20021
+      from = from.to_date.change(year: 2021) if [20021, 202121, 0201].include?(from.to_date.year)
+      to = to.to_date.change(year: 2021) if [20021, 202121, 0201].include?(to.to_date.year)
 
       rule = lodging.rules.find_or_initialize_by(start_date: from, end_date: to, checkin_day: checkin_day)
       rule.flexible_arrival = flexible_arrival || lodging.flexible_arrival
