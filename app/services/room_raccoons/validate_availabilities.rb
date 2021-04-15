@@ -15,17 +15,7 @@ class RoomRaccoons::ValidateAvailabilities
     begin
       if @body['availstatusmessages']['availstatusmessage'].is_a?(Array)
         @body['availstatusmessages']['availstatusmessage'].each do |avail_status_message|
-          parsed_availability = parse_data(avail_status_message)
-          availability = availabilities.find { |avail|
-            avail[:lodging_id] == parsed_availability[:lodging_id] && avail[:rate_plan_id] == parsed_availability[:rate_plan_id] &&
-              avail[:start_date] == parsed_availability[:start_date] && avail[:end_date] == parsed_availability[:end_date]
-            }
-
-          if availability.present?
-            availability.merge!(parsed_availability)
-          else
-            availabilities << parsed_availability
-          end
+          availabilities << parse_data(avail_status_message)
         end
       else
         availabilities << parse_data(@body['availstatusmessages']['availstatusmessage'])

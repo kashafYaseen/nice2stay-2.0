@@ -26,7 +26,7 @@ class RoomRaccoons::CreateAvailabilities
       dates.each do |date|
         availability = current_room_rate.availabilities.find { |room_rate_availability| room_rate_availability.available_on.to_s == date } ||
                         current_room_rate.availabilities.new(available_on: date, room_rate: current_room_rate, created_at: DateTime.now, updated_at: DateTime.now)
-        availability.rr_minimum_stay = minimum_stay(availability, data, stays, current_room_rate)
+        availability.rr_minimum_stay = minimum_stay(availability, data, stays, current_room_rate) if data[:min_stay].present? || data[:max_stay].present?
         availability.rr_booking_limit = data[:booking_limit] || current_room_rate.default_booking_limit if availability.rr_booking_limit.zero? || data[:booking_limit].present?
         check_response = restriction_status(data[:status], data[:restriction])
 
@@ -73,7 +73,6 @@ class RoomRaccoons::CreateAvailabilities
     end
 
     def default_stay params
-      return [] if params[:min_stay].blank? && params[:max_stay].blank?
       return (1..45).map(&:to_s) if params[:min_stay].blank? && params[:max_stay].to_i > 45
       return (params[:min_stay].to_i..45).map(&:to_s) if params[:min_stay].present? && params[:max_stay].to_i > 45
       return (1..params[:max_stay].to_i).map(&:to_s) if params[:min_stay].blank? && params[:max_stay].to_i < 45
