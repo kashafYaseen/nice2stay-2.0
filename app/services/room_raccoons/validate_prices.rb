@@ -17,8 +17,8 @@
         @body['rateamountmessages']['rateamountmessage'].each do |rate_amount_message|
           parsed_price = parse_body(rate_amount_message)
           price = prices.find { |avail|
-            avail[:lodging_id] == parsed_availability[:lodging_id] && avail[:rate_plan_id] == parsed_availability[:rate_plan_id] &&
-              avail[:start_date] == parsed_availability[:start_date] && avail[:end_date] == parsed_availability[:end_date]
+            avail[:lodging_id] == parsed_price[:lodging_id] && avail[:rate_plan_id] == parsed_price[:rate_plan_id] &&
+              avail[:start_date] == parsed_price[:start_date] && avail[:end_date] == parsed_price[:end_date]
             }
 
           if price.present?
