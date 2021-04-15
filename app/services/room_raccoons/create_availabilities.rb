@@ -75,6 +75,7 @@ class RoomRaccoons::CreateAvailabilities
     def default_stay params
       return [] if params[:min_stay].blank? && params[:max_stay].blank?
       return (1..45).map(&:to_s) if params[:min_stay].blank? && params[:max_stay].to_i > 45
+      return (params[:min_stay].to_i..45).map(&:to_s) if params[:min_stay].present? && params[:max_stay].to_i > 45
       return (1..params[:max_stay].to_i).map(&:to_s) if params[:min_stay].blank? && params[:max_stay].to_i < 45
       return (params[:min_stay].to_i..45).map(&:to_s) if params[:min_stay].present? && params[:max_stay].blank?
 
@@ -83,7 +84,7 @@ class RoomRaccoons::CreateAvailabilities
 
     def minimum_stay availability, params, stays, room_rate
       return stays.presence || (room_rate.min_stay..room_rate.max_stay).map(&:to_s) if availability.rr_minimum_stay.blank? || (params[:min_stay].present? && params[:max_stay].present?)
-      return (availability.rr_minimum_stay[0].to_i..params[:max_stay].to_i).map(&:to_s) if params[:max_stay].present?
-      return (params[:min_stay]..availability.rr_minimum_stay[-1]) if params[:min_stay].present?
+      return (availability.rr_minimum_stay[0].to_i..stays[-1].to_i).map(&:to_s) if params[:max_stay].present?
+      return (stays[0].to_i..availability.rr_minimum_stay[-1].to_i).map(&:to_s) if params[:min_stay].present?
     end
 end
