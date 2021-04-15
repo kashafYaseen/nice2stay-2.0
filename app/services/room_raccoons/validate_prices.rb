@@ -15,10 +15,20 @@
     begin
       if @body['rateamountmessages']['rateamountmessage'].is_a?(Array)
         @body['rateamountmessages']['rateamountmessage'].each do |rate_amount_message|
-          prices << parse_data(rate_amount_message)
+          parsed_price = parse_body(rate_amount_message)
+          price = prices.find { |avail|
+            avail[:lodging_id] == parsed_availability[:lodging_id] && avail[:rate_plan_id] == parsed_availability[:rate_plan_id] &&
+              avail[:start_date] == parsed_availability[:start_date] && avail[:end_date] == parsed_availability[:end_date]
+            }
+
+          if price.present?
+            price.merge!(parsed_price)
+          else
+            prices << parsed_price
+          end
         end
       else
-        prices << parse_data(@body['rateamountmessages']['rateamountmessage'])
+        prices << parse_body(@body['rateamountmessages']['rateamountmessage'])
       end
 
       Rails.logger.info "PARSED PRICES ===============================>>>>>>>>>> #{prices}"
@@ -39,13 +49,14 @@
   end
 
   private
-    def parse_data(data)
-      lodging_id = data['statusapplicationcontrol']['invtypecode']
-      rate_plan_id = data['statusapplicationcontrol']['rateplancode']
-      start_date = data['statusapplicationcontrol']['start']
-      end_date = data['statusapplicationcontrol']['end']
+    def parse_body params
+      response = {}
+      response[:lodging_id] = params['statusapplicationcontrol']['invtypecode']
+      response[:rate_plan_id] = params['statusapplicationcontrol']['rateplancode']
+      response[:start_date] = params['statusapplicationcontrol']['start']
+      response[:end_date] = params['statusapplicationcontrol']['end']
 
-      base_by_guest_amts = data['rates']['rate']['basebyguestamts']['basebyguestamt']
+      base_by_guest_amts = params['rates']['rate']['basebyguestamts']['basebyguestamt']
       rates = []
       if base_by_guest_amts.kind_of?(Array)
         base_by_guest_amts.each do |base_by_guest_amt|
@@ -55,10 +66,11 @@
         rates << guests_base_amount(base_by_guest_amts)
       end
 
-      additional_guest_amounts = data['rates']['rate']['additionalguestamounts']
+      response[:rates] = rates
+      additional_guest_amounts = params['rates']['rate']['additionalguestamounts']
       if additional_guest_amounts.present?
         additional_amounts = []
-        additional_guest_amounts = data['rates']['rate']['additionalguestamounts']['additionalguestamount']
+        additional_guest_amounts = params['rates']['rate']['additionalguestamounts']['additionalguestamount']
 
         if additional_guest_amounts.is_a?(Array)
           additional_guest_amounts.each do |additional_guest_amount|
@@ -67,22 +79,16 @@
         else
           additional_amounts << guests_additional_amount(additional_guest_amounts)
         end
+
+        response[:additional_amounts] = additional_amounts
       end
 
-      {
-        lodging_id: lodging_id,
-        rate_plan_id: rate_plan_id,
-        start_date: start_date,
-        end_date: end_date,
-        rates: rates,
-        additional_amounts: additional_amounts
-      }
+      response
     end
 
     def guests_base_amount params
       {
         age_qualifying_code: params['agequalifyingcode'],
-        # guests: params['numberofguests'].present? ? params['numberofguests'] : '999',
         guests: params['numberofguests'],
         amount: params['amountaftertax']
       }

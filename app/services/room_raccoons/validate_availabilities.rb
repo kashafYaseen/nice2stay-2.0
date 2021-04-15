@@ -15,7 +15,17 @@ class RoomRaccoons::ValidateAvailabilities
     begin
       if @body['availstatusmessages']['availstatusmessage'].is_a?(Array)
         @body['availstatusmessages']['availstatusmessage'].each do |avail_status_message|
-          availabilities << parse_data(avail_status_message)
+          parsed_availability = parse_data(avail_status_message)
+          availability = availabilities.find { |avail|
+            avail[:lodging_id] == parsed_availability[:lodging_id] && avail[:rate_plan_id] == parsed_availability[:rate_plan_id] &&
+              avail[:start_date] == parsed_availability[:start_date] && avail[:end_date] == parsed_availability[:end_date]
+            }
+
+          if availability.present?
+            availability.merge!(parsed_availability)
+          else
+            availabilities << parsed_availability
+          end
         end
       else
         availabilities << parse_data(@body['availstatusmessages']['availstatusmessage'])
@@ -39,19 +49,20 @@ class RoomRaccoons::ValidateAvailabilities
 
   private
     def parse_data data
-      booking_limit = data['bookinglimit']
+      response = {}
+      response[:booking_limit] = data['bookinglimit'] if data['bookinglimit'].present?
       status_application_control = data['statusapplicationcontrol']
       if status_application_control.present?
-        @start = status_application_control['start']
-        @end = status_application_control['end']
-        @lodging_id = status_application_control['invtypecode']
-        @rate_plan_id = status_application_control['rateplancode']
+        response[:start_date] = status_application_control['start']
+        response[:end_date] = status_application_control['end']
+        response[:lodging_id] = status_application_control['invtypecode']
+        response[:rate_plan_id] = status_application_control['rateplancode']
       end
 
       restriction_status = data['restrictionstatus']
       if restriction_status.present?
-        @status = restriction_status['status']
-        @restriction = restriction_status['restriction']
+        response[:status] = restriction_status['status']&.downcase
+        response[:restriction] = restriction_status['restriction']&.downcase
       end
 
       length_of_stays = data['lengthsofstay']
@@ -59,23 +70,17 @@ class RoomRaccoons::ValidateAvailabilities
       if length_of_stays.present?
         if length_of_stays['lengthofstay'].is_a?(Array)
           length_of_stays['lengthofstay'].each do |length_of_stay|
-            @stays << length_of_stay['time']
+            response[:min_stay] = length_of_stay['time'] if length_of_stay['minmaxmessagetype'] == 'SetMinLOS'
+            response[:max_stay] = length_of_stay['time'] if length_of_stay['minmaxmessagetype'] == 'SetMaxLOS'
           end
         else
-          @stays << length_of_stays['lengthofstay']['time']
+          length_of_stay = length_of_stays['lengthofstay']
+          response[:min_stay] = length_of_stay['time'] if length_of_stay['minmaxmessagetype'] == 'SetMinLOS'
+          response[:max_stay] = length_of_stay['time'] if length_of_stay['minmaxmessagetype'] == 'SetMaxLOS'
         end
       end
 
-      {
-        start_date: @start,
-        end_date: @end,
-        lodging_id: @lodging_id,
-        rate_plan_id: @rate_plan_id,
-        status: @status&.downcase,
-        restriction: @restriction&.downcase,
-        stays: @stays.include?('999') ? ['999'] : @stays&.sort,
-        booking_limit: booking_limit
-      }
+      response
     end
 
     def lodging_ids
