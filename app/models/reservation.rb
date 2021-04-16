@@ -25,10 +25,9 @@ class Reservation < ApplicationRecord
 
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, :belongs_to_channel?, to: :lodging, prefix: true, allow_nil: true
-  delegate :user, :identifier, :created_by, to: :booking, allow_nil: true
+  delegate :user, :identifier, :created_by, :rebooking_approved, to: :booking, allow_nil: true
   delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
-  # delegate :code, :description, to: :room_type, prefix: true
   delegate :code, :id, :rule, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
   delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true

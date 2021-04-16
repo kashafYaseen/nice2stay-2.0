@@ -706,6 +706,7 @@ of the accommodation."
     request_sent: Your booking request is succesfully sent to nice2stay and our partner. Your reservation needs to be accepted by the owner of the accommodation, after approval it is a definitive reservation and you will immediately receive a confirmation of your booking.
     gc_sent: You have booked this accommodation instantly and the period is reserved for you. The confirmation will be send to you.
     created: Your booking %{identifier} was created succesfully. See the status per accommodation below and in your <a href="%{link}">profile</a>
+    rebooking: The status of your booking has changed to "rebooking". The original booked dates is no longer held for you. We would like to hear from you as soon as you have chosen a new date. We will then ask for approval from the house owner and definitively rebook your reservation to the new date. After that you will see the new dates in your account with the possible new price.
 
   not_live_standalone:
     The availability of this property is not (always) up to date!
