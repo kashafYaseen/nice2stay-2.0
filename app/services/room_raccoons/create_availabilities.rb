@@ -20,27 +20,29 @@ class RoomRaccoons::CreateAvailabilities
       dates = (data[:start_date].to_date..data[:end_date].to_date).map(&:to_s)
       stays = default_stay(data)
       current_lodging = lodgings.find { |lodging| lodging.id == data[:lodging_id].to_i }
-      current_room_rate = current_lodging.room_rates.find { |room_rate| room_rate.rate_plan_id == data[:rate_plan_id]&.to_i }
-      next if current_room_rate.blank?
+      room_rates = lodging_room_rates(current_lodging, data)
+      next if room_rates.blank?
 
-      dates.each do |date|
-        availability = current_room_rate.availabilities.find { |room_rate_availability| room_rate_availability.available_on.to_s == date } ||
-                        current_room_rate.availabilities.new(available_on: date, room_rate: current_room_rate, created_at: DateTime.now, updated_at: DateTime.now)
-        availability.rr_minimum_stay = minimum_stay(availability, data, stays, current_room_rate) if data[:min_stay].present? || data[:max_stay].present?
-        availability.rr_booking_limit = data[:booking_limit] || current_room_rate.default_booking_limit if availability.rr_booking_limit.zero? || data[:booking_limit].present?
-        check_response = restriction_status(data[:status], data[:restriction])
+      room_rates.each do |current_room_rate|
+        dates.each do |date|
+          availability = current_room_rate.availabilities.find { |room_rate_availability| room_rate_availability.available_on.to_s == date } ||
+                          current_room_rate.availabilities.new(available_on: date, room_rate: current_room_rate, created_at: DateTime.now, updated_at: DateTime.now)
+          availability.rr_minimum_stay = minimum_stay(availability, data, stays, current_room_rate) if data[:min_stay].present? || data[:max_stay].present?
+          availability.rr_booking_limit = data[:booking_limit] || current_room_rate.default_booking_limit if availability.rr_booking_limit.zero? || data[:booking_limit].present?
+          check_response = restriction_status(data[:status], data[:restriction])
 
-        if check_response.present? && check_response == 'stop_sell'
-          availability.rr_booking_limit = 0
-        elsif check_response.present?
-          check_response == 'check_in_closed' ? availability.rr_check_in_closed = true : availability.rr_check_out_closed = true
-        end
+          if check_response.present? && check_response == 'stop_sell'
+            availability.rr_booking_limit = 0
+          elsif check_response.present?
+            check_response == 'check_in_closed' ? availability.rr_check_in_closed = true : availability.rr_check_out_closed = true
+          end
 
-        availability_index = availabilities.index { |avail| avail.available_on == availability.available_on && avail.room_rate_id == availability.room_rate_id }
-        if availability_index.present?
-          availabilities[availability_index] = availability
-        elsif availability.new_record? || availability.changed?
-          availabilities << availability
+          availability_index = availabilities.index { |avail| avail.available_on == availability.available_on && avail.room_rate_id == availability.room_rate_id }
+          if availability_index.present?
+            availabilities[availability_index] = availability
+          elsif availability.new_record? || availability.changed?
+            availabilities << availability
+          end
         end
       end
     end
@@ -64,7 +66,7 @@ class RoomRaccoons::CreateAvailabilities
   end
 
   private
-    def restriction_status(status, restriction)
+    def restriction_status status, restriction
       return unless status.present?
 
       return 'stop_sell' if status == 'close' && restriction.blank?
@@ -85,5 +87,11 @@ class RoomRaccoons::CreateAvailabilities
       return stays.presence || (room_rate.min_stay..room_rate.max_stay).map(&:to_s) if availability.rr_minimum_stay.blank? || (params[:min_stay].present? && params[:max_stay].present?)
       return (availability.rr_minimum_stay[0].to_i..stays[-1].to_i).map(&:to_s) if params[:max_stay].present?
       return (stays[0].to_i..availability.rr_minimum_stay[-1].to_i).map(&:to_s) if params[:min_stay].present?
+    end
+
+    def lodging_room_rates lodging, params
+      return lodging.room_rates.select { |room_rate| room_rate.rate_plan_id == params[:rate_plan_id].to_i } if params[:rate_plan_id].present?
+
+      lodging.room_rates
     end
 end
