@@ -59,7 +59,7 @@ class Booking < ApplicationRecord
       if reservation.open_gds?
         reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + reservation.open_gds_deposit_amount : (sum + reservation.total_price) * 0.3
       else
-        0.3 * reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent
+        0.3 * (reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent)
       end
     end
   end
@@ -69,7 +69,7 @@ class Booking < ApplicationRecord
       if reservation.open_gds?
         reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + (reservation.total_price - reservation.open_gds_deposit_amount) : sum + reservation.total_price * 0.7
       else
-        0.7 * reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent
+        0.7 * (reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent)
       end
     end
   end
