@@ -47,4 +47,12 @@ class Availability < ApplicationRecord
   def price_with(adults, children, amount, days)
     prices.find_by(adults: adults, children: children, amount: amount, minimum_stay: days)
   end
+
+  def max_stay
+    rr_minimum_stay.map(&:to_i).max
+  end
+
+  def min_stay
+    rr_minimum_stay.map(&:to_i).min
+  end
 end

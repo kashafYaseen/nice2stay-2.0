@@ -10,7 +10,7 @@ class RoomRaccoons::CalendarBuild
   def initialize(room_rate:, params:)
     @room_rate = room_rate
     @params = params
-    @availabilities = Availability.for_range(check_in, check_out).where(room_rate_id: room_rate.id)
+    @availabilities = room_rate.availabilities.for_range(check_in, check_out)
   end
 
   def call
@@ -22,7 +22,7 @@ class RoomRaccoons::CalendarBuild
       price_details = room_rate.price_details(room_rate_params)
       next unless price_details[:valid]
 
-      response << { date: availability.available_on.to_s, available: availability.rr_booking_limit, rate: price_details[:rates].sum.round(2), minlos: min_stay(availability), maxlos: max_stay(availability) }
+      response << { date: availability.available_on.to_s, available: availability.rr_booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
     end
 
     response
@@ -38,17 +38,9 @@ class RoomRaccoons::CalendarBuild
     end
 
     def params_based_on availability
-      min_stay = min_stay(availability)
+      min_stay = availability.min_stay
       return if min_stay.blank?
 
       [availability.available_on.to_s, (availability.available_on + min_stay.to_i.days).to_s, params[:adults] || 1, params[:children], 1]
-    end
-
-    def min_stay availability
-      availability.rr_minimum_stay.min
-    end
-
-    def max_stay availability
-      availability.rr_minimum_stay.max
     end
 end

@@ -17,9 +17,14 @@ class Api::V2::RoomRatesController < Api::V2::ApiController
   end
 
   def calendar_departure
-    calendar_entries = OpenGds::CalendarDeparture.call(room_rate: @room_rate, params: params)
-    if calendar_entries.present?
-      render json: calendar_entries, status: :ok
+    if @lodging.open_gds?
+      @calendar_entries = OpenGds::CalendarDeparture.call(room_rate: @room_rate, params: params)
+    else
+      @calendar_entries = RoomRaccoons::CalendarDeparture.call(room_rate: @room_rate, params: params)
+    end
+
+    if @calendar_entries.present?
+      render json: @calendar_entries, status: :ok
     else
       unprocessable_entity('No Available Days Found')
     end
