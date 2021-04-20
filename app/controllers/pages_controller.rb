@@ -10,7 +10,7 @@ class PagesController < ApplicationController
 
   def home
     @all_reviews = Review.homepage
-    @reviews = @all_reviews.includes(:user, :translations, :reservation).page(params[:page]).per(2)
+    @reviews = @all_reviews.includes(:user, :translations, :reservation).page(review_page).per(2)
     @lead = Lead.new
     @lodgings = Lodging.home_page
     @custom_texts = CustomText.home_page
@@ -25,4 +25,10 @@ class PagesController < ApplicationController
   def loader
     render layout: false
   end
+
+  private
+    def review_page
+      return params[:page] if params[:page].present?
+      1
+    end
 end
