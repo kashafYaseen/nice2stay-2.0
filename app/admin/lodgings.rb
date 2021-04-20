@@ -239,7 +239,7 @@ ActiveAdmin.register Lodging do
     end
 
     panel "Availabilities" do
-      table_for lodging.availabilities_wrt_channel.sort_by(&:available_on) do
+      table_for lodging.availabilities_wrt_channel.sort_by(&:available_on).select { |availability| availability.available_on >= Date.current } do
         column :id
         column :available_on
         column :check_out_only
