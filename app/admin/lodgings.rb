@@ -213,7 +213,7 @@ ActiveAdmin.register Lodging do
     panel 'Rate Plans' do
       if lodging.as_parent?
         table_for lodging.rate_plans do
-          column('Rate Plan Code') { |rate_plan| rate_plan.code }
+          column('Rate Plan ID') { |rate_plan| rate_plan.id }
           column('Rate Plan Name') { |rate_plan| rate_plan.name }
           column('Rate Plan Enabled') { |rate_plan| rate_plan.rate_enabled }
           column('OpenGDS Pushed At') { |rate_plan| rate_plan.opengds_pushed_at }
@@ -224,7 +224,8 @@ ActiveAdmin.register Lodging do
         end
       else
         table_for lodging.room_rates do
-          column :rate_plan_code
+          column :id
+          column :rate_plan_id
           column :rate_plan_name
           column :default_rate
           column :publish

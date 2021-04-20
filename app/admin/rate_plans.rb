@@ -75,7 +75,7 @@ ActiveAdmin.register RatePlan do
 
     panel 'Lodgings' do
       table_for rate_plan.room_rates do
-        # column :room_type_code
+        column('Room Rate ID') { | room_rate| room_rate.id }
         column :child_lodging
         column :open_gds_accommodation_id
         column :default_rate
