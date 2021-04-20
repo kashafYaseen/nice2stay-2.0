@@ -1,6 +1,12 @@
 <% lodging = reservation.lodging %>
 <h3><%= link_to lodging.name, lodging_path(lodging) %></h3>
 
+<% if reservation.rebooking_approved %>
+  <div class="alert alert-danger" role="alert">
+    <%= t('bookings.rebooking') %>
+  </div>
+<% end %>
+
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
@@ -45,7 +51,7 @@
               <% end %>
             <% end %>
 
-            <td class="text-center text-lg text-medium"><%= render_request_status reservation.request_status %></td>
+            <td class="text-center text-lg text-medium"><%= render_reservation_status reservation %></td>
           </tr>
         </tbody>
       </table>

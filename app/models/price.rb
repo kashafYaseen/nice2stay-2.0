@@ -39,4 +39,16 @@ class Price < ApplicationRecord
   def adults_and_children
     adults.max.to_i + children.max.to_i
   end
+
+  def has_adults? selected_adults
+    adults.include?(selected_adults.to_s) || adults.include?('999')
+  end
+
+  def has_children? selected_children
+    children.include?(selected_children.to_s) || children.include?('999')
+  end
+
+  def has_minimum_stay? selected_nights
+    minimum_stay.include?(selected_nights.to_s) || minimum_stay.include?('999')
+  end
 end
