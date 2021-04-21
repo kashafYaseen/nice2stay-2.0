@@ -28,7 +28,7 @@ class RoomRaccoons::CalendarDeparture
       response << { date: availability.available_on, rate: price_details[:rates].sum.round(2) / availability.min_stay, ctd: closed_to_departure?(availability) }
     end
 
-    response << { date: dates[-1].to_date + 1.day, rate: nil, ctd: false } # checkout
+    response << { date: dates[-1].to_date + 1.day, rate: nil, ctd: false } if response.present? # checkout
     response.sort_by { |r| r[:date] }
   end
 
@@ -41,7 +41,7 @@ class RoomRaccoons::CalendarDeparture
     end
 
     def dates
-      (check_in_availability.available_on..check_in_availability.available_on + check_in_availability.max_stay.days).map(&:to_s)
+      (check_in_availability.available_on..check_in_availability.available_on + check_in_availability.max_stay.days - 1).map(&:to_s)
     end
 
     def closed_to_departure? availability
