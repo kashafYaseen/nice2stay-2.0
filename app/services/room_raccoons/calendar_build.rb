@@ -22,10 +22,10 @@ class RoomRaccoons::CalendarBuild
       price_details = room_rate.price_details(room_rate_params)
       next unless price_details[:valid]
 
-      response << { date: availability.available_on.to_s, available: availability.rr_booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
+      response << { date: availability.available_on, available: availability.rr_booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
     end
 
-    response
+    response.sort_by { |r| r[:date] }
   end
 
   private

@@ -25,11 +25,11 @@ class RoomRaccoons::CalendarDeparture
       price_details = room_rate.price_details(room_rate_params)
       next unless price_details[:valid]
 
-      response << { date: availability.available_on.to_s, rate: price_details[:rates].sum.round(2) / availability.min_stay, ctd: closed_to_departure?(availability) }
+      response << { date: availability.available_on, rate: price_details[:rates].sum.round(2) / availability.min_stay, ctd: closed_to_departure?(availability) }
     end
 
     response << { date: dates[-1].to_date + 1.day, rate: nil, ctd: false } # checkout
-    response
+    response.sort_by { |r| r[:date] }
   end
 
   private
