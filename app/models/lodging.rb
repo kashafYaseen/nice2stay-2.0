@@ -30,6 +30,7 @@ class Lodging < ApplicationRecord
   has_many :rate_plans, class_name: 'RatePlan', foreign_key: :parent_lodging_id
   has_many :parent_rate_plans, through: :parent, source: :rate_plans
   has_many :room_rate_plans, through: :room_rates, source: :rate_plan
+  has_many :children_room_rates, through: :lodging_children, source: :room_rates
 
   include ImageHelper
 
@@ -386,6 +387,15 @@ class Lodging < ApplicationRecord
     return room_rate_availabilities if belongs_to_channel?
 
     availabilities
+  end
+
+  def cheapest_room_rate(params)
+    room_rates = self.as_parent? ? self.children_room_rates : self.room_rates
+    room_rates.select(&:publish).each do |room_rate|
+      room_rate.cumulative_price(params.clone)
+    end
+
+    room_rates.select(&:price_valid).min_by(&:calculated_price)
   end
 
   private

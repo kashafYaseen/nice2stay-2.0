@@ -1,6 +1,6 @@
 class Api::V2::RoomRateSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :default_rate, :calculated_price, :dynamic_price, :price_valid, :price_errors, :default_booking_limit
+  attributes :id, :default_rate, :calculated_price, :dynamic_price, :price_valid, :price_errors, :default_booking_limit, :child_lodging_name, :child_lodging_description
 
   attribute :rate_plan do |room_rate|
     Api::V2::RatePlanSerializer.new(room_rate.rate_plan)
