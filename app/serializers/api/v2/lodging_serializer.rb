@@ -27,7 +27,7 @@ class Api::V2::LodgingSerializer
     Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
   end
 
-  attribute :cheapest_room_rate, if: proc { |lodging| lodging.belongs_to_channel? && lodging.as_parent? } do |lodging, params|
-    Api::V2::RoomRateSerializer.new(lodging.cheapest_room_rate(params), { params: params })
+  attribute :cheapest_room_rate, if: proc { |lodging| lodging.as_parent? } do |lodging, params|
+    lodging.cheapest_room_rate(params)
   end
 end
