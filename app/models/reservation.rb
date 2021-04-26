@@ -13,10 +13,11 @@ class Reservation < ApplicationRecord
   validates :check_in, :check_out, presence: true
   validate :availability
   validate :no_of_guests
-  validate :accommodation_rules, unless: :belongs_to_channel?
-  validate :accommodation_rate_plan_rule, if: :belongs_to_channel?
+  validate :accommodation_rules, unless: :lodging_belongs_to_channel?
+  validate :accommodation_rate_plan_rule, if: :lodging_belongs_to_channel?
+  validate :unique_child_accommodation, if: :lodging_belongs_to_channel?
 
-  after_validation :update_lodging_availability, unless: :belongs_to_channel?
+  after_validation :update_lodging_availability, on: :create, unless: :lodging_belongs_to_channel?
   # after_validation :update_room_rate_availability, if: :belongs_to_channel?, on: :update
   # after_commit :send_reservation_details
   before_create :set_expired_at
@@ -24,7 +25,7 @@ class Reservation < ApplicationRecord
   after_destroy :send_reservation_removal_details
 
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
-  delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, :belongs_to_channel?, to: :lodging, prefix: true, allow_nil: true
+  delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, :rebooking_approved, to: :booking, allow_nil: true
   delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true
   delegate :id, :confirmed, to: :booking, prefix: true
@@ -32,6 +33,7 @@ class Reservation < ApplicationRecord
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
   delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
   delegate :id, :name, to: :child_lodging, allow_nil: true, prefix: true
+  delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
@@ -94,7 +96,7 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
+    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless lodging_belongs_to_channel?
 
     self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i
   end
@@ -141,10 +143,6 @@ class Reservation < ApplicationRecord
     cleaning_costs.try(:first).try(:manage_by)
   end
 
-  def belongs_to_channel?
-    lodging_belongs_to_channel?
-  end
-
   def lodging_wrt_channel
     return child_lodging if lodging_belongs_to_channel?
 
@@ -174,7 +172,7 @@ class Reservation < ApplicationRecord
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
 
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      if belongs_to_channel?
+      if lodging_belongs_to_channel?
         validate_room_rate_availabilities
       else
         _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
@@ -292,5 +290,9 @@ class Reservation < ApplicationRecord
 
     def extra_bed_used?
       (child_lodging.adults - (adults + children + infants)).negative?
+    end
+
+    def unique_child_accommodation
+      errors.add(:child_lodging, 'Accommodation already reserved.') if booking.reservations.joins(:child_lodging).where(lodgings: { id: self.child_lodging_id }).present?
     end
 end
