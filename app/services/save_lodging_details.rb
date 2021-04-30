@@ -23,10 +23,11 @@ class SaveLodgingDetails
       lodging.region = region(params[:lodging][:country_crm_id], params[:lodging][:region_crm_id])
       lodging.parent = parent
       lodging.channel = 'open_gds' if params[:lodging][:open_gds]
+      lodging.channel = 'room_raccoon' if params[:lodging][:room_raccoon]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
 
-      UpdateLodgingRatePlans.call(lodging: lodging, rate_plans: params[:lodging][:parent_rate_plans]) if lodging.as_parent?
+      UpdateLodgingRatePlans.call(lodging: lodging, parent_rate_plans: params[:lodging][:parent_rate_plans], room_rates: params[:lodging][:room_rates]) if lodging.belongs_to_channel?
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?

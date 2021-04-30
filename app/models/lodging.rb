@@ -30,6 +30,7 @@ class Lodging < ApplicationRecord
   has_many :rate_plans, class_name: 'RatePlan', foreign_key: :parent_lodging_id
   has_many :parent_rate_plans, through: :parent, source: :rate_plans
   has_many :room_rate_plans, through: :room_rates, source: :rate_plan
+  has_many :children_room_rates, through: :lodging_children, source: :room_rates
 
   include ImageHelper
 
