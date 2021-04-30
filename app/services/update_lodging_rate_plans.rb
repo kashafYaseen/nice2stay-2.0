@@ -29,6 +29,8 @@ class UpdateLodgingRatePlans
         rate_plan.name = rp[:name]
         rate_plan.description = rp[:description]
         rate_plan.open_gds_rate_id = rp[:open_gds_rate_id]
+        rate_plan.min_stay = rp[:min_stay]
+        rate_plan.max_stay = rp[:max_stay]
         new_rate_plans << rate_plan if rate_plan.new_record? || rate_plan.changed?
       end
 
