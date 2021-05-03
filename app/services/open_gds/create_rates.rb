@@ -274,7 +274,11 @@ class OpenGds::CreateRates
       RatePlan.import rate_plans, batch_size: 150, on_duplicate_key_update: { columns: RatePlan.column_names - %w[id updated_at] } if rate_plans.present?
       Rule.import rules, batch_size: 150, on_duplicate_key_update: { columns: Rule.column_names - %w[id updated_at] } if rules.present?
       ChildRate.import child_rates, batch_size: 150, on_duplicate_key_update: { columns: %i[rate rate_type age_group] } if child_rates.present?
-      RoomRate.import room_rates, batch_size: 150, on_duplicate_key_update: { columns: RoomRate.column_names - %w[id updated_at] } if room_rates.present?
+
+      if room_rates.present?
+        RoomRate.import room_rates, batch_size: 150, on_duplicate_key_update: { columns: RoomRate.column_names - %w[id updated_at] }
+        SendRoomRatesDetailsJob.perform_later(room_rates.map(&:id))
+      end
 
       if availabilities.present?
         availabilities = availabilities.flatten.select do |availability|

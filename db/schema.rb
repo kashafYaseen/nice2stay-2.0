@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_125023) do
+ActiveRecord::Schema.define(version: 2021_04_23_074850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -621,6 +621,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_125023) do
     t.integer "extra_beds", default: 0
     t.boolean "extra_beds_for_children_only", default: false
     t.boolean "dynamic_prices", default: false
+    t.integer "num_of_accommodations", default: 1
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
