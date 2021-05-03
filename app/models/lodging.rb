@@ -37,6 +37,7 @@ class Lodging < ApplicationRecord
   attr_accessor :flexible_search
   attr_accessor :calculated_price
   attr_accessor :dynamic_price
+  attr_accessor :price_valid
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -225,11 +226,14 @@ class Lodging < ApplicationRecord
       self.calculated_price = price.to_f.round(2)
       return self.dynamic_price = false
     end
-    total_price = price_list(params.merge(flexible: false))[:rates].sum
+
+    prices = price_list(params.merge(flexible: false))
+    total_price = prices[:rates].sum
     total_discount = calculate_discount(discount(params), total_price)
     total_price -= total_discount if total_discount.present?
     self.calculated_price = total_price.round(2)
     self.dynamic_price = true
+    self.price_valid = prices[:valid]
   end
 
   def allow_check_in_days
@@ -387,6 +391,42 @@ class Lodging < ApplicationRecord
     return room_rate_availabilities if belongs_to_channel?
 
     availabilities
+  end
+
+  def cheapest_room_rate(params)
+    return self.cumulative_price(params.clone) unless self.belongs_to_channel? || self.as_parent?
+
+    cheapest_room = nil
+    available_rooms_count = 0
+    if self.belongs_to_channel?
+      room_rates = self.as_parent? ? self.children_room_rates : self.room_rates
+      room_rates.select(&:publish).each do |room_rate|
+        room_rate.cumulative_price(params.clone)
+      end
+
+      available_rooms = room_rates.select(&:price_valid)
+      available_rooms_count = available_rooms.size
+      cheapest_room = available_rooms.min_by(&:calculated_price)
+    else
+      self.lodging_children.each do |lodging|
+        lodging.cumulative_price(params.clone)
+      end
+
+      available_rooms = self.lodging_children.select(&:price_valid)
+      available_rooms_count = available_rooms.size
+      cheapest_room = available_rooms.min_by(&:calculated_price)
+    end
+
+    return unless cheapest_room.present?
+
+    {
+      calculated_price: cheapest_room.calculated_price,
+      dynamic_price: cheapest_room.dynamic_price,
+      price_valid: cheapest_room.price_valid,
+      child_lodging_name: cheapest_room.name,
+      child_lodging_description: cheapest_room.description,
+      available_rooms: available_rooms_count
+    }
   end
 
   private

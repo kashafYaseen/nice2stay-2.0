@@ -22,8 +22,11 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
-    lodgings = Lodging.where(id: ids).includes(room_rates: %i[parent_lodging rate_plan])
+    lodgings = Lodging.where(id: ids).includes(:lodging_children, { children_room_rates: %i[parent_lodging rate_plan child_lodging] }, { room_rates: %i[parent_lodging rate_plan child_lodging] })
+
     lodgings.each do |lodging|
+      next if lodging.as_parent?
+
       if lodging.belongs_to_channel?
         lodging.room_rates.select(&:publish).each do |room_rate|
           room_rate.cumulative_price(params.clone)
@@ -33,7 +36,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       end
     end
 
-    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f, check_in: params[:check_in], check_out: params[:check_out] } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f, check_in: params[:check_in], check_out: params[:check_out], rooms: params[:rooms] } }).serialized_json, status: :ok
   end
 
   def recommendations
