@@ -17,7 +17,7 @@ class OpenGds::PaymentsRead
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     response = JSON.parse(http.request(request).body)
-    reservation.update(open_gds_deposit_amount: response['deposit'].to_f)
+    reservation.update_columns(open_gds_deposit_amount: response['deposit'].to_f)
     response
   end
 

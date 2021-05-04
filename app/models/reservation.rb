@@ -15,7 +15,7 @@ class Reservation < ApplicationRecord
   validate :no_of_guests
   validate :accommodation_rules, unless: :lodging_belongs_to_channel?
   validate :accommodation_rate_plan_rule, if: :lodging_belongs_to_channel?
-  validate :unique_child_accommodation, if: :lodging_belongs_to_channel?
+  validate :unique_child_accommodation, if: :lodging_belongs_to_channel?, on: :create
 
   after_validation :update_lodging_availability, on: :create, unless: :lodging_belongs_to_channel?
   # after_validation :update_room_rate_availability, if: :belongs_to_channel?, on: :update
@@ -27,12 +27,12 @@ class Reservation < ApplicationRecord
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, :rebooking_approved, to: :booking, allow_nil: true
-  delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true
+  delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true, allow_nil: true
   delegate :id, :confirmed, to: :booking, prefix: true
-  delegate :code, :id, :rule, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :code, :id, :rule, :crm_id, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
   delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
-  delegate :id, :name, to: :child_lodging, allow_nil: true, prefix: true
+  delegate :id, :name, :slug, :crm_id, to: :child_lodging, allow_nil: true, prefix: true
   delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
