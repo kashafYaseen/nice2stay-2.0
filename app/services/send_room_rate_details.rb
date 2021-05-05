@@ -12,7 +12,7 @@ class SendRoomRateDetails
 
   def call
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true if Rails.env.production?
+    # http.use_ssl = true if Rails.env.production?
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.body = room_rate_body.to_json
     http.request(request)
