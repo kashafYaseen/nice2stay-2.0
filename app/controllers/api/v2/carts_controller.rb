@@ -41,6 +41,7 @@ class Api::V2::CartsController < Api::V2::ApiController
         OpenGds::UpdatePaymentStatus.call(reservation: reservation, payment_status: 'paid')
       end
 
+      SendBookingDetailsJob.perform_later(@booking.id)
       render json: Api::V2::BookingSerializer.new(@booking, { params: { reservations: true, auth: true } }).serialized_json, status: :ok
     else
       unprocessable_entity(@booking.errors)
