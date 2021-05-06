@@ -256,18 +256,14 @@ class Reservation < ApplicationRecord
       nights = (check_out - check_in).to_i
       if _availabilities.present?
         min_booking_limit = _availabilities.pluck(:rr_booking_limit).min
-        errors.add(:rooms, "Minimum rooms available from #{check_in} to #{check_out} are #{min_booking_limit}") if rooms > min_booking_limit
-        errors.add(:check_in, "Check-in not possible on #{check_in}")  if _availabilities.first.rr_check_in_closed && _availabilities.first.available_on == check_in
-        errors.add(:check_out, "Check-out not possible on #{check_out}")  if _availabilities.last.rr_check_out_closed && _availabilities.last.available_on == check_out
-        count = 0
-        _availabilities.each do |availability|
-          count += 1 if availability.rr_minimum_stay.present? && availability.rr_minimum_stay.exclude?(nights.to_s)
-        end
+        check_in_availability = _availabilities.find { |availability| availability.available_on == check_in }
+        check_out_availability = _availabilities.find { |availability| availability.available_on == check_out-1.day }
+        return errors.add(:base, 'Not available for selected dates') if check_in_availability.blank? || check_out_availability.blank?
 
-        if count == _availabilities.length
-          _availability = _availabilities.find { |avail| avail.available_on == check_in }
-          errors.add(:base, "Minimum Stay can be of #{_availability.min_stay} and Maximum Stay can be of #{_availability.max_stay}")
-        end
+        errors.add(:rooms, "Minimum rooms available from #{check_in} to #{check_out} are #{min_booking_limit}") if rooms > min_booking_limit
+        errors.add(:check_in, "Check-in not possible on #{check_in}")  if check_in_availability.rr_check_in_closed
+        errors.add(:check_out, "Check-out not possible on #{check_out}")  if check_out_availability.rr_check_out_closed
+        errors.add(:base, "Minimum Stay can be of #{check_in_availability.min_stay} and Maximum Stay can be of #{check_in_availability.max_stay}") if check_in_availability.rr_minimum_stay.exclude?(nights.to_s)
       end
 
       errors.add(:base, "Not available for selected dates") if check_in < Date.today && _availabilities.blank?
