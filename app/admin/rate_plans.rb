@@ -60,6 +60,7 @@ ActiveAdmin.register RatePlan do
       row :max_stay
       row :open_gds_rate_type
       row :open_gds_daily_supplements
+      row('OpenGDS Reservation Fee') { |rate_plan| rate_plan.open_gds_res_fee }
       row :opengds_pushed_at
     end
 
