@@ -122,7 +122,7 @@ class SendBookingDetails
     end
 
     def accommodation_slug(reservation)
-      return reservation.child_lodging_slug if reservation.lodging_belongs_to_channel?
+      return reservation.child_lodging_slug if reservation.belongs_to_channel?
 
       reservation.lodging_slug
     end

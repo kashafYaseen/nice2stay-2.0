@@ -32,16 +32,19 @@ class SaveBookingDetails
       params[:booking][:reservations_attributes].each do |reservations_attribute|
         reservation = booking.reservations.not_canceled.find_by(id: reservations_attribute[:id]) || booking.reservations.build
         reservation.attributes = reservation_params(reservations_attribute)
+        reservation.room_rate = RoomRate.joins(:child_lodging, :rate_plan).find_by(lodgings: { crm_id: booking_accommodations_attribute[:child_lodging_crm_id], rate_plans: { crm_id: booking_accommodations_attribute[:rate_plan_crm_id] })
         lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
         reservation.lodging = lodging
 
-        if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled? && !booking.rebooking_approved?
-          lodging.availabilities.check_out_only!(reservation.check_in)
-          lodging.availabilities.where(available_on: (reservation.check_in+1.day..reservation.check_out-1.day).map(&:to_s)).destroy_all
-          lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
-        end
+        unless reservation.belongs_to_channel?
+          if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled? && !booking.rebooking_approved?
+            lodging.availabilities.check_out_only!(reservation.check_in)
+            lodging.availabilities.where(available_on: (reservation.check_in+1.day..reservation.check_out-1.day).map(&:to_s)).destroy_all
+            lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
+          end
 
-       add_availabilities(reservation.check_in, reservation.check_out, lodging) if booking.rebooking_approved?
+          add_availabilities(reservation.check_in, reservation.check_out, lodging) if booking.rebooking_approved?
+        end
 
         next unless reservations_attribute[:review_attributes].present?
         review = reservation.review || reservation.build_review
