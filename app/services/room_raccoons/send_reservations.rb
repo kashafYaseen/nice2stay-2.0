@@ -112,15 +112,18 @@ class RoomRaccoons::SendReservations
 
     def room_stays
       _room_stays = Ox::Element.new('RoomStays')
-      room_stay = Ox::Element.new('RoomStay')
-      room_stay << room_types
-      room_stay << room_rates
-      room_stay << guest_counts
-      room_stay << time_span
-      room_stay << total
-      room_stay << basic_property_info
-      room_stay << res_guest_rphs
-      _room_stays << room_stay
+
+      reservation.rooms.times do
+        room_stay = Ox::Element.new('RoomStay')
+        room_stay << room_types
+        room_stay << room_rates
+        room_stay << guest_counts
+        room_stay << time_span
+        room_stay << total
+        room_stay << basic_property_info
+        room_stay << res_guest_rphs
+        _room_stays << room_stay
+      end
 
       _room_stays
     end
@@ -151,7 +154,7 @@ class RoomRaccoons::SendReservations
       rate['ExpireDate'] = reservation.check_out
 
       base_rate = Ox::Element.new('Base')
-      base_rate['AmountAfterTax'] = reservation.total_price
+      base_rate['AmountAfterTax'] = reservation.total_price / reservation.rooms
       base_rate['CurrencyCode'] = 'EUR'
       rate << base_rate
       rates << rate
@@ -188,7 +191,7 @@ class RoomRaccoons::SendReservations
 
     def basic_property_info
       _basic_property_info = Ox::Element.new('BasicPropertyInfo')
-      _basic_property_info['HotelCode'] = reservation.lodging_id
+      _basic_property_info['HotelCode'] = reservation.parent_lodging_id
       _basic_property_info
     end
 

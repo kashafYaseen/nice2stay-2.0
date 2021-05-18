@@ -34,9 +34,11 @@ class Reservation < ApplicationRecord
   delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
   delegate :id, :name, :slug, :crm_id, to: :child_lodging, allow_nil: true, prefix: true
   delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
+  delegate :parent_lodging_id, to: :room_rate, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
+  scope :canceled, -> { where(canceled: true) }
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false, canceled: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
@@ -50,6 +52,7 @@ class Reservation < ApplicationRecord
   scope :open_gds, -> { joins(:child_lodging).where(lodgings: { channel: 3 }) }
   scope :open_gds_without_online_payment, -> { open_gds.where(open_gds_online_payment: false) }
   scope :open_gds_with_online_payment, -> { open_gds.where(open_gds_online_payment: true) }
+  scope :belongs_to_channel, -> { where.not(room_rate_id: nil) }
 
   accepts_nested_attributes_for :review
 
@@ -152,6 +155,14 @@ class Reservation < ApplicationRecord
 
   def belongs_to_channel?
     room_rate_id.present?
+  end
+
+  def room_raccoon?
+    rr_res_id_value.present? || rr_errors.present?
+  end
+
+  def open_gds?
+    open_gds_res_id.present? || open_gds_error_name.present?
   end
 
   private
