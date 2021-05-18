@@ -15,6 +15,7 @@ class SaveBookingDetails
 
   def call
     save_booking
+    cancel_channel_manager_reservations
     booking
   end
 
@@ -32,12 +33,13 @@ class SaveBookingDetails
       params[:booking][:reservations_attributes].each do |reservations_attribute|
         reservation = booking.reservations.not_canceled.find_by(id: reservations_attribute[:id]) || booking.reservations.build
         reservation.attributes = reservation_params(reservations_attribute)
-        reservation.room_rate = RoomRate.joins(:child_lodging, :rate_plan).find_by(lodgings: { crm_id: booking_accommodations_attribute[:child_lodging_crm_id], rate_plans: { crm_id: booking_accommodations_attribute[:rate_plan_crm_id] })
+        reservation.room_rate = RoomRate.joins(:child_lodging, :rate_plan).find_by(lodgings: { crm_id: reservations_attribute[:child_lodging_crm_id] }, rate_plans: { crm_id: reservations_attribute[:rate_plan_crm_id] })
         lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
         reservation.lodging = lodging
+        reservation_saved = reservation.save(validate: false)
 
         unless reservation.belongs_to_channel?
-          if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled? && !booking.rebooking_approved?
+          if lodging.present? & reservation_saved && booking.step_passed?(:booked) && !reservation.canceled? && !booking.rebooking_approved?
             lodging.availabilities.check_out_only!(reservation.check_in)
             lodging.availabilities.where(available_on: (reservation.check_in+1.day..reservation.check_out-1.day).map(&:to_s)).destroy_all
             lodging.availabilities.where(available_on: reservation.check_out, check_out_only: true).delete_all
@@ -176,6 +178,15 @@ class SaveBookingDetails
       dates = (check_in + 1.day..check_out).map(&:to_s)
       dates.each do |date|
         a = Availability.find_or_create_by(available_on: date, lodging_id: lodging.id)
+      end
+    end
+
+    def cancel_channel_manager_reservations
+      booking.reservations_canceled.belongs_to_channel.each do |reservation|
+        next if reservation.canceled_at_channel.present? #already canceled
+
+        OpenGds::CancelReservation.call(reservation) if reservation.open_gds?
+        RoomRaccoons::SendReservations.call(reservation: reservation, reservation_status: 'Cancel') if reservation.room_raccoon?
       end
     end
 end
