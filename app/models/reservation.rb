@@ -13,11 +13,11 @@ class Reservation < ApplicationRecord
   validates :check_in, :check_out, presence: true
   validate :availability
   validate :no_of_guests
-  validate :accommodation_rules, unless: :lodging_belongs_to_channel?
-  validate :accommodation_rate_plan_rule, if: :lodging_belongs_to_channel?
-  validate :unique_child_accommodation, if: :lodging_belongs_to_channel?, on: :create
+  validate :accommodation_rules, unless: :belongs_to_channel?
+  validate :accommodation_rate_plan_rule, if: :belongs_to_channel?
+  validate :unique_child_accommodation, if: :belongs_to_channel?, on: :create
 
-  after_validation :update_lodging_availability, on: :create, unless: :lodging_belongs_to_channel?
+  after_validation :update_lodging_availability, on: :create, unless: :belongs_to_channel?
   # after_validation :update_room_rate_availability, if: :belongs_to_channel?, on: :update
   # after_commit :send_reservation_details
   before_create :set_expired_at
@@ -34,9 +34,11 @@ class Reservation < ApplicationRecord
   delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
   delegate :id, :name, :slug, :crm_id, to: :child_lodging, allow_nil: true, prefix: true
   delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
+  delegate :parent_lodging_id, to: :room_rate, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
+  scope :canceled, -> { where(canceled: true) }
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false, canceled: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
@@ -50,6 +52,7 @@ class Reservation < ApplicationRecord
   scope :open_gds, -> { joins(:child_lodging).where(lodgings: { channel: 3 }) }
   scope :open_gds_without_online_payment, -> { open_gds.where(open_gds_online_payment: false) }
   scope :open_gds_with_online_payment, -> { open_gds.where(open_gds_online_payment: true) }
+  scope :belongs_to_channel, -> { where.not(room_rate_id: nil) }
 
   accepts_nested_attributes_for :review
 
@@ -96,7 +99,7 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless lodging_belongs_to_channel?
+    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
 
     self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i
   end
@@ -144,9 +147,22 @@ class Reservation < ApplicationRecord
   end
 
   def lodging_wrt_channel
-    return child_lodging if lodging_belongs_to_channel?
+    return child_lodging if belongs_to_channel?
 
     lodging
+  end
+
+
+  def belongs_to_channel?
+    room_rate_id.present?
+  end
+
+  def room_raccoon?
+    rr_res_id_value.present? || rr_errors.present?
+  end
+
+  def open_gds?
+    open_gds_res_id.present? || open_gds_error_name.present?
   end
 
   private
@@ -172,7 +188,7 @@ class Reservation < ApplicationRecord
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
 
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      if lodging_belongs_to_channel?
+      if belongs_to_channel?
         validate_room_rate_availabilities
       else
         _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))

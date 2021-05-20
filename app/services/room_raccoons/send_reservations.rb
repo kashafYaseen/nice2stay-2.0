@@ -24,10 +24,11 @@ class RoomRaccoons::SendReservations
     response = http.request(request)
     api_response = parse_response(response.body)
     if api_response[:errors].present?
-      reservation.update_attributes(rr_errors: api_response[:errors], request_status: 'rejected') if reservation_status == 'Commit'
-      reservation.update_attributes(rr_errors: api_response[:errors]) if reservation_status == 'Cancel'
+      reservation.update_columns(rr_errors: api_response[:errors], request_status: 'rejected') if reservation_status == 'Commit'
+      reservation.update_columns(rr_errors: api_response[:errors]) if reservation_status == 'Cancel'
     else
-      reservation.update_attributes(rr_res_id_value: api_response[:res_id_value], request_status: "#{ reservation_status == 'Commit' ? 'confirmed' : 'canceled' }", booking_status: "booked")
+      reservation.update_columns(rr_res_id_value: api_response[:res_id_value], request_status: 'confirmed', booking_status: "booked") if reservation_status == 'Commit'
+      reservation.update_columns(rr_res_id_value: api_response[:res_id_value], request_status: 'canceled', canceled_at_channel: DateTime.current) if reservation_status == 'Cancel'
     end
   end
 
@@ -112,15 +113,18 @@ class RoomRaccoons::SendReservations
 
     def room_stays
       _room_stays = Ox::Element.new('RoomStays')
-      room_stay = Ox::Element.new('RoomStay')
-      room_stay << room_types
-      room_stay << room_rates
-      room_stay << guest_counts
-      room_stay << time_span
-      room_stay << total
-      room_stay << basic_property_info
-      room_stay << res_guest_rphs
-      _room_stays << room_stay
+
+      reservation.rooms.times do
+        room_stay = Ox::Element.new('RoomStay')
+        room_stay << room_types
+        room_stay << room_rates
+        room_stay << guest_counts
+        room_stay << time_span
+        room_stay << total
+        room_stay << basic_property_info
+        room_stay << res_guest_rphs
+        _room_stays << room_stay
+      end
 
       _room_stays
     end
@@ -151,7 +155,7 @@ class RoomRaccoons::SendReservations
       rate['ExpireDate'] = reservation.check_out
 
       base_rate = Ox::Element.new('Base')
-      base_rate['AmountAfterTax'] = reservation.total_price
+      base_rate['AmountAfterTax'] = reservation.total_price / reservation.rooms
       base_rate['CurrencyCode'] = 'EUR'
       rate << base_rate
       rates << rate
@@ -188,7 +192,7 @@ class RoomRaccoons::SendReservations
 
     def basic_property_info
       _basic_property_info = Ox::Element.new('BasicPropertyInfo')
-      _basic_property_info['HotelCode'] = reservation.lodging_id
+      _basic_property_info['HotelCode'] = reservation.parent_lodging_id
       _basic_property_info
     end
 
@@ -244,15 +248,20 @@ class RoomRaccoons::SendReservations
       profile['ProfileType'] = 1
 
       customer = Ox::Element.new('Customer')
+
       person_name = Ox::Element.new('PersonName')
       given_name = Ox::Element.new('GivenName')
       given_name << reservation.user_first_name
       sur_name = Ox::Element.new('SurName')
       sur_name << reservation.user_last_name
-
       person_name << given_name
       person_name << sur_name
       customer << person_name
+
+      email = Ox::Element.new('Email')
+      email << reservation.user_email
+      customer << email
+
       profile << customer
       profile_info << profile
       profiles << profile_info
