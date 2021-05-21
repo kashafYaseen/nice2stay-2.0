@@ -2,7 +2,7 @@ class API::V1::RoomRaccoon::RetrieveRooms
   attr_accessor :rooms, :xml_doc, :request_body, :response_body
 
   def initialize(hotel_id:, body:)
-    @rooms = Lodging.find_by(id: hotel_id)&.lodging_children&.joins(:room_rate_plans)&.select('lodgings.id as room_id, lodgings.name as room_name, lodgings.short_desc as room_description, rate_plans.id as rate_id, rate_plans.name as rate_name, rate_plans.description as rate_description')
+    @rooms = Lodging.find_by(id: hotel_id)&.lodging_children&.joins(:room_rate_plans)&.select('lodgings.id as room_id, lodgings.name_on_cm as room_name, lodgings.short_desc as room_description, rate_plans.id as rate_id, rate_plans.name_on_cm as rate_name, rate_plans.description as rate_description')
     @request_body = body
     @xml_doc = Ox::Document.new
   end

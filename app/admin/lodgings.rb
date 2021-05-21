@@ -117,6 +117,8 @@ ActiveAdmin.register Lodging do
   show do
     attributes_table do
       row :title
+      row :name
+      row ('Name on Channel Manager') { |lodging| lodging.name_on_cm }
       row :subtitle
       row :owner
       row :street

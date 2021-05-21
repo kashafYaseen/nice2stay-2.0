@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_060700) do
+ActiveRecord::Schema.define(version: 2021_05_21_092945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -622,6 +622,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_060700) do
     t.boolean "extra_beds_for_children_only", default: false
     t.boolean "dynamic_prices", default: false
     t.integer "num_of_accommodations", default: 1
+    t.string "name_on_cm"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -879,6 +880,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_060700) do
     t.datetime "opengds_pushed_at"
     t.bigint "parent_lodging_id"
     t.bigint "crm_id"
+    t.string "name_on_cm"
     t.index ["parent_lodging_id"], name: "index_rate_plans_on_parent_lodging_id"
   end
 
