@@ -52,6 +52,7 @@ ActiveAdmin.register RatePlan do
   show do
     attributes_table do
       row :name
+      row ('Name on Channel Manager') { |rate_plan| rate_plan.name_on_cm }
       row('OpenGDS Rate ID') { |rate_plan| rate_plan.open_gds_rate_id }
       row :description
       row :rate_enabled
