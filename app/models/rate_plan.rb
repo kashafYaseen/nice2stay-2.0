@@ -30,4 +30,10 @@ class RatePlan < ApplicationRecord
     single_supplement: 0,
     single_rate: 1
   }
+
+  def expired?
+    return false if rule.blank?
+
+    rule.end_date < Date.current
+  end
 end

@@ -227,6 +227,7 @@ class Reservation < ApplicationRecord
         max_occupants = child_lodging.adults + child_lodging.extra_beds
         occupants = adults.to_i + children.to_i + infants.to_i
         return errors.add(:base, "Maximum #{max_occupants} occupants are allowed") if max_occupants < occupants
+        return errors.add(:base, "Minimum #{child_lodging.minimum_adults} occupants are allowed") if occupants < child_lodging.minimum_adults
         return unless child_lodging.extra_beds_for_children_only && extra_bed_used?
 
         errors.add(:base, 'Extra Beds are only available for children / infants') if child_lodging.adults < adults.to_i
