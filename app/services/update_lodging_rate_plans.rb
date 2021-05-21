@@ -27,6 +27,7 @@ class UpdateLodgingRatePlans
       parent_rate_plans.each do |rp|
         rate_plan = existing_rate_plans.find { |erp| erp.crm_id == rp[:crm_id] } || lodging.rate_plans.new(created_at: DateTime.current, updated_at: DateTime.current, crm_id: rp[:crm_id])
         rate_plan.name = rp[:name]
+        rate_plan.name_on_cm = rp[:name_on_cm]
         rate_plan.description = rp[:description]
         rate_plan.open_gds_rate_id = rp[:open_gds_rate_id]
         rate_plan.min_stay = rp[:min_stay]

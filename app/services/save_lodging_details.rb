@@ -170,7 +170,8 @@ class SaveLodgingDetails
         :open_gds_accommodation_id,
         :extra_beds,
         :extra_beds_for_children_only,
-        :num_of_accommodations
+        :num_of_accommodations,
+        :name_on_cm
       )
     end
 
