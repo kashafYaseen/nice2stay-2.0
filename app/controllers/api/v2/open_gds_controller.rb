@@ -10,6 +10,8 @@ class Api::V2::OpenGdsController < Api::V2::ApiController
     if lodgings.present?
       OpenGdsCreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h)
       render json: { response: 'Success' }, status: :ok
+    elsif ENV['BASE_URL'] == 'https://www.staging.nice2stay.net'
+      render json: { response: 'Property/Accommodations Not Found(Staging Server)!' }, status: :ok
     else
       render json: { response: 'Property/Accommodations Not Found!' }, status: :unprocessable_entity
     end
