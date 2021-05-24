@@ -61,7 +61,7 @@ class OpenGds::CreateRates
       selected_rate_plans.each do |rate_plan|
         rate_plan.rate_enabled = params[:rate_enabled] if params[:rate_enabled].present?
         rate_plan.open_gds_rate_type = params[:rate_type] if params[:rate_type].present?
-        rate_plan.open_gds_valid_permanent = params[:valid_pernament] if params[:valid_pernament].present?
+        rate_plan.open_gds_valid_permanent = params[:valid_permanent] if params[:valid_permanent].present?
         rate_plan.open_gds_res_fee = params[:res_fee] if params[:res_fee].present?
         rate_plan.open_gds_rate_type = params[:rate_type] if params[:rate_type].present?
         rate_plan.min_stay = params[:default_minlos] if params[:default_minlos].present?
