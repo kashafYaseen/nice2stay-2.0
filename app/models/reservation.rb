@@ -31,8 +31,8 @@ class Reservation < ApplicationRecord
   delegate :id, :confirmed, to: :booking, prefix: true
   delegate :code, :id, :rule, :crm_id, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
-  delegate :open_gds_accommodation_id, :open_gds?, to: :child_lodging, allow_nil: true
-  delegate :id, :name, :slug, :crm_id, to: :child_lodging, allow_nil: true, prefix: true
+  delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
+  delegate :id, :name, :slug, :crm_id, :open_gds?, to: :child_lodging, allow_nil: true, prefix: true
   delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
   delegate :parent_lodging_id, to: :room_rate, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
@@ -306,6 +306,6 @@ class Reservation < ApplicationRecord
     end
 
     def unique_child_accommodation
-      errors.add(:child_lodging, 'Accommodation already reserved.') if booking.reservations.joins(:child_lodging).where(lodgings: { id: self.child_lodging_id }).present?
+      errors.add(:child_lodging, 'Accommodation already reserved.') if booking.reservations_in_cart.joins(:child_lodging).where(lodgings: { id: self.child_lodging_id }).present?
     end
 end
