@@ -25,7 +25,7 @@ class RoomRaccoons::ValidateAvailabilities
       return false if Lodging.where(id: lodging_ids).count.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In Availabilities JOB'
-      RrCreateAvailabilitiesJob.perform_later(
+      RoomRaccoon::CreateAvailabilitiesJob.perform_later(
         hotel_id: hotel_id,
         lodging_ids: lodging_ids,
         rr_availabilities: availabilities
