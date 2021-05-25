@@ -9,11 +9,11 @@ class Api::V2::CartsController < Api::V2::ApiController
   def create
     reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
     if reservation.save
-      OpenGds::ReceiptBuild.call(reservation: reservation) if reservation.open_gds?
-      if reservation.open_gds_online_payment
+      OpenGds::ReceiptBuild.call(reservation: reservation) if reservation.child_lodging_open_gds?
+      if reservation.open_gds_online_payment?
         OpenGds::SendReservations.call(reservation: reservation, booking_status: reservation.booking_status)
         OpenGds::PaymentsRead.call(reservation: reservation)
-        OpenGds::UpdatePaymentStatus.call(reservation: reservation)
+        OpenGds::UpdateReservationStatusJob.set(wait: 32.minutes).perform_later(reservation.id) #OpenGDS expires uncomfirmed reservations after 30 minutes
       end
 
       render json: Api::V2::ReservationSerializer.new(@booking.reservations).serializable_hash.merge(booking_id: @booking.id), status: :ok

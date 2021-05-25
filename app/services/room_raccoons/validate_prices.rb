@@ -25,7 +25,7 @@
       return false if Lodging.where(id: lodging_ids).count.zero?
 
       Rails.logger.info '===============================>>>>>>>>>>In PRICES JOB'
-      RrCreatePricesJob.perform_later(
+      RoomRaccoon::CreatePricesJob.perform_later(
         hotel_id: hotel_id,
         lodging_ids: lodging_ids,
         rate_plan_ids: rate_plan_ids,

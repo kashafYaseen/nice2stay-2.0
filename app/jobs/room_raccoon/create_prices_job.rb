@@ -1,4 +1,4 @@
-class RrCreatePricesJob < ApplicationJob
+class RoomRaccoon::CreatePricesJob < ApplicationJob
   queue_as :rr_prices_queue
 
   def perform(hotel_id:, lodging_ids:, rate_plan_ids:, rr_prices:)
