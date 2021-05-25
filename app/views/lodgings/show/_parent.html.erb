@@ -90,8 +90,8 @@
       <div class="mt-3 col-md-9 mx-auto">
         <% if @lodging.dynamic_prices? %>
           <%= render 'shared/alert', title: 'Important:', type: 'info', description: t('dynamic_prices') %>
-        <% else %>
-          <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
+        <%# else %>
+          <%#= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? %>
         <% end %>
 
         <% unless @lodging.free_cancelation? %>
