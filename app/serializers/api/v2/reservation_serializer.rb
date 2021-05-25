@@ -15,10 +15,6 @@ class Api::V2::ReservationSerializer
     Api::V2::ReviewSerializer.new(reservation.review)
   end
 
-  attribute :room_type do |reservation|
-    Api::V2::RoomTypeSerializer.new(reservation.room_type)
-  end
-
   attribute :rate_plan do |reservation|
     Api::V2::RatePlanSerializer.new(reservation.rate_plan)
   end
