@@ -42,6 +42,8 @@ class Booking < ApplicationRecord
 
   attr_accessor :skip_data_posting
 
+  after_update :send_reservations_to_open_gds
+
   def identifier
     be_identifier || "#{user_identifier}#{created_at.to_i}"
   end
@@ -94,5 +96,15 @@ class Booking < ApplicationRecord
     def send_details
       return if in_cart || skip_data_posting
       SendBookingDetailsJob.perform_later(self.id)
+    end
+
+    def send_reservations_to_open_gds
+      return if in_cart
+
+      reservations_open_gds_with_online_payment.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
+        OpenGds::SendReservations.call(reservation: reservation, booking_status: reservation.booking_status)
+        OpenGds::PaymentsRead.call(reservation: reservation)
+        # OpenGds::UpdateReservationStatusJob.set(wait: 32.minutes).perform_later(reservation.id) #OpenGDS expires uncomfirmed reservations after 30 minutes
+      end
     end
 end
