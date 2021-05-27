@@ -28,12 +28,15 @@ class Api::V2::CartsController < Api::V2::ApiController
         RoomRaccoons::SendReservations.call(reservation: reservation)
       end
 
-      @booking.reservations_open_gds_without_online_payment.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
-        OpenGds::SendReservations.call(reservation: reservation)
-      end
+      @booking.reservations_open_gds.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
+        next if reservation.open_gds_res_id.present?
 
-      @booking.reservations_open_gds_with_online_payment.each do |reservation|
-        OpenGds::UpdatePaymentStatus.call(reservation: reservation, payment_status: 'paid')
+        if reservation.open_gds_online_payment?
+          OpenGds::SendReservations.call(reservation: reservation, booking_status: reservation.booking_status)
+          OpenGds::UpdatePaymentStatus.call(reservation: reservation, payment_status: 'paid')
+        else
+          OpenGds::SendReservations.call(reservation: reservation)
+        end
       end
 
       SendBookingDetailsJob.perform_later(@booking.id)
