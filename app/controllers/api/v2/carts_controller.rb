@@ -86,14 +86,17 @@ class Api::V2::CartsController < Api::V2::ApiController
         :in_cart,
         :created_by,
         user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
-        reservations_attributes: [:id, :booking_id, :in_cart]
+        reservations_attributes: [:id, :in_cart]
       )
     end
 
     def set_booking
       @booking = Booking.find_by(id: params[:booking_id], in_cart: true)
       if current_user.present?
-        @booking.reservations.update_all(booking_id: current_user.booking_in_cart.id) if @booking.reservations.present? if @booking.present? && @booking != current_user.booking_in_cart
+        if @booking.present? && @booking != current_user.booking_in_cart
+          @booking.reservations.update_all(booking_id: current_user.booking_in_cart.id) if @booking.reservations.present?
+          @booking.delete
+        end
         @booking = current_user.booking_in_cart
       end
 
