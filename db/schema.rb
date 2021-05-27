@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_092945) do
+ActiveRecord::Schema.define(version: 2021_05_27_085810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -982,6 +982,9 @@ ActiveRecord::Schema.define(version: 2021_05_21_092945) do
     t.integer "open_gds_payment_status", default: 0
     t.date "expired_at"
     t.datetime "canceled_at_channel"
+    t.decimal "pre_payment_percentage", default: "30.0"
+    t.decimal "final_payment_percentage", default: "70.0"
+    t.boolean "payment_in_percentage", default: true
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"
