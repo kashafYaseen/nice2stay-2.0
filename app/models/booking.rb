@@ -42,8 +42,6 @@ class Booking < ApplicationRecord
 
   attr_accessor :skip_data_posting
 
-  after_save :send_reservations_to_open_gds
-
   def identifier
     be_identifier || "#{user_identifier}#{created_at.to_i}"
   end
@@ -58,20 +56,20 @@ class Booking < ApplicationRecord
 
   def pre_payment_amount
     reservations.includes(:child_lodging).inject(0) do |sum, reservation|
-      if reservation.open_gds?
-        reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + reservation.open_gds_deposit_amount : (sum + reservation.total_price) * 0.3
+      if reservation.child_lodging_open_gds?
+        reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + reservation.open_gds_deposit_amount : sum + (reservation.total_price * 0.3)
       else
-        0.3 * (reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent)
+        sum + (0.3 * reservation.booking_expert? || reservation.belongs_to_channel?.present? ? reservation.total_price : reservation.rent)
       end
     end
   end
 
   def final_payment_amount
     reservations.includes(:child_lodging).inject(0) do |sum, reservation|
-      if reservation.open_gds?
-        reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + (reservation.total_price - reservation.open_gds_deposit_amount) : sum + reservation.total_price * 0.7
+      if reservation.child_lodging_open_gds?
+        reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + (reservation.total_price - reservation.open_gds_deposit_amount) : sum + (reservation.total_price * 0.7)
       else
-        0.7 * (reservation.booking_expert? || reservation.room_rate_id.present? ? sum + reservation.total_price : sum + reservation.rent)
+        sum + (0.7 * reservation.booking_expert? || reservation.belongs_to_channel?.present? ? reservation.total_price : reservation.rent)
       end
     end
   end
@@ -96,17 +94,5 @@ class Booking < ApplicationRecord
     def send_details
       return if in_cart || skip_data_posting
       SendBookingDetailsJob.perform_later(self.id)
-    end
-
-    def send_reservations_to_open_gds
-      return if in_cart
-
-      reservations_open_gds_with_online_payment.includes(room_rate: %i[child_lodging rate_plan child_rates]).each do |reservation|
-        next if reservation.open_gds_res_id.present?
-
-        OpenGds::SendReservations.call(reservation: reservation, booking_status: reservation.booking_status)
-        # OpenGds::PaymentsRead.call(reservation: reservation)
-        # OpenGds::UpdateReservationStatusJob.set(wait: 32.minutes).perform_later(reservation.id) #OpenGDS expires uncomfirmed reservations after 30 minutes
-      end
     end
 end
