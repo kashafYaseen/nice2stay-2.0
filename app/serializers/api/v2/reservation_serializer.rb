@@ -5,7 +5,8 @@ class Api::V2::ReservationSerializer
              :rent, :cleaning_cost, :discount, :identifier, :check_in, :check_out,
              :adults, :children, :infants, :guest_centric_booking_id, :offer_id,
              :meal_id, :meal_price, :gc_errors, :rooms, :meal_tax, :tax, :additional_fee,
-             :room_type, :gc_policy
+             :room_type, :gc_policy, :open_gds_deposit_amount, :open_gds_online_payment,
+             :pre_payment_percentage, :final_payment_percentage, :payment_in_percentage
 
   attributes :lodging do |reservation|
     Api::V2::LodgingSerializer.new(reservation.lodging)

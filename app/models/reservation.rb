@@ -165,6 +165,22 @@ class Reservation < ApplicationRecord
     open_gds_res_id.present? || open_gds_error_name.present?
   end
 
+  def pre_payment_amount
+    if child_lodging_open_gds?
+      open_gds_online_payment? && open_gds_deposit_amount.positive? ? open_gds_deposit_amount : total_price * (pre_payment_percentage / 100)
+    else
+      (pre_payment_percentage / 100) * (booking_expert? || belongs_to_channel? ? total_price : rent)
+    end
+  end
+
+  def final_payment_amount
+    if child_lodging_open_gds?
+      open_gds_online_payment? && open_gds_deposit_amount.positive? ? reservation.open_gds_deposit_amount : total_price * (final_payment_percentage / 100)
+    else
+      (final_payment_percentage / 100) * (booking_expert? || belongs_to_channel? ? total_price : rent)
+    end
+  end
+
   private
     def update_lodging_availability
       return if in_cart? || prebooking? || option? || offer_id.present?
