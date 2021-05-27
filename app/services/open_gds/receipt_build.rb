@@ -17,7 +17,7 @@ class OpenGds::ReceiptBuild
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     response = JSON.parse(http.request(request).body)
-    reservation.update_columns(open_gds_online_payment: true) if response['payment'].present?
+    reservation.update_columns(open_gds_online_payment: true, open_gds_deposit_amount: response['payment']['deposit'].to_f) if response['payment'].present?
     response
   end
 

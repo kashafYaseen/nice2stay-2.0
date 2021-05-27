@@ -1,5 +1,6 @@
 class Api::V2::CartsController < Api::V2::ApiController
-  before_action :set_user_if_present
+  before_action :set_user_if_present, except: [:update]
+  before_action :authenticate, only: [:update]
   before_action :set_booking
 
   def show
@@ -10,12 +11,6 @@ class Api::V2::CartsController < Api::V2::ApiController
     reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
     if reservation.save
       OpenGds::ReceiptBuild.call(reservation: reservation) if reservation.child_lodging_open_gds?
-      if reservation.open_gds_online_payment?
-        OpenGds::SendReservations.call(reservation: reservation, booking_status: reservation.booking_status)
-        OpenGds::PaymentsRead.call(reservation: reservation)
-        OpenGds::UpdateReservationStatusJob.set(wait: 32.minutes).perform_later(reservation.id) #OpenGDS expires uncomfirmed reservations after 30 minutes
-      end
-
       render json: Api::V2::ReservationSerializer.new(@booking.reservations).serializable_hash.merge(booking_id: @booking.id), status: :ok
     else
       unprocessable_entity(reservation.errors)
@@ -91,13 +86,12 @@ class Api::V2::CartsController < Api::V2::ApiController
         :in_cart,
         :created_by,
         user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
-        reservations_attributes: [:id, :booking_id, :in_cart]
+        reservations_attributes: [:id, :in_cart]
       )
     end
 
     def set_booking
       @booking = Booking.find_by(id: params[:booking_id], in_cart: true)
-
       if current_user.present?
         if @booking.present? && @booking != current_user.booking_in_cart
           @booking.reservations.update_all(booking_id: current_user.booking_in_cart.id) if @booking.reservations.present?
@@ -105,6 +99,7 @@ class Api::V2::CartsController < Api::V2::ApiController
         end
         @booking = current_user.booking_in_cart
       end
+
       @booking ||= Booking.create
     end
 end
