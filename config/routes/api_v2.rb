@@ -40,6 +40,11 @@ namespace :api do
     resources :bookings, only: [:index, :show] do
       resource :payments, only: [:create]
     end
+
+    namespace :payments do
+      get :payment_method_details
+    end
+
     resource :carts do
       post :remove, on: :member
     end
