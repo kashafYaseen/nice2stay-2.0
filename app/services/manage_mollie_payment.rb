@@ -4,12 +4,14 @@ class ManageMolliePayment
   attr_reader :booking
   attr_reader :user
   attr_reader :redirect_custom_url
+  attr_reader :issuer
 
-  def initialize(booking, redirect_custom_url = nil)
+  def initialize(booking, redirect_custom_url = nil, issuer = nil)
     @booking = booking
     @mollie = ManageMollieCustomer.new(booking.user)
     @user = @mollie.user
     @redirect_custom_url = redirect_custom_url
+    @issuer = issuer
   end
 
   def pre_payment
@@ -63,6 +65,8 @@ class ManageMolliePayment
         description:  description,
         redirect_url: redirect_url,
         webhook_url:   webhook_url,
+        issuer: issuer[:id],
+        method: issuer[:method],
         metadata: {
           booking_id: booking.id,
           booking_reference: booking.identifier,
