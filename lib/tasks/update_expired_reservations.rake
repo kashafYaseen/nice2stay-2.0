@@ -9,5 +9,5 @@ task update_expired_reservations: :environment do |t, args|
     end
   end
 
-  puts "Expired reservations are updated successfully!!!"
+  puts "#{Date.today}: Expired reservations are updated successfully!!!"
 end
