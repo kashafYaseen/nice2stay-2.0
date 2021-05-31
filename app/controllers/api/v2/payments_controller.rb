@@ -26,14 +26,14 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     end
   end
 
-  def payment_status
+  def update_status
     if params[:payment] == 'pre-payment'
-      payment = ManageMolliePayment.new(@booking).get_pre_payment
+      ManageMolliePayment.new(@booking).update_status(@booking.pre_payment_mollie_id)
     elsif params[:payment] == 'final-payment'
-      payment = ManageMolliePayment.new(@booking).get_final_payment
+      ManageMolliePayment.new(@booking).update_status(@booking.final_payment_mollie_id)
     end
 
-    render json: { status: payment.present? ? payment.status : false }, status: :ok
+    render json: Api::V2::BookingSerializer.new(@booking).serialized_json, status: :ok
   end
 
   private

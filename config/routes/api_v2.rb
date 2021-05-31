@@ -41,7 +41,7 @@ namespace :api do
 
     resources :bookings, only: [:index, :show] do
       resource :payments, only: [:create] do
-        get :payment_status, on: :collection
+        put :update_status, on: :member
       end
     end
 
