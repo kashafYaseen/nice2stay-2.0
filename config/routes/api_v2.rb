@@ -31,14 +31,18 @@ namespace :api do
     resources :pages, only: [] do
       get :home, on: :collection
     end
+
     resource :filters, only: [:show]
     resources :autocompletes, only: [:index]
     resources :favourites, only: [:index, :create, :destroy]
     resources :trips, only: [:index, :create, :update, :destroy] do
       resources :trip_members, only: [:new, :create, :destroy]
     end
+
     resources :bookings, only: [:index, :show] do
-      resource :payments, only: [:create]
+      resource :payments, only: [:create] do
+        get :payment_status, on: :collection
+      end
     end
 
     namespace :payments do

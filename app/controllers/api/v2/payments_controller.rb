@@ -1,12 +1,12 @@
 class Api::V2::PaymentsController < Api::V2::ApiController
   before_action :authenticate
-  before_action :set_booking, only: [:create]
+  before_action :set_booking, except: [:payment_method_details]
 
   def create
     if params[:payment] == 'pre-payment'
-      payment = ManageMolliePayment.new(@booking, params[:redirect_url], params[:issuer]).pre_payment
+      payment = ManageMolliePayment.new(@booking, params).pre_payment
     elsif params[:payment] == 'final-payment'
-      payment = ManageMolliePayment.new(@booking, params[:redirect_url], params[:issuer]).final_payment
+      payment = ManageMolliePayment.new(@booking, params).final_payment
     end
 
     if payment.present?
@@ -26,6 +26,16 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     end
   end
 
+  def payment_status
+    if params[:payment] == 'pre-payment'
+      payment = ManageMolliePayment.new(@booking).get_pre_payment
+    elsif params[:payment] == 'final-payment'
+      payment = ManageMolliePayment.new(@booking).get_final_payment
+    end
+
+    render json: { status: payment.present? ? payment.status : false }, status: :ok
+  end
+
   private
     def set_booking
       @booking = current_user.bookings.find(params[:booking_id])
@@ -38,6 +48,6 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     end
 
     def mollie_payment_method_details(details)
-      details['issuers'].map { |issuer| { id: issuer['id'], name: issuer['name'], images: issuer['image'] } }
+      details.issuers.map { |issuer| { id: issuer['id'], name: issuer['name'], images: issuer['image'] } }
     end
 end
