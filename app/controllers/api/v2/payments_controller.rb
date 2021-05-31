@@ -20,7 +20,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     details = Mollie::Method.get(params[:payment_method], include: 'issuers')
 
     if details.present?
-      render json: { details: mollie_payment_method_details(details.attributes) }, status: :ok
+      render json: { details: mollie_payment_method_details(details) }, status: :ok
     else
       unprocessable_entity("Unable to process your request at the moment.")
     end
