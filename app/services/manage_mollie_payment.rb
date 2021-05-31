@@ -1,17 +1,19 @@
 class ManageMolliePayment
   include Rails.application.routes.url_helpers
 
-  attr_reader :booking
-  attr_reader :user
-  attr_reader :redirect_custom_url
-  attr_reader :issuer
+  attr_reader :booking,
+              :user,
+              :redirect_custom_url,
+              :issuer
 
-  def initialize(booking, redirect_custom_url = nil, issuer = nil)
+  def initialize(booking, params = nil)
     @booking = booking
     @mollie = ManageMollieCustomer.new(booking.user)
     @user = @mollie.user
-    @redirect_custom_url = redirect_custom_url
-    @issuer = issuer
+    if params.present?
+      @redirect_custom_url = params[:redirect_url]
+      @issuer = params[:issuer]
+    end
   end
 
   def pre_payment
@@ -43,17 +45,20 @@ class ManageMolliePayment
   def update_status(payment_id)
     payment = find_payment(payment_id)
     return remove_rejected(payment) unless payment.status == 'paid'
+
     booking.pre_paid_at! payment.paid_at if payment.id == booking.pre_payment_mollie_id
     booking.final_paid_at! payment.paid_at if payment.id == booking.final_payment_mollie_id
   end
 
   def get_pre_payment
     return unless booking.pre_payment_mollie_id?
+
     find_payment(booking.pre_payment_mollie_id)
   end
 
   def get_final_payment
     return unless booking.final_payment_mollie_id?
+
     find_payment(booking.final_payment_mollie_id)
   end
 
