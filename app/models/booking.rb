@@ -59,7 +59,7 @@ class Booking < ApplicationRecord
       if reservation.child_lodging_open_gds?
         reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + reservation.open_gds_deposit_amount : sum + (reservation.total_price * 0.3)
       else
-        sum + (0.3 * reservation.booking_expert? || reservation.belongs_to_channel? ? reservation.total_price : reservation.rent)
+        sum + (0.3 * (reservation.booking_expert? || reservation.belongs_to_channel? ? reservation.total_price : reservation.rent))
       end
     end
   end
@@ -69,7 +69,7 @@ class Booking < ApplicationRecord
       if reservation.child_lodging_open_gds?
         reservation.open_gds_online_payment && reservation.open_gds_deposit_amount.positive? ? sum + (reservation.total_price - reservation.open_gds_deposit_amount) : sum + (reservation.total_price * 0.7)
       else
-        sum + (0.7 * reservation.booking_expert? || reservation.belongs_to_channel? ? reservation.total_price : reservation.rent)
+        sum + (0.7 * (reservation.booking_expert? || reservation.belongs_to_channel? ? reservation.total_price : reservation.rent))
       end
     end
   end
