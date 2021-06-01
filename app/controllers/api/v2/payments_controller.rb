@@ -1,4 +1,5 @@
 class Api::V2::PaymentsController < Api::V2::ApiController
+  include MollieCredentials
   before_action :authenticate
   before_action :set_booking, except: [:payment_method_details]
 
@@ -17,7 +18,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
   end
 
   def payment_method_details
-    details = Mollie::Method.get(params[:payment_method], include: 'issuers')
+    details = Mollie::Method.get(params[:payment_method], api_key: api_key(params[:requesting_site]), include: 'issuers')
 
     if details.present?
       render json: { details: mollie_payment_method_details(details) }, status: :ok
