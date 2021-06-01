@@ -5,9 +5,9 @@ task update_expired_reservations: :environment do |t, args|
   reservations.each do |reservation|
     if reservation.pending? && (reservation.prebooking? || reservation.option?)
       puts "Reservation id: #{reservation.id}"
-      reservation.expired!
+      reservation.update_column(:request_status, :expired)
     end
   end
 
-  puts "Expired reservations are updated successfully!!!"
+  puts "#{Date.today}: Expired reservations are updated successfully!!!"
 end
