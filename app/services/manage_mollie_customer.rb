@@ -1,15 +1,18 @@
 class ManageMollieCustomer
-  attr_reader :user
-  attr_reader :customer
+  include MollieCredentials
+  attr_reader :user,
+              :customer,
+              :params
 
-  def initialize(user)
+  def initialize(user, params = nil)
     @user = user
     @customer = find_or_create
+    @params = params
   end
 
   private
     def find_or_create
-      return Mollie::Customer.get(user.mollie_id) if user.mollie_id?
+      return Mollie::Customer.get(user.mollie_id, api_key: api_key(params.present? && params[:requesting_site])) if user.mollie_id?
       create
     end
 

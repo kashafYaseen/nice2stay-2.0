@@ -103,6 +103,6 @@ class Api::V2::CartsController < Api::V2::ApiController
         @booking = current_user.booking_in_cart
       end
 
-      @booking ||= Booking.create
+      @booking ||= Booking.create(created_by: params[:created_by] || 'customer')
     end
 end
