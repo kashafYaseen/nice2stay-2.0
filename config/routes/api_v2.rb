@@ -47,6 +47,7 @@ namespace :api do
 
     namespace :payments do
       get :payment_method_details
+      get :payment_methods
     end
 
     resource :carts do

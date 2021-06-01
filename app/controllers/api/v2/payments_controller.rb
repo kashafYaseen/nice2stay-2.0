@@ -1,7 +1,7 @@
 class Api::V2::PaymentsController < Api::V2::ApiController
   include MollieCredentials
   before_action :authenticate
-  before_action :set_booking, except: [:payment_method_details]
+  before_action :set_booking, except: [:payment_method_details, :payment_methods]
 
   def create
     if params[:payment] == 'pre-payment'
@@ -15,6 +15,11 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     else
       unprocessable_entity("Unable to process your request at the moment.")
     end
+  end
+
+  def payment_methods
+    methods = Mollie::Method.all(api_key: api_key(params[:requesting_site]))
+    render json: { methods: methods.map { |method| { id: method.id, description: method.description, images: method.image, status: method.attributes['status'] } } }, status: :ok
   end
 
   def payment_method_details
