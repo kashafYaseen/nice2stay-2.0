@@ -34,8 +34,8 @@ class SaveBookingDetails
         reservation = booking.reservations.not_canceled.find_by(id: reservations_attribute[:id]) || booking.reservations.build
         reservation.attributes = reservation_params(reservations_attribute)
         reservation.room_rate = RoomRate.joins(:child_lodging, :rate_plan).find_by(lodgings: { crm_id: reservations_attribute[:child_lodging_crm_id] }, rate_plans: { crm_id: reservations_attribute[:rate_plan_crm_id] })
-        lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
-        reservation.lodging = lodging
+        lodging = Lodging.find_by(crm_id: reservations_attribute[:lodging_crm_id]) || Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
+        reservation.lodging = lodging if lodging.present?
         reservation_saved = reservation.save(validate: false)
 
         unless reservation.belongs_to_channel?
