@@ -32,8 +32,8 @@ class SaveBookingDetails
       params[:booking][:reservations_attributes].each do |reservations_attribute|
         reservation = booking.reservations.not_canceled.find_by(id: reservations_attribute[:id]) || booking.reservations.build
         reservation.attributes = reservation_params(reservations_attribute)
-        lodging = Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
-        reservation.lodging = lodging
+        lodging = Lodging.find_by(crm_id: reservations_attribute[:lodging_crm_id]) || Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
+        reservation.lodging = lodging if lodging.present?
 
         if lodging.present? & reservation.save(validate: false) && booking.step_passed?(:booked) && !reservation.canceled? && !booking.rebooking_approved?
           lodging.availabilities.check_out_only!(reservation.check_in)
