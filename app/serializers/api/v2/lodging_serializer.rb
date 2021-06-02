@@ -19,15 +19,15 @@ class Api::V2::LodgingSerializer
     lodging.lowest_child_price
   end
 
-  attributes :wishlist_id, if: Proc.new { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
+  attributes :wishlist_id, if: proc { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
     lodging.wishlists.find_by(user: params[:current_user]).try(:id)
   end
 
-  attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? && !lodging.as_parent? } do |lodging, params|
+  attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? && !lodging.as_parent? && params[:action_name] != 'index' } do |lodging, params|
     Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
   end
 
-  attribute :cheapest_room_rate, if: proc { |lodging| lodging.as_parent? } do |lodging, params|
+  attribute :cheapest_room_rate, if: proc { |lodging, params| lodging.as_parent? && lodging.belongs_to_channel? && params[:action_name] == 'cumulative_price' } do |lodging, params|
     lodging.cheapest_room_rate(params)
   end
 end

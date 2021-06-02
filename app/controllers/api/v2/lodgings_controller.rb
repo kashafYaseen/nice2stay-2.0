@@ -8,7 +8,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   def index
     @lodgings = SearchLodgings.call(params, @custom_text, params[:only_parent])
     render json: {
-      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
+      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
       experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })
     } , status: :ok
   end
@@ -36,7 +36,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       end
     end
 
-    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f, check_in: params[:check_in], check_out: params[:check_out], rooms: params[:rooms] } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingSerializer.new(lodgings, { params: { adults: params[:adults], children: params[:children], nights: (params[:check_out].to_date - params[:check_in].to_date).to_f, check_in: params[:check_in], check_out: params[:check_out], rooms: params[:rooms], action_name: action_name } }).serialized_json, status: :ok
   end
 
   def recommendations
