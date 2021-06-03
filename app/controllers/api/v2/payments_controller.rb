@@ -11,7 +11,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     end
 
     if payment.present?
-      render json: { url: mollie_payment_url(payment, params[:payment]) }, status: :created
+      render json: { url: mollie_payment_url(payment, params[:payment]), status: payment.status }, status: :created
     else
       unprocessable_entity("Unable to process your request at the moment.")
     end
@@ -48,6 +48,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     end
 
     def mollie_payment_url(payment, type)
+      return if payment.status == 'paid'
       return payment._links['checkout']['href'] if payment._links['checkout'].present? && payment._links['checkout']['href'].present?
       @booking.update_columns pre_payment_mollie_id: nil if type == 'pre-payment'
       @booking.update_columns final_payment_mollie_id: nil if type == 'final-payment'
