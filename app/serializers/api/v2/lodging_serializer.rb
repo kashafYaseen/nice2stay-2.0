@@ -3,7 +3,7 @@ class Api::V2::LodgingSerializer
   attributes :id, :name, :h1, :h2, :lodging_type, :slug, :presentation, :child_name, :country_name,
             :region_name, :address, :latitude, :longitude, :adults, :children, :infants,
              :price, :calculated_price, :dynamic_price, :summary, :description, :short_desc, :including_text,
-             :images, :thumbnails, :average_rating, :created_at, :updated_at, :highlight_1,
+             :images, :average_rating, :created_at, :updated_at, :highlight_1,
              :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text,
              :open_gds_property_id, :open_gds_accommodation_id
 
@@ -27,7 +27,7 @@ class Api::V2::LodgingSerializer
     Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
   end
 
-  attribute :cheapest_room_rate, if: proc { |lodging, params| lodging.as_parent? && lodging.belongs_to_channel? && params[:action_name] == 'cumulative_price' } do |lodging, params|
+  attribute :cheapest_room_rate do |lodging, params|
     lodging.cheapest_room_rate(params)
   end
 end

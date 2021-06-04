@@ -13,7 +13,7 @@ class SearchLodgings
   end
 
   def call
-    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :children_room_rates, :lodging_children, { price_text: :translations }, { region: :country }, { parent: :translations }]
+    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
   end
 
   private
@@ -186,6 +186,20 @@ class SearchLodgings
                   { match: { check_in_day: check_in.strftime("%A").downcase } }
                 ]
               }
+            },
+            {
+              nested: {
+                path: :room_rates_availabilities,
+                query: {
+                  bool: {
+                    must: [
+                      { match: { "room_rates_availabilities.available_on": check_in  } },
+                      { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
+                      { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
+                    ]
+                  }
+                }
+              }
             }
           ]
         }
@@ -199,31 +213,52 @@ class SearchLodgings
         bool: {
           filter: [
             {
-              nested: {
-                path: :rules,
-                query: {
-                  bool: {
-                    should: [
-                      {
+              bool: {
+                should: [
+                  {
+                    nested: {
+                      path: :rules,
+                      query: {
                         bool: {
-                          must: [
-                            { range: { "rules.minimum_stay": { lte: nights } } },
-                            { match: { "rules.dates": check_in } },
+                          should: [
+                            {
+                              bool: {
+                                must: [
+                                  { range: { "rules.minimum_stay": { lte: nights } } },
+                                  { match: { "rules.dates": check_in } },
+                                ]
+                              }
+                            },
+                            {
+                              bool: {
+                                must: [
+                                  { match: { "rules.minimum_stay": 0 } },
+                                  { match: { "rules.dates": check_in } },
+                                ]
+                              }
+                            }
                           ]
                         }
                       },
-                      {
+                    }
+                  },
+                  {
+                    nested: {
+                      path: :room_rates_availabilities,
+                      query: {
                         bool: {
                           must: [
-                            { match: { "rules.minimum_stay": 0 } },
-                            { match: { "rules.dates": check_in } },
+                            { match: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
+                            { match: { "room_rates_availabilities.available_on": check_in  } },
+                            { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
+                            { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
                           ]
                         }
                       }
-                    ]
+                    }
                   }
-                },
-              },
+                ]
+              }
             }
           ]
         }

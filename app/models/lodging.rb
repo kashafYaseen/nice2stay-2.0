@@ -31,6 +31,8 @@ class Lodging < ApplicationRecord
   has_many :parent_rate_plans, through: :parent, source: :rate_plans
   has_many :room_rate_plans, through: :room_rates, source: :rate_plan
   has_many :children_room_rates, through: :lodging_children, source: :room_rates
+  has_many :children_room_rates_availabilities, through: :children_room_rates, source: :availabilities
+  has_many :children_room_rates_prices, through: :children_room_rates_availabilities, source: :prices
 
   include ImageHelper
 
@@ -174,6 +176,7 @@ class Lodging < ApplicationRecord
       properties: {
         rules: { type: :nested },
         availability_price: { type: :long },
+        room_rates_availabilities: { type: :nested }
       }
     }
   }
@@ -195,6 +198,13 @@ class Lodging < ApplicationRecord
       rules: rules.collect(&:search_data),
       discounts: discounts.active.present?,
       total_reviews: all_reviews.count,
+      adults: adults_wrt_presentation,
+      children: children_wrt_presentation,
+      infants: infants_wrt_presentation,
+      minimum_adults: (as_parent? ? adults_wrt_presentation : minimum_adults.to_i),
+      minimum_children: (as_parent? ? children_wrt_presentation : minimum_children.to_i),
+      minimum_infants: (as_parent? ? infants_wrt_presentation : minimum_infants.to_i),
+      room_rates_availabilities: (as_parent? ? children_room_rates_availabilities.collect(&:search_data) : room_rate_availabilities.collect(&:search_data))
     )
   end
 
@@ -204,12 +214,14 @@ class Lodging < ApplicationRecord
 
   def availability_price
     return prices.pluck(:amount).presence || [price] unless belongs_to_channel?
-
-    room_rate_prices.pluck(:amount).presence || [price]
+    return children_room_rates_prices.pluck(:amount).presence || children_room_rates.pluck(:default_rate) if as_parent?
+    room_rate_prices.pluck(:amount).presence || room_rates.pluck(:default_rate)
   end
 
   def adults_plus_children
-    adults.to_i + children.to_i
+    return adults.to_i + children.to_i unless belongs_to_channel? && as_parent?
+    child_lodgings = lodging_children
+    child_lodgings.pluck(:adults).select(&:present?).max.to_i + child_lodgings.pluck(:children).select(&:present?).max.to_i
   end
 
   def price_details(values, flexible = true)
@@ -380,7 +392,9 @@ class Lodging < ApplicationRecord
   end
 
   def lowest_child_price
-    lodging_children.published.pluck(:price).min
+    return children_room_rates.select(&:publish).pluck(:default_rate).min if belongs_to_channel?
+
+    lodging_children.select(&:published).pluck(:price).min
   end
 
   def belongs_to_channel?
@@ -388,7 +402,8 @@ class Lodging < ApplicationRecord
   end
 
   def availabilities_wrt_channel
-    return room_rate_availabilities if belongs_to_channel?
+    return children_room_rates_availabilities if belongs_to_channel? && as_parent?
+    return room_rate_availabilities if belongs_to_channel? && as_child?
 
     availabilities
   end
@@ -450,5 +465,20 @@ class Lodging < ApplicationRecord
 
     def reindex_experiences_and_region
       experiences.reindex && region.reindex
+    end
+
+    def adults_wrt_presentation
+      return lodging_children.pluck(:adults).select(&:present?).max.to_i if as_parent?
+      adults.to_i
+    end
+
+    def children_wrt_presentation
+      return lodging_children.pluck(:children).select(&:present?).max.to_i if as_parent?
+      children.to_i
+    end
+
+    def infants_wrt_presentation
+      return lodging_children.pluck(:infants).select(&:present?).max.to_i if as_parent?
+      infants.to_i
     end
 end

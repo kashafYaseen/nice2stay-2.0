@@ -25,10 +25,9 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     lodgings = Lodging.where(id: ids).includes(:lodging_children, { children_room_rates: %i[parent_lodging rate_plan child_lodging] }, { room_rates: %i[parent_lodging rate_plan child_lodging] })
 
     lodgings.each do |lodging|
-      next if lodging.as_parent?
-
       if lodging.belongs_to_channel?
-        lodging.room_rates.select(&:publish).each do |room_rate|
+        room_rates = lodging.as_parent? ? lodging.children_room_rates : lodging.room_rates
+        room_rates.select(&:publish).each do |room_rate|
           room_rate.cumulative_price(params.clone)
         end
       else
