@@ -201,10 +201,11 @@ class Lodging < ApplicationRecord
       adults: adults_wrt_presentation,
       children: children_wrt_presentation,
       infants: infants_wrt_presentation,
-      minimum_adults: (as_parent? ? adults_wrt_presentation : minimum_adults.to_i),
-      minimum_children: (as_parent? ? children_wrt_presentation : minimum_children.to_i),
-      minimum_infants: (as_parent? ? infants_wrt_presentation : minimum_infants.to_i),
-      room_rates_availabilities: (as_parent? ? children_room_rates_availabilities.collect(&:search_data) : room_rate_availabilities.collect(&:search_data))
+      minimum_adults: min_adults_wrt_presentation,
+      minimum_children: min_children_wrt_presentation,
+      minimum_infants: min_infants_wrt_presentation,
+      room_rates_availabilities: (as_parent? ? children_room_rates_availabilities.active.collect(&:search_data) : room_rate_availabilities.active.collect(&:search_data)),
+      checkout_dates: checkout_dates
     )
   end
 
@@ -402,10 +403,10 @@ class Lodging < ApplicationRecord
   end
 
   def availabilities_wrt_channel
-    return children_room_rates_availabilities if belongs_to_channel? && as_parent?
-    return room_rate_availabilities if belongs_to_channel? && as_child?
+    return children_room_rates_availabilities.active if belongs_to_channel? && as_parent?
+    return room_rate_availabilities.active if belongs_to_channel? && as_child?
 
-    availabilities
+    availabilities.active
   end
 
   def cheapest_room_rate(params)
@@ -480,5 +481,26 @@ class Lodging < ApplicationRecord
     def infants_wrt_presentation
       return lodging_children.pluck(:infants).select(&:present?).max.to_i if as_parent?
       infants.to_i
+    end
+
+    def min_adults_wrt_presentation
+      return lodging_children.pluck(:minimum_adults).select(&:present?).min.to_i if as_parent?
+      minimum_adults.to_i
+    end
+
+    def min_children_wrt_presentation
+      return lodging_children.pluck(:minimum_children).select(&:present?).min.to_i if as_parent?
+      minimum_children.to_i
+    end
+
+    def min_infants_wrt_presentation
+      return lodging_children.pluck(:minimum_infants).select(&:present?).min.to_i if as_parent?
+      minimum_infants.to_i
+    end
+
+    def checkout_dates
+      return unless belongs_to_channel?
+      _availabilities = room_rate_availabilities.presence || children_room_rates_availabilities
+      _availabilities.collect { |availability| availability.available_on unless availability.rr_check_out_closed? }
     end
 end

@@ -54,9 +54,9 @@ class SearchLodgings
 
       conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
-      conditions << { range: { adults: { gte: params[:adults] } } } if params[:adults].present?
+      conditions << { range: { adults: { gte: params[:adults].to_i } } } if params[:adults].present?
       conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } } if params[:adults].present?
-      conditions << { range: { minimum_adults: { lte: params[:adults] } } } if params[:adults].present?
+      conditions << { range: { minimum_adults: { lte: params[:adults].to_i } } } if params[:adults].present?
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
       if params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:regions_in].present? && params[:bounds].blank?
@@ -146,7 +146,7 @@ class SearchLodgings
     end
 
     def flexibility_condition
-      check_in = Date.parse(params[:check_in])
+      check_in, check_out = Date.parse(params[:check_in]), Date.parse(params[:check_out])
       {
         bool: {
           should: [
@@ -188,17 +188,68 @@ class SearchLodgings
               }
             },
             {
-              nested: {
-                path: :room_rates_availabilities,
-                query: {
-                  bool: {
-                    must: [
-                      { match: { "room_rates_availabilities.available_on": check_in  } },
-                      { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
-                      { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
-                    ]
+              bool: {
+                must: [
+                  {
+                    nested: {
+                      path: :room_rates_availabilities,
+                      query: {
+                        bool: {
+                          must: [
+                            { match: { "room_rates_availabilities.available_on": check_in  } },
+                            { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
+                            { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  { match: { "checkout_dates": check_out  } },
+                  {
+                    nested: {
+                      path: :rules,
+                      query: {
+                        bool: {
+                          should: [
+                            {
+                              bool: {
+                                must: [
+                                  { match: { "rules.dates": check_in } },
+                                  { match: { "rules.open_gds_arrival_days": check_in.strftime("%A").downcase } },
+                                  {
+                                    bool: {
+                                      filter: {
+                                        script: {
+                                          script: {
+                                            source: "String res_type = doc['rules.open_gds_restriction_type'].value; SimpleDateFormat sdf = new SimpleDateFormat('yyyy-MM-dd'); long checkin_date = sdf.parse(params.checkin).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DAY_OF_MONTH, (int)doc['rules.open_gds_restriction_days'].value); long required_check_in = cal.getTimeInMillis(); if(res_type == 'till') { return checkin_date >= required_check_in; } else if(res_type == 'from') { return checkin_date <= required_check_in; } return true;",
+                                            params: {
+                                             checkin: check_in
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              bool: {
+                                must_not: [
+                                  {
+                                    exists: {
+                                      field: 'rules'
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
                   }
-                }
+                ]
               }
             }
           ]
@@ -243,18 +294,69 @@ class SearchLodgings
                     }
                   },
                   {
-                    nested: {
-                      path: :room_rates_availabilities,
-                      query: {
-                        bool: {
-                          must: [
-                            { match: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
-                            { match: { "room_rates_availabilities.available_on": check_in  } },
-                            { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
-                            { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
-                          ]
+                    bool: {
+                      must: [
+                        {
+                          nested: {
+                            path: :room_rates_availabilities,
+                            query: {
+                              bool: {
+                                must: [
+                                  { match: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
+                                  { match: { "room_rates_availabilities.available_on": check_in  } },
+                                  { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
+                                  { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        { match: { "checkout_dates": check_out  } },
+                        {
+                          nested: {
+                            path: :rules,
+                            query: {
+                              bool: {
+                                should: [
+                                  {
+                                    bool: {
+                                      must: [
+                                        { match: { "rules.dates": check_in } },
+                                        { match: { "rules.open_gds_arrival_days": check_in.strftime("%A").downcase } },
+                                        {
+                                          bool: {
+                                            filter: {
+                                              script: {
+                                                script: {
+                                                  source: "int res_days = (int)doc['rules.open_gds_restriction_days'].value; String res_type = doc['rules.open_gds_restriction_type'].value; SimpleDateFormat sdf = new SimpleDateFormat('yyyy-MM-dd'); long checkin_date = sdf.parse(params.checkin).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DAY_OF_MONTH, res_days); long required_check_in = cal.getTimeInMillis(); if(res_type == 'till') { return checkin_date >= required_check_in; } else if(res_type == 'from') { return checkin_date <= required_check_in; } return true;",
+                                                  params: {
+                                                   checkin: check_in
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    bool: {
+                                      must_not: [
+                                        {
+                                          exists: {
+                                            field: 'rules'
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
                         }
-                      }
+                      ]
                     }
                   }
                 ]
