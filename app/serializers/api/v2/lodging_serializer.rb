@@ -23,11 +23,15 @@ class Api::V2::LodgingSerializer
     lodging.wishlists.find_by(user: params[:current_user]).try(:id)
   end
 
-  attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? && !lodging.as_parent? && params[:action_name] != 'index' } do |lodging, params|
-    Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
-  end
+  # attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? && !lodging.as_parent? && params[:action_name] != 'index' } do |lodging, params|
+  #   Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
+  # end
 
-  attribute :cheapest_room_rate do |lodging, params|
-    lodging.cheapest_room_rate(params)
+  # attribute :cheapest_room_rate do |lodging, params|
+  #   lodging.cheapest_room_rate(params)
+  # end
+
+  attribute :child_lodging_ids do |lodging|
+    lodging.lodging_children.ids
   end
 end
