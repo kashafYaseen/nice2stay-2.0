@@ -182,6 +182,8 @@ class Lodging < ApplicationRecord
   }
 
   def search_data
+    cached_rules = rules.collect(&:search_data)
+
     attributes.merge(
       location: { lat: latitude, lon: longitude },
       country_id: country.id,
@@ -196,6 +198,7 @@ class Lodging < ApplicationRecord
       experiences: experiences.collect(&:translated_slugs),
       experiences_ids: experiences.ids,
       rules: rules.collect(&:search_data),
+      rules_present: rules.present?,
       discounts: discounts.active.present?,
       total_reviews: all_reviews.count,
       adults: adults_wrt_presentation,
@@ -204,7 +207,7 @@ class Lodging < ApplicationRecord
       minimum_adults: min_adults_wrt_presentation,
       minimum_children: min_children_wrt_presentation,
       minimum_infants: min_infants_wrt_presentation,
-      room_rates_availabilities: (as_parent? ? children_room_rates_availabilities.active.collect(&:search_data) : room_rate_availabilities.active.collect(&:search_data)),
+      room_rates_availabilities: (as_parent? ? children_room_rates_availabilities.active.includes(:room_rate).collect(&:search_data) : room_rate_availabilities.includes(:room_rate).active.collect(&:search_data)),
       checkout_dates: checkout_dates
     )
   end

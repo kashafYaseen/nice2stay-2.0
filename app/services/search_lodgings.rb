@@ -146,7 +146,8 @@ class SearchLodgings
     end
 
     def flexibility_condition
-      check_in, check_out = Date.parse(params[:check_in]), Date.parse(params[:check_out])
+      check_out = params[:check_out].presence || params[:check_in]
+      check_in, check_out = Date.parse(params[:check_in]), Date.parse(check_out)
       {
         bool: {
           should: [
@@ -206,12 +207,12 @@ class SearchLodgings
                   },
                   { match: { "checkout_dates": check_out  } },
                   {
-                    nested: {
-                      path: :rules,
-                      query: {
-                        bool: {
-                          should: [
-                            {
+                    bool: {
+                      should: [
+                        {
+                          nested: {
+                            path: :rules,
+                            query: {
                               bool: {
                                 must: [
                                   { match: { "rules.dates": check_in } },
@@ -232,21 +233,13 @@ class SearchLodgings
                                   }
                                 ]
                               }
-                            },
-                            {
-                              bool: {
-                                must_not: [
-                                  {
-                                    exists: {
-                                      field: 'rules'
-                                    }
-                                  }
-                                ]
-                              }
                             }
-                          ]
+                          }
+                        },
+                        {
+                          term: { rules_present: false }
                         }
-                      }
+                      ]
                     }
                   }
                 ]
@@ -302,8 +295,8 @@ class SearchLodgings
                             query: {
                               bool: {
                                 must: [
-                                  { match: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
                                   { match: { "room_rates_availabilities.available_on": check_in  } },
+                                  { match: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
                                   { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
                                   { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
                                 ]
@@ -313,12 +306,12 @@ class SearchLodgings
                         },
                         { match: { "checkout_dates": check_out  } },
                         {
-                          nested: {
-                            path: :rules,
-                            query: {
-                              bool: {
-                                should: [
-                                  {
+                          bool: {
+                            should: [
+                              {
+                                nested: {
+                                  path: :rules,
+                                  query: {
                                     bool: {
                                       must: [
                                         { match: { "rules.dates": check_in } },
@@ -328,7 +321,7 @@ class SearchLodgings
                                             filter: {
                                               script: {
                                                 script: {
-                                                  source: "int res_days = (int)doc['rules.open_gds_restriction_days'].value; String res_type = doc['rules.open_gds_restriction_type'].value; SimpleDateFormat sdf = new SimpleDateFormat('yyyy-MM-dd'); long checkin_date = sdf.parse(params.checkin).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DAY_OF_MONTH, res_days); long required_check_in = cal.getTimeInMillis(); if(res_type == 'till') { return checkin_date >= required_check_in; } else if(res_type == 'from') { return checkin_date <= required_check_in; } return true;",
+                                                  source: "String res_type = doc['rules.open_gds_restriction_type'].value; SimpleDateFormat sdf = new SimpleDateFormat('yyyy-MM-dd'); long checkin_date = sdf.parse(params.checkin).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DAY_OF_MONTH, (int)doc['rules.open_gds_restriction_days'].value); long required_check_in = cal.getTimeInMillis(); if(res_type == 'till') { return checkin_date >= required_check_in; } else if(res_type == 'from') { return checkin_date <= required_check_in; } return true;",
                                                   params: {
                                                    checkin: check_in
                                                   }
@@ -339,21 +332,11 @@ class SearchLodgings
                                         }
                                       ]
                                     }
-                                  },
-                                  {
-                                    bool: {
-                                      must_not: [
-                                        {
-                                          exists: {
-                                            field: 'rules'
-                                          }
-                                        }
-                                      ]
-                                    }
                                   }
-                                ]
-                              }
-                            }
+                                }
+                              },
+                              { term: { rules_present: false } }
+                            ]
                           }
                         }
                       ]
