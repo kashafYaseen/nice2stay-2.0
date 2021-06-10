@@ -183,6 +183,7 @@ class Lodging < ApplicationRecord
 
   def search_data
     cached_rules = rules.collect(&:search_data)
+    cached_room_rates_availabilities = as_parent? ? children_room_rates_availabilities.active : room_rate_availabilities.active
 
     attributes.merge(
       location: { lat: latitude, lon: longitude },
@@ -197,8 +198,8 @@ class Lodging < ApplicationRecord
       amenities_ids: amenities.ids,
       experiences: experiences.collect(&:translated_slugs),
       experiences_ids: experiences.ids,
-      rules: rules.collect(&:search_data),
-      rules_present: rules.present?,
+      rules: cached_rules,
+      rules_present: cached_rules.present?,
       discounts: discounts.active.present?,
       total_reviews: all_reviews.count,
       adults: adults_wrt_presentation,
@@ -207,7 +208,7 @@ class Lodging < ApplicationRecord
       minimum_adults: min_adults_wrt_presentation,
       minimum_children: min_children_wrt_presentation,
       minimum_infants: min_infants_wrt_presentation,
-      room_rates_availabilities: (as_parent? ? children_room_rates_availabilities.active.includes(:room_rate).collect(&:search_data) : room_rate_availabilities.includes(:room_rate).active.collect(&:search_data)),
+      room_rates_availabilities: cached_room_rates_availabilities.includes(:room_rate).collect(&:search_data),
       checkout_dates: checkout_dates
     )
   end
@@ -413,38 +414,18 @@ class Lodging < ApplicationRecord
     availabilities.active
   end
 
-  def cheapest_room_rate(params)
-    # cheapest_room = self.cumulative_price(params.clone) unless self.belongs_to_channel? || self.as_parent?
-
-    # cheapest_room = nil
-    # available_rooms_count = 0
-    if self.belongs_to_channel?
-      self.children_room_rates.select(&:publish).each do |room_rate|
-        room_rate.cumulative_price(params.clone)
-      end
-
-      @available_rooms = self.children_room_rates.select(&:price_valid)
-      # available_rooms_count = available_rooms.size
-      @cheapest_room = @available_rooms.min_by(&:calculated_price)
-    else
-      self.lodging_children.each do |lodging|
-        lodging.cumulative_price(params.clone)
-      end
-
-      @available_rooms = self.lodging_children.select(&:price_valid)
-      # available_rooms_count = available_rooms.size
-      @cheapest_room = @available_rooms.min_by(&:calculated_price)
-    end
-
-    return unless @cheapest_room.present?
-
+  def cheapest_available_room
+    return unless as_parent?
+    available_rooms = belongs_to_channel? ? children_room_rates.select(&:price_valid) : lodging_children.select(&:price_valid)
+    return if available_rooms.blank?
+    cheapest_room = available_rooms.min_by(&:calculated_price)
     {
-      calculated_price: @cheapest_room.calculated_price,
-      dynamic_price: @cheapest_room.dynamic_price,
-      price_valid: @cheapest_room.price_valid,
-      child_lodging_name: @cheapest_room.name,
-      child_lodging_description: @cheapest_room.description,
-      available_rooms: @available_rooms.size
+      calculated_price: cheapest_room.calculated_price,
+      dynamic_price: cheapest_room.dynamic_price,
+      price_valid: cheapest_room.price_valid,
+      child_lodging_name: cheapest_room.name,
+      child_lodging_description: cheapest_room.description,
+      available_rooms: available_rooms.size
     }
   end
 
