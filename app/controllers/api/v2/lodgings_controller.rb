@@ -31,7 +31,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
           room_rate.cumulative_price(params.clone)
         end
       elsif lodging.as_parent?
-        lodging_children.each do |lodging|
+        lodging.lodging_children.each do |lodging|
           lodging.cumulative_price(params.clone)
         end
       else

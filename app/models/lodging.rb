@@ -33,6 +33,8 @@ class Lodging < ApplicationRecord
   has_many :children_room_rates, through: :lodging_children, source: :room_rates
   has_many :children_room_rates_availabilities, through: :children_room_rates, source: :availabilities
   has_many :children_room_rates_prices, through: :children_room_rates_availabilities, source: :prices
+  has_many :children_availabilities, through: :lodging_children, source: :availabilities
+  has_many :children_rules, through: :lodging_children, source: :rules
 
   include ImageHelper
 
@@ -182,7 +184,7 @@ class Lodging < ApplicationRecord
   }
 
   def search_data
-    cached_rules = rules.collect(&:search_data)
+    cached_rules = rules_wrt_channel
     cached_room_rates_availabilities = as_parent? ? children_room_rates_availabilities.active : room_rate_availabilities.active
 
     attributes.merge(
@@ -198,7 +200,7 @@ class Lodging < ApplicationRecord
       amenities_ids: amenities.ids,
       experiences: experiences.collect(&:translated_slugs),
       experiences_ids: experiences.ids,
-      rules: cached_rules,
+      rules: cached_rules.collect(&:search_data),
       rules_present: cached_rules.present?,
       discounts: discounts.active.present?,
       total_reviews: all_reviews.count,
@@ -398,7 +400,7 @@ class Lodging < ApplicationRecord
   end
 
   def lowest_child_price
-    return children_room_rates.select(&:publish).pluck(:default_rate).min if belongs_to_channel?
+    return children_room_rates.select(&:publish).pluck(:default_rate).min.to_f if belongs_to_channel?
 
     lodging_children.select(&:published).pluck(:price).min
   end
@@ -408,9 +410,9 @@ class Lodging < ApplicationRecord
   end
 
   def availabilities_wrt_channel
-    return children_room_rates_availabilities.active if belongs_to_channel? && as_parent?
-    return room_rate_availabilities.active if belongs_to_channel? && as_child?
-
+    return children_room_rates_availabilities.active.where("rr_booking_limit > ?", 0) if belongs_to_channel? && as_parent?
+    return room_rate_availabilities.active.where("rr_booking_limit > ?", 0) if belongs_to_channel? && as_child?
+    return children_availabilities.active if as_parent?
     availabilities.active
   end
 
@@ -486,5 +488,10 @@ class Lodging < ApplicationRecord
       return unless belongs_to_channel?
       _availabilities = room_rate_availabilities.presence || children_room_rates_availabilities
       _availabilities.collect { |availability| availability.available_on unless availability.rr_check_out_closed? }
+    end
+
+    def rules_wrt_channel
+      return rules if belongs_to_channel? || !as_parent?
+      children_rules
     end
 end

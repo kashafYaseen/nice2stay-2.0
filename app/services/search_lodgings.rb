@@ -304,7 +304,7 @@ class SearchLodgings
                             }
                           }
                         },
-                        { match: { "checkout_dates": check_out  } },
+                        { match: { "checkout_dates": check_out } },
                         {
                           bool: {
                             should: [
