@@ -10,8 +10,6 @@ class RoomRate < ApplicationRecord
   has_one :parent_lodging, through: :child_lodging, source: :parent
   has_many :child_rates, through: :rate_plan
 
-  # validates :child_lodging, uniqueness: { scope: :rate_plan }
-
   enum default_single_rate_type: {
     fixed_rate: 0,
     percentage: 1

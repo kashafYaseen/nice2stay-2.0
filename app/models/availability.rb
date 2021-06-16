@@ -21,6 +21,10 @@ class Availability < ApplicationRecord
   # for channel managers and opengds using booking limit
   scope :not_available, -> { active.having("SUM(rr_booking_limit) = 0").group(:available_on, :id) }
 
+  def search_data
+    attributes.merge(published: room_rate&.publish)
+  end
+
   def reindex_lodging
     lodging.reindex
   end

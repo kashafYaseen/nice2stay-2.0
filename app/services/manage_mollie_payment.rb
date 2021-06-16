@@ -1,18 +1,24 @@
 class ManageMolliePayment
   include Rails.application.routes.url_helpers
+  include MollieCredentials
 
   attr_reader :booking,
               :user,
               :redirect_custom_url,
-              :issuer
+              :issuer,
+              :card_token,
+              :params
 
   def initialize(booking, params = nil)
     @booking = booking
-    @mollie = ManageMollieCustomer.new(booking.user)
+    @mollie = ManageMollieCustomer.new(booking.user, params)
     @user = @mollie.user
+    @params = params
+    @issuer = {}
     if params.present?
       @redirect_custom_url = params[:redirect_url]
-      @issuer = params[:issuer]
+      @issuer = params[:issuer] || {}
+      @card_token = params[:card_token]
     end
   end
 
@@ -65,6 +71,7 @@ class ManageMolliePayment
   private
     def create_payment(amount, description)
       Mollie::Customer::Payment.create(
+        api_key: api_key(params.present? && params[:requesting_site]),
         customer_id:  user.mollie_id,
         amount:       { value: ("%.2f" % amount.round(2)), currency: 'EUR' },
         description:  description,
@@ -72,6 +79,7 @@ class ManageMolliePayment
         webhook_url:   webhook_url,
         issuer: issuer[:id],
         method: issuer[:method],
+        card_token: card_token,
         metadata: {
           booking_id: booking.id,
           booking_reference: booking.identifier,
