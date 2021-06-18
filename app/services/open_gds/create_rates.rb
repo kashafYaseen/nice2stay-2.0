@@ -293,5 +293,7 @@ class OpenGds::CreateRates
         Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: Price.column_names - %w[id updated_at] }
         prices.each(&:reindex)
       end
+
+      lodgings.reindex
     end
 end

@@ -57,6 +57,7 @@ class RoomRaccoons::CreateAvailabilities
 
     Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[minimum_stay] }
     prices.each(&:reindex)
+    lodgings.reindex
   end
 
   private
