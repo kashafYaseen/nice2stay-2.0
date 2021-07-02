@@ -9,7 +9,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     @lodgings = SearchLodgings.call(params, @custom_text, params[:only_parent])
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
-      experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })
+      amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
     } , status: :ok
   end
 
@@ -64,7 +64,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     end
 
     def set_total_lodgings
-      @total_lodgings = CountTotalLodgings.call(true)
+      @total_lodgings = CountTotalLodgings.call(params[:only_parent])
     end
 
     def ids
