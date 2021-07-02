@@ -6,7 +6,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :authenticate, only: [:recommendations]
 
   def index
-    @lodgings = SearchLodgings.call(params, @custom_text, params[:only_parent])
+    @lodgings = ::V2::SearchLodgings.call(params, @custom_text, params[:only_parent])
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
       experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })
