@@ -1,6 +1,6 @@
 class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_user_if_present
-  before_action :set_lodging, only: [:show, :options]
+  before_action :set_lodging, only: [:show, :options, :calendar_build]
   before_action :set_custom_text, only: [:index]
   before_action :set_total_lodgings, only: [:index]
   before_action :authenticate, only: [:recommendations]
@@ -47,6 +47,10 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     lodging_slugs.each { |lodging_slug| lodgings << Lodging.friendly.find(lodging_slug[0]) }
 
     render json: Api::V2::LodgingSerializer.new(lodgings).serialized_json, status: :ok
+  end
+
+  def calendar_build
+    render json: CalendarBuild.call(lodging: @lodging, params: params), status: :ok
   end
 
   private
