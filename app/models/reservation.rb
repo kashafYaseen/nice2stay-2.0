@@ -102,6 +102,7 @@ class Reservation < ApplicationRecord
     return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
 
     self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i + room_rate.open_gds_res_fee.to_f
+    self.additional_fee = room_rate.open_gds_res_fee.to_f
   end
 
   def total_meal_price
@@ -152,7 +153,6 @@ class Reservation < ApplicationRecord
     lodging
   end
 
-
   def belongs_to_channel?
     room_rate_id.present?
   end
@@ -185,7 +185,7 @@ class Reservation < ApplicationRecord
     def update_lodging_availability
       return if in_cart? || prebooking? || option? || offer_id.present?
       lodging.availabilities.check_out_only!(check_in)
-      lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
+      lodging.availabilities.where(available_on: (check_in + 1.day..check_out - 1.day).map(&:to_s)).destroy_all
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
@@ -207,7 +207,7 @@ class Reservation < ApplicationRecord
       if belongs_to_channel?
         validate_room_rate_availabilities
       else
-        _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
+        _availabilities = lodging.availabilities.where(available_on: (check_in..check_out - 1.day).map(&:to_s))
         check_out_days = _availabilities.where(check_out_only: true)
         errors.add(:base, "Not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
       end
@@ -259,8 +259,8 @@ class Reservation < ApplicationRecord
     def update_price_details
       return if skip_data_posting || offer_id.present? || be_category_id.present?
 
-      rent = calculate_rent
-      update_columns rent: rent, total_price: (rent - discount.to_f)
+      calculate_rent
+      update_columns rent: rent, total_price: (rent - discount.to_f), additional_fee: additional_fee
     end
 
     def rules_validation_message check_in, check_out
@@ -285,17 +285,17 @@ class Reservation < ApplicationRecord
     end
 
     def validate_room_rate_availabilities
-      _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s)).order(:available_on)
+      _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out - 1.day).map(&:to_s)).order(:available_on)
       nights = (check_out - check_in).to_i
       if _availabilities.present?
         min_booking_limit = _availabilities.pluck(:rr_booking_limit).min
         check_in_availability = _availabilities.find { |availability| availability.available_on == check_in }
-        check_out_availability = _availabilities.find { |availability| availability.available_on == check_out-1.day }
+        check_out_availability = _availabilities.find { |availability| availability.available_on == check_out - 1.day }
         return errors.add(:base, 'Not available for selected dates') if check_in_availability.blank? || check_out_availability.blank?
 
         errors.add(:rooms, "Minimum rooms available from #{check_in} to #{check_out} are #{min_booking_limit}") if rooms > min_booking_limit
-        errors.add(:check_in, "Check-in not possible on #{check_in}")  if check_in_availability.rr_check_in_closed
-        errors.add(:check_out, "Check-out not possible on #{check_out}")  if check_out_availability.rr_check_out_closed
+        errors.add(:check_in, "Check-in not possible on #{check_in}") if check_in_availability.rr_check_in_closed
+        errors.add(:check_out, "Check-out not possible on #{check_out}") if check_out_availability.rr_check_out_closed
         errors.add(:base, "Minimum Stay can be of #{check_in_availability.min_stay} and Maximum Stay can be of #{check_in_availability.max_stay}") if check_in_availability.rr_minimum_stay.exclude?(nights.to_s)
       end
 
