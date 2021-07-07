@@ -33,6 +33,7 @@ class RoomRate < ApplicationRecord
   scope :exclude_lodgings_by_rate_plan, ->(lodging_ids, rate_plan_id) { where.not(child_lodging_id: lodging_ids).where(rate_plan_id: rate_plan_id) }
   scope :lodging_channel, ->(channel) { joins(:parent_lodging).where(lodgings: { channel: channel }) }
   scope :published, -> { where(publish: true) }
+  scope :with_active_rateplans, -> { joins(:rate_plan).where(rate_plans: { rate_enabled: true }) }
 
   def cumulative_price(params)
     params[:children] = params[:children].presence || 0
