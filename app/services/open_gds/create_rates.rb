@@ -59,7 +59,7 @@ class OpenGds::CreateRates
       selected_rate_plans = rate_plans.select { |rp| params[:rate_interface_id].map(&:to_i).include?(rp[:id]) }
       params = params.merge({ dates: get_dates(params) })
       selected_rate_plans.each do |rate_plan|
-        rate_plan.rate_enabled = params[:rate_enabled] if params[:rate_enabled].present?
+        rate_plan.rate_enabled = params[:rate_enabled] if params.has_key?(:rate_enabled)
         rate_plan.open_gds_rate_type = params[:rate_type] if params[:rate_type].present?
         rate_plan.open_gds_valid_permanent = params[:valid_permanent] if params[:valid_permanent].present?
         rate_plan.open_gds_res_fee = params[:res_fee] if params[:res_fee].present?
@@ -120,7 +120,7 @@ class OpenGds::CreateRates
       room_rate.extra_bed_rate = accom_params[:extra_bed_rate] if accom_params[:extra_bed_rate].present?
       room_rate.extra_bed_rate_type = accom_params[:extra_bed_rate_type] if accom_params[:extra_bed_rate_type].present?
       room_rate.extra_night_rate = accom_params[:extra_night_rate] if accom_params[:extra_night_rate].present?
-      room_rate.publish = accom_params[:accom_enabled] if accom_params[:accom_enabled].present?
+      room_rate.publish = accom_params[:accom_enabled] if accom_params.has_key?(:accom_enabled).present?
       if room_rate.new_record?
         room_rate.created_at = DateTime.current
         room_rate.updated_at = DateTime.current
