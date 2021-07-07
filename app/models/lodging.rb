@@ -246,7 +246,7 @@ class Lodging < ApplicationRecord
       return self.dynamic_price = false
     end
 
-    prices = price_list(params.merge(flexible: false))
+    prices = price_list(params)
     total_price = prices[:rates].sum
     total_discount = calculate_discount(discount(params), total_price)
     total_price -= total_discount if total_discount.present?
