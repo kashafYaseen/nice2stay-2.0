@@ -27,7 +27,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     lodgings.each do |lodging|
       if lodging.belongs_to_channel?
         room_rates = lodging.as_parent? ? lodging.children_room_rates : lodging.room_rates
-        room_rates.select(&:publish).each do |room_rate|
+        room_rates.select{ |room_rate| room_rate.publish && room_rate.rate_enabled }.each do |room_rate|
           room_rate.cumulative_price(params.clone)
         end
       elsif lodging.as_parent?
@@ -56,7 +56,6 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   private
     def set_lodging
       @lodging = Lodging.published.friendly.find(params[:id])
-      @lodging = @lodging.parent if @lodging.parent.present?
     end
 
     def set_custom_text

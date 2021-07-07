@@ -7,6 +7,6 @@ class Api::V2::CumulativePriceSerializer
   end
 
   attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? && !lodging.as_parent? } do |lodging, params|
-    Api::V2::RoomRateSerializer.new(lodging.room_rates, { params: params })
+    Api::V2::RoomRateSerializer.new(lodging.room_rates.select { |room_rate| room_rate.publish && room_rate.rate_enabled }, { params: params })
   end
 end
