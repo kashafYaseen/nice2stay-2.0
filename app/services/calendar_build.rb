@@ -17,17 +17,16 @@ class CalendarBuild
 
   def call
     response =  []
-    availabilities.each do |availability|
+    availabilities.each_with_index do |availability, index|
       rule = rules.find { |rule| rule.start_date <= availability.available_on and rule.end_date >= availability.available_on }
-      next unless rule.present?
-      next if rule.minimum_stay.blank?
+      next if rule.blank? || rule&.minimum_stay.blank?
 
-      lodging_params = params_based_on(availability, rule)
-      price_details = lodging.price_details(lodging_params)
+      price_details = lodging.price_details(params_based_on(availability, rule), false)
       next unless price_details[:valid]
 
       response << { date: availability.available_on, minlos: rule.minimum_stay.min, rate: price_details[:rates].sum.round(2) }
     end
+
     response.sort_by { |r| r[:date] }
   end
 
@@ -41,6 +40,6 @@ class CalendarBuild
     end
 
     def params_based_on(availability, rule)
-      [availability.available_on.to_s, (availability.available_on + rule.minimum_stay.min.day).to_s, params[:adults] || 1, params[:children], 1]
+      [availability.available_on.to_s, (availability.available_on + rule.minimum_stay.min.day).to_s, params[:adults] || 1, params[:children]]
     end
 end
