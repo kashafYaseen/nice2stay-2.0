@@ -53,6 +53,8 @@ class SearchPrices
         conditions[:children] = flexible_children ? { gte: params[:children] } : params[:children]
       else
         conditions[:lodging_id] = params[:lodging_id]
+        conditions[:minimum_stay] = [params[:minimum_stay], 999]
+        conditions[:checkin] = checkin_day
         if flexible_children
           conditions[:children] = { gte: params[:children] }
         else

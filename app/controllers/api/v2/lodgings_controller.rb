@@ -1,6 +1,6 @@
 class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_user_if_present
-  before_action :set_lodging, only: [:show, :options]
+  before_action :set_lodging, only: [:show, :options, :calendar_build, :calendar_departure]
   before_action :set_custom_text, only: [:index]
   before_action :set_total_lodgings, only: [:index]
   before_action :authenticate, only: [:recommendations]
@@ -9,8 +9,8 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     @lodgings = SearchLodgings.call(params, @custom_text, params[:only_parent])
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
-      experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), { params: { lodgings: @lodgings, total_lodgings: @total_lodgings } })
-    } , status: :ok
+      amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
+    }, status: :ok
   end
 
   def show
@@ -27,7 +27,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     lodgings.each do |lodging|
       if lodging.belongs_to_channel?
         room_rates = lodging.as_parent? ? lodging.children_room_rates : lodging.room_rates
-        room_rates.select(&:publish).each do |room_rate|
+        room_rates.select{ |room_rate| room_rate.publish && room_rate.rate_enabled }.each do |room_rate|
           room_rate.cumulative_price(params.clone)
         end
       elsif lodging.as_parent?
@@ -49,10 +49,18 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     render json: Api::V2::LodgingSerializer.new(lodgings).serialized_json, status: :ok
   end
 
+  def calendar_build
+    render json: CalendarBuild.call(lodging: @lodging, params: params), status: :ok
+  end
+
+  def calendar_departure
+    render json: CalendarDeparture.call(lodging: @lodging, params: params), status: :ok
+  end
+
   private
     def set_lodging
       @lodging = Lodging.published.friendly.find(params[:id])
-      @lodging = @lodging.parent if @lodging.parent.present?
+      # @lodging = @lodging.parent if @lodging.parent.present?
     end
 
     def set_custom_text
@@ -60,7 +68,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     end
 
     def set_total_lodgings
-      @total_lodgings = CountTotalLodgings.call(true)
+      @total_lodgings = CountTotalLodgings.call(params[:only_parent])
     end
 
     def ids

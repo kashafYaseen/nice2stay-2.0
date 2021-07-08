@@ -11,6 +11,8 @@ namespace :api do
       resource :invoices, only: [:show]
       resources :reviews, only: [:index]
       resources :places, only: [:index]
+      get :calendar_build, on: :member
+      get :calendar_departure, on: :member
       resources :room_types do
         get :cumulative_price, on: :collection
       end
