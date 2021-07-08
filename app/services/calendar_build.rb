@@ -1,8 +1,5 @@
 class CalendarBuild
-  attr_reader :lodging,
-              :rules,
-              :availabilities,
-              :params,
+  attr_reader :lodging, :params,
 
   def self.call(lodging:, params:)
     new(lodging: lodging, params: params).call
@@ -11,12 +8,13 @@ class CalendarBuild
   def initialize(lodging:, params:)
     @lodging = lodging
     @params = params
-    @rules = lodging.rules.active(check_in, check_out)
-    @availabilities = lodging.availabilities.for_range(check_in, check_out)
   end
 
   def call
     response =  []
+    rules = lodging.rules_active(check_in, check_out)
+    availabilities = lodging.availabilities.for_range(check_in, check_out)
+
     availabilities.each_with_index do |availability, index|
       rule = rules.find { |rule| rule.start_date <= availability.available_on and rule.end_date >= availability.available_on }
       next if rule.blank? || rule&.minimum_stay.blank?
