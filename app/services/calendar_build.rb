@@ -22,7 +22,7 @@ class CalendarBuild
       price_details = lodging.price_details(params_based_on(availability, rule), false)
       next unless price_details[:valid]
 
-      response << { date: availability.available_on, minlos: rule.minimum_stay.min, rate: price_details[:rates].sum.round(2) }
+      response << { date: availability.available_on, minlos: rule.min_stay, rate: price_details[:rates].sum.round(2) }
     end
 
     response.sort_by { |r| r[:date] }
