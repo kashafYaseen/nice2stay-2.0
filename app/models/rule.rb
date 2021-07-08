@@ -31,4 +31,12 @@ class Rule < ApplicationRecord
       minimum_stay: (minimum_stay || 7),
     )
   end
+
+  def max_stay
+    minimum_stay.map(&:to_i).max
+  end
+
+  def min_stay
+    minimum_stay.map(&:to_i).min
+  end
 end
