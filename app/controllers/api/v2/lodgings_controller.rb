@@ -1,6 +1,6 @@
 class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_user_if_present
-  before_action :set_lodging, only: [:show, :options, :calendar_build]
+  before_action :set_lodging, only: [:show, :options, :calendar_build, :calendar_departure]
   before_action :set_custom_text, only: [:index]
   before_action :set_total_lodgings, only: [:index]
   before_action :authenticate, only: [:recommendations]
@@ -10,7 +10,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
       amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
-    } , status: :ok
+    }, status: :ok
   end
 
   def show
@@ -53,9 +53,14 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     render json: CalendarBuild.call(lodging: @lodging, params: params), status: :ok
   end
 
+  def calendar_departure
+    render json: CalendarDeparture.call(lodging: @lodging, params: params), status: :ok
+  end
+
   private
     def set_lodging
       @lodging = Lodging.published.friendly.find(params[:id])
+      # @lodging = @lodging.parent if @lodging.parent.present?
     end
 
     def set_custom_text

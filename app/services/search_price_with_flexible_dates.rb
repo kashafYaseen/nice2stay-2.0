@@ -67,8 +67,9 @@ class SearchPriceWithFlexibleDates
   private
     def search_price_with_defaults
       lodging.flexible_search = false
+      price_params = (daily_rate && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
       price_list = SearchPrices.call(params).uniq(&:available_on).pluck(:amount)
-      price_list = price_list + [lodging.price.to_f] * (params[:minimum_stay] - price_list.size) if price_list.size < params[:minimum_stay]
+      price_list = price_list + [lodging.price.to_f] * (minimum_stay - price_list.size) if price_list.size < params[:minimum_stay]
       reservation = build_reservation params
       return { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
     end
