@@ -37,6 +37,7 @@ class RoomRaccoons::SearchPrices
       condition[:_or] << condition_with_additional_amount if (params[:extra_adults].to_i.positive? || params[:children].to_i.positive?) && !flexible_adults
       condition[:available_on] = dates
       condition[:room_rate_id] = params[:room_rate_id]
+      conditions[:flexible_type] = params[:flexible_type] if params[:flexible].present? && params[:flexible_type].present? && params[:flexible_type] != 'week'
       # condition[:minimum_stay] = [params[:minimum_stay], 999]
 
       condition
@@ -59,6 +60,8 @@ class RoomRaccoons::SearchPrices
     end
 
     def availability_condition
+      return params[:dates_by_months] if params[:flexible].present? && params[:flexible_type].present?
+
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       (Date.parse(check_in)..Date.parse(check_out).prev_day).map(&:to_s)

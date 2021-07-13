@@ -1,7 +1,6 @@
 class Price < ApplicationRecord
   belongs_to :availability
   has_one :lodging, through: :availability
-  has_one :room_type, through: :availability
   has_one :room_rate, through: :availability
   has_one :rate_plan, through: :availability
 
@@ -55,13 +54,11 @@ class Price < ApplicationRecord
 
   private
     def flexible_type
-      return %w[week] if available_on.on_weekday?
-      return %w[week weekend] if available_on.on_weekend?
-
-      %w[week midweek] if on_midweek?(available_on)
+      return "weekend" if available_on.on_weekend?
+      "midweek" if on_midweek?(available_on)
     end
 
     def on_midweek? date
-      date.thuesday? || date.wednesday? || date.thursday?
+      date.tuesday? || date.wednesday? || date.thursday?
     end
 end

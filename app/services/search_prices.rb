@@ -46,16 +46,16 @@ class SearchPrices
       conditions[:_or] = []
       conditions[:available_on] = dates
       conditions[:adults] = [params[:adults], 999]
-      conditions[:flexible_type] = params[:flexible_type] if params[:flexible].present? && params[:flexible_type].present?
+      conditions[:flexible_type] = params[:flexible_type] if params[:flexible].present? && params[:flexible_type].present? && params[:flexible_type] != 'week'
 
       if params[:channel] == 'open_gds'
         conditions[:room_rate_id] = params[:room_rate_id]
-        conditions[:multiple_checkin_days] = checkin_day
+        conditions[:multiple_checkin_days] = checkin_days
         conditions[:children] = flexible_children ? { gte: params[:children] } : params[:children]
       else
         conditions[:lodging_id] = params[:lodging_id]
         conditions[:minimum_stay] = [params[:minimum_stay], 999]
-        conditions[:checkin] = [checkin_day, 'any']
+        conditions[:checkin] = checkin_days
         if flexible_children
           conditions[:children] = { gte: params[:children] }
         else
@@ -67,6 +67,8 @@ class SearchPrices
     end
 
     def availability_condition
+      return params[:dates_by_months] if params[:flexible].present? && params[:flexible_type].present?
+
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       (Date.parse(check_in)..Date.parse(check_out).prev_day).map(&:to_s)
@@ -76,14 +78,14 @@ class SearchPrices
       query_dates - result.collect(&:available_on).map{ |a| a.strftime('%Y-%m-%d') }
     end
 
-    def checkin_day
+    def checkin_days
+      return params[:checkin_dates].map{ |checkin_date| Date.parse(checkin_date).strftime("%A").downcase }.uniq + ['any'] if params[:flexible].present? && params[:flexible_type].present?
       check_in = params[:check_in].presence || params[:check_out]
-      Date.parse(check_in).strftime("%A").downcase
+      [Date.parse(check_in).strftime("%A").downcase, 'any']
     end
 
     def order_by_attribute
       return { available_on: :asc } if params[:channel] == 'open_gds'
-
       { amount: :asc }
     end
 end

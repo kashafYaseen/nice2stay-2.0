@@ -12,11 +12,6 @@ class RatePlan < ApplicationRecord
   has_many :child_rates
 
   # validates_associated :room_rates
-
-  accepts_nested_attributes_for :room_rates, allow_destroy: true, reject_if: :all_blank
-
-  delegate :open_gds_arrival_days, to: :rule, allow_nil: true
-
   enum open_gds_rate_type: {
     pppn: 0,
     papn: 1,
@@ -30,6 +25,10 @@ class RatePlan < ApplicationRecord
     single_supplement: 0,
     single_rate: 1
   }
+
+  accepts_nested_attributes_for :room_rates, allow_destroy: true, reject_if: :all_blank
+
+  delegate :open_gds_arrival_days, to: :rule, allow_nil: true
 
   def expired?
     return false if rule.blank?
