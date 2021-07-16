@@ -1,12 +1,13 @@
 class Rule < ApplicationRecord
   belongs_to :lodging
-  belongs_to :room_type, optional: true
   belongs_to :rate_plan, optional: true
 
   DAY_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
   scope :active_flexible, -> (check_in, check_out) { where("((start_date is :nil and end_date is :nil) or (start_date <= :start_date and end_date >= :end_date) or (start_date <= :start_date and end_date >= :end_date)) AND (checkin_day = :checkin_day or checkin_day = 'any')", nil: nil, start_date: check_in, end_date: check_out, checkin_day: check_in.strftime("%A").downcase) }
   scope :active, -> (check_in, check_out) { where("(start_date is :nil and end_date is :nil) or (start_date <= :start_date and end_date >= :end_date) or (start_date <= :start_date and end_date >= :end_date) or ((start_date <= :start_date and end_date >= :start_date) or (start_date <= :end_date and end_date >= :end_date))", nil: nil, start_date: check_in, end_date: check_out) }
+  scope :with_published_lodgings, -> { joins(:lodging).where("lodgings.published = true") }
+  scope :with_published_room_rates, -> { joins(rate_plan: { room_rates: :child_lodging }).where("room_rates.publish = true AND lodgings.published = true").distinct }
 
   enum checkin_day: {
     any: 'any',

@@ -1,6 +1,6 @@
 class V2::SearchLodgings
   attr_accessor :params
-  attr_reader :custom_text, :only_parent
+  attr_reader :custom_text, :only_parent, :check_ins, :check_outs
 
   def self.call(params, custom_text=nil, only_parent=false)
     self.new(params, custom_text, only_parent).call
@@ -10,6 +10,8 @@ class V2::SearchLodgings
     @params = params
     @custom_text = custom_text
     @only_parent = only_parent
+    @check_ins = check_in_dates
+    @check_outs = check_out_dates
   end
 
   def call
@@ -67,15 +69,19 @@ class V2::SearchLodgings
         conditions << regions_in
       end
 
-      unless params[:flexible_arrival].present?
-        conditions << flexibility_condition if params[:check_in].present?
-        conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
+      if params[:flexible_arrival].blank? || (params[:flexible_arrival].present? && params[:flexible_type].present?)
+        conditions << flexibility_condition if check_ins.present?
+        conditions << minimum_stay_condition if check_ins.present? && check_outs.present?
       end
+      # unless params[:flexible_arrival].present? || params[:flexible_type].blank?
+      #   conditions << flexibility_condition if params[:check_in].present?
+      #   conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
+      # end
 
       conditions << frame_coordinates if params[:bounds].present?
       conditions << near_latlong_condition if params[:within].present?
 
-      availability_condition conditions if params[:check_in].present? || params[:check_out].present?
+      availability_condition conditions if check_ins.present? || check_outs.present?
       all(:amenities_ids, params[:amenities_in], conditions) if params[:amenities_in].present?
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
@@ -146,7 +152,6 @@ class V2::SearchLodgings
     end
 
     def flexibility_condition
-      check_ins, check_outs = check_in_dates, check_out_dates
       {
         bool: {
           should: [
@@ -161,7 +166,7 @@ class V2::SearchLodgings
                         bool: {
                           must: [
                             { terms: { "rules.dates": check_ins } },
-                            { match: { "rules.flexible_arrival": true } },
+                            { match: { "rules.flexible_arrival": true } }
                           ]
                         }
                       },
@@ -170,7 +175,7 @@ class V2::SearchLodgings
                           must: [
                             { terms: { "rules.dates": check_ins } },
                             { match: { "rules.flexible_arrival": false } },
-                            { terms: { "rules.check_in_day": check_ins.map { |check_in| check_in.strftime("%A").downcase }}}
+                            { terms: { "rules.check_in_day": check_ins.map { |check_in| Date.parse(check_in).strftime("%A").downcase }.uniq }}
                           ]
                         }
                       }
@@ -183,7 +188,7 @@ class V2::SearchLodgings
               bool: {
                 must: [
                   { match: { flexible_arrival: false } },
-                  { terms: { check_in_day: check_ins.map { |check_in| check_in.strftime("%A").downcase }}}
+                  { terms: { check_in_day: check_ins.map { |check_in| Date.parse(check_in).strftime("%A").downcase }.uniq }}
                 ]
               }
             },
@@ -215,13 +220,14 @@ class V2::SearchLodgings
                               bool: {
                                 must: [
                                   { terms: { "rules.dates": check_ins } },
-                                  { terms: { "rules.open_gds_arrival_days": check_ins.map { |check_in| check_in.strftime("%A").downcase }}},
+                                  { match: { "rules.rate_enabled": true } },
+                                  { terms: { "rules.open_gds_arrival_days": check_ins.map { |check_in| Date.parse(check_in).strftime("%A").downcase }.uniq }},
                                   {
                                     bool: {
                                       filter: {
                                         script: {
                                           script: {
-                                            source: "String res_type = doc['rules.open_gds_restriction_type'].value; SimpleDateFormat sdf = new SimpleDateFormat('yyyy-MM-dd'); long[] checkin_dates = new long[params.checkin_dates.size()]; for(int i = 0; i < params.checkin_dates.size(); i++) { checkin_dates[i] = sdf.parse(params.checkin_dates[i]).getTime(); } Calendar cal = Calendar.getInstance(); cal.add(Calendar.DAY_OF_MONTH, (int)doc['rules.open_gds_restriction_days'].value); long required_check_in = cal.getTimeInMillis(); int mismatches = 0; for(int i =0; i < params.checkin_dates.size(); i++) { if((res_type == 'till' && checkin_dates[i] >= required_check_in) || (res_type == 'from' && checkin_dates[i] <= required_check_in)) { return true; } else { mismatches++; } } return mismatches == params.checkin_dates.size();",
+                                            source: "String res_type = doc[\"rules.open_gds_restriction_type\"].value; SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd\"); long [] checkin_dates = new long[params.checkin_dates.length]; try { for(int i = 0; i < params.checkin_dates.length; i++) { checkin_dates[i] = sdf.parse(params.checkin_dates[i]).getTime(); } Calendar cal = Calendar.getInstance(); cal.add(Calendar.DATE, (int)doc[\"rules.open_gds_restriction_days\"].value); long required_check_in = sdf.parse(sdf.format(cal.getTime())).getTime(); if(res_type == \"disabled\"){ return true; } for(int i = 0; i < params.checkin_dates.length; i++) { if((res_type == \"till\" && checkin_dates[i] >= required_check_in) || (res_type == \"from\" && checkin_dates[i] <= required_check_in)) { return true; } } return false; } catch(Exception e){ return false; }",
                                             params: {
                                              checkin_dates: check_ins
                                             }
@@ -250,7 +256,6 @@ class V2::SearchLodgings
     end
 
     def minimum_stay_condition
-      check_ins, check_outs = check_in_dates, check_out_dates
       nights = total_nights
       {
         bool: {
@@ -295,7 +300,7 @@ class V2::SearchLodgings
                               bool: {
                                 must: [
                                   { terms: { "room_rates_availabilities.available_on": check_ins  } },
-                                  { match: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
+                                  { term: { "room_rates_availabilities.rr_minimum_stay": nights.to_s } },
                                   { range: { "room_rates_availabilities.rr_booking_limit": { gt: 0 } } },
                                   { match: { "room_rates_availabilities.rr_check_in_closed": false  } }
                                 ]
@@ -314,13 +319,14 @@ class V2::SearchLodgings
                                     bool: {
                                       must: [
                                         { terms: { "rules.dates": check_ins } },
-                                        { terms: { "rules.open_gds_arrival_days": check_ins.map { |check_in| check_in.strftime("%A").downcase }}},
+                                        { match: { "rules.rate_enabled": true } },
+                                        { terms: { "rules.open_gds_arrival_days": check_ins.map { |check_in| Date.parse(check_in).strftime("%A").downcase }.uniq }},
                                         {
                                           bool: {
                                             filter: {
                                               script: {
                                                 script: {
-                                                  source: "String res_type = doc['rules.open_gds_restriction_type'].value; SimpleDateFormat sdf = new SimpleDateFormat('yyyy-MM-dd'); long[] checkin_dates = new long[params.checkin_dates.size()]; for(int i = 0; i < params.checkin_dates.size(); i++) { checkin_dates[i] = sdf.parse(params.checkin_dates[i]).getTime(); } Calendar cal = Calendar.getInstance(); cal.add(Calendar.DAY_OF_MONTH, (int)doc['rules.open_gds_restriction_days'].value); long required_check_in = cal.getTimeInMillis(); int mismatches = 0; for(int i =0; i < params.checkin_dates.size(); i++) { if((res_type == 'till' && checkin_dates[i] >= required_check_in) || (res_type == 'from' && checkin_dates[i] <= required_check_in)) { return true; } else { mismatches++; } } return mismatches == params.checkin_dates.size();",
+                                                  source: "String res_type = doc[\"rules.open_gds_restriction_type\"].value; SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd\"); long [] checkin_dates = new long[params.checkin_dates.length]; try { for(int i = 0; i < params.checkin_dates.length; i++) { checkin_dates[i] = sdf.parse(params.checkin_dates[i]).getTime(); } Calendar cal = Calendar.getInstance(); cal.add(Calendar.DATE, (int)doc[\"rules.open_gds_restriction_days\"].value); long required_check_in = sdf.parse(sdf.format(cal.getTime())).getTime(); if(res_type == \"disabled\"){ return true; } for(int i = 0; i < params.checkin_dates.length; i++) { if((res_type == \"till\" && checkin_dates[i] >= required_check_in) || (res_type == \"from\" && checkin_dates[i] <= required_check_in)) { return true; } } return false; } catch(Exception e){ return false; }",
                                                   params: {
                                                    checkin_dates: check_ins
                                                   }
@@ -353,22 +359,63 @@ class V2::SearchLodgings
       flexible_days = params[:flexible_days].presence || 3
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
-      return all(:available_on, (Date.parse(check_in)..Date.parse(check_out)).map(&:to_s), conditions) unless params[:flexible_arrival].present?
+      return conditions << available_on((Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)) unless params[:flexible_arrival].present?
 
       dates = []
-      flexible_days.to_i.times do |index|
-        dates << all(:available_on, ((Date.parse(check_in) + index.day)..(Date.parse(check_out) + index.day)).map(&:to_s), [])
-        next if index == 0
-        dates << all(:available_on, ((Date.parse(check_in) - index.day)..(Date.parse(check_out) - index.day)).map(&:to_s), [])
-        dates << all(:available_on, ((Date.parse(check_in) + index.day)..(Date.parse(check_out))).map(&:to_s), [])
-        dates << all(:available_on, ((Date.parse(check_in))..(Date.parse(check_out) - index.day)).map(&:to_s), [])
-        dates << all(:available_on, ((Date.parse(check_in) + index.day)..(Date.parse(check_out) - index.day)).map(&:to_s), []) if index == 1
+      if params[:flexible_type] == 'week'
+        params[:flexible_dates].each do |date_range|
+          dates << available_on((Date.parse(date_range[:check_in])..Date.parse(date_range[:check_out])).map(&:to_s))
+        end
+      else
+        flexible_days.to_i.times do |index|
+          dates << available_on(((Date.parse(check_in) + index.day)..Date.parse(check_out) + index.day).map(&:to_s))
+          next if index == 0
+
+          dates << available_on(((Date.parse(check_in) - index.day)..Date.parse(check_out) - index.day).map(&:to_s))
+          dates << available_on(((Date.parse(check_in) + index.day)..Date.parse(check_out)).map(&:to_s))
+          dates << available_on(((Date.parse(check_in))..Date.parse(check_out) - index.day).map(&:to_s))
+          next unless index == 1
+
+          dates << available_on(((Date.parse(check_in) + index.day)..Date.parse(check_out) - index.day).map(&:to_s))
+        end
       end
 
       should = []
-      dates.each { |date_range| should << { bool: { must: date_range } } }
+      should = { bool: { should: dates } }
+      # dates.each { |date_range| should << { bool: { must: date_range } } }
+      conditions << { bool: { must: should } }
+    end
 
-      conditions << { bool: { should: should } }
+    def available_on(dates)
+      _dates = []
+      dates.each do |date|
+        _dates << availability_check(date)
+      end
+
+      { bool: { must: _dates } }
+    end
+
+
+    def availability_check(date)
+      {
+        bool: {
+          must: [
+            {
+              nested: {
+                path: :check_out_availabilities,
+                query: {
+                  bool: {
+                    must: [
+                      { term: { "check_out_availabilities.available_on": date } },
+                      { match: { "check_out_availabilities.check_out_only": false } }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
     end
 
     def order
@@ -403,23 +450,38 @@ class V2::SearchLodgings
     end
 
     def check_in_dates
-      check_in = params[:check_in].presence || params[:check_out]
-      check_out = params[:check_out].presence || params[:check_in]
-      return [Date.parse(check_in)] unless params[:flexible].present?
-      return (Date.parse(check_in)..(Date.parse(check_out) - 7.days)).map(&:to_datetime) if params[:flexible].present? && params[:flexible_type] == 'week'
+      dates = []
+      if (params[:check_in].present? || params[:check_out].present?) && params[:flexible_arrival].blank?
+        check_in = params[:check_in].presence || params[:check_out]
+        dates << check_in
+      else
+        params[:months_date_range].each do |date_range|
+          dates += (Date.parse(date_range[:start_date])..(Date.parse(date_range[:end_date]) - 7.days)).map(&:to_s) if params[:flexible_arrival].present? && params[:flexible_type] == 'week'
+        end
+      end
+
+      dates
     end
 
     def check_out_dates
-      check_in = params[:check_in].presence || params[:check_out]
-      check_out = params[:check_out].presence || params[:check_in]
-      return [Date.parse(check_out)] unless params[:flexible].present?
-      return ((Date.parse(check_in) + 7.days)..(Date.parse(check_out))).map(&:to_datetime) if params[:flexible].present? && params[:flexible_type] == 'week'
+      dates = []
+      if (params[:check_in].present? || params[:check_out].present?) && params[:flexible_arrival].blank?
+        check_out = params[:check_out].presence || params[:check_in]
+        dates << check_out
+      elsif params[:flexible_arrival].present?
+        params[:months_date_range].each do |date_range|
+          dates += ((Date.parse(date_range[:start_date]) + 7.days)..(Date.parse(date_range[:end_date]))).map(&:to_s) if params[:flexible_type] == 'week'
+        end
+      end
+
+      dates
     end
 
     def total_nights
+      return 7 if params[:flexible_arrival].present? && params[:flexible_type] == 'week'
+
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
-      return (Date.parse(check_out) - Date.parse(check_in)).to_i unless params[:flexible].present?
-      return 7 if params[:flexible_type] == 'week'
+      return (Date.parse(check_out) - Date.parse(check_in)).to_i
     end
 end
