@@ -21,7 +21,7 @@ class RoomRate < ApplicationRecord
   }, _prefix: true
 
   delegate :code, :name, :pppn?, :papn?, :pp?, :ps?, :pppd?, :papd?, :opengds_pushed_at, to: :rate_plan, prefix: true, allow_nil: true
-  delegate :open_gds_daily_supplements, :single_supplement?, :single_rate?, :min_stay, :max_stay, :open_gds_res_fee, :open_gds_rate_id, to: :rate_plan, allow_nil: true
+  delegate :open_gds_daily_supplements, :single_supplement?, :single_rate?, :min_stay, :max_stay, :open_gds_res_fee, :open_gds_rate_id, :rate_enabled, to: :rate_plan, allow_nil: true
   delegate :adults, :open_gds_accommodation_id, :extra_beds, :extra_beds_for_children_only, to: :child_lodging, allow_nil: true
   delegate :channel, to: :parent_lodging, prefix: true
   delegate :children, :infants, to: :child_rates, prefix: true, allow_nil: true
@@ -43,7 +43,7 @@ class RoomRate < ApplicationRecord
     end
 
     prices = price_list(params.merge(rooms: params[:rooms] || 1))
-    self.calculated_price = (prices[:rates].sum.round(2) * (params[:rooms] || 1).to_i) + self.open_gds_res_fee.to_f
+    self.calculated_price = (prices[:rates].sum.round(2) * (params[:rooms] || 1).to_i)
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
     self.dynamic_price = true
@@ -53,6 +53,11 @@ class RoomRate < ApplicationRecord
 
   def price_details(values)
     price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5] })
+  end
+
+  def price_per_day(values)
+    total_nights = (values[1].to_date - values[0].to_date).to_i
+    SearchPriceWithFlexibleDates.call({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5], room_rate_id: id, minimum_stay: total_nights, max_adults: adults.to_i }, nil, self, true)
   end
 
   def minimum_booking_limit(params)

@@ -55,7 +55,7 @@ class Api::V2::LodgingDetailsSerializer
     Api::V2::ReviewSerializer.new(lodging.all_reviews.limit(5))
   end
 
-  attribute :room_rates, if: proc { |lodging| lodging.belongs_to_channel? } do |lodging|
-    Api::V2::RoomRateSerializer.new(lodging.room_rates.published)
+  attribute :room_rates, if: proc { |lodging| lodging.belongs_to_channel? && !lodging.as_parent? } do |lodging|
+    Api::V2::RoomRateSerializer.new(lodging.room_rates.published.with_active_rate_plan)
   end
 end

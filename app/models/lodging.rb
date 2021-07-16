@@ -134,13 +134,11 @@ class Lodging < ApplicationRecord
   def children_not_available_on
     return not_available_on unless lodging_children.present?
     _availabilities = []
-
     if belongs_to_channel?
-      total_children = lodging_children.count
-      lodging_children.each do |lodging_child|
+      total_children = lodging_children.published.count
+      lodging_children.published.each do |lodging_child|
         _availabilities += lodging_child.room_rate_availabilities_not_available.pluck(:available_on).uniq
       end
-
       not_available_dates = _availabilities
       _availabilities.reject { |availability| not_available_dates.count(availability) < total_children }.uniq.sort
     else
@@ -237,6 +235,11 @@ class Lodging < ApplicationRecord
 
   def price_details(values, flexible = true)
     price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible })
+  end
+
+  def price_per_day(values)
+    total_nights = (values[1].to_date - values[0].to_date).to_i
+    SearchPriceWithFlexibleDates.call({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: values[5], lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i}, self, nil, true)
   end
 
   def discount_details(values)

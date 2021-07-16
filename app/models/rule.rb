@@ -33,4 +33,12 @@ class Rule < ApplicationRecord
       rate_enabled: rate_plan.try(:rate_enabled)
     )
   end
+
+  def max_stay
+    minimum_stay.map(&:to_i).max
+  end
+
+  def min_stay
+    minimum_stay.map(&:to_i).min
+  end
 end
