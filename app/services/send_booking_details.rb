@@ -102,6 +102,7 @@ class SendBookingDetails
         country_slug: user.country_slug,
         phone: user.phone,
         language: user.language,
+        sign_in_count: user.sign_in_count,
       }
     end
 
