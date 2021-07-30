@@ -30,9 +30,10 @@ module MonthsDateRange
       year = ((month_index < current_date.month) && current_date.year + 1) || current_date.year
       start_date = (month_index == current_date.month && Date.new(year, month_index, current_date.day)) || Date.new(year, month_index, 1)
       end_date = Date.new(year, month_index + 1, 1)
+      _index = dates.size
 
-      if prev_month_index.present? && ((end_date.year * 12 + end_date.month) - (dates[index - 1][:end_date].to_date.year * 12 + dates[index - 1][:end_date].to_date.month) == 1) #consecutive months
-        dates[index - 1] = dates[index - 1].merge(end_date: end_date.to_s)
+      if prev_month_index.present? && ((end_date.year * 12 + end_date.month) - (dates[_index - 1][:end_date].to_date.year * 12 + dates[_index - 1][:end_date].to_date.month) == 1) #consecutive months
+        dates[_index - 1] = dates[_index - 1].merge(end_date: end_date.to_s)
       else
         dates << { start_date: start_date.to_s, end_date: end_date.to_s }
       end
