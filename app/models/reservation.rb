@@ -318,7 +318,7 @@ class Reservation < ApplicationRecord
     end
 
     def extra_bed_used?
-      (child_lodging.adults - (adults + children + infants)).negative?
+      (child_lodging.adults - (adults.to_i + children.to_i + infants.to_i)).negative?
     end
 
     def unique_child_accommodation

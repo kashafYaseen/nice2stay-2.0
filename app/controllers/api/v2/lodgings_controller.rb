@@ -5,8 +5,12 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   before_action :set_total_lodgings, only: [:index]
   before_action :authenticate, only: [:recommendations]
 
+  include MonthsDateRange
+
   def index
-    @lodgings = SearchLodgings.call(params, @custom_text, params[:only_parent])
+    dates = dates_by_months
+    @lodgings = ::V2::SearchLodgings.call(params.clone.merge(months_date_range: dates, flexible_dates: flexible_dates(dates)), @custom_text, params[:only_parent])
+
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
       amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
@@ -22,24 +26,13 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
-    lodgings = Lodging.where(id: ids).includes({ lodging_children: [{ room_rates: %i[parent_lodging rate_plan child_lodging] }, :translations] }, { children_room_rates: %i[parent_lodging rate_plan child_lodging] })
-
+    lodgings = Lodging.where(id: ids).includes({ lodging_children: [{ room_rates: [{rate_plan: :rule}, :parent_lodging, :child_lodging] }, :translations] }, { children_room_rates: [{rate_plan: :rule}, :parent_lodging, :child_lodging] })
+    search_params = params_wrt_flexible_type
     lodgings.each do |lodging|
-      if lodging.belongs_to_channel?
-        room_rates = lodging.as_parent? ? lodging.children_room_rates : lodging.room_rates
-        room_rates.select{ |room_rate| room_rate.publish && room_rate.rate_enabled }.each do |room_rate|
-          room_rate.cumulative_price(params.clone)
-        end
-      elsif lodging.as_parent?
-        lodging.lodging_children.each do |lodging|
-          lodging.cumulative_price(params.clone)
-        end
-      else
-        lodging.cumulative_price(params.clone)
-      end
+      lodging.calculate_price_for(search_params)
     end
 
-    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out] }}).serialized_json, status: :ok
+    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children] }}).serialized_json, status: :ok
   end
 
   def recommendations

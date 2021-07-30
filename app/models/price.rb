@@ -1,7 +1,6 @@
 class Price < ApplicationRecord
   belongs_to :availability
   has_one :lodging, through: :availability
-  has_one :room_type, through: :availability
   has_one :room_rate, through: :availability
   has_one :rate_plan, through: :availability
 
@@ -28,7 +27,8 @@ class Price < ApplicationRecord
       available_on: availability.try(:available_on),
       lodging_id: lodging.try(:id),
       adults_and_children: adults_and_children,
-      room_rate_id: room_rate.try(:id)
+      room_rate_id: room_rate.try(:id),
+      flexible_type: flexible_type
     )
   end
 
@@ -51,4 +51,14 @@ class Price < ApplicationRecord
   def has_minimum_stay? selected_nights
     minimum_stay.include?(selected_nights.to_s) || minimum_stay.include?('999')
   end
+
+  private
+    def flexible_type
+      return "weekend" if available_on.on_weekend?
+      "midweek" if on_midweek?(available_on)
+    end
+
+    def on_midweek? date
+      date.tuesday? || date.wednesday? || date.thursday?
+    end
 end
