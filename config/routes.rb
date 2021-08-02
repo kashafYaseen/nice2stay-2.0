@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   draw :api_v1
-  draw :seo
+  # draw :seo
   draw :sidekiq
 
   get 'loaderio-b3ee98d7d91b9f0724017998f831caf3', to: 'pages#loader' # This is used for stress testing through loader.io
