@@ -1,15 +1,14 @@
 class V2::SearchLodgings
   attr_accessor :params
-  attr_reader :custom_text, :only_parent, :check_ins, :check_outs
+  attr_reader :custom_text, :check_ins, :check_outs
 
-  def self.call(params, custom_text=nil, only_parent=false)
-    self.new(params, custom_text, only_parent).call
+  def self.call(params, custom_text=nil)
+    self.new(params, custom_text).call
   end
 
-  def initialize(params, custom_text=nil, only_parent=false)
+  def initialize(params, custom_text=nil)
     @params = params
     @custom_text = custom_text
-    @only_parent = only_parent
     @check_ins = check_in_dates
     @check_outs = check_out_dates
   end
@@ -25,7 +24,7 @@ class V2::SearchLodgings
 
     def body
       body = {}
-      body[:query] = { has_child: { type: :child, query: { bool: boolean_queries } } }
+      body[:query] = { has_child: { type: :child, query: { bool: boolean_queries }, inner_hits: {} } }
       body[:sort] = [order] if order.present?
       body[:aggs] = aggregation
       body
@@ -48,12 +47,7 @@ class V2::SearchLodgings
       conditions << { term: { discounts: true } } if params[:discounts].present?
       conditions << { term: { realtime_availability: true } } if params[:realtime_availability].present?
       conditions << { term: { free_cancelation: true } } if params[:free_cancelation].present?
-
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
-
-      # conditions << { terms: { presentation: ['as_child', 'as_standalone'] } } unless only_parent
-      # conditions << { term: { presentation: 'as_child' } }
-
       conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
       conditions << { range: { adults: { gte: params[:adults].to_i } } } if params[:adults].present?
