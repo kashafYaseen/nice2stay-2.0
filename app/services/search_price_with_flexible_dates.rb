@@ -68,14 +68,13 @@ class SearchPriceWithFlexibleDates
   private
     def search_price_with_defaults
       lodging.flexible_search = false
-      # self.params = (params[:flexible].present? && params[:flexible_type].present? && params_wrt_flexible_type) || params
       price_params = (daily_rate && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
       price_list = SearchPrices.call(params)
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
 
       price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] })
       reservation = build_reservation params
-      { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
+      { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
     end
 
     def search_price_with(params)
@@ -87,7 +86,6 @@ class SearchPriceWithFlexibleDates
 
     # for Channel Managers price calculation
     def search_price_for_room_rate
-      # self.params = (params[:flexible].present? && params[:flexible_type].present? && params_wrt_flexible_type) || params
       price_list =  if room_rate.room_raccoon?
                       price_params = (daily_rate && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
                       RoomRaccoons::SearchPrices.call(price_params.merge(adults: adults, extra_adults: extra_adults, children: extra_children))
@@ -98,7 +96,7 @@ class SearchPriceWithFlexibleDates
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
       price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] })
       reservation = build_reservation params
-      { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors }
+      { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
     end
 
     def search_price_wrt_flexible_type price_list

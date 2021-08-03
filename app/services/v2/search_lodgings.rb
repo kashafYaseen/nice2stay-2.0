@@ -67,10 +67,6 @@ class V2::SearchLodgings
         conditions << flexibility_condition if check_ins.present?
         conditions << minimum_stay_condition if check_ins.present? && check_outs.present?
       end
-      # unless params[:flexible_arrival].present? || params[:flexible_type].blank?
-      #   conditions << flexibility_condition if params[:check_in].present?
-      #   conditions << minimum_stay_condition if params[:check_in].present? && params[:check_out].present?
-      # end
 
       conditions << frame_coordinates if params[:bounds].present?
       conditions << near_latlong_condition if params[:within].present?
@@ -263,7 +259,6 @@ class V2::SearchLodgings
 
       should = []
       should = { bool: { should: dates } }
-      # dates.each { |date_range| should << { bool: { must: date_range } } }
       conditions << { bool: { must: should } }
     end
 
@@ -570,135 +565,3 @@ class V2::SearchLodgings
       return (Date.parse(check_out) - Date.parse(check_in)).to_i
     end
 end
-# {
-                        #   nested: {
-                        #     path: 'lodging_children',
-                        #     query: {
-                        #       bool: {
-                        #         should: [
-                        #           # {
-                        #           #   nested: {
-                        #           #     path: 'lodging_children.availabilities',
-                        #           #     query: {
-                        #           #       bool: {
-                        #           #         must: [
-                        #           #           { term: { 'lodging_children.availabilities.available_on': dates[0] },
-                        #           #           {
-                        #           #             nested: {
-                        #           #               path: 'lodging_children.availabilities.rules',
-                        #           #               query: {
-                        #           #                 bool: {
-                        #           #                   must: [
-                        #           #                     {
-                        #           #                       bool: {
-                        #           #                         should: [
-                        #           #                           { range: { 'lodging_children.availabilities.rules.minimum_stay': { lte: nights } } },
-                        #           #                           { match: { 'lodging_children.availabilities.rules.minimum_stay': 0 } }
-                        #           #                         ]
-                        #           #                       }
-                        #           #                     },
-                        #           #                     {
-                        #           #                       bool: {
-                        #           #                         should: [
-                        #           #                           # { terms: { channel: ['open_gds', 'room_raccoon'] } },
-                        #           #                           { match: { 'lodging_children.flexible_arrival': true } },
-                        #           #                           {
-                        #           #                             bool: {
-                        #           #                               should: [
-                        #           #                                 { match: { 'lodging_children.availabilities.rules.flexible_arrival': true } },
-                        #           #                                 {
-                        #           #                                   bool: {
-                        #           #                                     must: [
-                        #           #                                       { match: { 'lodging_children.availabilities.rules.flexible_arrival': false } },
-                        #           #                                       { terms: { 'lodging_children.availabilities.rules.check_in_day': Date.parse(dates[0]).strftime("%A").downcase } }
-                        #           #                                     ]
-                        #           #                                   }
-                        #           #                                 }
-                        #           #                               ]
-                        #           #                             }
-                        #           #                           },
-                        #           #                           {
-                        #           #                             bool: {
-                        #           #                               must: [
-                        #           #                                 { match: { 'lodging_children.flexible_arrival': false } },
-                        #           #                                 { match: { 'lodging_children.check_in_day': dates[0].strftime("%A").downcase } }
-                        #           #                               ]
-                        #           #                             }
-                        #           #                           },
-                        #           #                         ]
-                        #           #                       }
-                        #           #                     }
-                        #           #                   ]
-                        #           #                 }
-                        #           #               }
-                        #           #             }
-                        #           #           }
-                        #           #         ]
-                        #           #       }
-                        #           #     }
-                        #           #   }
-                        #           # }
-                        #         ]
-                        #       }
-                        #     }
-                        #   }
-                        # }
-
-
-# {
-                  #   bool: {
-                  #     must: [
-                  #       {
-                  #         nested: {
-                  #           path: 'room_rates.availabilities',
-                  #           query: {
-                  #             bool: {
-                  #               must: [
-                  #                 { term: { 'room_rates.availabilities.available_on': dates[0] } },
-                  #                 { term: { 'room_rates.availabilities.rr_minimum_stay': total_nights.to_s } },
-                  #                 { match: { 'room_rates.availabilities.rr_check_in_closed': false  } },
-                  #                 { range: { "room_rates.availabilities.rr_booking_limit": { gt: 0 } } },
-                  #                 {
-                  #                   bool: {
-                  #                     should: [
-                  #                       {
-                  #                         bool: {
-                  #                           must_not: [
-                  #                             { exists: { field: 'room_rates.availabilities.open_gds_restriction_days' } },
-                  #                             { exists: { field: 'room_rates.availabilities.open_gds_restriction_type' } }
-                  #                           ]
-                  #                         }
-                  #                       },
-                  #                       {
-                  #                         bool: {
-                  #                           must: [
-                  #                             { term: { 'room_rates.availabilities.open_gds_arrival_days': Date.parse(dates[0]).strftime("%A").downcase } },
-                  #                             {
-                  #                               bool: {
-                  #                                 should: {
-                  #                                   script: {
-                  #                                     script: {
-                  #                                       source: "String res_type = doc[\"room_rates.availabilities.open_gds_restriction_type\"].value; SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd\"); try { long checkin_date = sdf.parse(params.checkin_date).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DATE, (int)doc[\"room_rates.availabilities.open_gds_restriction_days\"].value); long required_check_in = sdf.parse(sdf.format(cal.getTime())).getTime(); if(res_type == \"disabled\" || (res_type == \"till\" && checkin_date >= required_check_in) || (res_type == \"from\" && checkin_date <= required_check_in)) { return true; } return false; } catch(Exception e){ return false; }",
-                  #                                       params: {
-                  #                                        checkin_date: dates[0]
-                  #                                       }
-                  #                                     }
-                  #                                   }
-                  #                                 }
-                  #                               }
-                  #                             }
-                  #                           ]
-                  #                         }
-                  #                       }
-                  #                     ]
-                  #                   }
-                  #                 }
-                  #               ]
-                  #             }
-                  #           }
-                  #         }
-                  #       },
-                  #       { term: { checkout_dates: dates[-1] } },
-                  #     ]
-                  #   }
-                  # }
