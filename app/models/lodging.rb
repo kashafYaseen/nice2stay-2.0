@@ -224,7 +224,7 @@ class Lodging < ApplicationRecord
       country:               country.translated_slugs,
       region:                region.translated_slugs,
       extended_name:         extended_name,
-      available_on:          ((as_parent? && belongs_to_channel?) && []) || _availabilities.pluck(:available_on),
+      available_on:          ((as_parent? || belongs_to_channel?) && []) || _availabilities.pluck(:available_on),
       availability_price:    availability_price,
       adults_and_children:   adults_plus_children,
       amenities:             amenities.collect(&:name),
@@ -232,9 +232,9 @@ class Lodging < ApplicationRecord
       experiences:           experiences.collect(&:translated_slugs),
       experiences_ids:       experiences.ids,
       discounts:             discounts.active.present?,
-      rules:                 ((as_parent? && belongs_to_channel?) && []) || rules.collect(&:search_data),
+      rules:                 ((as_parent? || belongs_to_channel?) && []) || rules.collect(&:search_data),
       total_reviews:         all_reviews.count,
-      availabilities:        ((as_parent? && belongs_to_channel?) && []) || _availabilities.collect(&:search_data),
+      availabilities:        ((as_parent? || belongs_to_channel?) && []) || _availabilities.collect(&:search_data),
       checkout_dates:        checkout_dates,
       room_rates:            room_rates.published.with_active_rate_plan.collect(&:search_data)
     ).merge(relation_type)
