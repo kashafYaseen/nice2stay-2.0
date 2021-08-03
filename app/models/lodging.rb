@@ -456,6 +456,7 @@ class Lodging < ApplicationRecord
 
   private
     def add_availabilities
+      return if belongs_to_channel?
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
     end
 
