@@ -47,9 +47,10 @@ module OpenGds::SearchPriceWithDates
     num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
     children_without_extrabeds = params[:children].to_i - num_of_children_with_extrabeds
     occupant_is_child = children_without_extrabeds.positive?
-    children_rates += children_rates_by_rate_type(children_rate || room_rate.extra_bed_rate, price, num_of_stays, num_of_children_with_extrabeds)
+    children_rates += children_rates_by_rate_type(children_rate&.rate || room_rate.extra_bed_rate, price, num_of_stays, num_of_children_with_extrabeds)
     children_without_extrabeds -= 1 if can_charge_adult_rate_to_children? && children_without_extrabeds.positive?
-    children_rates += children_rates_by_rate_type children_rate, price, num_of_stays, children_without_extrabeds if children_without_extrabeds.positive? && rate_type_involve_person?
+    children_rates += children_rates_by_rate_type(children_rate&.rate, price, num_of_stays, children_without_extrabeds) if children_without_extrabeds.positive? && rate_type_involve_person?
+    children_rates
   end
 
   def check_out

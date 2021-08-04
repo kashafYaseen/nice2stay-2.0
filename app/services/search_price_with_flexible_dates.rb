@@ -175,7 +175,7 @@ class SearchPriceWithFlexibleDates
     end
 
     def calculate_price_from price_list, date_range
-      prices = price_list.select { |price| price.available_on >= date_range[:check_in].to_date && price.available_on < date_range[:check_out].to_date }
+      prices = (params[:flexible].present? && params[:flexible_type].present? && price_list.select { |price| price.available_on >= date_range[:check_in].to_date && price.available_on < date_range[:check_out].to_date }) || price_list
 
       if room_rate.present? && room_rate.room_raccoon?
         price_list_without_additional_price = prices.reject(&:rr_additional_amount_flag).uniq(&:available_on).pluck(:amount)
