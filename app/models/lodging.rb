@@ -180,7 +180,6 @@ class Lodging < ApplicationRecord
         room_rates: {
           type: :nested,
           properties: {
-            rule: { type: :object },
             availabilities: { type: :nested }
           }
         },
