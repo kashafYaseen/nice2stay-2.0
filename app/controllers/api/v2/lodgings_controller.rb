@@ -74,7 +74,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     end
 
     def set_total_lodgings
-      @total_lodgings = CountTotalLodgings.call(params[:only_parent])
+      @total_lodgings = CountTotalLodgings.call(true)
     end
 
     def ids
