@@ -4,7 +4,6 @@ class Availability < ApplicationRecord
   has_one :rate_plan, through: :room_rate
   has_one :child_lodging, through: :room_rate
   has_one :parent_lodging, through: :room_rate
-  has_one :rule, through: :rate_plan
   has_many :prices
 
   after_commit :reindex_lodging
@@ -29,7 +28,7 @@ class Availability < ApplicationRecord
   def reindex_lodging
     if lodging.present?
       lodging.reindex
-      lodging.parent.reindex
+      lodging.parent&.reindex
     else
       child_lodging.reindex
       parent_lodging.reindex

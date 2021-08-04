@@ -55,7 +55,7 @@ class Lodging < ApplicationRecord
   accepts_nested_attributes_for :specifications, allow_destroy: true
   accepts_nested_attributes_for :reviews, allow_destroy: true
 
-  delegate :active, :active_flexible, to: :rules, allow_nil: true, prefix: true
+  delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
   delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
   delegate :country, to: :region, allow_nil: true

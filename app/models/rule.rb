@@ -35,14 +35,6 @@ class Rule < ApplicationRecord
     )
   end
 
-  def rules_attributes
-    attributes.merge(
-      check_in_day: lodging.check_in_day,
-      minimum_stay: (minimum_stay || 7),
-      rate_enabled: rate_plan.try(:rate_enabled)
-    )
-  end
-
   def max_stay
     minimum_stay.map(&:to_i).max
   end
