@@ -51,6 +51,15 @@ class RoomRate < ApplicationRecord
     self.check_out = prices[:check_out]
   end
 
+  def search_data
+    _rule = rule
+    attributes.merge(
+      availabilities: availabilities.active.collect { |availability| availability.search_data.merge(open_gds_restriction_type: _rule.try(:open_gds_restriction_type), open_gds_restriction_days: _rule.try(:open_gds_restriction_days), open_gds_arrival_days: _rule.try(:open_gds_arrival_days)) },
+      _rule_present: _rule.present?,
+      rate_enabled: rate_plan.rate_enabled
+    )
+  end
+
   def price_details(values)
     price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5] })
   end

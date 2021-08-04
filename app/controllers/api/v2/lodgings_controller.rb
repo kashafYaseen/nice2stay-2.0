@@ -9,7 +9,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
   def index
     dates = dates_by_months
-    @lodgings = ::V2::SearchLodgings.call(params.clone.merge(months_date_range: dates, flexible_dates: flexible_dates(dates)), @custom_text, params[:only_parent])
+    @lodgings = ::V2::SearchLodgings.call(params.clone.merge(months_date_range: dates, flexible_dates: flexible_dates(dates)), @custom_text)
 
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
@@ -26,13 +26,26 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
-    lodgings = Lodging.where(id: ids).includes({ lodging_children: [{ room_rates: [{rate_plan: :rule}, :parent_lodging, :child_lodging] }, :translations] }, { children_room_rates: [{rate_plan: :rule}, :parent_lodging, :child_lodging] })
+    lodgings = Lodging.where(id: ids).includes({ room_rates: [{ rate_plan: :rule }, :parent_lodging, :child_lodging] }, :translations)
     search_params = params_wrt_flexible_type
     lodgings.each do |lodging|
-      lodging.calculate_price_for(search_params)
+      if lodging.belongs_to_channel?
+        lodging.room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
+          room_rate.cumulative_price(search_params.clone)
+          lodging.check_in = room_rate.check_in
+          lodging.check_out = room_rate.check_out
+          lodging.calculated_price = room_rate.calculated_price
+          lodging.dynamic_price = room_rate.dynamic_price
+          lodging.price_valid = room_rate.price_valid
+          lodging.price_errors = room_rate.price_errors
+          break if room_rate.price_valid && params[:accom_listing]
+        end
+      else
+        lodging.cumulative_price(search_params.clone)
+      end
     end
 
-    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children] }}).serialized_json, status: :ok
+    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], accom_listing: params[:accom_listing] }}).serialized_json, status: :ok
   end
 
   def recommendations
@@ -61,7 +74,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     end
 
     def set_total_lodgings
-      @total_lodgings = CountTotalLodgings.call(params[:only_parent])
+      @total_lodgings = CountTotalLodgings.call(true)
     end
 
     def ids

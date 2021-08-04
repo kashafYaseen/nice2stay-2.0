@@ -5,9 +5,8 @@ class Availability < ApplicationRecord
   has_one :child_lodging, through: :room_rate
   has_one :parent_lodging, through: :room_rate
   has_many :prices
-  has_many :cleaning_costs
 
-  after_commit :reindex_lodging, if: -> (availability) { availability.lodging.present? }
+  after_commit :reindex_lodging
   validates :available_on, uniqueness: { scope: :lodging }, if: -> (availability) { availability.lodging.present? }
 
   accepts_nested_attributes_for :prices, allow_destroy: true
@@ -23,11 +22,17 @@ class Availability < ApplicationRecord
   scope :not_available, -> { active.having("SUM(rr_booking_limit) = 0").group(:available_on, :id) }
 
   def search_data
-    attributes.merge(published: room_rate&.publish)
+    attributes
   end
 
   def reindex_lodging
-    lodging.reindex
+    if lodging.present?
+      lodging.reindex
+      lodging.parent&.reindex
+    else
+      child_lodging.reindex
+      parent_lodging.reindex
+    end
   end
 
   def self.check_out_only!(check_in)

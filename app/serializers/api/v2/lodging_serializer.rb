@@ -23,7 +23,15 @@ class Api::V2::LodgingSerializer
     lodging.wishlists.find_by(user: params[:current_user]).try(:id)
   end
 
-  attributes :amenities, if: Proc.new { |lodging, params| params.present? && params[:amenities].present? } do |lodging, params|
+  attributes :amenities, if: proc { |lodging, params| params.present? && params[:amenities].present? } do |lodging, params|
     Api::V2::AmenitySerializer.new(lodging.amenities.includes(:translations).uniq, params: { lodgings: params[:lodgings], total_lodgings: params[:total_lodgings] })
+  end
+
+  attribute :total_available_childrens, if: proc { |lodging, params| params.present? } do |lodging, params|
+    lodging.available_children_wrt(params[:lodgings])
+  end
+
+  attribute :first_available_child_id, if: proc { |lodging, params| params.present? } do |lodging, params|
+    lodging.first_available_child_wrt(params[:lodgings])
   end
 end

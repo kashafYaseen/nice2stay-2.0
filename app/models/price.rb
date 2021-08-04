@@ -54,11 +54,15 @@ class Price < ApplicationRecord
 
   private
     def flexible_type
-      return "weekend" if available_on.on_weekend?
+      return "weekend" if on_weekend?(available_on)
       "midweek" if on_midweek?(available_on)
     end
 
+    def on_weekend? date
+      date.friday? || date.saturday? || date.sunday?
+    end
+
     def on_midweek? date
-      date.tuesday? || date.wednesday? || date.thursday?
+      date.monday? || date.tuesday? || date.wednesday? || date.thursday?
     end
 end

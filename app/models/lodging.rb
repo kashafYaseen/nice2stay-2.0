@@ -26,7 +26,6 @@ class Lodging < ApplicationRecord
   has_many :room_types, foreign_key: :parent_lodging_id
   belongs_to :room_type, optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
-  # has_many :rate_plans, through: :room_types
   has_many :rate_plans, class_name: 'RatePlan', foreign_key: :parent_lodging_id
   has_many :parent_rate_plans, through: :parent, source: :rate_plans
   has_many :room_rate_plans, through: :room_rates, source: :rate_plan
@@ -172,53 +171,66 @@ class Lodging < ApplicationRecord
     street_changed? || city_changed? || zip_changed? || state_changed?
   end
 
-  searchkick batch_size: 200, locations: [:location], text_middle: [:name], merge_mappings: true, mappings: {
+  searchkick batch_size: 200, routing: true, locations: [:location], text_middle: [:name], merge_mappings: true, mappings: {
     lodging: {
       properties: {
         rules: { type: :nested },
         availability_price: { type: :long },
-        room_rates_availabilities: { type: :nested },
-        check_out_availabilities: { type: :nested }
+        availabilities: { type: :nested },
+        room_rates: {
+          type: :nested,
+          properties: {
+            rule: { type: :object },
+            availabilities: { type: :nested }
+          }
+        },
+        relation_type: {
+          type: :join,
+          eager_global_ordinals: true,
+          relations: {
+            parent: :child
+          }
+        }
       }
     }
   }
 
   def search_data
-    cached_rules = rules_wrt_channel
-    cached_room_rates_availabilities = channel_managers_availabilities
-    cached_availabilities = availabilities_wrt_channel
-
+    _children = lodging_children.published if as_parent?
+    _availabilities = availabilities.active
     attributes.merge(
-      location: { lat: latitude, lon: longitude },
-      country_id: country.id,
-      country: country.translated_slugs,
-      region: region.translated_slugs,
-      extended_name: extended_name,
-      available_on: cached_availabilities.pluck(:available_on),
-      availability_price: availability_price,
-      adults_and_children: adults_plus_children,
-      amenities: amenities.collect(&:name),
-      amenities_ids: amenities.ids,
-      experiences: experiences.collect(&:translated_slugs),
-      experiences_ids: experiences.ids,
-      rules: cached_rules.collect(&:search_data),
-      rules_present: cached_rules.present?,
-      discounts: discounts.active.present?,
-      total_reviews: all_reviews.count,
-      adults: adults_wrt_presentation,
-      children: children_wrt_presentation,
-      infants: infants_wrt_presentation,
-      minimum_adults: min_adults_wrt_presentation,
-      minimum_children: min_children_wrt_presentation,
-      minimum_infants: min_infants_wrt_presentation,
-      room_rates_availabilities: cached_room_rates_availabilities.includes(:room_rate).collect(&:search_data),
-      checkout_dates: checkout_dates,
-      check_out_availabilities: cached_availabilities.map { |availability| { available_on: availability.available_on, check_out_only: availability.check_out_only.present? }}
-    )
+      location:              { lat: latitude, lon: longitude },
+      country_id:            country.id,
+      country:               country.translated_slugs,
+      region:                region.translated_slugs,
+      extended_name:         extended_name,
+      available_on:          ((as_parent? || belongs_to_channel?) && []) || _availabilities.pluck(:available_on),
+      availability_price:    availability_price,
+      adults_and_children:   adults_plus_children,
+      amenities:             amenities.collect(&:name),
+      amenities_ids:         amenities.ids,
+      experiences:           experiences.collect(&:translated_slugs),
+      experiences_ids:       experiences.ids,
+      discounts:             discounts.active.present?,
+      rules:                 ((as_parent? || belongs_to_channel?) && []) || rules.collect(&:search_data),
+      total_reviews:         all_reviews.count,
+      availabilities:        ((as_parent? || belongs_to_channel?) && []) || _availabilities.collect(&:search_data),
+      checkout_dates:        checkout_dates,
+      room_rates:            room_rates.published.with_active_rate_plan.collect(&:search_data)
+    ).merge(relation_type)
+  end
+
+  def search_routing
+    (parent_id || id).to_i.to_s
   end
 
   def should_index?
     published?
+  end
+
+  def relation_type
+    return { relation_type: { name: 'parent' } } if as_parent? || as_standalone?
+    { relation_type: { name: 'child', parent: parent_id.to_s } }
   end
 
   def availability_price
@@ -228,7 +240,7 @@ class Lodging < ApplicationRecord
   end
 
   def adults_plus_children
-    return adults.to_i + children.to_i unless belongs_to_channel? && as_parent?
+    return adults.to_i + children.to_i unless as_parent?
     child_lodgings = lodging_children
     child_lodgings.pluck(:adults).select(&:present?).max.to_i + child_lodgings.pluck(:children).select(&:present?).max.to_i
   end
@@ -418,69 +430,33 @@ class Lodging < ApplicationRecord
     %w[room_raccoon open_gds].include?(channel)
   end
 
-  def availabilities_wrt_channel
-    return channel_managers_availabilities if belongs_to_channel?
-    return children_availabilities.active.with_published_lodgings if as_parent?
-    availabilities.active
-  end
-
   def channel_managers_availabilities
-    _availabilities = children_room_rates_availabilities || room_rate_availabilities
-    _availabilities.active.with_published_room_rates.where("rr_booking_limit > ?", 0)
+    room_rate_availabilities.active.with_published_room_rates.where("rr_booking_limit > ?", 0)
   end
 
-  def calculate_price_for(params)
-    room = {}
-    if belongs_to_channel?
-      _room_rates = as_parent? ? children_room_rates : room_rates
-      _room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
-        room_rate.cumulative_price(params.clone)
-        room = room_rate
-        break if room_rate.price_valid && as_parent?
-      end
-    elsif as_parent?
-      lodging_children.select(&:published).each do |child_lodging|
-        child_lodging.cumulative_price(params.clone)
-        room = child_lodging
-        break if child_lodging.price_valid
-      end
-    else
-      cumulative_price(params.clone)
-    end
+  def first_available_child_wrt lodgings
+    lodging_hit = lodgings.hits.find { |hit| hit['_id'].to_i == id }
+    return unless lodging_hit.present?
 
-    ##### ONLY FOR PARENT LODGINGS ######
-    self.first_available_room = {
-                                  calculated_price: room.calculated_price,
-                                  dynamic_price:    room.dynamic_price,
-                                  price_valid:      room.price_valid,
-                                  name:             room.name,
-                                  description:      room.description,
-                                  check_in:         room.check_in,
-                                  check_out:        room.check_out
-                                } if as_parent? && room.present? && room.price_valid
+    lodging_hit = lodging_hit['inner_hits'].collect {|inner_hit| inner_hit }.flatten.collect { |inner_hit| inner_hit.slice('hits') }.delete_if(&:blank?).first
+    return unless lodging_hit.present?
+
+    lodging_hit['hits']['hits'].first['_id'] rescue nil
   end
 
-  def available_rooms(params)
-    return unless params[:check_in].present? && params[:check_out].present?
+  def available_children_wrt lodgings
+    lodging_hit = lodgings.hits.find { |hit| hit['_id'].to_i == id }
+    return unless lodging_hit.present?
 
-    rooms = belongs_to_channel? ? children_room_rates : lodging_children
-    rooms.each do |room|
-      room.price_valid = Reservation.new(
-                          check_in: params[:check_in],
-                          check_out: params[:check_out],
-                          adults: params[:adults],
-                          children: params[:children],
-                          lodging: (belongs_to_channel? && room.parent_lodging) || room,
-                          room_rate: (belongs_to_channel? && room) || nil,
-                          booking: Booking.new
-                        ).validate
-    end
+    lodging_hit = lodging_hit['inner_hits'].collect {|inner_hit| inner_hit }.flatten.collect { |inner_hit| inner_hit.slice('hits') }.delete_if(&:blank?).first
+    return unless lodging_hit.present?
 
-    rooms.select(&:price_valid).size
+    lodging_hit['hits']['hits'].count rescue 0
   end
 
   private
     def add_availabilities
+      return if belongs_to_channel?
       add_availabilities_for (Date.today..365.days.from_now).map(&:to_s)
     end
 
@@ -502,44 +478,12 @@ class Lodging < ApplicationRecord
       experiences.reindex && region.reindex
     end
 
-    def adults_wrt_presentation
-      return lodging_children.published.pluck(:adults).select(&:present?).max.to_i if as_parent?
-      adults.to_i
-    end
-
-    def children_wrt_presentation
-      return lodging_children.published.pluck(:children).select(&:present?).max.to_i if as_parent?
-      children.to_i
-    end
-
-    def infants_wrt_presentation
-      return lodging_children.published.pluck(:infants).select(&:present?).max.to_i if as_parent?
-      infants.to_i
-    end
-
-    def min_adults_wrt_presentation
-      return lodging_children.published.pluck(:minimum_adults).select(&:present?).min.to_i if as_parent?
-      minimum_adults.to_i
-    end
-
-    def min_children_wrt_presentation
-      return lodging_children.published.pluck(:minimum_children).select(&:present?).min.to_i if as_parent?
-      minimum_children.to_i
-    end
-
-    def min_infants_wrt_presentation
-      return lodging_children.published.pluck(:minimum_infants).select(&:present?).min.to_i if as_parent?
-      minimum_infants.to_i
-    end
-
     def checkout_dates
-      return unless belongs_to_channel?
-      _availabilities = channel_managers_availabilities
-      _availabilities.collect { |availability| availability.available_on unless availability.rr_check_out_closed? }
+      return [] unless belongs_to_channel?
+      channel_managers_availabilities.select { |availability|  !availability.rr_check_out_closed? }.collect(&:available_on)
     end
 
-    def rules_wrt_channel
-      return rules.with_published_room_rates if open_gds?
+    def rules_wrt_presentation
       _rules = (as_parent? && rules) || children_rules
       _rules.with_published_lodgings
     end
