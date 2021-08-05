@@ -22,7 +22,7 @@ class Availability < ApplicationRecord
   scope :not_available, -> { active.having("SUM(rr_booking_limit) = 0").group(:available_on, :id) }
 
   def search_data
-    attributes
+    attributes.merge(rr_minimum_stay: rr_minimum_stay&.map(&:to_i))
   end
 
   def reindex_lodging
