@@ -46,7 +46,6 @@ class SearchPrices
       conditions[:_or] = []
       conditions[:available_on] = dates
       conditions[:adults] = [params[:adults], 999]
-      conditions[:flexible_type] = params[:flexible_type] if params[:flexible].present? && params[:flexible_type].present? && params[:flexible_type] != 'week'
 
       if params[:channel] == 'open_gds'
         conditions[:room_rate_id] = params[:room_rate_id]

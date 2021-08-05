@@ -206,7 +206,7 @@ class V2::SearchLodgings
                             {
                               bool: {
                                 must: [
-                                  { range: { "rules.minimum_stay": { lte: nights } } },
+                                  { term: { "rules.minimum_stay": nights } },
                                   { terms: { "rules.dates": check_ins } },
                                 ]
                               }
@@ -239,7 +239,7 @@ class V2::SearchLodgings
       return conditions << available_on((Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)) unless params[:flexible_arrival].present?
 
       dates = []
-      if params[:flexible_type] == 'week'
+      if params[:flexible_type] == 'week' || params[:flexible_type] == 'midweek' || params[:flexible_type] == 'weekend'
         params[:flexible_dates].each do |date_range|
           dates << available_on((Date.parse(date_range[:check_in])..Date.parse(date_range[:check_out])).map(&:to_s))
         end
@@ -377,7 +377,7 @@ class V2::SearchLodgings
                               bool: {
                                 must: [
                                   { term: { 'room_rates.availabilities.available_on': dates[0] } },
-                                  { term: { 'room_rates.availabilities.rr_minimum_stay': total_nights.to_s } },
+                                  { term: { 'room_rates.availabilities.rr_minimum_stay': total_nights } },
                                   { match: { 'room_rates.availabilities.rr_check_in_closed': false  } },
                                   { range: { "room_rates.availabilities.rr_booking_limit": { gt: 0 } } },
                                   {
@@ -468,9 +468,9 @@ class V2::SearchLodgings
       if (params[:check_in].present? || params[:check_out].present?) && params[:flexible_arrival].blank?
         check_in = params[:check_in].presence || params[:check_out]
         dates << check_in
-      else
+      elsif params[:flexible_arrival].present? && params[:flexible_type].present?
         params[:months_date_range].each do |date_range|
-          dates += (Date.parse(date_range[:start_date])..(Date.parse(date_range[:end_date]) - 7.days)).map(&:to_s) if params[:flexible_arrival].present? && params[:flexible_type] == 'week'
+          dates += (Date.parse(date_range[:start_date])..(Date.parse(date_range[:end_date]) - total_nights)).map(&:to_s)
         end
       end
 
@@ -484,7 +484,7 @@ class V2::SearchLodgings
         dates << check_out
       elsif params[:flexible_arrival].present?
         params[:months_date_range].each do |date_range|
-          dates += ((Date.parse(date_range[:start_date]) + 7.days)..(Date.parse(date_range[:end_date]))).map(&:to_s) if params[:flexible_type] == 'week'
+          dates += ((Date.parse(date_range[:start_date]) + total_nights)..(Date.parse(date_range[:end_date]))).map(&:to_s)
         end
       end
 
@@ -493,6 +493,8 @@ class V2::SearchLodgings
 
     def total_nights
       return 7 if params[:flexible_arrival].present? && params[:flexible_type] == 'week'
+      return 4 if params[:flexible_arrival].present? && params[:flexible_type] == 'midweek'
+      return 2 if params[:flexible_arrival].present? && params[:flexible_type] == 'weekend'
 
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
