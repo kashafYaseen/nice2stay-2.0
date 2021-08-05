@@ -7,15 +7,13 @@ module MonthsDateRange
     checkin_dates = []
     months_date_range = dates_by_months
     months_date_range.each do |date_range|
-      if params[:flexible_type] == 'week'
+      if params[:flexible_type] == 'week' || params[:flexible_type] == 'custom'
         dates += ((Date.parse(date_range[:start_date]))..(Date.parse(date_range[:end_date]))).map(&:to_s)
         checkin_dates += dates - ((Date.parse(date_range[:end_date]) - 7.days)..(Date.parse(date_range[:end_date]))).map(&:to_s)
-      elsif params[:flexible_type] == 'weekend'
-        dates += (Date.parse(date_range[:start_date])..Date.parse(date_range[:end_date])).select { |date| [5, 6, 7].include?(date.cwday) }.map(&:to_s)
+      elsif params[:flexible_type] == 'weekend' || params[:flexible_type] == 'long_weekend'
+        days = (params[:flexible_type] == 'weekend' && [5, 6, 7]) || [5, 6, 7, 1]
+        dates += (Date.parse(date_range[:start_date])..Date.parse(date_range[:end_date])).select { |date| days.include?(date.cwday) }.map(&:to_s)
         checkin_dates += dates.select { |date| Date.parse(date).friday? }
-      elsif params[:flexible_type] == 'midweek'
-        dates += (Date.parse(date_range[:start_date])..Date.parse(date_range[:end_date])).select { |date| [1, 2, 3, 4].include?(date.cwday) }.map(&:to_s)
-        checkin_dates += dates.select { |date| Date.parse(date).monday? }
       end
     end
 
@@ -50,7 +48,7 @@ module MonthsDateRange
 
   def flexible_dates(months_date_range)
     dates = []
-    if params[:flexible_type] == 'week'
+    if params[:flexible_type] == 'week' || params[:flexible_type] == 'custom'
       months_date_range.each do |date_range|
         checkin = date_range[:start_date].to_date
         checkout = checkin + nights_wrt_flexible_type
@@ -60,9 +58,9 @@ module MonthsDateRange
           checkout += 1.day
         end
       end
-    elsif params[:flexible_type] == 'weekend' || params[:flexible_type] == 'midweek'
+    elsif params[:flexible_type] == 'weekend' || params[:flexible_type] == 'long_weekend'
       months_date_range.each do |date_range|
-        checkin_day = (params[:flexible_type] == 'weekend' && 5) || 1
+        checkin_day = 5  # Friday
         checkin = date_range[:start_date].to_date
         checkin = checkin.next_week if checkin.cwday > checkin_day
         checkin += ((checkin_day - checkin.cwday) % 7)
@@ -80,7 +78,8 @@ module MonthsDateRange
 
   def nights_wrt_flexible_type
     return 7 if params[:flexible_type] == 'week'
-    return 4 if params[:flexible_type] == 'midweek'
-    2 if params[:flexible_type] == 'weekend'
+    return 3 if params[:flexible_type] == 'long_weekend'
+    return 2 if params[:flexible_type] == 'weekend'
+    params[:custom_stay].to_i if params[:flexible_type] == 'custom'
   end
 end
