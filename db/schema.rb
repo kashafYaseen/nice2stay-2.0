@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_103127) do
+ActiveRecord::Schema.define(version: 2021_08_06_112900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1054,8 +1054,6 @@ ActiveRecord::Schema.define(version: 2021_08_06_103127) do
     t.boolean "flexible_arrival", default: false
     t.integer "minimum_stay", default: [], array: true
     t.string "checkin_day"
-    t.boolean "rr_check_in_closed", default: false
-    t.boolean "rr_check_out_closed", default: false
     t.integer "open_gds_restriction_type"
     t.integer "open_gds_restriction_days", default: 0
     t.string "open_gds_arrival_days", default: [], array: true
