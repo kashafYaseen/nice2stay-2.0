@@ -23,8 +23,6 @@ class Lodging < ApplicationRecord
   has_and_belongs_to_many :visited_users, class_name: 'User', join_table: 'visited_lodgings'
 
   belongs_to :parent, class_name: 'Lodging', optional: true
-  has_many :room_types, foreign_key: :parent_lodging_id
-  belongs_to :room_type, optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
   has_many :rate_plans, class_name: 'RatePlan', foreign_key: :parent_lodging_id
   has_many :parent_rate_plans, through: :parent, source: :rate_plans
@@ -66,7 +64,6 @@ class Lodging < ApplicationRecord
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
   delegate :admin_user, to: :owner, allow_nil: true
   delegate :summary, :location_description, :h1, to: :parent, allow_nil: true, prefix: true
-  delegate :code, :description, to: :room_type, prefix: true
   delegate :not_available, to: :room_rate_availabilities, prefix: true, allow_nil: true
 
   scope :published, -> { where(published: true) }

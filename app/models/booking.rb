@@ -1,7 +1,6 @@
 class Booking < ApplicationRecord
   belongs_to :user, optional: true
   has_many :reservations
-  has_many :room_types, through: :reservations
 
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false, canceled: false) }
