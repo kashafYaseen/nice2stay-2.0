@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_27_085810) do
+ActiveRecord::Schema.define(version: 2021_08_06_103127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -614,7 +614,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_085810) do
     t.string "be_admin_id"
     t.string "be_org_id"
     t.boolean "booking_expert", default: false
-    t.bigint "room_type_id"
     t.integer "channel", default: 0
     t.integer "open_gds_property_id"
     t.string "open_gds_accommodation_id"
@@ -627,7 +626,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_085810) do
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
     t.index ["region_id"], name: "index_lodgings_on_region_id"
-    t.index ["room_type_id"], name: "index_lodgings_on_room_type_id"
   end
 
   create_table "lodgings_amenities", force: :cascade do |t|
@@ -1038,7 +1036,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_085810) do
     t.integer "extra_bed_rate_type", default: 0
     t.decimal "extra_bed_rate"
     t.decimal "extra_night_rate"
-    t.bigint "room_type_id"
     t.bigint "rate_plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1046,30 +1043,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_085810) do
     t.boolean "publish", default: true
     t.index ["child_lodging_id"], name: "index_room_rates_on_child_lodging_id"
     t.index ["rate_plan_id"], name: "index_room_rates_on_rate_plan_id"
-    t.index ["room_type_id"], name: "index_room_rates_on_room_type_id"
-  end
-
-  create_table "room_types", force: :cascade do |t|
-    t.string "code"
-    t.text "description"
-    t.bigint "parent_lodging_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "adults", default: 0
-    t.integer "children", default: 0
-    t.integer "infants", default: 0
-    t.integer "open_gds_accommodation_id"
-    t.string "name"
-    t.integer "extra_beds", default: 0
-    t.boolean "extra_beds_for_children_only", default: false
-    t.integer "baths"
-    t.string "short_description"
-    t.string "images", default: [], array: true
-    t.integer "num_of_accommodations", default: 1
-    t.integer "minimum_adults", default: 1
-    t.integer "minimum_children", default: 0
-    t.integer "minimum_infants", default: 0
-    t.index ["parent_lodging_id"], name: "index_room_types_on_parent_lodging_id"
   end
 
   create_table "rules", force: :cascade do |t|
@@ -1234,7 +1207,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_085810) do
   add_foreign_key "leads_regions", "regions", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
-  add_foreign_key "lodgings", "room_types"
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "lodgings", on_delete: :cascade
   add_foreign_key "lodgings_experiences", "experiences", on_delete: :cascade
@@ -1260,8 +1232,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_085810) do
   add_foreign_key "reviews", "users", on_delete: :cascade
   add_foreign_key "room_rates", "lodgings", column: "child_lodging_id", on_delete: :cascade
   add_foreign_key "room_rates", "rate_plans", on_delete: :cascade
-  add_foreign_key "room_rates", "room_types", on_delete: :cascade
-  add_foreign_key "room_types", "lodgings", column: "parent_lodging_id", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
   add_foreign_key "rules", "rate_plans", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
