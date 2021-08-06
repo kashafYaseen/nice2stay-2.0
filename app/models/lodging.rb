@@ -432,7 +432,7 @@ class Lodging < ApplicationRecord
   end
 
   def channel_managers_availabilities
-    room_rate_availabilities.active.with_published_room_rates.where("rr_booking_limit > ?", 0)
+    room_rate_availabilities.active.with_published_room_rates.where("booking_limit > ?", 0)
   end
 
   def first_available_child_wrt lodgings
@@ -481,7 +481,7 @@ class Lodging < ApplicationRecord
 
     def checkout_dates
       return [] unless belongs_to_channel?
-      channel_managers_availabilities.select { |availability|  !availability.rr_check_out_closed? }.collect(&:available_on)
+      channel_managers_availabilities.select { |availability|  !availability.check_out_closed? }.collect(&:available_on)
     end
 
     def rules_wrt_presentation

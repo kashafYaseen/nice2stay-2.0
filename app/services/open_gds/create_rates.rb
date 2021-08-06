@@ -201,17 +201,17 @@ class OpenGds::CreateRates
 
     def set_availability(params, availability)
       if params[:close_out]
-        availability.rr_booking_limit = 0
+        availability.booking_limit = 0
       elsif params[:available].present?
-        availability.rr_booking_limit = params[:available]
+        availability.booking_limit = params[:available]
       end
 
       stays = []
       stays << params[:minlos] if params[:minlos].present?
       stays << params[:maxlos] if params[:maxlos].present?
-      availability.rr_minimum_stay = (stays[0]..stays[-1]).map(&:to_s) if stays.present?
-      availability.rr_check_in_closed = params[:cta] if params[:cta].present?
-      availability.rr_check_out_closed = params[:ctd] if params[:ctd].present?
+      availability.minimum_stay = (stays[0]..stays[-1]).map(&:to_s) if stays.present?
+      availability.check_in_closed = params[:cta] if params[:cta].present?
+      availability.check_out_closed = params[:ctd] if params[:ctd].present?
       if availability.new_record?
         availability.created_at = DateTime.current
         availability.updated_at = DateTime.current
@@ -223,7 +223,7 @@ class OpenGds::CreateRates
     def set_price(params, availability)
       price = availability.prices.find { |p| p[:adults] == ['999'] && p[:children] == ['0'] && p[:infants] == ['0'] } || availability.prices.new(adults: ['999'], children: ['0'], infants: ['0'])
       price.amount = params[:rate] if params[:rate].present?
-      price.minimum_stay = availability.rr_minimum_stay
+      price.minimum_stay = availability.minimum_stay
       price.open_gds_single_rate = params[:single_rate] if params[:single_rate].present?
       price.multiple_checkin_days = params[:checkin_days] if params[:checkin_days].present?
       if price.new_record?

@@ -97,7 +97,7 @@ class RoomRaccoons::CreatePrices
 
       price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
       price.amount = params[:amount] if params[:amount].present?
-      price.minimum_stay = availability.rr_minimum_stay
+      price.minimum_stay = availability.minimum_stay
       price.rr_additional_amount_flag = false
       num_of_guests = params[:guests].presence || (price.new_record? && '999')
       return unless num_of_guests.present?
@@ -110,7 +110,7 @@ class RoomRaccoons::CreatePrices
       additional_price = search_price(prices, params, true)
       additional_price ||= availability.prices.new(created_at: DateTime.now, updated_at: DateTime.now)
       additional_price.amount = params[:amount].to_f
-      additional_price.minimum_stay = availability.rr_minimum_stay
+      additional_price.minimum_stay = availability.minimum_stay
       additional_price.rr_additional_amount_flag = true
       set_guests additional_price, params, '1'
     end

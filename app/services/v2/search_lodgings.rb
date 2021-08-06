@@ -307,7 +307,7 @@ class V2::SearchLodgings
                                       bool: {
                                         must: [
                                           { term: { 'room_rates.availabilities.available_on': date } },
-                                          { range: { 'room_rates.availabilities.rr_booking_limit': { gt: 0 } } },
+                                          { range: { 'room_rates.availabilities.booking_limit': { gt: 0 } } },
                                         ]
                                       }
                                     }
@@ -377,9 +377,9 @@ class V2::SearchLodgings
                               bool: {
                                 must: [
                                   { term: { 'room_rates.availabilities.available_on': dates[0] } },
-                                  { term: { 'room_rates.availabilities.rr_minimum_stay': total_nights } },
-                                  { match: { 'room_rates.availabilities.rr_check_in_closed': false  } },
-                                  { range: { "room_rates.availabilities.rr_booking_limit": { gt: 0 } } },
+                                  { term: { 'room_rates.availabilities.minimum_stay': total_nights } },
+                                  { match: { 'room_rates.availabilities.check_in_closed': false  } },
+                                  { range: { "room_rates.availabilities.booking_limit": { gt: 0 } } },
                                   {
                                     bool: {
                                       should: [

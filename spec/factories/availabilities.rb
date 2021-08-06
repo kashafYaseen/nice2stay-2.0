@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :availability do
-    # rr_booking_limit { 10 }
+    # booking_limit { 10 }
 
     factory :availability_with_prices do
       transient do
@@ -13,7 +13,7 @@ FactoryBot.define do
         create(
           :price,
           amount: evaluator.amount,
-          minimum_stay: availability.rr_minimum_stay,
+          minimum_stay: availability.minimum_stay,
           open_gds_single_rate: evaluator.open_gds_single_rate,
           multiple_checkin_days: evaluator.multiple_checkin_days,
           availability: availability
