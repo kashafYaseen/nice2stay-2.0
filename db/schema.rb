@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_112900) do
+ActiveRecord::Schema.define(version: 2021_08_06_113211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,10 +165,10 @@ ActiveRecord::Schema.define(version: 2021_08_06_112900) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
-    t.string "rr_minimum_stay", default: [], array: true
-    t.boolean "rr_check_in_closed", default: false
-    t.boolean "rr_check_out_closed", default: false
-    t.integer "rr_booking_limit", default: 0
+    t.string "minimum_stay", default: [], array: true
+    t.boolean "check_in_closed", default: false
+    t.boolean "check_out_closed", default: false
+    t.integer "booking_limit", default: 0
     t.bigint "room_rate_id"
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
