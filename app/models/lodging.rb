@@ -429,6 +429,11 @@ class Lodging < ApplicationRecord
     %w[room_raccoon open_gds].include?(channel)
   end
 
+  def availabilities_wrt_channel
+    room_rate_availabilities.with_published_room_rates if belongs_to_channel?
+    availabilities
+  end
+
   def channel_managers_availabilities
     room_rate_availabilities.active.with_published_room_rates.where("rr_booking_limit > ?", 0)
   end
