@@ -427,7 +427,7 @@ class Lodging < ApplicationRecord
   end
 
   def availabilities_wrt_channel
-    room_rate_availabilities.with_published_room_rates if belongs_to_channel?
+    return room_rate_availabilities.with_published_room_rates if belongs_to_channel?
     availabilities
   end
 
