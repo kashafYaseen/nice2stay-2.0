@@ -249,15 +249,15 @@ ActiveAdmin.register Lodging do
         if lodging.belongs_to_channel?
           column :rate_plan
           column 'Availability' do |availability|
-            availability.rr_booking_limit
+            availability.booking_limit
           end
 
           column 'Check-In Closed' do |availability|
-            availability.rr_check_in_closed
+            availability.check_in_closed
           end
 
           column 'Check-Out Closed' do |availability|
-            availability.rr_check_out_closed
+            availability.check_out_closed
           end
         end
 

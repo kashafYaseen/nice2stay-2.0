@@ -16,8 +16,8 @@ FactoryBot.define do
             :availability_with_prices,
             available_on: date,
             room_rate: room_rate,
-            rr_minimum_stay: evaluator.min_stay,
-            rr_booking_limit: room_rate.default_booking_limit,
+            minimum_stay: evaluator.min_stay,
+            booking_limit: room_rate.default_booking_limit,
             amount: room_rate.default_rate,
             open_gds_single_rate: room_rate.default_single_rate
           )

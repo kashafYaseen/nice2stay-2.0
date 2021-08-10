@@ -23,8 +23,6 @@ class Lodging < ApplicationRecord
   has_and_belongs_to_many :visited_users, class_name: 'User', join_table: 'visited_lodgings'
 
   belongs_to :parent, class_name: 'Lodging', optional: true
-  has_many :room_types, foreign_key: :parent_lodging_id
-  belongs_to :room_type, optional: true
   has_many :lodging_children, class_name: 'Lodging', foreign_key: :parent_id
   has_many :rate_plans, class_name: 'RatePlan', foreign_key: :parent_lodging_id
   has_many :parent_rate_plans, through: :parent, source: :rate_plans
@@ -66,7 +64,6 @@ class Lodging < ApplicationRecord
   delegate :including_text, :particularities_text, :pay_text, :options_text, :payment_terms_text, :deposit_text, to: :price_text, allow_nil: true
   delegate :admin_user, to: :owner, allow_nil: true
   delegate :summary, :location_description, :h1, to: :parent, allow_nil: true, prefix: true
-  delegate :code, :description, to: :room_type, prefix: true
   delegate :not_available, to: :room_rate_availabilities, prefix: true, allow_nil: true
 
   scope :published, -> { where(published: true) }
@@ -430,12 +427,12 @@ class Lodging < ApplicationRecord
   end
 
   def availabilities_wrt_channel
-    room_rate_availabilities.with_published_room_rates if belongs_to_channel?
+    return room_rate_availabilities.with_published_room_rates if belongs_to_channel?
     availabilities
   end
 
   def channel_managers_availabilities
-    room_rate_availabilities.active.with_published_room_rates.where("rr_booking_limit > ?", 0)
+    room_rate_availabilities.active.with_published_room_rates.where("booking_limit > ?", 0)
   end
 
   def first_available_child_wrt lodgings
@@ -484,7 +481,7 @@ class Lodging < ApplicationRecord
 
     def checkout_dates
       return [] unless belongs_to_channel?
-      channel_managers_availabilities.select { |availability|  !availability.rr_check_out_closed? }.collect(&:available_on)
+      channel_managers_availabilities.select { |availability|  !availability.check_out_closed? }.collect(&:available_on)
     end
 
     def rules_wrt_presentation

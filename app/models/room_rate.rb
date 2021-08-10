@@ -71,7 +71,7 @@ class RoomRate < ApplicationRecord
 
   def minimum_booking_limit(params)
     return 0 unless params[:check_in].present? || params[:check_out].present?
-    availabilities.for_range(params[:check_in], params[:check_out]).order(rr_booking_limit: :desc).minimum(:rr_booking_limit).presence || 0
+    availabilities.for_range(params[:check_in], params[:check_out]).order(booking_limit: :desc).minimum(:booking_limit).presence || 0
   end
 
   private

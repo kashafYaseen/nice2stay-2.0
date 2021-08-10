@@ -19,10 +19,10 @@ class Availability < ApplicationRecord
   scope :with_published_room_rates, -> { joins(room_rate: [:child_lodging, :rate_plan]).where("room_rates.publish = true AND lodgings.published = true AND rate_plans.rate_enabled = true") }
 
   # for channel managers and opengds using booking limit
-  scope :not_available, -> { active.having("SUM(rr_booking_limit) = 0").group(:available_on, :id) }
+  scope :not_available, -> { active.having("SUM(booking_limit) = 0").group(:available_on, :id) }
 
   def search_data
-    attributes.merge(rr_minimum_stay: rr_minimum_stay&.map(&:to_i))
+    attributes.merge(minimum_stay: minimum_stay&.map(&:to_i))
   end
 
   def reindex_lodging
@@ -59,10 +59,10 @@ class Availability < ApplicationRecord
   end
 
   def max_stay
-    rr_minimum_stay.map(&:to_i).max
+    minimum_stay.map(&:to_i).max
   end
 
   def min_stay
-    rr_minimum_stay.map(&:to_i).min
+    minimum_stay.map(&:to_i).min
   end
 end
