@@ -33,7 +33,7 @@ module MonthsDateRange
       current_date = Date.today
       year = ((month_index < current_date.month) && current_date.year + 1) || current_date.year
       start_date = (month_index == current_date.month && Date.new(year, month_index, current_date.day)) || Date.new(year, month_index, 1)
-      end_date = Date.new(year, month_index + 1, 1)
+      end_date = Date.new(year, start_date.next_month.month, 1)
       _index = dates.size
 
       if prev_month_index.present? && ((end_date.year * 12 + end_date.month) - (dates[_index - 1][:end_date].to_date.year * 12 + dates[_index - 1][:end_date].to_date.month) == 1) #consecutive months
