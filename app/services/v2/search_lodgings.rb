@@ -23,8 +23,18 @@ class V2::SearchLodgings
     end
 
     def body
+      queries = boolean_queries
       body = {}
-      body[:query] = { has_child: { type: :child, query: { bool: boolean_queries }, inner_hits: {} } }
+      body[:query] = {
+        bool: {
+          should: [
+            {
+              has_child: { type: :child, query: { bool: queries }, inner_hits: {} }
+            },
+            { bool: queries.merge({ filter: queries[:filter].clone.push({ term: { presentation: :as_standalone } }) }) }
+          ]
+        }
+      }
       body[:sort] = [order] if order.present?
       body[:aggs] = aggregation
       body
