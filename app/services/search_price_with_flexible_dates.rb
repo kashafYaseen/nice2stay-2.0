@@ -101,7 +101,8 @@ class SearchPriceWithFlexibleDates
 
     def search_price_wrt_flexible_type price_list
       calculated_prices = []
-      params[:flexible_dates]&.each do |date_range|
+
+      flexible_dates(price_list.map(&:available_on).min)&.each do |date_range|
         reservation = build_reservation params.merge(check_in: date_range[:check_in], check_out: date_range[:check_out])
         is_valid = reservation.validate
         next unless is_valid
@@ -198,5 +199,10 @@ class SearchPriceWithFlexibleDates
       end
 
       prices
+    end
+
+    def flexible_dates(min_available_on)
+      return [] unless min_available_on.present?
+      params[:flexible_dates].select { |dates| dates[:check_out].to_date >= min_available_on }
     end
 end
