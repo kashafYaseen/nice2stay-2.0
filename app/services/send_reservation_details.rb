@@ -62,7 +62,8 @@ class SendReservationDetails
       {
         email: user.email,
         name: user.first_name,
-        surname: user.last_name
+        surname: user.last_name,
+        sign_in_count: user.sign_in_count,
       }
     end
 end
