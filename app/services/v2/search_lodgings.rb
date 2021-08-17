@@ -27,7 +27,7 @@ class V2::SearchLodgings
         bool: {
           should: [
             {
-              has_child: { type: :child, query: { bool: queries }, inner_hits: {} }
+              has_child: { type: :child, query: { bool: queries }, inner_hits: { _source: ['id'] } }
             },
             { bool: queries.merge({ filter: queries[:filter].clone.push({ term: { presentation: :as_standalone } }) }) }
           ]

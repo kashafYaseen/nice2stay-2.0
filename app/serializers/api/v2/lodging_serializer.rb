@@ -12,7 +12,7 @@ class Api::V2::LodgingSerializer
   end
 
   attribute :lowest_child_price do |lodging|
-    lodging.lowest_child_price
+    (lodging.as_standalone? && lodging.price) || lodging.lowest_child_price
   end
 
   attributes :wishlist_id, if: proc { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
