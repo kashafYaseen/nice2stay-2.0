@@ -214,6 +214,8 @@ GEM
       multi_json
     errbase (0.1.1)
     erubi (1.7.1)
+    ethon (0.12.0)
+      ffi (>= 1.3.0)
     exception_notification (4.2.2)
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
@@ -323,6 +325,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    oj (3.13.2)
     omniauth (1.9.0)
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
@@ -486,6 +489,8 @@ GEM
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
     turbolinks-source (5.1.0)
+    typhoeus (1.4.0)
+      ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.11)
@@ -565,6 +570,7 @@ DEPENDENCIES
   mini_magick
   mollie-api-ruby
   newrelic_rpm
+  oj
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-instagram
@@ -589,6 +595,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   starrr
   turbolinks (~> 5)
+  typhoeus
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
