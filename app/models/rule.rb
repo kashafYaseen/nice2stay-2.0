@@ -27,10 +27,11 @@ class Rule < ApplicationRecord
   }, _prefix: :restriction_type
 
   def search_data
-    attributes.merge(
+    _attrs = attributes
+    _attrs['minimum_stay'] = (minimum_stay || 7)
+    _attrs.merge(
       dates: (start_date..end_date).map(&:to_s),
       check_in_day: lodging.check_in_day,
-      minimum_stay: (minimum_stay || 7),
       rate_enabled: rate_plan.try(:rate_enabled)
     )
   end
