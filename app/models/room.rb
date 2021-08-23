@@ -5,7 +5,7 @@ class Room < ApplicationRecord
   after_validation :geocode, if: :address_changed?
   mount_uploader :image, ImageUploader
 
-  searchkick locations: [:location], text_start: [:city]
+  # searchkick locations: [:location], text_start: [:city]
 
   enum room_type: {
     villa: 1,
@@ -21,10 +21,10 @@ class Room < ApplicationRecord
     street_changed? || city_changed? || zip_changed? || state_changed?
   end
 
-  def search_data
-    attributes.merge(
-      location: { lat: latitude, lon: longitude },
-      booking_date: reservations.pluck(:booking_date)
-    )
-  end
+  # def search_data
+  #   attributes.merge(
+  #     location: { lat: latitude, lon: longitude },
+  #     booking_date: reservations.pluck(:booking_date)
+  #   )
+  # end
 end
