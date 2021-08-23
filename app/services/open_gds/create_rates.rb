@@ -10,7 +10,11 @@ class OpenGds::CreateRates
   end
 
   def self.call(rates)
-    new(rates).call
+    begin
+      new(rates).call
+    rescue => e
+      Rails.logger.info '===============================>>>>>>>>>>NOT FOUND!'
+    end
   end
 
   def call
