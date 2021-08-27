@@ -1,18 +1,17 @@
 class SearchPriceWithFlexibleDates
-  attr_reader :params, :lodging, :room_rate, :daily_rate
+  attr_reader :params, :lodging, :room_rate
   include OpenGds::SearchPriceWithDates
 
   FLEXIBILITY = 3
 
-  def self.call(params, lodging, room_rate = nil, daily_rate = false)
-    self.new(params, lodging, room_rate, daily_rate).call
+  def self.call(params, lodging, room_rate = nil)
+    self.new(params, lodging, room_rate).call
   end
 
-  def initialize(params, lodging, room_rate = nil, daily_rate = false)
+  def initialize(params, lodging, room_rate = nil)
     @params = params
     @lodging = lodging
     @room_rate = room_rate
-    @daily_rate = daily_rate
   end
 
   def call
@@ -68,8 +67,8 @@ class SearchPriceWithFlexibleDates
   private
     def search_price_with_defaults
       lodging.flexible_search = false
-      price_params = (daily_rate && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
-      price_list = SearchPrices.call(params)
+      price_params = (params[:daily_rate] && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
+      price_list = SearchPrices.call(price_params)
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
 
       price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] })
@@ -87,10 +86,11 @@ class SearchPriceWithFlexibleDates
     # for Channel Managers price calculation
     def search_price_for_room_rate
       price_list =  if room_rate.room_raccoon?
-                      price_params = (daily_rate && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
+                      price_params = (params[:daily_rate] && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params
                       RoomRaccoons::SearchPrices.call(price_params.merge(adults: adults, extra_adults: extra_adults, children: extra_children))
                     else
-                      SearchPrices.call(params.merge(children: 0, channel: room_rate.channel, check_out: check_out))
+                      price_params = (params[:daily_rate] && params.merge(check_out: params[:check_in].to_date.next_day.to_s)) || params.merge(check_out: check_out)
+                      SearchPrices.call(price_params.merge(children: 0, channel: room_rate.channel))
                     end
 
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
@@ -125,7 +125,7 @@ class SearchPriceWithFlexibleDates
 
     def minimum_stay(check_in = nil, check_out = nil)
       return (check_out.to_date - check_in.to_date).to_i if check_in.present? && check_out.present?
-      return params[:minimum_stay] unless daily_rate
+      return params[:minimum_stay] unless params[:daily_rate]
       1
     end
 

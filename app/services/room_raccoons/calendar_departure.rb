@@ -22,10 +22,10 @@ class RoomRaccoons::CalendarDeparture
       room_rate_params = params_based_on availability
       next if room_rate_params.blank?
 
-      price_per_day = room_rate.price_per_day(room_rate_params)
-      next unless price_per_day[:valid]
+      price_details = room_rate.price_details(room_rate_params, true)
+      next unless price_details[:valid]
 
-      response << { date: availability.available_on, rate: price_per_day[:rates].sum.round(2), ctd: closed_to_departure?(availability) }
+      response << { date: availability.available_on, rate: price_details[:rates].sum.round(2), ctd: closed_to_departure?(availability) }
     end
 
     response << { date: dates[-1].to_date + 1.day, rate: nil, ctd: false } if response.present? # checkout
@@ -45,6 +45,6 @@ class RoomRaccoons::CalendarDeparture
     end
 
     def closed_to_departure? availability
-      (availability.available_on - check_in_availability.available_on).to_i < check_in_availability.min_stay
+      !check_in_availability.minimum_stay.include? (availability.available_on.mjd - params[:check_in].to_date.mjd).to_s
     end
 end

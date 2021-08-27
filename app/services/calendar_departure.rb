@@ -24,10 +24,10 @@ class CalendarDeparture
       lodging_params = params_based_on availability
       next if lodging_params.blank?
 
-      price_per_day = lodging.price_per_day(lodging_params)
-      next unless price_per_day[:valid]
+      price_details = lodging.price_details(lodging_params, false, true)
+      next unless price_details[:valid]
 
-      response << { date: availability.available_on, rate: price_per_day[:rates].sum.round(2), ctd: closed_to_departure?(availability) }
+      response << { date: availability.available_on, rate: price_details[:rates].sum.round(2), ctd: closed_to_departure?(availability) }
     end
 
     response << { date: dates[-1].to_date + 1.day, rate: nil, ctd: false } if response.present?
@@ -47,6 +47,6 @@ class CalendarDeparture
     end
 
     def closed_to_departure? availability
-      (availability.available_on - check_in_availability.available_on).to_i < rule.min_stay
+      !rule.minimum_stay.include? availability.available_on.mjd - params[:check_in].to_date.mjd
     end
 end
