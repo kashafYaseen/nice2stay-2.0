@@ -19,7 +19,7 @@ class CalendarBuild
       rule = rules.find { |rule| rule.start_date <= availability.available_on and rule.end_date >= availability.available_on }
       next if rule.blank? || rule&.minimum_stay.blank?
 
-      price_details = lodging.price_details(params_based_on(availability, rule), false)
+      price_details = lodging.price_details(params_based_on(availability, rule), false, true)
       next unless price_details[:valid]
 
       response << { date: availability.available_on, minlos: rule.min_stay, rate: price_details[:rates].sum.round(2) }
