@@ -241,13 +241,8 @@ class Lodging < ApplicationRecord
     child_lodgings.pluck(:adults).select(&:present?).max.to_i + child_lodgings.pluck(:children).select(&:present?).max.to_i
   end
 
-  def price_details(values, flexible = true)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible })
-  end
-
-  def price_per_day(values)
-    total_nights = (values[1].to_date - values[0].to_date).to_i
-    SearchPriceWithFlexibleDates.call({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: values[5], lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i}, self, nil, true)
+  def price_details(values, flexible = true, daily_rate = false)
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible, daily_rate: daily_rate })
   end
 
   def discount_details(values)
