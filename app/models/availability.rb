@@ -19,7 +19,7 @@ class Availability < ApplicationRecord
   scope :with_published_room_rates, -> { joins(room_rate: [:child_lodging, :rate_plan]).where("room_rates.publish = true AND lodgings.published = true AND rate_plans.rate_enabled = true") }
 
   # for channel managers and opengds using booking limit
-  scope :not_available, -> { active.having("SUM(booking_limit) = 0").group(:available_on, :id) }
+  scope :not_available, -> { active.select("available_on").having("SUM(availabilities.booking_limit) = 0").group(:available_on) }
 
   def search_data
     _attrs = attributes
