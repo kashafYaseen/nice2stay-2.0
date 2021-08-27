@@ -129,20 +129,13 @@ class Lodging < ApplicationRecord
 
   def children_not_available_on
     return not_available_on unless lodging_children.present?
+    return children_room_rates_availabilities.not_available.pluck(:available_on) if belongs_to_channel?
+
     _availabilities = []
-    if belongs_to_channel?
-      total_children = lodging_children.published.count
-      lodging_children.published.each do |lodging_child|
-        _availabilities += lodging_child.room_rate_availabilities_not_available.pluck(:available_on).uniq
-      end
-      not_available_dates = _availabilities
-      _availabilities.reject { |availability| not_available_dates.count(availability) < total_children }.uniq.sort
-    else
-      lodging_children.includes(:availabilities).each do |lodging_child|
-        _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
-      end
-      (Date.today..2.years.from_now).map(&:to_s) - _availabilities
+    lodging_children.includes(:availabilities).each do |lodging_child|
+      _availabilities += lodging_child.availabilities.pluck(:available_on).map(&:to_s)
     end
+    (Date.today..2.years.from_now).map(&:to_s) - _availabilities
   end
 
   def gc_not_available_on params = {}
