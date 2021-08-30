@@ -11,9 +11,8 @@ ActiveAdmin.register RatePlan do
     end
 
     def scoped_collection
-      return RatePlan.all if action_name == 'index'
-
-      RatePlan.includes(:child_rates, :rule, room_rates: %i[child_lodging parent_lodging])
+      return RatePlan.includes(:translations) if action_name == 'index'
+      RatePlan.includes(:translations, :child_rates, :rule, room_rates: %i[child_lodging parent_lodging])
     end
   end
 

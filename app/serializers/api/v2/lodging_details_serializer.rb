@@ -24,7 +24,7 @@ class Api::V2::LodgingDetailsSerializer
   end
 
   attributes :options, if: Proc.new { |lodging| lodging.as_parent? } do |lodging|
-    Api::V2::LodgingDetailsSerializer.new(lodging.lodging_children.published.includes(:parent, :translations, { price_text: :translations }, { room_rates: :rate_plan }, { reviews: [:lodging, :reservation, :user] }))
+    Api::V2::LodgingDetailsSerializer.new(lodging.lodging_children.published.includes(:parent, :translations, { price_text: :translations }, { room_rates: { rate_plan: :translations } }, { reviews: [:lodging, :reservation, :user] }))
   end
 
   attributes :wishlist_id, if: Proc.new { |lodging, params| params.present? && params[:current_user].present? } do |lodging, params|
