@@ -10,6 +10,9 @@ class RatePlan < ApplicationRecord
   has_one :rule
   has_many :child_rates
 
+  translates :name, :description
+  globalize_accessors
+
   # validates_associated :room_rates
   enum open_gds_rate_type: {
     pppn: 0,
