@@ -39,6 +39,8 @@ class SendBookingDetails
           skip_data_posting: true,
           status: booking.booking_status,
           fe_id: booking.id,
+          pre_payment: booking.pre_payment,
+          final_payment: booking.final_payment,
         }
       }
     end

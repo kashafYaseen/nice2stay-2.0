@@ -17,9 +17,9 @@ namespace :api do
     resources :reviews, only: [:create]
     resources :places, only: [:create]
     resources :gc_offers, only: [:create]
-
     localized do
       resources :experiences, only: [:index]
     end
+    resources :owners, only: [:create]
   end
 end
