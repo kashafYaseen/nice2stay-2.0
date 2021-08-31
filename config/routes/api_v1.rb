@@ -15,5 +15,6 @@ namespace :api do
     resources :reviews, only: [:create]
     resources :places, only: [:create]
     resources :gc_offers, only: [:create]
+    resources :owners, only: [:create]
   end
 end
