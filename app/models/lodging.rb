@@ -39,7 +39,7 @@ class Lodging < ApplicationRecord
 
   delegate :active, to: :rules, allow_nil: true, prefix: true
   delegate :active, to: :discounts, allow_nil: true, prefix: true
-  delegate :full_name, :image_url, to: :owner, allow_nil: true, prefix: true
+  delegate :full_name, :image_url, :pre_payment, :final_payment, to: :owner, allow_nil: true, prefix: true
   delegate :country, to: :region, allow_nil: true
   delegate :name, to: :region, allow_nil: true, prefix: true
   delegate :name, to: :country, allow_nil: true, prefix: true
