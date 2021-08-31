@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
         @booking.delete
         cookies.delete(:booking)
       end
-      @booking = current_user.booking_in_cart unless controller_name == 'Carts' && action_name == 'details'
+      @booking = current_user.booking_in_cart unless controller_name == 'carts' && action_name == 'details'
     end
   end
 
