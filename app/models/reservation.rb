@@ -91,6 +91,7 @@ class Reservation < ApplicationRecord
   end
 
   def total_rent
+    return rent.to_f unless is_managed_by_n2s?
     rent.to_f + cleaning_cost.to_f - discount.to_f
   end
 
@@ -100,6 +101,10 @@ class Reservation < ApplicationRecord
 
   def final_payment
     total_rent * lodging.owner_final_payment / 100
+  end
+
+  def cleaning_cost_on_location
+    is_managed_by_n2s? ? 0 : cleaning_cost.to_f
   end
 
   def self.arrival_status
