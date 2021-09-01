@@ -224,6 +224,10 @@ class Lodging < ApplicationRecord
     published?
   end
 
+  def self.flush_cached_searched_data
+    Rails.cache.delete_matched('V2::SearchLodgings*')
+  end
+
   def relation_type
     return { relation_type: { name: 'parent' } } if as_parent? || as_standalone?
     { relation_type: { name: 'child', parent: parent_id.to_s } }
