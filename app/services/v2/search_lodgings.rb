@@ -12,7 +12,10 @@ class V2::SearchLodgings
   end
 
   def call
-    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
+    cache_key = [self.class.name, __method__, embed_params.to_s]
+    Rails.cache.fetch(cache_key, expires_in: 2.day) do
+      Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
+    end
   end
 
   private
@@ -392,5 +395,25 @@ class V2::SearchLodgings
 
     def total_nights(check_in, check_out)
       (Date.parse(check_out) - Date.parse(check_in)).to_i
+    end
+
+    def embed_params
+      {
+        adults: params[:adults],
+        children: params[:children],
+        custom_text_id: params[:custom_text_id],
+        check_in: params[:check_in],
+        check_out: params[:check_out],
+        amenities_in: params[:amenities_in]&.join(''),
+        experiences_in: params[:experiences_in]&.join(''),
+        limit: params[:limit],
+        flexible_arrival: params[:flexible_arrival],
+        flexible_type: params[:flexible_type],
+        months: params[:months]&.split(',').map { |month| month.strip.downcase },
+        page: params[:page],
+        countries_in: params[:countries_in]&.join(''),
+        regions_in: params[:regions_in]&.join(''),
+        custom_stay: params[:custom_stay]
+      }
     end
 end
