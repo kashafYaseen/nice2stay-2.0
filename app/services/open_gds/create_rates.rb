@@ -10,7 +10,11 @@ class OpenGds::CreateRates
   end
 
   def self.call(rates)
-    new(rates).call
+    begin
+      new(rates).call
+    rescue => e
+      Rails.logger.info '===============================>>>>>>>>>>NOT FOUND!'
+    end
   end
 
   def call
@@ -294,6 +298,7 @@ class OpenGds::CreateRates
         prices.each(&:reindex)
       end
 
+      Lodging.flush_cached_searched_data
       lodgings.reindex
     end
 end

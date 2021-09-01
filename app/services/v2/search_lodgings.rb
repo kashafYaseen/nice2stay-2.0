@@ -1,6 +1,6 @@
 class V2::SearchLodgings
   attr_accessor :params
-  attr_reader :custom_text, :check_ins, :check_outs
+  attr_reader :custom_text
 
   def self.call(params, custom_text=nil)
     self.new(params, custom_text).call
@@ -9,12 +9,13 @@ class V2::SearchLodgings
   def initialize(params, custom_text=nil)
     @params = params
     @custom_text = custom_text
-    @check_ins = check_in_dates
-    @check_outs = check_out_dates
   end
 
   def call
-    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
+    cache_key = [self.class.name, __method__, embed_params.to_s]
+    Rails.cache.fetch(cache_key, expires_in: 2.day) do
+      Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
+    end
   end
 
   private
@@ -23,8 +24,19 @@ class V2::SearchLodgings
     end
 
     def body
+      queries = boolean_queries
       body = {}
-      body[:query] = { has_child: { type: :child, query: { bool: boolean_queries }, inner_hits: {} } }
+      body[:query] = {
+        bool: {
+          should: [
+            {
+              has_child: { type: :child, query: { bool: queries }, inner_hits: { _source: ['id'] } }
+            },
+            { bool: queries.merge({ filter: queries[:filter].clone.push({ term: { presentation: :as_standalone } }) }) }
+          ]
+        }
+      }
+
       body[:sort] = [order] if order.present?
       body[:aggs] = aggregation
       body
@@ -63,15 +75,10 @@ class V2::SearchLodgings
         conditions << regions_in
       end
 
-      if params[:flexible_arrival].blank? || (params[:flexible_arrival].present? && params[:flexible_type].present?)
-        conditions << flexibility_condition if check_ins.present?
-        conditions << minimum_stay_condition if check_ins.present? && check_outs.present?
-      end
-
       conditions << frame_coordinates if params[:bounds].present?
       conditions << near_latlong_condition if params[:within].present?
 
-      availability_condition conditions if check_ins.present? || check_outs.present?
+      availability_condition conditions if params[:check_in].present? || params[:check_out].present? || params[:flexible_dates].present?
       all(:amenities_ids, params[:amenities_in], conditions) if params[:amenities_in].present?
       all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
 
@@ -141,90 +148,45 @@ class V2::SearchLodgings
       }
     end
 
-    def flexibility_condition
-    {
-      bool: {
-        should: [
-          { terms: { channel: ['open_gds', 'room_raccoon'] } },
-          { match: { flexible_arrival: true } },
-          {
-            nested: {
-              path: :rules,
-              query: {
-                bool: {
-                  should: [
-                    {
-                      bool: {
-                        must: [
-                          { terms: { "rules.dates": check_ins } },
-                          { match: { "rules.flexible_arrival": true } }
-                        ]
-                      }
-                    },
-                    {
-                      bool: {
-                        must: [
-                          { terms: { "rules.dates": check_ins } },
-                          { match: { "rules.flexible_arrival": false } },
-                          { terms: { "rules.check_in_day": check_ins.map { |check_in| Date.parse(check_in).strftime("%A").downcase }.uniq }}
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-            },
-          },
-          {
-            bool: {
-              must: [
-                { match: { flexible_arrival: false } },
-                { terms: { check_in_day: check_ins.map { |check_in| Date.parse(check_in).strftime("%A").downcase }.uniq }}
-              ]
-            }
-          }
-        ]
-      }
-    }
-    end
-
-    def minimum_stay_condition
-      nights = total_nights
+    def rules_condition(dates)
       {
         bool: {
-          filter: [
+          should: [
             {
-              bool: {
-                should: [
-                  { terms: { channel: ['open_gds', 'room_raccoon'] } },
-                  {
-                    nested: {
-                      path: :rules,
-                      query: {
+              nested: {
+                path: :rules,
+                query: {
+                  bool: {
+                    must: [
+                      { terms: { "rules.dates": dates } },
+                      { term: { "rules.minimum_stay": total_nights(dates[0], dates[-1]) } },
+                      {
                         bool: {
                           should: [
+                            { match: { flexible_arrival: true } },
+                            { match: { "rules.flexible_arrival": true } },
                             {
                               bool: {
                                 must: [
-                                  { term: { "rules.minimum_stay": nights } },
-                                  { terms: { "rules.dates": check_ins } },
+                                  { match: { "rules.flexible_arrival": false } },
+                                  { term: { "rules.check_in_day": Date.parse(dates[0]).strftime("%A").downcase } }
                                 ]
                               }
                             },
                             {
                               bool: {
                                 must: [
-                                  { match: { "rules.minimum_stay": 0 } },
-                                  { terms: { "rules.dates": check_ins } },
+                                  { match: { flexible_arrival: false } },
+                                  { term: { check_in_day: Date.parse(dates[0]).strftime("%A").downcase } }
                                 ]
                               }
-                            },
+                            }
                           ]
                         }
-                      },
-                    }
+                      }
+                    ]
                   }
-                ]
+                }
               }
             }
           ]
@@ -236,91 +198,102 @@ class V2::SearchLodgings
       flexible_days = params[:flexible_days].presence || 3
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
-      return conditions << available_on((Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)) unless params[:flexible_arrival].present?
+      return conditions << check_availabilities((Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)) unless params[:flexible_arrival].present?
 
-      dates = []
+      _conditions = []
       if params[:flexible_type].present?
         params[:flexible_dates].each do |date_range|
-          dates << available_on((Date.parse(date_range[:check_in])..Date.parse(date_range[:check_out])).map(&:to_s))
+          _conditions << check_availabilities((Date.parse(date_range[:check_in])..Date.parse(date_range[:check_out])).map(&:to_s))
         end
       else
         flexible_days.to_i.times do |index|
-          dates << available_on(((Date.parse(check_in) + index.day)..Date.parse(check_out) + index.day).map(&:to_s))
+          _conditions << check_availabilities(((Date.parse(check_in) + index.day)..Date.parse(check_out) + index.day).map(&:to_s))
           next if index == 0
 
-          dates << available_on(((Date.parse(check_in) - index.day)..Date.parse(check_out) - index.day).map(&:to_s))
-          dates << available_on(((Date.parse(check_in) + index.day)..Date.parse(check_out)).map(&:to_s))
-          dates << available_on(((Date.parse(check_in))..Date.parse(check_out) - index.day).map(&:to_s))
+          _conditions << check_availabilities(((Date.parse(check_in) - index.day)..Date.parse(check_out) - index.day).map(&:to_s))
+          _conditions << check_availabilities(((Date.parse(check_in) + index.day)..Date.parse(check_out)).map(&:to_s))
+          _conditions << check_availabilities(((Date.parse(check_in))..Date.parse(check_out) - index.day).map(&:to_s))
           next unless index == 1
 
-          dates << available_on(((Date.parse(check_in) + index.day)..Date.parse(check_out) - index.day).map(&:to_s))
+          _conditions << check_availabilities(((Date.parse(check_in) + index.day)..Date.parse(check_out) - index.day).map(&:to_s))
         end
       end
 
-      should = []
-      should = { bool: { should: dates } }
-      conditions << { bool: { must: should } }
+      conditions << { bool: { should: _conditions } }
     end
 
-    def available_on(dates)
-      _dates = []
-      dates.each do |date|
-        _dates << availability_check(date)
-      end
-
-      checkin_to_checkout_condition(dates, _dates)
-    end
-
-    def availability_check(date)
+    def check_availabilities(dates)
       {
         bool: {
-          filter: {
+          should: [
+            available_on(dates),
+            { bool: { must: [rate_enabled, available_on(dates, true)] } }
+          ]
+        }
+      }
+    end
+
+    def available_on(dates, channel_manager = false)
+      conditions = []
+      dates.each do |date|
+        condition = channel_manager ? check_channel_manager_availability(date) : check_standard_availability(date)
+        conditions << condition
+      end
+
+      return checkin_to_checkout_condition(dates, conditions) if channel_manager
+
+      {
+        bool: {
+          must: [
+            { bool: { must: conditions } },
+            rules_condition(dates)
+          ]
+        }
+      }
+    end
+
+    def check_standard_availability(date)
+      {
+        nested: {
+          path: :availabilities,
+          query: {
             bool: {
-              should: [
-                {
-                  nested: {
-                    path: :availabilities,
-                    query: {
-                      bool: {
-                        must: [
-                          { term: { 'availabilities.available_on': date } },
-                          { match: { 'availabilities.check_out_only': false } }
-                        ]
-                      }
-                    }
-                  }
-                },
-                {
-                  nested: {
-                    path: :room_rates,
-                    query: {
-                      bool: {
-                        must: [
-                          {
-                            bool: {
-                              must: [
-                                { match: { 'room_rates.rate_enabled': true } },
-                                {
-                                  nested: {
-                                    path: 'room_rates.availabilities',
-                                    query: {
-                                      bool: {
-                                        must: [
-                                          { term: { 'room_rates.availabilities.available_on': date } },
-                                          { range: { 'room_rates.availabilities.booking_limit': { gt: 0 } } },
-                                        ]
-                                      }
-                                    }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  }
+              must: [
+                { term: { 'availabilities.available_on': date } },
+                { term: { 'availabilities.check_out_only': false } }
+              ]
+            }
+          }
+        }
+      }
+    end
+
+    def rate_enabled
+      {
+        bool: {
+          must: [
+            {
+              nested: {
+                path: :room_rates,
+                query: {
+                  term: { 'room_rates.rate_enabled': true }
                 }
+              }
+            }
+          ]
+        }
+      }
+    end
+
+    def check_channel_manager_availability(date)
+      {
+        nested: {
+          path: 'room_rates.availabilities',
+          query: {
+            bool: {
+              must: [
+                { term: { 'room_rates.availabilities.available_on': date } },
+                { range: { 'room_rates.availabilities.booking_limit': { gt: 0 } } }
               ]
             }
           }
@@ -334,99 +307,56 @@ class V2::SearchLodgings
           must: [
             { bool: { must: conditions } },
             {
-              bool: {
-                should: [
-                  {
-                    bool: {
-                      must: [
-                        {
-                          bool: {
-                            must_not: [
-                              { exists: { field: :checkout_dates } },
-                              {
-                                bool: {
-                                  should: [
-                                    {
-                                      nested: {
-                                        path: :room_rates,
-                                        query: {
-                                          bool: {
-                                            must_not: [
-                                              { exists: { field: 'room_rates' } }
-                                            ]
+              nested: {
+                path: 'room_rates.availabilities',
+                query: {
+                  bool: {
+                    must: [
+                      { term: { 'room_rates.availabilities.available_on': dates[0] } },
+                      { term: { 'room_rates.availabilities.minimum_stay': total_nights(dates[0], dates[-1]) } },
+                      { term: { 'room_rates.availabilities.check_in_closed': false  } },
+                      { range: { "room_rates.availabilities.booking_limit": { gt: 0 } } },
+                      {
+                        bool: {
+                          should: [
+                            {
+                              bool: {
+                                must_not: [
+                                  { exists: { field: 'room_rates.availabilities.open_gds_restriction_days' } },
+                                  { exists: { field: 'room_rates.availabilities.open_gds_restriction_type' } }
+                                ]
+                              }
+                            },
+                            {
+                              bool: {
+                                must: [
+                                  { term: { 'room_rates.availabilities.open_gds_arrival_days': Date.parse(dates[0]).strftime("%A").downcase } },
+                                  {
+                                    bool: {
+                                      should: {
+                                        script: {
+                                          script: {
+                                            source: "String res_type = doc[\"room_rates.availabilities.open_gds_restriction_type\"].value; SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd\"); try { long checkin_date = sdf.parse(params.checkin_date).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DATE, (int)doc[\"room_rates.availabilities.open_gds_restriction_days\"].value); long required_check_in = sdf.parse(sdf.format(cal.getTime())).getTime(); if(res_type == \"disabled\" || (res_type == \"till\" && checkin_date >= required_check_in) || (res_type == \"from\" && checkin_date <= required_check_in)) { return true; } return false; } catch(Exception e){ return false; }",
+                                            params: {
+                                             checkin_date: dates[0]
+                                            }
                                           }
                                         }
                                       }
-                                    }
-                                  ]
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    bool: {
-                      must: [
-                        {
-                          nested: {
-                            path: 'room_rates.availabilities',
-                            query: {
-                              bool: {
-                                must: [
-                                  { term: { 'room_rates.availabilities.available_on': dates[0] } },
-                                  { term: { 'room_rates.availabilities.minimum_stay': total_nights } },
-                                  { match: { 'room_rates.availabilities.check_in_closed': false  } },
-                                  { range: { "room_rates.availabilities.booking_limit": { gt: 0 } } },
-                                  {
-                                    bool: {
-                                      should: [
-                                        {
-                                          bool: {
-                                            must_not: [
-                                              { exists: { field: 'room_rates.availabilities.open_gds_restriction_days' } },
-                                              { exists: { field: 'room_rates.availabilities.open_gds_restriction_type' } }
-                                            ]
-                                          }
-                                        },
-                                        {
-                                          bool: {
-                                            must: [
-                                              { term: { 'room_rates.availabilities.open_gds_arrival_days': Date.parse(dates[0]).strftime("%A").downcase } },
-                                              {
-                                                bool: {
-                                                  should: {
-                                                    script: {
-                                                      script: {
-                                                        source: "String res_type = doc[\"room_rates.availabilities.open_gds_restriction_type\"].value; SimpleDateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd\"); try { long checkin_date = sdf.parse(params.checkin_date).getTime(); Calendar cal = Calendar.getInstance(); cal.add(Calendar.DATE, (int)doc[\"room_rates.availabilities.open_gds_restriction_days\"].value); long required_check_in = sdf.parse(sdf.format(cal.getTime())).getTime(); if(res_type == \"disabled\" || (res_type == \"till\" && checkin_date >= required_check_in) || (res_type == \"from\" && checkin_date <= required_check_in)) { return true; } return false; } catch(Exception e){ return false; }",
-                                                        params: {
-                                                         checkin_date: dates[0]
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                              }
-                                            ]
-                                          }
-                                        }
-                                      ]
                                     }
                                   }
                                 ]
                               }
                             }
-                          }
-                        },
-                        { term: { checkout_dates: dates[-1] } },
-                      ]
-                    }
+                          ]
+                        }
+                      }
+                    ]
                   }
-                ]
+                }
               }
-            }
+            },
+            { term: { checkout_dates: dates[-1] } },
           ]
         }
       }
@@ -463,52 +393,27 @@ class V2::SearchLodgings
       query
     end
 
-    def check_in_dates
-      dates = []
-      if (params[:check_in].present? || params[:check_out].present?) && params[:flexible_arrival].blank?
-        check_in = params[:check_in].presence || params[:check_out]
-        dates << check_in
-      elsif params[:flexible_arrival].present? && params[:flexible_type].present?
-        params[:months_date_range].each do |date_range|
-           dates += if params[:flexible_type] == 'week' || params[:flexible_type] == 'custom'
-                      (Date.parse(date_range[:start_date])..(Date.parse(date_range[:end_date]) - total_nights)).map(&:to_s)
-                    else
-                      (Date.parse(date_range[:start_date])..Date.parse(date_range[:end_date])).select { |date| date.friday? }.map(&:to_s)
-                    end
-        end
-      end
-
-      dates
+    def total_nights(check_in, check_out)
+      (Date.parse(check_out) - Date.parse(check_in)).to_i
     end
 
-    def check_out_dates
-      dates = []
-      if (params[:check_in].present? || params[:check_out].present?) && params[:flexible_arrival].blank?
-        check_out = params[:check_out].presence || params[:check_in]
-        dates << check_out
-      elsif params[:flexible_arrival].present?
-        params[:months_date_range].each do |date_range|
-          dates += if params[:flexible_type] == 'week' || params[:flexible_type] == 'custom'
-                    ((Date.parse(date_range[:start_date]) + total_nights)..(Date.parse(date_range[:end_date]))).map(&:to_s)
-                  elsif params[:flexible_type] == 'weekend'
-                    (Date.parse(date_range[:start_date])..Date.parse(date_range[:end_date])).select { |date| date.sunday? }.map(&:to_s)
-                  else
-                    (Date.parse(date_range[:start_date])..Date.parse(date_range[:end_date])).select { |date| date.monday? }.map(&:to_s)
-                  end
-        end
-      end
-
-      dates
-    end
-
-    def total_nights
-      return 7 if params[:flexible_arrival].present? && params[:flexible_type] == 'week'
-      return 3 if params[:flexible_arrival].present? && params[:flexible_type] == 'long_weekend'
-      return 2 if params[:flexible_arrival].present? && params[:flexible_type] == 'weekend'
-      return params[:custom_stay].to_i if params[:flexible_arrival].present? && params[:flexible_type] == 'custom'
-
-      check_in = params[:check_in].presence || params[:check_out]
-      check_out = params[:check_out].presence || params[:check_in]
-      return (Date.parse(check_out) - Date.parse(check_in)).to_i
+    def embed_params
+      {
+        adults: params[:adults],
+        children: params[:children],
+        custom_text_id: params[:custom_text_id],
+        check_in: params[:check_in],
+        check_out: params[:check_out],
+        amenities_in: params[:amenities_in]&.join(''),
+        experiences_in: params[:experiences_in]&.join(''),
+        limit: params[:limit],
+        flexible_arrival: params[:flexible_arrival],
+        flexible_type: params[:flexible_type],
+        months: params[:months]&.split(',').map { |month| month.strip.downcase },
+        page: params[:page],
+        countries_in: params[:countries_in]&.join(''),
+        regions_in: params[:regions_in]&.join(''),
+        custom_stay: params[:custom_stay]
+      }
     end
 end

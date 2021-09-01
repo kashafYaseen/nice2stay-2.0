@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_30_093940) do
+ActiveRecord::Schema.define(version: 2021_08_30_105759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -861,6 +861,14 @@ ActiveRecord::Schema.define(version: 2021_08_30_093940) do
     t.index ["availability_id"], name: "index_prices_on_availability_id"
   end
 
+  create_table "rate_plan_translations", force: :cascade do |t|
+    t.string "locale"
+    t.string "name"
+    t.text "description"
+    t.bigint "rate_plan_id"
+    t.index ["rate_plan_id"], name: "index_rate_plan_translations_on_rate_plan_id"
+  end
+
   create_table "rate_plans", force: :cascade do |t|
     t.string "code"
     t.string "name"
@@ -1221,6 +1229,7 @@ ActiveRecord::Schema.define(version: 2021_08_30_093940) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
+  add_foreign_key "rate_plan_translations", "rate_plans", on_delete: :cascade
   add_foreign_key "rate_plans", "lodgings", column: "parent_lodging_id", on_delete: :cascade
   add_foreign_key "recent_searches", "users", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade

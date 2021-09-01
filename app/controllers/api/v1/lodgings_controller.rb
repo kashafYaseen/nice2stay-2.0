@@ -8,6 +8,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
   def create
     @lodging = SaveLodgingDetails.call(params)
     @lodging.reindex
+    Lodging.flush_cached_searched_data
 
     if @lodging.valid?
       render status: :created
@@ -28,6 +29,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
 
   def reindex
     Lodging.reindex
+    Lodging.flush_cached_searched_data
     render json: { reindex: true }, status: :ok
   end
 

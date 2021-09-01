@@ -56,6 +56,9 @@ gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
 gem "i18n-js"
+gem 'oj'
+gem 'typhoeus'
+gem 'redis-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false

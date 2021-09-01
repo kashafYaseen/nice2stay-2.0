@@ -1,4 +1,4 @@
-class RoomRaccoons::CalendarBuild
+class ChannelManagers::CalendarBuild
   attr_reader :room_rate,
               :params,
               :availabilities
@@ -10,7 +10,7 @@ class RoomRaccoons::CalendarBuild
   def initialize(room_rate:, params:)
     @room_rate = room_rate
     @params = params
-    @availabilities = room_rate.availabilities.for_range(check_in, check_out)
+    @availabilities = room_rate.availabilities.for_range(check_in, check_out).where('booking_limit > 0')
   end
 
   def call
@@ -19,7 +19,7 @@ class RoomRaccoons::CalendarBuild
       room_rate_params = params_based_on availability
       next if room_rate_params.blank?
 
-      price_details = room_rate.price_details(room_rate_params)
+      price_details = room_rate.price_details(room_rate_params, true)
       next unless price_details[:valid]
 
       response << { date: availability.available_on, available: availability.booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }

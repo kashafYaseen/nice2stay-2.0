@@ -3,11 +3,7 @@ class Api::V2::RoomRatesController < Api::V2::ApiController
   before_action :set_room_rate
 
   def calendar_build
-    if @lodging.open_gds?
-      @calendar_entries = OpenGds::CalendarBuild.call(room_rate: @room_rate, params: params)
-    else
-      @calendar_entries = RoomRaccoons::CalendarBuild.call(room_rate: @room_rate, params: params)
-    end
+    @calendar_entries = ChannelManagers::CalendarBuild.call(room_rate: @room_rate, params: params)
 
     if @calendar_entries.present?
       render json: @calendar_entries, status: :ok
