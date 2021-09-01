@@ -61,6 +61,10 @@ class Booking < ApplicationRecord
     reservations.sum(&:final_payment)
   end
 
+  def cleaning_cost_on_location
+    reservations.sum(&:cleaning_cost_on_location)
+  end
+
   def step_passed?(step)
     return false unless booking_status?
     return false if option?

@@ -26,7 +26,8 @@
             <th class="text-center">Infants</th>
             <th class="text-center">Cleaning Cost</th>
             <th class="text-center">Discount</th>
-            <th class="text-center">Price</th>
+            <th class="text-center">Rent</th>
+            <th class="text-center">Total</th>
             <th class="text-center">Status</th>
           </tr>
         </thead>
@@ -44,13 +45,10 @@
             <% if reservation.booking_expert? %>
               <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.total_price %></td>
             <% else %>
-              <% if reservation.is_managed_by_n2s? %>
-                <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.rent.to_f %></td>
-              <% else %>
-                <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
-              <% end %>
+              <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.rent.to_f %></td>
             <% end %>
 
+            <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
             <td class="text-center text-lg text-medium"><%= render_reservation_status reservation %></td>
           </tr>
         </tbody>
