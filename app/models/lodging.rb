@@ -226,6 +226,7 @@ class Lodging < ApplicationRecord
 
   def self.flush_cached_searched_data
     Rails.cache.delete_matched('V2::SearchLodgings*')
+    Rails.cache.delete_matched('Api::V2::LodgingsController*')
   end
 
   def relation_type
