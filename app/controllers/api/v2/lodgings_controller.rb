@@ -26,25 +26,8 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
-    lodgings = Lodging.where(id: ids).includes({ room_rates: [{ rate_plan: :rule }, :parent_lodging, :child_lodging] }, :translations)
-    search_params = params_wrt_flexible_type
-    lodgings.each do |lodging|
-      if lodging.belongs_to_channel?
-        lodging.room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
-          room_rate.cumulative_price(search_params.clone)
-          lodging.check_in = room_rate.check_in
-          lodging.check_out = room_rate.check_out
-          lodging.calculated_price = room_rate.calculated_price
-          lodging.dynamic_price = room_rate.dynamic_price
-          lodging.price_valid = room_rate.price_valid
-          lodging.price_errors = room_rate.price_errors
-          break if room_rate.price_valid && params[:accom_listing]
-        end
-      else
-        lodging.cumulative_price(search_params.clone)
-      end
-    end
-
+    cache_key = [self.class.name, __method__, params.to_s]
+    lodgings = params[:accom_listing] && params[:flexible] ? Rails.cache.fetch(cache_key, expires_in: 2.day) { calculate_prices } : calculate_prices
     render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], accom_listing: params[:accom_listing] }}).serialized_json, status: :ok
   end
 
@@ -79,5 +62,28 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
     def ids
       params[:ids].try(:split, ',')
+    end
+
+    def calculate_prices
+      lodgings = Lodging.where(id: ids).includes({ room_rates: [{ rate_plan: :rule }, :parent_lodging, :child_lodging] }, :translations)
+      search_params = params_wrt_flexible_type
+      lodgings.each do |lodging|
+        if lodging.belongs_to_channel?
+          lodging.room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
+            room_rate.cumulative_price(search_params.clone)
+            lodging.check_in = room_rate.check_in
+            lodging.check_out = room_rate.check_out
+            lodging.calculated_price = room_rate.calculated_price
+            lodging.dynamic_price = room_rate.dynamic_price
+            lodging.price_valid = room_rate.price_valid
+            lodging.price_errors = room_rate.price_errors
+            break if room_rate.price_valid && params[:accom_listing]
+          end
+        else
+          lodging.cumulative_price(search_params.clone)
+        end
+      end
+
+      lodgings
     end
 end

@@ -8,6 +8,7 @@ class Price < ApplicationRecord
   scope :search_import, -> { includes(:lodging).where.not(availability_id: nil) }
 
   delegate :available_on, to: :availability, allow_nil: true
+  delegate :max_stay, to: :availability, allow_nil: true, prefix: true
 
   searchkick
 
