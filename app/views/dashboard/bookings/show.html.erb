@@ -6,9 +6,13 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-md-6">
+        <!-- we are not adding cleaning cost in Total Price it if it's paid on location -->
         <p>Total Price - <%= render_rounded_price @booking.total_payment %></p>
         <p>Pre Payment - <%= render_rounded_price @booking.pre_payment %></p>
         <p>Final Payment - <%= render_rounded_price @booking.final_payment %></p>
+        <% if @booking.cleaning_cost_on_location.positive? %>
+          <p>Cleaning Cost - <%= render_rounded_price @booking.cleaning_cost_on_location %> (Pay on location)</p>
+        <% end %>
       </div>
 
       <div class="col-md-6">

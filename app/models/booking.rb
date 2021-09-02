@@ -52,11 +52,15 @@ class Booking < ApplicationRecord
   end
 
   def pre_payment_amount
-    reservations.sum(:rent) * 0.3
+    reservations.sum(&:pre_payment)
   end
 
   def final_payment_amount
-    reservations.sum(:rent) * 0.7
+    reservations.sum(&:final_payment)
+  end
+
+  def cleaning_cost_on_location
+    reservations.sum(&:cleaning_cost_on_location)
   end
 
   def step_passed?(step)
