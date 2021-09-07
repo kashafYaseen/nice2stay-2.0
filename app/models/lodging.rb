@@ -219,7 +219,8 @@ class Lodging < ApplicationRecord
 
   def self.flush_cached_searched_data
     Rails.cache.delete_matched('V2::SearchLodgings*')
-    Rails.cache.delete_matched('Api::V2::LodgingsController*')
+    Rails.cache.delete_matched('Lodging/calculate_prices*')
+    CacheLodgingsJob.perform_later
   end
 
   def relation_type
@@ -264,6 +265,31 @@ class Lodging < ApplicationRecord
     self.price_errors = prices[:errors]
     self.check_in = prices[:check_in]
     self.check_out = prices[:check_out]
+  end
+
+  def self.calculate_prices(params, lodging_ids, search_analytic)
+    cache_key = ['Lodging', __method__, search_analytic.params['lodgings']]
+    Rails.cache.fetch(cache_key, expires_in: 2.day) do
+      lodgings = Lodging.where(id: lodging_ids).includes({ room_rates: [{ rate_plan: :rule }, :parent_lodging, :child_lodging] }, :translations)
+      lodgings.each do |lodging|
+        if lodging.belongs_to_channel?
+          lodging.room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
+            room_rate.cumulative_price(params.clone)
+            lodging.check_in = room_rate.check_in
+            lodging.check_out = room_rate.check_out
+            lodging.calculated_price = room_rate.calculated_price
+            lodging.dynamic_price = room_rate.dynamic_price
+            lodging.price_valid = room_rate.price_valid
+            lodging.price_errors = room_rate.price_errors
+            break if room_rate.price_valid && params[:accom_listing]
+          end
+        else
+          lodging.cumulative_price(params.clone)
+        end
+      end
+
+      lodgings
+    end
   end
 
   def allow_check_in_days
