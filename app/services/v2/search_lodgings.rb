@@ -1,18 +1,19 @@
 class V2::SearchLodgings
   attr_accessor :params
-  attr_reader :custom_text
+  attr_reader :custom_text, :search_analytic
 
-  def self.call(params, custom_text=nil)
-    self.new(params, custom_text).call
+  def self.call(params, search_analytic, custom_text=nil)
+    self.new(params, search_analytic, custom_text).call
   end
 
-  def initialize(params, custom_text=nil)
+  def initialize(params, search_analytic, custom_text=nil)
     @params = params
     @custom_text = custom_text
+    @search_analytic = search_analytic
   end
 
   def call
-    cache_key = [self.class.name, __method__, embed_params]
+    cache_key = [self.class.name, __method__, search_analytic.params['lodgings']]
     Rails.cache.fetch(cache_key, expires_in: 2.day) do
       Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
     end

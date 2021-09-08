@@ -298,7 +298,7 @@ class OpenGds::CreateRates
         prices.each(&:reindex)
       end
 
-      Lodging.flush_cached_searched_data
       lodgings.reindex
+      Lodging.flush_cached_searched_data
     end
 end

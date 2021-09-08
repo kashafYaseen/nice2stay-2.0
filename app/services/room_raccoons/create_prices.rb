@@ -60,8 +60,8 @@ class RoomRaccoons::CreatePrices
 
     Price.import prices, batch_size: 150, on_duplicate_key_update: { columns: %i[amount children infants adults minimum_stay rr_additional_amount_flag] }
     prices.each(&:reindex)
-    Lodging.flush_cached_searched_data
     lodgings.reindex
+    Lodging.flush_cached_searched_data
   end
 
   private
