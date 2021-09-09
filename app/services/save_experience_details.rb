@@ -8,7 +8,7 @@ class SaveExperienceDetails
 
   def initialize(params)
     @params = params
-    @experience = Experience.find_or_initialize_by(slug: experience_params[:slug])
+    @experience = Experience.find_or_initialize_by(crm_id: experience_params[:crm_id])
   end
 
   def call
@@ -47,6 +47,7 @@ class SaveExperienceDetails
         :publish,
         :priority,
         :guests,
+        :crm_id,
         :created_at,
         :updated_at,
       )
