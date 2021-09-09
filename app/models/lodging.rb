@@ -269,7 +269,7 @@ class Lodging < ApplicationRecord
 
   def self.calculate_prices(params, lodging_ids, search_analytic)
     cache_key = ['Lodging', __method__, search_analytic.params['lodgings']]
-    Rails.cache.fetch(cache_key, expires_in: 2.day) do
+    Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       lodgings = Lodging.where(id: lodging_ids).includes({ room_rates: [{ rate_plan: :rule }, :parent_lodging, :child_lodging] }, :translations)
       lodgings.each do |lodging|
         if lodging.belongs_to_channel?

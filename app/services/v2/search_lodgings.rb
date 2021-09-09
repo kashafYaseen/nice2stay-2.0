@@ -14,7 +14,7 @@ class V2::SearchLodgings
 
   def call
     cache_key = [self.class.name, __method__, search_analytic.params['lodgings']]
-    Rails.cache.fetch(cache_key, expires_in: 2.day) do
+    Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
     end
   end

@@ -63,7 +63,7 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
   config.cache_store = :redis_store, {
-    expires_in: 2.day,
+    expires_in: 24.hours,
     namespace: 'cache',
     redis: { host: 'localhost', port: 6379, db: 0 },
   }

@@ -25,7 +25,7 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
   config.cache_store = :redis_store, {
-    expires_in: 2.day,
+    expires_in: 24.hours,
     namespace: 'cache',
     redis: { host: 'localhost', port: 6379, db: 0 },
   }
