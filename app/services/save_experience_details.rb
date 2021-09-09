@@ -45,6 +45,8 @@ class SaveExperienceDetails
         :tag,
         :short_desc,
         :publish,
+        :priority,
+        :guests,
         :created_at,
         :updated_at,
       )

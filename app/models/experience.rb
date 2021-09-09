@@ -11,6 +11,14 @@ class Experience < ApplicationRecord
 
   default_scope { includes(:translations) }
 
+  enum priority: {
+    lowest: 0,
+    low: 1,
+    medium: 2,
+    high: 3,
+    highest: 4
+  }
+
   def search_data
     attributes.merge(
       name_en: name_en,
