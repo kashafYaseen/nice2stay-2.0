@@ -10,6 +10,8 @@ class Experience < ApplicationRecord
   searchkick text_middle: [:name_en, :name_nl]
 
   default_scope { includes(:translations) }
+  scope :by_guests, -> (guests) { where(guests: [guests, 999]) }
+  scope :order_by_priority, -> { order(priority: :desc) }
 
   enum priority: {
     lowest: 0,
