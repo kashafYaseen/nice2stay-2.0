@@ -2,7 +2,7 @@ class Api::V1::ExperiencesController < Api::V1::ApiController
   before_action :set_locale, only: [:index]
 
   def index
-    render json: Api::V2::ExperienceSerializer.new(Experience.includes(:translations)).serialized_json, status: :ok
+    render json: Api::V2::ExperienceSerializer.new(Experience.by_guests(params[:guests]).order_by_priority.includes(:translations)).serialized_json, status: :ok
   end
 
   def create
