@@ -240,8 +240,8 @@ class Lodging < ApplicationRecord
     child_lodgings.pluck(:adults).select(&:present?).max.to_i + child_lodgings.pluck(:children).select(&:present?).max.to_i
   end
 
-  def price_details(values, flexible = true, daily_rate = false)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible, daily_rate: daily_rate })
+  def price_details(values:, flexible: true, daily_rate: false, calendar_departure: false)
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible, daily_rate: daily_rate, calendar_departure: calendar_departure })
   end
 
   def discount_details(values)

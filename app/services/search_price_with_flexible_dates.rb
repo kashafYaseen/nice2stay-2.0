@@ -15,6 +15,7 @@ class SearchPriceWithFlexibleDates
   end
 
   def call
+    return calculate_daily_rates if params[:daily_rate].present? && params[:calendar_departure].present?
     if @lodging.present?
       return search_price_with_defaults unless lodging.as_child? && params[:flexible] && params[:flexible_type].blank?
       return flexible_search
@@ -199,6 +200,22 @@ class SearchPriceWithFlexibleDates
       end
 
       prices
+    end
+
+    def calculate_daily_rates
+      price_list =  if lodging.present?
+                      SearchPrices.call(params.merge(check_out: (params[:check_out].to_date + 1.day).to_s)).uniq(&:available_on)
+                    else
+                      RoomRaccoons::SearchPrices.call(params.merge(adults: adults, extra_adults: extra_adults, children: extra_children, check_out: (params[:check_out].to_date + 1.day).to_s))
+                    end
+
+      prices = []
+      price_list.each do |price|
+        prices << { date: price.available_on, rate: calculate_price_from([price], { check_in: price.available_on, check_out: price.available_on + 1.day }).sum.round(2) }
+      end
+
+      reservation = build_reservation params
+      { rates_with_dates: prices, search_params: params, valid: reservation.validate, errors: reservation.errors }
     end
 
     def prices_based_on_min_stay(price_list)

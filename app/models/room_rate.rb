@@ -60,8 +60,8 @@ class RoomRate < ApplicationRecord
     )
   end
 
-  def price_details(values, daily_rate = false)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5], daily_rate: daily_rate })
+  def price_details(values:, daily_rate: false, calendar_departure: false)
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], rooms: values[5], daily_rate: daily_rate, calendar_departure: calendar_departure })
   end
 
   def minimum_booking_limit(params)

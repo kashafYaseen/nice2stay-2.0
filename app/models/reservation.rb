@@ -99,9 +99,9 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    return self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum unless belongs_to_channel?
+    return self.rent = lodging.price_details(values: [check_in.to_s, check_out.to_s, adults, children, infants], flexible: false)[:rates].sum unless belongs_to_channel?
 
-    self.rent = room_rate.price_details([check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i + room_rate.open_gds_res_fee.to_f
+    self.rent = room_rate.price_details(values: [check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i + room_rate.open_gds_res_fee.to_f
     self.additional_fee = room_rate.open_gds_res_fee.to_f
   end
 
