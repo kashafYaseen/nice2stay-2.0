@@ -19,7 +19,7 @@ class ChannelManagers::CalendarBuild
       room_rate_params = params_based_on availability
       next if room_rate_params.blank?
 
-      price_details = room_rate.price_details(room_rate_params, true)
+      price_details = room_rate.price_details(values: room_rate_params, daily_rate: true)
       next unless price_details[:valid]
 
       response << { date: availability.available_on, available: availability.booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
