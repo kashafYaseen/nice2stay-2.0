@@ -16,35 +16,34 @@ class RoomRaccoons::CalendarDeparture
   def call
     return [] if check_in_availability.blank?
 
-    availabilities = room_rate.availabilities.where(available_on: dates)
-    response = []
-    availabilities.each do |availability|
-      room_rate_params = params_based_on availability
+    prices = {}
+    dates_combinations.each do |dates_combination|
+      room_rate_params = params_based_on dates_combination
       next if room_rate_params.blank?
 
-      price_details = room_rate.price_details(room_rate_params, true)
+      price_details = room_rate.price_details(values: room_rate_params, daily_rate: true, calendar_departure: true)
       next unless price_details[:valid]
 
-      response << { date: availability.available_on, rate: price_details[:rates].sum.round(2), ctd: closed_to_departure?(availability) }
+      price_details[:rates_with_dates].each do |rate_with_date|
+        next if prices[rate_with_date[:date]].present?
+        prices[rate_with_date[:date]] = { date: rate_with_date[:date], rate: rate_with_date[:rate], ctd: rate_with_date[:date] != dates_combination[:check_out].to_date }
+      end
     end
 
-    response << { date: dates[-1].to_date + 1.day, rate: nil, ctd: false } if response.present? # checkout
-    response.sort_by { |r| r[:date] }
+    return [] if prices.blank?
+    response = prices.keys.map { |res| prices[res] }.sort_by { |r| r[:date] }
+    response[-1][:rate] = nil
+    response
   end
 
   private
-    def params_based_on availability
-      min_stay = availability.min_stay
-      return if min_stay.blank?
 
-      [availability.available_on.to_s, (availability.available_on + min_stay.to_i.days).to_s, params[:adults] || 1, params[:children], 1]
+    def params_based_on dates_combination
+      [dates_combination[:check_in].to_s, dates_combination[:check_out].to_s, params[:adults] || 1, params[:children], false]
     end
 
-    def dates
-      (check_in_availability.available_on..check_in_availability.available_on + check_in_availability.max_stay.days - 1).map(&:to_s)
-    end
-
-    def closed_to_departure? availability
-      !check_in_availability.minimum_stay.include? (availability.available_on.mjd - params[:check_in].to_date.mjd).to_s
+    def dates_combinations
+      return [] unless check_in_availability.minimum_stay.present?
+      check_in_availability.minimum_stay.map { |min_stay| { check_in: check_in_availability.available_on, check_out: check_in_availability.available_on + min_stay.to_i } }
     end
 end
