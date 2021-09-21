@@ -28,6 +28,8 @@ class RoomRaccoons::CalendarDeparture
         next if prices[rate_with_date[:date]].present?
         prices[rate_with_date[:date]] = { date: rate_with_date[:date], rate: rate_with_date[:rate], ctd: rate_with_date[:date] != dates_combination[:check_out].to_date }
       end
+
+      prices[dates_combination[:check_out].to_date] = { date: dates_combination[:check_out].to_date, rate: nil, ctd: false } unless prices[dates_combination[:check_out].to_date].present?
     end
 
     return [] if prices.blank?
