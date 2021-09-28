@@ -15,9 +15,6 @@ class CreateSupplements < ActiveRecord::Migration[5.2]
       t.string :valid_on_arrival_days, array: true, default: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       t.string :valid_on_departure_days, array: true, default: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       t.string :valid_on_stay_days, array: true, default: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      t.string :possible_days_with_date_selection, array: true, default: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      t.boolean :arrival_possible_with_date_selection, default: true
-      t.boolean :departure_possible_with_date_selection, default: true
       t.bigint :crm_id
       t.references :lodging, index: true, foreign_key: { on_delete: :cascade }
 

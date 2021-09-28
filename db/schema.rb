@@ -1140,9 +1140,6 @@ ActiveRecord::Schema.define(version: 2021_09_24_105438) do
     t.string "valid_on_arrival_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
     t.string "valid_on_departure_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
     t.string "valid_on_stay_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
-    t.string "possible_days_with_date_selection", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
-    t.boolean "arrival_possible_with_date_selection", default: true
-    t.boolean "departure_possible_with_date_selection", default: true
     t.bigint "crm_id"
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
