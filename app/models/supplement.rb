@@ -1,8 +1,8 @@
 class Supplement < ApplicationRecord
   belongs_to :lodging #parent accommodations
   has_many :linked_supplements
-  # has_many :linked_accommodations, through: :linked_supplements, source: :supplementable, source_type: 'Accommodation'
-  # has_many :linked_room_rates, through: :linked_supplements, source: :supplementable, source_type: 'RoomRate'
+  has_many :linked_room_rates, through: :linked_supplements, source: :supplementable, source_type: 'RoomRate'
+  has_many :rate_plans, through: :linked_room_rates
 
   translates :name, :description
   globalize_accessors

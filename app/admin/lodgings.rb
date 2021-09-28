@@ -240,6 +240,53 @@ ActiveAdmin.register Lodging do
       end
     end
 
+    panel 'Supplements' do
+      if lodging.as_parent? || lodging.as_standalone?
+        table_for lodging.supplements do
+          column('ID') { |supplement| supplement.id }
+          column('Name') { |supplement| supplement.name }
+          column('Description') { |supplement| supplement.description }
+          column('Rate Type') { |supplement| supplement.rate_type }
+          column('Supplement Type') { |supplement| supplement.supplement_type }
+          column('Rate') { |supplement| supplement.rate }
+          column('Child Rate') { |supplement| supplement.child_rate || 'N/A' }
+          column('Permanently Valid') { |supplement| supplement.valid_permanent }
+          column('Valid From') { |supplement| supplement.valid_from || 'N/A' }
+          column('Valid Till') { |supplement| supplement.valid_till || 'N/A' }
+          column('Valid on Arrival Days') { |supplement| supplement.valid_on_arrival_days }
+          column('Valid on Stay Days') { |supplement| supplement.valid_on_stay_days }
+          column('Valid on Departure Days') { |supplement| supplement.valid_on_departure_days }
+          column('Quantity') { |supplement| supplement.maximum_number }
+          column('Published') { |supplement| supplement.published }
+        end
+      else
+        supplements = lodging.belongs_to_channel? ? lodging.room_rates_supplements.joins(:rate_plans).select('supplements.*, rate_plans.id as rate_plan_id, rate_plans.name as rate_plan_name') : lodging.linked_child_supplements
+        table_for supplements do
+          column('ID') { |supplement| supplement.id }
+          column('Name') { |supplement| supplement.name }
+          if lodging.belongs_to_channel?
+            column('Rate Plan') do |supplement|
+              link_to "#{supplement.rate_plan_id} - #{supplement.rate_plan_name}", admin_rate_plan_path(id: supplement.rate_plan_id)
+            end
+          end
+
+          column('Description') { |supplement| supplement.description }
+          column('Rate Type') { |supplement| supplement.rate_type }
+          column('Supplement Type') { |supplement| supplement.supplement_type }
+          column('Rate') { |supplement| supplement.rate }
+          column('Child Rate') { |supplement| supplement.child_rate || 'N/A' }
+          column('Permanently Valid') { |supplement| supplement.valid_permanent }
+          column('Valid From') { |supplement| supplement.valid_from || 'N/A' }
+          column('Valid Till') { |supplement| supplement.valid_till || 'N/A' }
+          column('Valid on Arrival Days') { |supplement| supplement.valid_on_arrival_days }
+          column('Valid on Stay Days') { |supplement| supplement.valid_on_stay_days }
+          column('Valid on Departure Days') { |supplement| supplement.valid_on_departure_days }
+          column('Quantity') { |supplement| supplement.maximum_number }
+          column('Published') { |supplement| supplement.published }
+        end
+      end
+    end
+
     panel "Availabilities" do
       table_for lodging.availabilities_wrt_channel.sort_by(&:available_on).select { |availability| availability.available_on >= Date.current } do
         column :id

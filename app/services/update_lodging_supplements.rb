@@ -24,10 +24,10 @@ class UpdateLodgingSupplements
       supplements = lodging.supplements.includes(:linked_supplements)
       children = lodging.belongs_to_channel? ? lodging.children_room_rates.includes(:rate_plan) : lodging.lodging_children
       params.each do |supplement_params|
-        supplement = supplements.find { |supplement| supplement.crm_id == supplement_params[:crm_id] } || lodging.supplements.new(created_at: DateTime.current, updated_at: DateTime.current, crm_id: supplement_params[:crm_id])
+        supplement = supplements.find { |supplement| supplement.crm_id.to_s == supplement_params[:crm_id].to_s } || lodging.supplements.new(created_at: DateTime.current, updated_at: DateTime.current, crm_id: supplement_params[:crm_id])
 
         supplement_params[:linked_supplements].each do |linked_supplement_params|
-          child = lodging.belongs_to_channel? ? children.find { |c| c.rate_plan_crm_id == linked_supplement_params[:rate_plan_crm_id] } : children.find { |c| c.crm_id == linked_supplement_params[:supplementable_crm_id] }
+          child = lodging.belongs_to_channel? ? children.find { |c| c.rate_plan_crm_id.to_s == linked_supplement_params[:rate_plan_crm_id].to_s } : children.find { |c| c.crm_id.to_s == linked_supplement_params[:supplementable_crm_id].to_s }
           linked_supplement = supplement.linked_supplements.find { |ls| ls.supplementable_id == child.id && ls.supplementable_type == child.class.name }
           supplement.linked_supplements.build(created_at: DateTime.current, updated_at: DateTime.current, supplementable_id: child.id, supplementable_type: child.class.name) if linked_supplement.blank?
         end
@@ -43,7 +43,7 @@ class UpdateLodgingSupplements
       supplements = lodging.supplements.includes(:translations)
 
       params.each do |supplement_params|
-        supplement = supplements.find { |supplement| supplement.crm_id == supplement_params[:crm_id] }
+        supplement = supplements.find { |supplement| supplement.crm_id.to_s == supplement_params[:crm_id].to_s }
 
         supplement_params[:translations].each do |translation|
           _translation = supplement.translations.find_or_initialize_by(locale: translation[:locale])
@@ -66,6 +66,7 @@ class UpdateLodgingSupplements
         :valid_from,
         :valid_till,
         :rate_type,
+        :published,
         valid_on_arrival_days: [],
         valid_on_departure_days: [],
         valid_on_stay_days: []
