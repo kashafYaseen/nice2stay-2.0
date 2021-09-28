@@ -28,6 +28,7 @@ class SaveLodgingDetails
       return unless lodging.save
 
       UpdateLodgingRatePlans.call(lodging: lodging, parent_rate_plans: params[:lodging][:parent_rate_plans], room_rates: params[:lodging][:room_rates]) if lodging.belongs_to_channel?
+      UpdateLodgingSupplements.call(lodging: lodging, params: params[:supplements])
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?
