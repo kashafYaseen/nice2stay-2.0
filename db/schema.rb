@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_112650) do
+ActiveRecord::Schema.define(version: 2021_09_24_105438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -508,6 +508,16 @@ ActiveRecord::Schema.define(version: 2021_09_09_112650) do
     t.datetime "updated_at", null: false
     t.index ["lead_id"], name: "index_leads_regions_on_lead_id"
     t.index ["region_id"], name: "index_leads_regions_on_region_id"
+  end
+
+  create_table "linked_supplements", force: :cascade do |t|
+    t.string "supplementable_type"
+    t.bigint "supplementable_id"
+    t.bigint "supplement_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supplement_id"], name: "index_linked_supplements_on_supplement_id"
+    t.index ["supplementable_type", "supplementable_id"], name: "index_linked_supplements_on_supplementable"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -1104,6 +1114,42 @@ ActiveRecord::Schema.define(version: 2021_09_09_112650) do
     t.index ["lodging_id"], name: "index_specifications_on_lodging_id"
   end
 
+  create_table "supplement_translations", force: :cascade do |t|
+    t.string "locale"
+    t.string "name"
+    t.text "description"
+    t.bigint "crm_id"
+    t.bigint "supplement_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supplement_id"], name: "index_supplement_translations_on_supplement_id"
+  end
+
+  create_table "supplements", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "supplement_type", default: 0
+    t.integer "rate_type"
+    t.decimal "rate"
+    t.decimal "child_rate"
+    t.integer "maximum_number", default: 0
+    t.boolean "published", default: false
+    t.boolean "valid_permanent", default: false
+    t.datetime "valid_from"
+    t.datetime "valid_till"
+    t.string "valid_on_arrival_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
+    t.string "valid_on_departure_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
+    t.string "valid_on_stay_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
+    t.string "possible_days_with_date_selection", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
+    t.boolean "arrival_possible_with_date_selection", default: true
+    t.boolean "departure_possible_with_date_selection", default: true
+    t.bigint "crm_id"
+    t.bigint "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_id"], name: "index_supplements_on_lodging_id"
+  end
+
   create_table "trip_members", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "trip_id"
@@ -1222,6 +1268,7 @@ ActiveRecord::Schema.define(version: 2021_09_09_112650) do
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "leads_regions", "leads", on_delete: :cascade
   add_foreign_key "leads_regions", "regions", on_delete: :cascade
+  add_foreign_key "linked_supplements", "supplements", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
@@ -1254,6 +1301,8 @@ ActiveRecord::Schema.define(version: 2021_09_09_112650) do
   add_foreign_key "rules", "rate_plans", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
+  add_foreign_key "supplement_translations", "supplements", on_delete: :cascade
+  add_foreign_key "supplements", "lodgings", on_delete: :cascade
   add_foreign_key "trip_members", "trips", on_delete: :cascade
   add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"
