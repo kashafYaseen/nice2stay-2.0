@@ -3,12 +3,14 @@ class RoomRate < ApplicationRecord
 
   belongs_to :rate_plan
   belongs_to :child_lodging, class_name: 'Lodging'
+  has_one :rule, through: :rate_plan
+  has_one :parent_lodging, through: :child_lodging, source: :parent
   has_many :availabilities
   has_many :reservations
   has_many :prices, through: :availabilities
-  has_one :parent_lodging, through: :child_lodging, source: :parent
   has_many :child_rates, through: :rate_plan
-  has_one :rule, through: :rate_plan
+  has_many :linked_supplements, as: :supplementable
+  has_many :supplements, through: :linked_supplements
 
   enum default_single_rate_type: {
     fixed_rate: 0,

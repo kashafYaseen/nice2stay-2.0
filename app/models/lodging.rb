@@ -32,6 +32,10 @@ class Lodging < ApplicationRecord
   has_many :children_room_rates_prices, through: :children_room_rates_availabilities, source: :prices
   has_many :children_availabilities, through: :lodging_children, source: :availabilities
   has_many :children_rules, through: :lodging_children, source: :rules
+  has_many :supplements
+  has_many :linked_supplements, as: :supplementable
+  has_many :room_rates_supplements, through: :room_rates, source: :supplements
+  has_many :linked_child_supplements, through: :linked_supplements, source: :supplement
 
   include ImageHelper
 

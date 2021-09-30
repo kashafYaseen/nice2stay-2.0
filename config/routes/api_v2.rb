@@ -26,6 +26,8 @@ namespace :api do
         get :cumulative_price
         get :recommendations
       end
+
+      resources :supplements, only: [:index]
     end
     resources :pages, only: [] do
       get :home, on: :collection
