@@ -5,6 +5,7 @@ class Supplement < ApplicationRecord
   has_many :linked_lodgings, through: :linked_supplements, source: :supplementable, source_type: 'Lodging'
   has_many :rate_plans, through: :linked_room_rates
 
+  scope :published, -> { where(published: true) }
   scope :applied_room_rates_supplements, -> (check_in, check_out, guests) { joins(linked_room_rates: :child_lodging).where('(supplements.valid_permanent = true OR (supplements.valid_from <= :check_in AND supplements.valid_till >= :check_out)) AND lodgings.minimum_adults <= :guests AND lodgings.adults >= :guests', guests: guests, check_in: check_in, check_out: check_out).distinct }
   scope :applied_lodgings_supplements, -> (check_in, check_out, guests, symbol) { joins(symbol).where('(supplements.valid_permanent = true OR (supplements.valid_from <= :check_in AND supplements.valid_till >= :check_out)) AND lodgings.minimum_adults <= :guests AND lodgings.adults >= :guests', guests: guests, check_in: check_in, check_out: check_out) }
 
