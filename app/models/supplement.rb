@@ -51,19 +51,46 @@ class Supplement < ApplicationRecord
     'Per Stay Per Night': 8,
   }
 
-  def type
-    return 'checkbox' if ['Per Stay', 'Per Stay Per Day', 'Per Stay Per Night'].include?(self.rate_type)
-    return 'select' if ['Per Piece', 'Per Piece Per Day', 'Per Piece Per Night'].include?(self.rate_type)
-    'radio'
+  def elements(adults, children)
+    if rate_type_includes_person?
+      element_types = ['adults']
+      element_types += ['children'] if children.positive?
+    elsif rate_type_includes_piece?
+      element_types = ['quantity']
+    else
+      element_types = ['stay']
+    end
+
+    element_types.map { |element_type|
+      { id: element_type, type: type, options: options((rate_type_includes_person? && eval("#{element_type}")) || 0)  }
+    }
   end
 
-  def options(guests)
-    return (1..maximum_number.to_i).map(&:to_i) if ['Per Piece', 'Per Piece Per Day', 'Per Piece Per Night'].include?(self.rate_type)
-    return (1..guests.to_i).map(&:to_i) if ['Per Person', 'Per Person Per Day', 'Per Person Per Night'].include?(self.rate_type)
-    [true, false] # for stay rate types
+  def rate_type_includes_person?
+    ['Per Person', 'Per Person Per Day', 'Per Person Per Night'].include?(self.rate_type)
+  end
+
+  def rate_type_includes_piece?
+    ['Per Piece', 'Per Piece Per Day', 'Per Piece Per Night'].include?(self.rate_type)
+  end
+
+  def rate_type_includes_stay?
+    ['Per Stay', 'Per Stay Per Day', 'Per Stay Per Night'].include?(self.rate_type)
   end
 
   private
+    def type
+      return 'checkbox' if rate_type_includes_stay?
+      return 'select' if rate_type_includes_piece?
+      'radio'
+    end
+
+    def options(guests = 0)
+      return (0..maximum_number.to_i).to_a if rate_type_includes_piece?
+      return (0..guests.to_i).to_a if rate_type_includes_person?
+      [true, false] # for stay rate types
+    end
+
     def self.extra_adults(lodging_adults, adults)
       adults_without_extra_beds = lodging_adults.to_i - adults.to_i
       adults_with_extra_beds = adults_without_extra_beds.positive? ? 0 : adults_without_extra_beds.abs
