@@ -5,4 +5,8 @@ class Api::V2::SupplementSerializer
   attributes :elements do |supplement, params|
     supplement.elements(params[:adults].to_i, params[:children].to_i)
   end
+
+  attribute :calculated_data do |supplement, params|
+    supplement.cumulative_price(params)
+  end
 end

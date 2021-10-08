@@ -5,6 +5,8 @@ class Supplement < ApplicationRecord
   has_many :linked_lodgings, through: :linked_supplements, source: :supplementable, source_type: 'Lodging'
   has_many :rate_plans, through: :linked_room_rates
 
+  attr_accessor :calculated_data
+
   scope :published, -> { where(published: true) }
   scope :applied_room_rates_supplements, -> (check_in, check_out, adults, children, lodging_adults) do
     _extra_adults = extra_adults(lodging_adults, adults)
@@ -76,6 +78,13 @@ class Supplement < ApplicationRecord
 
   def rate_type_includes_stay?
     ['Per Stay', 'Per Stay Per Day', 'Per Stay Per Night'].include?(self.rate_type)
+  end
+
+  def cumulative_price(params)
+    return unless params[:check_in].present? && params[:check_out].present?
+
+    supplement.calculated_data = CalculateSupplementsPrices.call(supplement: self, params: params.merge(selected_adults: params[:adults].to_i, selected_children: params[:children].to_i, quantity: params[:quantity].to_i))
+    supplement.calculated_data
   end
 
   private
