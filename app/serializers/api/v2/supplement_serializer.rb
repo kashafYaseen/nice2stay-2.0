@@ -3,6 +3,6 @@ class Api::V2::SupplementSerializer
   attributes :id, :name, :description, :type, :rate_type, :rate, :child_rate, :maximum_number
 
   attributes :options do |supplement, params|
-    supplement.options(params[:guests])
+    supplement.options(params[:adults].to_i + params[:children].to_i)
   end
 end
