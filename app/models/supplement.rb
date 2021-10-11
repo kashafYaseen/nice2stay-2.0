@@ -83,8 +83,8 @@ class Supplement < ApplicationRecord
   def cumulative_price(params)
     return unless params[:check_in].present? && params[:check_out].present?
 
-    supplement.calculated_data = CalculateSupplementsPrices.call(supplement: self, params: params.merge(selected_adults: params[:adults].to_i, selected_children: params[:children].to_i, quantity: params[:quantity].to_i))
-    supplement.calculated_data
+    self.calculated_data = CalculateSupplementsPrices.call(supplement: self, params: params.merge(selected_adults: params[:adults].to_i, selected_children: params[:children].to_i, quantity: params[:quantity].to_i))
+    self.calculated_data
   end
 
   private
