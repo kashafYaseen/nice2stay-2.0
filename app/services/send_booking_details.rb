@@ -76,6 +76,7 @@ class SendBookingDetails
           offer_id: reservation.offer_id,
           by_houseowner: false,
           skip_data_posting: true,
+          book_option: reservation.book_option,
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end
