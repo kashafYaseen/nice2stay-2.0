@@ -1,7 +1,6 @@
 <div class="card border-dark text-center mb-3">
   <div class="card-body">
-    <h4 class="card-title homepage pt-3 pb-3">
-      <%= t 'profile_account.bookings_options_header' %></h4>
+    <h4 class="card-title homepage pt-3 pb-3"><%= t 'profile_account.bookings_options_header' %></h4>
     <div class="table-responsive text-xxs">
       <table class="table table-hover">
         <thead>
@@ -20,7 +19,7 @@
           <% if @requests.present? %>
             <%= render partial: 'request', collection: @requests, as: :reservation %>
           <% else %>
-            <tr><td colspan="5" class="text-center">No Request found!</td></tr>
+            <tr><td colspan="7" class="text-center">No Request found!</td></tr>
           <% end %>
         </tbody>
       </table>
