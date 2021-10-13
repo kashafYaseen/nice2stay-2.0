@@ -27,7 +27,7 @@ namespace :api do
         get :recommendations
       end
 
-      resources :supplements, only: [:index]
+      resources :supplements, only: [:index, :show]
     end
     resources :pages, only: [] do
       get :home, on: :collection
