@@ -23,18 +23,18 @@ class CalculateSupplementsPrices
     def calculate_price
       calculated_data = {}
       case supplement.rate_type
-        when 'Per Piece' || 'Per Piece Per Night' || 'Per Piece Per Day'
+        when 'Per Piece', 'Per Piece Per Night', 'Per Piece Per Day'
           calculated_data[:calculated_price] = supplement.rate * params[:quantity].to_i
-          calculated_data[:calculated_price] *= stays unless supplement.rate_type == 'Per Piece'
+          calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Piece'
           calculated_data[:quantity] = params[:quantity].to_i
-        when 'Per Person' || 'Per Person Per Night', 'Per Person Per Day'
+        when 'Per Person', 'Per Person Per Night', 'Per Person Per Day'
           calculated_data[:calculated_price] = supplement.rate * selected_guests
-          calculated_data[:calculated_price] *= stays unless supplement.rate_type == 'Per Person'
+          calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Person'
           calculated_data[:selected_adults] = params[:selected_adults].to_i
           calculated_data[:selected_children] = params[:selected_children].to_i
         else
           calculated_data[:calculated_price] = supplement.rate
-          calculated_data[:calculated_price] *= stays unless supplement.rate_type == 'Per Stay'
+          calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Stay'
       end
 
       calculated_data
@@ -42,8 +42,7 @@ class CalculateSupplementsPrices
 
     def stay
       total_night = (Date.parse(params[:check_out]) - Date.parse(params[:check_in])).to_i
-      return total_nights + 1 if supplement.rate_type_involves_day?
-      total_night
+      rate_type_involves_day? ? total_night + 1 : total_night
     end
 
     def rate_type_involves_day?
