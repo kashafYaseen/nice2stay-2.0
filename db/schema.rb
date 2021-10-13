@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_30_093940) do
+ActiveRecord::Schema.define(version: 2021_10_07_081814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -895,6 +895,7 @@ ActiveRecord::Schema.define(version: 2021_08_30_093940) do
     t.string "room_type"
     t.text "gc_policy"
     t.date "expired_at"
+    t.integer "book_option", default: 0
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end
