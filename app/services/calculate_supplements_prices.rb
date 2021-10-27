@@ -22,16 +22,22 @@ class CalculateSupplementsPrices
   private
     def calculate_price
       calculated_data = {}
+      sup = !!params[:supplements] ? params[:supplements].find { |sup| sup[:id] == @supplement.id } : nil
+
       case supplement.rate_type
         when 'Per Piece', 'Per Piece Per Night', 'Per Piece Per Day'
-          calculated_data[:calculated_price] = supplement.rate * params[:quantity].to_i
+          params[:quantity] = sup ? sup[:quantity] : params[:quantity].to_i
+          params[:quantity] = supplement.maximum_number if params[:quantity] > supplement.maximum_number
+          calculated_data[:calculated_price] = supplement.rate * params[:quantity]
           calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Piece'
-          calculated_data[:quantity] = params[:quantity].to_i
+          calculated_data[:quantity] = params[:quantity]
         when 'Per Person', 'Per Person Per Night', 'Per Person Per Day'
+          params[:selected_adults] =  sup ? sup[:selected_adults] : params[:selected_adults].to_i
+          params[:selected_children] =  sup ? sup[:selected_children] : params[:selected_children].to_i
           calculated_data[:calculated_price] = supplement.rate * selected_guests
           calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Person'
-          calculated_data[:selected_adults] = params[:selected_adults].to_i
-          calculated_data[:selected_children] = params[:selected_children].to_i
+          calculated_data[:selected_adults] = params[:selected_adults]
+          calculated_data[:selected_children] = params[:selected_children]
         else
           calculated_data[:calculated_price] = supplement.rate
           calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Stay'
@@ -50,6 +56,6 @@ class CalculateSupplementsPrices
     end
 
     def selected_guests
-      params[:selected_adults].to_i + params[:selected_children].to_i
+      params[:selected_adults] + params[:selected_children]
     end
 end
