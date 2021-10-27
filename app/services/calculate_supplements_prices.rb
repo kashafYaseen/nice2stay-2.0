@@ -10,8 +10,6 @@ class CalculateSupplementsPrices
   def initialize(supplement:, params:)
     @supplement = supplement
     @params = params
-    # @selected_supplements_params = JSON.parse(params[:selected_supplements]).map {|sup| sup.transform_keys(&:to_sym)} if params[:selected_supplements].present?
-    # @selected_supplement_params = params[:selectd_supplement]
   end
 
   def call
