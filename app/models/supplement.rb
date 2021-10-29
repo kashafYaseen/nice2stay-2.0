@@ -30,7 +30,7 @@ class Supplement < ApplicationRecord
       lodgings.minimum_adults <= :adults AND lodgings.adults >= :adults AND coalesce(lodgings.minimum_children, 0) <= :min_children AND coalesce(lodgings.children, 0) >= :max_children',
       check_in: check_in, check_out: check_out, adults: adults, min_children: (children.zero? ? 999 : children), max_children: (children.zero? ? 0 : children),
       check_in_day: Date.parse(check_in).strftime('%a'), check_out_day: Date.parse(check_out).strftime('%a'), stay_days: stay_days(check_in, check_out)
-    )
+    ).distinct
   end
 
   translates :name, :description
