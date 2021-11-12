@@ -13,6 +13,8 @@
   <td class="align-middle"><span class="text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></span></td>
 
   <td class="align-middle">
-    <%= link_to 'BOOK NOW', accept_option_dashboard_reservation_path(reservation) %>
+    <%= button_tag 'Book option', class: 'btn btn-success btn-sm text-white', data: { toggle: 'modal', target: "#book-option-modal-#{reservation.id}" } %>
   </td>
 </tr>
+
+<%= render('dashboard/bookings/option_to_booking_modal', reservation: reservation) if reservation.option? && reservation.confirmed? %>

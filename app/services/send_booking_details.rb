@@ -47,7 +47,7 @@ class SendBookingDetails
 
     def booking_accommodations
       reservations = []
-      booking.reservations.not_canceled.unexpired.order(:id).includes(:child_lodging, :rate_plan).each do |reservation|
+      booking.reservations.unexpired.order(:id).includes(:child_lodging, :rate_plan).each do |reservation|
         reservations << {
           id: reservation.crm_booking_id,
           front_end_id: reservation.id,
@@ -76,7 +76,6 @@ class SendBookingDetails
           offer_id: reservation.offer_id,
           by_houseowner: false,
           skip_data_posting: true,
-          booking_request_attributes: { status: request_status(reservation.request_status) },
           child_accommodation_id: reservation.child_lodging_crm_id,
           rate_plan_id: reservation.rate_plan_crm_id,
           rr_res_id_value: reservation.rr_res_id_value,
@@ -89,6 +88,8 @@ class SendBookingDetails
           open_gds_payment_hash: reservation.open_gds_payment_hash,
           open_gds_deposit_amount: reservation.open_gds_deposit_amount,
           open_gds_payment_status: reservation.open_gds_payment_status,
+          book_option: reservation.book_option,
+          booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end
       return reservations

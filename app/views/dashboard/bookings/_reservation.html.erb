@@ -1,5 +1,14 @@
 <% lodging = reservation.lodging %>
-<h3><%= link_to lodging.name, lodging_path(lodging) %></h3>
+<div class="d-flex align-items-center justify-content-between">
+  <h3><%= link_to lodging.name, lodging_path(lodging) %></h3>
+
+  <% if reservation.option? && reservation.confirmed? %>
+    <div class="text-right">
+      <%= button_tag 'Book option', class: 'btn btn-success text-white', data: { toggle: 'modal', target: "#book-option-modal-#{reservation.id}" } %>
+      <%= button_tag 'Cancel option', class: 'btn btn-danger text-white', data: { toggle: 'modal', target: "#cancel-option-modal-#{reservation.id}" } %>
+    </div>
+  <% end %>
+</div>
 
 <% if reservation.rebooking_approved %>
   <div class="alert alert-danger" role="alert">
@@ -161,3 +170,6 @@
     </div>
   </div>
 </div>
+
+<%= render('dashboard/bookings/option_to_booking_modal', reservation: reservation) if reservation.option? && reservation.confirmed? %>
+<%= render('dashboard/bookings/cancel_option_modal', reservation: reservation) if reservation.option? && reservation.confirmed? %>

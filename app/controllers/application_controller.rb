@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
   before_action :prepare_exception_notifier
   protect_from_forgery prepend: true, with: :exception
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
         @booking.delete
         cookies.delete(:booking)
       end
-      @booking = current_user.booking_in_cart unless controller_name == 'carts' && action_name == 'details'
+      @booking = current_user.booking_in_cart
     end
   end
 

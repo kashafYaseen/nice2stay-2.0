@@ -17,8 +17,18 @@ class Dashboard::ReservationsController < DashboardController
   end
 
   def accept_option
-    if @option.update(request_status: :pending, booking_status: :prebooking)
-      redirect_to dashboard_reservations_path, notice: 'Option status was updated successfully'
+    if @option.update_columns(booking_status: :prebooking, book_option: :customer)
+      SendBookingDetailsJob.perform_now(@option.booking_id)
+      redirect_to dashboard_booking_path(@option.booking_id), notice: 'Option status was updated successfully.'
+    else
+      redirect_to dashboard_booking_path(@option.booking_id), notice: 'Unable to process your request at the moment.'
+    end
+  end
+
+  def cancel_option
+    if @option.update_columns(request_status: :canceled, canceled: true)
+      SendBookingDetailsJob.perform_now(@option.booking_id)
+      redirect_to dashboard_reservations_path, notice: 'Option status was canceled successfully.'
     else
       redirect_to dashboard_reservations_path, notice: 'Unable to process your request at the moment.'
     end

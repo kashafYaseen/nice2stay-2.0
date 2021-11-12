@@ -89,6 +89,12 @@ class Reservation < ApplicationRecord
     refunded: 6
   }, _prefix: true
 
+  enum book_option: {
+    no: 0,
+    customer: 1,
+    nice2stay: 2,
+  }
+
   def can_review? user
     user == self.user && review.blank?
   end

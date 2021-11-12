@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead
+g# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_24_105438) do
+ActiveRecord::Schema.define(version: 2021_10_07_081814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1006,6 +1006,7 @@ ActiveRecord::Schema.define(version: 2021_09_24_105438) do
     t.decimal "pre_payment_percentage", default: "30.0"
     t.decimal "final_payment_percentage", default: "70.0"
     t.boolean "payment_in_percentage", default: true
+    t.integer "book_option", default: 0
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"
