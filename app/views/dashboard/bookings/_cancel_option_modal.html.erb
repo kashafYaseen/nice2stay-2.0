@@ -14,7 +14,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Yes, cancel</button>
+        <%= link_to 'Yes, cancel', cancel_option_dashboard_reservation_path(reservation), method: :post, class: 'btn btn-danger text-white' %>
       </div>
     </div>
   </div>

@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       resources :reservations, only: [:index, :destroy] do
         member do
           post :accept_option
+          post :cancel_option
         end
         resources :reviews, except: [:show, :index]
       end
