@@ -79,17 +79,19 @@ nl:
      new_customers: Bent u nieuw? Vul hier dan uw gegevens in.
      customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen
      create_new_account: Maak direct een Nice2stay account aan
-     bookings_options_header: Uw aanvraag overzicht
+     bookings_options_header: Aanvragen
      old_bookings_header: Vorige boekingen
      next_bookings_header: Aankomende boekingen
      options_header: Bevestigde opties
      reference: Referentie
      accommodation: Accommodatie
+     date: datum
      created: Aangemaakt
      request: Aanvraag bevestigd
      booking: Boeking bevestigd
-     type: Type aanvraag
+     type: Type
      price: Prijs
+     rental_amount: Huursom
      pre_payment: Aanbetaling
      final_payment: Restantbetaling
      total_payment: Totaal
@@ -220,8 +222,19 @@ nl:
     empty: Geen accommodaties geselecteerd
 
   reservations:
-    option: Optie (24 uur)
+    option: Optie
     prebooking: Reservering
+    convert_option: Optie omzetten in reservering
+    cancel_option: Cancel optie
+    request_statuses:
+      pending: In afwachting
+      confirmed: Bevestigd
+    convert_option_modal:
+      question: Bent u er zeker van dat u definitief wilt boeken?
+      paragraph_1: Indien u bevestigt ontvangt de eigenaar van de accommodatie direct een bericht en de periode ligt vast voor u.
+      paragraph_2: Ons team zal de reservering verder voor u afhandelen.
+      yes_convert: Ja, zet om in een reservering
+      no: Nee
 
   cart:
     details: Meer informatie & beschikbaarheid

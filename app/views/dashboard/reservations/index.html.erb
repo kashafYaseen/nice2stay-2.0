@@ -7,11 +7,10 @@
           <tr>
             <th><%= t 'profile_account.reference' %></th>
             <th><%= t 'profile_account.accommodation' %></th>
-            <th><%= t 'profile_account.created' %></th>
-            <th><%= t 'profile_account.request' %></th>
-            <th><%= t 'profile_account.booking' %></th>
+            <th><%= t 'profile_account.date' %></th>
             <th><%= t 'profile_account.type' %></th>
-            <th><%= t 'profile_account.price' %></th>
+            <th><%= t 'profile_account.request' %></th>
+            <th><%= t 'profile_account.rental_amount' %></th>
           </tr>
         </thead>
 
@@ -19,7 +18,7 @@
           <% if @requests.present? %>
             <%= render partial: 'request', collection: @requests, as: :reservation %>
           <% else %>
-            <tr><td colspan="7" class="text-center">No Request found!</td></tr>
+            <tr><td colspan="6" class="text-center">No Request found!</td></tr>
           <% end %>
         </tbody>
       </table>

@@ -285,24 +285,23 @@ en:
      side_nav_profile: Edit profile
      side_nav_wishlist: Favorites
      side_nav_password: Edit Password
-
      account: Nice2stay account
      new_customers: Are you new? Enter your details here.
      customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
      create_new_account: Create also a Nice2stay account
-
-     bookings_options_header: Your request overview
+     bookings_options_header: Requests
      old_bookings_header: Previous bookings
      next_bookings_header: Upcoming bookings
      options_header: Confirmed options
-
      reference: Reference
      accommodation: Accommodation
+     date: datue
      created: Created
      request: Request confirmed
      booking: Booking confirmed
-     type: Type of request
+     type: Type
      price: Price
+     rental_amount: Rental amount
      pre_payment: Deposit
      final_payment: Remaining payment
      total_payment: Total
@@ -310,8 +309,19 @@ en:
      option_to_booking: Convert option to booking
 
   reservations:
-    option: Option (24H)
+    option: Option
     prebooking: Booking
+    convert_option: Convert option into a reservation
+    cancel_option: Cancel option
+    request_statuses:
+      pending: Pending
+      confirmed: Confirmed
+    convert_option_modal:
+      question: Are you sure you want to book definitively?
+      paragraph_1: If you confirm, the owner of the accommodation receives a message immediately and the period is booked for you.
+      paragraph_2: Our team will complete the reservation for you.
+      yes_convert: Yes, convert in a booking
+      no: No
 
   cart:
     details: More information & availability
