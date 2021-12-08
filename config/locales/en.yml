@@ -327,6 +327,11 @@ en:
     cancel_option_modal:
       question: What is the reason?
       paragraph_1: We will inform the owner of the accommodation
+      preference_for_another_accommodation: Preference for another accommodation
+      preference_for_another_destination: Preference for another destination
+      unable_to_find_airline_tickets_or_transportation: Unable to find airline tickets/transportation
+      no_agreement_from_fellow_travelers_or_work: No agreement from fellow travelers or work
+      price_not_within_our_budget: Price not within our budget
 
   cart:
     details: More information & availability

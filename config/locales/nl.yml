@@ -240,6 +240,11 @@ nl:
     cancel_option_modal:
       question: Wat is de reden?
       paragraph_1: Wij informeren de eigenaar van de accommodatie
+      preference_for_another_accommodation: keuze voor een andere accommodatie
+      preference_for_another_destination: Keuze voor een andere bestemming 
+      unable_to_find_airline_tickets_or_transportation: Geen vliegtickets/ vervoer kunnen vinden
+      no_agreement_from_fellow_travelers_or_work: Geen akkoord van gezelschap en/ of werk
+      price_not_within_our_budget: Prijs toch niet binnen budget
 
   cart:
     details: Meer informatie & beschikbaarheid

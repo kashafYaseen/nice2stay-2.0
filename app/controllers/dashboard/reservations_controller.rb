@@ -26,7 +26,7 @@ class Dashboard::ReservationsController < DashboardController
   end
 
   def cancel_option
-    if @option.update_columns(request_status: :canceled, canceled: true)
+    if @option.update_attributes(cancel_option_params)
       SendBookingDetailsJob.perform_now(@option.booking_id)
       redirect_to dashboard_reservations_path, notice: t('reservations.option_cancelation_success')
     else
@@ -37,5 +37,9 @@ class Dashboard::ReservationsController < DashboardController
   private
     def set_option
       @option = current_user.reservations_confirmed_options.find(params[:id])
+    end
+
+    def cancel_option_params
+      params.require(:reservation).permit(:request_status, :canceled, :cancel_option_reason)
     end
 end
