@@ -313,6 +313,8 @@ en:
     prebooking: Booking
     convert_option: Convert option into a reservation
     cancel_option: Cancel option
+    option_converted_success: Thank you for booking with Nice2stay!
+    option_cancelation_success: Your option has been canceled successfully.
     request_statuses:
       pending: Pending
       confirmed: Confirmed

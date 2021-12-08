@@ -226,6 +226,8 @@ nl:
     prebooking: Reservering
     convert_option: Optie omzetten in reservering
     cancel_option: Cancel optie
+    option_converted_success: Hartelijk dank voor uw reservering bij Nice2stay!
+    option_cancelation_success: Uw optie is succesvol geannuleerd
     request_statuses:
       pending: In afwachting
       confirmed: Bevestigd
