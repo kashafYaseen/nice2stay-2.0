@@ -4,6 +4,14 @@
   </div>
 
   <div class="modal-body">
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="accordion" id="reservation-accordion" role="tablist">
+          <%= render partial: 'dashboard/bookings/reservation', collection: @booking.reservations.not_canceled.unexpired %>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-md-6">
         <!-- we are not adding cleaning cost in Total Price it if it's paid on location -->
@@ -21,14 +29,6 @@
           <%= final_paid_link @booking %>
           <%= "<p class='xxs'>#{t('cart.prepayment_not_payed')}</p>".html_safe unless @booking.step_passed?(:pre_paid) %>
         <% end %>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="accordion" id="reservation-accordion" role="tablist">
-          <%= render partial: 'dashboard/bookings/reservation', collection: @booking.reservations.not_canceled.unexpired %>
-        </div>
       </div>
     </div>
   </div>
