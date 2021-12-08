@@ -237,6 +237,9 @@ nl:
       paragraph_2: Ons team zal de reservering verder voor u afhandelen.
       yes_convert: Ja, zet om in een reservering
       no: Nee
+    cancel_option_modal:
+      question: Wat is de reden?
+      paragraph_1: Wij informeren de eigenaar van de accommodatie
 
   cart:
     details: Meer informatie & beschikbaarheid

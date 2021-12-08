@@ -324,6 +324,9 @@ en:
       paragraph_2: Our team will complete the reservation for you.
       yes_convert: Yes, convert in a booking
       no: No
+    cancel_option_modal:
+      question: What is the reason?
+      paragraph_1: We will inform the owner of the accommodation
 
   cart:
     details: More information & availability
