@@ -2,19 +2,22 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="book-option-modal-label-<%= reservation.id %>">Are you sure?</h5>
+        <h5 class="modal-title" id="book-option-modal-label-<%= reservation.id %>"><%= t('reservations.convert_option_modal.question') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
       <div class="modal-body text-left">
-        You want to convert the option into booking.
+        <div>
+          <p><i><%= t('reservations.convert_option_modal.paragraph_1') %></i></p>
+          <p><i><%= t('reservations.convert_option_modal.paragraph_2') %></i></p>
+        </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <%= link_to 'Yes, convert', accept_option_dashboard_reservation_path(reservation), method: :post, class: 'btn btn-primary' %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('reservations.convert_option_modal.no') %></button>
+        <%= link_to t('reservations.convert_option_modal.yes_convert'), accept_option_dashboard_reservation_path(reservation), method: :post, class: 'btn btn-primary' %>
       </div>
     </div>
   </div>

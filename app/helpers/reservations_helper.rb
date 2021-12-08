@@ -31,12 +31,12 @@ module ReservationsHelper
 
   def render_request_status(status)
     status_classes = ['bg-warning', 'bg-success', 'bg-danger']
-    "<span class='d-inline-block #{status_classes[Reservation.request_statuses[status]]} text-white text-xs p-1'>#{status.humanize}</span>".html_safe
+    "<span class='d-inline-block #{status_classes[Reservation.request_statuses[status]]} text-white text-xs p-1'>#{t("reservations.request_statuses.#{status}") || status.humanize}</span>".html_safe
   end
 
   def render_reservation_type(type)
-    return "<span class='d-inline-block text-xs p-1 text-secondary'>Option</span>".html_safe if type == 'option'
-    "<span class='d-inline-block text-xs p-1 text-primary'>Booking</span>".html_safe
+    return "<span class='d-inline-block text-xs p-1 text-secondary'>#{t('reservations.option')}</span>".html_safe if type == 'option'
+    "<span class='d-inline-block text-xs p-1'>#{t('reservations.prebooking')}</span>".html_safe
   end
 
   def render_rounded_price(price, multiplier = 1, round_by = 2)

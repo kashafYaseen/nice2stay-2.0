@@ -89,6 +89,7 @@ class SendBookingDetails
           open_gds_deposit_amount: reservation.open_gds_deposit_amount,
           open_gds_payment_status: reservation.open_gds_payment_status,
           book_option: reservation.book_option,
+          cancel_option_reason: reservation.cancel_option_reason,
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end

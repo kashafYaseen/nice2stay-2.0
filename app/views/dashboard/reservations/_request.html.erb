@@ -7,15 +7,11 @@
   <td class="align-middle"><%= render_date reservation.created_at %></td>
 
   <td class="align-middle">
-    <%= render_request_status reservation.request_status %>
-  </td>
-
-  <td class="align-middle">
-    <%= render_request_status(reservation.booking_confirmed ? 'confirmed' : 'pending') %>
-  </td>
-
-  <td class="align-middle">
     <%= render_reservation_type reservation.booking_status %>
+  </td>
+
+  <td class="align-middle">
+    <%= render_request_status reservation.request_status %>
   </td>
 
   <% if reservation.booking_expert? %>

@@ -2,20 +2,50 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cancel-option-modal-label-<%= reservation.id %>">Are you sure?</h5>
+        <h5 class="modal-title" id="cancel-option-modal-label-<%= reservation.id %>"><%= t('reservations.cancel_option_modal.question') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-      <div class="modal-body">
-        You want to cancel the option.
-      </div>
+      <%= form_for reservation, url: cancel_option_dashboard_reservation_path(id: reservation), method: :post do |f| %>
+        <%= f.hidden_field :request_status, value: :canceled %>
+        <%= f.hidden_field :canceled, value: true %>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <%= link_to 'Yes, cancel', cancel_option_dashboard_reservation_path(reservation), method: :post, class: 'btn btn-danger text-white' %>
-      </div>
+        <div class="modal-body">
+          <p><%= t('reservations.cancel_option_modal.paragraph_1') %></p>
+
+          <div>
+            <%= f.radio_button :cancel_option_reason, 'preference_for_another_accommodation' %> 
+            <%= f.label :cancel_option_reason, t('reservations.cancel_option_modal.preference_for_another_accommodation'), value: 'preference_for_another_accommodation' %>
+          </div>
+
+          <div>
+            <%= f.radio_button :cancel_option_reason, 'preference_for_another_destination' %> 
+            <%= f.label :cancel_option_reason, t('reservations.cancel_option_modal.preference_for_another_destination'), value: 'preference_for_another_destination' %>
+          </div>
+
+          <div>
+            <%= f.radio_button :cancel_option_reason, 'unable_to_find_airline_tickets_or_transportation' %> 
+            <%= f.label :cancel_option_reason, t('reservations.cancel_option_modal.unable_to_find_airline_tickets_or_transportation'), value: 'unable_to_find_airline_tickets_or_transportation' %>
+          </div>
+
+          <div>
+            <%= f.radio_button :cancel_option_reason, 'no_agreement_from_fellow_travelers_or_work' %> 
+            <%= f.label :cancel_option_reason, t('reservations.cancel_option_modal.no_agreement_from_fellow_travelers_or_work'), value: 'no_agreement_from_fellow_travelers_or_work' %>
+          </div>
+
+          <div>
+            <%= f.radio_button :cancel_option_reason, 'price_not_within_our_budget' %> 
+            <%= f.label :cancel_option_reason, t('reservations.cancel_option_modal.price_not_within_our_budget'), value: 'price_not_within_our_budget' %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <%= f.submit 'Yes, cancel', class: 'btn btn-danger text-white' %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

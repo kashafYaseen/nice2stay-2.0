@@ -95,6 +95,16 @@ class Reservation < ApplicationRecord
     nice2stay: 2,
   }
 
+  # default value is -1 which means reservation is not canceled yet.
+  # set this value when customer canceled a confirmed option
+  enum cancel_option_reason: {
+    preference_for_another_accommodation: 0,
+    preference_for_another_destination: 1,
+    unable_to_find_airline_tickets_or_transportation: 2,
+    no_agreement_from_fellow_travelers_or_work: 3,
+    price_not_within_our_budget: 4,
+  }
+
   def can_review? user
     user == self.user && review.blank?
   end
