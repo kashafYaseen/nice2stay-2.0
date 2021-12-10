@@ -88,6 +88,7 @@ nl:
      date: datum
      created: Aangemaakt
      request: Aanvraag bevestigd
+     status: Status
      booking: Boeking bevestigd
      type: Type
      price: Prijs
@@ -236,15 +237,23 @@ nl:
       paragraph_1: Indien u bevestigt ontvangt de eigenaar van de accommodatie direct een bericht en de periode ligt vast voor u.
       paragraph_2: Ons team zal de reservering verder voor u afhandelen.
       yes_convert: Ja, zet om in een reservering
-      no: Nee
+      no_text: 'Nee'
     cancel_option_modal:
-      question: Wat is de reden?
-      paragraph_1: Wij informeren de eigenaar van de accommodatie
+      question: Optie definitief annuleren?
+      paragraph_1: Wij informeren de eigenaar van de accommodatie. Hier kunt u de reden aangeven waarom u niet definitief wilt reserveren
       preference_for_another_accommodation: keuze voor een andere accommodatie
       preference_for_another_destination: Keuze voor een andere bestemming 
       unable_to_find_airline_tickets_or_transportation: Geen vliegtickets/ vervoer kunnen vinden
       no_agreement_from_fellow_travelers_or_work: Geen akkoord van gezelschap en/ of werk
       price_not_within_our_budget: Prijs toch niet binnen budget
+      yes_cancel: Annuleer optie
+    overview: Overzicht
+    included_in_rental_price: Inclusief
+    optional_services: Optionele services
+    check_in_and_check_out_time: Check-in & check-out tijd
+    paid_locally: Ter plaatse te betalen
+    reservation_and_cancelation: Reservering- & annuleringsvoorwaarden
+    routes_and_arrival: Route beschrijving & aankomst informatie
 
   cart:
     details: Meer informatie & beschikbaarheid
@@ -920,6 +929,11 @@ nl:
     gc_sent: U heeft de accommodatie geboekt en de periode is voor u gereserveerd. De bevestiging wordt u toegestuurd via email.
     created: Uw boeking %{identifier} is succesvol verzonden. Onderstaand kunt u per accommodatie de status vinden en in uw <a href="%{link}">profiel</a>
     rebooking: De status van uw boeking is gewijzigd naar "omboeking". De origineel geboekte datum wordt niet meer voor u vastgehouden. Wij horen het graag zodra u een nieuwe datum heeft gekozen. Wij zullen dan om akkoord vragen bij de eigenaar en uw reservering definitief omboeken naar de nieuwe datum. De nieuwe datum zult u dan terug zien in uw account met de eventuele nieuwe prijs.
+    total_price: Totale prijs
+    pre_payment: Aanbetaling
+    final_payment: Restantbetaling
+    cleaning_cost: Schoonmaakkoste
+    pay_on_location: Te betalen op locatie
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!
