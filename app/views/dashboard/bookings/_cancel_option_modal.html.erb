@@ -42,8 +42,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <%= f.submit 'Yes, cancel', class: 'btn btn-danger text-white' %>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('reservations.convert_option_modal.no_text') %></button>
+          <%= f.submit t('reservations.cancel_option_modal.yes_cancel'), class: 'btn btn-danger text-white' %>
         </div>
       <% end %>
     </div>
