@@ -16,7 +16,7 @@
           <p><%= t('reservations.cancel_option_modal.paragraph_1') %></p>
 
           <div>
-            <%= f.radio_button :cancel_option_reason, 'preference_for_another_accommodation' %> 
+            <%= f.radio_button :cancel_option_reason, 'preference_for_another_accommodation', checked: true %>
             <%= f.label :cancel_option_reason, t('reservations.cancel_option_modal.preference_for_another_accommodation'), value: 'preference_for_another_accommodation' %>
           </div>
 
