@@ -3,3 +3,15 @@
     background-image: asset-url('user-cover-img');
   }
 }
+
+#reservation-accordion {
+  thead {
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+  }
+
+  .card-header {
+    h5 {
+      font-family: 'Trebuchet MS', Arial, sans-serif !important;
+    }
+  }
+}

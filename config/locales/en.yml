@@ -236,12 +236,12 @@ en:
 
   footer:
     support: Direct contact?
-    support_details: You can reach our multilingual team by phone from 9 AM - 1 PM on weekdays and via the chat function on our website​. ​And you can always send an email to
+    support_details: You can reach our multilingual team by phone from 9 AM - 5.30 PM on weekdays and via the chat function on our website​. ​And you can always send an email
     support_bel: Call
     newsletter: OUR NEWSLETTER IS AWESOME
     newsletter_details: Browse new additions, last-minute deals, and special offers right from your inbox.
-
     search_button: Zoek
+    payment_methods: Payment Methods
 
   search:
     adult: Adult
@@ -280,34 +280,44 @@ en:
     date_and_guests: Select dates and guests for the total price
 
   profile_account:
-     side_nav_home: Dashboard
-     side_nav_bookings: Bookings & Options
-     side_nav_profile: Edit profile
-     side_nav_wishlist: Favorites
-     side_nav_password: Edit Password
-     account: Nice2stay account
-     new_customers: Are you new? Enter your details here.
-     customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
-     create_new_account: Create also a Nice2stay account
-     bookings_options_header: Requests
-     old_bookings_header: Previous bookings
-     next_bookings_header: Upcoming bookings
-     options_header: Confirmed options
-     reference: Reference
-     accommodation: Accommodation
-     date: date
-     created: Created
-     request: Request confirmed
-     status: Status
-     booking: Booking confirmed
-     type: Type
-     price: Price
-     rental_amount: Rental amount
-     pre_payment: Deposit
-     final_payment: Remaining payment
-     total_payment: Total
-     valid_to: Option valid until
-     option_to_booking: Convert option to booking
+    side_nav_home: Dashboard
+    side_nav_bookings: Bookings & Options
+    side_nav_profile: Edit profile
+    side_nav_wishlist: Favorites
+    side_nav_password: Edit Password
+    account: Nice2stay account
+    new_customers: Are you new? Enter your details here.
+    customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
+    create_new_account: Create also a Nice2stay account
+    bookings_options_header: Requests
+    old_bookings_header: Previous bookings
+    next_bookings_header: Upcoming bookings
+    options_header: Confirmed options
+    reference: Reference
+    accommodation: Accommodation
+    date: date
+    created: Created
+    request: Request confirmed
+    status: Status
+    booking: Booking confirmed
+    type: Type
+    price: Price
+    rental_amount: Rental amount
+    pre_payment: Deposit
+    final_payment: Remaining payment
+    total_payment: Total
+    valid_to: Option valid until
+    option_to_booking: Convert option to booking
+    check_in: Check-in
+    check_out: Check-out
+    adults: Adults
+    children: Children
+    infants: Infants
+    cleaning_cost: Cleaning Cost
+    discount: Discount
+    rent: Rent
+    total: Total
+    status: Status
 
   reservations:
     option: Option
@@ -341,6 +351,7 @@ en:
     paid_locally: Paid Locally
     reservation_and_cancelation: Reservation and cancellation policies
     routes_and_arrival: Route Description and arrival information
+    payment_overview: Payment overview
 
   cart:
     details: More information & availability

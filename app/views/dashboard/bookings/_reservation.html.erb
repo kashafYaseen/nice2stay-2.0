@@ -24,39 +24,35 @@
   </div>
 
   <div class="collapse show" id="collapse-reservation-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
-    <div class="card-body pl-0 pr-0">
+    <div class="card-body scroll-x pl-0 pr-0">
       <table class="table">
         <thead>
           <tr>
-            <th class="text-center">Check-in</th>
-            <th class="text-center">Check-out</th>
-            <th class="text-center">Adults</th>
-            <th class="text-center">Children</th>
-            <th class="text-center">Infants</th>
-            <th class="text-center">Cleaning Cost</th>
-            <th class="text-center">Discount</th>
-            <th class="text-center">Rent</th>
-            <th class="text-center">Total</th>
-            <th class="text-center">Status</th>
+            <th class="text-center"><%= t('profile_account.check_in') %></th>
+            <th class="text-center"><%= t('profile_account.check_out') %></th>
+            <th class="text-center"><%= t('profile_account.adults') %></th>
+            <th class="text-center"><%= t('profile_account.children') %></th>
+            <th class="text-center"><%= t('profile_account.infants') %></th>
+            <th class="text-center"><%= t('profile_account.cleaning_cost') %></th>
+            <th class="text-center"><%= t('profile_account.rent') %></th>
+            <th class="text-center"><%= t('profile_account.total') %></th>
+            <th class="text-center"><%= t('profile_account.status') %></th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td class="text-center text-lg text-medium"><%= reservation.check_in %></td>
-            <td class="text-center text-lg text-medium"><%= reservation.check_out %></td>
+            <td class="text-center text-lg text-medium"><%= render_date(reservation.check_in) %></td>
+            <td class="text-center text-lg text-medium"><%= render_date(reservation.check_out) %></td>
             <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
             <td class="text-center text-lg text-medium"><%= reservation.children %></td>
             <td class="text-center text-lg text-medium"><%= reservation.infants %></td>
             <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.cleaning_cost %></td>
-            <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.discount %></td>
-
             <% if reservation.booking_expert? %>
               <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.total_price %></td>
             <% else %>
               <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.rent.to_f %></td>
             <% end %>
-
             <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
             <td class="text-center text-lg text-medium"><%= render_reservation_status reservation %></td>
           </tr>
@@ -94,21 +90,6 @@
   <div class="collapse" id="collapse-rental-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
     <div class="card-body">
       <%= lodging.including_text.try(:html_safe) %>
-    </div>
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="card-header" role="tab">
-    <h5>
-      <a href="#collapse-checkin-details<%= reservation.id %>" data-toggle="collapse" class="collapsed"><%= t('reservations.check_in_and_check_out_time') %></a>
-    </h5>
-  </div>
-
-  <div class="collapse" id="collapse-checkin-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
-    <div class="card-body">
-      <%= lodging.particularities_text.try(:html_safe) %>
     </div>
   </div>
 </div>
