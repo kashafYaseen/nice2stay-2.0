@@ -9,9 +9,6 @@
       </div>
 
       <%= form_for reservation, url: cancel_option_dashboard_reservation_path(id: reservation), method: :post do |f| %>
-        <%= f.hidden_field :request_status, value: :canceled %>
-        <%= f.hidden_field :canceled, value: true %>
-
         <div class="modal-body">
           <p><%= t('reservations.cancel_option_modal.paragraph_1') %></p>
 
