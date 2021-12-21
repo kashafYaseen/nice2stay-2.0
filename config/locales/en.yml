@@ -331,8 +331,8 @@ en:
       confirmed: Confirmed
     convert_option_modal:
       question: Are you sure you want to book definitively?
-      paragraph_1: If you confirm, the owner of the accommodation receives a message immediately and the period is booked for you.
-      paragraph_2: Our team will complete the reservation for you.
+      paragraph_1: After confirming your reservation, the owner of the accommodation will immediately receive a message with confirmation of your reservation and the period is fixed for you.
+      paragraph_2: Our team will then process the reservation for you and send you the final booking confirmation by email.
       yes_convert: Yes, convert in a booking
       no_text: 'No'
     cancel_option_modal:
