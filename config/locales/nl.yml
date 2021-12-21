@@ -244,8 +244,8 @@ nl:
       confirmed: Bevestigd
     convert_option_modal:
       question: Bent u er zeker van dat u definitief wilt boeken?
-      paragraph_1: Indien u bevestigt ontvangt de eigenaar van de accommodatie direct een bericht en de periode ligt vast voor u.
-      paragraph_2: Ons team zal de reservering verder voor u afhandelen.
+      paragraph_1: Na bevestiging van uw reservering ontvangt de eigenaar van de accommodatie direct een bericht met de bevestiging van uw reservering en is de periode voor u vastgelegd.
+      paragraph_2: Ons team zal daarna de reservering nog verder voor u afhandelen en de finale reserveringsbevestiging per email sturen.
       yes_convert: Ja, zet om in een reservering
       no_text: 'Nee'
     cancel_option_modal:
