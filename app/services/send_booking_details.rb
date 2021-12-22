@@ -78,6 +78,7 @@ class SendBookingDetails
           skip_data_posting: true,
           book_option: reservation.book_option,
           cancel_option_reason: reservation.cancel_option_reason,
+          canceled_by: reservation.canceled_by,
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end

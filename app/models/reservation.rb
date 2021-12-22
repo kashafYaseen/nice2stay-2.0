@@ -76,7 +76,7 @@ class Reservation < ApplicationRecord
   enum canceled_by: {
     customer: 'customer',
     nice2stay: 'nice2stay',
-  }
+  }, _prefix: true
 
   def can_review? user
     user == self.user && review.blank?
