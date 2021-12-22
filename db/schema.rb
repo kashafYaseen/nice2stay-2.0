@@ -10,7 +10,7 @@ g# This file is auto-generated from the current state of the database. Instead
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_074327) do
+ActiveRecord::Schema.define(version: 2021_12_22_053658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1008,6 +1008,7 @@ ActiveRecord::Schema.define(version: 2021_12_08_074327) do
     t.boolean "payment_in_percentage", default: true
     t.integer "book_option", default: 0
     t.integer "cancel_option_reason", default: -1
+    t.string "canceled_by"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"

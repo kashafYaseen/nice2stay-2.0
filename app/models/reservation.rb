@@ -105,6 +105,11 @@ class Reservation < ApplicationRecord
     price_not_within_our_budget: 4,
   }
 
+  enum canceled_by: {
+    customer: 'customer',
+    nice2stay: 'nice2stay',
+  }, _prefix: true
+
   def can_review? user
     user == self.user && review.blank?
   end
