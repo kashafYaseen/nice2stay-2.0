@@ -70,31 +70,44 @@ nl:
     description: Omschrijving
 
   profile_account:
-     side_nav_home: Dashboard
-     side_nav_bookings: Boekingen & opties
-     side_nav_profile: Wachtwoord wijzigen
-     side_nav_wishlist: Favorieten
-     side_nav_password: Wachtwoord bewerken
-     account: Nice2stay account
-     new_customers: Bent u nieuw? Vul hier dan uw gegevens in.
-     customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen
-     create_new_account: Maak direct een Nice2stay account aan
-     bookings_options_header: Uw aanvraag overzicht
-     old_bookings_header: Vorige boekingen
-     next_bookings_header: Aankomende boekingen
-     options_header: Bevestigde opties
-     reference: Referentie
-     accommodation: Accommodatie
-     created: Aangemaakt
-     request: Aanvraag bevestigd
-     booking: Boeking bevestigd
-     type: Type aanvraag
-     price: Prijs
-     pre_payment: Aanbetaling
-     final_payment: Restantbetaling
-     total_payment: Totaal
-     valid_to: Optie geldig tot
-     option_to_booking: Zet optie om in boeking
+    side_nav_home: Dashboard
+    side_nav_bookings: Boekingen & opties
+    side_nav_profile: Wachtwoord wijzigen
+    side_nav_wishlist: Favorieten
+    side_nav_password: Wachtwoord bewerken
+    account: Nice2stay account
+    new_customers: Bent u nieuw? Vul hier dan uw gegevens in.
+    customers: Bent u al een klant van Nice2stay dan kunt u hier uw account activeren of u kunt inloggen
+    create_new_account: Maak direct een Nice2stay account aan
+    bookings_options_header: Aanvragen
+    old_bookings_header: Vorige boekingen
+    next_bookings_header: Aankomende boekingen
+    options_header: Bevestigde opties
+    reference: Referentie
+    accommodation: Accommodatie
+    date: datum
+    created: Aangemaakt
+    request: Aanvraag bevestigd
+    status: Status
+    booking: Boeking bevestigd
+    type: Type
+    price: Prijs
+    rental_amount: Huursom
+    pre_payment: Aanbetaling
+    final_payment: Restantbetaling
+    total_payment: Totaal
+    valid_to: Optie geldig tot
+    option_to_booking: Zet optie om in boeking
+    check_in: Check-in
+    check_out: Check-out
+    adults: Volwassenen
+    children: Kinderen
+    infants: Babies
+    cleaning_cost: Schoonmaakkosten
+    discount: Discount
+    rent: Huurprijs
+    total: Totaal
+    status: Status
 
   carts:
     empty: verwijder
@@ -220,8 +233,38 @@ nl:
     empty: Geen accommodaties geselecteerd
 
   reservations:
-    option: Optie (24 uur)
+    option: Optie
     prebooking: Reservering
+    convert_option: Optie omzetten in reservering
+    cancel_option: Cancel optie
+    option_converted_success: Hartelijk dank voor uw reservering bij Nice2stay!
+    option_cancelation_success: Uw optie is succesvol geannuleerd
+    request_statuses:
+      pending: In afwachting
+      confirmed: Bevestigd
+    convert_option_modal:
+      question: Bent u er zeker van dat u definitief wilt boeken?
+      paragraph_1: Na bevestiging van uw reservering ontvangt de eigenaar van de accommodatie direct een bericht met de bevestiging van uw reservering en is de periode voor u vastgelegd.
+      paragraph_2: Ons team zal daarna de reservering nog verder voor u afhandelen en de finale reserveringsbevestiging per email sturen.
+      yes_convert: Ja, zet om in een reservering
+      no_text: 'Nee'
+    cancel_option_modal:
+      question: Optie definitief annuleren?
+      paragraph_1: Wij informeren de eigenaar van de accommodatie. Hier kunt u de reden aangeven waarom u niet definitief wilt reserveren
+      preference_for_another_accommodation: keuze voor een andere accommodatie
+      preference_for_another_destination: Keuze voor een andere bestemming 
+      unable_to_find_airline_tickets_or_transportation: Geen vliegtickets/ vervoer kunnen vinden
+      no_agreement_from_fellow_travelers_or_work: Geen akkoord van gezelschap en/ of werk
+      price_not_within_our_budget: Prijs toch niet binnen budget
+      yes_cancel: Annuleer optie
+    overview: Overzicht
+    included_in_rental_price: Inclusief
+    optional_services: Optionele services
+    check_in_and_check_out_time: Check-in & check-out tijd
+    paid_locally: Ter plaatse te betalen
+    reservation_and_cancelation: Reservering- & annuleringsvoorwaarden
+    routes_and_arrival: Route beschrijving & aankomst informatie
+    payment_overview: Betalingsoverzicht
 
   cart:
     details: Meer informatie & beschikbaarheid
@@ -298,10 +341,11 @@ nl:
 
   footer:
     support: Wilt u direct contact?
-    support_details: Wij zijn op maandag t/m vrijdag bereikbaar van 09.00 tot 13.00 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons ook een email sturen
+    support_details: Wij zijn op maandag t/m vrijdag bereikbaar van 09.00 tot 17.30 uur op het nummer 0031-238447005 en via de chat. Natuurlijk kunt u ons ook een email sturen
     support_bel: Bel
     newsletter: ONZE NIEUWSBRIEF IS GEWELDIG
     newsletter_details: De allernieuwste aanwinsten, last-minute deals en speciale aanbiedingen rechtstreeks in uw inbox.
+    payment_methods: Betaalmogelijkheden
 
   filters:
     autocomplete_title: Zoek uw perfecte vakantiehuis, appartement of hotel
@@ -897,6 +941,11 @@ nl:
     gc_sent: U heeft de accommodatie geboekt en de periode is voor u gereserveerd. De bevestiging wordt u toegestuurd via email.
     created: Uw boeking %{identifier} is succesvol verzonden. Onderstaand kunt u per accommodatie de status vinden en in uw <a href="%{link}">profiel</a>
     rebooking: De status van uw boeking is gewijzigd naar "omboeking". De origineel geboekte datum wordt niet meer voor u vastgehouden. Wij horen het graag zodra u een nieuwe datum heeft gekozen. Wij zullen dan om akkoord vragen bij de eigenaar en uw reservering definitief omboeken naar de nieuwe datum. De nieuwe datum zult u dan terug zien in uw account met de eventuele nieuwe prijs.
+    total_price: Totale prijs
+    pre_payment: Aanbetaling
+    final_payment: Restantbetaling
+    cleaning_cost: Schoonmaakkosten
+    pay_on_location: Te betalen op locatie
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!

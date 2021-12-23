@@ -28,9 +28,7 @@
 
       <div class="col-12">
         <hr class="mt-2 mb-3">
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
-          <%= link_to "Deactivate my account", registration_path(resource_name), data: { confirm: "Are you sure? You cannot undo this." }, method: :delete, class: 'btn btn-danger' %>
-
+        <div class="d-flex flex-wrap justify-content-end align-items-center">
           <%= f.submit "Save Changes", class: 'btn btn-primary margin-right-none' %>
         </div>
       </div>

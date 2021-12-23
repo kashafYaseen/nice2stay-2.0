@@ -47,7 +47,7 @@ class SendBookingDetails
 
     def booking_accommodations
       reservations = []
-      booking.reservations.not_canceled.unexpired.order(:id).each do |reservation|
+      booking.reservations.unexpired.order(:id).each do |reservation|
         reservations << {
           id: reservation.crm_booking_id,
           front_end_id: reservation.id,
@@ -76,6 +76,9 @@ class SendBookingDetails
           offer_id: reservation.offer_id,
           by_houseowner: false,
           skip_data_posting: true,
+          book_option: reservation.book_option,
+          cancel_option_reason: reservation.cancel_option_reason,
+          canceled_by: reservation.canceled_by,
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end

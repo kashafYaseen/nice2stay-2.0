@@ -236,12 +236,12 @@ en:
 
   footer:
     support: Direct contact?
-    support_details: You can reach our multilingual team by phone from 9 AM - 1 PM on weekdays and via the chat function on our website​. ​And you can always send an email to
+    support_details: You can reach our multilingual team by phone from 9 AM - 5.30 PM on weekdays and via the chat function on our website​. ​And you can always send an email
     support_bel: Call
     newsletter: OUR NEWSLETTER IS AWESOME
     newsletter_details: Browse new additions, last-minute deals, and special offers right from your inbox.
-
     search_button: Zoek
+    payment_methods: Payment Methods
 
   search:
     adult: Adult
@@ -280,38 +280,78 @@ en:
     date_and_guests: Select dates and guests for the total price
 
   profile_account:
-     side_nav_home: Dashboard
-     side_nav_bookings: Bookings & Options
-     side_nav_profile: Edit profile
-     side_nav_wishlist: Favorites
-     side_nav_password: Edit Password
-
-     account: Nice2stay account
-     new_customers: Are you new? Enter your details here.
-     customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
-     create_new_account: Create also a Nice2stay account
-
-     bookings_options_header: Your request overview
-     old_bookings_header: Previous bookings
-     next_bookings_header: Upcoming bookings
-     options_header: Confirmed options
-
-     reference: Reference
-     accommodation: Accommodation
-     created: Created
-     request: Request confirmed
-     booking: Booking confirmed
-     type: Type of request
-     price: Price
-     pre_payment: Deposit
-     final_payment: Remaining payment
-     total_payment: Total
-     valid_to: Option valid until
-     option_to_booking: Convert option to booking
+    side_nav_home: Dashboard
+    side_nav_bookings: Bookings & Options
+    side_nav_profile: Edit profile
+    side_nav_wishlist: Favorites
+    side_nav_password: Edit Password
+    account: Nice2stay account
+    new_customers: Are you new? Enter your details here.
+    customers: Are you already a customer of Nice2stay you can activate your account here or you can log in
+    create_new_account: Create also a Nice2stay account
+    bookings_options_header: Requests
+    old_bookings_header: Previous bookings
+    next_bookings_header: Upcoming bookings
+    options_header: Confirmed options
+    reference: Reference
+    accommodation: Accommodation
+    date: date
+    created: Created
+    request: Request confirmed
+    status: Status
+    booking: Booking confirmed
+    type: Type
+    price: Price
+    rental_amount: Rental amount
+    pre_payment: Deposit
+    final_payment: Remaining payment
+    total_payment: Total
+    valid_to: Option valid until
+    option_to_booking: Convert option to booking
+    check_in: Check-in
+    check_out: Check-out
+    adults: Adults
+    children: Children
+    infants: Infants
+    cleaning_cost: Cleaning Cost
+    discount: Discount
+    rent: Rent
+    total: Total
+    status: Status
 
   reservations:
-    option: Option (24H)
+    option: Option
     prebooking: Booking
+    convert_option: Convert option into a reservation
+    cancel_option: Cancel option
+    option_converted_success: Thank you for booking with Nice2stay!
+    option_cancelation_success: Your option has been canceled successfully.
+    request_statuses:
+      pending: Pending
+      confirmed: Confirmed
+    convert_option_modal:
+      question: Are you sure you want to book definitively?
+      paragraph_1: After confirming your reservation, the owner of the accommodation will immediately receive a message with confirmation of your reservation and the period is fixed for you.
+      paragraph_2: Our team will then process the reservation for you and send you the final booking confirmation by email.
+      yes_convert: Yes, convert in a booking
+      no_text: 'No'
+    cancel_option_modal:
+      question: What is the reason?
+      paragraph_1: We will inform the owner of the accommodation
+      preference_for_another_accommodation: Preference for another accommodation
+      preference_for_another_destination: Preference for another destination
+      unable_to_find_airline_tickets_or_transportation: Unable to find airline tickets/transportation
+      no_agreement_from_fellow_travelers_or_work: No agreement from fellow travelers or work
+      price_not_within_our_budget: Price not within our budget
+      yes_cancel: Yes, cancel
+    overview: Overview
+    included_in_rental_price: Included in rental price
+    optional_services: Optional services
+    check_in_and_check_out_time: Checkin and Checkout time
+    paid_locally: Paid Locally
+    reservation_and_cancelation: Reservation and cancellation policies
+    routes_and_arrival: Route Description and arrival information
+    payment_overview: Payment overview
 
   cart:
     details: More information & availability
@@ -707,6 +747,11 @@ of the accommodation."
     gc_sent: You have booked this accommodation instantly and the period is reserved for you. The confirmation will be send to you.
     created: Your booking %{identifier} was created succesfully. See the status per accommodation below and in your <a href="%{link}">profile</a>
     rebooking: The status of your booking has changed to "rebooking". The original booked dates is no longer held for you. We would like to hear from you as soon as you have chosen a new date. We will then ask for approval from the house owner and definitively rebook your reservation to the new date. After that you will see the new dates in your account with the possible new price.
+    total_price: Total Price
+    pre_payment: Pre Payment
+    final_payment: Final Payment
+    cleaning_cost: Cleaning Cost
+    pay_on_location: Pay on location
 
   not_live_standalone:
     The availability of this property is not (always) up to date!

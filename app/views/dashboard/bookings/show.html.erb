@@ -4,30 +4,48 @@
   </div>
 
   <div class="modal-body">
-    <div class="row">
-      <div class="col-md-6">
-        <!-- we are not adding cleaning cost in Total Price it if it's paid on location -->
-        <p>Total Price - <%= render_rounded_price @booking.total_payment %></p>
-        <p>Pre Payment - <%= render_rounded_price @booking.pre_payment %></p>
-        <p>Final Payment - <%= render_rounded_price @booking.final_payment %></p>
-        <% if @booking.cleaning_cost_on_location.positive? %>
-          <p>Cleaning Cost - <%= render_rounded_price @booking.cleaning_cost_on_location %> (Pay on location)</p>
-        <% end %>
-      </div>
-
-      <div class="col-md-6">
-        <% if @booking.confirmed? %>
-          <%= pre_paid_link @booking %>
-          <%= final_paid_link @booking %>
-          <%= "<p class='xxs'>#{t('cart.prepayment_not_payed')}</p>".html_safe unless @booking.step_passed?(:pre_paid) %>
-        <% end %>
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="accordion" id="reservation-accordion" role="tablist">
+          <%= render partial: 'dashboard/bookings/reservation', collection: @booking.reservations.not_canceled.unexpired %>
+        </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
-        <div class="accordion" id="reservation-accordion" role="tablist">
-          <%= render partial: 'dashboard/bookings/reservation', collection: @booking.reservations.not_canceled.unexpired %>
+        <div class="accordion" id="booking-accordion" role="tablist">
+          <div class="card">
+            <div class="card-header" role="tab">
+              <h5>
+                <a href="#collapse-payment-overview" data-toggle="collapse" class="collapsed"><%= t('reservations.payment_overview') %></a>
+              </h5>
+            </div>
+
+            <div class="collapse" id="collapse-payment-overview" data-parent="#booking-accordion" role="tabpanel">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- we are not adding cleaning cost in Total Price it if it's paid on location -->
+                    <p><%= "#{t('bookings.total_price')} - #{render_rounded_price @booking.total_payment}" %></p>
+                    <p><%= "#{t('bookings.pre_payment')} - #{render_rounded_price @booking.pre_payment}" %></p>
+                    <p><%= "#{t('bookings.final_payment')} - #{render_rounded_price @booking.final_payment}" %></p>
+                    <% if @booking.cleaning_cost_on_location.positive? %>
+                      <p><%= "#{t('bookings.cleaning_cost')} - #{render_rounded_price @booking.cleaning_cost_on_location} (#{t('bookings.pay_on_location')})" %></p>
+                    <% end %>
+                  </div>
+
+                  <div class="col-md-6">
+                    <% if @booking.confirmed? %>
+                      <%= pre_paid_link @booking %>
+                      <%= final_paid_link @booking %>
+                      <%= "<p class='xxs'>#{t('cart.prepayment_not_payed')}</p>".html_safe unless @booking.step_passed?(:pre_paid) %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,14 @@
 <% lodging = reservation.lodging %>
-<h3><%= link_to lodging.name, lodging_path(lodging) %></h3>
+<div class="d-flex align-items-center justify-content-between">
+  <h3><%= link_to lodging.name, lodging_path(lodging) %></h3>
+
+  <% if reservation.option? && reservation.confirmed? %>
+    <div class="text-right">
+      <%= button_tag t('reservations.convert_option'), class: 'btn btn-success text-white', data: { toggle: 'modal', target: "#book-option-modal-#{reservation.id}" } %>
+      <%= button_tag t('reservations.cancel_option'), class: 'btn btn-danger text-white', data: { toggle: 'modal', target: "#cancel-option-modal-#{reservation.id}" } %>
+    </div>
+  <% end %>
+</div>
 
 <% if reservation.rebooking_approved %>
   <div class="alert alert-danger" role="alert">
@@ -10,37 +19,35 @@
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
-      <a href="#collapse-reservation-details<%= reservation.id %>" data-toggle="collapse">Reservation Details</a>
+      <a href="#collapse-reservation-details<%= reservation.id %>" data-toggle="collapse"><%= t('reservations.overview') %></a>
     </h5>
   </div>
 
   <div class="collapse show" id="collapse-reservation-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
-    <div class="card-body pl-0 pr-0">
+    <div class="card-body scroll-x pl-0 pr-0">
       <table class="table">
         <thead>
           <tr>
-            <th class="text-center">Checkin</th>
-            <th class="text-center">Checkout</th>
-            <th class="text-center">Adults</th>
-            <th class="text-center">Children</th>
-            <th class="text-center">Infants</th>
-            <th class="text-center">Cleaning Cost</th>
-            <th class="text-center">Discount</th>
-            <th class="text-center">Rent</th>
-            <th class="text-center">Total</th>
-            <th class="text-center">Status</th>
+            <th class="text-center"><%= t('profile_account.check_in') %></th>
+            <th class="text-center"><%= t('profile_account.check_out') %></th>
+            <th class="text-center"><%= t('profile_account.adults') %></th>
+            <th class="text-center"><%= t('profile_account.children') %></th>
+            <th class="text-center"><%= t('profile_account.infants') %></th>
+            <th class="text-center"><%= t('profile_account.cleaning_cost') %></th>
+            <th class="text-center"><%= t('profile_account.rent') %></th>
+            <th class="text-center"><%= t('profile_account.total') %></th>
+            <th class="text-center"><%= t('profile_account.status') %></th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td class="text-center text-lg text-medium"><%= reservation.check_in %></td>
-            <td class="text-center text-lg text-medium"><%= reservation.check_out %></td>
+            <td class="text-center text-lg text-medium"><%= render_date(reservation.check_in) %></td>
+            <td class="text-center text-lg text-medium"><%= render_date(reservation.check_out) %></td>
             <td class="text-center text-lg text-medium"><%= reservation.adults %></td>
             <td class="text-center text-lg text-medium"><%= reservation.children %></td>
             <td class="text-center text-lg text-medium"><%= reservation.infants %></td>
             <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.cleaning_cost %></td>
-            <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.discount %></td>
             <td class="text-center text-lg text-medium"><%= render_rounded_price reservation.rent.to_f %></td>
             <td class="text-center text-lg text-medium"><%= render_rounded_price (reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount.to_f) %></td>
             <td class="text-center text-lg text-medium"><%= render_reservation_status reservation %></td>
@@ -72,7 +79,7 @@
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
-      <a href="#collapse-rental-details<%= reservation.id %>" data-toggle="collapse" class="collapsed">Included in rental price</a>
+      <a href="#collapse-rental-details<%= reservation.id %>" data-toggle="collapse" class="collapsed"><%= t('reservations.included_in_rental_price') %></a>
     </h5>
   </div>
 
@@ -83,25 +90,10 @@
   </div>
 </div>
 
-
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
-      <a href="#collapse-checkin-details<%= reservation.id %>" data-toggle="collapse" class="collapsed">Checkin and Checkout time</a>
-    </h5>
-  </div>
-
-  <div class="collapse" id="collapse-checkin-details<%= reservation.id %>" data-parent="#reservation-accordion" role="tabpanel">
-    <div class="card-body">
-      <%= lodging.particularities_text.try(:html_safe) %>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header" role="tab">
-    <h5>
-      <a href="#collapse-paid-locally<%= reservation.id %>" data-toggle="collapse" class="collapsed">Paid Locally</a>
+      <a href="#collapse-paid-locally<%= reservation.id %>" data-toggle="collapse" class="collapsed"><%= t('reservations.paid_locally') %></a>
     </h5>
   </div>
 
@@ -115,7 +107,7 @@
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
-      <a href="#collapse-optional-services<%= reservation.id %>" data-toggle="collapse" class="collapsed">Optional services</a>
+      <a href="#collapse-optional-services<%= reservation.id %>" data-toggle="collapse" class="collapsed"><%= t('reservations.optional_services') %></a>
     </h5>
   </div>
 
@@ -129,7 +121,7 @@
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
-      <a href="#collapse-polices<%= reservation.id %>" data-toggle="collapse" class="collapsed">Reservation and cancellation policies</a>
+      <a href="#collapse-polices<%= reservation.id %>" data-toggle="collapse" class="collapsed"><%= t('reservations.reservation_and_cancelation') %></a>
     </h5>
   </div>
 
@@ -143,7 +135,7 @@
 <div class="card">
   <div class="card-header" role="tab">
     <h5>
-      <a href="#collapse-arrival-info<%= reservation.id %>" data-toggle="collapse" class="collapsed">Route Description and arrival information</a>
+      <a href="#collapse-arrival-info<%= reservation.id %>" data-toggle="collapse" class="collapsed"><%= t('reservations.routes_and_arrival') %></a>
     </h5>
   </div>
 
@@ -155,3 +147,6 @@
     </div>
   </div>
 </div>
+
+<%= render('dashboard/bookings/option_to_booking_modal', reservation: reservation) if reservation.option? && reservation.confirmed? %>
+<%= render('dashboard/bookings/cancel_option_modal', reservation: reservation) if reservation.option? && reservation.confirmed? %>
