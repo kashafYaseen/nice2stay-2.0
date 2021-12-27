@@ -17,7 +17,7 @@ class Dashboard::ReservationsController < DashboardController
   end
 
   def accept_option
-    if @option.update_columns(booking_status: :prebooking, book_option: :customer)
+    if @option.update_columns(booking_status: :booked, book_option: :customer)
       SendBookingDetailsJob.perform_now(@option.booking_id)
       redirect_to dashboard_booking_path(@option.booking_id), notice: t('reservations.option_converted_success')
     else
