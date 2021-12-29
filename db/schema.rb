@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_22_053658) do
+ActiveRecord::Schema.define(version: 2021_12_28_075913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1048,6 +1048,19 @@ ActiveRecord::Schema.define(version: 2021_12_22_053658) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vouchers", force: :cascade do |t|
+    t.string "sender_name"
+    t.string "sender_email"
+    t.integer "amount"
+    t.date "expired_at"
+    t.boolean "send_by_post", default: false
+    t.text "message"
+    t.bigint "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_vouchers_on_receiver_id"
+  end
+
   create_table "wishlists", force: :cascade do |t|
     t.bigint "lodging_id"
     t.bigint "user_id"
@@ -1113,6 +1126,7 @@ ActiveRecord::Schema.define(version: 2021_12_22_053658) do
   add_foreign_key "trip_members", "trips", on_delete: :cascade
   add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"
+  add_foreign_key "vouchers", "users", column: "receiver_id", on_delete: :cascade
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
   add_foreign_key "wishlists", "trips", on_delete: :cascade
   add_foreign_key "wishlists", "users", on_delete: :cascade
