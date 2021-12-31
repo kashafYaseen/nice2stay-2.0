@@ -71,6 +71,7 @@ nl:
 
   profile_account:
     side_nav_home: Dashboard
+    vouchers: Waardebonnen
     side_nav_bookings: Boekingen & opties
     side_nav_profile: Wachtwoord wijzigen
     side_nav_wishlist: Favorieten
@@ -83,6 +84,8 @@ nl:
     old_bookings_header: Vorige boekingen
     next_bookings_header: Aankomende boekingen
     options_header: Bevestigde opties
+    new_vouchers: Nieuwe Vouchers
+    old_vouchers: Vorige Vouchers
     reference: Referentie
     accommodation: Accommodatie
     date: datum
@@ -108,6 +111,11 @@ nl:
     rent: Huurprijs
     total: Totaal
     status: Status
+    amount: Bedrag
+    date_of_issue: Uitgifte datum
+    expiry_date: Verval datum
+    code: Code
+    no_voucher_found: Geen voucher gevonden!
 
   carts:
     empty: verwijder

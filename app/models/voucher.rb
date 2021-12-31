@@ -8,6 +8,10 @@ class Voucher < ApplicationRecord
   validates :amount, numericality: { greater_than_or_equal_to: 10 }
 
   before_validation :check_existing_receiver
+  before_create :set_code, :set_expired_at
+
+  scope :unsed, -> { where(used: false) }
+  scope :old, -> { where('expired_at < ? OR used = ?', DateTime.current, true) }
 
   private
     def check_existing_receiver
@@ -30,5 +34,16 @@ class Voucher < ApplicationRecord
         password: random_password,
         password_confirmation: random_password
       }
+    end
+
+    def set_code
+      loop do
+        self.code = (0...8).map { (65 + rand(26)).chr }.join
+        break unless self.class.exists?(code: code)
+      end
+    end
+
+    def set_expired_at
+      self.expired_at = 1.year.from_now
     end
 end

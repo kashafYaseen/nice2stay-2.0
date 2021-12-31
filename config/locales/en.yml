@@ -283,6 +283,7 @@ en:
 
   profile_account:
     side_nav_home: Dashboard
+    vouchers: Vouchers
     side_nav_bookings: Bookings & Options
     side_nav_profile: Edit profile
     side_nav_wishlist: Favorites
@@ -295,6 +296,8 @@ en:
     old_bookings_header: Previous bookings
     next_bookings_header: Upcoming bookings
     options_header: Confirmed options
+    new_vouchers: New Vouchers
+    old_vouchers: Old Vouchers
     reference: Reference
     accommodation: Accommodation
     date: date
@@ -320,6 +323,11 @@ en:
     rent: Rent
     total: Total
     status: Status
+    amount: Amount
+    date_of_issue: Date of issue
+    expiry_date: Expiry Date
+    code: Code
+    no_voucher_found: No voucher found!
 
   reservations:
     option: Option

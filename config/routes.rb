@@ -73,6 +73,8 @@ Rails.application.routes.draw do
       resources :notifications, only: [:index] do
         get :mark_as_read, on: :collection
       end
+
+      resources :vouchers, only: [:index]
     end
 
     resources :pages, only: [:show]

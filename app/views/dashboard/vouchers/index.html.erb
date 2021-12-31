@@ -1,0 +1,59 @@
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title homepage pt-3 pb-3"><%= t 'profile_account.new_vouchers' %></h4>
+    <div class="table-responsive text-xxs">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><%= t 'profile_account.amount' %></th>
+            <th><%= t 'profile_account.date_of_issue' %></th>
+            <th><%= t 'profile_account.expiry_date' %></th>
+            <th><%= t 'profile_account.code' %></th>
+          </tr>
+        </thead>
+
+        <tbody id="unsed-voucher-table-body">
+          <% if @unsed_vouchers.present? %>
+            <%= render partial: 'voucher', collection: @unsed_vouchers, as: :voucher %>
+          <% else %>
+            <tr><td colspan="6" class="text-center"><%= t 'profile_account.no_voucher_found' %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="unsed-voucher-pagination">
+      <%= paginate @unsed_vouchers, param_name: :unsed_vouchers_page, window: 2, remote: true %>
+    </div>
+  </div>
+</div>
+
+<div class="card border-dark text-center mb-3">
+  <div class="card-body">
+    <h4 class="card-title homepage pt-3 pb-3"><%= t 'profile_account.old_vouchers' %></h4>
+    <div class="table-responsive text-xxs">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><%= t 'profile_account.amount' %></th>
+            <th><%= t 'profile_account.date_of_issue' %></th>
+            <th><%= t 'profile_account.expiry_date' %></th>
+            <th><%= t 'profile_account.code' %></th>
+          </tr>
+        </thead>
+
+        <tbody id="old-vouchers-table-body">
+          <% if @old_vouchers.present? %>
+            <%= render partial: 'voucher', collection: @old_vouchers, as: :voucher %>
+          <% else %>
+            <tr><td colspan="5" class="text-center"><%= t 'profile_account.no_voucher_found' %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="old-vouchers-pagination">
+      <%= paginate @old_vouchers, param_name: :old_vouchers_page, window: 2, remote: true %>
+    </div>
+  </div>
+</div>

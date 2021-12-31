@@ -6,4 +6,8 @@ module DashboardHelper
   def reservations_count
     current_user.reservations_requests.count
   end
+
+  def vouchers_count
+    current_user.vouchers.count
+  end
 end
