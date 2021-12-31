@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_30_095448) do
+ActiveRecord::Schema.define(version: 2021_12_31_100327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1062,6 +1062,9 @@ ActiveRecord::Schema.define(version: 2021_12_30_095448) do
     t.string "receiver_zipcode"
     t.string "receiver_address"
     t.bigint "receiver_country_id"
+    t.string "code"
+    t.boolean "used", default: false
+    t.datetime "expired_at"
     t.index ["receiver_country_id"], name: "index_vouchers_on_receiver_country_id"
     t.index ["receiver_id"], name: "index_vouchers_on_receiver_id"
   end
