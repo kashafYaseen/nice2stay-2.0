@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_075913) do
+ActiveRecord::Schema.define(version: 2021_12_30_095448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1058,6 +1058,11 @@ ActiveRecord::Schema.define(version: 2021_12_28_075913) do
     t.bigint "receiver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "receiver_city"
+    t.string "receiver_zipcode"
+    t.string "receiver_address"
+    t.bigint "receiver_country_id"
+    t.index ["receiver_country_id"], name: "index_vouchers_on_receiver_country_id"
     t.index ["receiver_id"], name: "index_vouchers_on_receiver_id"
   end
 
@@ -1126,6 +1131,7 @@ ActiveRecord::Schema.define(version: 2021_12_28_075913) do
   add_foreign_key "trip_members", "trips", on_delete: :cascade
   add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"
+  add_foreign_key "vouchers", "countries", column: "receiver_country_id"
   add_foreign_key "vouchers", "users", column: "receiver_id", on_delete: :cascade
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
   add_foreign_key "wishlists", "trips", on_delete: :cascade
