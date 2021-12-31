@@ -1,0 +1,9 @@
+<% if @unsed_vouchers.present? %>
+  $('#unsed-voucher-table-body').html("<%= j render  @unsed_vouchers %>");
+  $('#unsed-voucher-pagination').html("<%= j paginate @unsed_vouchers, param_name: :unsed_vouchers_page, window: 2, remote: true %>");
+<% end %>
+
+<% if @old_vouchers.present? %>
+  $('#old-vouchers-table-body').html("<%= j render  @old_vouchers %>");
+  $('#old-vouchers-pagination').html("<%= j paginate @old_vouchers, param_name: :old_vouchers_page, window: 2, remote: true %>");
+<% end %>

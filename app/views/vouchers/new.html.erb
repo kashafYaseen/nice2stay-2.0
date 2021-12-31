@@ -1,0 +1,154 @@
+<% content_for :body_class, "home-full-page-layout" %>
+
+<div class="row price_box m-0">
+  <div class="jumbotron jumbotron-background col-md-12 p-0">
+    <div class="dark-overlay-image">
+      <div class="offset-md-1 col-sm-12 col-md-6 col-lg-5 col-xl-4 mt-vh">
+        <div class="row text-center">
+          <div class="card bg-white p-3 z-index-1">
+            <div class="card-body text-left">
+              <h1 class="display-4"><%= t('usp.gift_experience_voucher') %></h1>
+              <h5 class="my-3"><%= t('usp.gift_experience_voucher_description') %></h5>
+
+              <div class="row homepage">
+                <div class="col-md-12">
+                  <%= form_for @voucher do |f| %>
+                    <%= render 'shared/errors', resource: @voucher %>
+
+                    <div class="row">
+                      <div class="col-12">
+                        <h5 class="mt-2 text-bold">My details</h5>
+
+                        <div class="form-group">
+                          <%= f.text_field :sender_name, placeholder: 'Your name', class: 'h6 form-control' %>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="form-group">
+                          <%= f.email_field :sender_email, placeholder: 'Your email', class: 'h6 form-control' %>
+                        </div>
+                      </div>
+
+                      <%= f.fields_for :receiver do |rf| %>
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-12">
+                              <h5 class="text-bold">Gift voucher for?</h5>
+
+                              <div class="row">
+                                <div class="col-6">
+                                  <div class="form-group">
+                                    <%= rf.text_field :first_name, placeholder: 'First name', class: 'h6 form-control' %>
+                                  </div>
+                                </div>
+
+                                <div class="col-6">
+                                  <div class="form-group">
+                                    <%= rf.text_field :last_name, placeholder: 'Last name', class: 'h6 form-control' %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <div class="form-group">
+                            <%= rf.email_field :email, placeholder: 'Receiver email', class: 'h6 form-control' %>
+                          </div>
+                        </div>
+                      <% end %>
+
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="form-group">
+                                  <%= f.text_field :receiver_city, placeholder: 'City', class: 'h6 form-control' %>
+                                </div>
+                              </div>
+
+                              <div class="col-6">
+                                <div class="form-group">
+                                  <%= f.select :receiver_country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Country' }, class: 'form-control' %>
+                                </div>
+                              </div>
+
+                              <div class="col-12">
+                                <div class="form-group">
+                                  <%= f.text_field :receiver_zipcode, placeholder: 'Zipcode', class: 'h6 form-control' %>
+                                </div>
+                              </div>
+
+                              <div class="col-12">
+                                <div class="form-group">
+                                  <%= f.text_field :receiver_address, placeholder: 'Address', class: 'h6 form-control' %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="form-group">
+                          <div class="custom-control custom-checkbox mb-0">
+                            <%= f.check_box :send_by_post, { class: 'custom-control-input' }, true, false %>
+                            <%= f.label :send_by_post, 'Send gift voucher by post', class: 'custom-control-label' %>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 d-none message-container">
+                        <div class="form-group">
+                          <%= f.text_area :message, placeholder: 'Personal message', class: 'h6 form-control' %>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <h5 class="text-bold">Enter the amount for the gift voucher</h5>
+
+                        <div class="form-group">
+                          <%= f.number_field :amount, placeholder: 'Your name', class: 'h6 form-control' %>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="form-group">
+                          <%= f.submit 'Proceed', class: 'btn btn-primary float-right' %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 margin-top-1x">
+     <p class="text-sm margin-top-1x d-none"><%= t 'usp.intro_details' %></p>
+    </div>
+
+    <div class="col-sm-6 margin-top-1x">
+      <section class="widget-tags">
+        <h5 class="mb-10">Nice2stay</h5>
+        <% @pages.each do |page| %>
+          <%= link_to page.title, page_path(page), class: "tag" %>
+        <% end %>
+      </section>
+    </div>
+  </div>
+</div>
+
+<% content_for :js_init do %>
+  Voucher.init();
+<% end %>

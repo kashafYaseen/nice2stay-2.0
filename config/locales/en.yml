@@ -179,6 +179,8 @@ en:
     acco_show_p: All accommodations in our unique collection meet our high standards in quality, comfort, style and setting. We visit every place, meet the owners and explore the area, so we are sure that you will have a great holiday here!
     acco_show_visit: "Do you want to <a href='mailto:support@nice2stay.com'>know more</a> from %{admin_name} about %{lodging_name}? She is happy to advise you!"
     vragen_show_header: Do you have questions about
+    gift_experience_voucher: Gift experience voucher
+    gift_experience_voucher_description: Nice2stay gift experience vouchers can be used to book 1000+ of our hand-picked hotels or holiday rentals. As an extra service, one of our travel consultants will help you with the booking. It's the perfect gift!
 
   opens:
     week: Monday - Friday 9.00 am - 18.00 pm
@@ -281,6 +283,7 @@ en:
 
   profile_account:
     side_nav_home: Dashboard
+    vouchers: Vouchers
     side_nav_bookings: Bookings & Options
     side_nav_profile: Edit profile
     side_nav_wishlist: Favorites
@@ -293,6 +296,8 @@ en:
     old_bookings_header: Previous bookings
     next_bookings_header: Upcoming bookings
     options_header: Confirmed options
+    new_vouchers: New Vouchers
+    old_vouchers: Old Vouchers
     reference: Reference
     accommodation: Accommodation
     date: date
@@ -318,6 +323,11 @@ en:
     rent: Rent
     total: Total
     status: Status
+    amount: Amount
+    date_of_issue: Date of issue
+    expiry_date: Expiry Date
+    code: Code
+    no_voucher_found: No voucher found!
 
   reservations:
     option: Option

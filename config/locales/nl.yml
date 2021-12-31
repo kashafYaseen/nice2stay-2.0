@@ -71,6 +71,7 @@ nl:
 
   profile_account:
     side_nav_home: Dashboard
+    vouchers: Waardebonnen
     side_nav_bookings: Boekingen & opties
     side_nav_profile: Wachtwoord wijzigen
     side_nav_wishlist: Favorieten
@@ -83,6 +84,8 @@ nl:
     old_bookings_header: Vorige boekingen
     next_bookings_header: Aankomende boekingen
     options_header: Bevestigde opties
+    new_vouchers: Nieuwe Vouchers
+    old_vouchers: Vorige Vouchers
     reference: Referentie
     accommodation: Accommodatie
     date: datum
@@ -108,6 +111,11 @@ nl:
     rent: Huurprijs
     total: Totaal
     status: Status
+    amount: Bedrag
+    date_of_issue: Uitgifte datum
+    expiry_date: Verval datum
+    code: Code
+    no_voucher_found: Geen voucher gevonden!
 
   carts:
     empty: verwijder
@@ -183,6 +191,8 @@ nl:
     help_acco_show: Wij geven graag antwoord op uw vraag of helpen u bij het reserveren..
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio
+    gift_experience_voucher: Nice2stay gift card
+    gift_experience_voucher_description: De Nice2stay cadeaubonnen kunnen worden gebruikt om 1600+ van onze zorgvuldig geselecteerde hotels of vakantieverblijven te boeken. Als een extra service, helpen onze booking consultants u met de boeking. Het is het perfecte cadeau!
 
   opens:
     week: maandag - vrijdag - 9.00 tot 18.00
