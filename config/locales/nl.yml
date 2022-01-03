@@ -191,8 +191,34 @@ nl:
     help_acco_show: Wij geven graag antwoord op uw vraag of helpen u bij het reserveren..
     region_part_1: Elke villa, vakantiewoning of bed and breakfast in
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio
-    gift_experience_voucher: Nice2stay gift card
-    gift_experience_voucher_description: De Nice2stay cadeaubonnen kunnen worden gebruikt om 1600+ van onze zorgvuldig geselecteerde hotels of vakantieverblijven te boeken. Als een extra service, helpen onze booking consultants u met de boeking. Het is het perfecte cadeau!
+
+  vouchers:
+    paragraph_1: Verras een vriend, familielid of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
+    paragraph_2: Tot eind januari trakteert Nice2stay op 50 Euro. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven.
+    paragraph_3: Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
+    your_details: Uw details
+    your_name: Uw voor en achternaam
+    your_email: Uw e mailadres
+    for_who_is_this_gift: Voor wie is de Gift Card?
+    first_name: Voornaam
+    last_name: Achternaam
+    email_address: Emailadres
+    city: Plaatsnaam
+    country: Land
+    zipcode: Postcode
+    address: Adres
+    message: Schrijf hier uw persoonlijke boodschap voor de ontvanger...
+    select_amount: Selecteer het bedrag dat u wilt toevoegen bovenop de 50 Euro*
+    terms_and_conditions: De kleine lettertjes (voorwaarden)
+    term1: Vouchers worden niet gerestitueerd en zijn geldig voor boekingen gemaakt binnen 12 maanden na uitgiftedatum.
+    term2: Vouchers zijn niet direct inwisselbaar bij onze aangesloten accommodaties. Elke boeking moet via Nice2stay gemaakt worden.
+    term3: Vouchers zijn alleen inwisselbaar tegen accommodatie kosten. Ze kunnen niet worden ingewisseld voor incidentele hotelkosten of aanvullende diensten.
+    term4: Vouchers kunnen niet worden ingewisseld voor contant geld.
+    term5: In het geval dat u waarde wilt toevoegen bovenop de 50 Euro, ontvangt u voucher betalingsinstructies binnen de komende 24 uur. Nice2stay zal de bon direct versturen na ontvangst van betaling.
+    term6: Nice2stay zal de bon per post versturen naar de ontvanger, houdt er rekening mee dat het enkele dagen kan duren voordat de ontvanger de bon op de deurmat ontvangt.
+    term7: De gegevens van de ontvanger zullen enkel gebruikt worden voor het toesturen van de bon en zij zullen tevens de Nice2stay nieuwsbrief ontvangen.
+    accept_terms: Ik ga akkoord met bovenstaande voorwaarden
+    submit: VERSTUUR
 
   opens:
     week: maandag - vrijdag - 9.00 tot 18.00

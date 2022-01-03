@@ -5,7 +5,7 @@ class Voucher < ApplicationRecord
   accepts_nested_attributes_for :receiver
 
   validates :sender_name, :sender_email, :receiver_address, :receiver_zipcode, :receiver_city, presence: true
-  validates :amount, numericality: { greater_than_or_equal_to: 10 }
+  validates :amount, numericality: { greater_than: 0 }
 
   before_validation :check_existing_receiver
   before_create :set_code, :set_expired_at

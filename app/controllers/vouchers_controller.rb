@@ -1,6 +1,6 @@
 class VouchersController < ApplicationController
   def new
-    @voucher = Voucher.new(amount: 50)
+    @voucher = Voucher.new(amount: 0)
     @voucher.build_receiver
   end
 

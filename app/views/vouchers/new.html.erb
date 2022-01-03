@@ -7,8 +7,10 @@
         <div class="row text-center">
           <div class="card bg-white p-3 z-index-1">
             <div class="card-body text-left">
-              <h1 class="display-4"><%= t('usp.gift_experience_voucher') %></h1>
-              <h5 class="my-3"><%= t('usp.gift_experience_voucher_description') %></h5>
+              <h1 class="display-4">Nice2stay Gift Card</h1>
+              <h5 class="my-2"><%= t('vouchers.paragraph_1') %></h5>
+              <h5 class="mb-2"><%= t('vouchers.paragraph_2') %></h5>
+              <h5 class="mb-2"><%= t('vouchers.paragraph_3') %></h5>
 
               <div class="row homepage">
                 <div class="col-md-12">
@@ -17,16 +19,16 @@
 
                     <div class="row">
                       <div class="col-12">
-                        <h5 class="mt-2 text-bold">My details</h5>
+                        <h5 class="mt-2 text-bold"><%= t('vouchers.your_details') %></h5>
 
                         <div class="form-group">
-                          <%= f.text_field :sender_name, placeholder: 'Your name', class: 'h6 form-control' %>
+                          <%= f.text_field :sender_name, placeholder: t('vouchers.your_name'), class: 'h6 form-control' %>
                         </div>
                       </div>
 
                       <div class="col-12">
                         <div class="form-group">
-                          <%= f.email_field :sender_email, placeholder: 'Your email', class: 'h6 form-control' %>
+                          <%= f.email_field :sender_email, placeholder: t('vouchers.your_email'), class: 'h6 form-control' %>
                         </div>
                       </div>
 
@@ -34,18 +36,18 @@
                         <div class="col-12">
                           <div class="row">
                             <div class="col-12">
-                              <h5 class="text-bold">Gift voucher for?</h5>
+                              <h5 class="text-bold"><%= t('vouchers.for_who_is_this_gift') %></h5>
 
                               <div class="row">
                                 <div class="col-6">
                                   <div class="form-group">
-                                    <%= rf.text_field :first_name, placeholder: 'First name', class: 'h6 form-control' %>
+                                    <%= rf.text_field :first_name, placeholder: t('vouchers.first_name'), class: 'h6 form-control' %>
                                   </div>
                                 </div>
 
                                 <div class="col-6">
                                   <div class="form-group">
-                                    <%= rf.text_field :last_name, placeholder: 'Last name', class: 'h6 form-control' %>
+                                    <%= rf.text_field :last_name, placeholder: t('vouchers.last_name'), class: 'h6 form-control' %>
                                   </div>
                                 </div>
                               </div>
@@ -55,7 +57,7 @@
 
                         <div class="col-12">
                           <div class="form-group">
-                            <%= rf.email_field :email, placeholder: 'Receiver email', class: 'h6 form-control' %>
+                            <%= rf.email_field :email, placeholder: t('vouchers.email_address'), class: 'h6 form-control' %>
                           </div>
                         </div>
                       <% end %>
@@ -66,25 +68,25 @@
                             <div class="row">
                               <div class="col-6">
                                 <div class="form-group">
-                                  <%= f.text_field :receiver_city, placeholder: 'City', class: 'h6 form-control' %>
+                                  <%= f.text_field :receiver_city, placeholder: t('vouchers.city'), class: 'h6 form-control' %>
                                 </div>
                               </div>
 
                               <div class="col-6">
                                 <div class="form-group">
-                                  <%= f.select :receiver_country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: 'Country' }, class: 'form-control' %>
+                                  <%= f.select :receiver_country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: t('vouchers.country') }, class: 'form-control' %>
                                 </div>
                               </div>
 
                               <div class="col-12">
                                 <div class="form-group">
-                                  <%= f.text_field :receiver_zipcode, placeholder: 'Zipcode', class: 'h6 form-control' %>
+                                  <%= f.text_field :receiver_zipcode, placeholder: t('vouchers.zipcode'), class: 'h6 form-control' %>
                                 </div>
                               </div>
 
                               <div class="col-12">
                                 <div class="form-group">
-                                  <%= f.text_field :receiver_address, placeholder: 'Address', class: 'h6 form-control' %>
+                                  <%= f.text_field :receiver_address, placeholder: t('vouchers.address'), class: 'h6 form-control' %>
                                 </div>
                               </div>
                             </div>
@@ -94,30 +96,46 @@
 
                       <div class="col-12">
                         <div class="form-group">
+                          <%= f.text_area :message, placeholder: t('vouchers.message'), class: 'h6 form-control' %>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <h5 class="text-bold"><%= t('vouchers.select_amount') %></h5>
+
+                        <div class="form-group">
+                          <%= f.number_field :amount, class: 'h6 form-control' %>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <h5 class="text-bold"><%= t('vouchers.terms_and_conditions') %></h5>
+
+                        <div class="form-group">
+                          <ul>
+                            <li><%= t('vouchers.term1') %></li>
+                            <li><%= t('vouchers.term2') %></li>
+                            <li><%= t('vouchers.term3') %></li>
+                            <li><%= t('vouchers.term4') %></li>
+                            <li><%= t('vouchers.term5') %></li>
+                            <li><%= t('vouchers.term6') %></li>
+                            <li><%= t('vouchers.term7') %></li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="form-group">
                           <div class="custom-control custom-checkbox mb-0">
                             <%= f.check_box :send_by_post, { class: 'custom-control-input' }, true, false %>
-                            <%= f.label :send_by_post, 'Send gift voucher by post', class: 'custom-control-label' %>
+                            <%= f.label :send_by_post, t('vouchers.accept_terms'), class: 'custom-control-label' %>
                           </div>
                         </div>
                       </div>
 
-                      <div class="col-12 d-none message-container">
-                        <div class="form-group">
-                          <%= f.text_area :message, placeholder: 'Personal message', class: 'h6 form-control' %>
-                        </div>
-                      </div>
-
-                      <div class="col-12">
-                        <h5 class="text-bold">Enter the amount for the gift voucher</h5>
-
-                        <div class="form-group">
-                          <%= f.number_field :amount, placeholder: 'Your name', class: 'h6 form-control' %>
-                        </div>
-                      </div>
-
                       <div class="col-12">
                         <div class="form-group">
-                          <%= f.submit 'Proceed', class: 'btn btn-primary float-right' %>
+                          <%= f.submit t('vouchers.submit'), class: 'btn btn-primary float-right' %>
                         </div>
                       </div>
                     </div>
@@ -148,7 +166,3 @@
     </div>
   </div>
 </div>
-
-<% content_for :js_init do %>
-  Voucher.init();
-<% end %>

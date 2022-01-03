@@ -179,8 +179,34 @@ en:
     acco_show_p: All accommodations in our unique collection meet our high standards in quality, comfort, style and setting. We visit every place, meet the owners and explore the area, so we are sure that you will have a great holiday here!
     acco_show_visit: "Do you want to <a href='mailto:support@nice2stay.com'>know more</a> from %{admin_name} about %{lodging_name}? She is happy to advise you!"
     vragen_show_header: Do you have questions about
-    gift_experience_voucher: Gift experience voucher
-    gift_experience_voucher_description: Nice2stay gift experience vouchers can be used to book 1000+ of our hand-picked hotels or holiday rentals. As an extra service, one of our travel consultants will help you with the booking. It's the perfect gift!
+
+  vouchers:
+    paragraph_1: Surprise a friend, family member or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
+    paragraph_2: Until the end of January Nice2stay is treating you with 50 Euros. All you have to do is provide the details of the lucky recipient and a personal message.
+    paragraph_3: Our team will then send a beautiful handwritten gift card by post!
+    your_details: Your details
+    your_name: Your first & last name
+    your_email: Your email address
+    for_who_is_this_gift: For who is this Gift Card?
+    first_name: First name
+    last_name: Last name
+    email_address: Email address
+    city: City
+    country: Country
+    zipcode: Zip code
+    address: Address
+    message: Write your personal message for the recipient here...
+    select_amount: Please select the voucher amount you want to add on top of the 50 Euro*
+    terms_and_conditions: The small print (terms & conditions)
+    term1: Vouchers are non-refundable and valid for bookings made within 12 months of being requested.
+    term2: Vouchers are not directly redeemable at our participating properties. Any booking must be made through Nice2stay.
+    term3: Vouchers are only redeemable for accommodation expenses. They cannot be exchanged for incidental hotel expenses or additional services.
+    term4: Vouchers cannot be exchanged for cash.
+    term5: In case you want to add value on top of the 50 Euro, you will receive voucher payment instructions within the next 24 hours. Nice2stay will send the voucher immediately after receipt of payment.
+    term6: Nice2stay will send the voucher to the recipient by post, please note that it may take several days before the recipient receives the voucher.
+    term7: The data of the recipient will only be used to send the voucher and they will also receive the Nice2stay newsletter.
+    accept_terms: I agree to the terms & conditions mentioned above
+    submit: Submit
 
   opens:
     week: Monday - Friday 9.00 am - 18.00 pm
