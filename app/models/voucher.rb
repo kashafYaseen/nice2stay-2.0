@@ -6,12 +6,16 @@ class Voucher < ApplicationRecord
 
   validates :sender_name, :sender_email, :receiver_address, :receiver_zipcode, :receiver_city, presence: true
   validates :amount, numericality: { greater_than: 0 }
+  validate :accept_terms_and_conditions
 
   before_validation :check_existing_receiver
   before_create :set_code, :set_expired_at
+  after_commit :send_details
 
   scope :unsed, -> { where(used: false) }
   scope :old, -> { where('expired_at < ? OR used = ?', DateTime.current, true) }
+
+  attr_accessor :terms_and_conditions
 
   private
     def check_existing_receiver
@@ -44,6 +48,14 @@ class Voucher < ApplicationRecord
     end
 
     def set_expired_at
-      self.expired_at = 1.year.from_now
+      self.expired_at = DateTime.current + 1.year
+    end
+
+    def accept_terms_and_conditions
+      errors.add(:base, 'Please accept terms and conditions') unless terms_and_conditions
+    end
+
+    def send_details
+      SendVoucherDetailsJob.perform_later(self.id)
     end
 end

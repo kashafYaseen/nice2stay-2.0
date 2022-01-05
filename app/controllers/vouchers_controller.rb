@@ -25,6 +25,7 @@ class VouchersController < ApplicationController
         :receiver_country_id,
         :receiver_zipcode,
         :receiver_address,
+        :terms_and_conditions,
         receiver_attributes: [:first_name, :last_name, :email]
       )
     end

@@ -1052,7 +1052,6 @@ ActiveRecord::Schema.define(version: 2021_12_31_100327) do
     t.string "sender_name"
     t.string "sender_email"
     t.integer "amount"
-    t.date "expired_at"
     t.boolean "send_by_post", default: false
     t.text "message"
     t.bigint "receiver_id"
