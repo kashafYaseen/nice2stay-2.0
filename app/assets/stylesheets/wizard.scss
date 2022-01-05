@@ -59,7 +59,7 @@ img {
   }
 }
 .wizard > .steps .current-info, .wizard > .steps .number {
-    display: none;
+  display: none;
 }
 #wizard {
   min-height: fit-content;
@@ -234,22 +234,6 @@ textarea.form-control {
     }
   }
 }
-// .checkbox {
-//   position: relative;
-//   label {
-//     padding-left: 21px;
-//     cursor: pointer;
-//     color: #999;
-//   }
-//   input {
-//     position: absolute;
-//       opacity: 0;
-//       cursor: pointer;
-//   }
-//   input:checked ~ .checkmark:after {
-//     display: block;
-//   }
-// }
 @-webkit-keyframes hvr-icon-wobble-horizontal {
   16.65% {
     -webkit-transform: translateX(6px);
