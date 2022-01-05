@@ -1,0 +1,23 @@
+.vouchers-jumbotron-bg {
+  height: 100vh;
+  background-image: url("https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/64926/2021-11-23-9103fcef05f184636118f9a2c8a3b2c8.jpeg");
+
+  .dark-overlay-image {
+    height: 100vh;
+    background-color: rgba(0,0,0,0.1);
+  }
+}
+.mt-10-vh {
+  margin-top: 10vh;
+}
+.terms-conditions {
+  list-style: circle;
+  padding-left: 20px;
+  margin: 20px 0;
+}
+.current {
+  color: #404040 !important;
+}
+.title {
+  color: #757575;
+}
