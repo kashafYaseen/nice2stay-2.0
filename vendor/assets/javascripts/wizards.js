@@ -52,4 +52,17 @@ $(function() {
     $('.checkbox-circle label').removeClass('active');
     $(this).addClass('active');
   })
+
+  const box = document.querySelector('#wizard');
+  const backgroundImage = document.querySelector('.vouchers-jumbotron-bg');
+  const backgroundImageOverlay = document.querySelector('.dark-overlay-image');
+
+  const observer = new ResizeObserver((enteries) => {
+    const formContainer = enteries[0]
+    const isLarge = formContainer.contentRect.height > 500
+    backgroundImage.style.height = isLarge ? '130vh' : '100vh'
+    backgroundImageOverlay.style.height = isLarge ? '130vh' : '100vh'
+  });
+
+  observer.observe(box)
 });

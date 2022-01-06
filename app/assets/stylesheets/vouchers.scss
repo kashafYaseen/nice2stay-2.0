@@ -6,18 +6,82 @@
     height: 100vh;
     background-color: rgba(0,0,0,0.1);
   }
+
+  .main-row {
+    justify-content: space-between;
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
 }
-.mt-10-vh {
+.intro-columns, .form-columns {
   margin-top: 10vh;
 }
 .terms-conditions {
   list-style: circle;
   padding-left: 20px;
   margin: 20px 0;
+  li {
+    font-size: 12px;
+  }
 }
 .current {
   color: #404040 !important;
 }
 .title {
   color: #757575;
+}
+.vouchers {
+  .card {
+    min-height: 370px;
+  }
+
+  h4, h5 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1300px) { 
+  .main-row {
+    justify-content: space-between;
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vouchers-jumbotron-bg {
+    height: 140vh !important;
+
+    .dark-overlay-image {
+      height: 140vh !important;
+    }
+
+    .main-row {
+      justify-content: space-between;
+      padding-left: 5rem;
+      padding-right: 5rem;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .main-row {
+    padding: 0px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .vouchers-jumbotron-bg {
+    height: 140vh !important;
+
+    .dark-overlay-image {
+      height: 140vh !important;
+    }
+  }
+  .form-columns {
+    margin-top: 5vh;
+  }
+  .main-row {
+    padding: 0px !important;
+  }
 }
