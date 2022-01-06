@@ -1,25 +1,25 @@
 <% content_for :body_class, 'home-full-page-layout' %>
 
-<div class="row price_box m-0">
+<div class="row price_box m-0 vouchers">
   <div class="jumbotron vouchers-jumbotron-bg col-md-12 p-0">
     <div class="dark-overlay-image">
-      <div class="row">
-        <div class="offset-md-1 col-sm-12 col-md-6 col-lg-5 col-xl-4 mt-10-vh">
-          <div class="row text-center">
-            <div class="card bg-white p-3 z-index-1">
+      <div class="row main-row">
+        <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 intro-columns">
+          <div class=" text-center">
+            <div class="card bg-white z-index-1">
               <div class="card-body text-left">
                 <h1 class="display-4">Nice2stay Gift Card</h1>
-                <h5 class="my-2"><%= t('vouchers.paragraph_1') %></h5>
-                <h5 class="mb-2"><%= t('vouchers.paragraph_2') %></h5>
-                <h5 class="mb-2"><%= t('vouchers.paragraph_3') %></h5>
+                <h5 class="my-2 py-1"><%= t('vouchers.paragraph_1') %></h5>
+                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2') %></h5>
+                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_3') %></h5>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="offset-md-2 col-sm-12 col-md-6 col-lg-5 col-xl-4 mt-10-vh">
-          <div class="row text-center">
-            <div class="card bg-white p-3 z-index-1">
+        <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 form-columns">
+          <!-- <div class="row text-center"> -->
+            <div class="card bg-white px-3 z-index-1">
               <div class="card-body text-left">
                 <div class="row homepage">
                   <div class="col-md-12">
@@ -155,26 +155,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-6 margin-top-1x">
-     <p class="text-sm margin-top-1x d-none"><%= t 'usp.intro_details' %></p>
-    </div>
-
-    <div class="col-sm-6 margin-top-1x">
-      <section class="widget-tags">
-        <h5 class="mb-10">Nice2stay</h5>
-        <% @pages.each do |page| %>
-          <%= link_to page.title, page_path(page), class: "tag" %>
-        <% end %>
-      </section>
     </div>
   </div>
 </div>
