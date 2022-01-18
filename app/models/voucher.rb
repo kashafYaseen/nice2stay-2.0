@@ -1,4 +1,6 @@
 class Voucher < ApplicationRecord
+  PREDEFINED_GIFT_AMOUNT = 50
+
   belongs_to :receiver, class_name: 'User'
   belongs_to :receiver_country, class_name: 'Country'
 
@@ -9,7 +11,7 @@ class Voucher < ApplicationRecord
   validate :accept_terms_and_conditions
 
   before_validation :check_existing_receiver
-  before_create :set_code, :set_expired_at
+  before_create :set_code, :set_expired_at, :set_mollie_amount
   after_commit :send_details
 
   scope :unsed, -> { where(used: false) }
@@ -21,7 +23,7 @@ class Voucher < ApplicationRecord
     def check_existing_receiver
       existing_receiver = User.find_by(email: receiver.email)
       if existing_receiver.present?
-        self.receiver = existing_receiver
+        self.receiver_id = existing_receiver.id
       else
         self.receiver.attributes = new_receiver_attributes
       end
@@ -38,6 +40,11 @@ class Voucher < ApplicationRecord
         password: random_password,
         password_confirmation: random_password
       }
+    end
+
+    def set_mollie_amount
+      return if amount.to_f <= PREDEFINED_GIFT_AMOUNT
+      self.mollie_amount = amount.to_f - PREDEFINED_GIFT_AMOUNT
     end
 
     def set_code

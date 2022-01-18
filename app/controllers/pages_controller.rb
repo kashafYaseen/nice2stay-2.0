@@ -17,6 +17,7 @@ class PagesController < ApplicationController
     @campaigns = Campaign.spotlight
     @slider_campaigns = Campaign.menu
     @regions = Region.active
+    flash.now[:notice] = 'Voucher was created successfully.' if params[:code].present?
   end
 
   def page_not_found

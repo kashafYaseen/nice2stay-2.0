@@ -196,13 +196,13 @@ en:
     zipcode: Zip code
     address: Address
     message: Write your personal message for the recipient here...
-    select_amount: Please select the voucher amount you want to add on top of the 50 Euro*
+    select_amount: Please select the voucher amount you want to add on top of the 50 Euro
     terms_and_conditions: The small print (terms & conditions)
     term1: Vouchers are non-refundable and valid for new bookings made within 12 months of being requested.
     term2: Vouchers are not directly redeemable at our participating properties. Any booking must be made through Nice2stay.
     term3: Vouchers are only redeemable for accommodation expenses. They cannot be exchanged for incidental hotel expenses or additional services.
     term4: Vouchers cannot be exchanged for cash.
-    term5: In case you want to add value on top of the 50 Euro, you will receive voucher payment instructions within the next 24 hours. Nice2stay will send the voucher immediately after receipt of payment.
+    term5: In case you want to add value on top of the 50 Euro, you will be redirected directly to the payment page. Nice2stay will send the voucher after receipt of payment.
     term6: Nice2stay will send the voucher to the recipient by post, please note that it may take several days before the recipient receives the voucher.
     term7: The data of the recipient will only be used to send the voucher and they will also receive the Nice2stay newsletter.
     accept_terms: I agree to the terms & conditions mentioned above

@@ -1,4 +1,6 @@
 class VouchersController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:update_status]
+
   def new
     @voucher = Voucher.new(amount: 0)
     @voucher.build_receiver
@@ -7,10 +9,21 @@ class VouchersController < ApplicationController
   def create
     @voucher = Voucher.new(voucher_params)
     if @voucher.save
-      redirect_to root_path(locale: locale), notice: 'Voucher was created successfully.'
+      if @voucher.amount > Voucher::PREDEFINED_GIFT_AMOUNT
+        payment = VoucherPayment.new(voucher: @voucher, params: { locale: locale }).voucher_payment
+        return redirect_to mollie_payment_url(payment, params[:payment]) if payment.present?
+      else
+        redirect_to root_path(locale: locale), notice: 'Voucher was created successfully.'
+      end
     else
       render :new
     end
+  end
+
+  def update_status
+    @voucher = Voucher.find(params[:voucher_id])
+    VoucherPayment.new(voucher: @voucher).update_status(params[:id])
+    render status: 200, json: { status: :ok }
   end
 
   private
@@ -28,5 +41,11 @@ class VouchersController < ApplicationController
         :terms_and_conditions,
         receiver_attributes: [:first_name, :last_name, :email]
       )
+    end
+
+    def mollie_payment_url(payment, type)
+      return payment._links['checkout']['href'] if payment._links['checkout'].present? && payment._links['checkout']['href'].present?
+      @payment_booking.update_columns(mollie_payment_id: nil)
+      root_path(locale: locale)
     end
 end

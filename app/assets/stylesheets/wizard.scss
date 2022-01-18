@@ -63,7 +63,6 @@ img {
 }
 #wizard {
   min-height: fit-content;
-  padding-bottom: 20px;
 }
 .steps {
   margin-bottom: 10px;
@@ -225,7 +224,7 @@ textarea.form-control {
     &:last-child {
       a {
         padding-left: 29px;
-        width: 167px;
+        width: 135px;
         font-weight: 400;
         &:before {
           right: 30px;
