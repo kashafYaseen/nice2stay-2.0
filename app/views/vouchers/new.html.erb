@@ -3,59 +3,127 @@
 <div class="row price_box m-0 vouchers">
   <div class="jumbotron vouchers-jumbotron-bg col-md-12 p-0">
     <div class="dark-overlay-image">
-      <div class="row main-row">
-        <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 intro-columns">
-          <div class="card bg-white z-index-1">
-            <div class="card-body text-left">
-              <h1 class="display-4">Nice2stay Gift Card</h1>
-              <h5 class="my-2 py-1"><%= t('vouchers.paragraph_1') %></h5>
-              <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2') %></h5>
-              <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_3') %></h5>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 intro-columns">
+            <div class="card bg-white z-index-1">
+              <div class="card-body text-left">
+                <h1 class="display-4">Nice2stay Gift Card</h1>
+                <h5 class="my-2 py-1"><%= t('vouchers.paragraph_1') %></h5>
+                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2') %></h5>
+                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_3') %></h5>
+
+                <p class="text-info mb-1 cursor-pointer" data-toggle="modal" data-target="#termsAndConditionsModal">
+                  <span class="text-dotted text-xxs">Conditions & terms</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 form-columns">
-          <div class="card bg-white px-3 z-index-1">
-            <div class="card-body text-left">
-              <div class="row homepage">
-                <div class="col-md-12">
-                  <%= form_for @voucher do |f| %>
-                    <%= render 'shared/errors', resource: @voucher %>
+          <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 form-columns">
+            <div class="card bg-white px-3 z-index-1">
+              <div class="card-body text-left">
+                <div class="row homepage h-100">
+                  <div class="col-md-12">
+                    <%= form_for @voucher do |f| %>
+                      <%= render 'shared/errors', resource: @voucher %>
 
-                    <div id="wizard">
-                      <!-- SECTION 1 -->
-                      <h4 class="py-1">1. <%= t('vouchers.your_details') %></h4>
-                      <section>
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="form-group">
-                              <%= f.text_field :sender_name, placeholder: t('vouchers.your_name'), class: 'form-control' %>
+                      <div id="wizard">
+                        <!-- SECTION 1 -->
+                        <h4 class="py-1">1. <%= t('vouchers.your_details') %></h4>
+                        <section>
+                          <div class="row">
+                            <div class="col-md-12 text-right">
+                              <small><strong class="text-danger">* - required</strong></small>
                             </div>
                           </div>
 
-                          <div class="col-12">
-                            <div class="form-group">
-                              <%= f.email_field :sender_email, placeholder: t('vouchers.your_email'), class: 'form-control' %>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <%= f.label :sender_name, class: 'pl-0 mb-0' do %>
+                                  <%= t('vouchers.your_name') %>
+                                  <small><strong class="text-danger">*</strong></small>
+                                <% end %>
+                                <%= f.text_field :sender_name, placeholder: t('vouchers.your_name'), class: 'form-control' %>
+                              </div>
+                            </div>
+
+                            <div class="col-12">
+                              <div class="form-group">
+                                <%= f.label :sender_email, class: 'pl-0 mb-0' do %>
+                                  <%= t('vouchers.your_email') %>
+                                  <small><strong class="text-danger">*</strong></small>
+                                <% end %>
+                                <%= f.email_field :sender_email, placeholder: t('vouchers.your_email'), class: 'form-control' %>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </section>
+                        </section>
 
-                      <!-- SECTION 2 -->
-                      <h4 class="py-1">2. <%= t('vouchers.for_who_is_this_gift') %></h4>
-                      <section>
-                        <%= f.fields_for :receiver do |rf| %>
+                        <!-- SECTION 2 -->
+                        <h4 class="py-1">2. <%= t('vouchers.for_who_is_this_gift') %></h4>
+                        <section>
+                          <div class="row">
+                            <div class="col-md-12 text-right">
+                              <small><strong class="text-danger">* - required</strong></small>
+                            </div>
+                          </div>
+
+                          <%= f.fields_for :receiver do |rf| %>
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="form-group">
+                                  <%= rf.label :first_name, class: 'pl-0 mb-0' do %>
+                                    <%= t('vouchers.first_name') %>
+                                    <small><strong class="text-danger">*</strong></small>
+                                  <% end %>
+                                  <%= rf.text_field :first_name, placeholder: t('vouchers.first_name'), class: 'form-control' %>
+                                </div>
+                              </div>
+
+                              <div class="col-6">
+                                <div class="form-group">
+                                  <%= rf.label :last_name, class: 'pl-0 mb-0' do %>
+                                    <%= t('vouchers.last_name') %>
+                                    <small><strong class="text-danger">*</strong></small>
+                                  <% end %>
+                                  <%= rf.text_field :last_name, placeholder: t('vouchers.last_name'), class: 'form-control' %>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="form-group">
+                                  <%= rf.label :email, class: 'pl-0 mb-0' do %>
+                                    <%= t('vouchers.email_address') %>
+                                    <small><strong class="text-danger">*</strong></small>
+                                  <% end %>
+                                  <%= rf.email_field :email, placeholder: t('vouchers.email_address'), class: 'form-control' %>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+
                           <div class="row">
                             <div class="col-6">
                               <div class="form-group">
-                                <%= rf.text_field :first_name, placeholder: t('vouchers.first_name'), class: 'form-control' %>
+                                <%= f.label :receiver_city, class: 'pl-0 mb-0' do %>
+                                  <%= t('vouchers.city') %>
+                                  <small><strong class="text-danger">*</strong></small>
+                                <% end %>
+                                <%= f.text_field :receiver_city, placeholder: t('vouchers.city'), class: 'form-control' %>
                               </div>
                             </div>
 
                             <div class="col-6">
                               <div class="form-group">
-                                <%= rf.text_field :last_name, placeholder: t('vouchers.last_name'), class: 'form-control' %>
+                                <%= f.label :receiver_country_id, class: 'pl-0 mb-0' do %>
+                                  <%= t('vouchers.country') %>
+                                  <small><strong class="text-danger">*</strong></small>
+                                <% end %>
+                                <%= f.select :receiver_country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: t('vouchers.country') }, class: 'form-control' %>
                               </div>
                             </div>
                           </div>
@@ -63,96 +131,114 @@
                           <div class="row">
                             <div class="col-12">
                               <div class="form-group">
-                                <%= rf.email_field :email, placeholder: t('vouchers.email_address'), class: 'form-control' %>
+                                <%= f.label :receiver_zipcode, class: 'pl-0 mb-0' do %>
+                                  <%= t('vouchers.zipcode') %>
+                                  <small><strong class="text-danger">*</strong></small>
+                                <% end %>
+                                <%= f.text_field :receiver_zipcode, placeholder: t('vouchers.zipcode'), class: 'form-control' %>
                               </div>
                             </div>
                           </div>
-                        <% end %>
 
-                        <div class="row">
-                          <div class="col-6">
-                            <div class="form-group">
-                              <%= f.text_field :receiver_city, placeholder: t('vouchers.city'), class: 'form-control' %>
-                            </div>
-                          </div>
-
-                          <div class="col-6">
-                            <div class="form-group">
-                              <%= f.select :receiver_country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: t('vouchers.country') }, class: 'form-control' %>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="form-group">
-                              <%= f.text_field :receiver_zipcode, placeholder: t('vouchers.zipcode'), class: 'form-control' %>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="form-group">
-                              <%= f.text_field :receiver_address, placeholder: t('vouchers.address'), class: 'form-control' %>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="form-group">
-                              <%= f.text_area :message, placeholder: t('vouchers.message'), class: 'form-control' %>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-12">
-                            <h5 class="text-bold"><%= t('vouchers.select_amount') %></h5>
-
-                            <div class="form-group">
-                              <%= f.number_field :amount, class: 'h6 form-control' %>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-
-                      <!-- SECTION 3 -->
-                      <h4 class="py-1">3. <%= t('vouchers.terms_and_conditions') %></h4>
-                      <section>
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="form-group">
-                              <ul class="terms-conditions">
-                                <li><%= t('vouchers.term1') %></li>
-                                <li><%= t('vouchers.term2') %></li>
-                                <li><%= t('vouchers.term3') %></li>
-                                <li><%= t('vouchers.term4') %></li>
-                                <li><%= t('vouchers.term5') %></li>
-                                <li><%= t('vouchers.term6') %></li>
-                                <li><%= t('vouchers.term7') %></li>
-                              </ul>
-                            </div>
-                          </div>
-
-                          <div class="col-12">
-                            <div class="form-group">
-                              <div class="custom-control custom-checkbox mb-0">
-                                <%= f.check_box :terms_and_conditions, { class: 'custom-control-input' }, true, false %>
-                                <%= f.label :terms_and_conditions, t('vouchers.accept_terms'), class: 'custom-control-label' %>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <%= f.label :receiver_address, class: 'pl-0 mb-0' do %>
+                                  <%= t('vouchers.address') %>
+                                  <small><strong class="text-danger">*</strong></small>
+                                <% end %>
+                                <%= f.text_field :receiver_address, placeholder: t('vouchers.address'), class: 'form-control' %>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </section>
-                    </div>
-                  <% end %>
+
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <%= f.label :message, class: 'pl-0 mb-0' %>
+                                <%= f.text_area :message, placeholder: t('vouchers.message'), class: 'form-control h-auto' %>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-12">
+                              <h5 class="text-bold d-flex">
+                                <%= t('vouchers.select_amount') %><small><strong class="text-danger">&nbsp;*</strong></small>
+                              </h5>
+
+                              <div class="form-group">
+                                <%= f.select :amount, amounts, { include_blank: false }, class: 'form-control' %>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
+                        <!-- SECTION 3 -->
+                        <h4 class="py-1">3. <%= t('vouchers.terms_and_conditions') %></h4>
+                        <section>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <ul class="terms-conditions">
+                                  <li><%= t('vouchers.term1') %></li>
+                                  <li><%= t('vouchers.term2') %></li>
+                                  <li><%= t('vouchers.term3') %></li>
+                                  <li><%= t('vouchers.term4') %></li>
+                                  <li><%= t('vouchers.term5') %></li>
+                                  <li><%= t('vouchers.term6') %></li>
+                                  <li><%= t('vouchers.term7') %></li>
+                                </ul>
+                              </div>
+                            </div>
+
+                            <div class="col-12">
+                              <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-0">
+                                  <%= f.check_box :terms_and_conditions, { class: 'custom-control-input' }, true, false %>
+                                  <%= f.label :terms_and_conditions, t('vouchers.accept_terms'), class: 'custom-control-label' %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="termsAndConditionsModal" tabindex="-1" role="dialog" aria-labelledby="termsAndConditionsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsAndConditionsModalLabel">Conditions & terms</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <ul class="terms-conditions">
+          <li><%= t('vouchers.term1') %></li>
+          <li><%= t('vouchers.term2') %></li>
+          <li><%= t('vouchers.term3') %></li>
+          <li><%= t('vouchers.term4') %></li>
+          <li><%= t('vouchers.term5') %></li>
+          <li><%= t('vouchers.term6') %></li>
+          <li><%= t('vouchers.term7') %></li>
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

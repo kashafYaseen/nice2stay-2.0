@@ -7,10 +7,10 @@
     background-color: rgba(0,0,0,0.1);
   }
 
-  .main-row {
-    justify-content: space-between;
-    padding-left: 10rem;
-    padding-right: 10rem;
+  .row {
+    .intro-columns {
+      height: 440px;
+    }
   }
 }
 .intro-columns, .form-columns {
@@ -32,19 +32,14 @@
 }
 .vouchers {
   .card {
-    min-height: 370px;
+    height: 100%;
+  }
+  .h-auto {
+    height: auto;
   }
 
   h4, h5 {
     font-size: 15px;
-  }
-}
-
-@media (max-width: 1300px) { 
-  .main-row {
-    justify-content: space-between;
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
   }
 }
 
@@ -55,33 +50,21 @@
     .dark-overlay-image {
       height: 140vh !important;
     }
-
-    .main-row {
-      justify-content: space-between;
-      padding-left: 5rem;
-      padding-right: 5rem;
-    }
   }
-}
 
-@media (max-width: 991px) {
-  .main-row {
-    padding: 0px !important;
+  .row {
+    .intro-columns {
+      height: 474px !important;
+    }
   }
 }
 
 @media (max-width: 767px) {
   .vouchers-jumbotron-bg {
-    height: 140vh !important;
+    height: 170vh !important;
 
     .dark-overlay-image {
-      height: 140vh !important;
+      height: 170vh !important;
     }
-  }
-  .form-columns {
-    margin-top: 5vh;
-  }
-  .main-row {
-    padding: 0px !important;
   }
 }

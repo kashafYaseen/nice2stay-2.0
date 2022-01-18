@@ -83,7 +83,9 @@ Rails.application.routes.draw do
 
     resources :pages, only: [:show]
     resources :newsletter_subscriptions, only: [:create]
-    resources :vouchers, only: [:new, :create]
+    resources :vouchers, only: [:new, :create] do
+      post :update_status
+    end
 
     get "dashboard", to: "dashboard#index"
     get '/lodgings/guest_centric', to: "guest_centric_offers#index"
