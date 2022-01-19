@@ -182,7 +182,7 @@ en:
 
   vouchers:
     paragraph_1: Surprise a friend, family member or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
-    paragraph_2: Until the end of January Nice2stay is treating you with 50 Euros. All you have to do is provide the details of the lucky recipient and a personal message.
+    paragraph_2: Until February 28th 2022 Nice2stay is treating you with 50 Euros. All you have to do is provide the details of the lucky recipient and a personal message.
     paragraph_3: Our team will then send a beautiful handwritten gift card by post!
     your_details: Your details
     your_name: Your first & last name
@@ -195,8 +195,10 @@ en:
     country: Country
     zipcode: Zip code
     address: Address
+    message_label: Your personal message for the recipient which we will write on the card
     message: Write your personal message for the recipient here...
     select_amount: Please select the voucher amount you want to add on top of the 50 Euro
+    default_amount: €0,- (€50,- gift from Nice2stay)
     terms_and_conditions: The small print (terms & conditions)
     term1: Vouchers are non-refundable and valid for new bookings made within 12 months of being requested.
     term2: Vouchers are not directly redeemable at our participating properties. Any booking must be made through Nice2stay.

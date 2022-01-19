@@ -155,7 +155,7 @@
                           <div class="row">
                             <div class="col-12">
                               <div class="form-group">
-                                <%= f.label :message, class: 'pl-0 mb-0' %>
+                                <%= f.label :message, t('vouchers.message_label'), class: 'pl-0 mb-0' %>
                                 <%= f.text_area :message, placeholder: t('vouchers.message'), class: 'form-control h-auto' %>
                               </div>
                             </div>
@@ -243,3 +243,7 @@
     </div>
   </div>
 </div>
+
+<%= content_for :js_init do %>
+  Voucher.init();
+<% end %>

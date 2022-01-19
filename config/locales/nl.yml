@@ -194,7 +194,7 @@ nl:
 
   vouchers:
     paragraph_1: Verras een vriend, familielid of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
-    paragraph_2: Tot eind januari trakteert Nice2stay op 50 Euro. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven.
+    paragraph_2: Tot 28 februari 2022 trakteert Nice2stay op 50 Euro. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven.
     paragraph_3: Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
     your_details: Uw details
     your_name: Uw voor en achternaam
@@ -207,8 +207,10 @@ nl:
     country: Land
     zipcode: Postcode
     address: Adres
+    message_label: Uw persoonlijke boodschap voor de ontvanger die wij op de kaart zullen schrijven
     message: Schrijf hier uw persoonlijke boodschap voor de ontvanger...
     select_amount: Selecteer het bedrag dat u wilt toevoegen bovenop de 50 Euro
+    default_amount: €0,- (€50,- cadeau van Nice2stay)
     terms_and_conditions: De kleine lettertjes (voorwaarden)
     term1: Vouchers worden niet gerestitueerd en zijn geldig voor nieuwe reserveringen gemaakt binnen 12 maanden na uitgiftedatum.
     term2: Vouchers zijn niet direct inwisselbaar bij onze aangesloten accommodaties. Elke boeking moet via Nice2stay gemaakt worden.
