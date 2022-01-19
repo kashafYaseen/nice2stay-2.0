@@ -32,6 +32,5 @@
 //= require slick.min
 //= require i18n/translations
 //= require jquery.steps
-//= require wizards
 
 //= require_tree .
