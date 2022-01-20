@@ -207,6 +207,7 @@ en:
     term5: In case you want to add value on top of the 50 Euro, you will be redirected directly to the payment page. Nice2stay will send the voucher after receipt of payment.
     term6: Nice2stay will send the voucher to the recipient by post, please note that it may take several days before the recipient receives the voucher.
     term7: The data of the recipient will only be used to send the voucher and they will also receive the Nice2stay newsletter.
+    term8: It is not allowed to apply multiple vouchers per booking.
     accept_terms: I agree to the terms & conditions mentioned above
     submit: Submit
 

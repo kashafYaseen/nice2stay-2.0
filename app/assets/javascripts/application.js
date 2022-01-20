@@ -31,6 +31,7 @@
 //= require bootstrap-toggle.min
 //= require slick.min
 //= require i18n/translations
+//= require jquery.validate.min
 //= require jquery.steps
 
 //= require_tree .
