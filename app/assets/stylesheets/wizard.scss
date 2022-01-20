@@ -42,6 +42,14 @@
   .wizard > .steps .current-info, .wizard > .steps .number {
     display: none;
   }
+  .wizard > .content > .body label.error {
+    color: #ef0568;
+    display: inline-block;
+    margin-left: 1.5em;
+    text-transform: none;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
   #wizard {
     min-height: fit-content;
   }

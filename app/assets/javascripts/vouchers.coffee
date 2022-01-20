@@ -2,6 +2,17 @@
   window.Voucher or (window.Voucher = {})
 
   Voucher.init = ->
+    form = $('#new_voucher')
+    form.validate
+      errorPlacement: (error, element) ->
+        if element.is(':checkbox')
+          $(element).next().after error
+        else
+          element.before error
+        return
+      rules: 'voucher[terms_and_conditions]': required: true
+      messages: 'voucher[terms_and_conditions]': required: 'Please agree to the Terms and Conditions'
+
     $('#wizard').steps
       headerTag: 'h4'
       bodyTag: 'section'
@@ -28,6 +39,12 @@
         finish: 'Submit'
         next: 'Next'
         previous: 'Previous'
+      onStepChanging: (event, currentIndex, newIndex) ->
+        form.validate().settings.ignore = ':disabled,:hidden'
+        form.valid()
+      onFinishing: (event, currentIndex) ->
+        form.validate().settings.ignore = ':disabled'
+        form.valid()
       onFinished: ->
         $('#new_voucher').submit()
         return
