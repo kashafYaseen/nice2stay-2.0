@@ -5,6 +5,7 @@ class Api::V2::PagesController < Api::V2::ApiController
       campaigns: Api::V2::CampaignSerializer.new(CustomText.home_page.popular.includes(:country, :region, :experience)).serializable_hash,
       locations: Api::V2::CountrySerializer.new(Country.enabled).serializable_hash,
       new_lodgings: Api::V2::LodgingSerializer.new(Lodging.new_lodgings).serializable_hash,
+      reviews: Api::V2::ReviewSerializer.new(Review.last(10)).serializable_hash,
     }, status: :ok
   end
 end
