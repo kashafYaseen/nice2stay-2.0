@@ -79,10 +79,24 @@ class SendBookingDetails
           book_option: reservation.book_option,
           cancel_option_reason: reservation.cancel_option_reason,
           canceled_by: reservation.canceled_by,
+          guest_details_attributes: guest_details(reservation),
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end
       return reservations
+    end
+
+    def guest_details(reservation)
+      details = []
+      reservation.guest_details.each do |guest|
+        details << {
+          id: guest.id,
+          age: guest.age,
+          type: guest.type
+        }
+      end
+
+      details
     end
 
     def customer(user)
