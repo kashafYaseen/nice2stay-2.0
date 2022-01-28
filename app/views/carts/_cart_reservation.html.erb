@@ -18,6 +18,31 @@
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
 
+    <%= form.fields_for :reservations do |rf| %>
+      <% unless rf.object.expired? %>
+        <%= rf.hidden_field :id %>
+        <%= rf.hidden_field :booking_id %>
+        <%= rf.hidden_field :in_cart, value: false %>
+        <%= rf.hidden_field :skip_data_posting, value: true %>
+      <% end %>
+
+      <%= rf.fields_for :guest_details, reservation.guest_details do |gf| %>
+        <div class="row form-group">
+          <div class="col-md-12 row">
+            <div class="col-md-6">
+              <label class="text-bold">Age of child</label>
+              <strong class="text-danger font-italic">*</strong></small>
+            </div>
+
+            <div class="col-md-6">
+              <%= gf.select :age, options_for_select((0..12).to_a, 6), {}, { class: 'form-control', required: true } %>
+              <%= gf.hidden_field :type, value: "ChildDetail" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
     <% if reservation.guest_centric? || reservation.lodging.as_child? %>
       <b>Room Type</b>
       <p><%= link_to (reservation.guest_centric? ? reservation.room_type : reservation.lodging_name), reservation.lodging, class: 'text-decoration-none' %></p>
