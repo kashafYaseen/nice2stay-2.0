@@ -18,6 +18,17 @@
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
 
+    <div class="guest_details">
+      <b>Guest Details</b> <br>
+      <% if reservation.adults.to_i.present? %>
+        <span class="text-sm"> <%= pluralize(reservation.adults.to_i, 'Adult') %></span> <br>
+      <% end %>
+
+      <% if reservation.children.to_i.present? %>
+        <span class="text-sm"><%= pluralize(reservation.children.to_i, 'Child') %></span>
+      <% end %>
+    </div>
+
     <%= form.fields_for :reservations do |rf| %>
       <% unless rf.object.expired? %>
         <%= rf.hidden_field :id %>
@@ -26,21 +37,25 @@
         <%= rf.hidden_field :skip_data_posting, value: true %>
       <% end %>
 
-      <%= rf.fields_for :guest_details, reservation.guest_details do |gf| %>
-        <div class="row form-group">
-          <div class="col-md-12 row">
-            <div class="col-md-6">
-              <label class="text-bold">Age of child</label>
-              <strong class="text-danger font-italic">*</strong></small>
-            </div>
+      <div class="children_details my-3 border-grey">
+        <b>Children Details</b>
+        <%= rf.fields_for :guest_details, reservation.guest_details do |gf| %>
+          <div class="row form-group mt-3">
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label class="text-bold">Age of child <%= gf.options[:child_index] + 1 %></label>
+                <strong class="text-danger font-italic">*</strong></small>
+              </div>
 
-            <div class="col-md-6">
-              <%= gf.select :age, options_for_select((0..12).to_a, 6), {}, { class: 'form-control', required: true } %>
-              <%= gf.hidden_field :type, value: "ChildDetail" %>
+              <div class="col-md-6">
+                <%= gf.select :age, options_for_select((0..12).to_a, 6), {}, { class: 'form-control', required: true } %>
+                <%= gf.hidden_field :type, value: "ChildDetail" %>
+                <%= gf.hidden_field :name, value: "Child #{gf.options[:child_index] + 1}" %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     <% end %>
 
     <% if reservation.guest_centric? || reservation.lodging.as_child? %>
