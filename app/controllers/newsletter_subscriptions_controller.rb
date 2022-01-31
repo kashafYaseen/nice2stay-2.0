@@ -7,6 +7,6 @@ class NewsletterSubscriptionsController < ApplicationController
 
   private
     def newsletter_subscription_params
-      params.require(:newsletter_subscription).permit(:email)
+      params.require(:newsletter_subscription).permit(:email, :name)
     end
 end
