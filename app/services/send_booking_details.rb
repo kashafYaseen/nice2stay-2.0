@@ -90,9 +90,9 @@ class SendBookingDetails
       details = []
       reservation.guest_details.each do |guest|
         details << {
-          id: guest.id,
+          fe_id: guest.id,
           age: guest.age,
-          type: guest.type,
+          type: guest.relation_type,
           name: guest.name,
         }
       end
