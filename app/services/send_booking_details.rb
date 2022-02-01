@@ -96,7 +96,6 @@ class SendBookingDetails
           name: guest.name,
         }
       end
-
       details
     end
 

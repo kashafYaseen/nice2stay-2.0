@@ -3,7 +3,7 @@
     <!-- Checkout Address-->
     <div class="col-md-12">
       <% if @booking.reservations.unexpired.present? %>
-        <%= form_for @booking, url: carts_path do |f| %>
+        <%= form_for @booking, url: carts_path, remote: true do |f| %>
           <div class="row">
             <div class="col-md-6 border-default mx-auto bg-white">
               <h4 class="mb-2 text-bold"><%= t 'carts.overview' %></h4>
@@ -54,7 +54,7 @@
 
               <div class="row">
                 <div class="col-md-12 margin-top-2x">
-                  <%= render 'shared/errors', resource: @booking %>
+                  <div id="booking_errors"></div>
 
                   <%= f.hidden_field :in_cart, value: false %>
                   <%= f.fields_for :user do |user_fields| %>

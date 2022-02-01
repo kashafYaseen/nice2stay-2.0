@@ -33,8 +33,6 @@ class CartsController < ApplicationController
 
       cookies[:booking_details] = @booking.id
       redirect_to details_carts_path, notice: I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
-    else
-      render :show
     end
   end
 
