@@ -1,5 +1,5 @@
 ActiveAdmin.register NewsletterSubscription do
-  permit_params :email, :language
+  permit_params :name, :email, :language
 
   index do
     selectable_column
