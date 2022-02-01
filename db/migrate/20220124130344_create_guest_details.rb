@@ -5,7 +5,7 @@ class CreateGuestDetails < ActiveRecord::Migration[5.2]
       t.datetime :date_of_birth
       t.integer :age
       t.string :type
-      t.references :reservation, foreign_key: true
+      t.references :reservation, foreign_key: true, on_delete: :cascade
 
       t.timestamps
     end
