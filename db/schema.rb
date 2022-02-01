@@ -437,6 +437,17 @@ ActiveRecord::Schema.define(version: 2021_12_22_053658) do
     t.index ["lodging_id"], name: "index_gc_offers_on_lodging_id"
   end
 
+  create_table "guest_details", force: :cascade do |t|
+    t.string "name"
+    t.datetime "date_of_birth"
+    t.integer "age"
+    t.string "guest_type"
+    t.bigint "reservation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_guest_details_on_reservation_id"
+  end
+
   create_table "lead_translations", force: :cascade do |t|
     t.integer "lead_id", null: false
     t.string "locale", null: false
@@ -1081,6 +1092,7 @@ ActiveRecord::Schema.define(version: 2021_12_22_053658) do
   add_foreign_key "custom_texts", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "gc_offers", "lodgings", on_delete: :cascade
+  add_foreign_key "guest_details", "reservations"
   add_foreign_key "leads", "admin_users"
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "leads_regions", "leads", on_delete: :cascade

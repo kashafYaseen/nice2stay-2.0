@@ -92,7 +92,7 @@ class SendBookingDetails
         details << {
           fe_id: guest.id,
           age: guest.age,
-          type: guest.relation_type,
+          type: guest.guest_type,
           name: guest.name,
         }
       end

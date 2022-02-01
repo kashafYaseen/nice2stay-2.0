@@ -5,7 +5,7 @@ class CreateGuestDetails < ActiveRecord::Migration[5.2]
       t.datetime :date_of_birth
       t.integer :age
       t.string :type
-      t.references :reservation, index: true
+      t.references :reservation, foreign_key: true
 
       t.timestamps
     end
