@@ -1,7 +1,12 @@
 class GuestDetail < ApplicationRecord
   belongs_to :reservation
 
-  # Values based on CRM class and table names
+  # ENUM type is based on CRM GuestDetail type,
+  # The value defined here will be used on CRM to check,
+  # which type of GuestDetail to create
+  # Example:
+  # child => ChildDetail
+  # person => PersonDetail
   enum guest_type: {
     child: 'ChildDetail',
     person: 'PersonDetail',
