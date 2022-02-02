@@ -49,7 +49,7 @@
 
               <div class="col-md-6">
                 <%= gf.select :age, options_for_select((0..12).to_a, 6), {}, { class: 'form-control', required: true } %>
-                <%= gf.hidden_field :guest_type, value: "ChildDetail" %>
+                <%= gf.hidden_field :guest_type, value: :child %>
                 <%= gf.hidden_field :name, value: "Child #{gf.options[:child_index] + 1}" %>
               </div>
             </div>
