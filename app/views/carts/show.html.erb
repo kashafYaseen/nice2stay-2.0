@@ -3,55 +3,58 @@
     <!-- Checkout Address-->
     <div class="col-md-12">
       <% if @booking.reservations.unexpired.present? %>
-        <div class="row">
-          <div class="col-md-6 border-default mx-auto bg-white">
-            <h4 class="mb-2 text-bold"><%= t 'carts.overview' %></h4>
-            <div id="cart-flash-messages"></div>
+        <%= form_for @booking, url: carts_path, remote: true do |f| %>
+          <div class="row">
+            <div class="col-md-6 border-default mx-auto bg-white">
+              <h4 class="mb-2 text-bold"><%= t 'carts.overview' %></h4>
+              <div id="cart-flash-messages"></div>
 
-            <div class="bootstrap-default">
-              <div class="alert alert-warning alert-dismissible" role="alert">
-                <%= t('cart.validity') %>
+              <div class="bootstrap-default">
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                  <%= t('cart.validity') %>
+                </div>
               </div>
-            </div>
 
-            <div class="bootstrap-default">
-              <div class="alert alert-info" role="alert">
-                <%= t('cart.pay_less') %>
+              <div class="bootstrap-default">
+                <div class="alert alert-info" role="alert">
+                  <%= t('cart.pay_less') %>
+                </div>
               </div>
+
+              <div id="cart-body">
+                <%= render partial: 'cart_reservation', locals: { form: f }, collection: @reservations, as: :reservation %>
+              </div>
+
             </div>
 
-            <div id="cart-body">
-              <%= render partial: 'cart_reservation', collection: @booking.reservations.unexpired, as: :reservation %>
-            </div>
-          </div>
 
-          <div class="col-md-5 border-default mx-auto bg-white">
-            <div class="row">
-              <div class="col-md-12">
-                <h4 class="mb-5 text-bold"><%= t('cart.book_securely') %></h4>
+            <div class="col-md-5 border-default mx-auto bg-white">
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 class="mb-5 text-bold"><%= t('cart.book_securely') %></h4>
 
-                <% if user_signed_in? %>
-                  <p>Hi <%= current_user.full_name %>!, you are logon. Your details are automaticly filled in the form</p>
-                <% else %>
-                  <h5><%= t 'profile_account.account' %></h5>
-                  <p><%= t 'profile_account.customers' %></p>
-                  <div class="row">
-                    <div class="col-md-5 mx-auto">
-                      <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+                  <% if user_signed_in? %>
+                    <p>Hi <%= current_user.full_name %>!, you are logon. Your details are automaticly filled in the
+                      form</p>
+                  <% else %>
+                    <h5><%= t 'profile_account.account' %></h5>
+                    <p><%= t 'profile_account.customers' %></p>
+                    <div class="row">
+                      <div class="col-md-5 mx-auto">
+                        <input type="button" name="cart-login-form" value="Login" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#login-form-modal">
+                      </div>
+
+                      <div class="col-md-5 mx-auto">
+                        <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
+                      </div>
                     </div>
-
-                    <div class="col-md-5 mx-auto">
-                      <input type="button" name="reset-password-form" value="Reset wachtwoord" class="btn btn-primary btn w-100 mr-5" data-toggle="modal" data-target="#reset-pass-form-modal">
-                    </div>
-                  </div>
-                <% end %>
+                  <% end %>
+                </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-12 margin-top-2x">
-                <%= form_for @booking, url: carts_path do |f| %>
-                  <%= render 'shared/errors', resource: @booking %>
+              <div class="row">
+                <div class="col-md-12 margin-top-2x">
+                  <div id="booking_errors"></div>
 
                   <%= f.hidden_field :in_cart, value: false %>
                   <%= f.fields_for :user do |user_fields| %>
@@ -184,27 +187,18 @@
                     <% end %>
                   <% end %>
 
-                  <%= f.fields_for :reservations do |reservation_fields| %>
-                    <% unless reservation_fields.object.expired? %>
-                      <%= reservation_fields.hidden_field :id %>
-                      <%= reservation_fields.hidden_field :booking_id %>
-                      <%= reservation_fields.hidden_field :in_cart, value: false %>
-                      <%= reservation_fields.hidden_field :skip_data_posting, value: true %>
-                    <% end %>
-                  <% end %>
-
                   <div class="d-flex justify-content-between">
-                     <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
+                    <%= link_to _back_url, class: 'btn btn-outline-secondary' do %>
                       <i class="material-icons arrow_back"></i>&nbsp; <%= t 'nav.back' %>
                     <% end %>
 
                     <%= f.submit 'Complete', class: "btn btn-primary mb-0 mr-0" %>
                   </div>
                 </div>
-              <% end %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% else %>
         <div class="shopping-cart-footer">
           <div class="text-center">

@@ -6,6 +6,7 @@ class Reservation < ApplicationRecord
   has_one :rate_plan, through: :room_rate
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
+  has_many :guest_details
   has_one :review
   has_one :user, through: :booking
   has_many :child_rates, through: :rate_plan
@@ -55,6 +56,7 @@ class Reservation < ApplicationRecord
   scope :belongs_to_channel, -> { where.not(room_rate_id: nil) }
 
   accepts_nested_attributes_for :review
+  accepts_nested_attributes_for :guest_details
 
   attr_accessor :skip_data_posting
 

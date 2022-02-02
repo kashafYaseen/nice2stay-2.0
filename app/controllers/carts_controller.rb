@@ -6,6 +6,9 @@ class CartsController < ApplicationController
 
   def show
     @channel_manager = @booking.reservations.guest_centric.present? || @booking.reservations.booking_expert.present?
+    @guest_centric = @booking.reservations.guest_centric.present?
+    @reservations = @booking.reservations.unexpired
+    @reservations.map { |reservation| reservation.children.times.each { reservation.guest_details.build } }
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
   end
 
@@ -26,8 +29,6 @@ class CartsController < ApplicationController
 
       cookies[:booking_details] = @booking.id
       redirect_to details_carts_path, notice: I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
-    else
-      render :show
     end
   end
 
@@ -65,7 +66,7 @@ class CartsController < ApplicationController
       params.require(:booking).permit(
         :in_cart,
         user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
-        reservations_attributes: [:id, :booking_id, :in_cart, :skip_data_posting]
+        reservations_attributes: [:id, :booking_id, :in_cart, :skip_data_posting, guest_details_attributes: [:id, :age, :name, :guest_type]],
       )
     end
 
