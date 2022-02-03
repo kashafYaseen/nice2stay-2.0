@@ -5,7 +5,7 @@ class Api::V2::PlaceSerializer
               :region_id, :place_category_id, :created_at, :updated_at, :publish,
               :details, :description, :name, :slug
 
-  attribute :distance, if: proc { |place, params| params.present? } do |place, params|
-    place.distance_from(params[:lodgings])
+  attribute :distance, if: proc { |place, params| params.present? && params[:lodging].present? } do |place, params|
+    place.distance_from(params[:lodging])
   end
 end

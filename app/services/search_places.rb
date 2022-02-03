@@ -21,9 +21,9 @@ class SearchPlaces
           within: (params[:places_within].presence || '50km' )
         },
         publish: true,
-        country_id: params[:country_id],
       }
       conditions[:place_category_id] = params[:places_categories].split(',') if params[:places_categories].present?
+      conditions[:country_id] = params[:country_id] if params[:country_id].present?
       conditions
     end
 
