@@ -7,7 +7,7 @@ class CartsController < ApplicationController
   def show
     @guest_centric = @booking.reservations.guest_centric.present?
     @reservations = @booking.reservations.unexpired
-    @reservations.map { |reservation| reservation.children.times.each { reservation.guest_details.build } }
+    @reservations.map { |reservation| reservation.children.times.each { reservation.guest_details.build } unless reservation.children.nil? }
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
   end
 
