@@ -6,7 +6,7 @@ class Api::V2::LodgingDetailsSerializer
              :images, :average_rating, :created_at, :updated_at,
              :minimum_adults, :minimum_children, :beds, :baths, :checked,:including_text,
              :options_text, :payment_terms_text, :deposit_text,
-             :highlight_1, :highlight_2, :highlight_3, :description, :customized_dates,
+             :highlight_1, :highlight_2, :highlight_3, :description, :location_description, :customized_dates,
              :setting, :quality, :interior, :service, :communication, :country_name, :region_name,
              :gc_rooms, :guest_centric_id, :guest_centric, :realtime_availability, :gc_username, :gc_password, :channel,
              :extra_beds, :extra_beds_for_children_only
