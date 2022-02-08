@@ -44,4 +44,15 @@ ActiveAdmin.register Reservation do
 
     actions
   end
+
+  show do
+    panel 'Guest Details' do
+      table_for reservation.guest_details do
+        column :id
+        column :name
+        column :age
+        column :created_at
+      end
+    end
+  end
 end
