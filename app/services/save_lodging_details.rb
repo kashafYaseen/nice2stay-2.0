@@ -44,6 +44,7 @@ class SaveLodgingDetails
       UpdateLodgingDiscounts.call(lodging, params[:discounts], params[:discount_ids])
       update_amenities
       update_experiences
+      update_place_categories
     end
 
     def update_amenities
@@ -54,6 +55,11 @@ class SaveLodgingDetails
     def update_experiences
       experiences = Experience.where(slug: params[:experiences])
       lodging.experiences = experiences
+    end
+
+    def update_place_categories
+      place_categories = PlaceCategory.where(slug: params[:place_categories])
+      lodging.place_categories = place_categories
     end
 
     def owner
