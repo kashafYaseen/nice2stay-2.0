@@ -39,7 +39,7 @@ class Api::V2::LodgingDetailsSerializer
     Api::V2::RoomRateSerializer.new(lodging.room_rates.published.with_active_rate_plan)
   end
 
-  attributes :place_categories, if: Proc.new { |lodging, params| params.present? && params[:place_categories].present? } do |lodging, params|
+  attributes :place_categories, if: Proc.new { |lodging, params| params.present? && params[:place_categories] } do |lodging, params|
     Api::V2::PlaceCategorySerializer.new(lodging.place_categories)
   end
 end

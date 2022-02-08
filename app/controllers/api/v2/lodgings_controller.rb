@@ -19,7 +19,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def show
-    render json: Api::V2::LodgingDetailsSerializer.new(@lodging, { params: { current_user: current_user, reviews: true, action_name: action_name, place_categories: @lodging.place_categories } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingDetailsSerializer.new(@lodging, { params: { current_user: current_user, reviews: true, action_name: action_name, place_categories: @lodging.place_categories.present? } }).serialized_json, status: :ok
   end
 
   def options
