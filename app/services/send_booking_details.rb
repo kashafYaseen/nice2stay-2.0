@@ -92,7 +92,7 @@ class SendBookingDetails
         details << {
           fe_id: guest.id,
           age: guest.age,
-          type: guest.guest_type,
+          type: GuestDetail.guest_types[guest.guest_type.to_sym],
           name: guest.name,
         }
       end
