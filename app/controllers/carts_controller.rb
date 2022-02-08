@@ -8,7 +8,8 @@ class CartsController < ApplicationController
     @channel_manager = @booking.reservations.guest_centric.present? || @booking.reservations.booking_expert.present?
     @guest_centric = @booking.reservations.guest_centric.present?
     @reservations = @booking.reservations.unexpired
-    @reservations.map { |reservation| reservation.children.times.each { reservation.guest_details.build } }
+    # to_i will cast nil to 0 which mitigates nil errors when children will be nil
+    @reservations.map { |reservation| reservation.children.to_i.times.each { reservation.guest_details.build } }
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
   end
 
