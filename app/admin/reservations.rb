@@ -46,6 +46,43 @@ ActiveAdmin.register Reservation do
   end
 
   show do
+    attributes_table do
+      row :check_in
+      row :check_out
+      row :created_at
+      row :updated_at
+      row :adults
+      row :children
+      row :infants
+      row :total_price
+      row :rent
+      row :discount
+      row :cleaning_cost
+      row :booking_status
+      row :request_status
+      row :crm_booking_id
+      row :in_cart
+      row :lodging
+      row :booking
+      row :canceled
+      row :booked_by
+      row :guest_centric_booking_id
+      row :offer
+      row :meal
+      row :meal_price
+      row :gc_errors
+      row :rooms
+      row :meal_tax
+      row :tax
+      row :additional_fee
+      row :room_type
+      row :gc_policy
+      row :expired_at
+      row :book_option
+      row :cancel_option_reason
+      row :canceled_by
+    end
+
     panel 'Guest Details' do
       table_for reservation.guest_details do
         column :id
