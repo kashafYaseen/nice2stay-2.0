@@ -3,7 +3,7 @@ class Api::V2::PlacesController < Api::V2::ApiController
 
   def index
     @places = SearchPlaces.call(common_params)
-    @selected_places = SearchPlaces.call(common_params.merge(places_categories: @lodging.place_category_ids)) if @lodging.place_categories.present?
+    @selected_places = SearchPlaces.call(common_params.merge(places_categories: @lodging.place_category_ids.join(','))) if @lodging.place_categories.present?
     render json: {
       places: Api::V2::PlaceSerializer.new(@places, { params: { lodging: @lodging } }).serializable_hash,
       selected_places: Api::V2::PlaceSerializer.new(@selected_places, { params: { lodging: @lodging } }).serializable_hash,
