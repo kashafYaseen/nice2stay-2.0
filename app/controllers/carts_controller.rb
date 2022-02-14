@@ -10,6 +10,7 @@ class CartsController < ApplicationController
     @reservations = @booking.reservations.unexpired
     # to_i will cast nil to 0 which mitigates nil errors when children will be nil
     @reservations.map { |reservation| reservation.children.to_i.times.each { reservation.guest_details.build } }
+    @reservations.map { |reservation| reservation.adults.to_i.times.each { reservation.guest_details.build } }
     @booking.build_user(creation_status: :without_login) unless @booking.user.present?
   end
 
