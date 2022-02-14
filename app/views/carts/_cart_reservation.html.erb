@@ -43,20 +43,27 @@
           <div class="children_details my-3 border-grey">
             <b>Children's Age</b>
             <%= rf.fields_for :guest_details, reservation.guest_details do |gf| %>
-              <div class="row form-group mt-3">
-                <div class="col-md-12 row">
-                  <div class="col-md-6">
-                    <label class="text-bold">Age of child <%= gf.options[:child_index] + 1 %></label>
-                    <strong class="text-danger font-italic">*</strong></small>
-                  </div>
+              <% if gf.options[:child_index] < reservation.children.to_i %>
+                <div class="row form-group mt-3">
+                  <div class="col-md-12 row">
+                    <div class="col-md-6">
+                      <label class="text-bold">Age of child <%= gf.options[:child_index] + 1 %></label>
+                      <strong class="text-danger font-italic">*</strong></small>
+                    </div>
 
-                  <div class="col-md-6">
-                    <%= gf.select :age, options_for_select((0..12).to_a, 6), {}, { class: 'form-control', required: true } %>
-                    <%= gf.hidden_field :guest_type, value: GuestDetail.guest_types[:child] %>
-                    <%= gf.hidden_field :name, value: "Child #{gf.options[:child_index] + 1}" %>
+                    <div class="col-md-6">
+                      <%= gf.select :age, options_for_select((0..12).to_a, 6), {}, { class: 'form-control', required: true } %>
+                      <%= gf.hidden_field :guest_type, value: GuestDetail.guest_types[:child] %>
+                      <%= gf.hidden_field :name, value: "Child #{gf.options[:child_index] + 1}" %>
+                    </div>
                   </div>
                 </div>
-              </div>
+              <% else %>
+                <div>
+                  <%= gf.hidden_field :guest_type, value: GuestDetail.guest_types[:person] %>
+                  <%= gf.hidden_field :name, value: "Adult #{(gf.options[:child_index] + 1) - reservation.children.to_i}" %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         <% end %>
