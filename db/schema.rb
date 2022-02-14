@@ -10,7 +10,7 @@ g# This file is auto-generated from the current state of the database. Instead
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_31_095319) do
+ActiveRecord::Schema.define(version: 2022_02_04_120254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -529,6 +529,13 @@ ActiveRecord::Schema.define(version: 2022_01_31_095319) do
     t.datetime "updated_at", null: false
     t.index ["supplement_id"], name: "index_linked_supplements_on_supplement_id"
     t.index ["supplementable_type", "supplementable_id"], name: "index_linked_supplements_on_supplementable"
+  end
+
+  create_table "lodging_place_categories", force: :cascade do |t|
+    t.bigint "lodging_id"
+    t.bigint "place_category_id"
+    t.index ["lodging_id"], name: "index_lodging_place_categories_on_lodging_id"
+    t.index ["place_category_id"], name: "index_lodging_place_categories_on_place_category_id"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -1307,6 +1314,8 @@ ActiveRecord::Schema.define(version: 2022_01_31_095319) do
   add_foreign_key "leads_regions", "leads", on_delete: :cascade
   add_foreign_key "leads_regions", "regions", on_delete: :cascade
   add_foreign_key "linked_supplements", "supplements", on_delete: :cascade
+  add_foreign_key "lodging_place_categories", "lodgings", on_delete: :cascade
+  add_foreign_key "lodging_place_categories", "place_categories", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade

@@ -19,7 +19,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def show
-    render json: Api::V2::LodgingDetailsSerializer.new(@lodging, { params: { current_user: current_user, reviews: true, action_name: action_name } }).serialized_json, status: :ok
+    render json: Api::V2::LodgingDetailsSerializer.new(@lodging, { params: { current_user: current_user, reviews: true, action_name: action_name, place_categories: @lodging.place_categories.present? } }).serialized_json, status: :ok
   end
 
   def options
@@ -28,7 +28,8 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
   def cumulative_price
     lodgings = Lodging.calculate_prices(params_wrt_flexible_type(params), ids, @search_analytic)
-    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults], children: params[:children], accom_listing: params[:accom_listing] }}).serialized_json, status: :ok
+    supplements = JSON.parse(params[:supplements], symbolize_names: true) rescue nil
+    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults].to_i, children: params[:children].to_i, supplements: supplements, accom_listing: params[:accom_listing] }}).serialized_json, status: :ok
   end
 
   def recommendations
