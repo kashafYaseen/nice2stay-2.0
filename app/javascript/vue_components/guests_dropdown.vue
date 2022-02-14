@@ -8,32 +8,22 @@
       <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3">
         <div class="row">
           <label class="col-6 text-lg pt-2">{{ adultsTitle() }}</label>
-          <number-input-spinner
-            :min="0"
-            :max="this.maxAdults"
-            :integerOnly="true"
-            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
-            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
-            :value="this.totalAdults"
-            @input="handleAdults"
-            :class="inline ? 'mx-auto' : ''"
-          />
+          <div :class="inline ? 'vnis mx-auto' : 'vnis'">
+            <button :class="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'" type="button" @click="updateAdults('decrement')">-</button>
+            <input :class="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'" type="text" v-model="totalAdults" />
+            <button :class="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'" type="button" @click="updateAdults()">+</button>
+          </div>
         </div>
       </div>
 
       <div :class="inline ? '' : 'dropdown-item'" class="mt-3 mb-3">
         <div class="row">
           <label class="col-6 text-lg pt-2">{{ childrenTitle() }}<br><span class="text-xxs text-capitalize">{{ childrenAges() }}</span></label>
-          <number-input-spinner
-            :min="0"
-            :max="this.maxCalculatedChildren"
-            :integerOnly="true"
-            @input="handleChildren"
-            :inputClass="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'"
-            :value="this.totalChildren"
-            :buttonClass="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'"
-            :class="inline ? 'mx-auto' : ''"
-          />
+          <div :class="inline ? 'vnis mx-auto' : 'vnis'">
+            <button :class="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'" type="button" @click="updateChildren('decrement')">-</button>
+            <input :class="inline ? 'vnis__input bg-secondary-dark' : 'vnis__input'" type="text" v-model="totalChildren" />
+            <button :class="inline ? 'vnis__button col-6 bg-white' : 'vnis__button col-6'" type="button" @click="updateChildren()">+</button>
+          </div>
         </div>
       </div>
 
@@ -206,6 +196,22 @@
       this.guests()
     },
     methods: {
+      updateAdults(operation = 'increment') {
+        if (operation == 'increment') {
+          if (this.totalAdults >= 0 && this.totalAdults < this.maxAdults) this.totalAdults += 1
+        } else {
+          if (this.totalAdults > 0 && this.totalAdults <= this.maxAdults) this.totalAdults -= 1
+        }
+        $(this.adultsTarget).val(this.totalAdults)
+      },
+      updateChildren(operation = 'increment') {
+        if (operation == 'increment') {
+          if (this.totalChildren >= 0 && this.totalChildren < (this.maxChildren + this.maxAdults)) this.totalChildren += 1
+        } else {
+          if (this.totalChildren > 0 && this.totalChildren <= (this.maxChildren + this.maxAdults)) this.totalChildren -= 1
+        }
+        $(this.childrenTarget).val(this.totalChildren)
+      },
       handleAdults(value) {
         $(this.adultsTarget).val(value)
         this.totalAdults = value
