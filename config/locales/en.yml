@@ -131,14 +131,14 @@ en:
     check_out: Checkout
     adults: Adults
     your_details: "Your details"
-    children_details: "Children Details"
-    age_of_child: "Age of child"
     adult:
       one: "1 Adult"
       other: "%{count} Adults"
     child:
       one: "1 Child"
       other: "%{count} Children"
+    children_details: "Children Details"
+    age_of_child: "Age of child"
     children: Children(<12)
     infants: Babies
     subtotal: Rent
