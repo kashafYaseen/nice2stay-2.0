@@ -140,6 +140,15 @@ nl:
     checkin: Checkin
     check_out: Checkout
     adults: Volwassenen
+    your_details: "Uw details"
+    adult:
+      one: "1 Volwassen"
+      other: "%{count} Volwassenen"
+    child:
+      one: "1 Kind"
+      other: "%{count} Kinderen"
+    children_details: "Leeftijd kinderen"
+    age_of_child: "Leeftijd kind"
     children: Kinderen(<12)
     infants: Babies
     cleaning: Schoonmaakkosten

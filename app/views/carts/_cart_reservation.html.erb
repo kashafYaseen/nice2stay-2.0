@@ -21,13 +21,13 @@
       </p>
 
       <div class="guest_details">
-        <b>Guest Details</b> <br>
+        <b><%= t('carts.your_details') %></b> <br>
         <% if reservation.adults.to_i.present? %>
-          <span class="text-sm"> <%= pluralize(reservation.adults.to_i, 'Adult') %></span> <br>
+          <span class="text-sm"> <%= t('carts.adult', count: reservation.adults.to_i) %></span> <br>
         <% end %>
 
         <% if reservation.children.to_i.present? %>
-          <span class="text-sm"><%= pluralize(reservation.children.to_i, 'Child') %></span>
+          <span class="text-sm"> <%= t('carts.child', count: reservation.children.to_i) %></span> <br>
         <% end %>
       </div>
 
@@ -40,13 +40,13 @@
         <% end %>
 
         <div class="children_details my-3 border-grey">
-          <b><%= "Children's Age" if reservation.children.to_i > 0 %></b>
+          <b><%= t('carts.children_details') if reservation.children.to_i > 0 %></b>
           <%= rf.fields_for :guest_details, reservation.guest_details do |gf| %>
             <% if gf.options[:child_index] < reservation.children.to_i %>
               <div class="row form-group mt-3">
                 <div class="col-md-12 row">
                   <div class="col-md-6">
-                    <label class="text-bold">Age of child <%= gf.options[:child_index] + 1 %></label>
+                    <label class="text-bold"><%= t('carts.age_of_child') %> <%= gf.options[:child_index] + 1 %></label>
                     <small><strong class="text-danger font-italic">*</strong></small>
                   </div>
 
