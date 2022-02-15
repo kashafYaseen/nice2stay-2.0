@@ -23,21 +23,11 @@
       <div class="guest_details">
         <b><%= t('carts.your_details') %></b> <br>
         <% if reservation.adults.to_i.present? %>
-          <%= reservation.adults.to_i %>
-          <% if reservation.adults.to_i > 1 || reservation.adults.to_i == 0 %>
-            <span class="text-sm"> <%= t('carts.adults') %></span> <br>
-          <% else %>
-            <span class="text-sm"> <%= t('carts.adult') %></span> <br>
-          <% end %>
+          <span class="text-sm"> <%= t('carts.adult', count: reservation.adults.to_i) %></span> <br>
         <% end %>
 
         <% if reservation.children.to_i.present? %>
-          <%= reservation.children.to_i %>
-          <% if reservation.children.to_i > 1 || reservation.children.to_i == 0 %>
-            <span class="text-sm"><%= t('carts.child') %></span>
-          <% else %>
-            <span class="text-sm"> <%= t('carts.child_only') %></span> <br>
-          <% end %>
+          <span class="text-sm"> <%= t('carts.child', count: reservation.children.to_i) %></span> <br>
         <% end %>
       </div>
 
