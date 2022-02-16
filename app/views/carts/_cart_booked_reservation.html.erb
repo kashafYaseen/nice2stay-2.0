@@ -15,6 +15,40 @@
       <span class="text-sm"><%= reservation.check_in %></span> - <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
     </p>
 
+    <div class="guest_details my-3">
+      <b><%= t('carts.your_details') %></b> <br>
+      <% if reservation.adults.to_i.present? %>
+        <span class="text-sm"> <%= t('carts.adult', count: reservation.adults.to_i) %></span> <br>
+      <% end %>
+
+      <% if reservation.children.to_i.present? %>
+        <span class="text-sm"> <%= t('carts.child', count: reservation.children.to_i) %></span> <br>
+      <% end %>
+    </div>
+
+    <% if reservation.children.to_i > 0 %>
+      <b><%= t('carts.children_details') %></b>
+      <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% reservation.guest_details.child.each_with_index do |gd, index| %>
+            <tr>
+              <th scope="row"><%= index + 1 %></th>
+              <td><%= gd.name %></td>
+              <td><%= gd.age %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
     <% if reservation.guest_centric? || reservation.lodging.as_child? %>
       <b>Room Type</b>
       <p><%= link_to (reservation.guest_centric? ? reservation.room_type : reservation.lodging_name), reservation.lodging, class: 'text-decoration-none' %></p>
