@@ -59,21 +59,21 @@
         <b class="pl-3"><%= t('carts.children_details') %></b>
         <table class="table px-0 scroll-x mt-3 mb-0 py-0">
           <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Age</th>
-          </tr>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Age</th>
+            </tr>
           </thead>
 
           <tbody>
-          <% reservation.guest_details.child.each_with_index do |gd, index| %>
-            <tr>
-              <th scope="row"><%= index + 1 %></th>
-              <td><%= gd.name %></td>
-              <td><%= gd.age %></td>
-            </tr>
-          <% end %>
+            <% reservation.guest_details.child.each_with_index do |gd, index| %>
+              <tr>
+                <th scope="row"><%= index + 1 %></th>
+                <td><%= gd.name %></td>
+                <td><%= gd.age %></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
       <% end %>
