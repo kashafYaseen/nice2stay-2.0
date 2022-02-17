@@ -10,6 +10,7 @@ class Reservation < ApplicationRecord
   has_one :review
   has_one :user, through: :booking
   has_many :child_rates, through: :rate_plan
+  has_many :reserved_supplements
 
   validates :check_in, :check_out, presence: true
   validate :availability

@@ -1033,6 +1033,20 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"
   end
 
+  create_table "reserved_supplements", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "supplement_type", default: 0
+    t.integer "rate_type", default: 0
+    t.decimal "rate", default: "0.0"
+    t.decimal "child_rate", default: "0.0"
+    t.decimal "total", default: "0.0"
+    t.bigint "reservation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reserved_supplements_on_reservation_id"
+  end
+
   create_table "review_translations", force: :cascade do |t|
     t.integer "review_id", null: false
     t.string "locale", null: false
@@ -1339,6 +1353,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
   add_foreign_key "reservations", "room_rates", on_delete: :nullify
+  add_foreign_key "reserved_supplements", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users", on_delete: :cascade
