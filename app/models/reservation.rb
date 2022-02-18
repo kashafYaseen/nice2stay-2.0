@@ -58,6 +58,7 @@ class Reservation < ApplicationRecord
 
   accepts_nested_attributes_for :review
   accepts_nested_attributes_for :guest_details
+  accepts_nested_attributes_for :reserved_supplements
 
   attr_accessor :skip_data_posting
 

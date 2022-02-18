@@ -81,6 +81,16 @@ class Api::V2::CartsController < Api::V2::ApiController
         :rent,
         :meal_price,
         :room_rate_id,
+        reserved_supplements_attributes: [
+          :id,
+          :name,
+          :description,
+          :supplement_type,
+          :rate_type,
+          :rate,
+          :child_rate,
+          :quantity
+        ]
       )
     end
 
