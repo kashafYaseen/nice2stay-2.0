@@ -125,6 +125,7 @@ class SendBookingDetails
           quantity: supplement.quantity.to_i
         }
       end
+      reserved_supplements
     end
 
     def customer(user)

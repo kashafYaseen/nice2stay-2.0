@@ -4,7 +4,11 @@ class ReservedSupplement < ApplicationRecord
   before_create :cumulative_price
 
   attr_accessor :maximum_number
+  # quantity is virtual attribute please make a column
+  # and remove this virtual attribute
   attr_accessor :quantity
+
+  globalize_accessors
 
   enum supplement_type: {
     optional: 0,
@@ -29,7 +33,7 @@ class ReservedSupplement < ApplicationRecord
     # make two virtual attributes maximum_number and quantity
     # maximum number will always be greater than quantity send all these attributes to CalculateSupplementsPrices
     params = reservation.attributes.deep_symbolize_keys
-    self.maximum_number = quantity + 1
+    self.maximum_number = self.quantity.to_i + 1
 
     self.total = CalculateSupplementsPrices.call(
       supplement: self,
@@ -39,5 +43,8 @@ class ReservedSupplement < ApplicationRecord
         quantity: quantity.to_i
       )
     )
+
+    # you can create total as a virtual attribute instead of column
+    self.total = self.total[:calculated_price]
   end
 end
