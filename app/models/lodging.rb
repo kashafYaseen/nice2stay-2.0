@@ -268,9 +268,9 @@ class Lodging < ApplicationRecord
     total_discount = calculate_discount(discount(params), total_price)
     total_price -= total_discount if total_discount.present?
     total_price += cleaning_cost if cleaning_cost.present?
-    self.calculated_price = total_price.round(2)
-    self.discount_price = total_discount.round(2)
-    self.rent_price = (prices[:rates].sum).round(2)
+    self.calculated_price = total_price.to_f.round(2)
+    self.discount_price = total_discount.to_f.round(2)
+    self.rent_price = (prices[:rates].sum).to_f.round(2)
     self.dynamic_price = true
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
