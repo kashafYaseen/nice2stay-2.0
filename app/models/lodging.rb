@@ -45,6 +45,8 @@ class Lodging < ApplicationRecord
   attr_accessor :dynamic_price
   attr_accessor :price_valid, :price_errors
   attr_accessor :first_available_room, :check_in, :check_out
+  attr_accessor :discount_price
+  attr_accessor :rent_price
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -262,9 +264,13 @@ class Lodging < ApplicationRecord
 
     prices = price_list(params)
     total_price = prices[:rates].sum
+    cleaning_cost = cleaning_cost_for((params[:adults].to_i + params[:children].to_i), params[:nights])
     total_discount = calculate_discount(discount(params), total_price)
     total_price -= total_discount if total_discount.present?
+    total_price += cleaning_cost if cleaning_cost.present?
     self.calculated_price = total_price.round(2)
+    self.discount_price = total_discount.round(2)
+    self.rent_price = (prices[:rates].sum).round(2)
     self.dynamic_price = true
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
@@ -488,9 +494,9 @@ class Lodging < ApplicationRecord
     def calculate_discount(discounts, total_price)
       return unless discounts.present?
       amount = 0
-      discounts.each do |dis|
-        amount += (total_price * (dis[:value].to_i/100)) if dis[:discount_type] == 'percentage'
-        amount += dis[:value].to_i if dis[:discount_type] == 'amount' || dis[:discount_type] == 'incentive'
+      discounts.each do |dist|
+        amount += (total_price * (dist[:value].to_f/100)) if dist[:discount_type] == 'percentage'
+        amount += dist[:value].to_f if dist[:discount_type] == 'amount' || dist[:discount_type] == 'incentive'
       end
       amount
     end
