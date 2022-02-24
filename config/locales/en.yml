@@ -326,7 +326,9 @@ en:
     discount: Discount
     rent: Rent
     total: Total
-    status: Status
+    name: Name
+    child_with_count: Child %{count}
+    age: Age
 
   reservations:
     option: Option

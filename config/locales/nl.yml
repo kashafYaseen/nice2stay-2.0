@@ -107,7 +107,9 @@ nl:
     discount: Discount
     rent: Huurprijs
     total: Totaal
-    status: Status
+    name: Naam
+    child_with_count: Kind %{count}
+    age: Leeftijd
 
   carts:
     empty: verwijder
