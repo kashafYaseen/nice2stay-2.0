@@ -360,12 +360,14 @@ en:
     discount: Discount
     rent: Rent
     total: Total
-    status: Status
     amount: Amount
     date_of_issue: Date of issue
     expiry_date: Expiry Date
     code: Code
     no_voucher_found: No voucher found!
+    name: Name
+    child_with_count: Child %{count}
+    age: Age
 
   reservations:
     option: Option

@@ -11,4 +11,12 @@ class GuestDetail < ApplicationRecord
     child: 'ChildDetail',
     person: 'PersonDetail',
   }
+
+  def default_name?
+    name.split.first.downcase.eql?('child') rescue false
+  end
+
+  def default_count
+    name.try(:split).try(:second)
+  end
 end
