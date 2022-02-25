@@ -3,6 +3,7 @@ class Reservation < ApplicationRecord
   belongs_to :lodging
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
+  has_many :guest_details
   has_one :review
 
   validates :check_in, :check_out, presence: true
@@ -33,6 +34,7 @@ class Reservation < ApplicationRecord
   scope :guest_centric, -> { where.not(offer_id: nil) }
 
   accepts_nested_attributes_for :review
+  accepts_nested_attributes_for :guest_details
 
   attr_accessor :skip_data_posting
 
