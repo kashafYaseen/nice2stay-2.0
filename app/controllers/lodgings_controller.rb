@@ -37,12 +37,39 @@ class LodgingsController < ApplicationController
     end
   end
 
+  def get_events_from_ical(lodging)
+    begin
+      url = lodging.ical.strip
+      file = HTTParty.get(url, :headers => {"User-Agent" => "Mozilla/5.0 (Windows NT 6.3)" }, :verify => false) if valid_url?(url)
+      cals = Icalendar::Calendar.parse(file)
+      cal = cals.try(:first)
+      events = cal.try(:events)
+      return events
+    rescue
+      "Invalid URL/File..!!!"
+    end
+  end
+
+  def valid_url?(url)
+    url = URI.parse(url) rescue false
+  end
+
   def price_details
     @lodging = Lodging.find(params[:values].split(',')[-1])
+    @not_aval_days = []
+    @events = get_events_from_ical(@lodging)
+    unless @events.blank? || !(@events.class == Array)
+      @events.each do |event|
+        start_date = Icalendar::Values::Date.new(event.dtstart)
+        end_date = Icalendar::Values::Date.new(event.dtend)
+        @not_aval_days << (start_date..end_date).to_s
+      end
+    end
+    params[:values] = (params[:values] + "," + @not_aval_days.join("|")) if @not_aval_days != []
     results = @lodging.price_details(params[:values].split(','))
-
+    @errors = results[:errors]
     if @lodging.flexible_search
-      @rates = results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }}
+      @rates = results[:rates] == {} ? nil : results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }}
       @search_params = results.map{ |result| result[:search_params] }
       @discounts = []
       @search_params.each do |param|

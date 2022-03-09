@@ -169,6 +169,7 @@
       else
         show_unavailable(lodging_id)
     else
+      values.push(data.errors.base[0]) if data.errors.base != undefined
       Reservation.validate(values)
 
   show_unavailable = (lodging_id) ->

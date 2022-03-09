@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
   def validate
     @booking = @booking || Booking.new
     values = params[:values].split(',')
-    @reservation = @booking.reservations.unexpired.build(check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: values[5])
+    @reservation = @booking.reservations.unexpired.build(check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], lodging_id: values[5], base_error: values[6])
   end
 
   private
