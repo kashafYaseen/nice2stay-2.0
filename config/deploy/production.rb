@@ -1,12 +1,13 @@
 lock '~> 3.14.1'
 
-server '149.210.229.119', port: 22, roles: [:web, :app, :db], primary: true
+server '93.119.3.96', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:remcoz/geolocation.git'
+set :branch,          'N2S-275'
 set :application,     'geolocation'
 set :user,            'deploy'
-set :puma_threads,    [2, 8]
-set :puma_workers,    6
+set :puma_threads,    [5, 5]
+set :puma_workers,    24
 
 # Don't change these unless you know what you're doing
 set :pty,             true
@@ -52,8 +53,8 @@ namespace :deploy do
   desc 'Make sure local git is in sync with remote.'
   task :check_revision do
     on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse origin/master`
-        puts 'WARNING: HEAD is not the same as origin/master'
+      unless `git rev-parse HEAD` == `git rev-parse origin/N2S-275`
+        puts 'WARNING: HEAD is not the same as origin/N2S-275'
         puts 'Run `git push` to sync changes.'
         exit
       end
@@ -78,5 +79,4 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end
