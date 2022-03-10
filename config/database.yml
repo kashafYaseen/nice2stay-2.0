@@ -81,7 +81,7 @@ test:
 production:
   <<: *default
   database: <%= ENV['NICE2STAY_DATABASE_NAME'] %>
-  pool: 50
+  pool: <%= ENV['NICE2STAY_DATABASE_POOL'] %>
   host: 'localhost'
   username: geosearch
   password: <%= ENV['GEOSEARCH_DATABASE_PASSWORD'] %>
