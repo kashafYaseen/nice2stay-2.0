@@ -1,12 +1,12 @@
 lock '~> 3.14.1'
 
-server '149.210.229.119', port: 22, roles: [:web, :app, :db], primary: true
+server '93.119.3.96', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:remcoz/geolocation.git'
 set :application,     'geolocation'
 set :user,            'deploy'
-set :puma_threads,    [2, 8]
-set :puma_workers,    6
+set :puma_threads,    [4, 4]
+set :puma_workers,    24
 
 # Don't change these unless you know what you're doing
 set :pty,             true
@@ -78,5 +78,4 @@ namespace :deploy do
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end

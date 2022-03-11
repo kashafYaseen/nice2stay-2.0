@@ -1,7 +1,7 @@
 #!/bin/bash
 
 production() {
-  ssh deploy@149.210.229.119
+  ssh deploy@93.119.3.96
 }
 
 staging() {
