@@ -173,7 +173,6 @@
         $("#reservation-footer-btn-#{lodging_id}, #reservation-footer-btn-#{lodging_id}_modal").addClass('d-none');
         $("#cart-#{lodging_id}, #cart-#{lodging_id}_modal").addClass('disabled');
         $(".reservation-form-errors-#{lodging_id}").html("<div class='alert alert-danger' id='error_explanation'> <ul> <li class='text-xxxs'>Not available for selected dates</li> </ul> </div>");
-        #$(".reservation-form-errors-#{lodging_id}").html("Not available for selected dates");
       else
         Reservation.validate(values)
 
