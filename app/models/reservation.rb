@@ -37,7 +37,6 @@ class Reservation < ApplicationRecord
   accepts_nested_attributes_for :guest_details
 
   attr_accessor :skip_data_posting
-  attr_accessor :base_error
 
   enum booking_status: {
     prebooking: 0,
@@ -158,7 +157,6 @@ class Reservation < ApplicationRecord
     end
 
     def accommodation_rules
-      errors.add(:base, base_error) if base_error.present?
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       nights = (check_out - check_in).to_i
       applied_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
