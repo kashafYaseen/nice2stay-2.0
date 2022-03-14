@@ -34,14 +34,14 @@ class IcalEvents
     end
 
     def not_available_days
-      @not_aval_days = []
+      not_aval_days = []
       unless @events.blank? || !(@events.class == Array)
         @events.each do |event|
           start_date = Icalendar::Values::Date.new(event.dtstart)
           end_date = Icalendar::Values::Date.new(event.dtend)
-          @not_aval_days << (start_date..end_date).to_s
+          not_aval_days << (start_date..end_date).to_s
         end
       end
-      return @not_aval_days
+      return not_aval_days
     end
 end
