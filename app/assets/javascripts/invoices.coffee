@@ -170,15 +170,18 @@
         show_unavailable(lodging_id)
     else
       if data.errors.base != undefined
-        $("#reservation-footer-btn-#{lodging_id}, #reservation-footer-btn-#{lodging_id}_modal").addClass('d-none');
-        $("#cart-#{lodging_id}, #cart-#{lodging_id}_modal").addClass('disabled');
-        $(".reservation-form-errors-#{lodging_id}").html("<div class='alert alert-danger' id='error_explanation'> <ul> <li class='text-xxxs'>Not available for selected dates</li> </ul> </div>");
+        show_not_available_dates(lodging_id)
       else
         Reservation.validate(values)
 
   show_unavailable = (lodging_id) ->
     $("#bill-#{lodging_id}, #bill-#{lodging_id}_modal").text('Lodging is not available.')
     $("#reservation-footer-#{lodging_id}, #reservation-footer-#{lodging_id}_modal").text('Lodging is not available.')
+
+  show_not_available_dates = (lodging_id) ->
+    $("#reservation-footer-btn-#{lodging_id}, #reservation-footer-btn-#{lodging_id}_modal").addClass('d-none');
+    $("#cart-#{lodging_id}, #cart-#{lodging_id}_modal").addClass('disabled');
+    $(".reservation-form-errors-#{lodging_id}").html("<div class='alert alert-danger' id='error_explanation'> <ul> <li class='text-xxxs'>Not available for selected dates</li> </ul> </div>");
 
   check_values = (value) ->
     value == '' || value == undefined
