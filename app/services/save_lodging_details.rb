@@ -84,6 +84,7 @@ class SaveLodgingDetails
     def lodging_params
       params.require(:lodging).permit(
         :street,
+        :ical,
         :city,
         :zip,
         :state,

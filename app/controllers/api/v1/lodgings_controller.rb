@@ -39,6 +39,7 @@ class Api::V1::LodgingsController < Api::V1::ApiController
     def lodging_params
       params.require(:lodging).permit(
         :street,
+        :ical,
         :city,
         :zip,
         :state,
