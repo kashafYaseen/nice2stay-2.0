@@ -39,8 +39,6 @@ class LodgingsController < ApplicationController
 
   def price_details
     @lodging = Lodging.find(params[:values].split(',')[-1])
-    @not_aval_days = IcalEvents.call(@lodging)
-    params[:values] = (params[:values] + "," + @not_aval_days.join("|")) if @not_aval_days != []
     results = @lodging.price_details(params[:values].split(','))
     @errors = results[:errors]
     if @lodging.flexible_search

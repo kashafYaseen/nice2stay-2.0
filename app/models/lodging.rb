@@ -161,7 +161,7 @@ class Lodging < ApplicationRecord
   end
 
   def price_details(values, flexible = true)
-    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], not_aval_dates: values[6], flexible: flexible })
+    price_list({ check_in: values[0], check_out: values[1], adults: values[2], children: values[3], infants: values[4], flexible: flexible })
   end
 
   def discount_details(values)
@@ -289,12 +289,10 @@ class Lodging < ApplicationRecord
 
   def price_list(params)
     return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
-    if params[:not_aval_dates].present?
-      params[:not_aval_dates].split('|').each do |not_aval_date|
-        start_date = not_aval_date.split('..').first.to_date
-        end_date = not_aval_date.split('..').second.to_date
-        date_range = start_date..end_date
-        return { rates: {}, search_params: params, valid: false, errors: { base: ['Not available for selected dates'] } } if (date_range.cover?(params[:check_in].to_date) || date_range.cover?(params[:check_out].to_date))
+    not_available_days = IcalEvents.new(Lodging.find(self.id)).build_ical_blocked_dates
+    if not_available_days.present?
+      not_available_days.each do |not_available_day|
+        return { rates: {}, search_params: params, valid: false, errors: { base: ['Not available for selected dates'] } } if (not_available_day.cover?(params[:check_in].to_date) || not_available_day.cover?(params[:check_out].to_date))
       end
     end
     total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
