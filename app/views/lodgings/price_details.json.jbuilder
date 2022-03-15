@@ -5,3 +5,4 @@ json.search_params @search_params
 json.valid @valid
 json.cleaning_costs @cleaning_costs
 json.discounts @discounts
+json.errors @errors

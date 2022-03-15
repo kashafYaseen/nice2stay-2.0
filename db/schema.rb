@@ -653,6 +653,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.boolean "dynamic_prices", default: false
     t.integer "num_of_accommodations", default: 1
     t.string "name_on_cm"
+    t.string "ical"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"

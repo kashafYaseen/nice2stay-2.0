@@ -44,7 +44,7 @@ class LodgingsController < ApplicationController
   def price_details
     @lodging = Lodging.find(params[:values].split(',')[-1])
     results = @lodging.price_details(values: params[:values].split(','))
-
+    @errors = results[:errors]
     if @lodging.flexible_search
       @rates = results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }}
       @search_params = results.map{ |result| result[:search_params] }
