@@ -256,6 +256,7 @@ GEM
     i18n-js (3.6.0)
       i18n (>= 0.6.6)
     icalendar (2.7.1)
+      ice_cube (~> 0.16)
     inherited_resources (1.8.0)
       actionpack (>= 4.2, <= 5.2)
       has_scope (~> 0.6)
