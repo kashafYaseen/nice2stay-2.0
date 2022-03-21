@@ -170,7 +170,7 @@ class SearchLodgings
                           must: [
                             { match: { "rules.dates": check_in } },
                             { match: { "rules.flexible_arrival": false } },
-                            { match: { "rules.check_in_day": check_in.strftime("%A").downcase } }
+                            { match: { "rules.checkin_day": check_in.strftime("%A").downcase } }
                           ]
                         }
                       }
