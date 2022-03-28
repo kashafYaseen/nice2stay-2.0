@@ -137,6 +137,9 @@ en:
     child:
       one: "1 Child"
       other: "%{count} Children"
+    infant:
+      one: "1 Baby"
+      other: "%{count} Babies"
     children_details: "Children Details"
     age_of_child: "Age of child"
     children: Children(<12)
