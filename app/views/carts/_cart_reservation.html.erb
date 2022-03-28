@@ -15,7 +15,7 @@
       <% end unless action_name == 'details' %>
 
       <p>
-        <span class="text-sm"><%= reservation.adults.to_i + reservation.children.to_i %> guests</span> <br>
+        <span class="text-sm"><%= reservation.adults.to_i + reservation.children.to_i + reservation.infants.to_i %> guests</span> <br>
         <span class="text-sm"><%= reservation.check_in %></span> -
         <span class="text-sm"><%= reservation.check_out %></span> (<%= reservation.total_nights %> nights)
       </p>
@@ -28,6 +28,10 @@
 
         <% if reservation.children.to_i.present? %>
           <span class="text-sm"> <%= t('carts.child', count: reservation.children.to_i) %></span> <br>
+        <% end %>
+
+        <% if reservation.infants.to_i.present? %>
+          <span class="text-sm"> <%= t('carts.infant', count: reservation.infants.to_i) %></span> <br>
         <% end %>
       </div>
 
