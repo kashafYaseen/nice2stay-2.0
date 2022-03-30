@@ -181,9 +181,9 @@ en:
     vragen_show_header: Do you have questions about
 
   vouchers:
-    paragraph_1: Surprise a friend, family member or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
-    paragraph_2: Until February 28th 2022 Nice2stay is treating you with 50 Euros. All you have to do is provide the details of the lucky recipient and a personal message.
-    paragraph_3: Our team will then send a beautiful handwritten gift card by post!
+    paragraph_1: Surprise a friend, family member, colleague or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
+    paragraph_2: Until June 1, 2022 Nice2stay is giving away 50 Euros (You can decide whether you want to add more value to the 50 euros) All you have to do is provide the details of the lucky recipient and a personal message. Our team will then send a beautiful handwritten gift card by post!
+    conditions_terms: Conditions & terms
     your_details: Your details
     your_name: Your first & last name
     your_email: Your email address
@@ -208,7 +208,7 @@ en:
     term6: Nice2stay will send the voucher to the recipient by post, please note that it may take several days before the recipient receives the voucher.
     term7: The data of the recipient will only be used to send the voucher and they will also receive the Nice2stay newsletter.
     term8: It is not allowed to apply multiple vouchers per booking.
-    accept_terms: I agree to the terms & conditions mentioned above
+    accept_terms: I agree with the Nice2stay Gift Card conditions
     submit: Submit
 
   opens:

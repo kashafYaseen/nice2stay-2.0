@@ -11,10 +11,9 @@
                 <h1 class="display-4">Nice2stay Gift Card</h1>
                 <h5 class="my-2 py-1"><%= t('vouchers.paragraph_1') %></h5>
                 <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2') %></h5>
-                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_3') %></h5>
 
                 <p class="text-info mb-1 cursor-pointer" data-toggle="modal" data-target="#termsAndConditionsModal">
-                  <span class="text-dotted text-xxs">Conditions & terms</span>
+                  <span class="text-dotted text-xxs"><%= t('vouchers.conditions_terms') %></span>
                 </p>
               </div>
             </div>
@@ -172,11 +171,7 @@
                               </div>
                             </div>
                           </div>
-                        </section>
 
-                        <!-- SECTION 3 -->
-                        <h4 class="py-1">3. <%= t('vouchers.terms_and_conditions') %></h4>
-                        <section>
                           <div class="row">
                             <div class="col-12 mt-4">
                               <div class="form-group">
@@ -188,6 +183,21 @@
                             </div>
                           </div>
                         </section>
+
+                        <!-- SECTION 3 -->
+                        <!-- <h4 class="py-1">3. <%#= t('vouchers.terms_and_conditions') %></h4>
+                        <section>
+                          <div class="row">
+                            <div class="col-12 mt-4">
+                              <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-0">
+                                  <%#= f.check_box :terms_and_conditions, { class: 'custom-control-input' }, true, false %>
+                                  <%#= f.label :terms_and_conditions, t('vouchers.accept_terms'), class: 'custom-control-label' %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section> -->
                       </div>
                     <% end %>
                   </div>
