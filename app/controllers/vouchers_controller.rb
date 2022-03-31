@@ -14,7 +14,7 @@ class VouchersController < ApplicationController
         return redirect_to mollie_payment_url(payment, params[:payment]) if payment.present?
       else
         # redirect_to root_path(locale: locale), notice: 'Voucher was created successfully.'
-        redirect voucher_path(locale: locale), notice: 'Voucher was created successfully.'
+        redirect_to voucher_path(@voucher, locale: locale), notice: 'Voucher was created successfully.'
       end
     else
       render :new
