@@ -44,6 +44,7 @@ class SendVoucherDetails
           payment_status: voucher.payment_status,
           payed_at: voucher.payed_at,
           mollie_amount: voucher.mollie_amount,
+          created_by: voucher.created_by,
         }
       }
     end
