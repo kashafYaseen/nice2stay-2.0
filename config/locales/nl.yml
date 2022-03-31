@@ -149,6 +149,9 @@ nl:
     child:
       one: "1 Kind"
       other: "%{count} Kinderen"
+    infant:
+      one: "1 Baby"
+      other: "%{count} Babies"
     children_details: "Leeftijd kinderen"
     age_of_child: "Leeftijd kind"
     children: Kinderen(<12)
