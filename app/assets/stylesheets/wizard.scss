@@ -157,12 +157,12 @@
         border: none;
         display: inline-flex;
         height: 51px;
-        width: 135px;
+        width: 130px;
         align-items: center;
         background: #FFED00;
         cursor: pointer;
         position: relative;
-        padding-left: 41px;
+        padding-left: 20px;
         color: #333;
         -webkit-transform: perspective(1px) translateZ(0);
         transform: perspective(1px) translateZ(0);
@@ -173,7 +173,7 @@
           content: '\e5c8';
           position: absolute;
           top: 14px;
-          right: 41px;
+          right: 20px;
           font-family: 'Material Icons';
           -webkit-transform: translateZ(0);
             transform: translateZ(0);
@@ -203,7 +203,7 @@
           padding-left: 48px;
           &:before {
             content: '\e5c4';
-            left: 26px;
+            left: 20px;
           }
           &:hover {
             background: #ccc;
@@ -212,11 +212,11 @@
       }
       &:last-child {
         a {
-          padding-left: 29px;
-          width: 135px;
+          padding-left: 20px;
+          width: 130px;
           font-weight: 400;
           &:before {
-            right: 30px;
+            right: 20px;
           }
         }
       }

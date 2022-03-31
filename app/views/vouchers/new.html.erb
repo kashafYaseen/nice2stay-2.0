@@ -24,7 +24,7 @@
               <div class="card-body text-left">
                 <div class="row homepage h-100">
                   <div class="col-md-12">
-                    <%= form_for @voucher do |f| %>
+                    <%= form_for @voucher, data: { previous: t('vouchers.previous'), next: t('vouchers.next'), finish: t('vouchers.submit') } do |f| %>
                       <%= render 'shared/errors', resource: @voucher %>
 
                       <div id="wizard">
@@ -33,7 +33,7 @@
                         <section>
                           <div class="row">
                             <div class="col-md-12 text-right">
-                              <small><strong class="text-danger">* - required</strong></small>
+                              <small><strong class="text-danger">* - <%= t('vouchers.required') %></strong></small>
                             </div>
                           </div>
 
@@ -65,7 +65,7 @@
                         <section>
                           <div class="row">
                             <div class="col-md-12 text-right">
-                              <small><strong class="text-danger">* - required</strong></small>
+                              <small><strong class="text-danger">* - <%= t('vouchers.required') %></strong></small>
                             </div>
                           </div>
 
@@ -177,7 +177,7 @@
                               <div class="form-group">
                                 <div class="custom-control custom-checkbox mb-0">
                                   <%= f.check_box :terms_and_conditions, { class: 'custom-control-input' }, true, false %>
-                                  <%= f.label :terms_and_conditions, t('vouchers.accept_terms'), class: 'custom-control-label' %>
+                                  <%= f.label :terms_and_conditions, t('vouchers.accept_terms', link: link_to(t('vouchers.accept_terms_1'), '#', class: 'text-info', data: { toggle: 'modal', target: '#termsAndConditionsModal' })).html_safe, class: 'custom-control-label' %>
                                 </div>
                               </div>
                             </div>
@@ -215,7 +215,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="termsAndConditionsModalLabel">Conditions & terms</h5>
+        <h5 class="modal-title" id="termsAndConditionsModalLabel"><%= t('vouchers.terms_and_conditions') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -235,7 +235,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('vouchers.close') %></button>
       </div>
     </div>
   </div>
