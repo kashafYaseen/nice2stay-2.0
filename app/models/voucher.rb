@@ -11,13 +11,19 @@ class Voucher < ApplicationRecord
   validate :accept_terms_and_conditions
 
   before_validation :check_existing_receiver
-  before_create :set_code, :set_expired_at, :set_mollie_amount
+  before_create :set_code, :set_expired_at, :set_mollie_amount, :set_created_by
   after_commit :send_details
 
   scope :unsed, -> { where(used: false) }
   scope :old, -> { where('expired_at < ? OR used = ?', DateTime.current, true) }
 
   attr_accessor :terms_and_conditions
+
+  enum created_by: {
+    random_user: 0,
+    customer: 1,
+    nice2stay: 2,
+  }, _prefix: true
 
   private
     def check_existing_receiver
@@ -56,6 +62,11 @@ class Voucher < ApplicationRecord
 
     def set_expired_at
       self.expired_at = DateTime.current + 1.year
+    end
+
+    def set_created_by
+      return if created_by_nice2stay?
+      self.created_by = User.find_by(email: sender_email) ? Voucher.created_bies[:customer] : Voucher.created_bies[:random_user]
     end
 
     def accept_terms_and_conditions

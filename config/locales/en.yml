@@ -190,17 +190,19 @@ en:
     vragen_show_header: Do you have questions about
 
   vouchers:
-    paragraph_1: Surprise a friend, family member or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
-    paragraph_2: Until February 28th 2022 Nice2stay is treating you with 50 Euros. All you have to do is provide the details of the lucky recipient and a personal message.
-    paragraph_3: Our team will then send a beautiful handwritten gift card by post!
+    dear: 'Dear %{name}'
+    paragraph_1: Surprise a friend, family member, colleague or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
+    paragraph_2: Until June 1, 2022 Nice2stay is giving away 50 Euros (You can decide whether you want to add more value to the 50 euros) All you have to do is provide the details of the lucky recipient and a personal message. Our team will then send a beautiful handwritten gift card by post!
+    conditions_terms: Conditions & terms
     your_details: Your details
     your_name: Your first & last name
     your_email: Your email address
-    for_who_is_this_gift: For who is this Gift Card?
+    for_who_is_this_gift: The Details of the lucky recipient
     first_name: First name
     last_name: Last name
     email_address: Email address
     city: City
+    town: Town
     country: Country
     zipcode: Zip code
     address: Address
@@ -208,7 +210,8 @@ en:
     message: Write your personal message for the recipient here...
     select_amount: Please select the voucher amount you want to add on top of the 50 Euro
     default_amount: €0,- (€50,- gift from Nice2stay)
-    terms_and_conditions: The small print (terms & conditions)
+    small_print_terms_and_conditions: The small print (terms & conditions)
+    terms_and_conditions: Conditions & terms
     term1: Vouchers are non-refundable and valid for new bookings made within 12 months of being requested.
     term2: Vouchers are not directly redeemable at our participating properties. Any booking must be made through Nice2stay.
     term3: Vouchers are only redeemable for accommodation expenses. They cannot be exchanged for incidental hotel expenses or additional services.
@@ -217,8 +220,18 @@ en:
     term6: Nice2stay will send the voucher to the recipient by post, please note that it may take several days before the recipient receives the voucher.
     term7: The data of the recipient will only be used to send the voucher and they will also receive the Nice2stay newsletter.
     term8: It is not allowed to apply multiple vouchers per booking.
-    accept_terms: I agree to the terms & conditions mentioned above
+    accept_terms: I agree with the Nice2stay Gift Card <span class="text-dotted mb-1">%{link}</span>
+    accept_terms_1: conditions
+    previous: Previous
+    next: Next
     submit: Submit
+    required: required
+    close: Close
+    thankyou_message: Thank you for ordering  the Nice2stay Gift Voucher!
+    data_recipient: Data recipient
+    amount_gift_voucher: Amount Gift Voucher
+    personal_message: Personal message
+    closing_message: Our team will send the Gift Voucher by post to the lucky recipient within 5 working days.
 
   opens:
     week: Monday - Friday 9.00 am - 18.00 pm

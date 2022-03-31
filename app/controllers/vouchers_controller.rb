@@ -13,11 +13,16 @@ class VouchersController < ApplicationController
         payment = VoucherPayment.new(voucher: @voucher, params: { locale: locale }).voucher_payment
         return redirect_to mollie_payment_url(payment, params[:payment]) if payment.present?
       else
-        redirect_to root_path(locale: locale), notice: 'Voucher was created successfully.'
+        # redirect_to root_path(locale: locale), notice: 'Voucher was created successfully.'
+        redirect_to voucher_path(@voucher, locale: locale), notice: 'Voucher was created successfully.'
       end
     else
       render :new
     end
+  end
+
+  def show
+    @voucher = Voucher.find(params[:id])
   end
 
   def update_status
@@ -46,6 +51,6 @@ class VouchersController < ApplicationController
     def mollie_payment_url(payment, type)
       return payment._links['checkout']['href'] if payment._links['checkout'].present? && payment._links['checkout']['href'].present?
       @payment_booking.update_columns(mollie_payment_id: nil)
-      root_path(locale: locale)
+      voucher_path(locale: locale)
     end
 end

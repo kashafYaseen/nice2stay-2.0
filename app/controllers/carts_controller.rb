@@ -66,7 +66,7 @@ class CartsController < ApplicationController
 
     def booking_params
       params.require(:booking).permit(
-        :in_cart,
+        :in_cart, :voucher_code,
         user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
         reservations_attributes: [:id, :booking_id, :in_cart, :skip_data_posting, guest_details_attributes: [:id, :age, :name, :guest_type]],
       )

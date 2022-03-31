@@ -83,7 +83,7 @@ Rails.application.routes.draw do
 
     resources :pages, only: [:show]
     resources :newsletter_subscriptions, only: [:create]
-    resources :vouchers, only: [:new, :create] do
+    resources :vouchers, only: [:new, :create, :show] do
       post :update_status
     end
 

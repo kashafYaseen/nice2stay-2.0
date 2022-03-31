@@ -41,6 +41,8 @@ class SendBookingDetails
           fe_id: booking.id,
           pre_payment: booking.pre_payment,
           final_payment: booking.final_payment,
+          voucher_code: booking.voucher_code,
+          voucher_amount: booking.voucher_amount,
         }
       }
     end
