@@ -53,14 +53,23 @@
                 <%= form_for @booking, url: carts_path do |f| %>
                   <%= render 'shared/errors', resource: @booking %>
 
-                  <%= f.hidden_field :in_cart, value: false %>
-                  <%= f.fields_for :user do |user_fields| %>
-                    <div class="row">
-                      <div class="col-md-12 text-right">
-                        <small><strong class="text-danger">* - required</strong></small>
+                  <div class="row">
+                    <div class="col-md-12 text-right">
+                      <small><strong class="text-danger">* - required</strong></small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <%= f.label :voucher_code, 'Voucher code' %>
+                        <%= f.text_field :voucher_code, class: "form-control" %>
                       </div>
                     </div>
+                  </div>
 
+                  <%= f.hidden_field :in_cart, value: false %>
+                  <%= f.fields_for :user do |user_fields| %>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_06_093855) do
+ActiveRecord::Schema.define(version: 2022_02_04_120254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,8 @@ ActiveRecord::Schema.define(version: 2022_01_06_093855) do
     t.boolean "free_cancelation", default: false
     t.boolean "rebooked", default: false
     t.boolean "rebooking_approved", default: false
+    t.string "voucher_code"
+    t.float "voucher_amount"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
