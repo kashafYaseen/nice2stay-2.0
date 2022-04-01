@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_31_075158) do
+ActiveRecord::Schema.define(version: 2022_03_31_121133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1072,6 +1072,7 @@ ActiveRecord::Schema.define(version: 2022_03_31_075158) do
     t.float "mollie_amount", default: 0.0
     t.string "mollie_payment_id"
     t.integer "created_by", default: 0
+    t.integer "crm_id"
     t.index ["receiver_country_id"], name: "index_vouchers_on_receiver_country_id"
     t.index ["receiver_id"], name: "index_vouchers_on_receiver_id"
   end
