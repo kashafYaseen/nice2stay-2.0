@@ -11,14 +11,14 @@
           element.before error
         return
       rules: 'voucher[terms_and_conditions]': required: true
-      messages: 'voucher[terms_and_conditions]': required: 'Please agree to the Terms and Conditions'
+
+    translateValidationMessages I18n.locale
 
     $('#wizard').steps
       headerTag: 'h4'
       bodyTag: 'section'
       transitionEffect: 'fade'
       enableAllSteps: true
-      transitionEffectSpeed: 500
       onStepChanging: (event, currentIndex, newIndex) ->
         if newIndex == 1
           $('.steps ul').addClass 'step-2'
@@ -36,9 +36,9 @@
           $('.actions ul').removeClass 'step-last'
         true
       labels:
-        finish: 'Submit'
-        next: 'Next'
-        previous: 'Previous'
+        finish: $('#new_voucher').data 'finish'
+        next: $('#new_voucher').data 'next'
+        previous: $('#new_voucher').data 'previous'
       onStepChanging: (event, currentIndex, newIndex) ->
         form.validate().settings.ignore = ':disabled,:hidden'
         form.valid()
@@ -84,5 +84,18 @@
       return
     )
     observer.observe box
+
+  translateValidationMessages = (currentLang) ->
+    message =
+      en:
+        required: 'This field is required.'
+      nl:
+        required: 'Dit is een verplicht veld.'
+
+    if currentLang == 'nl'
+      $.extend $.validator.messages, message.nl
+    else
+      $.extend $.validator.messages, message.en
+    return
 
 ).call this

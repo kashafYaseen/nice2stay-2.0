@@ -21,5 +21,6 @@ namespace :api do
       resources :experiences, only: [:index]
     end
     resources :owners, only: [:create]
+    resources :vouchers, only: [:create]
   end
 end

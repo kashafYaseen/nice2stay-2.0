@@ -14,16 +14,13 @@ class SendVoucherDetails
   def call
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if Rails.env.production?
-    request = Net::HTTP::Post.new(uri.request_uri, header)
+    request = Net::HTTP::Post.new(uri.request_uri)
+    request['Content-Type'] = 'application/json'
     request.body = voucher_details.to_json
     http.request(request)
   end
 
   private
-    def header
-      { 'Content-Type': 'application/json' }
-    end
-
     def voucher_details
       {
         voucher: {
@@ -44,6 +41,8 @@ class SendVoucherDetails
           payment_status: voucher.payment_status,
           payed_at: voucher.payed_at,
           mollie_amount: voucher.mollie_amount,
+          created_by: voucher.created_by,
+          skip_data_posting: true,
         }
       }
     end

@@ -1,4 +1,4 @@
-g# This file is auto-generated from the current state of the database. Instead
+# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -10,7 +10,7 @@ g# This file is auto-generated from the current state of the database. Instead
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_04_120254) do
+ActiveRecord::Schema.define(version: 2022_03_31_121133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,14 +165,8 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.datetime "updated_at", null: false
     t.boolean "check_out_only", default: false
     t.bigint "lodging_id"
-    t.string "minimum_stay", default: [], array: true
-    t.boolean "check_in_closed", default: false
-    t.boolean "check_out_closed", default: false
-    t.integer "booking_limit", default: 0
-    t.bigint "room_rate_id"
     t.index ["lodging_id", "available_on"], name: "index_availabilities_on_lodging_id_and_available_on", unique: true
     t.index ["lodging_id"], name: "index_availabilities_on_lodging_id"
-    t.index ["room_rate_id"], name: "index_availabilities_on_room_rate_id"
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -199,6 +193,8 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.boolean "free_cancelation", default: false
     t.boolean "rebooked", default: false
     t.boolean "rebooking_approved", default: false
+    t.string "voucher_code"
+    t.float "voucher_amount"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -243,17 +239,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.index ["region_id"], name: "index_campaigns_regions_on_region_id"
   end
 
-  create_table "child_rates", force: :cascade do |t|
-    t.integer "open_gds_category"
-    t.decimal "rate"
-    t.integer "rate_type"
-    t.bigint "rate_plan_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "age_group"
-    t.index ["rate_plan_id"], name: "index_child_rates_on_rate_plan_id"
-  end
-
   create_table "cleaning_cost_translations", force: :cascade do |t|
     t.integer "cleaning_cost_id", null: false
     t.string "locale", null: false
@@ -274,8 +259,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.bigint "lodging_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "availability_id"
-    t.index ["availability_id"], name: "index_cleaning_costs_on_availability_id"
     t.index ["lodging_id"], name: "index_cleaning_costs_on_lodging_id"
   end
 
@@ -415,9 +398,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.boolean "publish"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "priority", default: 2
-    t.integer "guests", default: 999
-    t.bigint "crm_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -457,17 +437,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.text "policy"
     t.text "restrictions"
     t.index ["lodging_id"], name: "index_gc_offers_on_lodging_id"
-  end
-
-  create_table "guest_details", force: :cascade do |t|
-    t.string "name"
-    t.datetime "date_of_birth"
-    t.integer "age"
-    t.string "guest_type"
-    t.bigint "reservation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["reservation_id"], name: "index_guest_details_on_reservation_id"
   end
 
   create_table "lead_translations", force: :cascade do |t|
@@ -519,23 +488,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.datetime "updated_at", null: false
     t.index ["lead_id"], name: "index_leads_regions_on_lead_id"
     t.index ["region_id"], name: "index_leads_regions_on_region_id"
-  end
-
-  create_table "linked_supplements", force: :cascade do |t|
-    t.string "supplementable_type"
-    t.bigint "supplementable_id"
-    t.bigint "supplement_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["supplement_id"], name: "index_linked_supplements_on_supplement_id"
-    t.index ["supplementable_type", "supplementable_id"], name: "index_linked_supplements_on_supplementable"
-  end
-
-  create_table "lodging_place_categories", force: :cascade do |t|
-    t.bigint "lodging_id"
-    t.bigint "place_category_id"
-    t.index ["lodging_id"], name: "index_lodging_place_categories_on_lodging_id"
-    t.index ["place_category_id"], name: "index_lodging_place_categories_on_place_category_id"
   end
 
   create_table "lodging_translations", force: :cascade do |t|
@@ -641,19 +593,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.string "gc_rooms", default: [], array: true
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
-    t.string "be_category_id"
-    t.string "be_admin_id"
-    t.string "be_org_id"
-    t.boolean "booking_expert", default: false
-    t.integer "channel", default: 0
-    t.integer "open_gds_property_id"
-    t.string "open_gds_accommodation_id"
-    t.integer "extra_beds", default: 0
-    t.boolean "extra_beds_for_children_only", default: false
     t.boolean "dynamic_prices", default: false
-    t.integer "num_of_accommodations", default: 1
-    t.string "name_on_cm"
-    t.string "ical"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -698,7 +638,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.string "language"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -888,56 +827,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.text "infants", default: [], array: true
     t.text "minimum_stay", default: [], array: true
     t.integer "checkin", default: 0
-    t.decimal "open_gds_single_rate", default: "0.0"
-    t.string "multiple_checkin_days", default: [], array: true
-    t.boolean "rr_additional_amount_flag", default: false
     t.index ["availability_id"], name: "index_prices_on_availability_id"
-  end
-
-  create_table "rate_plan_translations", force: :cascade do |t|
-    t.string "locale"
-    t.string "name"
-    t.text "description"
-    t.bigint "rate_plan_id"
-    t.index ["rate_plan_id"], name: "index_rate_plan_translations_on_rate_plan_id"
-  end
-
-  create_table "rate_plans", force: :cascade do |t|
-    t.string "code"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.decimal "price", default: "0.0"
-    t.text "description"
-    t.integer "open_gds_rate_id"
-    t.boolean "rate_enabled", default: false
-    t.boolean "open_gds_valid_permanent", default: false
-    t.decimal "open_gds_res_fee", default: "0.0"
-    t.integer "open_gds_rate_type"
-    t.integer "min_stay", default: 1
-    t.integer "max_stay", default: 45
-    t.text "open_gds_daily_supplements"
-    t.integer "open_gds_single_rate_type"
-    t.datetime "opengds_pushed_at"
-    t.bigint "parent_lodging_id"
-    t.bigint "crm_id"
-    t.string "name_on_cm"
-    t.index ["parent_lodging_id"], name: "index_rate_plans_on_parent_lodging_id"
-  end
-
-  create_table "recent_searches", force: :cascade do |t|
-    t.date "check_in"
-    t.date "check_out"
-    t.integer "adults"
-    t.integer "children"
-    t.integer "infants"
-    t.bigint "searchable_id"
-    t.string "searchable_type"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["searchable_id", "searchable_type"], name: "index_recent_searches_on_searchable_id_and_searchable_type"
-    t.index ["user_id"], name: "index_recent_searches_on_user_id"
   end
 
   create_table "region_translations", force: :cascade do |t|
@@ -1006,32 +896,12 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.float "additional_fee", default: 0.0
     t.string "room_type"
     t.text "gc_policy"
-    t.string "be_category_id"
-    t.string "channel_manager_booking_id"
-    t.text "channel_manager_errors"
-    t.text "rr_errors"
-    t.integer "rr_res_id_value"
-    t.bigint "room_rate_id"
-    t.string "open_gds_res_id"
-    t.string "open_gds_error_name"
-    t.string "open_gds_error_message"
-    t.integer "open_gds_error_code"
-    t.integer "open_gds_error_status"
-    t.boolean "open_gds_online_payment", default: false
-    t.string "open_gds_payment_hash"
-    t.decimal "open_gds_deposit_amount", default: "0.0"
-    t.integer "open_gds_payment_status", default: 0
     t.date "expired_at"
-    t.datetime "canceled_at_channel"
-    t.decimal "pre_payment_percentage", default: "30.0"
-    t.decimal "final_payment_percentage", default: "70.0"
-    t.boolean "payment_in_percentage", default: true
     t.integer "book_option", default: 0
     t.integer "cancel_option_reason", default: -1
     t.string "canceled_by"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
-    t.index ["room_rate_id"], name: "index_reservations_on_room_rate_id"
   end
 
   create_table "review_translations", force: :cascade do |t|
@@ -1073,24 +943,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "room_rates", force: :cascade do |t|
-    t.integer "default_booking_limit", default: 0
-    t.decimal "default_rate", default: "0.0"
-    t.string "currency_code"
-    t.decimal "default_single_rate", default: "0.0"
-    t.integer "default_single_rate_type"
-    t.integer "extra_bed_rate_type", default: 0
-    t.decimal "extra_bed_rate"
-    t.decimal "extra_night_rate"
-    t.bigint "rate_plan_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "child_lodging_id"
-    t.boolean "publish", default: true
-    t.index ["child_lodging_id"], name: "index_room_rates_on_child_lodging_id"
-    t.index ["rate_plan_id"], name: "index_room_rates_on_rate_plan_id"
-  end
-
   create_table "rules", force: :cascade do |t|
     t.bigint "lodging_id"
     t.date "start_date"
@@ -1100,18 +952,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.boolean "flexible_arrival", default: false
     t.integer "minimum_stay", default: [], array: true
     t.string "checkin_day"
-    t.integer "open_gds_restriction_type"
-    t.integer "open_gds_restriction_days", default: 0
-    t.string "open_gds_arrival_days", default: [], array: true
-    t.bigint "rate_plan_id"
     t.index ["lodging_id"], name: "index_rules_on_lodging_id"
-    t.index ["rate_plan_id"], name: "index_rules_on_rate_plan_id"
-  end
-
-  create_table "search_analytics", force: :cascade do |t|
-    t.text "params"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "social_logins", force: :cascade do |t|
@@ -1135,39 +976,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["lodging_id"], name: "index_specifications_on_lodging_id"
-  end
-
-  create_table "supplement_translations", force: :cascade do |t|
-    t.string "locale"
-    t.string "name"
-    t.text "description"
-    t.bigint "crm_id"
-    t.bigint "supplement_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["supplement_id"], name: "index_supplement_translations_on_supplement_id"
-  end
-
-  create_table "supplements", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.integer "supplement_type", default: 0
-    t.integer "rate_type"
-    t.decimal "rate"
-    t.decimal "child_rate"
-    t.integer "maximum_number", default: 0
-    t.boolean "published", default: false
-    t.boolean "valid_permanent", default: false
-    t.datetime "valid_from"
-    t.datetime "valid_till"
-    t.string "valid_on_arrival_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
-    t.string "valid_on_departure_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
-    t.string "valid_on_stay_days", default: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], array: true
-    t.bigint "crm_id"
-    t.bigint "lodging_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lodging_id"], name: "index_supplements_on_lodging_id"
   end
 
   create_table "trip_members", force: :cascade do |t|
@@ -1242,12 +1050,6 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "visited_lodgings", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "lodging_id", null: false
-    t.index ["user_id", "lodging_id"], name: "index_visited_lodgings_on_user_id_and_lodging_id"
-  end
-
   create_table "vouchers", force: :cascade do |t|
     t.string "sender_name"
     t.string "sender_email"
@@ -1269,6 +1071,8 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
     t.datetime "payed_at"
     t.float "mollie_amount", default: 0.0
     t.string "mollie_payment_id"
+    t.integer "created_by", default: 0
+    t.integer "crm_id"
     t.index ["receiver_country_id"], name: "index_vouchers_on_receiver_country_id"
     t.index ["receiver_id"], name: "index_vouchers_on_receiver_id"
   end
@@ -1293,12 +1097,9 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
 
   add_foreign_key "amenities", "amenity_categories", on_delete: :cascade
   add_foreign_key "availabilities", "lodgings", on_delete: :cascade
-  add_foreign_key "availabilities", "room_rates", on_delete: :cascade
   add_foreign_key "bookings", "users", on_delete: :cascade
   add_foreign_key "campaigns_regions", "campaigns", on_delete: :cascade
   add_foreign_key "campaigns_regions", "regions", on_delete: :cascade
-  add_foreign_key "child_rates", "rate_plans", on_delete: :cascade
-  add_foreign_key "cleaning_costs", "availabilities", on_delete: :cascade
   add_foreign_key "cleaning_costs", "lodgings", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "parent_id", on_delete: :cascade
   add_foreign_key "collections", "custom_texts", column: "relative_id", on_delete: :cascade
@@ -1309,14 +1110,10 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
   add_foreign_key "custom_texts", "regions", on_delete: :cascade
   add_foreign_key "discounts", "lodgings", on_delete: :cascade
   add_foreign_key "gc_offers", "lodgings", on_delete: :cascade
-  add_foreign_key "guest_details", "reservations"
   add_foreign_key "leads", "admin_users"
   add_foreign_key "leads", "users", on_delete: :cascade
   add_foreign_key "leads_regions", "leads", on_delete: :cascade
   add_foreign_key "leads_regions", "regions", on_delete: :cascade
-  add_foreign_key "linked_supplements", "supplements", on_delete: :cascade
-  add_foreign_key "lodging_place_categories", "lodgings", on_delete: :cascade
-  add_foreign_key "lodging_place_categories", "place_categories", on_delete: :cascade
   add_foreign_key "lodgings", "owners", on_delete: :cascade
   add_foreign_key "lodgings", "regions", on_delete: :cascade
   add_foreign_key "lodgings_amenities", "amenities", on_delete: :cascade
@@ -1333,24 +1130,15 @@ ActiveRecord::Schema.define(version: 2022_02_04_120254) do
   add_foreign_key "places", "regions", on_delete: :cascade
   add_foreign_key "price_texts", "lodgings", on_delete: :cascade
   add_foreign_key "prices", "availabilities", on_delete: :cascade
-  add_foreign_key "rate_plan_translations", "rate_plans", on_delete: :cascade
-  add_foreign_key "rate_plans", "lodgings", column: "parent_lodging_id", on_delete: :cascade
-  add_foreign_key "recent_searches", "users", on_delete: :cascade
   add_foreign_key "regions", "countries", on_delete: :cascade
   add_foreign_key "reservations", "bookings", on_delete: :cascade
   add_foreign_key "reservations", "lodgings", on_delete: :cascade
-  add_foreign_key "reservations", "room_rates", on_delete: :nullify
   add_foreign_key "reviews", "lodgings", on_delete: :cascade
   add_foreign_key "reviews", "reservations", on_delete: :cascade
   add_foreign_key "reviews", "users", on_delete: :cascade
-  add_foreign_key "room_rates", "lodgings", column: "child_lodging_id", on_delete: :cascade
-  add_foreign_key "room_rates", "rate_plans", on_delete: :cascade
   add_foreign_key "rules", "lodgings", on_delete: :cascade
-  add_foreign_key "rules", "rate_plans", on_delete: :cascade
   add_foreign_key "social_logins", "users", on_delete: :cascade
   add_foreign_key "specifications", "lodgings", on_delete: :cascade
-  add_foreign_key "supplement_translations", "supplements", on_delete: :cascade
-  add_foreign_key "supplements", "lodgings", on_delete: :cascade
   add_foreign_key "trip_members", "trips", on_delete: :cascade
   add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"

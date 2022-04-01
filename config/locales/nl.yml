@@ -207,17 +207,19 @@ nl:
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio
 
   vouchers:
-    paragraph_1: Verras een vriend, familielid of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
-    paragraph_2: Tot 28 februari 2022 trakteert Nice2stay op 50 Euro. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven.
-    paragraph_3: Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
-    your_details: Uw details
+    dear: 'Beste %{name},'
+    paragraph_1: Verras een vriend, familielid, collega of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
+    paragraph_2: Tot 1 juni 2022 trakteert Nice2stay op 50 Euro (U kunt evt. de 50 euro aanvullen met meer tegoed). U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven. Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
+    conditions_terms: Lees hier de voorwaarden
+    your_details: Uw gegevens
     your_name: Uw voor en achternaam
     your_email: Uw e mailadres
-    for_who_is_this_gift: Voor wie is de Gift Card?
+    for_who_is_this_gift: De gegevens van de gelukkige ontvanger
     first_name: Voornaam
     last_name: Achternaam
     email_address: Emailadres
     city: Plaatsnaam
+    town: Plaats
     country: Land
     zipcode: Postcode
     address: Adres
@@ -225,7 +227,8 @@ nl:
     message: Schrijf hier uw persoonlijke boodschap voor de ontvanger...
     select_amount: Selecteer het bedrag dat u wilt toevoegen bovenop de 50 Euro
     default_amount: €0,- (€50,- cadeau van Nice2stay)
-    terms_and_conditions: De kleine lettertjes (voorwaarden)
+    small_print_terms_and_conditions: De kleine lettertjes (voorwaarden)
+    terms_and_conditions: Voorwaarden
     term1: Vouchers worden niet gerestitueerd en zijn geldig voor nieuwe reserveringen gemaakt binnen 12 maanden na uitgiftedatum.
     term2: Vouchers zijn niet direct inwisselbaar bij onze aangesloten accommodaties. Elke boeking moet via Nice2stay gemaakt worden.
     term3: Vouchers zijn alleen inwisselbaar tegen accommodatie kosten. Ze kunnen niet worden ingewisseld voor incidentele hotelkosten of aanvullende diensten.
@@ -234,8 +237,18 @@ nl:
     term6: Nice2stay zal de bon per post versturen naar de ontvanger, houdt er rekening mee dat het enkele dagen kan duren voordat de ontvanger de bon op de deurmat ontvangt.
     term7: De gegevens van de ontvanger zullen enkel gebruikt worden voor het toesturen van de bon en zij zullen tevens de Nice2stay nieuwsbrief ontvangen.
     term8: Het is niet toegestaan om meerdere vouchers per boeking toe te passen.
-    accept_terms: Ik ga akkoord met bovenstaande voorwaarden
-    submit: VERSTUUR
+    accept_terms: Ik ga akkoord met de Nice2stay Gift Card <span class="text-dotted mb-1">%{link}</span>
+    accept_terms_1: voorwaarden
+    previous: Vorige
+    next: Volgende
+    submit: Verstuur
+    required: verplicht
+    close: Sluit
+    thankyou_message: Bedankt voor het aanvragen van de Nice2stay Gift Voucher!
+    data_recipient: Gegevens ontvanger
+    amount_gift_voucher: Bedrag Gift Voucher
+    personal_message: Persoonlijke boodschap
+    closing_message: Ons team zal binnen 5 werkdagen de Gift Voucher per post versturen aan de gelukkige ontvanger.
 
   opens:
     week: maandag - vrijdag - 9.00 tot 18.00

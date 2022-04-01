@@ -61,7 +61,7 @@ class VoucherPayment
 
     def webhook_url
       return voucher_update_status_url(voucher_id: voucher, locale: params[:locale], host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      "https://ec98-2400-adc7-10c-c000-7d72-816e-70ec-e65b.ngrok.io/#{params[:locale]}/vouchers/#{voucher.id}/update_status"
+      voucher_update_status_url(voucher_id: voucher, locale: params[:locale], host: 'https://cc40-124-109-59-230.ngrok.io') # host could be localhost
     end
 
     def update_redirect_url(payment)
@@ -70,7 +70,7 @@ class VoucherPayment
     end
 
     def redirect_url
-      return root_url(code: voucher.code, locale: params[:locale], host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
-      "https://ec98-2400-adc7-10c-c000-7d72-816e-70ec-e65b.ngrok.io/#{params[:locale]}?code=#{voucher.code}"
+      return voucher_url(voucher, code: voucher.code, locale: params[:locale], host: ENV['CLIENT_BASE_URL']) if Rails.env.production?
+      voucher_url(voucher, code: voucher.code, locale: params[:locale], host: 'https://cc40-124-109-59-230.ngrok.io') # host could be localhost
     end
 end
