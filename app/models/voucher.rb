@@ -6,7 +6,7 @@ class Voucher < ApplicationRecord
 
   accepts_nested_attributes_for :receiver
 
-  validates :sender_name, :sender_email, :receiver_address, :receiver_zipcode, :receiver_city, presence: true
+  validates :sender_name, :sender_email, :receiver_address, :receiver_zipcode, :receiver_city, presence: true, unless: :created_by_nice2stay?
   validates :amount, numericality: { greater_than: 0 }
   validate :accept_terms_and_conditions
 
@@ -17,7 +17,7 @@ class Voucher < ApplicationRecord
   scope :unsed, -> { where(used: false) }
   scope :old, -> { where('expired_at < ? OR used = ?', DateTime.current, true) }
 
-  attr_accessor :terms_and_conditions
+  attr_accessor :terms_and_conditions, :skip_data_posting
 
   enum created_by: {
     random_user: 0,
@@ -49,11 +49,13 @@ class Voucher < ApplicationRecord
     end
 
     def set_mollie_amount
+      return if created_by_nice2stay?
       return if amount.to_f <= PREDEFINED_GIFT_AMOUNT
       self.mollie_amount = amount.to_f - PREDEFINED_GIFT_AMOUNT
     end
 
     def set_code
+      return if created_by_nice2stay?
       loop do
         self.code = (0...8).map { (65 + rand(26)).chr }.join
         break unless self.class.exists?(code: code)
@@ -61,6 +63,7 @@ class Voucher < ApplicationRecord
     end
 
     def set_expired_at
+      return if created_by_nice2stay?
       self.expired_at = DateTime.current + 1.year
     end
 
@@ -70,10 +73,12 @@ class Voucher < ApplicationRecord
     end
 
     def accept_terms_and_conditions
+      return if skip_data_posting
       errors.add(:base, 'Please accept terms and conditions') unless terms_and_conditions
     end
 
     def send_details
+      return if skip_data_posting
       SendVoucherDetailsJob.perform_later(self.id)
     end
 end
