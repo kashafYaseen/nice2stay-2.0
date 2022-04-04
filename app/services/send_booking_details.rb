@@ -41,8 +41,8 @@ class SendBookingDetails
           fe_id: booking.id,
           pre_payment: booking.pre_payment,
           final_payment: booking.final_payment,
-          customer_prepayment_received_email_date: booking.pre_payed_at,
-          customer_finalpayment_received_email_date: booking.final_payed_at
+          prepayment_received_date: booking.pre_payed_at,
+          finalpayment_received_date: booking.final_payed_at
         }
       }
     end
