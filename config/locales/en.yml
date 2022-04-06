@@ -235,6 +235,8 @@ en:
     amount_gift_voucher: Amount Gift Voucher
     personal_message: Personal message
     closing_message: Our team will send the Gift Voucher by post to the lucky recipient within 5 working days.
+    new_giftcard: 'New: Giftcard'
+    new_nice2stay_giftcard: 'New: Nice2stay Giftcard'
 
   opens:
     week: Monday - Friday 9.00 am - 18.00 pm

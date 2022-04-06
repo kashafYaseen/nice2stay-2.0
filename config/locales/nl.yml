@@ -249,6 +249,8 @@ nl:
     amount_gift_voucher: Bedrag Gift Voucher
     personal_message: Persoonlijke boodschap
     closing_message: Ons team zal binnen 5 werkdagen de Gift Voucher per post versturen aan de gelukkige ontvanger.
+    new_giftcard: 'Nieuw: Giftcard'
+    new_nice2stay_giftcard: 'Nieuw: Nice2stay Giftcard'
 
   opens:
     week: maandag - vrijdag - 9.00 tot 18.00
