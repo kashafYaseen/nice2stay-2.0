@@ -31,7 +31,7 @@ class SaveBookingDetails
       booking.reservations.where.not(id: params[:booking][:reservation_ids]).update_all(canceled: true)
 
       params[:booking][:reservations_attributes].each do |reservations_attribute|
-        reservation = booking.reservations.not_canceled.find_by(id: reservations_attribute[:id]) || booking.reservations.build
+        reservation = booking.reservations.find_by(id: reservations_attribute[:id]) || booking.reservations.build
         reservation.attributes = reservation_params(reservations_attribute)
         reservation.room_rate = RoomRate.joins(:child_lodging, :rate_plan).find_by(lodgings: { crm_id: reservations_attribute[:child_lodging_crm_id] }, rate_plans: { crm_id: reservations_attribute[:rate_plan_crm_id] })
         lodging = Lodging.find_by(crm_id: reservations_attribute[:lodging_crm_id]) || Lodging.friendly.find(reservations_attribute[:lodging_slug]) rescue nil
