@@ -594,6 +594,7 @@ ActiveRecord::Schema.define(version: 2022_03_31_121133) do
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
     t.boolean "dynamic_prices", default: false
+    t.float "deposit"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -900,6 +901,8 @@ ActiveRecord::Schema.define(version: 2022_03_31_121133) do
     t.integer "book_option", default: 0
     t.integer "cancel_option_reason", default: -1
     t.string "canceled_by"
+    t.float "security_deposit"
+    t.boolean "include_deposit"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end

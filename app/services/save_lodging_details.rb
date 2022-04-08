@@ -148,6 +148,7 @@ class SaveLodgingDetails
         :confirmed_price_2020,
         :dynamic_prices,
         :include_cleaning,
+        :deposit,
         :include_deposit,
         :checked,
         :flexible_arrival,
