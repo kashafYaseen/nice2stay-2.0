@@ -125,6 +125,8 @@ class SaveBookingDetails
         :guest_centric_booking_id,
         :meal_id,
         :offer_id,
+        :security_deposit,
+        :include_deposit,
       )
     end
 

@@ -37,6 +37,8 @@ class Reservation < ApplicationRecord
   delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
   delegate :parent_lodging_id, to: :room_rate, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
+  delegate :deposit, to: :lodging, prefix: :security, allow_nil: true
+  delegate :include_deposit, to: :lodging, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :canceled, -> { where(canceled: true) }
