@@ -3,8 +3,6 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
-    @reservation.security_deposit = @reservation.lodging.deposit
-    @reservation.include_deposit = @reservation.lodging.include_deposit
     if @reservation.save
       ahoy.track "Booking", @reservation
       @reservation = @reservation.lodging.reservations.build
