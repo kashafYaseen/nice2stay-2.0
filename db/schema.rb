@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_31_095319) do
+ActiveRecord::Schema.define(version: 2022_03_31_121133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,8 @@ ActiveRecord::Schema.define(version: 2022_01_31_095319) do
     t.boolean "free_cancelation", default: false
     t.boolean "rebooked", default: false
     t.boolean "rebooking_approved", default: false
+    t.string "voucher_code"
+    t.float "voucher_amount"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -1060,6 +1062,33 @@ ActiveRecord::Schema.define(version: 2022_01_31_095319) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vouchers", force: :cascade do |t|
+    t.string "sender_name"
+    t.string "sender_email"
+    t.integer "amount"
+    t.boolean "send_by_post", default: false
+    t.text "message"
+    t.bigint "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "receiver_city"
+    t.string "receiver_zipcode"
+    t.string "receiver_address"
+    t.bigint "receiver_country_id"
+    t.string "code"
+    t.boolean "used", default: false
+    t.datetime "expired_at"
+    t.string "sender_mollie_id"
+    t.string "payment_status"
+    t.datetime "payed_at"
+    t.float "mollie_amount", default: 0.0
+    t.string "mollie_payment_id"
+    t.integer "created_by", default: 0
+    t.integer "crm_id"
+    t.index ["receiver_country_id"], name: "index_vouchers_on_receiver_country_id"
+    t.index ["receiver_id"], name: "index_vouchers_on_receiver_id"
+  end
+
   create_table "wishlists", force: :cascade do |t|
     t.bigint "lodging_id"
     t.bigint "user_id"
@@ -1126,6 +1155,8 @@ ActiveRecord::Schema.define(version: 2022_01_31_095319) do
   add_foreign_key "trip_members", "trips", on_delete: :cascade
   add_foreign_key "trip_members", "users", on_delete: :cascade
   add_foreign_key "users", "countries"
+  add_foreign_key "vouchers", "countries", column: "receiver_country_id"
+  add_foreign_key "vouchers", "users", column: "receiver_id", on_delete: :cascade
   add_foreign_key "wishlists", "lodgings", on_delete: :cascade
   add_foreign_key "wishlists", "trips", on_delete: :cascade
   add_foreign_key "wishlists", "users", on_delete: :cascade

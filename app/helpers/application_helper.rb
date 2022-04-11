@@ -40,7 +40,7 @@ module ApplicationHelper
   end
 
   def render_logo_tag
-    logo = current_page?(root_path) || current_page?(root_en_path) || current_page?(root_nl_path) ? 'logo_white_small.png' : 'site-logo.png'
+    logo = current_page?(root_path) || current_page?(root_en_path) || current_page?(root_nl_path) || current_page?(new_voucher_path) ? 'logo_white_small.png' : 'site-logo.png'
     image_tag(logo, class: "site-logo")
   end
 end

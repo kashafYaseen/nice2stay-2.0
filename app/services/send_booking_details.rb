@@ -43,6 +43,8 @@ class SendBookingDetails
           final_payment: booking.final_payment,
           prepayment_received_date: booking.pre_payed_at,
           finalpayment_received_date: booking.final_payed_at
+          voucher_code: booking.voucher_code,
+          voucher_amount: booking.voucher_amount,
         }
       }
     end

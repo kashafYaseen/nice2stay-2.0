@@ -10,6 +10,10 @@
       <i class="icon-home"></i><%= t 'profile_account.side_nav_home' %>
     <% end %>
 
+    <%= link_to dashboard_vouchers_path(locale: locale), class: "list-group-item with-badge #{active_class(dashboard_vouchers_path)}" do %>
+      <i class="icon-home"></i><%= t 'profile_account.vouchers' %><span class="badge badge-default badge-pill"><%= vouchers_count %>
+    <% end %>
+
     <%= link_to dashboard_reservations_path, class: "list-group-item with-badge #{active_class(dashboard_reservations_path)}" do %>
       <i class="icon-bag"></i><%= t 'profile_account.side_nav_bookings' %><span class="badge badge-default badge-pill"><%= reservations_count %></span>
     <% end %>

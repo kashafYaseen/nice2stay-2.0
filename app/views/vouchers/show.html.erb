@@ -1,0 +1,134 @@
+<% content_for :body_class, 'home-full-page-layout' %>
+
+<div class="row price_box m-0 vouchers">
+  <div class="jumbotron vouchers-jumbotron-bg col-md-12 p-0">
+    <div class="dark-overlay-image">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 intro-columns">
+            <div class="card bg-white z-index-1">
+              <div class="card-body text-left">
+                <h1 class="display-4">Nice2stay Gift Card</h1>
+                <h5 class="my-2 py-1"><%= t('vouchers.paragraph_1') %></h5>
+                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2') %></h5>
+
+                <p class="text-info mb-1 cursor-pointer" data-toggle="modal" data-target="#termsAndConditionsModal">
+                  <span class="text-dotted text-xxs"><%= t('vouchers.conditions_terms') %></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 form-columns">
+            <div class="card bg-white z-index-1">
+              <div class="card-body text-left">
+                <div class="row h-100">
+                  <div class="col-md-12">
+                    <!-- SECTION 1 -->
+                    <h4 class="py-1"><%= t('vouchers.dear', name: @voucher.sender_name) %></h4>
+                    <section class="mb-4">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.thankyou_message') %></p>
+                        </div>
+                      </div>
+                    </section>
+
+                    <!-- SECTION 2 -->
+                    <h4 class="py-1"><%= t('vouchers.data_recipient') %></h4>
+                    <section>
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.first_name') %>: <%= @voucher.receiver.first_name %></p>
+                        </div>
+
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.last_name') %>: <%= @voucher.receiver.last_name %></p>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.address') %>: <%= @voucher.receiver_address %></p>
+                        </div>
+
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.zipcode') %>: <%= @voucher.receiver_zipcode %></p>
+                        </div>
+
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.town') %>: <%= @voucher.receiver_city %></p>
+                        </div>
+
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.country') %>: <%= @voucher.receiver_country.name %></p>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.email_address') %>: <%= @voucher.receiver.email %></p>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.amount_gift_voucher') %>: <%= @voucher.amount %> Euro</p>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.personal_message') %>: <%= @voucher.message.presence || 'n/a' %></p>
+                        </div>
+                      </div>
+                    </section>
+
+                    <!-- SECTION 3 -->
+                    <section class="mb-4">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="mb-2"><%= t('vouchers.closing_message') %></p>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="termsAndConditionsModal" tabindex="-1" role="dialog" aria-labelledby="termsAndConditionsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsAndConditionsModalLabel"><%= t('vouchers.terms_and_conditions') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <ul class="terms-conditions">
+          <li><%= t('vouchers.term1') %></li>
+          <li><%= t('vouchers.term2') %></li>
+          <li><%= t('vouchers.term3') %></li>
+          <li><%= t('vouchers.term4') %></li>
+          <li><%= t('vouchers.term5') %></li>
+          <li><%= t('vouchers.term6') %></li>
+          <li><%= t('vouchers.term7') %></li>
+          <li><%= t('vouchers.term8') %></li>
+        </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('vouchers.close') %></button>
+      </div>
+    </div>
+  </div>
+</div>

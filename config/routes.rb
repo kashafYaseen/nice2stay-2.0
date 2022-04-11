@@ -73,10 +73,15 @@ Rails.application.routes.draw do
       resources :notifications, only: [:index] do
         get :mark_as_read, on: :collection
       end
+
+      resources :vouchers, only: [:index]
     end
 
     resources :pages, only: [:show]
     resources :newsletter_subscriptions, only: [:create]
+    resources :vouchers, only: [:new, :create, :show] do
+      post :update_status
+    end
 
     get "dashboard", to: "dashboard#index"
     get '/lodgings/guest_centric', to: "guest_centric_offers#index"

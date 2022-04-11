@@ -1,0 +1,73 @@
+.vouchers-jumbotron-bg {
+  height: 100vh;
+  background-image: url("https://imagesnice2stayeurope.s3.amazonaws.com/uploads/image/image/64926/2021-11-23-9103fcef05f184636118f9a2c8a3b2c8.jpeg");
+
+  .dark-overlay-image {
+    height: 100vh;
+    background-color: rgba(0,0,0,0.1);
+  }
+
+  .row {
+    .intro-columns {
+      height: 440px;
+    }
+  }
+}
+.intro-columns, .form-columns {
+  margin-top: 10vh;
+}
+.terms-conditions {
+  list-style: circle;
+  padding-left: 20px;
+  margin: 20px 0;
+  li {
+    font-size: 12px;
+  }
+}
+.current {
+  color: #404040 !important;
+}
+.title {
+  color: #757575;
+}
+.vouchers {
+  .card {
+    height: 100%;
+  }
+  .h-auto {
+    height: auto !important;
+  }
+  h1 {
+    font-family: 'Open Sans', sans-serif;
+  }
+  h4, h5 {
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vouchers-jumbotron-bg {
+    height: 140vh !important;
+
+    .dark-overlay-image {
+      height: 140vh !important;
+    }
+  }
+
+  .row {
+    .intro-columns {
+      height: 474px !important;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .vouchers-jumbotron-bg {
+    height: 170vh !important;
+
+    .dark-overlay-image {
+      height: 170vh !important;
+    }
+  }
+}
