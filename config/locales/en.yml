@@ -200,7 +200,7 @@ en:
     your_details: Your details
     your_name: Your first & last name
     your_email: Your email address
-    for_who_is_this_gift: The Details of the lucky recipient
+    for_who_is_this_gift: The details of the lucky recipient
     first_name: First name
     last_name: Last name
     email_address: Email address
@@ -378,14 +378,15 @@ en:
     discount: Discount
     rent: Rent
     total: Total
+    name: Name
+    child_with_count: Child %{count}
+    age: Age
+    status: Status
     amount: Amount
     date_of_issue: Date of issue
     expiry_date: Expiry Date
     code: Code
     no_voucher_found: No voucher found!
-    name: Name
-    child_with_count: Child %{count}
-    age: Age
 
   reservations:
     option: Option

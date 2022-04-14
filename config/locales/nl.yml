@@ -110,14 +110,15 @@ nl:
     discount: Discount
     rent: Huurprijs
     total: Totaal
+    name: Naam
+    child_with_count: Kind %{count}
+    age: Leeftijd
+    status: Status
     amount: Bedrag
     date_of_issue: Uitgifte datum
     expiry_date: Verval datum
     code: Code
     no_voucher_found: Geen voucher gevonden!
-    name: Naam
-    child_with_count: Kind %{count}
-    age: Leeftijd
 
   carts:
     empty: verwijder
@@ -209,7 +210,7 @@ nl:
   vouchers:
     dear: 'Beste %{name},'
     paragraph_1: Verras een vriend, familielid, collega of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
-    paragraph_2: Tot 1 juni 2022 trakteert Nice2stay op 50 Euro (U kunt evt. de 50 euro aanvullen met meer tegoed). U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven. Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
+    paragraph_2: Tot 1 juni 2022 trakteert Nice2stay op 50 Euro <br>(U kunt evt. de 50 euro aanvullen met meer tegoed). U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven. Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
     conditions_terms: Lees hier de voorwaarden
     your_details: Uw gegevens
     your_name: Uw voor en achternaam
