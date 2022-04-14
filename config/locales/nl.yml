@@ -1015,6 +1015,7 @@ nl:
     final_payment: Restantbetaling
     cleaning_cost: Schoonmaakkosten
     pay_on_location: Te betalen op locatie
+    voucher_added: Dank u wel voor invullen van de vouchercode %{code}. De vouchercode zal door ons worden gecontroleerd en toegepast op uw boeking.
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!
