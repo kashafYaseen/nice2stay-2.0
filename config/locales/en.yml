@@ -821,6 +821,7 @@ of the accommodation."
     final_payment: Final Payment
     cleaning_cost: Cleaning Cost
     pay_on_location: Pay on location
+    voucher_added: Thank you for entering the voucher code %{code}. The voucher code will be checked by us and applied to your booking.
 
   not_live_standalone:
     The availability of this property is not (always) up to date!
