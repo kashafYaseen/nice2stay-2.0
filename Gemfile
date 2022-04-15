@@ -56,6 +56,8 @@ gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
 gem "i18n-js"
+gem 'httparty'
+gem 'icalendar', '~> 2.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
