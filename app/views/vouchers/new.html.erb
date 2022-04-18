@@ -10,7 +10,7 @@
               <div class="card-body text-left">
                 <h1 class="display-4">Nice2stay Gift Card</h1>
                 <h5 class="my-2 py-1"><%= t('vouchers.paragraph_1') %></h5>
-                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2') %></h5>
+                <h5 class="mb-2 pb-1"><%= t('vouchers.paragraph_2').html_safe %></h5>
 
                 <p class="text-info mb-1 cursor-pointer" data-toggle="modal" data-target="#termsAndConditionsModal">
                   <span class="text-dotted text-xxs"><%= t('vouchers.conditions_terms') %></span>
@@ -122,7 +122,7 @@
                                   <%= t('vouchers.country') %>
                                   <small><strong class="text-danger">*</strong></small>
                                 <% end %>
-                                <%= f.select :receiver_country_id, @countries.collect{ |country| [country.name, country.id] }, { include_blank: t('vouchers.country') }, class: 'form-control', required: true %>
+                                <%= f.select :receiver_country_id, @countries.sort_by{ |country| country.name }.collect{ |country| [country.name, country.id] }, { include_blank: t('vouchers.country') }, class: 'form-control', required: true %>
                               </div>
                             </div>
                           </div>
