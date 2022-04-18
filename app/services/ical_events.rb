@@ -32,9 +32,9 @@ class IcalEvents
       ical_blocked_dates = []
       unless @events.blank? || !(@events.class == Array)
         @events.each do |event|
-          start_date = Icalendar::Values::Date.new(event.dtstart).to_date
-          end_date = Icalendar::Values::Date.new(event.dtend).to_date
-          date_range = start_date..end_date
+          start_date = Icalendar::Values::Date.new(event.dtstart) == nil ? nil : Icalendar::Values::Date.new(event.dtstart).to_date
+          end_date = Icalendar::Values::Date.new(event.dtend) == nil ? nil : Icalendar::Values::Date.new(event.dtend).to_date
+          date_range = start_date.nil? || end_date.nil? ? nil : start_date..end_date
           ical_blocked_dates << date_range
         end
       end
