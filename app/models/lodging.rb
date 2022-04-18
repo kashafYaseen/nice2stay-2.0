@@ -414,6 +414,7 @@ class Lodging < ApplicationRecord
     ical_blocked_dates = IcalEvents.new(self).build_ical_blocked_dates
     if ical_blocked_dates.present?
       ical_blocked_dates.each do |ical_blocked_date_range|
+        next if ical_blocked_date_range.nil?
         return { rates: {}, search_params: params, valid: false, errors: { base: ['Not available for selected dates'] } } if (ical_blocked_date_range.cover?(params[:check_in].to_date) || ical_blocked_date_range.cover?(params[:check_out].to_date))
       end
     end
