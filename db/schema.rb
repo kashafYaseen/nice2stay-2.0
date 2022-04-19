@@ -605,7 +605,6 @@ ActiveRecord::Schema.define(version: 2022_04_15_071739) do
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
     t.boolean "dynamic_prices", default: false
-    t.string "ical"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"

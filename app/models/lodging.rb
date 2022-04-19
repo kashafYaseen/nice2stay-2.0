@@ -289,12 +289,6 @@ class Lodging < ApplicationRecord
 
   def price_list(params)
     return { rates: {}, search_params: params, valid: false, errors: { base: ['check_in & check_out dates must exist'] } } unless params[:check_in].present? && params[:check_out].present?
-    ical_blocked_dates = IcalEvents.new(self).build_ical_blocked_dates
-    if ical_blocked_dates.present?
-      ical_blocked_dates.each do |ical_blocked_date_range|
-        return { rates: {}, search_params: params, valid: false, errors: { base: ['Not available for selected dates'] } } if (ical_blocked_date_range.cover?(params[:check_in].to_date) || ical_blocked_date_range.cover?(params[:check_out].to_date))
-      end
-    end
     total_nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
     SearchPriceWithFlexibleDates.call(params.merge(lodging_id: id, minimum_stay: total_nights, max_adults: adults.to_i), self)
   end
