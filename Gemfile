@@ -59,8 +59,6 @@ gem "i18n-js"
 gem 'oj'
 gem 'typhoeus'
 gem 'redis-rails'
-gem 'httparty'
-gem 'icalendar', '~> 2.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
