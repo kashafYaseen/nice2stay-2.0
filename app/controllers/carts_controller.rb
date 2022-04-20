@@ -46,7 +46,7 @@ class CartsController < ApplicationController
   end
 
   def details
-    flash[:notice] = I18n.t('bookings.voucher_added', code: @booking.voucher_code) if @booking.voucher_code.present?
+    flash[:notice] = I18n.t('bookings.voucher_added', code: @booking.voucher_code) if @booking.present? && @booking.voucher_code.present?
     @user = @booking_details.user
   end
 
