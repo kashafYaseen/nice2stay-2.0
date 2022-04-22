@@ -8,6 +8,8 @@ class Api::V2::PaymentsController < Api::V2::ApiController
       payment = ManageMolliePayment.new(@booking, params).pre_payment
     elsif params[:payment] == 'final-payment'
       payment = ManageMolliePayment.new(@booking, params).final_payment
+    elsif params[:payment] == 'security-deposit'
+      payment = ManageMolliePayment.new(@booking, params).security_payment
     end
 
     if payment.present?
@@ -52,6 +54,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
       return payment._links['checkout']['href'] if payment._links['checkout'].present? && payment._links['checkout']['href'].present?
       @booking.update_columns pre_payment_mollie_id: nil if type == 'pre-payment'
       @booking.update_columns final_payment_mollie_id: nil if type == 'final-payment'
+      @booking.update_columns security_deposit_payment_mollie_id: nil if type == 'security-payment'
     end
 
     def mollie_payment_method_details(details)
