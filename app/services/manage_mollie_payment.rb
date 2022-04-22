@@ -48,6 +48,17 @@ class ManageMolliePayment
     payment
   end
 
+  def security_payment
+    if booking.security_deposit_payment_mollie_id?
+      payment = find_payment(booking.security_deposit_payment_mollie_id)
+      return update_redirect_url(payment) if payment.status == 'open'
+    end
+
+    payment = create_payment(security_deposit_payment, "#{booking.identifier} - Security deposit Payment")
+    booking.update_column :security_deposit_payment_mollie_id, payment.id
+    payment
+  end
+
   def update_status(payment_id)
     payment = find_payment(payment_id)
     return remove_rejected(payment) unless payment.status == 'paid'
@@ -66,6 +77,12 @@ class ManageMolliePayment
     return unless booking.final_payment_mollie_id?
 
     find_payment(booking.final_payment_mollie_id)
+  end
+
+  def get_security_payment
+    return unless booking.security_deposit_payment_mollie_id?
+
+    find_payment(booking.security_deposit_payment_mollie_id)
   end
 
   private
@@ -119,5 +136,9 @@ class ManageMolliePayment
 
     def final_payment_amount
       booking.final_payment > 0 ? booking.final_payment : booking.final_payment_amount
+    end
+
+    def security_payment_amount
+      booking.security_deposit_payment > 0 ? booking.security_deposit_payment : booking.security_deposit_payment
     end
 end
