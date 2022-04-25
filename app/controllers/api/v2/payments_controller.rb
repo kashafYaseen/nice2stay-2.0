@@ -9,7 +9,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
     elsif params[:payment] == 'final-payment'
       payment = ManageMolliePayment.new(@booking, params).final_payment
     elsif params[:payment] == 'security-deposit'
-      payment = ManageMolliePayment.new(@booking, params).security_payment
+      payment = ManageMolliePayment.new(@booking, params).security_deposit_payment
     end
 
     if payment.present?
