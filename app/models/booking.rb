@@ -81,6 +81,11 @@ class Booking < ApplicationRecord
     update(final_payed_at: datetime, booking_status: 'fully_paid')
   end
 
+  def security_paid_at!(datetime)
+    reservations.update_all(booking_status: 'security_paid')
+    update(security_payed_at: datetime, booking_status: 'security_paid')
+  end
+
   private
     def send_details
       return if in_cart || skip_data_posting

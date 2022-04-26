@@ -49,6 +49,8 @@ class ManageMolliePayment
   end
 
   def security_deposit_payment
+    return if booking.security_payed_at?
+
     if booking.security_deposit_payment_mollie_id?
       payment = find_payment(booking.security_deposit_payment_mollie_id)
       return update_redirect_url(payment) if payment.status == 'open'
@@ -65,6 +67,7 @@ class ManageMolliePayment
 
     booking.pre_paid_at! payment.paid_at if payment.id == booking.pre_payment_mollie_id
     booking.final_paid_at! payment.paid_at if payment.id == booking.final_payment_mollie_id
+    booking.security_paid_at! payment.paid_at if payment.id == booking.security_deposit_payment_mollie_id
   end
 
   def get_pre_payment
