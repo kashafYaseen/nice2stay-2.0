@@ -22,6 +22,7 @@ ActiveAdmin.register Booking do
       f.input :final_payment_mollie_id
       f.input :pre_payed_at, as: :date_time_picker
       f.input :final_payed_at, as: :date_time_picker
+      f.input :security_payed_at, as: :date_time_picker
 
       f.input :confirmed
     end
@@ -40,6 +41,7 @@ ActiveAdmin.register Booking do
     column :final_payment
     column :pre_payed_at
     column :final_payed_at
+    column :security_payed_at
     column :confirmed
     column :in_cart
     column :created_at
