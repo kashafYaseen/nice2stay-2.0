@@ -31,7 +31,7 @@ class CartsController < ApplicationController
 
       cookies[:booking_details] = @booking.id
       flash[:notice] = I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
-      flash[:success] = I18n.t('bookings.voucher_added', code: @booking.voucher_code) if @booking.voucher_code.present?
+      flash[:success] = I18n.t('bookings.voucher_added', code: @booking.voucher_code) if @booking.present? && @booking.voucher_code.present?
       redirect_to details_carts_path
     end
   end
@@ -42,7 +42,6 @@ class CartsController < ApplicationController
   end
 
   def details
-    flash[:notice] = I18n.t('bookings.voucher_added', code: @booking.voucher_code) if @booking.voucher_code.present?
     @user = @booking_details.user
   end
 
