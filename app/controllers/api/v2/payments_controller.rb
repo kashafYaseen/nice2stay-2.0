@@ -39,6 +39,8 @@ class Api::V2::PaymentsController < Api::V2::ApiController
       ManageMolliePayment.new(@booking).update_status(@booking.pre_payment_mollie_id)
     elsif params[:payment] == 'final-payment'
       ManageMolliePayment.new(@booking).update_status(@booking.final_payment_mollie_id)
+    elsif params[:payment] == 'security-deposit'
+      ManageMolliePayment.new(@booking).update_status(@booking.security_deposit_payment_mollie_id)
     end
 
     render json: Api::V2::BookingSerializer.new(@booking).serialized_json, status: :ok
