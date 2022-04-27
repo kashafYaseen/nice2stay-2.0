@@ -16,6 +16,8 @@ namespace :api do
     resources :places, only: [:create]
     resources :gc_offers, only: [:create]
     resources :owners, only: [:create]
-    resources :vouchers, only: [:create]
+    resources :vouchers, only: :create do
+      post :remove, on: :collection
+    end
   end
 end
