@@ -61,6 +61,10 @@ class Booking < ApplicationRecord
     reservations.sum(&:final_payment)
   end
 
+  def total_security_deposit
+    reservations.sum(&:security_deposit_on_location)
+  end
+
   def cleaning_cost_on_location
     reservations.sum(&:cleaning_cost_on_location)
   end

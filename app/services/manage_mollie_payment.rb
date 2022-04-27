@@ -142,6 +142,6 @@ class ManageMolliePayment
     end
 
     def security_deposit_amount
-      booking.security_deposit_payment > 0 ? booking.security_deposit_payment : booking.security_deposit_amount
+      booking.total_security_deposit > 0 ? booking.total_security_deposit : booking.security_deposit_amount
     end
 end

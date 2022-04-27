@@ -195,7 +195,6 @@ ActiveRecord::Schema.define(version: 2022_04_15_071739) do
     t.boolean "rebooking_approved", default: false
     t.string "voucher_code"
     t.float "voucher_amount"
-    t.float "security_deposit_payment"
     t.string "security_deposit_payment_mollie_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
