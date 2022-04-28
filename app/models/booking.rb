@@ -30,6 +30,7 @@ class Booking < ApplicationRecord
     arrival_email_sent: 7,
     option: 8,
     request_price: 9,
+    security_paid: 10,
   }
 
   enum created_by: {
