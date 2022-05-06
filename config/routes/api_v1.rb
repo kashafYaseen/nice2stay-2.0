@@ -21,6 +21,8 @@ namespace :api do
       resources :experiences, only: [:index]
     end
     resources :owners, only: [:create]
-    resources :vouchers, only: [:create]
+    resources :vouchers, only: :create do
+      post :remove, on: :collection
+    end
   end
 end
