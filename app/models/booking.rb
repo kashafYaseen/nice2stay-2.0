@@ -30,6 +30,7 @@ class Booking < ApplicationRecord
     arrival_email_sent: 7,
     option: 8,
     request_price: 9,
+    security_paid: 10,
   }
 
   enum created_by: {
@@ -61,6 +62,10 @@ class Booking < ApplicationRecord
     reservations.sum(&:final_payment)
   end
 
+  def total_security_deposit
+    reservations.sum(&:security_deposit_on_location)
+  end
+
   def cleaning_cost_on_location
     reservations.sum(&:cleaning_cost_on_location)
   end
@@ -79,6 +84,11 @@ class Booking < ApplicationRecord
   def final_paid_at!(datetime)
     reservations.update_all(booking_status: 'fully_paid')
     update(final_payed_at: datetime, booking_status: 'fully_paid')
+  end
+
+  def security_paid_at!(datetime)
+    reservations.update_all(booking_status: 'security_paid')
+    update(security_payed_at: datetime, booking_status: 'security_paid')
   end
 
   private

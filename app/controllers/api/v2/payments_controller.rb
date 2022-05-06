@@ -8,6 +8,8 @@ class Api::V2::PaymentsController < Api::V2::ApiController
       payment = ManageMolliePayment.new(@booking, params).pre_payment
     elsif params[:payment] == 'final-payment'
       payment = ManageMolliePayment.new(@booking, params).final_payment
+    elsif params[:payment] == 'security-deposit'
+      payment = ManageMolliePayment.new(@booking, params).security_deposit_payment
     end
 
     if payment.present?
@@ -37,6 +39,8 @@ class Api::V2::PaymentsController < Api::V2::ApiController
       ManageMolliePayment.new(@booking).update_status(@booking.pre_payment_mollie_id)
     elsif params[:payment] == 'final-payment'
       ManageMolliePayment.new(@booking).update_status(@booking.final_payment_mollie_id)
+    elsif params[:payment] == 'security-deposit'
+      ManageMolliePayment.new(@booking).update_status(@booking.security_deposit_payment_mollie_id)
     end
 
     render json: Api::V2::BookingSerializer.new(@booking).serialized_json, status: :ok
@@ -52,6 +56,7 @@ class Api::V2::PaymentsController < Api::V2::ApiController
       return payment._links['checkout']['href'] if payment._links['checkout'].present? && payment._links['checkout']['href'].present?
       @booking.update_columns pre_payment_mollie_id: nil if type == 'pre-payment'
       @booking.update_columns final_payment_mollie_id: nil if type == 'final-payment'
+      @booking.update_columns security_deposit_payment_mollie_id: nil if type == 'security-payment'
     end
 
     def mollie_payment_method_details(details)
