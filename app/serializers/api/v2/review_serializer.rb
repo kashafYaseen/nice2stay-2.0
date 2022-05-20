@@ -5,4 +5,6 @@ class Api::V2::ReviewSerializer
   attributes :user_full_name do |review|
     review.user_full_name unless review.anonymous?
   end
+
+  attribute :feedback_submitted, if: Proc.new { params.present? && params[:feedback_submitted].present? && params[:feedback_submitted] == true }
 end
