@@ -1,5 +1,8 @@
 class Voucher < ApplicationRecord
-  PREDEFINED_GIFT_AMOUNT = 50
+  # This PREDEFINED_GIFT_AMOUNT constant was used when we started a voucher campaign to give customers 50 Euros for free,
+  # now campaign has been ended so no more free vouchers, customer has to pay full amount.
+  # PREDEFINED_GIFT_AMOUNT = 50
+  PREDEFINED_GIFT_AMOUNT = 0
 
   belongs_to :receiver, class_name: 'User'
   belongs_to :receiver_country, class_name: 'Country'

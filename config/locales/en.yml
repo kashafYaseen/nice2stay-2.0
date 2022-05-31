@@ -195,8 +195,8 @@ en:
   vouchers:
     dear: 'Dear %{name},'
     paragraph_1: Surprise a friend, family member, colleague or loved one with a voucher for an unforgettable stay in one of our 1600+ accommodations.
-    paragraph_2: Until June 1, 2022 Nice2stay is giving away 50 Euros (You can decide whether you want to add more value to the 50 euros) All you have to do is provide the details of the lucky recipient and a personal message. Our team will then send a beautiful handwritten gift card by post!
-    conditions_terms: Conditions & terms
+    paragraph_2: You can easily request your gift voucher on the right. Provide the details of the lucky recipient and write a personal message. Our team will then send a beautiful handwritten gift card by post!
+    conditions_terms: Terms & conditions
     your_details: Your details
     your_name: Your first & last name
     your_email: Your email address
@@ -211,7 +211,7 @@ en:
     address: Address
     message_label: Your personal message for the recipient which we will write on the card
     message: Write your personal message for the recipient here...
-    select_amount: Please select the voucher amount you want to add on top of the 50 Euro
+    select_amount: Please select the voucher amount
     default_amount: €0,- (€50,- gift from Nice2stay)
     small_print_terms_and_conditions: The small print (terms & conditions)
     terms_and_conditions: Conditions & terms
@@ -219,7 +219,7 @@ en:
     term2: Vouchers are not directly redeemable at our participating properties. Any booking must be made through Nice2stay.
     term3: Vouchers are only redeemable for accommodation expenses. They cannot be exchanged for incidental hotel expenses or additional services.
     term4: Vouchers cannot be exchanged for cash.
-    term5: In case you want to add value on top of the 50 Euro, you will be redirected directly to the payment page. Nice2stay will send the voucher after receipt of payment.
+    term5: After requesting the voucher, you will be redirected directly to the payment page. Nice2stay will send the voucher after receipt of payment.
     term6: Nice2stay will send the voucher to the recipient by post, please note that it may take several days before the recipient receives the voucher.
     term7: The data of the recipient will only be used to send the voucher and they will also receive the Nice2stay newsletter.
     term8: It is not allowed to apply multiple vouchers per booking.
