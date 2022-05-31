@@ -210,7 +210,7 @@ nl:
   vouchers:
     dear: 'Beste %{name},'
     paragraph_1: Verras een vriend, familielid, collega of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
-    paragraph_2: Tot 1 juni 2022 trakteert Nice2stay op 50 Euro <br>(U kunt evt. de 50 euro aanvullen met meer tegoed). U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven. Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
+    paragraph_2: Vraag hier rechts gemakkelijk uw voucher aan. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven. Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
     conditions_terms: Lees hier de voorwaarden
     your_details: Uw gegevens
     your_name: Uw voor en achternaam
@@ -226,7 +226,7 @@ nl:
     address: Adres
     message_label: Uw persoonlijke boodschap voor de ontvanger die wij op de kaart zullen schrijven
     message: Schrijf hier uw persoonlijke boodschap voor de ontvanger...
-    select_amount: Selecteer het bedrag dat u wilt toevoegen bovenop de 50 Euro
+    select_amount: Selecteer het gewenste bedrag
     default_amount: €0,- (€50,- cadeau van Nice2stay)
     small_print_terms_and_conditions: De kleine lettertjes (voorwaarden)
     terms_and_conditions: Voorwaarden
@@ -234,7 +234,7 @@ nl:
     term2: Vouchers zijn niet direct inwisselbaar bij onze aangesloten accommodaties. Elke boeking moet via Nice2stay gemaakt worden.
     term3: Vouchers zijn alleen inwisselbaar tegen accommodatie kosten. Ze kunnen niet worden ingewisseld voor incidentele hotelkosten of aanvullende diensten.
     term4: Vouchers kunnen niet worden ingewisseld voor contant geld.
-    term5: In het geval dat u waarde wilt toevoegen bovenop de 50 Euro, wordt u direct doorgeleid naar de betaalpagina. Nice2stay zal de bon versturen na ontvangst van betaling.
+    term5: Na het aanvragen van de voucher wordt u direct doorgeleid naar de betaalpagina. Nice2stay zal de voucher versturen na ontvangst van betaling.
     term6: Nice2stay zal de bon per post versturen naar de ontvanger, houdt er rekening mee dat het enkele dagen kan duren voordat de ontvanger de bon op de deurmat ontvangt.
     term7: De gegevens van de ontvanger zullen enkel gebruikt worden voor het toesturen van de bon en zij zullen tevens de Nice2stay nieuwsbrief ontvangen.
     term8: Het is niet toegestaan om meerdere vouchers per boeking toe te passen.
