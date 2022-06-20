@@ -30,7 +30,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     params.merge!(nights: nights_wrt_flexible_type(params)) unless params[:nights].present? && params[:flexible]
     lodgings = Lodging.calculate_prices(params_wrt_flexible_type(params), ids, @search_analytic)
     supplements = JSON.parse(params[:supplements], symbolize_names: true) rescue nil
-    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults].to_i, children: params[:children].to_i, supplements: supplements, accom_listing: params[:accom_listing], show_supplements: params[:show_supplements] }}).serialized_json, status: :ok
+    render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults].to_i, children: params[:children].to_i, supplements: supplements, accom_listing: params[:accom_listing] }}).serialized_json, status: :ok
   end
 
   def recommendations
