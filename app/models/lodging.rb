@@ -46,7 +46,7 @@ class Lodging < ApplicationRecord
   attr_accessor :price_valid, :price_errors
   attr_accessor :first_available_room, :check_in, :check_out
   attr_accessor :discount_price
-  attr_accessor :rent_price
+  attr_accessor :rent_price, :cleaning_cost
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -266,6 +266,7 @@ class Lodging < ApplicationRecord
     total_discount = calculate_discount(discount(params), total_price)
     total_price -= total_discount if total_discount.present?
     total_price += cleaning_cost if cleaning_cost.present?
+    self.cleaning_cost = cleaning_cost.to_f.round(2)
     self.calculated_price = total_price.to_f.round(2)
     self.discount_price = total_discount.to_f.round(2)
     self.rent_price = (prices[:rates].sum).to_f.round(2)
