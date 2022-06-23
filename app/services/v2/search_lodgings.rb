@@ -372,7 +372,7 @@ class V2::SearchLodgings
       return { price: :desc } if params[:order] == 'price_desc'
       return { created_at: :desc } if params[:order] == 'new_desc'
       return { average_rating: :desc } if params[:order] == 'rating_desc'
-      return { boost: :desc }
+      return { boost: :asc }
     end
 
     def merge_seo_filters conditions
