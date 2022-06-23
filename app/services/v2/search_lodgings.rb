@@ -364,11 +364,15 @@ class V2::SearchLodgings
     end
 
     def order
-      return { average_rating: :desc } if params[:order] == 'rating_desc'
+      return { beds: :asc } if params[:order] == 'beds_asc'
+      return { beds: :desc } if params[:order] == 'beds_desc'
+      return { adults: :asc } if params[:order] == 'adults_asc'
+      return { adults: :desc } if params[:order] == 'adults_desc'
       return { price: :asc } if params[:order] == 'price_asc'
       return { price: :desc } if params[:order] == 'price_desc'
       return { created_at: :desc } if params[:order] == 'new_desc'
-      return { boost: :asc }
+      return { average_rating: :desc } if params[:order] == 'rating_desc'
+      return { boost: :desc }
     end
 
     def merge_seo_filters conditions
