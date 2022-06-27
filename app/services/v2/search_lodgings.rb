@@ -63,9 +63,15 @@ class V2::SearchLodgings
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
-      conditions << { range: { adults: { gte: params[:adults].to_i, lte: params[:adults].to_i + 1 } } } if params[:adults].present?
-      conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } } if params[:adults].present?
-      conditions << { range: { minimum_adults: { lte: params[:adults].to_i } } } if params[:adults].present?
+
+      if params[:adults].present? && params[:perfect_adults].present?
+        conditions << { range: { adults: { gte: params[:adults].to_i, lte: params[:perfect_adults].to_i } } }
+      elsif params[:adults].present?
+        conditions << { range: { adults: { gte: params[:adults].to_i } } }
+        conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } }
+        conditions << { range: { minimum_adults: { lte: params[:adults].to_i } } }
+      end
+
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
       if params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:regions_in].present? && params[:bounds].blank?
