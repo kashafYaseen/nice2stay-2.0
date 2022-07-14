@@ -302,6 +302,15 @@ class Lodging < ApplicationRecord
     end
   end
 
+  def lodging_type_count_for(lodgings)
+    buckets = lodgings.aggregations['lodging_type']['buckets']
+    count = 0
+    buckets.each do |bucket|
+      count = bucket['doc_count'] if bucket['key'] == lodging_type
+    end if buckets.present?
+    count
+  end
+
   def allow_check_in_days
     days = rules_active(Date.today, Date.today).pluck(:check_in_days).join(',')
     days.present? ? days : "All days"
