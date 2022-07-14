@@ -27,4 +27,12 @@ class Api::V2::LodgingSerializer
   attribute :first_available_child_id, if: proc { |lodging, params| params.present? } do |lodging, params|
     lodging.first_available_child_wrt(params[:lodgings])
   end
+
+  attribute :actual, if: Proc.new { |lodging, params| params.present? && params[:lodgings].present?  } do |lodging, params|
+    lodging.lodging_type_count_for(params[:lodgings])
+  end
+
+  attribute :total, if: Proc.new { |lodging, params| params.present? && params[:total_lodgings].present?  } do |lodging, params|
+    lodging.lodging_type_count_for(params[:total_lodgings])
+  end
 end
