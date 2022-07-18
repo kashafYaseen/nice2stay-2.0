@@ -85,7 +85,6 @@ class Lodging < ApplicationRecord
   scope :by_rate_code, ->(rate_plan_code) { joins(:prices).where("prices.rr_rate_plan_code = ?", rate_plan_code) }
   scope :parent_lodgings, -> { where(parent_id: nil) }
   scope :new_lodgings, -> { as_parent.published.order('created_at desc').limit(4) }
-  scope :instant_count, -> { where(realtime_availability: 'true').count }
 
   translates :title, :subtitle, :description, :meta_desc, :meta_title, :slug, :h1, :h2, :h3, :highlight_1, :highlight_2, :highlight_3, :summary, :short_desc, :location_description
 
@@ -492,6 +491,22 @@ class Lodging < ApplicationRecord
     return unless lodging_hit.present?
 
     lodging_hit['hits']['hits'].count rescue 0
+  end
+
+  def self.render_lodgings_count_for (lodgings, key, filter_name, total_lodgings)
+    buckets = lodgings.aggregations[filter_name]['buckets']
+    all_buckets = total_lodgings.aggregations[filter_name]['buckets']
+    total, actual = 0, 0
+
+    buckets.each do |bucket|
+      actual = bucket['doc_count'] if bucket['key'] == key
+    end if buckets.present?
+
+    all_buckets.each do |bucket|
+      total = bucket['doc_count'] if bucket['key'] == key
+    end if all_buckets.present?
+
+    "#{actual} of #{total}"
   end
 
   private
