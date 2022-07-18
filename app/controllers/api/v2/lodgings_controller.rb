@@ -14,6 +14,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
+      instant_lodgings: { count: Lodging.render_lodgings_count_for(@lodgings, 1, 'realtime_availability', @total_lodgings) },
       amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings }),
       experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
     }, status: :ok

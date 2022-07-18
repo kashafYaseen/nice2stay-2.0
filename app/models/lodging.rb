@@ -493,6 +493,22 @@ class Lodging < ApplicationRecord
     lodging_hit['hits']['hits'].count rescue 0
   end
 
+  def self.render_lodgings_count_for (lodgings, key, filter_name, total_lodgings)
+    buckets = lodgings.aggregations[filter_name]['buckets']
+    all_buckets = total_lodgings.aggregations[filter_name]['buckets']
+    total, actual = 0, 0
+
+    buckets.each do |bucket|
+      actual = bucket['doc_count'] if bucket['key'] == key
+    end if buckets.present?
+
+    all_buckets.each do |bucket|
+      total = bucket['doc_count'] if bucket['key'] == key
+    end if all_buckets.present?
+
+    "#{actual} of #{total}"
+  end
+
   private
     def add_availabilities
       return if belongs_to_channel?
