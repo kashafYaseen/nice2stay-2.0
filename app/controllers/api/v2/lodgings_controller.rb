@@ -13,7 +13,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
     @lodgings = ::V2::SearchLodgings.call(params.clone.merge(months_date_range: dates, flexible_dates: flexible_dates(dates, params)), @search_analytic, @custom_text)
 
     render json: {
-      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
+      lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count, instant_lodgings_count: Lodging.instant_count),
       amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings }),
       experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
     }, status: :ok
