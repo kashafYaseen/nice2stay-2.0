@@ -10,6 +10,7 @@ namespace :api do
     resources :amenities, only: [:create]
     resources :experiences, only: [:create]
     resources :countries, only: [:create]
+    resources :lodging_categories, only: [:create]
     resources :bookings, only: [:create]
     resources :pages, only: [:create]
     resources :users, only: [:create]
