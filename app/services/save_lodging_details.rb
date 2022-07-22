@@ -157,6 +157,7 @@ class SaveLodgingDetails
         :price_updated_at,
         :status,
         :region_id,
+        :lodging_category_id,
         :check_in_day,
         :presentation,
         :created_at,
