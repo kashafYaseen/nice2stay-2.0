@@ -17,7 +17,7 @@ class Api::V2::LodgingsController < Api::V2::ApiController
       instant_lodgings: { count: Lodging.render_lodgings_count_for(@lodgings, 1, 'realtime_availability', @total_lodgings) },
       amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings }),
       experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings }),
-      lodging_types: Api::V2::LodgingCategoriesSerializer.new(LodgingCategory.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
+      lodging_categories: Api::V2::LodgingCategorySerializer.new(LodgingCategory.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
     }, status: :ok
   end
 
