@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
     draw :api_v2
+    draw :api_v3
 
     devise_scope :user do
       get "users/edit/password", to: 'users/registrations#edit_password', as: :user_edit_password
@@ -29,6 +30,9 @@ Rails.application.routes.draw do
       get :quick_view, on: :member
       get :cumulative_price, on: :collection
       get :calendar, on: :member
+      resources :booking_expert_lodgings, only: [:show] do
+        post :rates, on: :collection
+      end
     end
     resource :carts do
       get :remove, on: :member

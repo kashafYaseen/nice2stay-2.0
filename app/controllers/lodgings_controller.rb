@@ -30,17 +30,20 @@ class LodgingsController < ApplicationController
     @reviews = @lodging.all_reviews.includes(:user, :reservation).page(params[:page]).per(2)
     @lodging_children = @lodging.lodging_children.published.includes(:availabilities, :translations) if @lodging.as_parent?
     @title = @lodging.meta_title
+
     if @lodging.guest_centric?
       @disable_dates = @lodging.gc_not_available_on(params)
       @check_in = @lodging.first_available_date(@disable_dates)
       @children_gc_ids = @lodging.lodging_children.pluck(:guest_centric_id)
+    elsif @lodging.booking_expert?
+      @disable_dates = @lodging.be_not_available_on
+      @check_in = @lodging.first_available_date(@disable_dates)
     end
   end
 
   def price_details
     @lodging = Lodging.find(params[:values].split(',')[-1])
-    results = @lodging.price_details(params[:values].split(','))
-
+    results = @lodging.price_details(values: params[:values].split(','))
     if @lodging.flexible_search
       @rates = results.map{ |result| result[:rates].inject(Hash.new(0)){ |h, i| h[i]+=1; h }}
       @search_params = results.map{ |result| result[:search_params] }
@@ -86,6 +89,6 @@ class LodgingsController < ApplicationController
     end
 
     def track_action
-      ahoy.track "Lodgings Search", request.parameters.except('utf8') rescue nil
+      ahoy.track "Lodgings Search", request.parameters.except('utf8')
     end
 end

@@ -10,7 +10,7 @@ class Api::V2::BookingsController < Api::V2::ApiController
 
     render json: {
       old:      Api::V2::BookingSerializer.new(old_bookings).serializable_hash.merge(pagy: old_bookings_pagy),
-      upcoming: Api::V2::BookingSerializer.new(upcoming_bookings).serializable_hash.merge(pagy: upcoming_bookings_pagy),
+      upcoming: Api::V2::BookingSerializer.new(upcoming_bookings, { params: { reservations: true }}).serializable_hash.merge(pagy: upcoming_bookings_pagy),
       requests: Api::V2::ReservationSerializer.new(requests).serializable_hash.merge(pagy: requests_pagy),
       options:  Api::V2::ReservationSerializer.new(options).serializable_hash.merge(pagy: options_pagy),
     }, status: :ok

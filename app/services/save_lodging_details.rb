@@ -1,3 +1,4 @@
+
 class SaveLodgingDetails
   attr_reader :params
   attr_reader :lodging
@@ -21,17 +22,29 @@ class SaveLodgingDetails
       lodging.owner = owner
       lodging.region = region(params[:lodging][:country_crm_id], params[:lodging][:region_crm_id])
       lodging.parent = parent
+      lodging.channel = 'open_gds' if params[:lodging][:open_gds]
+      lodging.channel = 'room_raccoon' if params[:lodging][:room_raccoon]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save
+
+      UpdateLodgingRatePlans.call(lodging: lodging, parent_rate_plans: params[:lodging][:parent_rate_plans], room_rates: params[:lodging][:room_rates]) if lodging.belongs_to_channel?
+      UpdateLodgingSupplements.call(lodging: lodging, params: params[:supplements])
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
       return unless lodging.published?
-      UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
-      UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
+
+      unless lodging.belongs_to_channel?
+        Rails.logger.info "Sync Lodging In UpdatePrices Block ==================>>>>>>>>>>> #{lodging.name}"
+        Rails.logger.info "Sync Lodging Channel ==================>>>>>>>>>>> #{lodging.channel} =======> OpenGDS: #{params[:lodging][:open_gds]}"
+        UpdateLodgingPrices.call(lodging, params[:lodging][:prices])
+        UpdateLodgingAvailabilities.call(lodging, params[:not_available_days])
+      end
+
       UpdateLodgingCleaningCosts.call(lodging, params[:cleaning_costs], params[:cleaning_cost_ids])
       UpdateLodgingDiscounts.call(lodging, params[:discounts], params[:discount_ids])
       update_amenities
       update_experiences
+      update_place_categories
     end
 
     def update_amenities
@@ -42,6 +55,11 @@ class SaveLodgingDetails
     def update_experiences
       experiences = Experience.where(slug: params[:experiences])
       lodging.experiences = experiences
+    end
+
+    def update_place_categories
+      place_categories = PlaceCategory.where(slug: params[:place_categories])
+      lodging.place_categories = place_categories
     end
 
     def owner
@@ -66,7 +84,9 @@ class SaveLodgingDetails
     end
 
     def parent
+      Rails.logger.info "Params[:parent] ==================> #{params[:parent].present?}"
       return unless params[:parent].present?
+
       _parent = Lodging.find_by(crm_id: parent_params[:crm_id]) || Lodging.friendly.find(parent_params[:slug]) rescue Lodging.new
       _parent.owner = owner
       _parent.region = region(params[:parent][:country_crm_id], params[:parent][:region_crm_id])
@@ -127,6 +147,7 @@ class SaveLodgingDetails
         :confirmed_price_2020,
         :dynamic_prices,
         :include_cleaning,
+        :deposit,
         :include_deposit,
         :checked,
         :flexible_arrival,
@@ -136,6 +157,7 @@ class SaveLodgingDetails
         :price_updated_at,
         :status,
         :region_id,
+        :lodging_category_id,
         :check_in_day,
         :presentation,
         :created_at,
@@ -153,6 +175,12 @@ class SaveLodgingDetails
         { gc_rooms: [] },
         :crm_id,
         :free_cancelation,
+        :open_gds_property_id,
+        :open_gds_accommodation_id,
+        :extra_beds,
+        :extra_beds_for_children_only,
+        :num_of_accommodations,
+        :name_on_cm
       )
     end
 

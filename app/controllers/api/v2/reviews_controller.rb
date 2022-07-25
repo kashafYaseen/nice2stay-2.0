@@ -2,6 +2,7 @@ class Api::V2::ReviewsController < Api::V2::ApiController
   before_action :set_lodging, only: [:index]
   before_action :authenticate, only: [:create]
   before_action :set_reservation, only: [:create]
+  before_action :check_authorization_to_create, only: [:create]
 
   def index
     pagy, reviews = pagy(@lodging.all_reviews.includes(:lodging, :reservation), items: params[:per_page], page: params[:page])
@@ -24,6 +25,11 @@ class Api::V2::ReviewsController < Api::V2::ApiController
 
     def set_reservation
       @reservation = current_user.reservations.find(params[:reservation_id])
+    end
+
+    def check_authorization_to_create
+      return if @reservation.can_review?(current_user)
+      render json: { feedback_submitted: true }, status: :ok
     end
 
     def review_params

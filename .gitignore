@@ -44,3 +44,10 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+
+.yarn/
+.yarnrc
+.idea/
+.rakeTasks
+n2s_erd.pdf
+/vendor/bundle/

@@ -1,4 +1,7 @@
+require './lib/recommendation.rb'
+
 class User < ApplicationRecord
+  include Reccommendation
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -12,14 +15,16 @@ class User < ApplicationRecord
   has_many :leads
   has_many :bookings
   has_many :reservations, through: :bookings
+  has_many :reserved_lodgings, through: :reservations, source: :lodging
   has_many :notifications
   has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
   has_many :vouchers, foreign_key: :receiver_id
-
   has_many :trip_members
   has_many :trips, through: :trip_members
+  has_many :recent_searches
+  has_and_belongs_to_many :visited_lodgings, class_name: 'Lodging', join_table: 'visited_lodgings'
 
   has_one :first_visit, -> (user) { order(:started_at).where("started_at < ?", user.created_at) }, class_name: 'Ahoy::Visit'
 
@@ -30,6 +35,7 @@ class User < ApplicationRecord
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
   delegate :recent, to: :notifications, allow_nil: true, prefix: true
   delegate :name, :code, :slug, to: :country, allow_nil: true, prefix: true
+  delegate :with_lodgings, to: :history_lodgings, allow_nil: true, prefix: :history
   delegate :unsed, :old, to: :vouchers, allow_nil: true, prefix: true
 
   validates :email, uniqueness: { message: "has an account. Click here to <input type='button' name='login-form' value='Login' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#login-form-modal'>or here to <input type='button' name='reset-password-form' value='Reset password' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#reset-pass-form-modal'>" }, allow_blank: true
@@ -95,6 +101,10 @@ class User < ApplicationRecord
   def invitation_status
     return "Pending"  if invitation_accepted_at.blank? && !invitation_sent_at.blank?
     return "Accepted"
+  end
+
+  def reserved_lodging_slugs
+    reserved_lodgings.map(&:slug).uniq
   end
 
   private
