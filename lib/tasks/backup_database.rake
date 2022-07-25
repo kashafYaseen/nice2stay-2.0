@@ -7,6 +7,6 @@ namespace :db do
     dir = Dir.new(backup_folder)
     all_backups = dir.entries.reject { |entry| entry == '.' || entry == '..' }.sort
     FileUtils.rm_rf(File.join(backup_folder, all_backups.first))  if all_backups.size > 4
-    puts "Databse backup created successfully -------------------------------->> #{datestamp}"
+    puts "Database backup created successfully -------------------------------->> #{datestamp}"
   end
 end
