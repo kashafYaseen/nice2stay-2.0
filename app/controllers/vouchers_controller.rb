@@ -8,7 +8,7 @@ class VouchersController < ApplicationController
 
   def create
     @voucher = Voucher.new(voucher_params)
-    if @voucher.save
+    if verify_recaptcha(model: @voucher) && @voucher.save
       if @voucher.amount > Voucher::PREDEFINED_GIFT_AMOUNT
         payment = VoucherPayment.new(voucher: @voucher, params: { locale: locale }).voucher_payment
         return redirect_to mollie_payment_url(payment, params[:payment]) if payment.present?
