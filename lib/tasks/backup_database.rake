@@ -11,6 +11,6 @@ namespace :db do
   end
 
   def dir_entries(dir)
-    dir.entries.reject { |entry| entry == '.' || entry == '..' }.sort
+    dir.entries.reject { |entry| entry == '.' || entry == '..' }.sort_by{|v| v.split("-")[2].to_i}
   end
 end
