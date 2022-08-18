@@ -262,9 +262,9 @@ nl:
     title: Gemiddelde score & laatste reviews van Nice2stay
     quality: Kwaliteit
     interior: Interieur & Stijl
-    service: Gastvrijheid
+    service: Nice2stay Service
     setting: Setting & Locatie
-    communication: Nice2stay Service
+    communication: Gastvrijheid
   nav:
     land: Landen & regio's
     landen: Landen
@@ -321,7 +321,7 @@ nl:
       question: Optie definitief annuleren?
       paragraph_1: Wij informeren de eigenaar van de accommodatie. Hier kunt u de reden aangeven waarom u niet definitief wilt reserveren
       preference_for_another_accommodation: keuze voor een andere accommodatie
-      preference_for_another_destination: Keuze voor een andere bestemming 
+      preference_for_another_destination: Keuze voor een andere bestemming
       unable_to_find_airline_tickets_or_transportation: Geen vliegtickets/ vervoer kunnen vinden
       no_agreement_from_fellow_travelers_or_work: Geen akkoord van gezelschap en/ of werk
       price_not_within_our_budget: Prijs toch niet binnen budget
