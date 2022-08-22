@@ -87,7 +87,7 @@ class GetAutocompleteData
         limit: 6,
         load: false,
         misspellings: { below: 5 },
-        where: { presentation: 'as_parent', published: true }
+        where: { presentation: ['as_parent', 'as_standalone'], published: true }
       }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'lodging', slug: lodging.slug } }
     end
 
