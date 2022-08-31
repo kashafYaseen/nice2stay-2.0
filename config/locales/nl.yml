@@ -603,7 +603,7 @@ nl:
     feedback_reminder_email_link: "Klik hier om uw ervaringen te delen met ons"
     warm_regards: "Hartelijke groeten"
     contact: "Contact"
-    contact_text: "Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat op onze website. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com"
+    contact_text: "Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur op het nummer 0031-238447005 en via de chat op onze website. Natuurlijk kunt u ons altijd een email sturen: info@nice2stay.com"
 
   route:
     greeting: "Beste %{name},"
