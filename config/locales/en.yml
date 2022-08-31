@@ -608,7 +608,7 @@ en:
     feedback_reminder_email_link: "Click here to share your feedback with Nice2stay"
     warm_regards: "Warm regards"
     contact: "Contact"
-    contact_text: "You can reach our multilingual team by phone from 9 AM - 5.30 PM ​on weekdays and on Saturday from 10 AM - 1 PM at 0031-238447005 or via the chat function​ on our website. ​And you can always send an email to info@nice2stay.com, we will respond as soon as possible."
+    contact_text: "You can reach our multilingual team by phone from 9 AM - 5.30 PM ​on weekdays at 0031-238447005 or via the chat function​ on our website. ​And you can always send an email to info@nice2stay.com, we will respond as soon as possible."
 
   route:
     greeting: "Dear %{name},"
