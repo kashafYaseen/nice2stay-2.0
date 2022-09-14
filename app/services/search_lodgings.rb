@@ -207,7 +207,7 @@ class SearchLodgings
                       {
                         bool: {
                           must: [
-                            { range: { "rules.minimum_stay": { lte: nights } } },
+                            { match: { "rules.minimum_stay": nights } },
                             { match: { "rules.dates": check_in } },
                           ]
                         }
