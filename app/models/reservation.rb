@@ -169,7 +169,7 @@ class Reservation < ApplicationRecord
             count += 1
           end
         end
-        if count == applied_rules.length
+        if count > 0
           errors.add(:check_in, rules_validation_message(check_in, check_out))
         end
       else
