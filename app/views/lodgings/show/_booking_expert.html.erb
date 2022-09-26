@@ -1,0 +1,248 @@
+<%= render 'shared/photoswipe' %>
+
+<div id="loader">
+  <%= image_tag 'loader.gif', class: 'w-50' %>
+</div>
+
+<div class="home-container">
+  <div class="col-md-12 padding-sm-0">
+    <div class="col-md-12 margin-top-1x padding-sm-0">
+      <div class="row target-section" id="home-container">
+        <div class="col-md-12 col-xs-12 pr-0">
+          <div>
+            <div class="owl-carousel-full">
+              <% @lodging.images.each_with_index do |image_url, index| %>
+                <%= image_tag image_url, class: "item", alt: index %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="lodging-gallery margin-top-1x" itemscope>
+            <% @lodging.images.each_with_index do |image_url, index| %>
+              <figure itemprop="associatedMedia" itemscope class="d-none">
+                <a href="<%= image_url %>" itemprop="contentUrl">
+                  <img src="<%= image_url %>" itemprop="thumbnail" alt="<%= @lodging.name %>" class="img-fluid img-thumbnail" />
+                </a>
+                <figcaption itemprop="caption description"><%= index %></figcaption>
+              </figure>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row container-fluid padding-sm-0 mt-4">
+        <div class="col-md-3">
+          <h2 class="name-header mb-3"><%= @lodging.h1 %></h2>
+
+          <ul class="list-icon">
+            <% if @reviews.present? %>
+              <div class="align-baseline text-xlg text-primary mr-1 mt-3 mb-3">
+                <%= render_stars_tag @lodging.average_rating %> <p class="d-inline">(<%= pluralize(@lodging.all_reviews.count, 'review', 'reviews') %>)</p>
+              </div>
+            <% end %>
+
+            <h6>
+              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_1 %><br>
+              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_2 %><br>
+              <i class="material-icons md-24 check text-success"></i><%= @lodging.highlight_3 %>
+            </h6>
+            <br>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <%= @lodging.summary.try(:html_safe) %>
+        </div>
+
+        <div class="col-md-3">
+          <h6 class="amenities-header"><%= t('amenities.popular') %></h6>
+
+          <div class="bs-glyphicons">
+            <ul class="bs-glyphicons-list">
+              <% @lodging.amenities.hot.each do |amenity| %>
+                <li>
+                  <span class="glyphicon glyphicon-asterisk" aria-hidden="true"><i class="fal fa-<%= amenity.icon.presence || 'shield-check' %> fa-2x"></i></span>
+                  <span class="glyphicon-class"><%= amenity.name %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+          <a class="scroll-to-btn text-info" data-target="#lodging-amenities"><%= t('amenities.view_all') %></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="calendar_section col-md-12 margin-bottom-2x margin-top-3x padding-sm-0" id="availability-and-prices">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 p-2 margin-top-1x bg-white">
+        <%= render 'reservations/booking_expert_form', lodging: @lodging, reservation: @reservation, lodging_children: @lodging_children, id_sufix: '_modal' %>
+      </div>
+
+      <div class="col-md-9 margin-top-1x padding-bottom-2x bg-white">
+        <div class="col-md-12 bootstrap-default margin-top-1x">
+          <div class="alert alert-success" role="alert">
+            <%= t('lodgings_index.carefree_booking') %>
+          </div>
+        </div>
+
+        <div id="booking_expert_lodgings">
+          <%= render 'booking_expert', lodging: @lodging, be_availabilities: @be_availabilities %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="questions" class="col-md-12 margin-bottom-1x p-0">
+    <div class="infobox">
+      <div class="infobox-header bg-secondary">
+        <h5 class="mb-3">
+          <%= t 'cart.price' %>
+        </h5>
+      </div>
+
+      <div class="infobox-content">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-12 mt-1">
+
+              <div class="bg-white mt-3">
+                <%= render 'shared/alert', title: 'Important:', type: 'info', description: render_price_notice(@lodging) if @lodging.display_price_notice? || !@lodging.checked? %>
+              </div>
+
+              <p class="margin-top-1x">
+                <%= t 'usp.vragen_show_header' %> <%= @lodging.name %> ?
+              </p>
+
+              <p><%= t 'email.contact_text' %></p>
+              <p><%= t('calendar.legenda') %></p>
+            </div>
+
+            <div class="text-xxs mt-3 row">
+              <div class="col-3 text-center">
+                <p class="asd__day--enabled bg-white color-box mb-1 mx-auto"></p>
+                <span><%= t('calendar.available') %></span>
+              </div>
+
+              <div class="col-3 text-center">
+                <p class="asd__day--disabled color-box mb-1 mx-auto"></p>
+                <span><%= t('calendar.not_available') %></span>
+              </div>
+
+              <div class="col-3 text-center">
+                <p class="asd__day--discount color-box mb-1 mx-auto"></p>
+                <span><%= t('calendar.special_offer') %></span>
+              </div>
+
+              <div class="col-3 text-center">
+                <p class="asd__day--option color-box mb-1 mx-auto"></p>
+                <span><%= t('calendar.under_option') %></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="accordion" id="accordion2" role="tablist">
+              <div class="card-header" role="tab">
+                <h6>
+                  <a href="#collapseFour" data-toggle="collapse">
+                    <i class="material-icons check_circle"></i>
+                    <%= t 'information.included_header' %>
+                  </a>
+                </h6>
+              </div>
+
+              <div class="collapse" id="collapseFour" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body">
+                  <%= @lodging.including_text.try(:html_safe) %>
+                </div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6>
+                  <a class="collapsed" href="#collapseFive" data-toggle="collapse">
+                    <i class="material-icons assignment"></i>
+                    <%= t 'information.informatie_header' %>
+                  </a>
+                </h6>
+              </div>
+
+              <div class="collapse" id="collapseFive" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body">
+                  <%= @lodging.particularities_text.try(:html_safe) %>
+                </div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6>
+                  <a class="collapsed" href="#collapseSeven" data-toggle="collapse">
+                    <i class="material-icons room_service"></i>
+                    <%= t 'information.extra_service' %>
+                  </a>
+                </h6>
+              </div>
+
+              <div class="collapse" id="collapseSeven" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body">
+                  <%= @lodging.options_text.try(:html_safe) %>
+                </div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6>
+                  <a class="collapsed" href="#collapseSix" data-toggle="collapse">
+                    <i class="material-icons monetization_on"></i>
+                    <%= t 'information.payment_conditions' %>
+                  </a>
+                </h6>
+              </div>
+
+              <div class="collapse" id="collapseSix" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body">
+                  <%= @lodging.payment_terms_text.try(:html_safe) %>
+                </div>
+              </div>
+
+              <div class="card-header" role="tab">
+                <h6>
+                  <a class="collapsed" href="#collapseTen" data-toggle="collapse">
+                   <i class="material-icons monetization_on"></i>
+                    <%= t 'information.deposit' %>
+                  </a>
+                </h6>
+              </div>
+
+              <div class="collapse" id="collapseTen" data-parent="#accordion2" role="tabpanel">
+                <div class="card-body">
+                  <%= @lodging.deposit_text.try(:html_safe) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared_content', lodging: @lodging %>
+
+<%= render 'shared/meta_tags', resource: @lodging %>
+
+<% content_for :canonical do %><%= lodging_url(@lodging) %><% end %>
+
+<%= content_for :js_init do %>
+  Lodging.read_more()
+  initPhotoSwipeFromDOM('.lodging-gallery');
+  initDatePicker();
+  OwlCarousel.init();
+  Map.init_with('<%= @lodging.to_json(methods: [:feature], only: []) %>', 'lodging-map-location');
+  BookingExpert.init();
+  $('#loader').hide();
+  $('.price-loader').hide();
+<% end %>

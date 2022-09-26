@@ -16,7 +16,8 @@ class Booking < ApplicationRecord
 
   after_update :send_details
 
-  delegate :full_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
+  delegate :full_name, :first_name, :last_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
+  delegate :open_gds, :open_gds_without_online_payment, :open_gds_with_online_payment, :canceled, :in_cart, to: :reservations, prefix: true, allow_nil: true
 
   enum booking_status: {
     prebooking: 0,
@@ -29,12 +30,14 @@ class Booking < ApplicationRecord
     arrival_email_sent: 7,
     option: 8,
     request_price: 9,
+    security_paid: 10,
   }
 
   enum created_by: {
     customer: 0,
     houseowner: 1,
     nice2stay: 2,
+    hotelandbeyond: 3,
   }
 
   attr_accessor :skip_data_posting
@@ -59,6 +62,10 @@ class Booking < ApplicationRecord
     reservations.sum(&:final_payment)
   end
 
+  def total_security_deposit
+    reservations.sum(&:security_deposit_on_location)
+  end
+
   def cleaning_cost_on_location
     reservations.sum(&:cleaning_cost_on_location)
   end
@@ -77,6 +84,11 @@ class Booking < ApplicationRecord
   def final_paid_at!(datetime)
     reservations.update_all(booking_status: 'fully_paid')
     update(final_payed_at: datetime, booking_status: 'fully_paid')
+  end
+
+  def security_paid_at!(datetime)
+    reservations.update_all(booking_status: 'security_paid')
+    update(security_payed_at: datetime, booking_status: 'security_paid')
   end
 
   private

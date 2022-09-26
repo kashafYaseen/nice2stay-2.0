@@ -41,10 +41,10 @@ class SendBookingDetails
           fe_id: booking.id,
           pre_payment: booking.pre_payment,
           final_payment: booking.final_payment,
-          prepayment_received_date: booking.pre_payed_at,
-          finalpayment_received_date: booking.final_payed_at,
           voucher_code: booking.voucher_code,
           voucher_amount: booking.voucher_amount,
+          prepayment_received_date: booking.pre_payed_at,
+          finalpayment_received_date: booking.final_payed_at,
         }
       }
     end
@@ -55,7 +55,7 @@ class SendBookingDetails
         reservations << {
           id: reservation.crm_booking_id,
           front_end_id: reservation.id,
-          accommodation_slug: reservation.lodging_slug,
+          accommodation_slug: accommodation_slug(reservation),
           from: reservation.check_in,
           to: reservation.check_out,
           persons_number: reservation.adults,
@@ -80,6 +80,18 @@ class SendBookingDetails
           offer_id: reservation.offer_id,
           by_houseowner: false,
           skip_data_posting: true,
+          child_accommodation_id: reservation.child_lodging_crm_id,
+          rate_plan_id: reservation.rate_plan_crm_id,
+          rr_res_id_value: reservation.rr_res_id_value,
+          rr_errors: reservation.rr_errors,
+          open_gds_res_id: reservation.open_gds_res_id,
+          open_gds_error_name: reservation.open_gds_error_name,
+          open_gds_error_message: reservation.open_gds_error_message,
+          open_gds_error_code: reservation.open_gds_error_code,
+          open_gds_error_status: reservation.open_gds_error_status,
+          open_gds_payment_hash: reservation.open_gds_payment_hash,
+          open_gds_deposit_amount: reservation.open_gds_deposit_amount,
+          open_gds_payment_status: reservation.open_gds_payment_status,
           book_option: reservation.book_option,
           cancel_option_reason: reservation.cancel_option_reason,
           canceled_by: reservation.canceled_by,
@@ -131,5 +143,11 @@ class SendBookingDetails
         next unless reservation.present?
         reservation.update_column :crm_booking_id, booking_accommodation['id']
       end
+    end
+
+    def accommodation_slug(reservation)
+      return reservation.child_lodging_slug if reservation.belongs_to_channel?
+
+      reservation.lodging_slug
     end
 end
