@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.0'
+ruby '2.6.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
@@ -55,7 +55,7 @@ gem 'premailer-rails'
 gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
-gem "i18n-js"
+gem 'i18n-js', '~> 3.6'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -67,6 +67,8 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'dotenv-rails'
+  gem 'pry'
+  gem 'pry-rails'
 end
 
 group :production do
@@ -108,9 +110,10 @@ gem 'jquery-ui-rails'
 
 gem 'geocoder'
 gem 'searchkick'
+gem 'elasticsearch', '~> 7.17', '>= 7.17.1'
 gem 'activeadmin'
 gem 'route_translator'
-gem 'globalize', git: 'https://github.com/globalize/globalize'
+gem 'globalize'
 gem 'globalize-accessors'
 gem 'chosen-rails'
 gem "skylight"
