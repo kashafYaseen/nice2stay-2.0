@@ -168,23 +168,21 @@ class Lodging < ApplicationRecord
   end
 
   searchkick batch_size: 200, routing: true, locations: [:location], text_middle: [:name], merge_mappings: true, mappings: {
-    lodging: {
-      properties: {
-        rules: { type: :nested },
-        availability_price: { type: :long },
-        availabilities: { type: :nested },
-        room_rates: {
-          type: :nested,
-          properties: {
-            availabilities: { type: :nested }
-          }
-        },
-        relation_type: {
-          type: :join,
-          eager_global_ordinals: true,
-          relations: {
-            parent: :child
-          }
+    properties: {
+      rules: { type: :nested },
+      availability_price: { type: :long },
+      availabilities: { type: :nested },
+      room_rates: {
+        type: :nested,
+        properties: {
+          availabilities: { type: :nested }
+        }
+      },
+      relation_type: {
+        type: :join,
+        eager_global_ordinals: true,
+        relations: {
+          parent: :child
         }
       }
     }

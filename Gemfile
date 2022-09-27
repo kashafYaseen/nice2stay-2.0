@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.0'
+ruby '2.6.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
@@ -55,7 +55,7 @@ gem 'premailer-rails'
 gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
-gem "i18n-js"
+gem 'i18n-js', '~> 3.6'
 gem 'oj'
 gem 'typhoeus'
 gem 'redis-rails'
@@ -69,6 +69,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'dotenv-rails'
+  gem 'pry'
+  gem 'pry-rails'
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
   gem 'selenium-webdriver'
@@ -117,9 +119,10 @@ gem 'jquery-ui-rails'
 
 gem 'geocoder'
 gem 'searchkick'
+gem 'elasticsearch', '~> 7.17', '>= 7.17.1'
 gem 'activeadmin'
 gem 'route_translator'
-gem 'globalize', git: 'https://github.com/globalize/globalize'
+gem 'globalize'
 gem 'globalize-accessors'
 gem 'chosen-rails'
 gem "skylight"

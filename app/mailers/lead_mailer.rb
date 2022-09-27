@@ -7,7 +7,7 @@ class LeadMailer < ApplicationMailer
     local = @user.language.presence || :nl
 
     I18n.with_locale(local.downcase) do
-      make_bootstrap_mail(
+      bootstrap_mail(
         from: @owner.email,
         to: @user.email,
         cc: "support@nice2stay.com",
