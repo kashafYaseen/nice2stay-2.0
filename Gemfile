@@ -125,6 +125,6 @@ gem "chartkick"
 gem 'groupdate'
 gem 'activerecord-import', '~> 0.15.0'
 gem 'globalize-accessors'
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '~> 5.0', '>= 5.0.0.342'
 gem 'rack-cors'
 gem 'recaptcha'
