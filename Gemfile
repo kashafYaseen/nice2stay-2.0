@@ -133,7 +133,7 @@ gem 'arctic_admin'
 gem "chartkick"
 gem 'groupdate'
 gem 'activerecord-import', '~> 0.15.0'
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '~> 5.0', '>= 5.0.0.342'
 gem 'rack-cors'
 gem 'ox', '~> 2.13', '>= 2.13.3'
 gem 'csv'
