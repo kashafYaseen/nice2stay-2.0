@@ -125,7 +125,7 @@ gem 'route_translator'
 gem 'globalize'
 gem 'globalize-accessors'
 gem 'chosen-rails'
-gem "skylight"
+gem 'skylight', '3.1.2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
 gem 'omniauth-facebook'
