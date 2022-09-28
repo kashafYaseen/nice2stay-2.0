@@ -58,11 +58,11 @@ class User < ApplicationRecord
   end
 
   def auth_token
-    JsonWebToken.encode({ user_id: self.id, exp: auth_expires_at })
+    JsonWebToken.encode({ user_id: self.id, exp: auth_expires_at.to_i })
   end
 
   def regenerate_auth_token
-    JsonWebToken.encode({ user_id: self.id, exp: update_token_expire_time })
+    JsonWebToken.encode({ user_id: self.id, exp: update_token_expire_time.to_i })
   end
 
   def self.authenticate(email:, password:)
