@@ -92,7 +92,7 @@ class GetAutocompleteData
     end
 
     def visited_lodgings
-      user_visited_lodgings = User.find_by(id: params[:user_id]).visited_lodgings rescue []
+      user_visited_lodging_ids = User.find_by(id: params[:user_id]).visited_lodgings.pluck(:id) rescue []
       return [] unless user_visited_lodgings.present?
       Lodging.search(params[:query], {
         fields: [:name],
@@ -100,7 +100,7 @@ class GetAutocompleteData
         limit: 5,
         load: false,
         misspellings: { below: 5 },
-        where: { presentation: 'as_parent', published: true, id: user_visited_lodgings.ids }
+        where: { presentation: 'as_parent', published: true, id: user_visited_lodging_ids }
       }).map{ |lodging| { name: lodging.name, type: 'lodging', id: lodging.id, url: lodging_path(lodging.slug, locale: locale), image: lodging.images[0] } }
     end
 
