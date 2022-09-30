@@ -119,7 +119,7 @@ gem 'jquery-ui-rails'
 
 gem 'geocoder'
 gem 'searchkick'
-gem 'elasticsearch', '~> 8.0', '>= 8.0.0'
+gem 'elasticsearch', '8.0.0'
 gem 'activeadmin'
 gem 'route_translator'
 gem 'globalize'
