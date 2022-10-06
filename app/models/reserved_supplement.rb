@@ -4,9 +4,6 @@ class ReservedSupplement < ApplicationRecord
   before_create :cumulative_price
 
   attr_accessor :maximum_number
-  # quantity is virtual attribute please make a column
-  # and remove this virtual attribute
-  attr_accessor :quantity
 
   translates :name, :description
   globalize_accessors
