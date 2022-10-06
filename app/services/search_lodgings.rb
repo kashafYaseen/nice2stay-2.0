@@ -170,7 +170,7 @@ class SearchLodgings
                           must: [
                             { match: { "rules.dates": check_in } },
                             { match: { "rules.flexible_arrival": false } },
-                            { match: { "rules.check_in_day": check_in.strftime("%A").downcase } }
+                            { match: { "rules.checkin_day": check_in.strftime("%A").downcase } }
                           ]
                         }
                       }
@@ -207,7 +207,7 @@ class SearchLodgings
                       {
                         bool: {
                           must: [
-                            { range: { "rules.minimum_stay": { lte: nights } } },
+                            { match: { "rules.minimum_stay": nights } },
                             { match: { "rules.dates": check_in } },
                           ]
                         }

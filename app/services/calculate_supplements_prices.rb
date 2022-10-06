@@ -37,7 +37,7 @@ class CalculateSupplementsPrices
           calculated_data[:selected_adults] = params[:selected_adults]
           calculated_data[:selected_children] = params[:selected_children]
         else
-          calculated_data[:calculated_price] = supplement.rate
+          calculated_data[:calculated_price] = sup.present? ? supplement.rate : 0.0
           calculated_data[:calculated_price] *= stay unless supplement.rate_type == 'Per Stay'
       end
 

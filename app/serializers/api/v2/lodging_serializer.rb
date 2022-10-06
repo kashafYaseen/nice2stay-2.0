@@ -6,7 +6,8 @@ class Api::V2::LodgingSerializer
              :images, :average_rating, :created_at, :updated_at, :highlight_1,
              :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text,
              :open_gds_property_id, :open_gds_accommodation_id, :including_text,
-             :setting, :quality, :interior, :service, :communication
+             :setting, :quality, :interior, :service, :communication, :realtime_availability,
+             :lodging_category_id
 
   attribute :total_reviews do |lodging|
     lodging.all_reviews.count
@@ -26,5 +27,13 @@ class Api::V2::LodgingSerializer
 
   attribute :first_available_child_id, if: proc { |lodging, params| params.present? } do |lodging, params|
     lodging.first_available_child_wrt(params[:lodgings])
+  end
+
+  attribute :actual, if: Proc.new { |lodging, params| params.present? && params[:lodgings].present?  } do |lodging, params|
+    lodging.lodging_type_count_for(params[:lodgings])
+  end
+
+  attribute :total, if: Proc.new { |lodging, params| params.present? && params[:total_lodgings].present?  } do |lodging, params|
+    lodging.lodging_type_count_for(params[:total_lodgings])
   end
 end

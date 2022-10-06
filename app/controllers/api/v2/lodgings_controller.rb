@@ -14,7 +14,10 @@ class Api::V2::LodgingsController < Api::V2::ApiController
 
     render json: {
       lodgings: Api::V2::LodgingSerializer.new(@lodgings, { params: { experiences: true, current_user: current_user, lodgings: @lodgings, total_lodgings: @total_lodgings, action_name: action_name } }).serializable_hash.merge(total_lodgings: @lodgings.total_count),
-      amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
+      instant_lodgings: { count: Lodging.render_lodgings_count_for(@lodgings, 1, 'realtime_availability', @total_lodgings) },
+      amenities: Api::V2::AmenitySerializer.new(Amenity.includes(:translations, amenity_category: :translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings }),
+      experiences: Api::V2::ExperienceSerializer.new(Experience.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings }),
+      lodging_categories: Api::V2::LodgingCategorySerializer.new(LodgingCategory.includes(:translations), params: { lodgings: @lodgings, total_lodgings: @total_lodgings })
     }, status: :ok
   end
 
@@ -27,9 +30,9 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def cumulative_price
+    params.merge!(nights: nights_wrt_flexible_type(params)) unless params[:nights].present? && params[:flexible]
     lodgings = Lodging.calculate_prices(params_wrt_flexible_type(params), ids, @search_analytic)
     supplements = JSON.parse(params[:supplements], symbolize_names: true) rescue nil
-    nights = (params[:check_out].to_date - params[:check_in].to_date).to_i
     render json: Api::V2::CumulativePriceSerializer.new(lodgings, { params: { check_in: params[:check_in], check_out: params[:check_out], adults: params[:adults].to_i, children: params[:children].to_i, supplements: supplements, accom_listing: params[:accom_listing] }}).serialized_json, status: :ok
   end
 

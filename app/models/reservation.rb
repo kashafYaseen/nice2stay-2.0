@@ -38,6 +38,8 @@ class Reservation < ApplicationRecord
   delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
   delegate :parent_lodging_id, to: :room_rate, allow_nil: true
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
+  delegate :deposit, to: :lodging, prefix: :security, allow_nil: true
+  delegate :include_deposit, to: :lodging, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :canceled, -> { where(canceled: true) }
@@ -183,6 +185,10 @@ class Reservation < ApplicationRecord
     is_managed_by_n2s? ? 0 : cleaning_cost.to_f
   end
 
+  def security_deposit_on_location
+    !include_deposit? ? 0 : security_deposit.to_f
+  end
+
   def self.arrival_status
     _arrivals = {}
     joins(lodging: { region: :country }).select("in_cart, check_in, countries.id").where("in_cart = ? and check_in >= ? and request_status = ?", false, Date.today, 1).group(:"countries.id").group_by_month(:check_in).count("id").map { |arrival| _arrivals[arrival.first[0]].present? ? _arrivals[arrival.first[0]] << [arrival.first[1], arrival.last] : _arrivals[arrival.first[0]] = [[arrival.first[1], arrival.last]] }
@@ -257,7 +263,7 @@ class Reservation < ApplicationRecord
             count += 1
           end
         end
-        if count == applied_rules.length
+        if count > 0
           errors.add(:check_in, rules_validation_message(check_in, check_out))
         end
       else

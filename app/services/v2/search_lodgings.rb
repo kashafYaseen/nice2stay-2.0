@@ -63,9 +63,15 @@ class V2::SearchLodgings
       conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
       conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
-      conditions << { range: { adults: { gte: params[:adults].to_i } } } if params[:adults].present?
-      conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } } if params[:adults].present?
-      conditions << { range: { minimum_adults: { lte: params[:adults].to_i } } } if params[:adults].present?
+
+      if params[:adults].present? && params[:perfect_adults].present?
+        conditions << { range: { adults: { gte: params[:adults].to_i, lte: params[:perfect_adults].to_i } } }
+      elsif params[:adults].present?
+        conditions << { range: { adults: { gte: params[:adults].to_i } } }
+        conditions << { range: { adults_and_children: { gte: (params[:adults].to_i + params[:children].to_i) } } }
+        conditions << { range: { minimum_adults: { lte: params[:adults].to_i } } }
+      end
+
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
       if params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:regions_in].present? && params[:bounds].blank?
@@ -100,6 +106,7 @@ class V2::SearchLodgings
         countries: { terms: { field: :country_id } },
         amenities: { terms: { field: :amenities_ids, size: Amenity.count } },
         experiences: { terms: { field: :experiences_ids, size: Experience.count } },
+        lodging_categories: { terms: { field: :lodging_category_id } },
         discounts: { terms: { field: :discounts } },
         checked: { terms: { field: :checked } },
         realtime_availability: { terms: { field: :realtime_availability } },
@@ -364,10 +371,14 @@ class V2::SearchLodgings
     end
 
     def order
-      return { average_rating: :desc } if params[:order] == 'rating_desc'
+      return { beds: :asc } if params[:order] == 'beds_asc'
+      return { beds: :desc } if params[:order] == 'beds_desc'
+      return { adults: :asc } if params[:order] == 'adults_asc'
+      return { adults: :desc } if params[:order] == 'adults_desc'
       return { price: :asc } if params[:order] == 'price_asc'
       return { price: :desc } if params[:order] == 'price_desc'
       return { created_at: :desc } if params[:order] == 'new_desc'
+      return { average_rating: :desc } if params[:order] == 'rating_desc'
       return { boost: :asc }
     end
 

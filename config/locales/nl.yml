@@ -110,6 +110,9 @@ nl:
     discount: Discount
     rent: Huurprijs
     total: Totaal
+    name: Naam
+    child_with_count: Kind %{count}
+    age: Leeftijd
     status: Status
     amount: Bedrag
     date_of_issue: Uitgifte datum
@@ -147,6 +150,9 @@ nl:
     child:
       one: "1 Kind"
       other: "%{count} Kinderen"
+    infant:
+      one: "1 Baby"
+      other: "%{count} Babies"
     children_details: "Leeftijd kinderen"
     age_of_child: "Leeftijd kind"
     children: Kinderen(<12)
@@ -202,35 +208,50 @@ nl:
     region_part_2: heeft een persoonlijke kwaliteitsinspectie doorstaan, om ervoor te zorgen dat het voldoet aan de hoge standaarden voor comfort, kwaliteit en stijl.  Christa Linders is verantwoordelijk voor portefolio
 
   vouchers:
-    paragraph_1: Verras een vriend, familielid of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
-    paragraph_2: Tot 28 februari 2022 trakteert Nice2stay op 50 Euro. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven.
-    paragraph_3: Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
-    your_details: Uw details
+    dear: 'Beste %{name},'
+    paragraph_1: Verras een vriend, familielid, collega of geliefde met een voucher voor een onvergetelijk verblijf in één van onze 1600 + accommodaties.
+    paragraph_2: Vraag hier rechts gemakkelijk uw voucher aan. U hoeft enkel de gegevens van de gelukkige ontvanger en een persoonlijke boodschap door te geven. Ons team verstuurt dan per post een mooie handgeschreven cadeaukaart!
+    conditions_terms: Lees hier de voorwaarden
+    your_details: Uw gegevens
     your_name: Uw voor en achternaam
     your_email: Uw e mailadres
-    for_who_is_this_gift: Voor wie is de Gift Card?
+    for_who_is_this_gift: De gegevens van de gelukkige ontvanger
     first_name: Voornaam
     last_name: Achternaam
     email_address: Emailadres
     city: Plaatsnaam
+    town: Plaats
     country: Land
     zipcode: Postcode
     address: Adres
     message_label: Uw persoonlijke boodschap voor de ontvanger die wij op de kaart zullen schrijven
     message: Schrijf hier uw persoonlijke boodschap voor de ontvanger...
-    select_amount: Selecteer het bedrag dat u wilt toevoegen bovenop de 50 Euro
+    select_amount: Selecteer het gewenste bedrag
     default_amount: €0,- (€50,- cadeau van Nice2stay)
-    terms_and_conditions: De kleine lettertjes (voorwaarden)
+    small_print_terms_and_conditions: De kleine lettertjes (voorwaarden)
+    terms_and_conditions: Voorwaarden
     term1: Vouchers worden niet gerestitueerd en zijn geldig voor nieuwe reserveringen gemaakt binnen 12 maanden na uitgiftedatum.
     term2: Vouchers zijn niet direct inwisselbaar bij onze aangesloten accommodaties. Elke boeking moet via Nice2stay gemaakt worden.
     term3: Vouchers zijn alleen inwisselbaar tegen accommodatie kosten. Ze kunnen niet worden ingewisseld voor incidentele hotelkosten of aanvullende diensten.
     term4: Vouchers kunnen niet worden ingewisseld voor contant geld.
-    term5: In het geval dat u waarde wilt toevoegen bovenop de 50 Euro, wordt u direct doorgeleid naar de betaalpagina. Nice2stay zal de bon versturen na ontvangst van betaling.
+    term5: Na het aanvragen van de voucher wordt u direct doorgeleid naar de betaalpagina. Nice2stay zal de voucher versturen na ontvangst van betaling.
     term6: Nice2stay zal de bon per post versturen naar de ontvanger, houdt er rekening mee dat het enkele dagen kan duren voordat de ontvanger de bon op de deurmat ontvangt.
     term7: De gegevens van de ontvanger zullen enkel gebruikt worden voor het toesturen van de bon en zij zullen tevens de Nice2stay nieuwsbrief ontvangen.
     term8: Het is niet toegestaan om meerdere vouchers per boeking toe te passen.
-    accept_terms: Ik ga akkoord met bovenstaande voorwaarden
-    submit: VERSTUUR
+    accept_terms: Ik ga akkoord met de Nice2stay Gift Card <span class="text-dotted mb-1">%{link}</span>
+    accept_terms_1: voorwaarden
+    previous: Vorige
+    next: Volgende
+    submit: Verstuur
+    required: verplicht
+    close: Sluit
+    thankyou_message: Bedankt voor het aanvragen van de Nice2stay Gift Voucher!
+    data_recipient: Gegevens ontvanger
+    amount_gift_voucher: Bedrag Gift Voucher
+    personal_message: Persoonlijke boodschap
+    closing_message: Ons team zal binnen 5 werkdagen de Gift Voucher per post versturen aan de gelukkige ontvanger.
+    new_giftcard: 'Nieuw: Giftcard'
+    new_nice2stay_giftcard: 'Nieuw: Nice2stay Giftcard'
 
   opens:
     week: maandag - vrijdag - 9.00 tot 18.00
@@ -241,9 +262,9 @@ nl:
     title: Gemiddelde score & laatste reviews van Nice2stay
     quality: Kwaliteit
     interior: Interieur & Stijl
-    service: Gastvrijheid
+    service: Nice2stay Service
     setting: Setting & Locatie
-    communication: Nice2stay Service
+    communication: Gastvrijheid
   nav:
     land: Landen & regio's
     landen: Landen
@@ -300,7 +321,7 @@ nl:
       question: Optie definitief annuleren?
       paragraph_1: Wij informeren de eigenaar van de accommodatie. Hier kunt u de reden aangeven waarom u niet definitief wilt reserveren
       preference_for_another_accommodation: keuze voor een andere accommodatie
-      preference_for_another_destination: Keuze voor een andere bestemming 
+      preference_for_another_destination: Keuze voor een andere bestemming
       unable_to_find_airline_tickets_or_transportation: Geen vliegtickets/ vervoer kunnen vinden
       no_agreement_from_fellow_travelers_or_work: Geen akkoord van gezelschap en/ of werk
       price_not_within_our_budget: Prijs toch niet binnen budget
@@ -582,7 +603,7 @@ nl:
     feedback_reminder_email_link: "Klik hier om uw ervaringen te delen met ons"
     warm_regards: "Hartelijke groeten"
     contact: "Contact"
-    contact_text: "Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur en op zaterdag van 10.00 - 13.00 uur op het nummer 0031-238447005 en via de chat op onze website. Natuurlijk kunt u ons altijd een email sturen info@nice2stay.com"
+    contact_text: "Wij zijn op maandag t/m vrijdag telefonisch bereikbaar van 09.00 tot 17.30 uur op het nummer 0031-238447005 en via de chat op onze website. Natuurlijk kunt u ons altijd een email sturen: info@nice2stay.com"
 
   route:
     greeting: "Beste %{name},"
@@ -994,6 +1015,7 @@ nl:
     final_payment: Restantbetaling
     cleaning_cost: Schoonmaakkosten
     pay_on_location: Te betalen op locatie
+    voucher_added: Dank u wel voor invullen van de vouchercode %{code}. De vouchercode zal door ons worden gecontroleerd en toegepast op uw boeking.
 
   not_live_standalone:
     De beschikbaarheid van dit vakantiehuis is niet (altijd) up to date!

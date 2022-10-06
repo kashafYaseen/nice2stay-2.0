@@ -41,13 +41,17 @@ class SendBookingDetails
           fe_id: booking.id,
           pre_payment: booking.pre_payment,
           final_payment: booking.final_payment,
+          voucher_code: booking.voucher_code,
+          voucher_amount: booking.voucher_amount,
+          prepayment_received_date: booking.pre_payed_at,
+          finalpayment_received_date: booking.final_payed_at,
         }
       }
     end
 
     def booking_accommodations
       reservations = []
-      booking.reservations.unexpired.order(:id).includes(:child_lodging, :rate_plan).each do |reservation|
+      booking.reservations.not_canceled.unexpired.order(:id).each do |reservation|
         reservations << {
           id: reservation.crm_booking_id,
           front_end_id: reservation.id,

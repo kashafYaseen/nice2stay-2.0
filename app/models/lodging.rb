@@ -20,6 +20,7 @@ class Lodging < ApplicationRecord
   has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
+  belongs_to :lodging_category
   has_and_belongs_to_many :place_categories, join_table: 'lodging_place_categories'
   has_and_belongs_to_many :visited_users, class_name: 'User', join_table: 'visited_lodgings'
 
@@ -45,6 +46,8 @@ class Lodging < ApplicationRecord
   attr_accessor :dynamic_price
   attr_accessor :price_valid, :price_errors
   attr_accessor :first_available_room, :check_in, :check_out
+  attr_accessor :discount_price
+  attr_accessor :rent_price, :cleaning_cost
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -90,8 +93,6 @@ class Lodging < ApplicationRecord
     villa: 1,
     apartment: 2,
     bnb: 3,
-    small_resort: 4,
-    boutique_hotels: 5,
   }
 
   enum presentation: {
@@ -167,23 +168,21 @@ class Lodging < ApplicationRecord
   end
 
   searchkick batch_size: 200, routing: true, locations: [:location], text_middle: [:name], merge_mappings: true, mappings: {
-    lodging: {
-      properties: {
-        rules: { type: :nested },
-        availability_price: { type: :long },
-        availabilities: { type: :nested },
-        room_rates: {
-          type: :nested,
-          properties: {
-            availabilities: { type: :nested }
-          }
-        },
-        relation_type: {
-          type: :join,
-          eager_global_ordinals: true,
-          relations: {
-            parent: :child
-          }
+    properties: {
+      rules: { type: :nested },
+      availability_price: { type: :long },
+      availabilities: { type: :nested },
+      room_rates: {
+        type: :nested,
+        properties: {
+          availabilities: { type: :nested }
+        }
+      },
+      relation_type: {
+        type: :join,
+        eager_global_ordinals: true,
+        relations: {
+          parent: :child
         }
       }
     }
@@ -262,9 +261,14 @@ class Lodging < ApplicationRecord
 
     prices = price_list(params)
     total_price = prices[:rates].sum
+    cleaning_cost = cleaning_cost_for((params[:adults].to_i + params[:children].to_i), params[:nights])
     total_discount = calculate_discount(discount(params), total_price)
     total_price -= total_discount if total_discount.present?
-    self.calculated_price = total_price.round(2)
+    total_price += cleaning_cost if cleaning_cost.present?
+    self.cleaning_cost = cleaning_cost.to_f.round(2)
+    self.calculated_price = total_price.to_f.round(2)
+    self.discount_price = total_discount.to_f.round(2)
+    self.rent_price = (prices[:rates].sum).to_f.round(2)
     self.dynamic_price = true
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
@@ -295,6 +299,15 @@ class Lodging < ApplicationRecord
 
       lodgings
     end
+  end
+
+  def lodging_type_count_for(lodgings)
+    buckets = lodgings.aggregations['lodging_type']['buckets']
+    count = 0
+    buckets.each do |bucket|
+      count = bucket['doc_count'] if bucket['key'] == lodging_type
+    end if buckets.present?
+    count
   end
 
   def allow_check_in_days
@@ -479,6 +492,22 @@ class Lodging < ApplicationRecord
     lodging_hit['hits']['hits'].count rescue 0
   end
 
+  def self.render_lodgings_count_for (lodgings, key, filter_name, total_lodgings)
+    buckets = lodgings.aggregations[filter_name]['buckets']
+    all_buckets = total_lodgings.aggregations[filter_name]['buckets']
+    total, actual = 0, 0
+
+    buckets.each do |bucket|
+      actual = bucket['doc_count'] if bucket['key'] == key
+    end if buckets.present?
+
+    all_buckets.each do |bucket|
+      total = bucket['doc_count'] if bucket['key'] == key
+    end if all_buckets.present?
+
+    "#{actual} of #{total}"
+  end
+
   private
     def add_availabilities
       return if belongs_to_channel?
@@ -488,9 +517,9 @@ class Lodging < ApplicationRecord
     def calculate_discount(discounts, total_price)
       return unless discounts.present?
       amount = 0
-      discounts.each do |dis|
-        amount += (total_price * (dis[:value].to_i/100)) if dis[:discount_type] == 'percentage'
-        amount += dis[:value].to_i if dis[:discount_type] == 'amount' || dis[:discount_type] == 'incentive'
+      discounts.each do |dist|
+        amount += (total_price * (dist[:value].to_f/100)) if dist[:discount_type] == 'percentage'
+        amount += dist[:value].to_f if dist[:discount_type] == 'amount' || dist[:discount_type] == 'incentive'
       end
       amount
     end

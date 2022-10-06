@@ -30,7 +30,9 @@ class CartsController < ApplicationController
       SendBookingDetailsJob.perform_later(@booking.id)
 
       cookies[:booking_details] = @booking.id
-      redirect_to details_carts_path, notice: I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
+      flash[:notice] = I18n.t('bookings.created', identifier: @booking.identifier, link: dashboard_reservations_path)
+      flash[:success] = I18n.t('bookings.voucher_added', code: @booking.voucher_code) if @booking.present? && @booking.voucher_code.present?
+      redirect_to details_carts_path
     end
   end
 
@@ -66,7 +68,7 @@ class CartsController < ApplicationController
 
     def booking_params
       params.require(:booking).permit(
-        :in_cart,
+        :in_cart, :voucher_code,
         user_attributes: [:id, :first_name, :last_name, :email, :password, :password_confirmation, :creation_status, :country_id, :city, :zipcode, :address, :phone, :skip_validations, :language],
         reservations_attributes: [:id, :booking_id, :in_cart, :skip_data_posting, guest_details_attributes: [:id, :age, :name, :guest_type]],
       )
