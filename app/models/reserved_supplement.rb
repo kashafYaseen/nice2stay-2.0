@@ -2,11 +2,7 @@ class ReservedSupplement < ApplicationRecord
   belongs_to :reservation
 
   before_create :cumulative_price
-
   attr_accessor :maximum_number
-
-  translates :name, :description
-  globalize_accessors
 
   enum supplement_type: {
     optional: 0,
