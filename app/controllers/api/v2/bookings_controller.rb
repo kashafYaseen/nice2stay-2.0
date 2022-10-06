@@ -5,7 +5,7 @@ class Api::V2::BookingsController < Api::V2::ApiController
   def index
     old_bookings_pagy, old_bookings           = pagy(current_user.bookings_confirmed.old, page: params[:old_bookings_page], items: 5)
     upcoming_bookings_pagy, upcoming_bookings = pagy(current_user.bookings_confirmed.upcoming, page: params[:upcoming_bookings_page], items: 5)
-    requests_pagy, requests                   = pagy(current_user.reservations_non_confirmed.includes(:booking, lodging: :translations), page: params[:requests_page], items: 5)
+    requests_pagy, requests                   = current_user.reservations_non_confirmed.includes(:booking, lodging: :translations)
     options_pagy, options                     = pagy(current_user.reservations_confirmed_options.includes(:booking, lodging: :translations), page: params[:options_page], items: 5)
 
     render json: {
