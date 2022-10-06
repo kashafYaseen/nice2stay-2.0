@@ -20,8 +20,4 @@ class Api::V2::ReservationSerializer
   attribute :rate_plan do |reservation|
     Api::V2::RatePlanSerializer.new(reservation.rate_plan)
   end
-
-  attributes :supplements do |reservation|
-    Api::V2::SupplementSerializer.new(reservation.lodging.supplements)
-  end
 end
