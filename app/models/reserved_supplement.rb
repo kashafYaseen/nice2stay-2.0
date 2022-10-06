@@ -8,6 +8,7 @@ class ReservedSupplement < ApplicationRecord
   # and remove this virtual attribute
   attr_accessor :quantity
 
+  translates :name, :description
   globalize_accessors
 
   enum supplement_type: {
@@ -35,7 +36,7 @@ class ReservedSupplement < ApplicationRecord
     params = reservation.attributes.deep_symbolize_keys
     self.maximum_number = self.quantity.to_i + 1
 
-    self.total = CalculateSupplementsPrices.call(
+    supplement_price = CalculateSupplementsPrices.call(
       supplement: self,
       params: params.merge(
         selected_adults: params[:adults].to_i,
@@ -45,6 +46,6 @@ class ReservedSupplement < ApplicationRecord
     )
 
     # you can create total as a virtual attribute instead of column
-    self.total = self.total[:calculated_price]
+    self.total = supplement_price.dig(:calculated_price)
   end
 end

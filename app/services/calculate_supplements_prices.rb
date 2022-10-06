@@ -45,8 +45,7 @@ class CalculateSupplementsPrices
     end
 
     def stay
-      total_night = (params[:check_out] - params[:check_in]).to_i if reserved_supplement?
-      total_night = (Date.parse(params[:check_out]) - Date.parse(params[:check_in])).to_i unless reserved_supplement?
+      total_night = (Date.parse(params[:check_out].to_s) - Date.parse(params[:check_in].to_s)).to_i
       rate_type_involves_day? ? total_night + 1 : total_night
     end
 
@@ -56,9 +55,5 @@ class CalculateSupplementsPrices
 
     def selected_guests
       params[:selected_adults] + params[:selected_children]
-    end
-
-    def reserved_supplement?
-      supplement.class.name == 'ReservedSupplement'
     end
 end
