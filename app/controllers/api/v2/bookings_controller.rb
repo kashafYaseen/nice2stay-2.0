@@ -9,7 +9,7 @@ class Api::V2::BookingsController < Api::V2::ApiController
     options_pagy, options                     = pagy(current_user.reservations_confirmed_options.includes(:booking, lodging: :translations), page: params[:options_page], items: 5)
 
     render json: {
-      old:      Api::V2::BookingSerializer.new(old_bookings).serializable_hash.merge(pagy: old_bookings_pagy),
+      old:      Api::V2::BookingSerializer.new(old_bookings, { params: { reservations: true }}).serializable_hash.merge(pagy: old_bookings_pagy),
       upcoming: Api::V2::BookingSerializer.new(upcoming_bookings, { params: { reservations: true }}).serializable_hash.merge(pagy: upcoming_bookings_pagy),
       requests: Api::V2::ReservationSerializer.new(requests),
       options:  Api::V2::ReservationSerializer.new(options).serializable_hash.merge(pagy: options_pagy),
