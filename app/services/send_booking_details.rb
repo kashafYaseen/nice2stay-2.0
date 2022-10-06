@@ -96,6 +96,7 @@ class SendBookingDetails
           cancel_option_reason: reservation.cancel_option_reason,
           canceled_by: reservation.canceled_by,
           guest_details_attributes: guest_details(reservation),
+          reserved_supplements_attributes: reserved_supplements_details(reservation),
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end
@@ -113,6 +114,22 @@ class SendBookingDetails
         }
       end
       details
+    end
+
+    def reserved_supplements_details(reservation)
+      reserved_supplements = []
+      reservation.reserved_supplements.each do |supplement|
+        reserved_supplements << {
+          fe_id: supplement.id,
+          rate_type: supplement.rate_type,
+          supplement_type: supplement.supplement_type,
+          rate: supplement.rate,
+          child_rate: supplement.child_rate,
+          total: supplement.total.to_f,
+          quantity: supplement.quantity.to_i
+        }
+      end
+      reserved_supplements
     end
 
     def customer(user)

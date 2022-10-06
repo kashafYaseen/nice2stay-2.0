@@ -45,7 +45,7 @@ class CalculateSupplementsPrices
     end
 
     def stay
-      total_night = (Date.parse(params[:check_out]) - Date.parse(params[:check_in])).to_i
+      total_night = (Date.parse(params[:check_out].to_s) - Date.parse(params[:check_in].to_s)).to_i
       rate_type_involves_day? ? total_night + 1 : total_night
     end
 

@@ -10,6 +10,7 @@ class Reservation < ApplicationRecord
   has_one :review
   has_one :user, through: :booking
   has_many :child_rates, through: :rate_plan
+  has_many :reserved_supplements
 
   validates :check_in, :check_out, presence: true
   validate :availability
@@ -59,6 +60,7 @@ class Reservation < ApplicationRecord
 
   accepts_nested_attributes_for :review
   accepts_nested_attributes_for :guest_details
+  accepts_nested_attributes_for :reserved_supplements
 
   attr_accessor :skip_data_posting
 

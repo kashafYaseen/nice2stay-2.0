@@ -11,7 +11,7 @@ class Api::V2::CartsController < Api::V2::ApiController
     reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
     if reservation.save
       OpenGds::ReceiptBuild.call(reservation: reservation) if reservation.child_lodging_open_gds?
-      render json: Api::V2::ReservationSerializer.new(@booking.reservations).serializable_hash.merge(booking_id: @booking.id, supplements: params.dig(:reservation, :reserved_supplements_attributes)), status: :ok
+      render json: Api::V2::ReservationSerializer.new(@booking.reservations).serializable_hash.merge(booking_id: @booking.id), status: :ok
     else
       unprocessable_entity(reservation.errors)
     end
@@ -81,6 +81,16 @@ class Api::V2::CartsController < Api::V2::ApiController
         :rent,
         :meal_price,
         :room_rate_id,
+        reserved_supplements_attributes: [
+          :id,
+          :name,
+          :description,
+          :supplement_type,
+          :rate_type,
+          :rate,
+          :child_rate,
+          :quantity
+        ]
       )
     end
 
