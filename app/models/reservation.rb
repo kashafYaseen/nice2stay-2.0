@@ -160,6 +160,7 @@ class Reservation < ApplicationRecord
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
       nights = (check_out - check_in).to_i
       applied_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
+      applied_rules = applied_rules.select{|ar| ar.minimum_stay.include? nights} if applied_rules.pluck(:start_date).uniq.size == 1 && applied_rules.pluck(:end_date).uniq.size == 1
       errors.add(:base, "The maximum allowed stay is 21 nights") if nights > 21
 
       if applied_rules.present?
