@@ -158,7 +158,11 @@ class Reservation < ApplicationRecord
 
   def total_rent
     return rent.to_f unless is_managed_by_n2s?
-    rent.to_f + reserved_supplements.sum{|r_s| r_s.rate.to_f * [r_s.quantity.to_i, 1].max} + cleaning_cost_on_nice2stay.to_f - discount.to_f
+    rent.to_f + tolal_supplements_amount + cleaning_cost_on_nice2stay.to_f - discount.to_f
+  end
+
+  def tolal_supplements_amount
+    reserved_supplements.sum{|r_s| r_s.rate.to_f * [r_s.quantity.to_i, 1].max}
   end
 
   def booking_expert_total
