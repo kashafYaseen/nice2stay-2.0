@@ -63,6 +63,10 @@ class Booking < ApplicationRecord
   end
 
   def total_security_deposit
+    reservations.sum(&:security_deposit_on_nice2stay)
+  end
+
+  def total_security_deposit_on_location
     reservations.sum(&:security_deposit_on_location)
   end
 

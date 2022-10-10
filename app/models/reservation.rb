@@ -158,7 +158,7 @@ class Reservation < ApplicationRecord
 
   def total_rent
     return rent.to_f unless is_managed_by_n2s?
-    rent.to_f + reserved_supplements.sum{|r_s| r_s.rate.to_f * [r_s.quantity.to_i, 1].max} + cleaning_cost.to_f - discount.to_f
+    rent.to_f + reserved_supplements.sum{|r_s| r_s.rate.to_f * [r_s.quantity.to_i, 1].max} + cleaning_cost_on_nice2stay.to_f - discount.to_f
   end
 
   def booking_expert_total
@@ -181,12 +181,20 @@ class Reservation < ApplicationRecord
     end
   end
 
+  def cleaning_cost_on_nice2stay
+    is_managed_by_n2s? ? cleaning_cost.to_f : 0
+  end
+
   def cleaning_cost_on_location
     is_managed_by_n2s? ? 0 : cleaning_cost.to_f
   end
 
+  def security_deposit_on_nice2stay
+    include_deposit? ? security_deposit.to_f : 0
+  end
+
   def security_deposit_on_location
-    !include_deposit? ? 0 : security_deposit.to_f
+    include_deposit? ? 0 : security_deposit.to_f
   end
 
   def self.arrival_status
