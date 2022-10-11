@@ -139,3 +139,5 @@ gem 'ox', '~> 2.13', '>= 2.13.3'
 gem 'csv'
 gem "recaptcha"
 gem 'pg_lock'
+gem 'pry'
+gem 'pry-rails'
