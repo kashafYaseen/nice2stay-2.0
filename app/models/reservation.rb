@@ -75,6 +75,7 @@ class Reservation < ApplicationRecord
     arrival_email_sent: 7,
     option: 8,
     request_price: 9,
+    security_deposit: 10,
   }
 
   enum request_status: {
