@@ -7,7 +7,7 @@ class Api::V2::LodgingSerializer
              :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text,
              :open_gds_property_id, :open_gds_accommodation_id, :including_text,
              :setting, :quality, :interior, :service, :communication, :realtime_availability,
-             :lodging_category_id
+             :lodging_category_id, :payment_terms_text, :deposit_text
 
   attribute :total_reviews do |lodging|
     lodging.all_reviews.count
