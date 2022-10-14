@@ -97,6 +97,7 @@ class SendBookingDetails
           canceled_by: reservation.canceled_by,
           guest_details_attributes: guest_details(reservation),
           reserved_supplements_attributes: reserved_supplements_details(reservation),
+          received: reservation.try(:booking).try(:security_payed_at).present?,
           booking_request_attributes: { status: request_status(reservation.request_status) }
         }
       end
