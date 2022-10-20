@@ -94,6 +94,18 @@ class User < ApplicationRecord
     hash.hexdigest
   end
 
+  def self.configure_social_login_user(uid:, provider:, email:, first_name:, last_name:)
+    user = User.find_by(email: email)
+    return user if user
+
+    user = User.create(email: email, password: Devise.friendly_token[0,20], first_name: first_name, last_name: last_name)
+    user.social_logins.find_or_create_by(uid: uid, provider: provider) do |social_login|
+      social_login.email = email
+      social_login.confirmed_at = DateTime.current
+    end
+    user
+  end
+
   def self.from_omniauth(access_token)
     find_by_provider_and_uid(access_token['provider'], access_token['uid']) || create_by_user(access_token)
   end
