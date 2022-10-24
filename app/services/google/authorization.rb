@@ -14,7 +14,7 @@ class Google::Authorization
     request["Content-Type"] = "application/json"
     request.body = payload.to_json
     response = JSON.parse https.request(request).body
-
+    puts "Response of AuthorizationCode: #{response}"
     response.has_key?("error") ? nil : response.dig('access_token')
   end
 
