@@ -6,6 +6,7 @@ namespace :api do
     end
     resource :sessions, only: [:create, :update]
     resource :omniauths, only: [:create, :update]
+    resource :socials, only: :create
     resources :lodgings, only: [:index, :show] do
       resources :gc_rooms, only: [:show]
       resource :invoices, only: [:show]
