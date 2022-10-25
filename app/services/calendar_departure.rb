@@ -27,10 +27,10 @@ class CalendarDeparture
 
       price_details[:rates_with_dates].each do |rate_with_date|
         next if prices[rate_with_date[:date]].present?
-        prices[rate_with_date[:date]] = { date: rate_with_date[:date], rate: rate_with_date[:rate], ctd: rate_with_date[:date] != dates_combination[:check_out].to_date }
+        prices[rate_with_date[:date]] = { date: rate_with_date[:date], rate: rate_with_date[:rate], ctd: rate_with_date[:date] != dates_combination[:check_out].to_date, minlos: rule.minimum_stay&.first }
       end
 
-      prices[dates_combination[:check_out].to_date] = { date: dates_combination[:check_out].to_date, rate: nil, ctd: false } unless prices[dates_combination[:check_out].to_date].present?
+      prices[dates_combination[:check_out].to_date] = { date: dates_combination[:check_out].to_date, rate: nil, ctd: false, minlos: rule.minimum_stay&.first } unless prices[dates_combination[:check_out].to_date].present?
     end
 
     return [] if prices.blank?
