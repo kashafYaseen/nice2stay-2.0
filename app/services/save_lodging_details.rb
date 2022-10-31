@@ -25,7 +25,7 @@ class SaveLodgingDetails
       lodging.channel = 'open_gds' if params[:lodging][:open_gds]
       lodging.channel = 'room_raccoon' if params[:lodging][:room_raccoon]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
-      return unless lodging.save
+      return unless lodging.save(validate: false)
 
       UpdateLodgingRatePlans.call(lodging: lodging, parent_rate_plans: params[:lodging][:parent_rate_plans], room_rates: params[:lodging][:room_rates]) if lodging.belongs_to_channel?
       UpdateLodgingSupplements.call(lodging: lodging, params: params[:supplements])
