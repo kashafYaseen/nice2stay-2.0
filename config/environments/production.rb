@@ -62,6 +62,11 @@ Rails.application.configure do
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
+  config.cache_store = :redis_store, {
+    expires_in: 24.hours,
+    namespace: 'cache',
+    redis: { host: 'localhost', port: 6379, db: 0 },
+  }
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -97,20 +102,20 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  ActionMailer::Base.smtp_settings = {
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_API_KEY'],
-    domain: ENV['BASE_URL'],
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV['MAILTRAP_USERNAME'],
+    password: ENV['MAILTRAP_PASSWORD'],
+    domain: 'smtp.mailtrap.io',
+    address: 'smtp.mailtrap.io',
+    port: 2525,
+    authentication: :cram_md5
   }
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     ignore_crawlers: %w{Googlebot bingbot Applebot SeznamBot SemrushBot AhrefsBot bot Baiduspider YandexBot facebookexternalhit facebot},
     email: {
-      email_prefix: "[Nice2Stay] ",
+      email_prefix: "[Nice2Stay Stage]",
       sender_address: %{"notifier" <notifier@nice2stay.com>},
       exception_recipients: %w{ahmad@thedevden.co hunaid.nawaz@devden.io asad.sarfraz@devden.io}
     },

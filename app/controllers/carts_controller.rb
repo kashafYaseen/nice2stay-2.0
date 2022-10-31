@@ -5,6 +5,7 @@ class CartsController < ApplicationController
   before_action :set_booking_details, only: [:details]
 
   def show
+    @channel_manager = @booking.reservations.guest_centric.present? || @booking.reservations.booking_expert.present?
     @guest_centric = @booking.reservations.guest_centric.present?
     @reservations = @booking.reservations.unexpired
     # to_i will cast nil to 0 which mitigates nil errors when children will be nil
@@ -20,16 +21,11 @@ class CartsController < ApplicationController
   end
 
   def update
-    @guest_centric = @booking.reservations.guest_centric.present?
+    @channel_manager = @booking.reservations.guest_centric.present? || @booking.reservations.booking_expert.present?
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
     if @booking.save
-      @booking.reservations.guest_centric.each do |reservation|
-        if reservation.lodging.as_child?
-          BookGuestCentricOffer.call(reservation.lodging_parent, reservation, @booking)
-        else
-          BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
-        end
-      end
+      @booking.reservations.guest_centric.each { |reservation| BookGuestCentricOffer.call(lodging_parent_if_exist(reservation), reservation, @booking) }
+      @booking.reservations.booking_expert.each { |reservation| ReserveBookingExpertLodging.call(lodging_parent_if_exist(reservation), reservation) }
 
       SendBookingDetailsJob.perform_later(@booking.id)
 
@@ -87,5 +83,10 @@ class CartsController < ApplicationController
     def set_booking_details
       @booking_details = Booking.find_by(id: cookies[:booking_details])
       return redirect_to carts_path unless @booking_details.present?
+    end
+
+    def lodging_parent_if_exist reservation
+      return reservation.lodging_parent if reservation.lodging.as_child?
+      reservation.lodging
     end
 end

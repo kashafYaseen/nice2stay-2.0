@@ -14,4 +14,5 @@ task remove_duplicate_availabilities: :environment do |t, args|
   end
   Lodging.reindex
   Price.reindex
+  Lodging.flush_cached_searched_data
 end

@@ -19,6 +19,10 @@ ActiveAdmin.register Lodging do
 
     def scoped_collection
       return Lodging.includes(:translations) if action_name == "index"
+
+      lodging = Lodging.friendly.find(params[:id])
+      return Lodging.includes({ room_rate_availabilities: %i[prices rate_plan] }, { room_rates: :rate_plan }, :discounts, :rules) if lodging.belongs_to_channel?
+
       Lodging.includes({availabilities: :prices}, :discounts, :rules)
     end
   end
@@ -29,6 +33,8 @@ ActiveAdmin.register Lodging do
     column :title
     column :name
     column :address
+    column :open_gds_property_id
+    column :open_gds_accommodation_id
     column :beds
     column :baths
     column :sq__ft
@@ -37,8 +43,10 @@ ActiveAdmin.register Lodging do
     column :total_rules
     column :total_children
     column :created_at
+    column :updated_at
     column :published
     column :country
+    column(:channel) { |lodging| lodging.channel.titleize }
 
     actions
   end
@@ -63,6 +71,7 @@ ActiveAdmin.register Lodging do
       f.input :longitude
       f.input :images, as: :file, input_html: { multiple: true }
       f.input :lodging_type
+      f.input(:channel) { |lodging| lodging.channel.titleize }
       f.input :adults
       f.input :children
       f.input :infants
@@ -108,6 +117,8 @@ ActiveAdmin.register Lodging do
   show do
     attributes_table do
       row :title
+      row :name
+      row ('Name on Channel Manager') { |lodging| lodging.name_on_cm }
       row :subtitle
       row :owner
       row :street
@@ -123,6 +134,7 @@ ActiveAdmin.register Lodging do
       row :longitude
       row :description
       row :lodging_type
+      row :channel
       row :adults
       row :children
       row :infants
@@ -137,6 +149,10 @@ ActiveAdmin.register Lodging do
       row :region_page
       row :country_page
       row :home_page
+      row :open_gds_property_id
+      row :open_gds_accommodation_id
+      row :extra_beds
+      row :extra_beds_for_children_only
       row :created_at
       row :updated_at
     end
@@ -196,11 +212,101 @@ ActiveAdmin.register Lodging do
       end
     end
 
+    panel 'Rate Plans' do
+      if lodging.as_parent?
+        table_for lodging.rate_plans do
+          column('Rate Plan ID') { |rate_plan| rate_plan.id }
+          column('Rate Plan Name') { |rate_plan| rate_plan.name }
+          column('Rate Plan Enabled') { |rate_plan| rate_plan.rate_enabled }
+          column('OpenGDS Pushed At') { |rate_plan| rate_plan.opengds_pushed_at }
+
+          column 'Action' do |rate_plan|
+            link_to 'View', admin_rate_plan_path(rate_plan)
+          end
+        end
+      else
+        table_for lodging.room_rates do
+          column :id
+          column :rate_plan_id
+          column :rate_plan_name
+          column :default_rate
+          column :publish
+          column :rate_plan_opengds_pushed_at
+
+          column 'Action' do |room_rate|
+            link_to 'View', admin_rate_plan_path(room_rate.rate_plan)
+          end
+        end
+      end
+    end
+
+    panel 'Supplements' do
+      if lodging.as_parent? || lodging.as_standalone?
+        table_for lodging.supplements do
+          column('ID') { |supplement| supplement.id }
+          column('Name') { |supplement| supplement.name }
+          column('Description') { |supplement| supplement.description }
+          column('Rate Type') { |supplement| supplement.rate_type }
+          column('Supplement Type') { |supplement| supplement.supplement_type }
+          column('Rate') { |supplement| supplement.rate }
+          column('Child Rate') { |supplement| supplement.child_rate || 'N/A' }
+          column('Permanently Valid') { |supplement| supplement.valid_permanent }
+          column('Valid From') { |supplement| supplement.valid_from || 'N/A' }
+          column('Valid Till') { |supplement| supplement.valid_till || 'N/A' }
+          column('Valid on Arrival Days') { |supplement| supplement.valid_on_arrival_days }
+          column('Valid on Stay Days') { |supplement| supplement.valid_on_stay_days }
+          column('Valid on Departure Days') { |supplement| supplement.valid_on_departure_days }
+          column('Quantity') { |supplement| supplement.maximum_number }
+          column('Published') { |supplement| supplement.published }
+        end
+      else
+        supplements = lodging.belongs_to_channel? ? lodging.room_rates_supplements.joins(:rate_plans).select('supplements.*, rate_plans.id as rate_plan_id, rate_plans.name as rate_plan_name') : lodging.linked_child_supplements
+        table_for supplements do
+          column('ID') { |supplement| supplement.id }
+          column('Name') { |supplement| supplement.name }
+          if lodging.belongs_to_channel?
+            column('Rate Plan') do |supplement|
+              link_to "#{supplement.rate_plan_id} - #{supplement.rate_plan_name}", admin_rate_plan_path(id: supplement.rate_plan_id)
+            end
+          end
+
+          column('Description') { |supplement| supplement.description }
+          column('Rate Type') { |supplement| supplement.rate_type }
+          column('Supplement Type') { |supplement| supplement.supplement_type }
+          column('Rate') { |supplement| supplement.rate }
+          column('Child Rate') { |supplement| supplement.child_rate || 'N/A' }
+          column('Permanently Valid') { |supplement| supplement.valid_permanent }
+          column('Valid From') { |supplement| supplement.valid_from || 'N/A' }
+          column('Valid Till') { |supplement| supplement.valid_till || 'N/A' }
+          column('Valid on Arrival Days') { |supplement| supplement.valid_on_arrival_days }
+          column('Valid on Stay Days') { |supplement| supplement.valid_on_stay_days }
+          column('Valid on Departure Days') { |supplement| supplement.valid_on_departure_days }
+          column('Quantity') { |supplement| supplement.maximum_number }
+          column('Published') { |supplement| supplement.published }
+        end
+      end
+    end
+
     panel "Availabilities" do
-      table_for lodging.availabilities.order(:available_on) do
+      table_for lodging.availabilities_wrt_channel.sort_by(&:available_on).select { |availability| availability.available_on >= Date.current } do
         column :id
         column :available_on
         column :check_out_only
+
+        if lodging.belongs_to_channel?
+          column :rate_plan
+          column 'Availability' do |availability|
+            availability.booking_limit
+          end
+
+          column 'Check-In Closed' do |availability|
+            availability.check_in_closed
+          end
+
+          column 'Check-Out Closed' do |availability|
+            availability.check_out_closed
+          end
+        end
 
         column 'Prices' do |availability|
           table_for availability.prices do
@@ -210,6 +316,7 @@ ActiveAdmin.register Lodging do
             column :infants
             column :minimum_stay
             column :checkin
+            column('Additional Guest Amount') { |price| price.rr_additional_amount_flag }
 
             column 'Action' do |price|
               link_to 'Edit Price', edit_admin_price_path(price)

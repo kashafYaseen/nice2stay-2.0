@@ -28,7 +28,11 @@ ActiveAdmin.register Reservation do
   index do
     selectable_column
     id_column
-    column :lodging
+    column 'Lodging' do |reservation|
+      reservation.lodging_wrt_channel
+    end
+
+    column :rate_plan
     column :check_in
     column :check_out
     column :booking_status

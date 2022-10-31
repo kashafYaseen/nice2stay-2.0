@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
   before_action :prepare_exception_notifier
   protect_from_forgery prepend: true, with: :exception

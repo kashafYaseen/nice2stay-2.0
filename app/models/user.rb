@@ -1,4 +1,7 @@
+require './lib/recommendation.rb'
+
 class User < ApplicationRecord
+  include Reccommendation
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -12,14 +15,16 @@ class User < ApplicationRecord
   has_many :leads
   has_many :bookings
   has_many :reservations, through: :bookings
+  has_many :reserved_lodgings, through: :reservations, source: :lodging
   has_many :notifications
   has_many :social_logins
   has_many :visits, class_name: "Ahoy::Visit"
   has_many :events, class_name: "Ahoy::Event"
   has_many :vouchers, foreign_key: :receiver_id
-
   has_many :trip_members
   has_many :trips, through: :trip_members
+  has_many :recent_searches
+  has_and_belongs_to_many :visited_lodgings, class_name: 'Lodging', join_table: 'visited_lodgings'
 
   has_one :first_visit, -> (user) { order(:started_at).where("started_at < ?", user.created_at) }, class_name: 'Ahoy::Visit'
 
@@ -30,6 +35,7 @@ class User < ApplicationRecord
   delegate :in_cart, :confirmed, to: :bookings, allow_nil: true, prefix: true
   delegate :recent, to: :notifications, allow_nil: true, prefix: true
   delegate :name, :code, :slug, to: :country, allow_nil: true, prefix: true
+  delegate :with_lodgings, to: :history_lodgings, allow_nil: true, prefix: :history
   delegate :unsed, :old, to: :vouchers, allow_nil: true, prefix: true
 
   validates :email, uniqueness: { message: "has an account. Click here to <input type='button' name='login-form' value='Login' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#login-form-modal'>or here to <input type='button' name='reset-password-form' value='Reset password' class='btn btn-link btn-danger btn-sm' data-toggle='modal' data-target='#reset-pass-form-modal'>" }, allow_blank: true
@@ -52,11 +58,11 @@ class User < ApplicationRecord
   end
 
   def auth_token
-    JsonWebToken.encode({ user_id: self.id, exp: auth_expires_at })
+    JsonWebToken.encode({ user_id: self.id, exp: auth_expires_at.to_i })
   end
 
   def regenerate_auth_token
-    JsonWebToken.encode({ user_id: self.id, exp: update_token_expire_time })
+    JsonWebToken.encode({ user_id: self.id, exp: update_token_expire_time.to_i })
   end
 
   def self.authenticate(email:, password:)
@@ -88,6 +94,18 @@ class User < ApplicationRecord
     hash.hexdigest
   end
 
+  def self.configure_social_login_user(uid:, provider:, email:, first_name:, last_name:)
+    user = User.find_by(email: email)
+    return user if user
+
+    user = User.create(email: email, password: Devise.friendly_token[0,20], first_name: first_name, last_name: last_name)
+    user.social_logins.find_or_create_by(uid: uid, provider: provider) do |social_login|
+      social_login.email = email
+      social_login.confirmed_at = DateTime.current
+    end
+    user
+  end
+
   def self.from_omniauth(access_token)
     find_by_provider_and_uid(access_token['provider'], access_token['uid']) || create_by_user(access_token)
   end
@@ -95,6 +113,10 @@ class User < ApplicationRecord
   def invitation_status
     return "Pending"  if invitation_accepted_at.blank? && !invitation_sent_at.blank?
     return "Accepted"
+  end
+
+  def reserved_lodging_slugs
+    reserved_lodgings.map(&:slug).uniq
   end
 
   private

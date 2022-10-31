@@ -11,6 +11,7 @@ task :create_availabilities_for_year, [:year] => :environment do |t, args|
     puts "#{index + 1} Availabilities created for #{lodging.name}"
     lodging.reindex
   end
+  Lodging.flush_cached_searched_data
 
   puts "Availabilities created successfully!!!"
 end
