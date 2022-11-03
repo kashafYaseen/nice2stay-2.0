@@ -1,7 +1,7 @@
 class Api::V2::SocialsController < Api::V2::ApiController
   def create
     if social_params[:provider] == SocialLogin::PROVIDERS[:google]
-      access_token = Google::Authorization.new(social_params[:code]).access_token
+      access_token = Google::Authorization.new(social_params).access_token
       puts "access_token ---------------#{access_token}"
       render json: {access_token: access_token}, status: :created
     end
@@ -30,7 +30,7 @@ class Api::V2::SocialsController < Api::V2::ApiController
 
   private
     def social_params
-      params.permit(:code, :provider)
+      params.permit(:code, :provider, :redirect_uri)
     end
 
     def user_info_params
