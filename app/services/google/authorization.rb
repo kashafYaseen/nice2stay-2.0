@@ -1,8 +1,10 @@
 class Google::Authorization
   attr_reader :authorization_code
+  attr_reader :redirect_uri
 
-  def initialize (authorization_code)
-    @authorization_code = authorization_code
+  def initialize (params)
+    @redirect_uri = params[:redirect_uri]
+    @authorization_code = params[:code]
   end
 
   def access_token
@@ -22,11 +24,11 @@ class Google::Authorization
     {
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://www.googleapis.com/oauth2/v3/token',
-      client_id: ENV['GOOGLE_OAUTH_CLIENT_ID'],
-      client_secret: ENV['GOOGLE_OAUTH_CLIENT_SECRET'],
+      client_id: ENV['GOOGLE_CLIENT_ID'],
+      client_secret: ENV['GOOGLE_CLIENT_SECRET'],
       grant_type: 'authorization_code',
       code: authorization_code,
-      redirect_uri: ENV['GOOGLE_OAUTH_REDIRECT_URL']
+      redirect_uri: redirect_uri
     }
   end
 end
