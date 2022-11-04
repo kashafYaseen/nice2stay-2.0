@@ -25,6 +25,7 @@ class Api::V2::SocialsController < Api::V2::ApiController
       last_name: last_name
     )
     puts "User Found ---------------#{user&.id}"
+    user.regenerate_auth_token
     render json: Api::V2::UserSerializer.new(user, { params: { auth_token: true } }).serialized_json, status: :created
   end
 
