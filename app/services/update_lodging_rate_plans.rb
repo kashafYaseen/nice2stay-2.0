@@ -80,6 +80,8 @@ class UpdateLodgingRatePlans
         :open_gds_rate_id,
         :min_stay,
         :max_stay,
+        :min_occupancy,
+        :max_occupancy,
         :crm_id
       )
     end
