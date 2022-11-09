@@ -82,6 +82,9 @@ class UpdateLodgingRatePlans
         :max_stay,
         :min_occupancy,
         :max_occupancy,
+        :pre_payment_percentage,
+        :pre_payment_hours_limit,
+        :final_payment_days_limit,
         :crm_id
       )
     end
