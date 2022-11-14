@@ -20,6 +20,7 @@ class UpdateLodgingRatePlans
     if lodging.as_parent?
       update_parent_rate_plans
       update_translations
+      update_cancellation_policies
     end
   end
 
@@ -59,6 +60,18 @@ class UpdateLodgingRatePlans
       RoomRate.import new_room_rates, batch_size: 150, on_duplicate_key_update: { columns: RoomRate.column_names - %w[id updated_at] }
     end
 
+    def update_cancellation_policies
+      parent_rate_plans.each do |rate_plan|
+        rate_plan.dig(:cancellation_policies).each do |cancellation_policy|
+          # byebug
+          rate_plan = RatePlan.find_by(crm_id: cancellation_policy[:rate_plan_id])
+          _cancellation = CancellationPolicy.find_or_initialize_by(crm_id: cancellation_policy[:crm_id])
+          _cancellation.attributes = cancellation_policy_params(cancellation_policy).merge(rate_plan_id: rate_plan&.id)
+          _cancellation.save
+        end
+      end
+    end
+
     def update_translations
       rate_plans = lodging.rate_plans
       parent_rate_plans.each do |rp|
@@ -87,6 +100,10 @@ class UpdateLodgingRatePlans
         :final_payment_days_limit,
         :crm_id
       )
+    end
+
+    def cancellation_policy_params(cancellation_policy)
+      cancellation_policy.permit(:cancellation_percentage, :days_prior_to_check_in, :crm_id)
     end
 
     def translation_params(translation)

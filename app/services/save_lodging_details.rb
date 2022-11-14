@@ -31,7 +31,6 @@ class SaveLodgingDetails
       UpdateLodgingSupplements.call(lodging: lodging, params: params[:supplements])
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
-      UpdateCancellationPolicies.call(params: params[:lodging][:cancellation_policies])
       return unless lodging.published?
 
       unless lodging.belongs_to_channel?
