@@ -8,10 +8,10 @@ class Api::V2::OpenGdsController < Api::V2::ApiController
 
     lodgings = Lodging.where(id: accommodation_ids.flatten)
     if lodgings.present?
-      Logger.new("#{ENV['OPENGDS_LOG_PATH']}").info("Start Point #{DateTime.now} ================>>>>>>>>>>>>>>>>>>>>>")
-      Logger.new("#{ENV['OPENGDS_LOG_PATH']}").info("#{params[:_json].map(&:to_unsafe_h)}")
-      Logger.new("#{ENV['OPENGDS_LOG_PATH']}").info("End Point ================>>>>>>>>>>>>>>>>>>>>>")
       OpenGds::CreateRatesJob.perform_later params[:_json].map(&:to_unsafe_h)
+      Rails.logger.info "================================================================="
+      Rails.logger.info " Rate Data========================>>#{ params[:_json].map(&:to_unsafe_h)}"
+      Rails.logger.info "================================================================="
       render json: { response: 'Success' }, status: :ok
     elsif ENV['BASE_URL'] == 'https://www.staging.nice2stay.net'
       render json: { response: 'Property/Accommodations Not Found(Staging Server)!' }, status: :ok
