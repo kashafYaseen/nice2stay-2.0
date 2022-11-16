@@ -172,7 +172,7 @@ class Reservation < ApplicationRecord
 
   def pre_payment
     if child_lodging_open_gds?
-      open_gds_online_payment && open_gds_deposit_amount.positive? ? open_gds_deposit_amount : total_price * pre_payment_percentage / 100
+      open_gds_online_payment && open_gds_deposit_amount.positive? ? open_gds_deposit_amount : total_price * room_rate.try(:rate_plan).try(:pre_payment_percentage).to_i / 100
     else
       (booking_expert? || belongs_to_channel? ? total_price : total_rent) * lodging.owner_pre_payment / 100
     end
@@ -180,7 +180,7 @@ class Reservation < ApplicationRecord
 
   def final_payment
     if child_lodging_open_gds?
-      open_gds_online_payment && open_gds_deposit_amount.positive? ? (total_price - open_gds_deposit_amount) : (total_price * final_payment_percentage / 100)
+      open_gds_online_payment && open_gds_deposit_amount.positive? ? (total_price - open_gds_deposit_amount) : (total_price * room_rate.try(:rate_plan).try(:final_payment_percentage).to_i / 100)
     else
       (booking_expert? || belongs_to_channel? ? total_price : total_rent) * lodging.owner_final_payment / 100
     end

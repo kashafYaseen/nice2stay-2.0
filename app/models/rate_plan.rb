@@ -9,6 +9,7 @@ class RatePlan < ApplicationRecord
   has_many :prices, through: :availabilities
   has_one :rule
   has_many :child_rates
+  has_many :cancellation_policies
 
   translates :name, :description
   globalize_accessors
@@ -36,5 +37,9 @@ class RatePlan < ApplicationRecord
     return false if rule.blank?
 
     rule.end_date < Date.current
+  end
+
+  def final_payment_percentage
+    100 - pre_payment_percentage.to_i
   end
 end
