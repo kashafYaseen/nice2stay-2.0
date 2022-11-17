@@ -22,7 +22,13 @@ class OpenGds::CalendarBuild
     request.content_type = 'application/x-www-form-urlencoded; charset=UTF-8'
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    JSON.parse(http.request(request).body)
+    parse_data(JSON.parse(http.request(request).body))
+  end
+
+  def parse_data(response)
+    return [] if response.blank?
+
+    response.group_by{|r| r["date"]}.map{|key, value| value.find{|val| val["rate"] == value.pluck("rate").min}}
   end
 
   private
@@ -35,7 +41,7 @@ class OpenGds::CalendarBuild
     end
 
     def accommodation_id
-      lodging.lodging_children.pluck(:open_gds_accommodation_id)
+      lodging.lodging_children.pluck(:open_gds_accommodation_id).sort
     end
 
     def rate_id
