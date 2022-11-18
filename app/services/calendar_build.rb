@@ -15,7 +15,7 @@ class CalendarBuild
   end
 
   def open_gds_accommodations_calendar
-    OpenGds::CalendarBuild.call(lodging: lodging, params: params)
+    OpenGds::CalendarBuild.fetch(lodging: lodging, params: params)
   end
 
   def non_open_gds_accommodations_calendar
