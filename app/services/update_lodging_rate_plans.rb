@@ -103,7 +103,7 @@ class UpdateLodgingRatePlans
     end
 
     def cancellation_policy_params(cancellation_policy)
-      cancellation_policy.permit(:cancellation_percentage, :days_prior_to_check_in, :crm_id)
+      cancellation_policy.permit(:cancellation_percentage, :days_prior_to_check_in, :crm_id, :cancellation_type)
     end
 
     def translation_params(translation)
