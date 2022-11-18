@@ -16,6 +16,14 @@ class CalendarDeparture
   end
 
   def call
+    @lodging.open_gds? ? open_gds_accommodations_calendar : non_open_gds_accommodations_calendar
+  end
+
+  def open_gds_accommodations_calendar
+    OpenGds::CalendarDeparture.fetch(lodging: lodging, params: params)
+  end
+
+  def non_open_gds_accommodations_calendar
     return [] if check_in_availability.blank?
 
     prices = {}
