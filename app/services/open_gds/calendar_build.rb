@@ -21,7 +21,7 @@ class OpenGds::CalendarBuild
 
   def fetch
     room_rate_ids = rate_plan.room_rate_ids
-    availabilities = Availability.where(room_rate_id: room_rate_ids).for_range(check_in, check_out).where('booking_limit > 0')
+    availabilities = Availability.includes(:prices).where(room_rate_id: room_rate_ids).for_range(check_in, check_out).where('booking_limit > 0')
 
     response = []
     rate_plan.room_rates.each do |room_rate|
@@ -29,10 +29,10 @@ class OpenGds::CalendarBuild
         room_rate_params = params_based_on availability
         next if room_rate_params.blank?
 
-        price_details = room_rate.price_details(values: room_rate_params, daily_rate: true)
-        next unless price_details[:valid]
+        # price_details = room_rate.price_details(values: room_rate_params, daily_rate: true)
+        # next unless price_details[:valid]
 
-        response << { date: availability.available_on, available: availability.booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
+        response << { date: availability.available_on, available: availability.booking_limit, rate: availability.prices.pluck(:amount).sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
       end
     end
 
