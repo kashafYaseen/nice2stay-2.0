@@ -1,5 +1,5 @@
 class OpenGds::CalendarDeparture
-  attr_reader :room_rate,
+  attr_reader :lodging,
               :params,
               :rate_plan,
               :accommodation_id,
@@ -25,6 +25,37 @@ class OpenGds::CalendarDeparture
     JSON.parse(http.request(request).body)
   end
 
+  def fetch
+    room_rate_ids = rate_plan.room_rate_ids
+    check_in_availabilities = Availability.where(room_rate_id: room_rate_ids, available_on: params[:check_in])
+    response = []
+    check_in_availabilities.each do |check_in_availability|
+      prices = {}
+      dates_combinations(check_in_availability).each do |dates_combination|
+        room_rate_params = params_based_on dates_combination
+        next if room_rate_params.blank?
+
+        price_details = check_in_availability.room_rate.price_details(values: room_rate_params, daily_rate: true, calendar_departure: true)
+        next unless price_details[:valid]
+
+        price_details[:rates_with_dates].each do |rate_with_date|
+          next if prices[rate_with_date[:date]].present?
+          prices[rate_with_date[:date]] = { date: rate_with_date[:date], rate: rate_with_date[:rate], ctd: rate_with_date[:date] != dates_combination[:check_out].to_date }
+        end
+
+        prices[dates_combination[:check_out].to_date] = { date: dates_combination[:check_out].to_date, rate: nil, ctd: false } unless prices[dates_combination[:check_out].to_date].present?
+
+      end
+
+      next if prices.blank?
+      response << prices.keys.map { |res| prices[res] }.sort_by { |r| r[:date] }
+    end
+
+    response = response.flatten.group_by{|r| r[:date]}.map{|key, value| value.find{|val| val[:rate] == value.pluck(:rate).min}}
+    response[-1][:rate] = nil
+    response
+  end
+
   private
     def query_params
       "#{credentials}&#{calendar_params}"
@@ -39,7 +70,7 @@ class OpenGds::CalendarDeparture
     # end
 
     def rate_id
-      room_rate.open_gds_rate_id
+      rate_plan.open_gds_rate_id
     end
 
     def check_in
@@ -53,9 +84,9 @@ class OpenGds::CalendarDeparture
     def children
       return unless params[:children].present?
 
-      child_rate = room_rate.child_rates.order(rate: :desc).first
-      @child_category = child_rate&.open_gds_category || 1
-      ", {\"#{@child_category}\": #{params[:children]}}"
+      child_rate = rate_plan.child_rates.order(rate: :desc).first
+      child_category = child_rate&.open_gds_category || 1
+      ", {\"#{child_category}\": #{params[:children]}}"
     end
 
     def credentials
