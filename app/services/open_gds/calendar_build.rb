@@ -2,16 +2,18 @@ class OpenGds::CalendarBuild
   attr_reader :rate_plan,
               :params,
               :lodging,
+              :accommodation_id,
               :uri
 
-  def self.call(params:, lodging:)
-    new(params: params, lodging: lodging).call
+  def self.call(params:, lodging:, accommodation_id:)
+    new(params: params, lodging: lodging, accommodation_id: accommodation_id).call
   end
 
-  def initialize(params:, lodging:)
+  def initialize(params:, lodging:, accommodation_id:)
     @params = params
     @lodging = lodging
     @rate_plan = get_rate_plan
+    @accommodation_id = accommodation_id
     @uri = URI.parse("https://api.opengds.com/core/v1/acc-status/calendar?#{query_params}")
   end
 
@@ -40,9 +42,9 @@ class OpenGds::CalendarBuild
       "rate_id=#{rate_id}&accom_id=#{accommodation_id}&from=#{check_in}&till=#{check_out}&occupancy=#{occupancy}"
     end
 
-    def accommodation_id
-      lodging.lodging_children.pluck(:open_gds_accommodation_id).sort
-    end
+    # def accommodation_id
+    #   lodging.lodging_children.pluck(:open_gds_accommodation_id).sort
+    # end
 
     def rate_id
       rate_plan.open_gds_rate_id
