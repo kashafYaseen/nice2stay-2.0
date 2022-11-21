@@ -17,26 +17,6 @@ class OpenGds::CalendarBuild
     @uri = URI.parse("https://api.opengds.com/core/v1/acc-status/calendar?#{query_params}")
   end
 
-  def fetch
-    room_rate_ids = rate_plan.room_rate_ids
-    availabilities = Availability.where(room_rate_id: room_rate_ids).for_range(check_in, check_out).where('booking_limit > 0')
-
-    response = []
-    rate_plan.room_rates.each do |room_rate|
-      availabilities.select{|availability| availability.room_rate_id == room_rate.id}.each do |availability|
-        room_rate_params = params_based_on availability
-        next if room_rate_params.blank?
-
-        price_details = room_rate.price_details(values: room_rate_params, daily_rate: true)
-        next unless price_details[:valid]
-
-        response << { date: availability.available_on, available: availability.booking_limit, rate: price_details[:rates].sum.round(2), minlos: availability.min_stay, maxlos: availability.max_stay }
-      end
-    end
-
-    response.group_by{|r| r[:date]}.map{|key, value| value.find{|val| val[:rate] == value.pluck(:rate).min}}
-  end
-
   def call
     return if rate_plan.blank?
 
@@ -44,13 +24,7 @@ class OpenGds::CalendarBuild
     request.content_type = 'application/x-www-form-urlencoded; charset=UTF-8'
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    parse_data(JSON.parse(http.request(request).body))
-  end
-
-  def parse_data(response)
-    return [] if response.blank?
-
-    response.group_by{|r| r["date"]}.map{|key, value| value.find{|val| val["rate"] == value.pluck("rate").min}}
+    JSON.parse(http.request(request).body)
   end
 
   private

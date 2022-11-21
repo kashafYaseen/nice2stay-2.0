@@ -25,7 +25,7 @@ class CalendarDeparture
       response <<  OpenGds::CalendarDeparture.call(lodging: lodging, params: params, accommodation_id: open_gds_accommodation_id)
     end
 
-    response.flatten.group_by{|r| r["date"]}.reject{|key, value| key.nil?}.map{|key, value| value.find{|val| val["rate"].to_i == value.pluck("rate").map(&:to_i).min}}
+    response.flatten.group_by{ |r| r["date"] }.reject{ |key, value| key.nil? }.map{ |key, value| value.find { |val| val["rate"].to_i == value.pluck("rate").map(&:to_i).min }}
   end
 
   def non_open_gds_accommodations_calendar
