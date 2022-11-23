@@ -7,6 +7,10 @@ class Api::V2::RatePlanSerializer
     rate_plan.expired?
   end
 
+  attribute :active do |rate_plan|
+    rate_plan.open_gds_rate_id.present?
+  end
+
   attribute :cancellation_policies do |rate_plan|
     Api::V2::CancellationPoliciesSerializer.new(rate_plan.cancellation_policies)
   end
