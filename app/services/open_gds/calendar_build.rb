@@ -76,6 +76,6 @@ class OpenGds::CalendarBuild
     end
 
     def get_rate_plan
-      lodging.rate_plans.find_by(id: params[:rate_plan_id]) || lodging.rate_plans.first
+      lodging.rate_plans.active.find_by(id: params[:rate_plan_id]) || lodging.rate_plans.active.first
     end
 end
