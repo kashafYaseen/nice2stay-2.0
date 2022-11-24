@@ -21,7 +21,7 @@ class CalendarDeparture
 
   def open_gds_accommodations_calendar
     response = []
-    lodging.lodging_children.pluck(:open_gds_accommodation_id).sort.each do |open_gds_accommodation_id|
+    lodging.lodging_children.pluck(:open_gds_accommodation_id).reject(&:blank?).sort.each do |open_gds_accommodation_id|
       response <<  OpenGds::CalendarDeparture.call(lodging: lodging, params: params, accommodation_id: open_gds_accommodation_id)
     end
 
