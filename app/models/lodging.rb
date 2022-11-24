@@ -286,8 +286,8 @@ class Lodging < ApplicationRecord
         valid_price = false
         if lodging.belongs_to_channel?
           lodging.room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
+            room_rate.cumulative_price(params.clone)
             unless valid_price
-              room_rate.cumulative_price(params.clone)
               lodging.check_in = room_rate.check_in
               lodging.check_out = room_rate.check_out
               lodging.calculated_price = room_rate.calculated_price
