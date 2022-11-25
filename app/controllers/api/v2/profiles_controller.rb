@@ -41,7 +41,7 @@ class Api::V2::ProfilesController < Api::V2::ApiController
 
   private
     def user_sign_up_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :last_name, :email, :phone, :city, :address, :password, :password_confirmation)
     end
 
     def account_update_params
