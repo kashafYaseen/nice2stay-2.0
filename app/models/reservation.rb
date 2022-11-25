@@ -355,6 +355,7 @@ class Reservation < ApplicationRecord
 
     def accommodation_rate_plan_rule
       return unless check_in.present? && check_out.present? && lodging.present? && lodging.open_gds?
+      return if errors.keys.include?(:rooms)
 
       rule = rate_plan_rule
       errors.add(:check_in, "Check-in not possible on #{check_in}") if check_in < rule.start_date || check_in > rule.end_date
