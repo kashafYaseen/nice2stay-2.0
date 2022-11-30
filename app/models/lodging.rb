@@ -300,7 +300,8 @@ class Lodging < ApplicationRecord
               calculated_price: room_rate.calculated_price,
               dynamic_price: room_rate.dynamic_price,
               rate_plan_id: room_rate.rate_plan_id,
-              price_valid: room_rate.price_valid
+              price_valid: room_rate.price_valid,
+              minimum_booking_limit: room_rate.minimum_booking_limit(params)
             }
           end
         else
