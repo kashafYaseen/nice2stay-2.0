@@ -8,7 +8,7 @@ class SaveAmenityDetails
 
   def initialize(params)
     @params = params
-    @amenity = Amenity.find_or_initialize_by(slug: amenity_params[:slug])
+    @amenity = Amenity.find_by(slug: amenity_params[:slug]) || Amenity.find_by(crm_id: amenity_params[:crm_id]) || Amenity.new(crm_id: amenity_params[:crm_id])
   end
 
   def call
@@ -60,6 +60,7 @@ class SaveAmenityDetails
       params.require(:amenity).permit(
         :slug,
         :name,
+        :crm_id,
         :filter_enabled,
         :hot,
         :icon,
