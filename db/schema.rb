@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(version: 2022_04_15_071739) do
     t.boolean "rebooking_approved", default: false
     t.string "voucher_code"
     t.float "voucher_amount"
+    t.string "security_deposit_payment_mollie_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -605,6 +606,9 @@ ActiveRecord::Schema.define(version: 2022_04_15_071739) do
     t.integer "crm_id"
     t.boolean "free_cancelation", default: false
     t.boolean "dynamic_prices", default: false
+    t.float "deposit"
+    t.integer "num_of_accommodations", default: 1
+    t.string "name_on_cm"
     t.index ["crm_id"], name: "index_lodgings_on_crm_id", unique: true
     t.index ["owner_id"], name: "index_lodgings_on_owner_id"
     t.index ["parent_id"], name: "index_lodgings_on_parent_id"
@@ -649,7 +653,6 @@ ActiveRecord::Schema.define(version: 2022_04_15_071739) do
     t.string "language"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -912,6 +915,8 @@ ActiveRecord::Schema.define(version: 2022_04_15_071739) do
     t.integer "book_option", default: 0
     t.integer "cancel_option_reason", default: -1
     t.string "canceled_by"
+    t.float "security_deposit"
+    t.boolean "include_deposit"
     t.index ["booking_id"], name: "index_reservations_on_booking_id"
     t.index ["lodging_id"], name: "index_reservations_on_lodging_id"
   end

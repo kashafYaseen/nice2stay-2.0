@@ -3,6 +3,7 @@ class Region < ApplicationRecord
   has_many :lodgings
   has_many :custom_texts
   has_many :places
+  has_many :recent_searches, as: :searchable
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :leads
 
@@ -23,7 +24,7 @@ class Region < ApplicationRecord
   scope :published, -> { where(published: true) }
 
   delegate :name, :regions, :disable, :slug, to: :country, prefix: true, allow_nil: true
-  delegate :region_page, to: :lodgings, prefix: true, allow_nil: true
+  delegate :region_page, :published_parents_count, to: :lodgings, prefix: true, allow_nil: true
 
   def search_data
     attributes.merge(
@@ -32,7 +33,10 @@ class Region < ApplicationRecord
       title_en: title_en,
       title_nl: title_nl,
       country_slug: country.slug,
+      country_name_en: country.name_en,
+      country_name_nl: country.name_nl,
       disable: country_disable,
+      lodging_count: lodgings.published_parents_count,
     )
   end
 

@@ -22,6 +22,9 @@ class BookGuestCentricOffer
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.set_form_data form_data
     response = JSON.parse(http.request(request).body)
+    puts "------------------header = #{header}"
+    puts "------------------form_data = #{form_data}"
+    puts "------------------response = #{response}"
     if response['error']
       reservation.update_columns(gc_errors: "#{response['error_message']} -- #{response['error_list']}", request_status: 'rejected')
     else

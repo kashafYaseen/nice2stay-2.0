@@ -149,7 +149,7 @@
         <%= truncated_description(lodging.description, 1000).try(:html_safe) %>
       </div>
 
-      <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description %>" data-truncated="<%= truncated_description(lodging.description, 1000) %>">Read more</button>
+      <button class="btn btn-read-more float-right d-block d-sm-none" data-target="#lodging-full-description" data-actual="<%= lodging.description.try(:html_safe) %>" data-truncated="<%= truncated_description(lodging.description, 1000).try(:html_safe) %>">Read more</button>
     </div>
   </div>
 

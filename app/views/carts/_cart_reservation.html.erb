@@ -87,51 +87,95 @@
     <div class="row row border-grey border-bottom mb-5">
       <div class="col-md-12">
         <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          <%= "#{reservation.rooms} #{'Room'.pluralize reservation.rooms}" %>
-        </span>
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= "#{reservation.rooms} #{'Room'.pluralize reservation.rooms}" %>
+          </span>
 
           <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price(reservation.rent - reservation.tax_and_additional_fee - reservation.total_meal_price) %>
-        </span>
+            <%= render_rounded_price(reservation.rent - reservation.tax_and_additional_fee - reservation.total_meal_price) %>
+          </span>
         </div>
       </div>
 
       <% if reservation.meal_id.present? %>
         <div class="col-md-12">
           <div class="row">
-          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-            <%= render_meal_title(reservation.meal_id) %>
-          </span>
+            <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+              <%= render_meal_title(reservation.meal_id) %>
+            </span>
 
             <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-            <%= render_rounded_price reservation.total_meal_price %>
-          </span>
+              <%= render_rounded_price reservation.total_meal_price %>
+            </span>
           </div>
         </div>
       <% end %>
 
       <div class="col-md-12">
         <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          <%= t('guest_centric.tax') %>
-        </span>
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= t('guest_centric.tax') %>
+          </span>
 
           <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price reservation.tax_and_additional_fee %>
-        </span>
+            <%= render_rounded_price reservation.tax_and_additional_fee %>
+          </span>
         </div>
       </div>
 
       <div class="col-md-12">
         <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          <%= t('cart.total_charges') %>
-        </span>
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= t('cart.total_charges') %>
+          </span>
 
           <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
-          <%= render_rounded_price reservation.rent.to_f %>
-        </span>
+            <%= render_rounded_price reservation.rent.to_f %>
+          </span>
+        </div>
+      </div>
+    </div>
+    </div>
+  <% elsif reservation.booking_expert? %>
+    <div class="mb-3">
+      <span class="text-bold"><%= t('bookings.instant_booking') %></span><br>
+      <span class="text-xs"><%= t('bookings.instant') %></span>
+    </div>
+
+    <div class="row row border-grey border-bottom mb-5">
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= "#{reservation.rooms} #{'Room'.pluralize reservation.rooms}" %>
+          </span>
+
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+            <%= render_rounded_price reservation.rent %>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= t('booking_expert.additional_fee_with_tax') %>
+          </span>
+
+          <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
+           <%= render_rounded_price reservation.tax_and_additional_fee %>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="row">
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= t('cart.total_charges') %>
+          </span>
+
+          <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
+            <%= render_rounded_price (reservation.rent + reservation.tax_and_additional_fee) %>
+          </span>
         </div>
       </div>
     </div>
@@ -151,26 +195,26 @@
     <div class="row row border-grey border-bottom mb-5">
       <div class="col-md-12">
         <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          <%= t('cart.rent') %>
-        </span>
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= t('cart.rent') %>
+          </span>
 
           <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-          <%= render_rounded_price reservation.rent %>
-        </span>
+            <%= render_rounded_price reservation.rent %>
+          </span>
         </div>
       </div>
 
       <% if reservation.cleaning_cost.to_f > 0 %>
         <div class="col-md-12">
           <div class="row">
-          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-            <%= t('cart.cleaning_cost') %>
-          </span>
+            <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+              <%= t('cart.cleaning_cost') %>
+            </span>
 
             <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-            <%= render_rounded_price reservation.cleaning_cost %>
-          </span>
+              <%= render_rounded_price reservation.cleaning_cost %>
+            </span>
           </div>
         </div>
       <% end %>
@@ -178,26 +222,26 @@
       <% if reservation.discount.to_f > 0 %>
         <div class="col-md-12">
           <div class="row">
-          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-            Discount
-          </span>
+            <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+              Discount
+            </span>
 
             <span class="col-md-4 text-right border-top border-grey ml-auto pt-2 pb-2 mr-3">
-            <%= render_rounded_price reservation.discount %>
-          </span>
+              <%= render_rounded_price reservation.discount %>
+            </span>
           </div>
         </div>
       <% end %>
 
       <div class="col-md-12">
         <div class="row">
-        <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
-          <%= t('cart.total_charges') %>
-        </span>
+          <span class="col-md-4 text-left border-top border-grey pt-2 pb-2 ml-3">
+            <%= t('cart.total_charges') %>
+          </span>
 
           <span class="col-md-4 text-right ml-auto border-top border-grey pt-2 pb-2 mr-3 price-large">
-          <%= render_rounded_price(reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %>
-        </span>
+            <%= render_rounded_price(reservation.rent.to_f + reservation.cleaning_cost.to_f - reservation.discount) %>
+          </span>
         </div>
       </div>
     </div>

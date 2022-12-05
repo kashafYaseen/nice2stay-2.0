@@ -1,18 +1,27 @@
 class Reservation < ApplicationRecord
   belongs_to :booking
   belongs_to :lodging
+  belongs_to :room_rate, optional: true
+  has_one :child_lodging, through: :room_rate
+  has_one :rate_plan, through: :room_rate
   has_many :rules, through: :lodging
   has_many :cleaning_costs, through: :lodging
   has_many :guest_details
   has_one :review
+  has_one :user, through: :booking
+  has_many :child_rates, through: :rate_plan
+  has_many :reserved_supplements
 
   validates :check_in, :check_out, presence: true
   validate :availability
   validate :no_of_guests
-  validate :accommodation_rules
+  validate :accommodation_rules, unless: :belongs_to_channel?
+  validate :accommodation_rate_plan_rule, if: :belongs_to_channel?
+  validate :unique_child_accommodation, if: :belongs_to_channel?, on: :create
 
-  after_validation :update_lodging_availability
-  #after_commit :send_reservation_details
+  after_validation :update_lodging_availability, on: :create, unless: :belongs_to_channel?
+  # after_validation :update_room_rate_availability, if: :belongs_to_channel?, on: :update
+  # after_commit :send_reservation_details
   before_create :set_expired_at
   after_create :update_price_details
   after_destroy :send_reservation_removal_details
@@ -20,10 +29,20 @@ class Reservation < ApplicationRecord
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
   delegate :user, :identifier, :created_by, :rebooking_approved, to: :booking, allow_nil: true
-  delegate :email, :full_name, to: :user, prefix: true
+  delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true, allow_nil: true
   delegate :id, :confirmed, to: :booking, prefix: true
+  delegate :code, :id, :rule, :crm_id, to: :rate_plan, prefix: true, allow_nil: true
+  delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
+  delegate :open_gds_accommodation_id, to: :child_lodging, allow_nil: true
+  delegate :id, :name, :slug, :crm_id, :open_gds?, to: :child_lodging, allow_nil: true, prefix: true
+  delegate :belongs_to_channel?, to: :child_lodging, allow_nil: true, prefix: :lodging
+  delegate :parent_lodging_id, to: :room_rate, allow_nil: true
+  delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
+  delegate :deposit, to: :lodging, prefix: :security, allow_nil: true
+  delegate :include_deposit, to: :lodging, prefix: true, allow_nil: true
 
   scope :not_canceled, -> { where(canceled: false) }
+  scope :canceled, -> { where(canceled: true) }
   scope :in_cart, -> { where(in_cart: true) }
   scope :requests, -> { where(in_cart: false, canceled: false) }
   scope :non_confirmed, -> { requests.joins(:booking).where(bookings: { confirmed: false }) }
@@ -32,9 +51,16 @@ class Reservation < ApplicationRecord
   scope :unexpired, -> { where.not(request_status: 'expired') }
 
   scope :guest_centric, -> { where.not(offer_id: nil) }
+  scope :booking_expert, -> { where.not(be_category_id: nil) }
+  scope :room_raccoon, -> { joins(:lodging).where(lodgings: { channel: 2 }) }
+  scope :open_gds, -> { joins(:child_lodging).where(lodgings: { channel: 3 }) }
+  scope :open_gds_without_online_payment, -> { open_gds.where(open_gds_online_payment: false) }
+  scope :open_gds_with_online_payment, -> { open_gds.where(open_gds_online_payment: true) }
+  scope :belongs_to_channel, -> { where.not(room_rate_id: nil) }
 
   accepts_nested_attributes_for :review
   accepts_nested_attributes_for :guest_details
+  accepts_nested_attributes_for :reserved_supplements
 
   attr_accessor :skip_data_posting
 
@@ -49,6 +75,7 @@ class Reservation < ApplicationRecord
     arrival_email_sent: 7,
     option: 8,
     request_price: 9,
+    security_paid: 10,
   }
 
   enum request_status: {
@@ -58,6 +85,16 @@ class Reservation < ApplicationRecord
     canceled: 3,
     expired: 4,
   }
+
+  enum open_gds_payment_status: {
+    open: 0,
+    pending: 1,
+    paid: 2,
+    failed: 3,
+    cancelled: 4,
+    expired: 5,
+    refunded: 6
+  }, _prefix: true
 
   enum book_option: {
     no: 0,
@@ -90,7 +127,10 @@ class Reservation < ApplicationRecord
   end
 
   def calculate_rent
-    self.rent = lodging.price_details([check_in.to_s, check_out.to_s, adults, children, infants], false)[:rates].sum
+    return self.rent = lodging.price_details(values: [check_in.to_s, check_out.to_s, adults, children, infants], flexible: false)[:rates].sum unless belongs_to_channel?
+
+    self.rent = room_rate.price_details(values: [check_in.to_s, check_out.to_s, adults, children, infants, rooms])[:rates].sum * rooms.to_i + room_rate.open_gds_res_fee.to_f
+    self.additional_fee = room_rate.open_gds_res_fee.to_f
   end
 
   def total_meal_price
@@ -109,25 +149,57 @@ class Reservation < ApplicationRecord
     offer_id.present?
   end
 
+  def booking_expert?
+    be_category_id.present?
+  end
+
   def step_passed?(step)
     Reservation.booking_statuses[booking_status] >= Reservation.booking_statuses[step]
   end
 
   def total_rent
     return rent.to_f unless is_managed_by_n2s?
-    rent.to_f + cleaning_cost.to_f - discount.to_f
+    rent.to_f + tolal_supplements_amount + cleaning_cost_on_nice2stay.to_f - discount.to_f
+  end
+
+  def tolal_supplements_amount
+    reserved_supplements.sum{|r_s| r_s.rate.to_f * [r_s.quantity.to_i, 1].max}
+  end
+
+  def booking_expert_total
+    rent.to_f + tax_and_additional_fee.to_f
   end
 
   def pre_payment
-    total_rent * lodging.owner_pre_payment / 100
+    if child_lodging_open_gds?
+      open_gds_online_payment && open_gds_deposit_amount.positive? ? open_gds_deposit_amount : total_price * room_rate.try(:rate_plan).try(:pre_payment_percentage).to_i / 100
+    else
+      (booking_expert? || belongs_to_channel? ? total_price : total_rent) * lodging.owner_pre_payment / 100
+    end
   end
 
   def final_payment
-    total_rent * lodging.owner_final_payment / 100
+    if child_lodging_open_gds?
+      open_gds_online_payment && open_gds_deposit_amount.positive? ? (total_price - open_gds_deposit_amount) : (total_price * room_rate.try(:rate_plan).try(:final_payment_percentage).to_i / 100)
+    else
+      (booking_expert? || belongs_to_channel? ? total_price : total_rent) * lodging.owner_final_payment / 100
+    end
+  end
+
+  def cleaning_cost_on_nice2stay
+    is_managed_by_n2s? ? cleaning_cost.to_f : 0
   end
 
   def cleaning_cost_on_location
     is_managed_by_n2s? ? 0 : cleaning_cost.to_f
+  end
+
+  def security_deposit_on_nice2stay
+    include_deposit? ? security_deposit.to_f : 0
+  end
+
+  def security_deposit_on_location
+    include_deposit? ? 0 : security_deposit.to_f
   end
 
   def self.arrival_status
@@ -140,24 +212,59 @@ class Reservation < ApplicationRecord
     cleaning_costs.try(:first).try(:manage_by)
   end
 
+  def lodging_wrt_channel
+    return child_lodging if belongs_to_channel?
+
+    lodging
+  end
+
+  def belongs_to_channel?
+    room_rate_id.present?
+  end
+
+  def room_raccoon?
+    rr_res_id_value.present? || rr_errors.present?
+  end
+
+  def open_gds?
+    open_gds_res_id.present? || open_gds_error_name.present?
+  end
+
   private
     def update_lodging_availability
       return if in_cart? || prebooking? || option? || offer_id.present?
       lodging.availabilities.check_out_only!(check_in)
-      lodging.availabilities.where(available_on: (check_in+1.day..check_out-1.day).map(&:to_s)).destroy_all
+      lodging.availabilities.where(available_on: (check_in + 1.day..check_out - 1.day).map(&:to_s)).destroy_all
       lodging.availabilities.where(available_on: check_out, check_out_only: true).delete_all
     end
 
+    # def update_room_rate_availability
+    #   return if in_cart? || prebooking? || option?
+    #
+    #   _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
+    #   _availabilities.each do |availability|
+    #     availability.booking_limit -= rooms
+    #   end
+    #
+    #   Availability.import _availabilities.to_ary, batch_size: 150, on_duplicate_key_update: { columns: [:booking_limit] } if _availabilities.present?
+    # end
+
     def availability
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
+
       errors.add(:check_in, "& check out dates must be different") if (check_out - check_in).to_i < 1
-      _availabilities = lodging.availabilities.where(available_on: (check_in..check_out-1.day).map(&:to_s))
-      check_out_days = _availabilities.where(check_out_only: true)
-      errors.add(:base, "Not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
+      if belongs_to_channel?
+        validate_room_rate_availabilities
+      else
+        _availabilities = lodging.availabilities.where(available_on: (check_in..check_out - 1.day).map(&:to_s))
+        check_out_days = _availabilities.where(check_out_only: true)
+        errors.add(:base, "Not available for selected dates") if _availabilities.where(check_out_only: false).count < (check_out - check_in).to_i || check_in < Date.today || check_out_days.present?
+      end
     end
 
     def accommodation_rules
       return unless check_in.present? && check_out.present? && lodging.present? && offer_id.blank?
+
       nights = (check_out - check_in).to_i
       applied_rules = rules_active(check_in, check_out).presence || rules_active_flexible(check_in, check_out)
       applied_rules = applied_rules.select{|ar| ar.minimum_stay.include? nights} if applied_rules.pluck(:start_date).uniq.size == 1 && applied_rules.pluck(:end_date).uniq.size == 1 && applied_rules.count > 1
@@ -180,17 +287,31 @@ class Reservation < ApplicationRecord
     end
 
     def no_of_guests
-      return unless lodging.present? && lodging.adults.present? && offer_id.blank?
-      return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults.to_i
+      return unless lodging.present? && offer_id.blank?
 
-      children_vacancies = lodging.children.to_i + lodging.adults - adults.to_i
-      errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
+      if child_lodging.present? && child_lodging.belongs_to_channel?
+        max_occupants = child_lodging.adults + child_lodging.extra_beds
+        occupants = adults.to_i + children.to_i + infants.to_i
+        return errors.add(:base, "Maximum #{max_occupants} occupants are allowed") if max_occupants < occupants
+        return errors.add(:base, "Minimum #{child_lodging.minimum_adults} occupants are allowed") if occupants < child_lodging.minimum_adults
+        return unless child_lodging.extra_beds_for_children_only && extra_bed_used?
+
+        errors.add(:base, 'Extra Beds are only available for children / infants') if child_lodging.adults < adults.to_i
+      else
+        return unless lodging.adults.present? && offer_id.blank?
+        return errors.add(:base, "Maximum #{lodging.adults} adults are allowed") if lodging.adults < adults.to_i
+        return errors.add(:base, "Minimum #{lodging.minimum_adults} adults are allowed") if lodging.minimum_adults > adults.to_i
+
+        children_vacancies = lodging.children.to_i + lodging.adults - adults.to_i
+        errors.add(:base, "Maximum #{children_vacancies} children are allowed") if children_vacancies < children.to_i
+      end
     end
 
     def update_price_details
-      return if skip_data_posting || offer_id.present?
-      rent = calculate_rent
-      update_columns rent: rent, total_price: (rent - discount.to_f)
+      return if skip_data_posting || offer_id.present? || be_category_id.present?
+
+      calculate_rent
+      update_columns rent: rent, total_price: (rent - discount.to_f), additional_fee: additional_fee
     end
 
     def rules_validation_message check_in, check_out
@@ -212,5 +333,47 @@ class Reservation < ApplicationRecord
 
     def send_reservation_removal_details
       SendReservationRemovalDetailsJob.perform_later(self.id, self.crm_booking_id, self.booking_id) unless skip_data_posting || booking.in_cart
+    end
+
+    def validate_room_rate_availabilities
+      _availabilities = room_rate.availabilities.where(available_on: (check_in..check_out - 1.day).map(&:to_s)).order(:available_on)
+      nights = (check_out - check_in).to_i
+      if _availabilities.present?
+        min_booking_limit = _availabilities.pluck(:booking_limit).min
+        check_in_availability = _availabilities.find { |availability| availability.available_on == check_in }
+        check_out_availability = _availabilities.find { |availability| availability.available_on == check_out - 1.day }
+        return errors.add(:base, 'Not available for selected dates') if check_in_availability.blank? || check_out_availability.blank?
+
+        errors.add(:rooms, "Minimum rooms available from #{check_in} to #{check_out} are #{min_booking_limit}") if rooms > min_booking_limit
+        errors.add(:check_in, "Check-in not possible on #{check_in}") if check_in_availability.check_in_closed
+        errors.add(:check_out, "Check-out not possible on #{check_out}") if check_out_availability.check_out_closed
+        errors.add(:base, "Minimum Stay can be of #{check_in_availability.min_stay} and Maximum Stay can be of #{check_in_availability.max_stay}") if check_in_availability.minimum_stay.exclude?(nights.to_s)
+      end
+
+      errors.add(:base, "Not available for selected dates") if check_in < Date.today && _availabilities.blank?
+    end
+
+    def accommodation_rate_plan_rule
+      return unless check_in.present? && check_out.present? && lodging.present? && lodging.open_gds?
+      return if errors.keys.include?(:rooms)
+
+      rule = rate_plan_rule
+      errors.add(:check_in, "Check-in not possible on #{check_in}") if check_in < rule.start_date || check_in > rule.end_date
+      errors.add(:check_out, "Check-out not possible on #{check_out}") if check_out < rule.start_date || check_out > rule.end_date
+      errors.add(:check_in, "Check-in Possible only on #{rule.open_gds_arrival_days}") if rule.open_gds_arrival_days.exclude?(check_in.strftime('%A').downcase)
+      return if rule.restriction_type_disabled?
+
+      required_check_in = Date.current + rule.open_gds_restriction_days
+      return errors.add(:check_in, "Check-in possible from #{rule.open_gds_restriction_days.days.from_now.to_date}") if rule.restriction_type_till? && check_in < required_check_in
+
+      errors.add(:check_in, "Check-in possible till #{rule.open_gds_restriction_days.days.from_now}") if rule.restriction_type_from? && check_in > required_check_in
+    end
+
+    def extra_bed_used?
+      (child_lodging.adults - (adults.to_i + children.to_i + infants.to_i)).negative?
+    end
+
+    def unique_child_accommodation
+      errors.add(:child_lodging, 'Accommodation already reserved.') if booking.reservations_in_cart.joins(:child_lodging).where(lodgings: { id: self.child_lodging_id }).present?
     end
 end

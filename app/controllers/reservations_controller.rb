@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
   def create
     @reservation = @booking.reservations.build(reservation_params.merge(in_cart: true))
     if @reservation.save
-      ahoy.track "Booking", @reservation rescue nil
+      ahoy.track "Booking", @reservation
       @reservation = @reservation.lodging.reservations.build
       @reservations = @booking.reservations.unexpired
     else
