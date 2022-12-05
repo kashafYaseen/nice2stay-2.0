@@ -24,6 +24,8 @@ default: &default
 development:
   <<: *default
   database: geosearch_development
+  pool: 100
+  timeout: 15000
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -84,4 +86,4 @@ production:
   pool: <%= ENV['NICE2STAY_DATABASE_POOL'] %>
   host: 'localhost'
   username: geosearch
-  password: <%= ENV['GEOSEARCH_DATABASE_PASSWORD'] %>
+  password: <%= ENV['NICE2STAY_DATABASE_PASSWORD'] %>

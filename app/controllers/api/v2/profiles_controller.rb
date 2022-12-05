@@ -1,5 +1,5 @@
 class Api::V2::ProfilesController < Api::V2::ApiController
-  before_action :authenticate, except: [:create]
+  before_action :authenticate, except: [:create, :valid]
 
   def show
     render json: Api::V2::UserSerializer.new(current_user).serialized_json, status: :ok
@@ -30,9 +30,18 @@ class Api::V2::ProfilesController < Api::V2::ApiController
     end
   end
 
+  def valid
+    user = User.new(user_sign_up_params)
+    if user.valid?
+      render json: { valid: true }, status: :ok
+    else
+      unprocessable_entity(user.errors)
+    end
+  end
+
   private
     def user_sign_up_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :last_name, :email, :phone, :city, :address, :password, :password_confirmation)
     end
 
     def account_update_params

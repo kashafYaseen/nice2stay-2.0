@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.0'
+ruby '2.6.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
@@ -49,13 +49,16 @@ gem "breadcrumbs_on_rails"
 gem 'mollie-api-ruby'
 gem 'devise-i18n'
 gem 'activeadmin_addons'
-gem 'ahoy_matey'
+gem 'ahoy_matey', '~> 3.0'
 gem 'starrr'
 gem 'premailer-rails'
 gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
-gem "i18n-js"
+gem 'i18n-js', '~> 3.6'
+gem 'oj'
+gem 'typhoeus'
+gem 'redis-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -65,11 +68,19 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
   gem 'dotenv-rails'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 4.0.2'
+  gem 'selenium-webdriver'
 end
 
 group :production do
+  gem 'exception_notification'
+end
+
+group :staging do
   gem 'exception_notification'
 end
 
@@ -108,12 +119,13 @@ gem 'jquery-ui-rails'
 
 gem 'geocoder'
 gem 'searchkick'
+gem 'elasticsearch', '8.0.1'
 gem 'activeadmin'
 gem 'route_translator'
-gem 'globalize', git: 'https://github.com/globalize/globalize'
+gem 'globalize'
 gem 'globalize-accessors'
 gem 'chosen-rails'
-gem "skylight"
+gem 'skylight', '3.1.2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram'
 gem 'omniauth-facebook'
@@ -121,7 +133,11 @@ gem 'arctic_admin'
 gem "chartkick"
 gem 'groupdate'
 gem 'activerecord-import', '~> 0.15.0'
-gem 'globalize-accessors'
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '5.0.0.342'
 gem 'rack-cors'
-gem 'recaptcha'
+gem 'ox', '~> 2.13', '>= 2.13.3'
+gem 'csv'
+gem "recaptcha"
+gem 'pg_lock'
+gem 'pry'
+gem 'pry-rails'
