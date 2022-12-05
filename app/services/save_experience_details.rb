@@ -8,7 +8,7 @@ class SaveExperienceDetails
 
   def initialize(params)
     @params = params
-    @experience = Experience.find_or_initialize_by(crm_id: experience_params[:crm_id])
+    @experience = Experience.find_by(slug: experience_params[:slug]) || Experience.find_by(crm_id: experience_params[:crm_id]) || Experience.new(crm_id: experience_params[:crm_id])
   end
 
   def call
@@ -42,6 +42,7 @@ class SaveExperienceDetails
       params.require(:experience).permit(
         :slug,
         :name,
+        :crm_id,
         :tag,
         :short_desc,
         :publish,
