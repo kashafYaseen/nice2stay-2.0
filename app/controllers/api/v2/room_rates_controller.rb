@@ -24,7 +24,7 @@ class Api::V2::RoomRatesController < Api::V2::ApiController
 
   def cumulative_price
     @room_rate.cumulative_price(params.except(:lodging_id).clone)
-    render json: Api::V2::RoomRateSerializer.new(@room_rate).serialized_json, status: :ok
+    render json: Api::V2::RoomRateSerializer.new(@room_rate, { params: { check_in: params[:check_in], check_out: params[:check_out]}}).serialized_json, status: :ok
   end
 
   private
