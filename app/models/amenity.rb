@@ -5,6 +5,7 @@ class Amenity < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
   translates :name, :slug
+  globalize_accessors
 
   before_save :name_downcase
 
