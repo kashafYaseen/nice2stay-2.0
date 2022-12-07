@@ -4,8 +4,9 @@ class Campaign < ApplicationRecord
 
   include ImageHelper
 
-  URL_MAKER = ["categories", "experiences", "price", "amenities", "guests", "accommodations", "place_categories"]
+  URL_MAKER = ["categories", "experiences", "amenities", "guests"]
   MODEL_MAPPING = {'experiences' => 'Experience', 'categories' => 'LodgingCategory', 'amenities' => 'Amenity'}
+  ULR_KEYS = {'experiences' => 'experiences_in', 'categories' => 'types_in', 'amenities' => 'amenities_in', 'guests' => 'adults'}
 
   searchkick text_middle: [:title_en, :title_nl]
 
@@ -41,14 +42,14 @@ class Campaign < ApplicationRecord
 
     if self.country_id
       country = get_country(self.country_id)
-      url_en << "country=#{country.try(:slug_en)}"
-      url_nl << "country=#{country.try(:slug_nl)}"
+      url_en << "countries_in=#{country.try(:slug_en)}"
+      url_nl << "countries_in=#{country.try(:slug_nl)}"
     end
 
     if self.region_id
       region = get_region(self.region_id)
-      url_en << "region=#{region.try(:slug_en)}"
-      url_nl << "region=#{region.try(:slug_nl)}"
+      url_en << "regions_in=#{region.try(:slug_en)}"
+      url_nl << "regions_in=#{region.try(:slug_nl)}"
     end
 
     if self.min_price.present?
@@ -62,36 +63,31 @@ class Campaign < ApplicationRecord
     end
 
     if self.from.present?
-      url_en << "starts_from=#{self.from.strftime('%d-%m-%Y')}"
-      url_nl << "starts_from=#{self.from.strftime('%d-%m-%Y')}"
+      url_en << "check_in=#{self.from.strftime('%d-%m-%Y')}"
+      url_nl << "check_in=#{self.from.strftime('%d-%m-%Y')}"
     end
 
     if self.to.present?
-      url_en << "ends_on=#{self.to.strftime('%d-%m-%Y')}"
-      url_nl << "ends_on=#{self.to.strftime('%d-%m-%Y')}"
+      url_en << "check_out=#{self.to.strftime('%d-%m-%Y')}"
+      url_nl << "check_out=#{self.to.strftime('%d-%m-%Y')}"
     end
 
     Campaign::URL_MAKER.each do |key|
       next unless self.try(:category) && self.try(:category).keys.any? {|k| k.include? key}
 
       values = self.try(:category).select{|k, value | k.include?(key)}.values
-      data = []
+      url_key = ULR_KEYS[key]
 
       if MODEL_MAPPING[key].present?
         model_data = MODEL_MAPPING[key].constantize.where(crm_id: values)
-        if key == 'categories'
-          model_data = model_data.map{|c| {en: c.name_en, nl: c.name_nl}}
-        else
-          model_data = model_data.map{|c| {en: c.slug_en, nl: c.slug_nl}}
-        end
-        url_en << "#{key}=#{model_data.map{|k| k[:en]}.join(',')}"
-        url_nl << "#{key}=#{model_data.map{|k| k[:nl]}.join(',')}"
+        model_data = key == 'categories' ? model_data.map{|c| {en: c.name_en, nl: c.name_nl}} : model_data.map{|c| {en: c.slug_en, nl: c.slug_nl}}
+        url_en << model_data.map{|k| "#{url_key}=#{k[:en]}"}.join('&')
+        url_nl << model_data.map{|k| "#{url_key}=#{k[:nl]}"}.join('&')
       else
-        url_en << "#{key}=#{values.join(",")}"
-        url_nl << "#{key}=#{values.join(",")}"
+        url_en << "#{url_key}=#{values.join}"
+        url_nl << "#{url_key}=#{values.join}"
       end
     end
-
     ["?#{url_en.join("&")}", "?#{url_nl.join("&")}"]
   end
 

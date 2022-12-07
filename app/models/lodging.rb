@@ -203,6 +203,7 @@ class Lodging < ApplicationRecord
       adults_and_children:   adults_plus_children,
       amenities:             amenities.collect(&:name),
       amenities_ids:         amenities.ids,
+      amenities_slugs:       amenities.collect(&:translated_slugs),
       experiences:           experiences.collect(&:translated_slugs),
       experiences_ids:       experiences.ids,
       discounts:             discounts.active.present?,

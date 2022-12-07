@@ -26,4 +26,8 @@ class Amenity < ApplicationRecord
     end if buckets.present?
     count
   end
+
+  def translated_slugs
+    translations.pluck(:slug)
+  end
 end
