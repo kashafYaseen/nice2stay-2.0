@@ -20,7 +20,7 @@ class Lodging < ApplicationRecord
   has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
-  belongs_to :lodging_category
+  belongs_to :lodging_category, optional: true
   has_and_belongs_to_many :place_categories, join_table: 'lodging_place_categories'
   has_and_belongs_to_many :visited_users, class_name: 'User', join_table: 'visited_lodgings'
 
@@ -203,6 +203,7 @@ class Lodging < ApplicationRecord
       adults_and_children:   adults_plus_children,
       amenities:             amenities.collect(&:name),
       amenities_ids:         amenities.ids,
+      amenities_slugs:       amenities.collect(&:translated_slugs),
       experiences:           experiences.collect(&:translated_slugs),
       experiences_ids:       experiences.ids,
       discounts:             discounts.active.present?,

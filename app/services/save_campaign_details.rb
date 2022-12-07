@@ -20,7 +20,7 @@ class SaveCampaignDetails
 
   private
     def save_campaign
-      campaign.attributes = campaign_params
+      campaign.attributes = campaign_params.merge(category: params.dig(:campaign, :category).permit(params.dig(:campaign, :category).keys).to_h )
       campaign.save
       campaign.reindex
     end
@@ -51,6 +51,12 @@ class SaveCampaignDetails
       params.require(:campaign).permit(
         :title,
         :description,
+        :region_id,
+        :country_id,
+        :from,
+        :to,
+        :min_price,
+        :max_price,
         :slug,
         :url,
         :price,

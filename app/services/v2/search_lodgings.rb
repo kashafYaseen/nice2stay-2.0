@@ -60,7 +60,7 @@ class V2::SearchLodgings
       conditions << { term: { discounts: true } } if params[:discounts].present?
       conditions << { term: { realtime_availability: true } } if params[:realtime_availability].present?
       conditions << { term: { free_cancelation: true } } if params[:free_cancelation].present?
-      conditions << { terms: { lodging_type: params[:lodging_type_in] } } if params[:lodging_type_in].present?
+      conditions << { terms: { lodging_type: params[:lodging_type_in].flatten } } if params[:lodging_type_in].present?
       conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
 
@@ -86,8 +86,9 @@ class V2::SearchLodgings
       conditions << near_latlong_condition if params[:within].present?
 
       availability_condition conditions if params[:check_in].present? || params[:check_out].present? || params[:flexible_dates].present?
-      all(:amenities_ids, params[:amenities_in], conditions) if params[:amenities_in].present?
-      all(:experiences, params[:experiences_in], conditions) if params[:experiences_in].present?
+
+      all(:amenities_slugs, params[:amenities_in].flatten, conditions) if params[:amenities_in].present?
+      all(:experiences, params[:experiences_in].flatten, conditions) if params[:experiences_in].present?
 
       conditions
     end
