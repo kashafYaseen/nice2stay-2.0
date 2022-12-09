@@ -62,13 +62,13 @@ class Campaign < ApplicationRecord
     end
 
     if self.from.present?
-      url_en << "check_in=#{self.from.strftime('%d-%m-%Y')}"
-      url_nl << "check_in=#{self.from.strftime('%d-%m-%Y')}"
+      url_en << "check_in=#{self.from.strftime('%Y-%m-%d')}"
+      url_nl << "check_in=#{self.from.strftime('%Y-%m-%d')}"
     end
 
     if self.to.present?
-      url_en << "check_out=#{self.to.strftime('%d-%m-%Y')}"
-      url_nl << "check_out=#{self.to.strftime('%d-%m-%Y')}"
+      url_en << "check_out=#{self.to.strftime('%Y-%m-%d')}"
+      url_nl << "check_out=#{self.to.strftime('%Y-%m-%d')}"
     end
 
     Campaign::URL_MAKER.each do |key|
