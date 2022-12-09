@@ -92,6 +92,8 @@ class GetAutocompleteData
     end
 
     def visited_lodgings
+      return [] if params[:query].present? && params[:query] != '*'
+
       user_visited_lodging_ids = User.find_by(id: params[:user_id]).visited_lodgings.pluck(:id) rescue []
       return [] unless user_visited_lodging_ids.present?
       Lodging.search(params[:query], {
