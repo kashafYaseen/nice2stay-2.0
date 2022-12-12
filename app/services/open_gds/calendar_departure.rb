@@ -2,18 +2,16 @@ class OpenGds::CalendarDeparture
   attr_reader :lodging,
               :params,
               :rate_plan,
-              :accommodation_id,
               :uri
 
-  def self.call(lodging:, params:, accommodation_id:)
-    new(lodging: lodging, params: params, accommodation_id: accommodation_id).call
+  def self.call(lodging:, params:)
+    new(lodging: lodging, params: params).call
   end
 
-  def initialize(lodging:, params:, accommodation_id:)
+  def initialize(lodging:, params:)
     @params = params
     @lodging = lodging
     @rate_plan = get_rate_plan
-    @accommodation_id = accommodation_id
     @uri = URI.parse("https://api.opengds.com/core/v1/acc-status/calendar-depart?#{query_params}")
   end
 
@@ -22,10 +20,20 @@ class OpenGds::CalendarDeparture
     request.content_type = 'application/x-www-form-urlencoded; charset=UTF-8'
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    JSON.parse(http.request(request).body)
+    response = JSON.parse(http.request(request).body)
+    parse_data(response)
   end
 
   private
+    def parse_data(response)
+      return [] if response.is_a?(Hash) # IF there will be hash in response it means there is an error occured in the request
+
+      response.flatten.group_by{ |r| r["date"] }.reject{ |key, value| key.nil? }.map do |key, value|
+        minimum_value = value.pluck("rate").reject(&:blank?).min
+        value.find{ |val| val["rate"] == minimum_value }
+      end
+    end
+
     def query_params
       "#{credentials}&#{calendar_params}"
     end
@@ -34,9 +42,9 @@ class OpenGds::CalendarDeparture
       "rate_id=#{rate_id}&accom_id=#{accommodation_id}&arrival=#{check_in}&occupancy=#{occupancy}"
     end
 
-    # def accommodation_id
-    #   lodging.lodging_children.pluck(:open_gds_accommodation_id)
-    # end
+    def accommodation_id
+       lodging.lodging_children.pluck(:open_gds_accommodation_id).reject(&:blank?).sort
+    end
 
     def rate_id
       rate_plan.open_gds_rate_id

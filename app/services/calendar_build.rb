@@ -15,12 +15,7 @@ class CalendarBuild
   end
 
   def open_gds_accommodations_calendar
-    response = []
-    lodging.lodging_children.pluck(:open_gds_accommodation_id).reject(&:blank?).sort.each do |open_gds_accommodation_id|
-      response <<  OpenGds::CalendarBuild.call(lodging: lodging, params: params, accommodation_id: open_gds_accommodation_id)
-    end
-
-    response.flatten.group_by{ |r| r["date"] }.reject{ |key, value| key.nil? }.map{ |key, value| value.find{ |val| val["rate"] == value.pluck("rate").min }}
+    OpenGds::CalendarBuild.call(lodging: lodging, params: params)
   end
 
   def non_open_gds_accommodations_calendar
