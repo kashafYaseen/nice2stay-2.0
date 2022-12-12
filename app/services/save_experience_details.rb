@@ -42,6 +42,7 @@ class SaveExperienceDetails
       params.require(:experience).permit(
         :slug,
         :name,
+        :crm_id,
         :tag,
         :short_desc,
         :publish,

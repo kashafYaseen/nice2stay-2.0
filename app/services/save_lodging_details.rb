@@ -22,6 +22,7 @@ class SaveLodgingDetails
       lodging.owner = owner
       lodging.region = region(params[:lodging][:country_crm_id], params[:lodging][:region_crm_id])
       lodging.parent = parent
+      lodging.lodging_category = lodging_category(params[:lodging][:lodging_category_id])
       lodging.channel = 'open_gds' if params[:lodging][:open_gds]
       lodging.channel = 'room_raccoon' if params[:lodging][:room_raccoon]
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
@@ -81,6 +82,10 @@ class SaveLodgingDetails
     def region(country_crm_id, region_crm_id)
       country = Country.find_by(crm_id: country_crm_id)
       country.regions.find_by(crm_id: region_crm_id) if country.present?
+    end
+
+    def lodging_category(lodging_category_id)
+      LodgingCategory.find_by(crm_id: lodging_category_id)
     end
 
     def parent
@@ -157,7 +162,6 @@ class SaveLodgingDetails
         :price_updated_at,
         :status,
         :region_id,
-        :lodging_category_id,
         :check_in_day,
         :presentation,
         :created_at,

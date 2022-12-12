@@ -43,8 +43,8 @@ class GetAutocompleteData
         limit: 15,
         load: false,
         misspellings: { below: 5 },
-        where: { collection: true, popular_homepage: true }
-      }).map{ |campaign| { name: campaign.send("title_#{locale}"), id: campaign.id, type: 'campaign', url: campaign.url } }
+        where: { popular_homepage: true }
+      }).map{ |campaign| { name: campaign.send("title_#{locale}"), id: campaign.id, type: 'campaign', url: campaign.send("redirect_url_#{locale}") } }
     end
 
     def countries
@@ -92,6 +92,8 @@ class GetAutocompleteData
     end
 
     def visited_lodgings
+      return [] if params[:query].present? && params[:query] != '*'
+
       user_visited_lodging_ids = User.find_by(id: params[:user_id]).visited_lodgings.pluck(:id) rescue []
       return [] unless user_visited_lodging_ids.present?
       Lodging.search(params[:query], {
@@ -105,6 +107,8 @@ class GetAutocompleteData
     end
 
     def recent_searches
+      return [] if params[:query].present? && params[:query] != '*'
+
       User.find_by(id: params[:user_id]).recent_searches.last(5).map do |recent_search|
         { name: recent_search.searchable.name,
           searchable_type: recent_search.searchable_type.downcase,

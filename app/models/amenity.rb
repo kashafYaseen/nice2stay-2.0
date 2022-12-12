@@ -5,6 +5,7 @@ class Amenity < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
   translates :name, :slug
+  globalize_accessors
 
   before_save :name_downcase
 
@@ -24,5 +25,9 @@ class Amenity < ApplicationRecord
       count = bucket['doc_count'] if bucket['key'] == self.id
     end if buckets.present?
     count
+  end
+
+  def translated_slugs
+    translations.pluck(:slug)
   end
 end

@@ -20,7 +20,7 @@ class Lodging < ApplicationRecord
   has_one :price_text
   has_and_belongs_to_many :amenities, join_table: 'lodgings_amenities'
   has_and_belongs_to_many :experiences, join_table: 'lodgings_experiences'
-  belongs_to :lodging_category
+  belongs_to :lodging_category, optional: true
   has_and_belongs_to_many :place_categories, join_table: 'lodging_place_categories'
   has_and_belongs_to_many :visited_users, class_name: 'User', join_table: 'visited_lodgings'
 
@@ -43,6 +43,7 @@ class Lodging < ApplicationRecord
 
   attr_accessor :flexible_search
   attr_accessor :calculated_price
+  attr_accessor :rate_plan_prices
   attr_accessor :dynamic_price
   attr_accessor :price_valid, :price_errors
   attr_accessor :first_available_room, :check_in, :check_out
@@ -202,6 +203,7 @@ class Lodging < ApplicationRecord
       adults_and_children:   adults_plus_children,
       amenities:             amenities.collect(&:name),
       amenities_ids:         amenities.ids,
+      amenities_slugs:       amenities.collect(&:translated_slugs),
       experiences:           experiences.collect(&:translated_slugs),
       experiences_ids:       experiences.ids,
       discounts:             discounts.active.present?,
@@ -281,20 +283,32 @@ class Lodging < ApplicationRecord
     Rails.cache.fetch(cache_key, expires_in: 24.hours) do
       lodgings = Lodging.where(id: lodging_ids).includes({ room_rates: [{ rate_plan: :rule }, :parent_lodging, :child_lodging] }, :translations)
       lodgings.each do |lodging|
+        data = []
+        valid_price = false
         if lodging.belongs_to_channel?
           lodging.room_rates.select{ |room_rate| room_rate.publish && !room_rate.rate_plan_expired? }.each do |room_rate|
             room_rate.cumulative_price(params.clone)
-            lodging.check_in = room_rate.check_in
-            lodging.check_out = room_rate.check_out
-            lodging.calculated_price = room_rate.calculated_price
-            lodging.dynamic_price = room_rate.dynamic_price
-            lodging.price_valid = room_rate.price_valid
-            lodging.price_errors = room_rate.price_errors
-            break if room_rate.price_valid && params[:accom_listing]
+            unless valid_price
+              lodging.check_in = room_rate.check_in
+              lodging.check_out = room_rate.check_out
+              lodging.calculated_price = room_rate.calculated_price
+              lodging.dynamic_price = room_rate.dynamic_price
+              lodging.price_valid = room_rate.price_valid
+              lodging.price_errors = room_rate.price_errors
+              valid_price = room_rate.price_valid && params[:accom_listing]
+            end
+            data << {
+              calculated_price: room_rate.calculated_price,
+              dynamic_price: room_rate.dynamic_price,
+              rate_plan_id: room_rate.rate_plan_id,
+              price_valid: room_rate.price_valid,
+              minimum_booking_limit: room_rate.minimum_booking_limit(params)
+            }
           end
         else
           lodging.cumulative_price(params.clone)
         end
+        lodging.rate_plan_prices = data
       end
 
       lodgings

@@ -28,6 +28,11 @@ class Api::V3::AutocompletesController < Api::V2::ApiController
         type: 'hotels',
         data: GetAutocompleteData.call(query_params.merge(type: 'hotels'), locale),
       },
+      {
+        title: 'Campaign',
+        type: 'campaigns',
+        data: GetAutocompleteData.call(query_params.merge(type: 'campaigns'), locale),
+      }
     ]
   end
 

@@ -33,6 +33,8 @@ class RatePlan < ApplicationRecord
 
   delegate :open_gds_arrival_days, to: :rule, allow_nil: true
 
+  scope :active, -> { where.not(open_gds_rate_id: nil).order(:id) }
+
   def expired?
     return false if rule.blank?
 
