@@ -6,7 +6,7 @@ class Campaign < ApplicationRecord
 
   URL_MAKER = ["categories", "experiences", "amenities", "guests"]
   MODEL_MAPPING = {'experiences' => 'Experience', 'categories' => 'LodgingCategory', 'amenities' => 'Amenity'}
-  ULR_KEYS = {'experiences' => 'experiences_in', 'categories' => 'types_in', 'amenities' => 'amenities_in', 'guests' => 'adults'}
+  ULR_KEYS = {'experiences' => 'experiences_in[]', 'categories' => 'types_in[]', 'amenities' => 'amenities_in[]', 'guests' => 'adults'}
 
   searchkick text_middle: [:title_en, :title_nl]
 
