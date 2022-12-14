@@ -36,17 +36,11 @@
 
     <script src="https://chat-assets.frontapp.com/v1/chat.bundle.js"></script>
     <script>
-      <% if locale.eql?(:en) %>
-        window.FCSP = 'a270af6f48b623a989aa8c31902d1e92';
-      <% else %>
-        window.FCSP = 'd6c603b98d7255302bd1b5e029489495';
-      <% end %>
-
       <% if user_signed_in? %>
-        FrontChat('identity', {
-            email: "<%= current_user.email %>",
-            userHash: "<%= current_user.front_chat_hash %>"
-          });
+        window.FrontChat('init', {
+          chatId: '<%= locale.eql?(:en) ? "a270af6f48b623a989aa8c31902d1e92" : "d6c603b98d7255302bd1b5e029489495" %>',
+          useDefaultLauncher: true
+        });
       <% end %>
     </script>
   </body>
