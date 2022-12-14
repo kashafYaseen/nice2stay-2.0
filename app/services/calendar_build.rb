@@ -11,6 +11,14 @@ class CalendarBuild
   end
 
   def call
+    @lodging.open_gds? ? open_gds_accommodations_calendar : non_open_gds_accommodations_calendar
+  end
+
+  def open_gds_accommodations_calendar
+    OpenGds::CalendarBuild.call(lodging: lodging, params: params)
+  end
+
+  def non_open_gds_accommodations_calendar
     response =  []
     rules = lodging.rules_active(check_in, check_out)
     availabilities = lodging.availabilities.for_range(check_in, check_out)
