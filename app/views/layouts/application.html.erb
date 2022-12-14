@@ -36,12 +36,10 @@
 
     <script src="https://chat-assets.frontapp.com/v1/chat.bundle.js"></script>
     <script>
-      <% if user_signed_in? %>
-        window.FrontChat('init', {
-          chatId: '<%= locale.eql?(:en) ? "a270af6f48b623a989aa8c31902d1e92" : "d6c603b98d7255302bd1b5e029489495" %>',
-          useDefaultLauncher: true
-        });
-      <% end %>
+      window.FrontChat('init', {
+        chatId: '<%= locale.eql?(:en) ? "a270af6f48b623a989aa8c31902d1e92" : "d6c603b98d7255302bd1b5e029489495" %>',
+        useDefaultLauncher: true
+      });
     </script>
   </body>
 </html>
