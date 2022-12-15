@@ -55,7 +55,7 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { disable: false }
-      }).map{ |country| { name: country.send("name_#{locale}"), id: country.id, type: 'country', country: country.slug, lodging_count: country.lodging_count, url: lodgings_path(locale: locale) } }
+      }).map{ |country| { name: country.send("name_#{locale}"), id: country.id, type: 'country', country: country.send("slug_#{locale}"), lodging_count: country.lodging_count, url: lodgings_path(locale: locale) } }
     end
 
     def regions
