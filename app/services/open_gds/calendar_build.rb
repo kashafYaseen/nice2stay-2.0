@@ -30,10 +30,12 @@ class OpenGds::CalendarBuild
     def parse_data(response)
       return [] if response.is_a?(Hash) # IF there will be hash in response it means there is an error occured in the request
 
-      response.flatten.group_by{ |r| r["date"] }.reject{ |key, value| key.nil? }.map do |key, value|
+      result = response.flatten.group_by{ |r| r["date"] }.reject{ |key, value| key.nil? }.map do |key, value|
         minimum_value = value.pluck("rate").reject(&:blank?).min
         value.find{ |val| val["rate"] == minimum_value }
       end
+
+      result.reject{|r| r["rate"].blank?}
     end
 
     def query_params
@@ -45,7 +47,7 @@ class OpenGds::CalendarBuild
     end
 
     def accommodation_id
-      lodging.lodging_children.pluck(:open_gds_accommodation_id).reject(&:blank?).sort
+      rate_plan.room_rates.map{|rr| rr.child_lodging.try(:open_gds_accommodation_id)}.reject(&:blank?).sort
     end
 
     def rate_id
