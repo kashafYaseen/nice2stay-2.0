@@ -33,6 +33,8 @@ class Country < ApplicationRecord
     attributes.merge(
       name_en: name_en,
       name_nl: name_nl,
+      slug_en: slug_en,
+      slug_nl: slug_nl,
       title_en: title_en,
       title_nl: title_nl,
       regions: regions.collect(&:name),
