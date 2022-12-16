@@ -44,7 +44,11 @@ class Api::V2::LodgingsController < Api::V2::ApiController
   end
 
   def calendar_build
-    render json: CalendarBuild.call(lodging: @lodging, params: params), status: :ok
+    if params[:check_out] <= params[:check_in]
+      render json: {error: 'The end date must be greater than or equal to the start date.'}, status: :error
+    else
+      render json: CalendarBuild.call(lodging: @lodging, params: params), status: :ok
+    end
   end
 
   def calendar_departure
