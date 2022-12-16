@@ -886,3 +886,6 @@ of the accommodation."
     advise: advies van nice2stay
     shareable_link: shareable link
     need_help: Need help making choice? Please select this checkbox and our consultants will contact and help you
+
+  open_gds:
+    error: No availability for selected occupancy. Please see following alternatives for a maximum of 2 adults
