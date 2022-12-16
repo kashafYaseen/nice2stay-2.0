@@ -26,7 +26,7 @@ class OpenGds::CalendarBuild
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     response = JSON.parse(http.request(request).body)
-    if response.is_a?(Hash) # IF there will be hash in response it means there is an error occured in the request so we call the api with default adults 2
+    if response.is_a?(Hash) and default_adults.nil? # IF there will be hash in response it means there is an error occured in the request so we call the api with default adults 2
       return OpenGds::CalendarBuild.call(lodging: lodging, params: params, default_adults: 2)
     else
       return parse_data(response)
@@ -35,6 +35,8 @@ class OpenGds::CalendarBuild
 
   private
     def parse_data(response)
+      return [] if response.is_a?(Hash) # IF there will be hash in response it means there is an error occured in the request
+
       result = response.flatten.group_by{ |r| r["date"] }.reject{ |key, value| key.nil? }.map do |key, value|
         minimum_value = value.pluck("rate").reject(&:blank?).min
         value.find{ |val| val["rate"] == minimum_value }
