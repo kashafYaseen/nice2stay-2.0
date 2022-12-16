@@ -1079,3 +1079,6 @@ nl:
     advise: Advies van nice2stay
     shareable_link: deelbare link
     need_help: Hulp nodig bij het maken van keuzes? Schakel het selectievakje in en onze consultants gaan u  helpen
+
+  open_gds:
+    error: Geen beschikbaarheid voor geselecteerd aantal personen. Zie onderstaand de beschikbaarheid voor maximaal 2 volwassenen
