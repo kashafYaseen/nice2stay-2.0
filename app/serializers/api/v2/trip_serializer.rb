@@ -6,7 +6,11 @@ class Api::V2::TripSerializer
     Api::V2::TripMemberSerializer.new(trip.trip_members)
   end
 
-  attributes :lodgings do |trip|
+  attributes :lodgings, if: proc { |trip, params| params.dig(:lodgings_required) } do |trip|
     Api::V2::LodgingSerializer.new(trip.lodgings)
+  end
+
+  attributes :wishlists, if: proc { |trip, params| params.dig(:wishlists_required) } do |trip|
+    Api::V2::WishlistSerializer.new(trip.wishlists)
   end
 end
