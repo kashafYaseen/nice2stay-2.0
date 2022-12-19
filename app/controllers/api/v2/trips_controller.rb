@@ -1,10 +1,14 @@
 class Api::V2::TripsController < Api::V2::ApiController
   before_action :authenticate
-  before_action :set_trip, only: [:update, :destroy]
+  before_action :set_trip, only: [:show, :update, :destroy]
 
   def index
     pagy, trips = pagy(current_user.trips.includes({ lodgings: :translations }, :users), items: params[:per_page], page: params[:page])
     render json: Api::V2::TripSerializer.new(trips).serializable_hash.merge(pagy: pagy), status: :ok
+  end
+
+  def show
+    render json: Api::V2::TripSerializer.new(@trip).serialized_json, status: :ok
   end
 
   def create
