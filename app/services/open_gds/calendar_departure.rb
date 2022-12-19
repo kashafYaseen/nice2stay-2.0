@@ -75,6 +75,7 @@ class OpenGds::CalendarDeparture
     end
 
     def children
+      return if default_adults.present?
       return unless params[:children].present?
 
       child_rate = rate_plan.child_rates.order(rate: :desc).first
