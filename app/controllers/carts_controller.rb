@@ -23,6 +23,12 @@ class CartsController < ApplicationController
   def update
     @channel_manager = @booking.reservations.guest_centric.present? || @booking.reservations.booking_expert.present?
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
+
+    if @booking.voucher_code.present? && (Voucher.find_by(code: @booking.voucher_code).blank?)
+      @booking.errors.add(:base, 'Invalid Voucher Code.')
+      return
+    end
+
     if @booking.save
       @booking.reservations.guest_centric.each { |reservation| BookGuestCentricOffer.call(lodging_parent_if_exist(reservation), reservation, @booking) }
       @booking.reservations.booking_expert.each { |reservation| ReserveBookingExpertLodging.call(lodging_parent_if_exist(reservation), reservation) }
