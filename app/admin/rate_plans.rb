@@ -75,11 +75,16 @@ ActiveAdmin.register RatePlan do
     end
 
     panel 'Lodgings' do
-      table_for rate_plan.room_rates do
+      table_for rate_plan.room_rates.includes(:child_lodging) do
         column('Room Rate ID') { | room_rate| room_rate.id }
         column :child_lodging
         column :open_gds_accommodation_id
         column :default_rate
+        column('Number of persons') { |room_rate| room_rate.child_lodging.try(:adults) }
+        column('Extra Beds') { |room_rate| room_rate.child_lodging.try(:extra_beds) }
+        column('Extra Beds only for Children') { |room_rate| room_rate.child_lodging.try(:extra_beds_for_children_only) }
+        column :extra_bed_rate
+        column :extra_bed_rate_type
         column :parent_lodging
         column :publish
         column :created_at
