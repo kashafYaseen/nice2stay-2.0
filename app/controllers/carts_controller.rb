@@ -24,7 +24,7 @@ class CartsController < ApplicationController
     @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
 
     if @booking.voucher_code.present? && (Voucher.find_by(code: @booking.voucher_code).blank?)
-      @booking.errors.add(:base, 'Invalid Voucher Code.')
+      @booking.errors.add(:base, I18n.t('vouchers.error'))
       return
     end
 
