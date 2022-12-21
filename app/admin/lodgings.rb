@@ -230,6 +230,11 @@ ActiveAdmin.register Lodging do
           column :rate_plan_id
           column :rate_plan_name
           column :default_rate
+          column('Number of persons') { |lodging| lodging.adults }
+          column('Extra Beds') { |lodging| lodging.extra_beds }
+          column('Extra Beds only for Children') { |lodging| lodging.extra_beds_for_children_only }
+          column :extra_bed_rate
+          column :extra_bed_rate_type
           column :publish
           column :rate_plan_opengds_pushed_at
 
