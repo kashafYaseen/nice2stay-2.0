@@ -56,7 +56,7 @@ gem 'bootstrap-email'
 gem 'fast_jsonapi'
 gem 'pagy'
 gem 'i18n-js', '~> 3.6'
-gem 'oj'
+# gem 'oj'
 gem 'typhoeus'
 gem 'redis-rails'
 

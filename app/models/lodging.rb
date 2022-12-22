@@ -193,6 +193,8 @@ class Lodging < ApplicationRecord
     _children = lodging_children.published if as_parent?
     _availabilities = availabilities.active
     attributes.merge(
+      adults:                adults_count,
+      children:              children_count,
       location:              { lat: latitude, lon: longitude },
       country_id:            country.id,
       country:               country.translated_slugs,
@@ -213,6 +215,18 @@ class Lodging < ApplicationRecord
       checkout_dates:        checkout_dates,
       room_rates:            room_rates.published.with_active_rate_plan.collect(&:search_data)
     ).merge(relation_type)
+  end
+
+  def adults_count
+    return adults.to_i unless belongs_to_channel?
+
+    extra_beds_for_children_only ? adults.to_i : adults.to_i + extra_beds.to_i
+  end
+
+  def children_count
+    return children.to_i unless belongs_to_channel?
+
+    extra_beds_for_children_only ? children.to_i + extra_beds.to_i : children.to_i
   end
 
   def search_routing
