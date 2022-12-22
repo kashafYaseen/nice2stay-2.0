@@ -1,15 +1,23 @@
 class Api::V2::LodgingDetailsSerializer
   include FastJsonapi::ObjectSerializer
   attributes :id, :name, :h1, :h2, :h3, :lodging_type, :presentation, :child_name,
-             :address, :latitude, :longitude, :adults, :children, :infants,
-             :price, :calculated_price, :dynamic_price, :summary, :description, :short_desc,
-             :images, :average_rating, :created_at, :updated_at,
-             :minimum_adults, :minimum_children, :beds, :baths, :checked,:including_text,
-             :options_text, :payment_terms_text, :deposit_text,
-             :highlight_1, :highlight_2, :highlight_3, :description, :location_description, :customized_dates,
-             :setting, :quality, :interior, :service, :communication, :country_name, :region_name,
-             :gc_rooms, :guest_centric_id, :guest_centric, :realtime_availability, :gc_username, :gc_password, :channel,
+             :address, :latitude, :longitude, :infants, :price, :calculated_price,
+             :dynamic_price, :summary, :description, :short_desc, :images, :average_rating,
+             :created_at, :updated_at, :minimum_adults, :minimum_children, :beds, :baths,
+             :checked,:including_text, :options_text, :payment_terms_text, :deposit_text,
+             :highlight_1, :highlight_2, :highlight_3, :description, :location_description,
+             :customized_dates, :setting, :quality, :interior, :service, :communication,
+             :country_name, :region_name, :gc_rooms, :guest_centric_id, :guest_centric,
+             :realtime_availability, :gc_username, :gc_password, :channel,
              :extra_beds, :extra_beds_for_children_only
+
+  attribute :adults do |lodging|
+    lodging.belongs_to_channel? ? lodging.adults_count : lodging.adults
+  end
+
+  attribute :children do |lodging|
+    lodging.belongs_to_channel? ? lodging.children_count : lodging.children
+  end
 
   attribute :summary do |lodging|
     lodging.as_child? ? lodging.parent_summary : lodging.summary
