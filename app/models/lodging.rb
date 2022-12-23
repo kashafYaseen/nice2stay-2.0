@@ -193,8 +193,8 @@ class Lodging < ApplicationRecord
     _children = lodging_children.published if as_parent?
     _availabilities = availabilities.active
     attributes.merge(
-      adults:                adults_count,
-      children:              children_count,
+      # adults:                adults_count,
+      # children:              children_count,
       location:              { lat: latitude, lon: longitude },
       country_id:            country.id,
       country:               country.translated_slugs,
@@ -217,17 +217,17 @@ class Lodging < ApplicationRecord
     ).merge(relation_type)
   end
 
-  def adults_count
-    return adults.to_i unless belongs_to_channel?
+  # def adults_count
+  #   return adults.to_i unless belongs_to_channel?
 
-    extra_beds_for_children_only ? adults.to_i : adults.to_i + extra_beds.to_i
-  end
+  #   extra_beds_for_children_only ? adults.to_i : adults.to_i + extra_beds.to_i
+  # end
 
-  def children_count
-    return children.to_i unless belongs_to_channel?
+  # def children_count
+  #   return children.to_i unless belongs_to_channel?
 
-    extra_beds_for_children_only ? children.to_i + extra_beds.to_i : children.to_i
-  end
+  #   extra_beds_for_children_only ? children.to_i + extra_beds.to_i : children.to_i
+  # end
 
   def search_routing
     (parent_id || id).to_i.to_s
@@ -253,6 +253,12 @@ class Lodging < ApplicationRecord
     return children_room_rates_prices.pluck(:amount).presence || children_room_rates.pluck(:default_rate) if as_parent?
     room_rate_prices.pluck(:amount).presence || room_rates.pluck(:default_rate)
   end
+
+  # def adults_plus_children
+  #   return adults.to_i + extra_beds.to_i + children.to_i unless as_parent?
+  #   child_lodgings = lodging_children
+  #   child_lodgings.pluck(:adults).select(&:present?).max.to_i + child_lodgings.pluck(:extra_beds).select(&:present?).max.to_i + child_lodgings.pluck(:children).select(&:present?).max.to_i
+  # end
 
   def adults_plus_children
     return adults.to_i + children.to_i unless as_parent?
