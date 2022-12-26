@@ -33,7 +33,13 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { presentation: ['as_parent', 'as_standalone'], published: true }
-      }).map{ |lodging| { name: lodging.name, type: 'lodging', id: lodging.id, url: lodging_path(lodging.slug, locale: locale) } }
+      }).map { |lodging| {
+          name: lodging.name,
+          type: 'lodging',
+          id: lodging.id,
+          url: lodging_path(lodging.slug,
+          locale: locale)
+        }}
     end
 
     def campaigns
@@ -44,7 +50,12 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { popular_homepage: true }
-      }).map{ |campaign| { name: campaign.send("title_#{locale}"), id: campaign.id, type: 'campaign', url: campaign.send("redirect_url_#{locale}") } }
+      }).map { |campaign| {
+          name: campaign.send("title_#{locale}"),
+          id: campaign.id,
+          type: 'campaign',
+          url: campaign.send("redirect_url_#{locale}")
+        }}
     end
 
     def countries
@@ -55,7 +66,13 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { disable: false }
-      }).map{ |country| { name: country.send("name_#{locale}"), id: country.id, type: 'country', country: country.send("slug_#{locale}"), lodging_count: country.lodging_count, url: lodgings_path(locale: locale) } }
+      }).map { |country| {
+          name: country.send("name_#{locale}"),
+          id: country.id,
+          type: 'country',
+          country: country.send("slug_#{locale}"),
+          lodging_count: country.lodging_count,
+          url: lodgings_path(locale: locale) } }
     end
 
     def regions
@@ -66,7 +83,17 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { disable: false }
-      }).map{ |region| { name: region.send("name_#{locale}"), id: region.id, type: 'region', country: region.country_slug, country_slug: region.country_slug, country_name: region.send("country_name_#{locale}"), region: region.slug, lodging_count: region.lodging_count, url: lodgings_path(locale: locale) } }
+      }).map { |region| {
+          name: region.send("name_#{locale}"),
+          id: region.id,
+          type: 'region',
+          country: region.send("country_slug_#{locale}"),
+          country_slug: region.send("country_slug_#{locale}"),
+          country_name: region.send("country_name_#{locale}"),
+          region: region.slug,
+          lodging_count: region.lodging_count,
+          url: lodgings_path(locale: locale)
+        }}
     end
 
     def themes
@@ -77,7 +104,14 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { publish: true }
-      }).map{ |experience| { name: experience.send("name_#{locale}"), id: experience.id, type: 'experience', lodging_count: experience.lodging_count, experience: experience.send("slug_#{locale}"), url: lodgings_path(locale: locale) } }
+      }).map { |experience| {
+          name: experience.send("name_#{locale}"),
+          id: experience.id,
+          type: 'experience',
+          lodging_count: experience.lodging_count,
+          experience: experience.send("slug_#{locale}"),
+          url: lodgings_path(locale: locale)
+        }}
     end
 
     def hotels
@@ -88,7 +122,12 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { presentation: ['as_parent', 'as_standalone'], published: true }
-      }).map{ |lodging| { name: lodging.name, id: lodging.id, type: 'lodging', slug: lodging.slug } }
+      }).map { |lodging| {
+          name: lodging.name,
+          id: lodging.id,
+          type: 'lodging',
+          slug: lodging.slug
+        }}
     end
 
     def visited_lodgings
@@ -103,7 +142,13 @@ class GetAutocompleteData
         load: false,
         misspellings: { below: 5 },
         where: { presentation: 'as_parent', published: true, id: user_visited_lodging_ids }
-      }).map{ |lodging| { name: lodging.name, type: 'lodging', id: lodging.id, url: lodging_path(lodging.slug, locale: locale), image: lodging.images[0] } }
+      }).map { |lodging| {
+          name: lodging.name,
+          type: 'lodging',
+          id: lodging.id,
+          url: lodging_path(lodging.slug, locale: locale),
+          image: lodging.images[0]
+        }}
     end
 
     def recent_searches

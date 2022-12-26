@@ -30,9 +30,12 @@ class Region < ApplicationRecord
     attributes.merge(
       name_en: name_en,
       name_nl: name_nl,
+      slug_en: slug_en,
+      slug_nl: slug_nl,
       title_en: title_en,
       title_nl: title_nl,
-      country_slug: country.slug,
+      country_slug_en: country.slug_en,
+      country_slug_nl: country.slug_nl,
       country_name_en: country.name_en,
       country_name_nl: country.name_nl,
       disable: country_disable,
