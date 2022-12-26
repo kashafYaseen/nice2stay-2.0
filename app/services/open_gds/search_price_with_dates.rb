@@ -1,6 +1,7 @@
 module OpenGds::SearchPriceWithDates
   def calculate_adult_rates prices
     return [] if prices.blank?
+    hash  = { price: [], adult_prices: [], extra_bed_rate: 0, adults_with_extra_beds: 0}
 
     if params[:adults].to_i == 1 && params[:children].to_i.zero? && room_rate.single_rate?
       @price_list = prices.map { |price| { amount: price.open_gds_single_rate, date: price.available_on } }
@@ -19,10 +20,15 @@ module OpenGds::SearchPriceWithDates
       @adults_rates *= total_adults unless room_rate.rate_plan_papn? || room_rate.rate_plan_papd?
     end
 
-    return @adults_rates if room_rate.extra_beds_for_children_only
+    if room_rate.extra_beds_for_children_only
+      return { price: @adults_rates, adult_prices: @adults_rates.sum.round(2), extra_bed_rate: 0, adults_with_extra_beds: 0 }
+    end
 
     adults_with_extra_beds = extra_beds_used_by_adults[0]
-    return @adults_rates if adults_with_extra_beds.zero?
+
+    if adults_with_extra_beds.zero?
+      return { price: @adults_rates, adult_prices: @adults_rates.sum.round(2), extra_bed_rate: 0, adults_with_extra_beds: 0 }
+    end
 
     if rate_type_involve_person?
       extra_bed_rate = room_rate.extra_bed_rate || @adults_rates.sum / total_adults
@@ -32,11 +38,14 @@ module OpenGds::SearchPriceWithDates
       extra_bed_rate *= total_stay if room_rate.rate_plan_papd? || room_rate.rate_plan_papn?
     end
 
-    @adults_rates += [extra_bed_rate * adults_with_extra_beds]
+    extra_bed_rate_prices = extra_bed_rate * adults_with_extra_beds
+    { adult_prices: @adults_rates.sum.round(2), price: @adults_rates += [extra_bed_rate_prices], extra_bed_rate: extra_bed_rate_prices, adults_with_extra_beds: adults_with_extra_beds}
   end
 
   def calculate_children_rates price_list
-    return [] if params[:children].to_i.zero? || price_list.blank?
+    if params[:children].to_i.zero? || price_list.blank?
+      return { children_rates: [], num_of_children_with_extrabeds: 0 }
+    end
 
     children_rate = room_rate.child_rates.order(rate: :desc).first
     price = rate_type_involve_person? ? price_list.sum / total_adults : price_list.sum
@@ -47,10 +56,11 @@ module OpenGds::SearchPriceWithDates
     num_of_children_with_extrabeds = extra_beds_used_by_children(params[:children].to_i)
     children_without_extrabeds = params[:children].to_i - num_of_children_with_extrabeds
     occupant_is_child = children_without_extrabeds.positive?
-    children_rates += children_rates_by_rate_type(children_rate&.rate || room_rate.extra_bed_rate, price, num_of_stays, num_of_children_with_extrabeds)
+    children_rates += children_rates_by_rate_type(children_rate.try(:rate) || room_rate.try(:extra_bed_rate), price, num_of_stays, num_of_children_with_extrabeds)
     children_without_extrabeds -= 1 if can_charge_adult_rate_to_children? && children_without_extrabeds.positive?
-    children_rates += children_rates_by_rate_type(children_rate&.rate, price, num_of_stays, children_without_extrabeds) if children_without_extrabeds.positive? && rate_type_involve_person?
+    children_rates += children_rates_by_rate_type(children_rate.try(:rate), price, num_of_stays, children_without_extrabeds) if children_without_extrabeds.positive? && rate_type_involve_person?
     children_rates
+    { children_rates: children_rates, num_of_children_with_extrabeds: num_of_children_with_extrabeds }
   end
 
   def check_out

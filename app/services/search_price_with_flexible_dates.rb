@@ -97,7 +97,7 @@ class SearchPriceWithFlexibleDates
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
       price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] })
       reservation = build_reservation params
-      { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
+      { rates: price_list[:price], splited_rates_info: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
     end
 
     def search_price_wrt_flexible_type price_list
@@ -193,7 +193,10 @@ class SearchPriceWithFlexibleDates
       elsif room_rate.present? && room_rate.open_gds?
         prices = prices.uniq(&:available_on)
         prices = calculate_adult_rates(prices)
-        prices += calculate_children_rates(prices)
+        children_rates = calculate_children_rates(prices[:price])
+        prices[:price] += children_rates.try(:[], :children_rates)
+        prices[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2)
+        prices[:num_of_children_with_extrabeds] = children_rates.try(:[], :num_of_children_with_extrabeds)
       else
         prices = prices.uniq(&:available_on).pluck(:amount)
         prices = prices + [lodging.price.to_f] * (minimum_stay - prices.size) if prices.size < minimum_stay
