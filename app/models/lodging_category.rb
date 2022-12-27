@@ -12,4 +12,8 @@ class LodgingCategory < ApplicationRecord
     end if buckets.present?
     count
   end
+
+  def translated_names
+    translations.pluck(:name)
+  end
 end
