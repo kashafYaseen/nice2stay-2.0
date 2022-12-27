@@ -1,6 +1,6 @@
 class Api::V2::CumulativePriceSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :name, :calculated_price, :rate_plan_prices, :price_valid, :price_errors, :dynamic_price, :check_in, :check_out, :discount_price, :rent_price, :cleaning_cost
+  attributes :id, :name, :calculated_price, :splited_rates, :rate_plan_prices, :price_valid, :price_errors, :dynamic_price, :check_in, :check_out, :discount_price, :rent_price, :cleaning_cost
 
   attribute :belongs_to_channel do |lodging|
     lodging.belongs_to_channel?

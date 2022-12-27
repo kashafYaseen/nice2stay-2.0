@@ -1,5 +1,5 @@
 class RoomRate < ApplicationRecord
-  attr_accessor :calculated_price, :dynamic_price, :price_errors, :price_valid, :check_in, :check_out
+  attr_accessor :calculated_price, :splited_rates, :dynamic_price, :price_errors, :price_valid, :check_in, :check_out
 
   belongs_to :rate_plan
   belongs_to :child_lodging, class_name: 'Lodging'
@@ -46,6 +46,7 @@ class RoomRate < ApplicationRecord
 
     prices = price_list(params.merge(rooms: params[:rooms] || 1))
     self.calculated_price = (prices[:rates].sum.round(2) * (params[:rooms] || 1).to_i)
+    self.splited_rates = prices[:splited_rates_info].reject! { |key| key == :price }
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
     self.dynamic_price = true

@@ -48,7 +48,7 @@ class Lodging < ApplicationRecord
   attr_accessor :price_valid, :price_errors
   attr_accessor :first_available_room, :check_in, :check_out
   attr_accessor :discount_price
-  attr_accessor :rent_price, :cleaning_cost
+  attr_accessor :rent_price, :cleaning_cost, :splited_rates
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -306,6 +306,7 @@ class Lodging < ApplicationRecord
               lodging.check_in = room_rate.check_in
               lodging.check_out = room_rate.check_out
               lodging.calculated_price = room_rate.calculated_price
+              lodging.splited_rates = room_rate.splited_rates
               lodging.dynamic_price = room_rate.dynamic_price
               lodging.price_valid = room_rate.price_valid
               lodging.price_errors = room_rate.price_errors
