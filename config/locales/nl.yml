@@ -252,7 +252,7 @@ nl:
     closing_message: Ons team zal binnen 5 werkdagen de Gift Voucher per post versturen aan de gelukkige ontvanger.
     new_giftcard: 'Nieuw: Giftcard'
     new_nice2stay_giftcard: 'Nieuw: Nice2stay Giftcard'
-    error: 'Ongeldige Vouchercode.'
+    error: 'Ongeldige/Verlopen Vouchercode.'
 
   opens:
     week: maandag - vrijdag - 9.00 tot 18.00

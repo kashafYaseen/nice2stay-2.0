@@ -28,6 +28,10 @@ class Voucher < ApplicationRecord
     nice2stay: 2,
   }, _prefix: true
 
+  def not_available?
+    used? || expired_at < DateTime.current
+  end
+
   private
     def check_existing_receiver
       existing_receiver = User.find_by(email: receiver.email)
