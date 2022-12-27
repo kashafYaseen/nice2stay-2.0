@@ -195,7 +195,7 @@ class SearchPriceWithFlexibleDates
         prices = calculate_adult_rates(prices)
         children_rates = calculate_children_rates(prices[:price])
         prices[:price] += children_rates.try(:[], :children_rates)
-        prices[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2)
+        prices[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2) * (params[:rooms] || 1).to_i
         prices[:num_of_children_with_extrabeds] = children_rates.try(:[], :num_of_children_with_extrabeds)
       else
         prices = prices.uniq(&:available_on).pluck(:amount)
