@@ -204,6 +204,7 @@ class Lodging < ApplicationRecord
       availability_price:    availability_price,
       adults_and_children:   adults_plus_children,
       amenities:             amenities.collect(&:name),
+      category:              lodging_category&.translated_names,
       amenities_ids:         amenities.ids,
       amenities_slugs:       amenities.collect(&:translated_slugs),
       experiences:           experiences.collect(&:translated_slugs),
