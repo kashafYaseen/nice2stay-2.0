@@ -220,12 +220,18 @@ class V2::SearchLodgings
           _conditions << check_availabilities(((Date.parse(check_in) + index.day)..Date.parse(check_out) + index.day).map(&:to_s))
           next if index == 0
 
-          _conditions << check_availabilities(((Date.parse(check_in) - index.day)..Date.parse(check_out) - index.day).map(&:to_s))
-          _conditions << check_availabilities(((Date.parse(check_in) + index.day)..Date.parse(check_out)).map(&:to_s))
-          _conditions << check_availabilities(((Date.parse(check_in))..Date.parse(check_out) - index.day).map(&:to_s))
+          date_range = ((Date.parse(check_in) - index.day)..Date.parse(check_out) - index.day).map(&:to_s)
+          _conditions << check_availabilities(date_range) unless date_range.empty?
+
+          date_range = ((Date.parse(check_in) + index.day)..Date.parse(check_out)).map(&:to_s)
+          _conditions << check_availabilities(date_range) unless date_range.empty?
+
+          date_range = ((Date.parse(check_in))..Date.parse(check_out) - index.day).map(&:to_s)
+          _conditions << check_availabilities(date_range) unless date_range.empty?
           next unless index == 1
 
-          _conditions << check_availabilities(((Date.parse(check_in) + index.day)..Date.parse(check_out) - index.day).map(&:to_s))
+          date_range = ((Date.parse(check_in) + index.day)..Date.parse(check_out) - index.day).map(&:to_s)
+          _conditions << check_availabilities(date_range) unless date_range.empty?
         end
       end
 
