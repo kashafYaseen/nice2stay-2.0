@@ -1,6 +1,6 @@
 class Api::V1::VouchersController < Api::V1::ApiController
   def create
-    voucher = Voucher.find_or_initialize_by(crm_id: voucher_params[:crm_id])
+    voucher = Voucher.find_or_initialize_by(code: voucher_params[:code])
     voucher.attributes = voucher_params
     if voucher.save
       render json: { success: true }, status: :created
