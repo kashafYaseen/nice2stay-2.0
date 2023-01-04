@@ -18,7 +18,8 @@ class Api::V2::CartsController < Api::V2::ApiController
   end
 
   def update
-    if @booking.update_columns(booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount))
+    @booking.attributes = booking_params.merge(uid: SecureRandom.uuid, pre_payment: @booking.pre_payment_amount, final_payment: @booking.final_payment_amount)
+    if @booking.update_columns(@booking.attributes)
       @booking.reservations.guest_centric.each do |reservation|
         BookGuestCentricOffer.call(reservation.lodging, reservation, @booking)
       end
