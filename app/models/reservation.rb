@@ -315,10 +315,10 @@ class Reservation < ApplicationRecord
     end
 
     def rules_validation_message check_in, check_out
-      message = " days should be"
+      message = ""
       rules.active(check_in, check_out).each_with_index do |rule, index|
         day = rule.any? ? 'any day' : rule.checkin_day
-        message += "#{',' if index > 0} #{day.try(:upcase)} (#{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights)"
+        message += "#{',' if index > 0} Check-in only possible on #{day.try(:downcase)} for stays of #{rule.minimum_stay.to_sentence(last_word_connector: ' or ', two_words_connector: ' or ')} nights"
       end
       message
     end
