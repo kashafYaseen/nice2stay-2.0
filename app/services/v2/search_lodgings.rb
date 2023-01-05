@@ -205,7 +205,7 @@ class V2::SearchLodgings
     end
 
     def availability_condition conditions
-      flexible_days = params[:flexible_days].presence || 3
+      flexible_days = (params[:flexible_days].presence || 3) + 1
       check_in = params[:check_in].presence || params[:check_out]
       check_out = params[:check_out].presence || params[:check_in]
       return conditions << check_availabilities((Date.parse(check_in)..Date.parse(check_out)).map(&:to_s)) unless params[:flexible_arrival].present?
