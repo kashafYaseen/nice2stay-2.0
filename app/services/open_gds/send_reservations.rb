@@ -27,7 +27,7 @@ class OpenGds::SendReservations
         booking_status: booking_status,
         open_gds_payment_hash: response['hash']
       )
-      reservation.booking.update_columns(booking_status: 'booked')
+      reservation.booking.update_columns(booking_status: 'booked', confirmed: true)
     else
       reservation.update_attributes(
         open_gds_error_name: response['name'],
