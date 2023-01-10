@@ -13,7 +13,7 @@ class CustomText < ApplicationRecord
   delegate :slug, to: :experience, prefix: true, allow_nil: true
 
   scope :home_page, -> { includes(:translations).where(homepage: true) }
-  scope :popular, -> { where(popular: true) }
+  scope :popular, -> { includes(:translations).where(popular: true) }
   scope :inspiration, -> { where(inspiration: true) }
   scope :menu, -> { includes(:translations).where(navigation_popular: true) }
   scope :country_menu, -> { includes(:translations).where(navigation_country: true) }
