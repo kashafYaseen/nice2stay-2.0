@@ -25,7 +25,7 @@ class Campaign < ApplicationRecord
   scope :search_import, -> { home_page }
 
   def should_index?
-    collection && popular_homepage
+    collection || popular_homepage || popular_search || footer || top_menu
   end
 
   def search_data
