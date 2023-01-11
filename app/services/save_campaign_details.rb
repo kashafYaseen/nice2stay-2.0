@@ -67,6 +67,8 @@ class SaveCampaignDetails
         :popular_search,
         :popular_homepage,
         :collection,
+        :footer,
+        :top_menu,
         :crm_urls,
         :created_at,
         :updated_at,
