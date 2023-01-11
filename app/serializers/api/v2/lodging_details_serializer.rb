@@ -9,7 +9,7 @@ class Api::V2::LodgingDetailsSerializer
              :customized_dates, :setting, :quality, :interior, :service, :communication,
              :country_name, :region_name, :gc_rooms, :guest_centric_id, :guest_centric,
              :realtime_availability, :gc_username, :gc_password, :channel,
-             :extra_beds, :extra_beds_for_children_only
+             :extra_beds, :extra_beds_for_children_only, :meta_title, :meta_desc
 
   attribute :adults do |lodging|
     lodging.belongs_to_channel? ? lodging.adults_count : lodging.adults
