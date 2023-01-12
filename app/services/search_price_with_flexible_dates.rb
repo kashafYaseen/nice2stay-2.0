@@ -197,6 +197,7 @@ class SearchPriceWithFlexibleDates
         prices[:price] += children_rates.try(:[], :children_rates)
         prices[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2) * (params[:rooms] || 1).to_i
         prices[:num_of_children_with_extrabeds] = children_rates.try(:[], :num_of_children_with_extrabeds)
+        prices = prices[:price]
       else
         prices = prices.uniq(&:available_on).pluck(:amount)
         prices = prices + [lodging.price.to_f] * (minimum_stay - prices.size) if prices.size < minimum_stay
