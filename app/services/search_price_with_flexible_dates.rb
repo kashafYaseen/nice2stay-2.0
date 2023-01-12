@@ -72,7 +72,7 @@ class SearchPriceWithFlexibleDates
       price_list = SearchPrices.call(price_params)
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
 
-      price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] })
+      price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] }).first
       reservation = build_reservation params
       { rates: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
     end
@@ -97,7 +97,7 @@ class SearchPriceWithFlexibleDates
       return search_price_wrt_flexible_type(price_list) if params[:flexible].present? && params[:flexible_type].present?
       price_list = calculate_price_from(price_list, { check_in: params[:check_in], check_out: params[:check_out] })
       reservation = build_reservation params
-      { rates: price_list[:price], splited_rates_info: price_list, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
+      { rates: price_list.first.to_a, splited_rates_info: price_list.last, search_params: params, valid: reservation.validate, errors: reservation.errors, check_in: params[:check_in], check_out: params[:check_out] }
     end
 
     def search_price_wrt_flexible_type price_list
@@ -107,7 +107,7 @@ class SearchPriceWithFlexibleDates
         reservation = build_reservation params.merge(check_in: date_range[:check_in], check_out: date_range[:check_out])
         is_valid = reservation.validate
         next unless is_valid
-        prices = calculate_price_from(price_list, date_range)
+        prices = calculate_price_from(price_list, date_range).first
         return { rates: prices, search_params: params, valid: is_valid, errors: reservation.errors, check_in: date_range[:check_in], check_out: date_range[:check_out] }
       end
 
@@ -192,18 +192,18 @@ class SearchPriceWithFlexibleDates
         prices = price_list_without_additional_price + (additional_adults_prices_list * extra_adults) + (additional_children_prices_list * extra_children)
       elsif room_rate.present? && room_rate.open_gds?
         prices = prices.uniq(&:available_on)
-        prices = calculate_adult_rates(prices)
-        children_rates = calculate_children_rates(prices[:price])
-        prices[:price] += children_rates.try(:[], :children_rates)
-        prices[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2) * (params[:rooms] || 1).to_i
-        prices[:num_of_children_with_extrabeds] = children_rates.try(:[], :num_of_children_with_extrabeds)
-        prices = prices[:price]
+        prices_data = calculate_adult_rates(prices)
+        children_rates = calculate_children_rates(prices_data[:price])
+        prices_data[:price] += children_rates.try(:[], :children_rates)
+        prices_data[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2) * (params[:rooms] || 1).to_i
+        prices_data[:num_of_children_with_extrabeds] = children_rates.try(:[], :num_of_children_with_extrabeds)
+        prices = prices_data[:price]
       else
         prices = prices.uniq(&:available_on).pluck(:amount)
         prices = prices + [lodging.price.to_f] * (minimum_stay - prices.size) if prices.size < minimum_stay
       end
 
-      prices
+      [prices, prices_data]
     end
 
     def calculate_daily_rates
@@ -215,7 +215,7 @@ class SearchPriceWithFlexibleDates
 
       prices = []
       price_list.each do |price|
-        prices << { date: price.available_on, rate: calculate_price_from([price], { check_in: price.available_on, check_out: price.available_on + 1.day }).sum.round(2) }
+        prices << { date: price.available_on, rate: calculate_price_from([price], { check_in: price.available_on, check_out: price.available_on + 1.day }).first&.sum.round(2) }
       end
 
       reservation = build_reservation params
