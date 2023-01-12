@@ -32,7 +32,7 @@ namespace :api do
 
       resources :supplements, only: [:index, :show]
     end
-    resources :pages, only: [] do
+    resources :pages, only: [:show] do
       get :home, on: :collection
     end
 
