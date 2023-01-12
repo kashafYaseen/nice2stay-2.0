@@ -1,4 +1,6 @@
 class Api::V2::PagesController < Api::V2::ApiController
+  before_action :set_page, only: [:show]
+
   def home
     render json: {
       accommodation_type_campagins: GetCampaigsData.call('accommodation_type', locale),
@@ -12,4 +14,14 @@ class Api::V2::PagesController < Api::V2::ApiController
       lodging_types: Lodging.lodging_types.keys
     }, status: :ok
   end
+
+  def show
+    render json: Api::V2::PageSerializer.new(@page).serializable_hash , status: :ok
+  end
+
+
+  private
+    def set_page
+      @page = Page.not_private.find_by(id: params[:id])
+    end
 end
