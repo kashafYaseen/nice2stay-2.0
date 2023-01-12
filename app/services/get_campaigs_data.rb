@@ -17,7 +17,8 @@ class GetCampaigsData
     Campaign.search('*', { where: { "#{type}": true }, load: false}).map { |campaign| {
       name: campaign.send("title_#{locale}"),
       id: campaign.id,
-      type: 'campaign',
+      type: "#{type}_campaign",
+      images: campaign.images,
       url: campaign.send("redirect_url_#{locale}")
     }}
   end
