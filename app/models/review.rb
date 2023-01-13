@@ -10,7 +10,8 @@ class Review < ApplicationRecord
   attr_accessor :skip_data_posting
 
   scope :published, -> { where(published: true) }
-  scope :desc, -> { order('created_at DESC') }
+  scope :perfect, -> { published.where(perfect: true) }
+  scope :desc, -> { order(created_at: :desc) }
   scope :homepage, -> { published.limit(50).desc }
   scope :rating_sum, -> (type) { uniq.pluck(type).sum.round(2) }
   scope :ratings_average, -> { (RATING_TYPE.sum { |type| rating_sum(type) } / (uniq.count.to_f * 5)).round(2) }
@@ -32,6 +33,14 @@ class Review < ApplicationRecord
 
   def photo_urls
     photos.collect(&:service_url) if photos.attached? && Rails.env.production?
+  end
+
+  def set_lodging_slug
+    lodging.as_child? ? lodging.parent.slug : lodging_slug
+  end
+
+  def set_lodging_name
+    lodging.as_child? ? lodging.parent.name : lodging_name
   end
 
   private
