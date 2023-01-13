@@ -16,10 +16,6 @@ class Campaign < ApplicationRecord
 
   default_scope { includes(:translations) }
   scope :home_page, -> { where(collection: true, popular_homepage: true) }
-  scope :collection, -> { where(collection: true) }
-  scope :accommodation_type, -> { where(popular_search: true) }
-  scope :footer, -> { where(footer: true) }
-  scope :top_menu, -> { where(top_menu: true) }
   scope :menu, -> { where(slider: true) }
   scope :spotlight, -> { where(popular_homepage: true, spotlight: true) }
   scope :search_import, -> { home_page }

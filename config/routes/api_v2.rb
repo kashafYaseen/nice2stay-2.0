@@ -36,6 +36,7 @@ namespace :api do
       collection do
         get :home
         get :reviews
+        get :campaigns
       end
     end
 
