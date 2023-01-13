@@ -9,7 +9,7 @@ class Review < ApplicationRecord
 
   attr_accessor :skip_data_posting
 
-  scope :published, -> { where(published: true) }
+  scope :published, -> { joins(:lodging).where(published: true, lodgings: {published: true}) }
   scope :perfect, -> { published.where(perfect: true) }
   scope :desc, -> { order(created_at: :desc) }
   scope :homepage, -> { published.limit(50).desc }
