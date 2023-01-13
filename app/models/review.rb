@@ -11,7 +11,7 @@ class Review < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :perfect, -> { published.where(perfect: true) }
-  scope :desc, -> { order('created_at DESC') }
+  scope :desc, -> { order(created_at: :desc) }
   scope :homepage, -> { published.limit(50).desc }
   scope :rating_sum, -> (type) { uniq.pluck(type).sum.round(2) }
   scope :ratings_average, -> { (RATING_TYPE.sum { |type| rating_sum(type) } / (uniq.count.to_f * 5)).round(2) }
