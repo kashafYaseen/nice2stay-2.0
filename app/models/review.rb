@@ -35,6 +35,14 @@ class Review < ApplicationRecord
     photos.collect(&:service_url) if photos.attached? && Rails.env.production?
   end
 
+  def set_lodging_slug
+    lodging.as_child? ? lodging.parent.slug : lodging_slug
+  end
+
+  def set_lodging_name
+    lodging.as_child? ? lodging.parent.name : lodging_name
+  end
+
   private
     def update_ratings
       return unless lodging.present?
