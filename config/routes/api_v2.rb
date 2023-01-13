@@ -33,7 +33,10 @@ namespace :api do
       resources :supplements, only: [:index, :show]
     end
     resources :pages, only: [:show] do
-      get :home, on: :collection
+      collection do
+        get :home
+        get :reviews
+      end
     end
 
     resource :filters, only: [:show]

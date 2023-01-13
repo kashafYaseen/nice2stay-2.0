@@ -10,6 +10,7 @@ class Review < ApplicationRecord
   attr_accessor :skip_data_posting
 
   scope :published, -> { where(published: true) }
+  scope :perfect, -> { published.where(perfect: true) }
   scope :desc, -> { order('created_at DESC') }
   scope :homepage, -> { published.limit(50).desc }
   scope :rating_sum, -> (type) { uniq.pluck(type).sum.round(2) }
