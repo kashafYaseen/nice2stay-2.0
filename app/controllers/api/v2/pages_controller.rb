@@ -21,8 +21,9 @@ class Api::V2::PagesController < Api::V2::ApiController
   end
 
   def reviews
-    reviews_pagy, reviews = pagy(Review.published.desc, items: params[:per_page], page: params[:page])
-    render json: Api::V2::ReviewSerializer.new(reviews).serializable_hash, status: :ok
+    @reviews = Review.published.desc
+    reviews_pagy, pagy_reviews = pagy(@reviews, items: params[:per_page], page: params[:page])
+    render json: Api::V2::ReviewSerializer.new(pagy_reviews).serializable_hash.merge(total_reviews: @reviews.count), status: :ok
   end
 
   def show
