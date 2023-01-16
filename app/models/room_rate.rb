@@ -46,7 +46,7 @@ class RoomRate < ApplicationRecord
 
     prices = price_list(params.merge(rooms: params[:rooms] || 1))
     self.calculated_price = (prices[:rates].sum.round(2) * (params[:rooms] || 1).to_i)
-    self.splited_rates = prices[:splited_rates_info].reject! { |key| key == :price }
+    self.splited_rates = prices[:splited_rates_info].to_h.reject! { |key| key == :price }
     self.price_valid = prices[:valid]
     self.price_errors = prices[:errors]
     self.dynamic_price = true
