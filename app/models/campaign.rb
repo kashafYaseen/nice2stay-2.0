@@ -10,7 +10,8 @@ class Campaign < ApplicationRecord
 
   searchkick text_middle: [:title_en, :title_nl]
 
-  validates :title, :description, presence: true
+  # validates :title, :description, presence: true
+  validates :title, presence: true
   translates :title, :url, :description, :crm_urls
   globalize_accessors
 
