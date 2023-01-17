@@ -30,6 +30,8 @@ class Campaign < ApplicationRecord
     attributes.merge(
       title_en: title_en,
       title_nl: title_nl,
+      description_en: description_en,
+      description_nl: description_nl,
       regions: regions.collect(&:name),
       redirect_url_en: url_en,
       redirect_url_nl: url_nl

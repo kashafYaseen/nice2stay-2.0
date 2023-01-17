@@ -16,6 +16,7 @@ class GetCampaigsData
   def call
     Campaign.search('*', { where: { "#{type}": true }, load: false}).map { |campaign| {
       name: campaign.send("title_#{locale}"),
+      description: campaign.send("description_#{locale}"),
       id: campaign.id,
       type: "#{type}_campaign",
       images: campaign.images,
