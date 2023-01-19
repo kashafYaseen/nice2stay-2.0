@@ -40,6 +40,13 @@ namespace :api do
       end
     end
 
+    resources :reservations, only: [] do
+      member do
+        put :accept_option
+        put :cancel_option
+      end
+    end
+
     resource :filters, only: [:show]
     resources :autocompletes, only: [:index]
     resources :favourites, only: [:index, :create, :destroy]
