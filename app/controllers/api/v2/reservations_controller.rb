@@ -10,7 +10,6 @@ class Api::V2::ReservationsController < Api::V2::ApiController
   end
 
   def cancel_option
-    @option.booking_request
     if @option.update_columns(request_status: :canceled, canceled: true, canceled_by: :customer, cancel_option_reason: cancel_option_reason[:cancel_option_reason])
       SendBookingDetailsJob.perform_later(@option.booking_id)
     end
