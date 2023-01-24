@@ -6,6 +6,7 @@ class CacheLodgingsJob < ApplicationJob
     SearchAnalytic.all.each do |search_analytic|
       search_params = search_analytic.params.with_indifferent_access[:lodgings]
       next if search_params.blank?
+      next if search_params[:check_in] == 'Invalid Date'
       next if search_params[:check_in].present? && search_params[:check_in].to_date < Date.today
       if search_params[:action] == 'index'
         dates = dates_by_months(search_params)
