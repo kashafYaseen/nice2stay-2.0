@@ -95,11 +95,11 @@ class V2::SearchLodgings
     end
 
     def countries_in
-      { terms: { country: params[:countries_in] } }
+      { terms: { country: params[:countries_in].flatten } }
     end
 
     def regions_in
-      { terms: { region: params[:regions_in] } }
+      { terms: { region: params[:regions_in].flatten } }
     end
 
     def aggregation
