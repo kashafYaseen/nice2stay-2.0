@@ -63,7 +63,7 @@ class V2::SearchLodgings
       # conditions << { terms: { lodging_type: params[:lodging_type_in].flatten } } if params[:lodging_type_in].present?
       conditions << { range: { beds: { gte: params[:beds], lte: params[:beds].to_i + 1 } } } if params[:beds].present?
       conditions << { range: { baths: { gte: params[:baths], lte: params[:baths].to_i + 1 } } } if params[:baths].present?
-      conditions << { terms: { category: params[:lodging_type_in].flatten } } if params[:lodging_type_in].present?
+      conditions << { terms: { category: params[:lodging_type_in].to_a.flatten } } if params[:lodging_type_in].present?
 
       if params[:adults].present? && params[:perfect_adults].present?
         conditions << { range: { adults: { gte: params[:adults].to_i, lte: params[:perfect_adults].to_i } } }
