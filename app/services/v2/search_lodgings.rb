@@ -75,11 +75,11 @@ class V2::SearchLodgings
 
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
-      if params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:regions_in].present? && params[:bounds].blank?
+      if params[:countries_in].flatten.reject(&:empty?).present? && params[:regions_in].flatten.present? && params[:bounds].blank?
         conditions << { bool: { should: [countries_in, regions_in] }}
-      elsif params[:countries_in].present? && params[:countries_in].reject(&:empty?).present? && params[:bounds].blank?
+      elsif params[:countries_in].flatten.reject(&:empty?).present? && params[:bounds].blank?
         conditions << countries_in
-      elsif params[:regions_in].present? && params[:regions_in].reject(&:empty?).present? && params[:bounds].blank?
+      elsif params[:regions_in].flatten.reject(&:empty?).present? && params[:bounds].blank?
         conditions << regions_in
       end
 
