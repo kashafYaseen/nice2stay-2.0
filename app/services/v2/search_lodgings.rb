@@ -75,11 +75,11 @@ class V2::SearchLodgings
 
       conditions << { range: { availability_price: { gte: params[:min_price], lte: params[:max_price] } } } if params[:min_price].present? && params[:max_price].present?
 
-      if params[:countries_in].flatten.reject(&:empty?).present? && params[:regions_in].flatten.present? && params[:bounds].blank?
+      if params[:countries_in].to_a.flatten.reject(&:empty?).present? && params[:regions_in].to_a.flatten.present? && params[:bounds].blank?
         conditions << { bool: { should: [countries_in, regions_in] }}
-      elsif params[:countries_in].flatten.reject(&:empty?).present? && params[:bounds].blank?
+      elsif params[:countries_in].to_a.flatten.reject(&:empty?).present? && params[:bounds].blank?
         conditions << countries_in
-      elsif params[:regions_in].flatten.reject(&:empty?).present? && params[:bounds].blank?
+      elsif params[:regions_in].to_a.flatten.reject(&:empty?).present? && params[:bounds].blank?
         conditions << regions_in
       end
 
@@ -88,18 +88,18 @@ class V2::SearchLodgings
 
       availability_condition conditions if params[:check_in].present? || params[:check_out].present? || params[:flexible_dates].present?
 
-      all(:amenities_slugs, params[:amenities_in].flatten, conditions) if params[:amenities_in].present?
-      all(:experiences, params[:experiences_in].flatten, conditions) if params[:experiences_in].present?
+      all(:amenities_slugs, params[:amenities_in].to_a.flatten, conditions) if params[:amenities_in].present?
+      all(:experiences, params[:experiences_in].to_a.flatten, conditions) if params[:experiences_in].present?
 
       conditions
     end
 
     def countries_in
-      { terms: { country: params[:countries_in].flatten } }
+      { terms: { country: params[:countries_in].to_a.flatten } }
     end
 
     def regions_in
-      { terms: { region: params[:regions_in].flatten } }
+      { terms: { region: params[:regions_in].to_a.flatten } }
     end
 
     def aggregation
