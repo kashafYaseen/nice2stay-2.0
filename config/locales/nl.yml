@@ -1083,3 +1083,16 @@ nl:
 
   open_gds:
     error: Geen beschikbaarheid voor geselecteerd aantal personen. Zie onderstaand de beschikbaarheid voor maximaal 2 volwassenen
+
+  password:
+    subject: Reset Wachtwoord Instructies
+    hello: Hallo
+    sentence_1: Iemand heeft een link aangevraagd om uw wachtwoord te wijzigen. Dat kan via onderstaande link.
+    change_password: Verander mijn wachtwoord
+    sentence_2: Als u hier niet om heeft gevraagd, kunt u deze e-mail negeren.
+    sentence_3: Uw wachtwoord verandert niet totdat u de bovenstaande link opent en een nieuw wachtwoord aanmaakt.
+    email_not_found: E-mail niet gevonden
+    mail_sent: U ontvangt binnen enkele minuten een e-mail met instructies om uw wachtwoord opnieuw in te stellen.
+    invalid_token: Resettoken is ongeldig
+    update: Wachtwoord succesvol bijgewerkt
+    error_message: Er is een fout opgetreden tijdens het bijwerken van het wachtwoord.

@@ -4,4 +4,10 @@ class UserMailer < ApplicationMailer
     @social_login = @user.social_logins.find_by(confirmation_token: token)
     mail(to: @user.email, subject: "Reuqest to Connect Social Account")
   end
+
+  def forgot_password_email(user, token)
+    @user = user
+    @token = token
+    mail(to: @user.email, subject: I18n.t('forgot_password.subject'))
+  end
 end

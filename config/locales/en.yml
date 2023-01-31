@@ -890,3 +890,16 @@ of the accommodation."
 
   open_gds:
     error: No availability for selected occupancy. Please see following alternatives for a maximum of 2 adults
+
+  forgot_password:
+    subject: Reset Password Instructions
+    hello: Hello %{name}
+    sentence_1: Someone has requested a link to change your password. You can do this through the link below.
+    change_password: Change my password
+    sentence_2: If you didn't request this, please ignore this email.
+    sentence_3: Your password won't change until you access the link above and create a new one.
+    email_not_found: Email not Found
+    mail_sent: You will receive an email with instructions on how to reset your password in a few minutes.
+    invalid_token: Reset token is Invalid
+    update: Password Updated Successfully
+    error_message: Error Occurred while updating Password.
