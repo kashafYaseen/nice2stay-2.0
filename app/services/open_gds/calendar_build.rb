@@ -2,7 +2,6 @@ class OpenGds::CalendarBuild
   attr_reader :rate_plan,
               :params,
               :lodging,
-              :uri,
               :default_adults
 
   def self.call(params:, lodging:, default_adults: nil)
@@ -14,13 +13,12 @@ class OpenGds::CalendarBuild
     @lodging = lodging
     @rate_plan = get_rate_plan
     @default_adults = default_adults
-    @uri = URI.parse("https://api.opengds.com/core/v1/acc-status/calendar?#{query_params}")
   end
 
   def call
-    return if rate_plan.blank?
+    return [] if rate_plan.blank?
 
-    result = []
+    uri = URI.parse("https://api.opengds.com/core/v1/acc-status/calendar?#{query_params}")
     request = Net::HTTP::Get.new(uri.request_uri)
     request.content_type = 'application/x-www-form-urlencoded; charset=UTF-8'
     http = Net::HTTP.new(uri.host, uri.port)
