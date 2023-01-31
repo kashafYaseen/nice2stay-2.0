@@ -5,6 +5,7 @@ namespace :api do
       post :valid
     end
     resource :sessions, only: [:create, :update]
+    resource :passwords, only: [:create, :update]
     resource :omniauths, only: [:create, :update]
     resource :socials, only: :create do
       post :user_info, on: :collection
