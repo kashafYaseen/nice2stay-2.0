@@ -3,6 +3,7 @@ class Api::V2::RoomRatesController < Api::V2::ApiController
   before_action :set_room_rate
 
   def calendar_build
+    params[:check_out] = (params[:check_in].to_date + 1.month).end_of_month
     @calendar_entries = ChannelManagers::CalendarBuild.call(room_rate: @room_rate, params: params)
 
     if @calendar_entries.present?
