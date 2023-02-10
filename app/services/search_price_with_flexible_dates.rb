@@ -193,11 +193,15 @@ class SearchPriceWithFlexibleDates
       elsif room_rate.present? && room_rate.open_gds?
         prices = prices.uniq(&:available_on)
         prices_data = calculate_adult_rates(prices)
-        children_rates = calculate_children_rates(prices_data[:price])
-        prices_data[:price] += children_rates.try(:[], :children_rates)
-        prices_data[:children_rates] = children_rates.try(:[], :children_rates).sum.round(2) * (params[:rooms] || 1).to_i
-        prices_data[:num_of_children_with_extrabeds] = children_rates.try(:[], :num_of_children_with_extrabeds)
-        prices = prices_data[:price]
+        unless prices_data.blank?
+          children_rates = calculate_children_rates(prices_data[:price])
+          prices_data[:price] += children_rates[:children_rates]
+          prices_data[:children_rates] = children_rates.[:children_rates].sum.round(2) * (params[:rooms] || 1).to_i
+          prices_data[:num_of_children_with_extrabeds] = children_rates[:num_of_children_with_extrabeds]
+          prices = prices_data[:price]
+        else
+          prices = prices_data
+        end
       else
         prices = prices.uniq(&:available_on).pluck(:amount)
         prices = prices + [lodging.price.to_f] * (minimum_stay - prices.size) if prices.size < minimum_stay
