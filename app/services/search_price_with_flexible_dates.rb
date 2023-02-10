@@ -196,7 +196,7 @@ class SearchPriceWithFlexibleDates
         unless prices_data.blank?
           children_rates = calculate_children_rates(prices_data[:price])
           prices_data[:price] += children_rates[:children_rates]
-          prices_data[:children_rates] = children_rates.[:children_rates].sum.round(2) * (params[:rooms] || 1).to_i
+          prices_data[:children_rates] = children_rates[:children_rates].sum.round(2) * (params[:rooms] || 1).to_i
           prices_data[:num_of_children_with_extrabeds] = children_rates[:num_of_children_with_extrabeds]
           prices = prices_data[:price]
         else
