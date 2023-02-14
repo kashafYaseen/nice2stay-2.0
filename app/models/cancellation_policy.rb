@@ -3,5 +3,6 @@ class CancellationPolicy < ApplicationRecord
 
   enum cancellation_type: {
     within: 0,
-    until: 1 }
+    until: 1,
+    no_show: 2 }
 end
