@@ -1,8 +1,8 @@
 class Api::V2::LodgingSerializer
   include FastJsonapi::ObjectSerializer
   attributes :id, :name, :h1, :h2, :lodging_type, :slug, :presentation, :child_name, :country_name,
-             :region_name, :address, :latitude, :longitude, :adults, :children, :infants,
-             :price, :calculated_price, :dynamic_price, :short_desc,
+             :region_name, :address, :latitude, :longitude, :adults, :children, :infants, :summary,
+             :price, :calculated_price, :dynamic_price, :short_desc, :h2,
              :images, :average_rating, :created_at, :updated_at, :highlight_1,
              :highlight_2, :highlight_3, :beds, :baths, :channel, :particularities_text,
              :open_gds_property_id, :open_gds_accommodation_id, :including_text,
