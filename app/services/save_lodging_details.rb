@@ -28,7 +28,14 @@ class SaveLodgingDetails
       lodging.attributes = lodging_params.merge(lodging_type: lodging_type(params[:lodging][:lodging_type]), crm_synced_at: DateTime.current)
       return unless lodging.save(validate: false)
 
-      UpdateLodgingRatePlans.call(lodging: lodging, parent_rate_plans: params[:lodging][:parent_rate_plans], room_rates: params[:lodging][:room_rates]) if lodging.belongs_to_channel?
+      if lodging.belongs_to_channel?
+        UpdateLodgingRatePlans.call(lodging: lodging, parent_rate_plans: params[:lodging][:parent_rate_plans], room_rates: params[:lodging][:room_rates])
+
+        # To remove the Rules and Availabilities of n2s coming from CRM for open-gds accommodataions because we are using the data directly from open-gds
+        lodging.rules.where(rate_plan_id: nil).destroy_all;
+        lodging.availabilities.where(room_rate_id: nil).destroy_all;
+      end
+
       UpdateLodgingSupplements.call(lodging: lodging, params: params[:supplements])
       UpdateLodgingTranslations.call(lodging, params[:translations])
       UpdateLodgingPriceText.call(lodging, params[:price_text])
