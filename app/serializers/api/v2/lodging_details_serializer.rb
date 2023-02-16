@@ -31,6 +31,10 @@ class Api::V2::LodgingDetailsSerializer
     lodging.all_reviews.count
   end
 
+   attribute :experiences do |lodging|
+    Api::V2::ExperienceSerializer.new(lodging.experiences)
+  end
+
   attributes :options, if: Proc.new { |lodging| lodging.as_parent? } do |lodging|
     Api::V2::LodgingDetailsSerializer.new(lodging.lodging_children.published.includes(:parent, :translations, { price_text: :translations }, { room_rates: { rate_plan: :translations } }, { reviews: [:lodging, :reservation, :user] }))
   end
