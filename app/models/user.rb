@@ -119,6 +119,12 @@ class User < ApplicationRecord
     reserved_lodgings.map(&:slug).uniq
   end
 
+  def generate_reset_token
+    token, enc_token = Devise.token_generator.generate(User, :reset_password_token)
+    self.update(reset_password_token: enc_token, reset_password_sent_at: Time.now.utc)
+    UserMailer.forgot_password_email(self, token).deliver_now
+  end
+
   private
     def self.find_by_provider_and_uid provider, uid
       joins(:social_logins).where("social_logins.provider = ? and social_logins.uid = ? and social_logins.confirmed_at is not ?", provider, uid, nil).take
