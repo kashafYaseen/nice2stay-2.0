@@ -3,7 +3,7 @@ class Api::V2::PasswordsController < Api::V2::ApiController
   def create
     user = User.find_by(email: forgot_email_params[:email])
     if user
-      ForgotPasswordService.call(user)
+      user.generate_reset_token
       render json: I18n.t('forgot_password.mail_sent'), status: :ok
     else
       render json: I18n.t('forgot_password.email_not_found'), status: :ok
