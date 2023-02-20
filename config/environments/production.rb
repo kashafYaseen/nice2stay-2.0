@@ -108,8 +108,7 @@ Rails.application.configure do
     domain: ENV['SMTP_DOMAIN'],
     address: ENV['SMTP_ADDRESS'],
     port: ENV['SMTP_PORT'],
-    authentication: ENV['SMTP_AUTHENTICATION'],
-    enable_starttls_auto: true
+    authentication: ENV['SMTP_AUTHENTICATION']
   }
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
