@@ -1084,7 +1084,7 @@ nl:
   open_gds:
     error: Geen beschikbaarheid voor geselecteerd aantal personen. Zie onderstaand de beschikbaarheid voor maximaal 2 volwassenen
 
-  password:
+  forgot_password:
     subject: Reset Wachtwoord Instructies
     hello: Hallo
     sentence_1: Iemand heeft een link aangevraagd om uw wachtwoord te wijzigen. Dat kan via onderstaande link.
