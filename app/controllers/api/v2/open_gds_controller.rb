@@ -13,8 +13,8 @@ class Api::V2::OpenGdsController < Api::V2::ApiController
       Rails.logger.info " Rate Data========================>>#{ params[:_json].map(&:to_unsafe_h)}"
       Rails.logger.info "================================================================="
       render json: { response: 'Success' }, status: :ok
-    elsif ENV['BASE_URL'] == 'https://www.staging.nice2stay.net'
-      render json: { response: 'Property/Accommodations Not Found(Staging Server)!' }, status: :ok
+    elsif ['https://www.staging.nice2stay.net', 'https://backend.nice2stay.com'].include? ENV['BASE_URL']
+      render json: { response: 'Property/Accommodations Not Found on Server!' }, status: :ok
     else
       render json: { response: 'Property/Accommodations Not Found!' }, status: :unprocessable_entity
     end
