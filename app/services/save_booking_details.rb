@@ -92,6 +92,7 @@ class SaveBookingDetails
         :free_cancelation,
         :rebooked,
         :rebooking_approved,
+        :owner_name
       )
     end
 
@@ -104,6 +105,7 @@ class SaveBookingDetails
         :infants,
         :total_price,
         :rent,
+        :commission,
         :discount,
         :cleaning_cost,
         :crm_booking_id,
