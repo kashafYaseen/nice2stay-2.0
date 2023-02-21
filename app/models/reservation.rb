@@ -28,8 +28,8 @@ class Reservation < ApplicationRecord
 
   delegate :active, :active_flexible, to: :rules, prefix: true, allow_nil: true
   delegate :slug, :name, :child_name, :confirmed_price, :image, :address, :average_rating, :parent, to: :lodging, prefix: true, allow_nil: true
-  delegate :user, :identifier, :created_by, :rebooking_approved, to: :booking, allow_nil: true
-  delegate :email, :first_name, :last_name, :full_name, :phone, to: :user, prefix: true, allow_nil: true
+  delegate :user, :identifier, :created_by, :rebooking_approved, :owner_name, to: :booking, allow_nil: true
+  delegate :email, :first_name, :last_name, :full_name, :phone, :country, to: :user, prefix: true, allow_nil: true
   delegate :id, :confirmed, to: :booking, prefix: true
   delegate :code, :id, :rule, :crm_id, to: :rate_plan, prefix: true, allow_nil: true
   delegate :open_gds_rate_id, to: :rate_plan, allow_nil: true
@@ -40,6 +40,8 @@ class Reservation < ApplicationRecord
   delegate :infants, :children, to: :child_rates, prefix: true, allow_nil: true
   delegate :deposit, to: :lodging, prefix: :security, allow_nil: true
   delegate :include_deposit, to: :lodging, prefix: true, allow_nil: true
+
+  searchkick
 
   scope :not_canceled, -> { where(canceled: false) }
   scope :canceled, -> { where(canceled: true) }
@@ -116,6 +118,22 @@ class Reservation < ApplicationRecord
     customer: 'customer',
     nice2stay: 'nice2stay',
   }, _prefix: true
+
+  def search_data
+    attributes.merge(
+      booking_identifier: identifier,
+      owner: owner_name,
+      bookings_date: created_at,
+      customer: user.try(:full_name),
+      customer_country: user_country.try(:name),
+      rent: rent.to_f.round(2),
+      commission: commission.to_f.round(2),
+      accommodation: lodging.try(:name),
+      accommodation_type: lodging.try(:lodging_category).try(:name),
+      accommodation_country: lodging.try(:country_name),
+      accommodation_region: lodging.try(:region_name),
+    )
+  end
 
   def can_review? user
     user == self.user && review.blank?
