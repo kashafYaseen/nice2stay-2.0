@@ -121,7 +121,7 @@ class User < ApplicationRecord
 
   def generate_reset_token
     token, enc_token = Devise.token_generator.generate(User, :reset_password_token)
-    self.update(reset_password_token: enc_token, reset_password_sent_at: Time.now.utc)
+    self.update_columns(reset_password_token: enc_token, reset_password_sent_at: Time.now)
     UserMailer.forgot_password_email(self, token).deliver_now
   end
 
