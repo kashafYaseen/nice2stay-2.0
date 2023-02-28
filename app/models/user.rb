@@ -60,7 +60,7 @@ class User < ApplicationRecord
     from_a_friend_family_member_or_coworker: 3,
     from_an_influencer: 4,
     press_or_other_article: 5,
-    tikTok: 6,
+    tiktok: 6,
     pinterest: 7,
     other: 8
   }
