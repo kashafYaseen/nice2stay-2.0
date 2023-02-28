@@ -54,15 +54,15 @@ class User < ApplicationRecord
   }
 
   enum referral: {
-    Instagram: 0,
-    Google_or_other_search_engine: 1,
-    Facebook: 2,
-    From_a_friend_family_member_or_coworker: 3,
-    From_an_influencer: 4,
-    Press_or_other_article: 5,
-    TikTok: 6,
-    Pinterest: 7,
-    Other: 8
+    instagram: 0,
+    google_or_other_search_engine: 1,
+    facebook: 2,
+    from_a_friend_family_member_or_coworker: 3,
+    from_an_influencer: 4,
+    press_or_other_article: 5,
+    tiktok: 6,
+    pinterest: 7,
+    other: 8
   }
 
   def full_name
