@@ -135,6 +135,8 @@ gem 'groupdate'
 gem 'activerecord-import', '~> 0.15.0'
 gem 'newrelic_rpm', '5.0.0.342'
 gem 'rack-cors'
+gem 'rack', '~> 2.0.9'
+gem 'sinatra'
 gem 'ox', '~> 2.13', '>= 2.13.3'
 gem 'csv'
 gem "recaptcha"
