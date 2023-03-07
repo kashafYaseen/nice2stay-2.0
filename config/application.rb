@@ -1,6 +1,10 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'sidekiq'
+require 'sidekiq-status'
+require 'sidekiq/web'
+require 'sidekiq-status/web'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -26,4 +30,17 @@ module Geosearch
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
   end
+end
+
+Sidekiq.configure_client do |config|
+  # accepts :expiration (optional)
+  Sidekiq::Status.configure_client_middleware config, expiration: 30.minutes.to_i
+end
+
+Sidekiq.configure_server do |config|
+  # accepts :expiration (optional)
+  Sidekiq::Status.configure_server_middleware config, expiration: 30.minutes.to_i
+
+  # accepts :expiration (optional)
+  Sidekiq::Status.configure_client_middleware config, expiration: 30.minutes.to_i
 end

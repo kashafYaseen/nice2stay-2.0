@@ -143,3 +143,4 @@ gem "recaptcha"
 gem 'pg_lock'
 gem 'pry'
 gem 'pry-rails'
+gem 'sidekiq-status'
