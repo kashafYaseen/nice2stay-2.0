@@ -32,6 +32,7 @@ ActiveAdmin.register User do
       row :country
       row :address
       row :city
+      row :referral
       row :zipcode
       row :creation_status
       row :created_at

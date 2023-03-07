@@ -53,6 +53,18 @@ class User < ApplicationRecord
     with_social_site: 2,
   }
 
+  enum referral: {
+    instagram: 0,
+    google_or_other_search_engine: 1,
+    facebook: 2,
+    from_a_friend_family_member_or_coworker: 3,
+    from_an_influencer: 4,
+    press_or_other_article: 5,
+    tiktok: 6,
+    pinterest: 7,
+    other: 8
+  }
+
   def full_name
     "#{first_name} #{last_name}".titleize
   end
