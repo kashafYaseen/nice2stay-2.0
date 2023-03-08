@@ -8,4 +8,8 @@ class Api::V2::UserSerializer
   attribute :auth_token, if: Proc.new { |user, params|
     params && params[:auth_token] == true
   }
+
+  attribute :social_logins do |user|
+    user.social_logins
+  end
 end
