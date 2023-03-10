@@ -69,6 +69,7 @@ class SaveCampaignDetails
         :collection,
         :footer,
         :top_menu,
+        :homepage,
         :crm_urls,
         :created_at,
         :updated_at,
