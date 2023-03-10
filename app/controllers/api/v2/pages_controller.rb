@@ -16,7 +16,8 @@ class Api::V2::PagesController < Api::V2::ApiController
       accommodation_type_campagins: GetCampaigsData.call('popular_search', locale),
       collection_campaigns: GetCampaigsData.call('collection', locale),
       footer_campaigns: GetCampaigsData.call('footer', locale),
-      top_menu_campaigns:  GetCampaigsData.call('top_menu', locale)
+      top_menu_campaigns: GetCampaigsData.call('top_menu', locale),
+      homepage_campaigns: GetCampaigsData.call('homepage', locale)
     }, status: :ok
   end
 
