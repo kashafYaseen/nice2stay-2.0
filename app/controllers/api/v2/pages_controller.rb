@@ -13,11 +13,12 @@ class Api::V2::PagesController < Api::V2::ApiController
 
   def campaigns
     render json: {
-      accommodation_type_campagins: GetCampaigsData.call('popular_search', locale),
-      collection_campaigns: GetCampaigsData.call('collection', locale),
-      footer_campaigns: GetCampaigsData.call('footer', locale),
-      top_menu_campaigns: GetCampaigsData.call('top_menu', locale),
-      homepage_campaigns: GetCampaigsData.call('homepage', locale)
+      footer_accommodation_types: GetCampaigsData.call('popular_search', 'footer', locale),
+      footer_collections: GetCampaigsData.call('collection', 'footer', locale),
+      homepage_accommodation_types: GetCampaigsData.call('popular_search', 'homepage', locale),
+      homepage_collections: GetCampaigsData.call('collection', 'homepage', locale),
+      topmenu_accommodation_types: GetCampaigsData.call('popular_search', 'top_menu', locale),
+      topmenu_collections: GetCampaigsData.call('collection', 'top_menu', locale),
     }, status: :ok
   end
 
