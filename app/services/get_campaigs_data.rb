@@ -6,7 +6,7 @@ class GetCampaigsData
   attr_reader :locale
 
   def self.call(type, section, locale)
-    new(type, section, locale).call
+    self.new(type, section, locale).call
   end
 
   def initialize(type, section, locale)
