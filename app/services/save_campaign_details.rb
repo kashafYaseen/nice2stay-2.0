@@ -14,13 +14,13 @@ class SaveCampaignDetails
   def call
     save_campaign
     save_regions
-    update_translations
     campaign
   end
 
   private
     def save_campaign
       campaign.attributes = campaign_params.merge(category: params.dig(:campaign, :category).permit(params.dig(:campaign, :category).keys).to_h )
+      update_translations
       campaign.save
       campaign.reindex
     end
