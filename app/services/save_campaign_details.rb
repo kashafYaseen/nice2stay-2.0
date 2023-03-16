@@ -22,6 +22,7 @@ class SaveCampaignDetails
       campaign.attributes = campaign_params.merge(category: params.dig(:campaign, :category).permit(params.dig(:campaign, :category).keys).to_h )
       update_translations
       campaign.save
+      campaign.reload
       campaign.reindex
     end
 
