@@ -2,7 +2,7 @@ class Api::V2::RecentSearchesController < Api::V2::ApiController
   before_action :authenticate
 
   def index
-    render json: Api::V2::RecentSearchSerializer.new(current_user.recent_searches.includes(:searchable)).serialized_json, status: :ok
+    render json: Api::V2::RecentSearchSerializer.new(current_user.recent_searches.upcoming_searches.includes(:searchable)).serialized_json, status: :ok
   end
 
   def create
