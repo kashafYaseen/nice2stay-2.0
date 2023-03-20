@@ -15,6 +15,10 @@ class Api::V2::BookingSerializer
     booking.final_payment_amount.to_f
   end
 
+  attributes :latest_checkout, if: Proc.new { |booking| booking.reservations.present? } do |booking|
+    booking.reservations.pluck(:check_out).max > Date.today
+  end
+
   attributes :fully_paid do |booking|
     booking.step_passed?(:fully_paid)
   end
