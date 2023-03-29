@@ -10,6 +10,8 @@ class Api::V1::CustomTextsController < Api::V1::ApiController
       update_translations(params, @custom_text)
       update_relatives(params, @custom_text)
       Rails.application.reload_routes!
+      @custom_text.reload
+      @custom_text.reindex
       render json: @custom_text, status: :created
     else
       unprocessable_entity(@custom_text.errors)

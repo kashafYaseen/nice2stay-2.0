@@ -38,6 +38,7 @@ namespace :api do
         get :home
         get :reviews
         get :campaigns
+        get :custom_texts
       end
     end
 
