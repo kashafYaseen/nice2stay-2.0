@@ -6,19 +6,43 @@ class CustomText < ApplicationRecord
   has_many :collections, foreign_key: 'parent_id'
   has_many :relatives, through: :collections
 
+  searchkick
+
   translates :h1_text, :p_text, :meta_title, :meta_description, :category, :seo_path, :menu_title
 
   delegate :slug, to: :country, prefix: true, allow_nil: true
   delegate :slug, to: :region, prefix: true, allow_nil: true
   delegate :slug, to: :experience, prefix: true, allow_nil: true
 
-  scope :home_page, -> { includes(:translations).where(homepage: true) }
-  scope :popular, -> { includes(:translations).where(popular: true) }
+  globalize_accessors
+
+  default_scope { includes(:translations) }
+  scope :home_page, -> { where(homepage: true) }
+  scope :popular, -> { where(popular: true) }
   scope :inspiration, -> { where(inspiration: true) }
-  scope :menu, -> { includes(:translations).where(navigation_popular: true) }
-  scope :country_menu, -> { includes(:translations).where(navigation_country: true) }
-  scope :country_page, -> { includes(:translations).where(country_page: true) }
-  scope :region_page, -> { includes(:translations).where(region_page: true) }
+  scope :menu, -> { where(navigation_popular: true) }
+  scope :country_menu, -> { where(navigation_country: true) }
+  scope :country_page, -> { where(country_page: true) }
+  scope :region_page, -> { where(region_page: true) }
+
+  def search_data
+    attributes.merge(
+      meta_title_en: meta_title_en,
+      meta_title_nl: meta_title_nl,
+      meta_description_en: meta_description_en,
+      meta_description_nl: meta_description_nl,
+      h1_text_en: h1_text_en,
+      h1_text_nl: h1_text_nl,
+      p_text_en: p_text_en,
+      p_text_nl: p_text_nl,
+      category_en: category_en,
+      category_nl: category_nl,
+      seo_path_en: seo_path_en,
+      seo_path_nl: seo_path_nl,
+      menu_title_en: menu_title_en,
+      menu_title_nl: menu_title_nl,
+    )
+  end
 
   def translation_with locale, method
     Globalize.with_locale(locale) do
