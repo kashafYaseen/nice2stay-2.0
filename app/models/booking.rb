@@ -14,7 +14,7 @@ class Booking < ApplicationRecord
   accepts_nested_attributes_for :reservations
   accepts_nested_attributes_for :user
 
-  # after_update :send_details
+  after_update :send_details
 
   delegate :full_name, :first_name, :last_name, :email, :phone, :city, :zipcode, :country_name, to: :user, prefix: true, allow_nil: true
   delegate :open_gds, :open_gds_without_online_payment, :open_gds_with_online_payment, :canceled, :in_cart, to: :reservations, prefix: true, allow_nil: true
