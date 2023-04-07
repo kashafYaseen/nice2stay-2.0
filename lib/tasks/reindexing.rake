@@ -3,7 +3,7 @@ namespace :searchkick do
   desc "reindex all models"
   task reindexing: :environment  do |t, args|
     Searchkick.models.each do |model|
-      puts "Reindexing #{model.name}..."
+      puts "Reindexing #{model.name}... at #{DateTime.now}"
       model.name.downcase == 'campaign' ? model.all.map(&:reindex) : model.reindex
     end
     puts "Reindex complete"
