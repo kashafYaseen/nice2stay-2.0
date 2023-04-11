@@ -26,6 +26,7 @@ class CustomText < ApplicationRecord
   scope :region_page, -> { where(region_page: true) }
 
   def search_data
+    url_en, url_nl = redirect_url
     attributes.merge(
       meta_title_en: meta_title_en,
       meta_title_nl: meta_title_nl,
@@ -41,6 +42,8 @@ class CustomText < ApplicationRecord
       seo_path_nl: seo_path_nl,
       menu_title_en: menu_title_en,
       menu_title_nl: menu_title_nl,
+      redirect_url_en: url_en,
+      redirect_url_nl: url_nl,
     )
   end
 
@@ -64,5 +67,35 @@ class CustomText < ApplicationRecord
     return 'villa' if ['villa', 'villas', 'vakantiehuizen'].include?(type)
     return 'apartment' if ['apartment', 'apartments', 'appartementen'].include?(type)
     return 'bnb' if ["boutique-hotels", "boutique-hotels", "bnb"].include?(type)
+  end
+
+  def redirect_url
+    url_en = []
+    url_nl = []
+
+    if self.country_id
+      country = Country.find(self.country_id)
+      url_en << "countries_in=#{country.try(:slug_en)}"
+      url_nl << "countries_in=#{country.try(:slug_nl)}"
+    end
+
+    if self.region_id
+      region = Region.find(self.region_id)
+      url_en << "regions_in=#{region.try(:slug_en)}"
+      url_nl << "regions_in=#{region.try(:slug_nl)}"
+    end
+
+    if self.experience_id
+      experience = Experience.find(self.experience_id)
+      url_en << "experiences_in=#{experience.try(:slug_en)}"
+      url_nl << "experiences_in=#{experience.try(:slug_nl)}"
+    end
+
+    if self.category
+      url_en << "types_in=#{try(:category_en)}"
+      url_nl << "types_in=#{try(:category_nl)}"
+    end
+
+    ["?#{url_en.join("&")}", "?#{url_nl.join("&")}"]
   end
 end

@@ -21,6 +21,7 @@ class GetCustomTextData
       category: custom_text.send("category_#{locale}"),
       seo_path: custom_text.send("seo_path_#{locale}"),
       menu_title: custom_text.send("menu_title_#{locale}"),
+      url: custom_text.send("redirect_url_#{locale}"),
       experience: custom_text.experience,
       homepage: custom_text.homepage,
       country_page: custom_text.country_page,
