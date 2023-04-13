@@ -75,25 +75,25 @@ class CustomText < ApplicationRecord
 
     if self.country_id
       country = Country.find(self.country_id)
-      url_en << "countries_in=#{country.try(:slug_en)}"
-      url_nl << "countries_in=#{country.try(:slug_nl)}"
+      url_en << "countries_in[]=#{country.try(:slug_en)}"
+      url_nl << "countries_in[]=#{country.try(:slug_nl)}"
     end
 
     if self.region_id
       region = Region.find(self.region_id)
-      url_en << "regions_in=#{region.try(:slug_en)}"
-      url_nl << "regions_in=#{region.try(:slug_nl)}"
+      url_en << "regions_in[]=#{region.try(:slug_en)}"
+      url_nl << "regions_in[]=#{region.try(:slug_nl)}"
     end
 
     if self.experience_id
       experience = Experience.find(self.experience_id)
-      url_en << "experiences_in=#{experience.try(:slug_en)}"
-      url_nl << "experiences_in=#{experience.try(:slug_nl)}"
+      url_en << "experiences_in[]=#{experience.try(:slug_en)}"
+      url_nl << "experiences_in[]=#{experience.try(:slug_nl)}"
     end
 
     if self.category
-      url_en << "types_in=#{try(:category_en)}"
-      url_nl << "types_in=#{try(:category_nl)}"
+      url_en << "types_in[]=#{try(:category_en)}"
+      url_nl << "types_in[]=#{try(:category_nl)}"
     end
 
     ["?#{url_en.join("&")}", "?#{url_nl.join("&")}"]
