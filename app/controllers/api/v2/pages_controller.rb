@@ -11,12 +11,6 @@ class Api::V2::PagesController < Api::V2::ApiController
     }, status: :ok
   end
 
-  def custom_texts
-    render json: {
-      custom_texts: GetCustomTextData.call(locale),
-    }, status: :ok
-  end
-
   def campaigns
     render json: {
       footer_accommodation_types: GetCampaigsData.call('popular_search', 'footer', locale),

@@ -38,9 +38,10 @@ namespace :api do
         get :home
         get :reviews
         get :campaigns
-        get :custom_texts
       end
     end
+
+    resources :custom_texts, only: [:index, :show]
 
     resources :reservations, only: [] do
       member do
