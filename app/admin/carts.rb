@@ -2,6 +2,7 @@ ActiveAdmin.register Reservation, as: "Cart" do
   actions :show, :index
 
   filter :lodging
+  filter :user
   filter :check_in
   filter :check_out
   filter :adults
@@ -26,7 +27,7 @@ ActiveAdmin.register Reservation, as: "Cart" do
     column 'Expired' do |reservation|
       reservation.expired? ? 'Yes' : 'No'
     end
-    column :user
+    column :user, sortable: 'users.first_name'
     column :check_in
     column :check_out
     column :rent
