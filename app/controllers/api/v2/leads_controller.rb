@@ -3,8 +3,6 @@ class Api::V2::LeadsController < Api::V2::ApiController
   before_action :set_user, only: [:create]
 
   def create
-    # lead = current_user.present? ? current_user.leads.build(lead_params) : Lead.new(lead_and_user_params)
-    # current_user.skip_validations = true if current_user.present?
     lead = @user.leads.build(lead_params)
 
     if lead.save
@@ -25,6 +23,7 @@ class Api::V2::LeadsController < Api::V2::ApiController
         @user = User.without_login.find_or_initialize_by(email: params[:lead][:user_attributes][:email])
         @user.attributes = user_params
         @user.password = @user.password_confirmation = Devise.friendly_token[0, 20]
+        @user.save
       end
     end
 

@@ -94,6 +94,8 @@ ActiveAdmin.register Lead do
       end
       row :created_at
       row :updated_at
+      row :stay
+      row :budget
     end
 
     panel "Countries" do
