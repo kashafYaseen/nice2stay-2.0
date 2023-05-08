@@ -15,6 +15,11 @@ ActiveAdmin.register CustomText do
     column :translations do |custom_text|
       custom_text.translations.count
     end
+    column 'FE URL' do |custom_text|
+      ct = CustomText.search('*', {where: {id: custom_text.id},load: false}).first
+      link_value = "https://nice2stay.netlify.app/" + ct.send("seo_path_#{locale}") + ct.send("redirect_url_#{locale}")
+      link_to link_value, link_value
+    end
 
     column :seo_path
     column :country
