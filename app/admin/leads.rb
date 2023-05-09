@@ -98,7 +98,7 @@ ActiveAdmin.register Lead do
       row :budget
       row 'preferred_months' do |lead|
         months_array = JSON.parse(lead.preferred_months)
-        capitalized_months = months_array.map { |month| month.capitalize }
+        months_array.map { |month| month.capitalize }
       end
     end
 
