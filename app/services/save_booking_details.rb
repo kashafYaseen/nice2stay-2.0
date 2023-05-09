@@ -84,6 +84,8 @@ class SaveBookingDetails
         :pre_payment,
         :final_payment,
         :refund_payment,
+        :pre_payed_at,
+        :final_payed_at,
         :booking_status,
         :crm_id,
         :canceled,
