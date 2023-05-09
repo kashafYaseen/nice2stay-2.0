@@ -96,6 +96,10 @@ ActiveAdmin.register Lead do
       row :updated_at
       row :stay
       row :budget
+      row 'preferred_months' do |lead|
+        months_array = JSON.parse(lead.preferred_months)
+        months_array.map { |month| month.capitalize }
+      end
     end
 
     panel "Countries" do

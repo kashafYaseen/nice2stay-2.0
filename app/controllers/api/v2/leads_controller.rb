@@ -41,6 +41,7 @@ class Api::V2::LeadsController < Api::V2::ApiController
         :stay,
         :experience,
         :budget,
+        { preferred_months: [] },
         { country_ids: [] },
         { region_ids: [] },
         user_attributes: [:first_name, :last_name, :email, :phone, :password, :password_confirmation, :skip_validations],
@@ -57,6 +58,7 @@ class Api::V2::LeadsController < Api::V2::ApiController
         :stay,
         :experience,
         :budget,
+        { preferred_months: [] },
         { country_ids: [] },
         { region_ids: [] },
       )
