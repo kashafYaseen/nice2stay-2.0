@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_10_074727) do
+ActiveRecord::Schema.define(version: 2023_05_09_064532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -490,6 +490,7 @@ ActiveRecord::Schema.define(version: 2023_03_10_074727) do
     t.integer "stay"
     t.integer "experience"
     t.integer "budget"
+    t.string "preferred_months"
     t.index ["admin_user_id"], name: "index_leads_on_admin_user_id"
     t.index ["user_id"], name: "index_leads_on_user_id"
   end
