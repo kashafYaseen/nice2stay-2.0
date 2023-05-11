@@ -14,14 +14,15 @@ class SaveCountryDetails
   def call
     save_country
     save_regions
-    update_translations
     country
   end
 
   private
     def save_country
       country.attributes = country_params
+      update_translations
       country.save
+      country.reload
       country.reindex
     end
 
@@ -30,8 +31,9 @@ class SaveCountryDetails
       params[:regions].each do |region|
         _region = country.regions.find_or_initialize_by(crm_id: region[:crm_id])
         _region.attributes = region_params(region)
-        _region.save
         update_region_translations(_region, region)
+        _region.save
+        _region.reload
         _region.reindex
       end
     end
