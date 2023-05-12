@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   draw :seo
   draw :sidekiq
 
-  get 'loaderio-b3ee98d7d91b9f0724017998f831caf3', to: 'pages#loader' # This is used for stress testing through loader.io
+  get 'loaderio-92ffa9c2f5ca47c35049bbaa39b7c1b0', to: 'pages#loader' # This is used for stress testing through loader.io
   get '404', to: 'pages#page_not_found', as: :page_not_found
   devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
