@@ -512,6 +512,22 @@ class Lodging < ApplicationRecord
     lodging_hit['hits']['hits'].first['_id'] rescue nil
   end
 
+  def first_available_child_wrt_info lodgings
+    lodging_hit = lodgings.hits.find { |hit| hit['_id'].to_i == id }
+    return unless lodging_hit.present?
+
+    lodging_hit = lodging_hit['inner_hits'].collect {|inner_hit| inner_hit }.flatten.collect { |inner_hit| inner_hit.slice('hits') }.delete_if(&:blank?).first
+    return unless lodging_hit.present?
+    child_data = lodging_hit['hits']['hits'][0]['_source'] rescue []
+    name = child_data['name'] rescue nil
+    adults = child_data['adults'] rescue 0
+    childrens = child_data['children'] rescue 0
+    beds = child_data['beds'] rescue 0
+    baths = child_data['baths'] rescue 0
+
+    { name: name, adults: adults, childrens: childrens, beds: beds, baths: baths }
+  end
+
   def available_children_wrt lodgings
     lodging_hit = lodgings.hits.find { |hit| hit['_id'].to_i == id }
     return unless lodging_hit.present?
