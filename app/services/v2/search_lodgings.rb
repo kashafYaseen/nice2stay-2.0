@@ -14,9 +14,7 @@ class V2::SearchLodgings
 
   def call
     cache_key = [self.class.name, __method__, search_analytic.params['lodgings']]
-    Rails.cache.fetch(cache_key, expires_in: 24.hours) do
-      Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
-    end
+    Lodging.search body: body, page: params[:page], per_page: 18, limit: params[:limit], includes: [:translations, :lodging_children, :children_room_rates, { price_text: :translations }, { region: :country }, { parent: :translations }]
   end
 
   private
@@ -31,7 +29,7 @@ class V2::SearchLodgings
         bool: {
           should: [
             {
-              has_child: { type: :child, query: { bool: queries }, inner_hits: { _source: ['id'] } }
+              has_child: { type: :child, query: { bool: queries }, inner_hits: { _source: ["id", "name", "adults", "children", "beds", "baths"] } }
             },
             { bool: queries.merge({ filter: queries[:filter].clone.push({ term: { presentation: :as_standalone } }) }) }
           ]
