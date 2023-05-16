@@ -12,6 +12,7 @@ class Api::V2::TripsController < Api::V2::ApiController
   end
 
   def create
+    current_user.skip_validations = true if current_user.present?
     trip = current_user.trips.build(trip_params)
     trip.users << current_user
     if trip.save
