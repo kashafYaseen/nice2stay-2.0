@@ -51,6 +51,7 @@ class SaveExperienceDetails
         :crm_id,
         :created_at,
         :updated_at,
+        :image
       )
     end
 

@@ -1,6 +1,6 @@
 class Api::V2::ExperienceSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :name, :tag, :slug, :short_desc
+  attributes :id, :name, :tag, :slug, :short_desc, :image
 
   attribute :actual, if: Proc.new { |experience, params| params.present? && params[:lodgings].present? } do |experience, params|
     experience.experiences_count_for(params[:lodgings])
