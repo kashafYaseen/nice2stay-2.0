@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_24_060923) do
+ActiveRecord::Schema.define(version: 2023_05_26_105807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 2023_05_24_060923) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "icon"
+    t.string "image"
     t.bigint "amenity_category_id"
     t.index ["amenity_category_id"], name: "index_amenities_on_amenity_category_id"
   end

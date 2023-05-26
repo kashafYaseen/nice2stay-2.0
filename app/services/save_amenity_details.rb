@@ -64,6 +64,7 @@ class SaveAmenityDetails
         :filter_enabled,
         :hot,
         :icon,
+        :image,
       )
     end
 
