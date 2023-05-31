@@ -213,11 +213,19 @@ class Reservation < ApplicationRecord
   end
 
   def security_deposit_on_nice2stay
-    include_deposit? ? security_deposit.to_f : 0
+    if include_deposit != nil
+      include_deposit? ? security_deposit.to_f : 0
+    else
+      lodging_include_deposit ? security_deposit.to_f : 0
+    end
   end
 
   def security_deposit_on_location
-    include_deposit? ? 0 : security_deposit.to_f
+    if include_deposit != nil
+      include_deposit? ? 0 : security_deposit.to_f
+    else
+      lodging_include_deposit ? 0 : security_deposit.to_f
+    end
   end
 
   def self.arrival_status
