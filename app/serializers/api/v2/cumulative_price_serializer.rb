@@ -6,6 +6,10 @@ class Api::V2::CumulativePriceSerializer
     lodging.belongs_to_channel?
   end
 
+  attribute :cleaning_cost_managed_by_n2s do |lodging|
+    lodging.try(:cleaning_costs).try(:first).try(:manage_by)
+  end
+
   attributes :room_rates, if: proc { |lodging, params| lodging.belongs_to_channel? && !params[:accom_listing] } do |lodging, params|
     Api::V2::RoomRateSerializer.new(lodging.room_rates.select { |room_rate| room_rate.publish && room_rate.rate_enabled }, { params: params })
   end

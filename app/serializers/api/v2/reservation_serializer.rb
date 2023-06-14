@@ -17,6 +17,10 @@ class Api::V2::ReservationSerializer
     Api::V2::ReviewSerializer.new(reservation.review)
   end
 
+  attribute :cleaning_cost_managed_by_n2s do |reservation|
+    reservation.try(:is_managed_by_n2s?)
+  end
+
   attribute :rate_plan do |reservation|
     Api::V2::RatePlanSerializer.new(reservation.rate_plan)
   end
