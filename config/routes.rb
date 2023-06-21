@@ -91,8 +91,8 @@ Rails.application.routes.draw do
     get '/lodgings/guest_centric', to: "guest_centric_offers#index"
     get '/:id', to: 'countries#show', as: :country
     get '/:country_id/:id', to: 'regions#show', as: :country_region
-    get '/', to: 'pages#home', as: :root
+    # get '/', to: 'pages#home', as: :root
   end
-  root 'pages#home'
+  # root 'pages#home'
   post '/', to: 'dashboard/payments#update_status' unless Rails.env.production?
 end
