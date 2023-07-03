@@ -1,4 +1,4 @@
-lock '~> 3.14.1'
+lock '~> 3.17.2'
 
 server '93.119.3.96', port: 22, roles: [:web, :app, :db], primary: true
 

@@ -63,7 +63,6 @@ class UpdateLodgingRatePlans
     def update_cancellation_policies
       parent_rate_plans.each do |rate_plan|
         rate_plan.dig(:cancellation_policies).each do |cancellation_policy|
-          # byebug
           rate_plan = RatePlan.find_by(crm_id: cancellation_policy[:rate_plan_id])
           _cancellation = CancellationPolicy.find_or_initialize_by(crm_id: cancellation_policy[:crm_id])
           _cancellation.attributes = cancellation_policy_params(cancellation_policy).merge(rate_plan_id: rate_plan&.id)
