@@ -11,10 +11,7 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::ApiController
 
   def create
     @campaign = Campaign.new(campaign_params)
-    # @campaign.category = params[:campaign][:category]
-
-    # for testing only, i have generated this hash
-    @campaign.category = { params[:campaign][:category].keys.first => params[:campaign][:category].values.first }
+    @campaign.category = params[:campaign][:category]
     if @campaign.save
       @campaign.region_ids = params[:campaign][:region_ids]
       set_image_sequence if !params[:sequence].blank?
@@ -28,10 +25,7 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::ApiController
   end
 
   def update
-    #@campaign.category = params[:campaign][:category]
-
-    # for testing only, i have generated this hash
-    @campaign.category = { params[:campaign][:category].keys.first => params[:campaign][:category].values.first }
+    @campaign.category = params[:campaign][:category]
     @campaign.publish = params[:campaign][:publish] if params[:campaign][:publish].blank?
     if @campaign.update(campaign_params)
       @campaign.region_ids = params[:campaign][:region_ids]
