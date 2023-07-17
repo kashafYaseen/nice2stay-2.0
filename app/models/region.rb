@@ -15,8 +15,9 @@ class Region < ApplicationRecord
   globalize_accessors
 
   searchkick text_middle: [:name_en, :name_nl]
-
-  validates :name, presence: true
+  # add validation for the presence of country_id and its uniqueness
+  validates :name, :country_id, presence: true
+  validates :name, uniqueness: { scope: :country_id }
 
   default_scope { includes(:translations) }
 

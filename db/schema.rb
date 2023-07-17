@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_30_150259) do
+ActiveRecord::Schema.define(version: 2023_07_17_071048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1029,6 +1029,7 @@ ActiveRecord::Schema.define(version: 2023_05_30_150259) do
     t.string "images", default: [], array: true
     t.integer "crm_id"
     t.boolean "published", default: false
+    t.index ["country_id", "name"], name: "index_regions_on_country_id_and_name", unique: true
     t.index ["country_id"], name: "index_regions_on_country_id"
     t.index ["crm_id"], name: "index_regions_on_crm_id", unique: true
   end

@@ -60,7 +60,7 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
         :apartment_desc,
         :bb_desc,
         # videos_attributes: [:id, :url, :start, :stop, :_destroy],
-        images_attributes: [:image, :id, :_destroy],
+        # images_attributes: [:image, :id, :_destroy],
       )
     end
 end

@@ -39,7 +39,7 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
   private
 
     def get_country
-      @country = Country.friendly.find(params[:id])
+      @country = Country.find(params[:id])
     end
 
     def country_params
@@ -62,7 +62,7 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
         :dropdown,
         :sidebar,
         # videos_attributes: [:id, :url, :start, :stop, :_destroy], #this attribute is additional
-        images_attributes: [:image, :id, :_destroy],
+        # images_attributes: [:image, :id, :_destroy],
       )
     end
 end
