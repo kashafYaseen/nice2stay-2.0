@@ -1,9 +1,13 @@
 class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::ApiController
-
+  include Pagy::Backend
   before_action :find_place_category, only: [:update, :destroy]
 
   def index
-    render json: Crm::V1::PlaceCategorySerializer.new(PlaceCategory.all).serialized_json, status: :ok
+    query = params[:query]
+    @q = PlaceCategory.ransack(translations_name_cont: query)
+    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::PlaceCategorySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def edit
@@ -40,6 +44,6 @@ class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::ApiController
     end
 
     def place_category_params
-      params.require(:place_category).permit(:name, :color_code)
+      params.require(:place_category).permit(:name_en, :name_nl, :color_code)
     end
 end

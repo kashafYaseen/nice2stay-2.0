@@ -6,4 +6,7 @@ class PlaceCategory < ApplicationRecord
   friendly_id :name, use: :slugged
 
   translates :name, :slug
+  globalize_accessors
+
+  validates :name, presence: true, uniqueness: true
 end
