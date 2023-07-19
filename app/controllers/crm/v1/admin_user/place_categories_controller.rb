@@ -1,6 +1,5 @@
 class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::ApiController
-  include Pagy::Backend
-  before_action :find_place_category, only: [:update, :destroy]
+  before_action :set_place_category, only: [:update, :destroy]
 
   def index
     query = params[:query]
@@ -39,7 +38,7 @@ class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::ApiController
   end
 
   private
-    def find_place_category
+    def set_place_category
        @place_category = PlaceCategory.friendly.find(params[:id])
     end
 

@@ -1,8 +1,7 @@
 class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
-  include Pagy::Backend
   respond_to :html, :js
 
-  before_action :place_find, only: [:update, :edit, :destroy]
+  before_action :set_place, only: [:update, :edit, :destroy]
 
   def index
     query = params[:query]
@@ -63,7 +62,7 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
 
   private
 
-    def place_find
+    def set_place
       @place = Place.friendly.find(params[:id])
     end
 

@@ -1,4 +1,5 @@
 class Crm::V1::ApiController < ActionController::API
+  include Pagy::Backend
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error
 
   protected
