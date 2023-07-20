@@ -1,6 +1,6 @@
 class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
 
-  before_action :get_amenity, only: [:edit, :update, :destroy]
+  before_action :get_amenity, only: %i[edit update destroy]
 
   def index
     @amenities = Amenity.includes(:translations, :amenity_category, :translations).all

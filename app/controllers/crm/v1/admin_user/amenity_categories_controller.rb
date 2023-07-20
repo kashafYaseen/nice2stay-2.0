@@ -1,6 +1,6 @@
 class Crm::V1::AdminUser::AmenityCategoriesController < Crm::V1::ApiController
 
-  before_action :find_amenity_category, only: [:update, :destroy]
+  before_action :find_amenity_category, only: %i[edit update destroy]
 
   def index
     render json: Crm::V1::AmenityCategorySerializer.new(AmenityCategory.all).serialized_json, status: :ok
