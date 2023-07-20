@@ -1,10 +1,14 @@
 class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
-  before_action :get_country, only: [:edit, :update, :destroy]
+  before_action :set_country, only: [:edit, :update, :destroy]
 
   def index
-    render json: Crm::V1::CountrySerializer.new(Country.all).serialized_json, status: :ok
-    # render json: Crm::V1::CountrySerializer.new(Country.all.includes(:regions).ordered).serialized_json, status: :ok
+
+    query = params[:query]
+    @q = Country.ransack(translations_name_cont: query)
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::CountrySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
@@ -38,7 +42,7 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
   private
 
-    def get_country
+    def set_country
       @country = Country.find(params[:id])
     end
 
