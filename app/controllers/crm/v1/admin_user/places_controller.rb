@@ -1,10 +1,14 @@
 class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
   respond_to :html, :js
 
-  before_action :place_find, only: [:update, :edit, :destroy]
+  before_action :set_place, only: %i[edit update destroy]
 
   def index
-    render json: Crm::V1::PlaceSerializer.new(Place.all).serialized_json, status: :ok
+    query = params[:query]
+    @q = Place.ransack(translations_name_cont: query)
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::PlaceSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
@@ -58,12 +62,14 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
 
   private
 
-    def place_find
+    def set_place
       @place = Place.friendly.find(params[:id])
     end
 
     def place_params
       params.require(:place).permit(
+        :name_nl,
+        :name_en,
         :short_desc_nav,
         :short_desc,
         :header_dropdown,
@@ -72,11 +78,16 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
         :region_id,
         :place_category_id,
         :description,
+        :description_nl,
+        :description_en,
         :address,
         :spotlight,
         :publish,
         :slug,
-        :location_attributes => [:lat, :lon, :id]
+        :slug_nl,
+        :slug_en,
+        :longitude,
+        :latitude
       )
     end
 

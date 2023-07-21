@@ -1,6 +1,6 @@
 class Crm::V1::AdminUser::LodgingCategoriesController < Crm::V1::ApiController
 
-  before_action :find_lodging_category, only: [:update, :destroy]
+  before_action :find_lodging_category, only: %i[update destroy]
 
   def index
     render json: Crm::V1::LodgingCategorySerializer.new(LodgingCategory.all).serialized_json, status: :ok

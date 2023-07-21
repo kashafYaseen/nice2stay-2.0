@@ -1,6 +1,6 @@
 class Crm::V1::AdminUser::CampaignsController < Crm::V1::ApiController
 
-  before_action :get_campaign, only: [:edit, :update, :destroy]
+  before_action :get_campaign, only: %i[edit update destroy]
 
   def index
     render json: Crm::V1::CampaignSerializer.new(Campaign.all).serialized_json, status: :ok
@@ -70,7 +70,7 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::ApiController
         :slider_desc,
         {:publish => []},
         :category,
-        :price, #here this is price attribute nd in crm schema it is price_range 
+        :price, #here this is price attribute nd in crm schema it is price_range
         :url,  #here this is url attribute nd in crm schema it is redirect_url
         :slider,
         :from,
