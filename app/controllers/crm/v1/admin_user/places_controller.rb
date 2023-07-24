@@ -4,8 +4,7 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
   before_action :set_place, only: %i[edit update destroy]
 
   def index
-    query = params[:query]
-    @q = Place.ransack(translations_name_cont: query)
+    @q = Place.ransack(translations_name_cont: params[:query])
     @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::PlaceSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
@@ -16,13 +15,13 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
 
   def create
     # @geo = true       #this is to enable the geo-location attributes (lat, long) on FE input form
-    @place = Place.new(place_params)
-    if @place.save
+    place = Place.new(place_params)
+    if place.save
       set_image_sequence if !params[:sequence].blank?
-      render json: Crm::V1::PlaceSerializer.new(@place).serialized_json, status: :ok
+      render json: Crm::V1::PlaceSerializer.new(place).serialized_json, status: :ok
     else
       @geo = true
-      unprocessable_entity(@place.errors)
+      unprocessable_entity(place.errors)
     end
   end
 

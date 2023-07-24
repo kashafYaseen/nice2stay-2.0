@@ -2,8 +2,7 @@ class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::ApiController
   before_action :set_place_category, only: %i[update destroy]
 
   def index
-    query = params[:query]
-    @q = PlaceCategory.ransack(translations_name_cont: query)
+    @q = PlaceCategory.ransack(translations_name_cont: params[:query])
     @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::PlaceCategorySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
@@ -16,11 +15,11 @@ class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::ApiController
   end
 
   def create
-    @place_category = PlaceCategory.new(place_category_params)
-    if @place_category.save
-      render json: Crm::V1::PlaceCategorySerializer.new(@place_category).serialized_json, status: :ok
+    place_category = PlaceCategory.new(place_category_params)
+    if place_category.save
+      render json: Crm::V1::PlaceCategorySerializer.new(place_category).serialized_json, status: :ok
     else
-      unprocessable_entity(@place_category.errors)
+      unprocessable_entity(place_category.errors)
     end
   end
 

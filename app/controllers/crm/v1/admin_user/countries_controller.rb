@@ -4,8 +4,7 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
   def index
 
-    query = params[:query]
-    @q = Country.ransack(translations_name_cont: query)
+    @q = Country.ransack(translations_name_cont: params[:query])
     @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::CountrySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
@@ -19,11 +18,11 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
   end
 
   def create
-    @country = Country.new(country_params)
-    if @country.save
-      render json: Crm::V1::CountrySerializer.new(@country).serialized_json, status: :ok
+    country = Country.new(country_params)
+    if country.save
+      render json: Crm::V1::CountrySerializer.new(country).serialized_json, status: :ok
     else
-      unprocessable_entity(@country.errors)
+      unprocessable_entity(country.errors)
     end
   end
 
