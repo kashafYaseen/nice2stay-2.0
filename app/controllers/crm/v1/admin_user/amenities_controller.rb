@@ -1,10 +1,9 @@
 class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
 
-  before_action :set_amenity, only: %i[edit update destroy]
+  before_action :set_amenity, only: %i[edit update destroy update_icon]
 
   def index
-    query = params[:query]
-    @q = Amenity.ransack(translations_name_cont: query)
+    @q = Amenity.ransack(translations_name_cont: params[:query])
     @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::AmenitySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
@@ -17,11 +16,11 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
   end
 
   def create
-    @amenity = Amenity.new(amenity_params)
-    if @amenity.save
-      render json: Crm::V1::AmenitySerializer.new(@amenity).serialized_json, status: :ok
+    amenity = Amenity.new(amenity_params)
+    if amenity.save
+      render json: Crm::V1::AmenitySerializer.new(amenity).serialized_json, status: :ok
     else
-      unprocessable_entity(@amenity.errors)
+      unprocessable_entity(amenity.errors)
     end
   end
 
@@ -35,7 +34,6 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
 
   #to update the icon column only
   def update_icon
-    @amenity = Amenity.friendly.find(params[:amenity_id])
     if @amenity.update_column(:icon, amenity_params[:icon])
       render json: { updated: true }, status: :ok
     else

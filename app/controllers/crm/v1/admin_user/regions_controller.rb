@@ -3,8 +3,7 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
   before_action :set_region, only: %i[edit update destroy]
 
   def index
-    query = params[:query]
-    @q = Region.ransack(translations_name_cont: query)
+    @q = Region.ransack(translations_name_cont: params[:query])
     @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::RegionSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
@@ -17,11 +16,11 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
   end
 
   def create
-    @region = Region.new(region_params)
-    if @region.save
-      render json: Crm::V1::RegionSerializer.new(@region).serialized_json, status: :ok
+    region = Region.new(region_params)
+    if region.save
+      render json: Crm::V1::RegionSerializer.new(region).serialized_json, status: :ok
     else
-      unprocessable_entity(@region.errors)
+      unprocessable_entity(region.errors)
     end
   end
 
