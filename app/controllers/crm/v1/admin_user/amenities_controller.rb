@@ -1,10 +1,13 @@
 class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
 
-  before_action :get_amenity, only: %i[edit update destroy]
+  before_action :set_amenity, only: %i[edit update destroy]
 
   def index
-    @amenities = Amenity.includes(:translations, :amenity_category, :translations).all
-    render json: Crm::V1::AmenitySerializer.new(@amenities).serialized_json, status: :ok
+    query = params[:query]
+    @q = Amenity.ransack(translations_name_cont: query)
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::AmenitySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
@@ -47,7 +50,7 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
 
   private
 
-    def get_amenity
+    def set_amenity
       @amenity = Amenity.friendly.find(params[:id])
     end
 
@@ -58,6 +61,7 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
         :amenity_category_id,
         :slug_en,
         :slug_nl,
+        :filter_enabled,
         # :add_to_search_filters, #this is an additional attribute
         :hot,
         :icon,

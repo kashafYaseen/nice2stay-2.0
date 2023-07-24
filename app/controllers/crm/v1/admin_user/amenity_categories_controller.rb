@@ -1,9 +1,13 @@
 class Crm::V1::AdminUser::AmenityCategoriesController < Crm::V1::ApiController
 
-  before_action :find_amenity_category, only: %i[edit update destroy]
+  before_action :set_amenity_category, only: %i[edit update destroy]
 
   def index
-    render json: Crm::V1::AmenityCategorySerializer.new(AmenityCategory.all).serialized_json, status: :ok
+    query = params[:query]
+    @q = AmenityCategory.ransack(translations_name_cont: query)
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::AmenityCategorySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def edit
@@ -35,11 +39,11 @@ class Crm::V1::AdminUser::AmenityCategoriesController < Crm::V1::ApiController
   end
 
   private
-    def find_amenity_category
+    def set_amenity_category
        @amenity_category = AmenityCategory.find(params[:id])
     end
 
     def amenity_category_params
-      params.require(:amenity_category).permit(:name)
+      params.require(:amenity_category).permit(:name_en, :name_nl)
     end
 end
