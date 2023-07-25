@@ -10,7 +10,7 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
   end
 
   def new
-    render json: { amenity_categories: AmenityCategory.all}
+    render json: Crm::V1::AmenityCategorySerializer.new(AmenityCategory.all).serializable_hash, status: :ok
   end
 
   def edit

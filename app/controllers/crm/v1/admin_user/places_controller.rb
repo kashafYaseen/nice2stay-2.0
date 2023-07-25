@@ -12,9 +12,9 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
 
   def new
     render json: {
-      place_categories: PlaceCategory.all,
-      countries: Country.all
-    }
+      place_categories: Crm::V1::PlaceCategorySerializer.new(PlaceCategory.all).serializable_hash,
+      countries: Crm::V1::CountrySerializer.new(Country.all).serializable_hash
+    }, status: :ok
   end
 
   def create

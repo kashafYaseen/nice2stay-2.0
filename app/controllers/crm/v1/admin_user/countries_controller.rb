@@ -1,6 +1,6 @@
 class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
-  before_action :set_country, only: %i[edit update destroy]
+  before_action :set_country, only: %i[edit update destroy regions]
 
   def index
 
@@ -39,10 +39,8 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
     render json: { removed: @country.destroyed? }, status: :ok
   end
 
-  def regions_by_country
-    country = Country.find(params[:id])
-    regions = country.regions
-    render json: regions
+  def regions
+    render json: Crm::V1::RegionSerializer.new(@country.regions).serializable_hash, status: :ok
   end
 
   private
@@ -53,6 +51,7 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
     def country_params
       params.require(:country).permit(
+        :name,
         :name_en,
         :name_nl,
         :slug_en,

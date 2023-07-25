@@ -10,7 +10,7 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
   end
 
   def new
-    render json: { countries: Country.all}
+    render json: Crm::V1::CountrySerializer.new(Country.all).serializable_hash, status: :ok
   end
 
   def edit
