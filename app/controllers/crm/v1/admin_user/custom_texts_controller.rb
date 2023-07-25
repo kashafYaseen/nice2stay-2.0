@@ -1,6 +1,6 @@
 class Crm::V1::AdminUser::CustomTextsController < Crm::V1::ApiController
 
-  before_action :set_custom_text, only: [:update, :destroy]
+  before_action :set_custom_text, only:%i[update destroy]
 
   def index
     render json: Crm::V1::CustomTextSerializer.new(CustomText.all).serialized_json, status: :ok

@@ -1,10 +1,13 @@
 class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
-  before_action :get_country, only: [:edit, :update, :destroy]
+  before_action :set_country, only: %i[edit update destroy]
 
   def index
-    render json: Crm::V1::CountrySerializer.new(Country.all).serialized_json, status: :ok
-    # render json: Crm::V1::CountrySerializer.new(Country.all.includes(:regions).ordered).serialized_json, status: :ok
+
+    @q = Country.ransack(translations_name_cont: params[:query])
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::CountrySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
@@ -15,11 +18,11 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
   end
 
   def create
-    @country = Country.new(country_params)
-    if @country.save
-      render json: Crm::V1::CountrySerializer.new(@country).serialized_json, status: :ok
+    country = Country.new(country_params)
+    if country.save
+      render json: Crm::V1::CountrySerializer.new(country).serialized_json, status: :ok
     else
-      unprocessable_entity(@country.errors)
+      unprocessable_entity(country.errors)
     end
   end
 
@@ -38,7 +41,7 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
 
   private
 
-    def get_country
+    def set_country
       @country = Country.find(params[:id])
     end
 

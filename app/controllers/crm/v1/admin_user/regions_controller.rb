@@ -1,9 +1,12 @@
 class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
 
-  before_action :get_region, only: [:edit, :update, :destroy]
+  before_action :set_region, only: %i[edit update destroy]
 
   def index
-    render json: Crm::V1::RegionSerializer.new(Region.all).serialized_json, status: :ok
+    @q = Region.ransack(translations_name_cont: params[:query])
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::RegionSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
@@ -13,11 +16,11 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
   end
 
   def create
-    @region = Region.new(region_params)
-    if @region.save
-      render json: Crm::V1::RegionSerializer.new(@region).serialized_json, status: :ok
+    region = Region.new(region_params)
+    if region.save
+      render json: Crm::V1::RegionSerializer.new(region).serialized_json, status: :ok
     else
-      unprocessable_entity(@region.errors)
+      unprocessable_entity(region.errors)
     end
   end
 
@@ -36,7 +39,7 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
 
   private
 
-    def get_region
+    def set_region
       @region = Region.friendly.find(params[:id])
     end
 

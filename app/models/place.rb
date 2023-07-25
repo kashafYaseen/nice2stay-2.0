@@ -9,6 +9,8 @@ class Place < ApplicationRecord
   friendly_id :name, use: :slugged
 
   translates :details, :description, :name, :slug
+  globalize_accessors
+
 
   delegate :name, to: :place_category, allow_nil: true, prefix: true
 
