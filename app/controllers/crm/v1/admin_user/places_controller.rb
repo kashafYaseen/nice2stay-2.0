@@ -11,6 +11,10 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
   end
 
   def new
+    render json: {
+      place_categories: PlaceCategory.all,
+      countries: Country.all
+    }
   end
 
   def create

@@ -39,6 +39,12 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
     render json: { removed: @country.destroyed? }, status: :ok
   end
 
+  def regions_by_country
+    country = Country.find(params[:id])
+    regions = country.regions
+    render json: regions
+  end
+
   private
 
     def set_country

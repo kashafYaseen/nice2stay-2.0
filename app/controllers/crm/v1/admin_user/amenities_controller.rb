@@ -10,6 +10,7 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
   end
 
   def new
+    render json: { amenity_categories: AmenityCategory.all}
   end
 
   def edit

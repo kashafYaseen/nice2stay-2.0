@@ -10,6 +10,7 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::ApiController
   end
 
   def new
+    render json: { countries: Country.all}
   end
 
   def edit

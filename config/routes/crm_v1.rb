@@ -5,7 +5,9 @@ namespace :crm do
       resources :amenities
       resources :experiences
       resources :places
-      resources :countries
+      resources :countries do
+        get :regions_by_country, on: :member
+      end
       resources :regions
       resources :campaigns
       resources :custom_texts
