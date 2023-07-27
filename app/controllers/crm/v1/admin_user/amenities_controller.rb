@@ -1,5 +1,5 @@
 class Crm::V1::AdminUser::AmenitiesController < Crm::V1::ApiController
-
+  before_action :authenticate
   before_action :set_amenity, only: %i[edit update destroy update_icon]
 
   def index

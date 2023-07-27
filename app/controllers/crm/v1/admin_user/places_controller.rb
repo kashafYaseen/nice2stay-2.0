@@ -1,4 +1,5 @@
 class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
+  before_action :authenticate
   respond_to :html, :js
 
   before_action :set_place, only: %i[edit update destroy]

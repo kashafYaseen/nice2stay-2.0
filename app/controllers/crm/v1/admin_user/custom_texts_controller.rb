@@ -1,5 +1,5 @@
 class Crm::V1::AdminUser::CustomTextsController < Crm::V1::ApiController
-
+  before_action :authenticate
   before_action :set_custom_text, only:%i[update destroy]
 
   def index

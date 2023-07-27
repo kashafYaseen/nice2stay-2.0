@@ -1,5 +1,5 @@
 class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
-
+  before_action :authenticate
   before_action :set_country, only: %i[edit update destroy regions]
 
   def index

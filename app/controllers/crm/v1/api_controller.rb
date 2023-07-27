@@ -12,14 +12,6 @@ class Crm::V1::ApiController < ActionController::API
     @current_user = user
   end
 
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
-  end
-
-  def locale
-    I18n.locale
-  end
-
   protected
     def set_user_if_present
       authenticate_token
@@ -29,9 +21,8 @@ class Crm::V1::ApiController < ActionController::API
       authenticate_token || not_authenticated
     end
 
-    def invalid_credentials
-      render json: { errors: [I18n.t('devise.failure.invalid', authentication_keys: 'email')] }, status: :unauthorized
-      return
+    def record_not_found_error
+      render json: { errors: ['Object was not found'] }, status: :not_found
     end
 
     def unprocessable_entity(errors)
@@ -39,13 +30,13 @@ class Crm::V1::ApiController < ActionController::API
       return
     end
 
-    def not_authenticated
-      render json: { errors: ['User not authorized'] }, status: :unauthorized
+    def invalid_credentials
+      render json: { errors: [I18n.t('devise.failure.invalid', authentication_keys: 'email')] }, status: :unauthorized
       return
     end
 
+
     def authenticate_token
-      return true
       return false unless user_id_in_token?
 
       @current_user = User.find_by(id: auth_token[:user_id])
@@ -54,11 +45,12 @@ class Crm::V1::ApiController < ActionController::API
       true
     end
 
-  private
-    def record_not_found_error
-      render json: { errors: ['Object was not found'] }, status: :not_found
+    def not_authenticated
+      render json: { errors: ['User not authorized'] }, status: :unauthorized
+      return
     end
 
+    private
     def http_token
       @http_token = request.headers['AUTH-TOKEN']
     end
@@ -70,5 +62,4 @@ class Crm::V1::ApiController < ActionController::API
     def user_id_in_token?
       http_token && auth_token && !auth_token.is_a?(String) && auth_token[:user_id].to_i
     end
-
 end
