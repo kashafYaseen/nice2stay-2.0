@@ -1,4 +1,4 @@
-class Crm::V1::AdminUser::CountriesController < Crm::V1::ApiController
+class Crm::V1::AdminUser::CountriesController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :set_country, only: %i[edit update destroy regions]
 
