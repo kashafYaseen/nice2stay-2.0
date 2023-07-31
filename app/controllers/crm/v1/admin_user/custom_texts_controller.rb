@@ -1,4 +1,4 @@
-class Crm::V1::AdminUser::CustomTextsController < Crm::V1::ApiController
+class Crm::V1::AdminUser::CustomTextsController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :set_custom_text, only:%i[update destroy]
 

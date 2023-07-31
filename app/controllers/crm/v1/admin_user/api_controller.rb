@@ -1,8 +1,7 @@
-class Crm::V1::ApiController < ActionController::API
+class Crm::V1::AdminUser::ApiController < ActionController::API
   include Pagy::Backend
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error
 
-  before_action :set_locale
 
   def current_user
     @current_user
@@ -37,9 +36,9 @@ class Crm::V1::ApiController < ActionController::API
 
 
     def authenticate_token
-      return false unless user_id_in_token?
+      return false unless admin_user_id_in_token?
 
-      @current_user = User.find_by(id: auth_token[:user_id])
+      @current_user = AdminUser.find_by(id: auth_token[:admin_user_id])
       return false unless @current_user.present?
       set_current_user @current_user
       true
@@ -59,7 +58,7 @@ class Crm::V1::ApiController < ActionController::API
       @auth_token = JsonWebToken.decode(http_token)
     end
 
-    def user_id_in_token?
-      http_token && auth_token && !auth_token.is_a?(String) && auth_token[:user_id].to_i
+    def admin_user_id_in_token?
+      http_token && auth_token && !auth_token.is_a?(String) && auth_token[:admin_user_id].to_i
     end
 end

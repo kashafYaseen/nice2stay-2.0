@@ -1,4 +1,4 @@
-class Crm::V1::AdminUser::ExperiencesController < Crm::V1::ApiController
+class Crm::V1::AdminUser::ExperiencesController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :get_experience, only: %i[edit update destroy]
 

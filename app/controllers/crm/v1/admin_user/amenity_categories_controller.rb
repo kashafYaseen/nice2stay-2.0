@@ -1,4 +1,4 @@
-class Crm::V1::AdminUser::AmenityCategoriesController < Crm::V1::ApiController
+class Crm::V1::AdminUser::AmenityCategoriesController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :set_amenity_category, only: %i[edit update destroy]
 

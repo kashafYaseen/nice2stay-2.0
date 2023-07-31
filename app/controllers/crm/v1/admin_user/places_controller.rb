@@ -1,4 +1,4 @@
-class Crm::V1::AdminUser::PlacesController < Crm::V1::ApiController
+class Crm::V1::AdminUser::PlacesController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   respond_to :html, :js
 
