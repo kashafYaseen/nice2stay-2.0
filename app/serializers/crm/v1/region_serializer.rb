@@ -1,6 +1,6 @@
 class Crm::V1::RegionSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :name_en, :name_nl, :slug_en, :slug_nl, :title_en, :title_nl, :content_en, :content_nl,
+  attributes :id, :name, :name_en, :name_nl, :slug_en, :slug_nl, :title_en, :title_nl, :content_en, :content_nl,
               :meta_title_en, :meta_title_nl, :published, :short_desc, :country_id, :villas_desc,
               :apartment_desc, :bb_desc
 
