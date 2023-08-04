@@ -4,7 +4,7 @@ class Crm::V1::AdminUser::PlaceCategoriesController < Crm::V1::AdminUser::ApiCon
 
   def index
     @q = PlaceCategory.ransack(translations_name_cont: params[:query])
-    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::PlaceCategorySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
