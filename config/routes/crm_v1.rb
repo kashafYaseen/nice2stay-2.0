@@ -8,7 +8,9 @@ namespace :crm do
       resources :countries do
         get :regions, on: :member
       end
-
+      resources :owners do
+        get :resend_invitation, on: :member
+      end
       resources :regions
       resources :campaigns
       resources :custom_texts
