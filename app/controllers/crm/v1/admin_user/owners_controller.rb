@@ -28,7 +28,7 @@ end
 
 def update
   if @owner.update(owner_params)
-    render json: Crm::V1::RegionSerializer.new(@owner).serialized_json, status: :ok
+    render json: Crm::V1::OwnerSerializer.new(@owner).serialized_json, status: :ok
   else
     unprocessable_entity(@region.errors)
   end

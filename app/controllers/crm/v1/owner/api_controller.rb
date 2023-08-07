@@ -1,6 +1,7 @@
 class Crm::V1::Owner::ApiController < ActionController::API
   include Pagy::Backend
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error
+  before_action :set_locale
 
 
   def current_user
@@ -9,6 +10,14 @@ class Crm::V1::Owner::ApiController < ActionController::API
 
   def set_current_user(user)
     @current_user = user
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def locale
+    I18n.locale
   end
 
   protected

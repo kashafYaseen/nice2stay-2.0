@@ -2,12 +2,13 @@ class Crm::V1::Owner::InvitationsController < Crm::V1::Owner::ApiController
   before_action :set_owner, only: [:update]
 
   def edit
-    redirect_to 'http://127.0.0.1:5173/business-owner/invitation-form'
+    redirect_to "http://127.0.0.1:5173/#{locale}/business-owner/invitation-form"
   end
 
   def update
     if (@owner.invitation_accepted_at.nil?)
       @owner.invitation_accepted_at = Time.now
+      @owner.invitation_token = nil
       if @owner.update(owner_params)
         authToken = auth_token
         exp_time = update_token_expire_time
