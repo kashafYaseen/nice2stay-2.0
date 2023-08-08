@@ -1,17 +1,20 @@
 class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
-  before_action :get_campaign, only: %i[edit update destroy]
+  before_action :set_campaign, only: %i[edit update destroy]
 
   def index
-    render json: Crm::V1::CampaignSerializer.new(Campaign.all).serialized_json, status: :ok
+    @q = Campaign.ransack(translations_title_cont: params[:query])
+    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+
+    render json: Crm::V1::CampaignSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
+    render json: { countries: Crm::V1::CountrySerializer.new(Country.all).serializable_hash }, status: :ok
   end
 
   def create
     @campaign = Campaign.new(campaign_params)
-    @campaign.category = params[:campaign][:category]
     if @campaign.save
       @campaign.region_ids = params[:campaign][:region_ids]
       set_image_sequence if !params[:sequence].blank?
@@ -25,18 +28,32 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
   end
 
   def update
-    @campaign.category = params[:campaign][:category]
     @campaign.publish = params[:campaign][:publish] if params[:campaign][:publish].blank?
     if @campaign.update(campaign_params)
       @campaign.region_ids = params[:campaign][:region_ids]
       set_image_sequence if !params[:sequence].blank?
+      render json: Crm::V1::CampaignSerializer.new(@campaign).serialized_json, status: :ok
     else
-      render :edit
+      unprocessable_entity(@campaign.errors)
     end
   end
 
   def destroy
     @campaign.destroy
+  end
+
+  def options_from_category
+    if (params[:category_id] == '0')
+      render json: { experiences: Crm::V1::ExperienceSerializer.new(Experience.all).serializable_hash }, status: :ok
+    elsif (params[:category_id] == '1')
+      render json: { lodging_categories: Crm::V1::LodgingCategorySerializer.new(LodgingCategory.all).serializable_hash }, status: :ok
+    elsif (params[:category_id] == '2')
+      render json: { guests: (1..30).to_a }, status: :ok
+    elsif (params[:category_id] == '3')
+      render json: { amenities: Crm::V1::AmenitySerializer.new(Amenity.all).serializable_hash }, status: :ok
+    else
+      render json: [], status: :ok
+    end
   end
 
   # def more_category
@@ -54,7 +71,7 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
 
   private
 
-    def get_campaign
+    def set_campaign
       @campaign = Campaign.find_by(id: params[:id])
     end
 
@@ -68,8 +85,8 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
         :description_nl,
         :description_en,
         :slider_desc,
-        {:publish => []},
-        :category,
+        { publish: [] },
+        { category: {} },
         :price, #here this is price attribute nd in crm schema it is price_range
         :url,  #here this is url attribute nd in crm schema it is redirect_url
         :slider,

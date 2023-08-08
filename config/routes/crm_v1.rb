@@ -9,7 +9,9 @@ namespace :crm do
         get :regions, on: :member
       end
       resources :regions
-      resources :campaigns
+      resources :campaigns do
+        get :options_from_category, on: :collection
+      end
       resources :custom_texts
       resources :amenity_categories
       resources :cleaning_costs
