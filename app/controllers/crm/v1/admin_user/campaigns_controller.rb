@@ -4,7 +4,7 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
 
   def index
     @q = Campaign.ransack(translations_title_cont: params[:query])
-    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::CampaignSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
@@ -28,7 +28,6 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
   end
 
   def update
-    @campaign.publish = params[:campaign][:publish] if params[:campaign][:publish].blank?
     if @campaign.update(campaign_params)
       @campaign.region_ids = params[:campaign][:region_ids]
       set_image_sequence if !params[:sequence].blank?
@@ -42,32 +41,20 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
     @campaign.destroy
   end
 
-  def options_from_category
-    if (params[:category_id] == '0')
-      render json: { experiences: Crm::V1::ExperienceSerializer.new(Experience.all).serializable_hash }, status: :ok
-    elsif (params[:category_id] == '1')
-      render json: { lodging_categories: Crm::V1::LodgingCategorySerializer.new(LodgingCategory.all).serializable_hash }, status: :ok
-    elsif (params[:category_id] == '2')
-      render json: { guests: (1..30).to_a }, status: :ok
-    elsif (params[:category_id] == '3')
-      render json: { amenities: Crm::V1::AmenitySerializer.new(Amenity.all).serializable_hash }, status: :ok
-    else
-      render json: [], status: :ok
-    end
+  def options
+    category_options = if (params[:category] == 'experiences')
+        { experiences: Crm::V1::ExperienceSerializer.new(Experience.all).serializable_hash }
+      elsif (params[:category] == 'categories')
+        { categories: Crm::V1::LodgingCategorySerializer.new(LodgingCategory.all).serializable_hash }
+      elsif (params[:category] == 'guests')
+        { guests: (1..30).to_a }
+      elsif (params[:category] == 'amenities')
+        { amenities: Crm::V1::AmenitySerializer.new(Amenity.all).serializable_hash }
+      else
+        []
+      end
+      render json: category_options, status: :ok
   end
-
-  # def more_category
-  #   @parent_id = Time.now.to_i
-  # end
-
-  # def select_category
-  #   @parent_id = params[:parent_id]
-  #   @category = params[:category]
-  #   @categories_count = params[:categories_count]
-  # end
-
-  # def capaign_data
-  # end
 
   private
 
@@ -102,11 +89,6 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
         :crm_urls, #here it is crm_urls and in crm schema it is urls
         :min_price,
         :max_price,
-        # :meta_title,
-        # :meta_description,
-        # :experience_id,
-        # :locale,
-        # :label,
       )
     end
 
