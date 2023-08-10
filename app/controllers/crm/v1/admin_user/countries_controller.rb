@@ -3,9 +3,8 @@ class Crm::V1::AdminUser::CountriesController < Crm::V1::AdminUser::ApiControlle
   before_action :set_country, only: %i[edit update destroy regions]
 
   def index
-
-    @q = Country.ransack(translations_name_cont: params[:query])
-    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+    @q = ransack_search_translated(Country, :name, query: params[:query])
+    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::CountrySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end

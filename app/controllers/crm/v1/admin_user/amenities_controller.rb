@@ -3,8 +3,8 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::AdminUser::ApiControlle
   before_action :set_amenity, only: %i[edit update destroy update_icon]
 
   def index
-    @q = Amenity.ransack(translations_name_cont: params[:query])
-    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+    @q = ransack_search_translated(Amenity, :name, query: params[:query])
+    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::AmenitySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end

@@ -5,8 +5,8 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::AdminUser::ApiController
   before_action :set_place, only: %i[edit update destroy]
 
   def index
-    @q = Place.ransack(translations_name_cont: params[:query])
-    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+    @q = ransack_search_translated(Place, :name, query: params[:query])
+    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::PlaceSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end

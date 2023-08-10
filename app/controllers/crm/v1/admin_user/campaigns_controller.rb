@@ -3,7 +3,8 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
   before_action :set_campaign, only: %i[edit update destroy]
 
   def index
-    @q = Campaign.ransack(translations_title_cont: params[:query])
+    @q = ransack_search_translated(Campaign, :title, query: params[:query])
+    # @q = Campaign.ransack(translations_title_cont: params[:query], translations_locale_eq: I18n.locale)
     @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::CampaignSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
