@@ -1,6 +1,7 @@
 class Crm::V1::AdminUser::AmenitiesController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :set_amenity, only: %i[edit update destroy update_icon]
+  before_action :initialize_form_data, only: %i[new edit]
 
   def index
     @q = ransack_search_translated(Amenity, :name, query: params[:query])
@@ -10,7 +11,6 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::AdminUser::ApiControlle
   end
 
   def new
-    render json: Crm::V1::AmenityCategorySerializer.new(AmenityCategory.all).serializable_hash, status: :ok
   end
 
   def edit
@@ -48,6 +48,10 @@ class Crm::V1::AdminUser::AmenitiesController < Crm::V1::AdminUser::ApiControlle
   end
 
   private
+
+    def initialize_form_data
+      render json: Crm::V1::AmenityCategorySerializer.new(AmenityCategory.all).serializable_hash, status: :ok
+    end
 
     def set_amenity
       @amenity = Amenity.friendly.find(params[:id])

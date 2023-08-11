@@ -1,6 +1,7 @@
 class Crm::V1::AdminUser::RegionsController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :set_region, only: %i[edit update destroy]
+  before_action :initialize_form_data, only: %i[new edit]
 
   def index
     @q = ransack_search_translated(Region, :name, query: params[:query])
@@ -10,7 +11,6 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::AdminUser::ApiController
   end
 
   def new
-    render json: Crm::V1::CountrySerializer.new(Country.all).serializable_hash, status: :ok
   end
 
   def edit
@@ -39,6 +39,10 @@ class Crm::V1::AdminUser::RegionsController < Crm::V1::AdminUser::ApiController
   end
 
   private
+
+    def initialize_form_data
+      render json: Crm::V1::CountrySerializer.new(Country.all).serializable_hash, status: :ok
+    end
 
     def set_region
       @region = Region.friendly.find(params[:id])

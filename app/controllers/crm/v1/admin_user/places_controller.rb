@@ -2,7 +2,8 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   respond_to :html, :js
 
-  before_action :set_place, only: %i[edit update destroy]
+  before_action :set_place, only: %i[update destroy]
+  before_action :initialize_form_data, only: %i[new edit]
 
   def index
     @q = ransack_search_translated(Place, :name, query: params[:query])
@@ -12,10 +13,6 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::AdminUser::ApiController
   end
 
   def new
-    render json: {
-      place_categories: Crm::V1::PlaceCategorySerializer.new(PlaceCategory.all).serializable_hash,
-      countries: Crm::V1::CountrySerializer.new(Country.all).serializable_hash
-    }, status: :ok
   end
 
   def create
@@ -65,6 +62,13 @@ class Crm::V1::AdminUser::PlacesController < Crm::V1::AdminUser::ApiController
   end
 
   private
+
+  def initialize_form_data
+    render json: {
+      place_categories: Crm::V1::PlaceCategorySerializer.new(PlaceCategory.all).serializable_hash,
+      countries: Crm::V1::CountrySerializer.new(Country.all).serializable_hash
+    }, status: :ok
+  end
 
     def set_place
       @place = Place.friendly.find(params[:id])
