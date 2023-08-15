@@ -58,6 +58,15 @@ class Crm::V1::AdminUser::ApiController < ActionController::API
     end
 
   private
+
+  def ransack_search_translated(model, query_column, options = {})
+    ransack_params = {
+      "translations_#{query_column}_cont" => options[:query],
+      "translations_locale_eq" => I18n.locale
+    }
+    model.ransack(ransack_params)
+  end
+
     def http_token
       @http_token = request.headers['AUTH-TOKEN']
     end

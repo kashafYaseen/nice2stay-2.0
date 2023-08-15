@@ -15,6 +15,8 @@ class Campaign < ApplicationRecord
   translates :title, :url, :description, :crm_urls
   globalize_accessors
 
+  before_save :generate_url
+
   default_scope { includes(:translations) }
   scope :home_page, -> { where(collection: true, popular_homepage: true) }
   scope :menu, -> { where(slider: true) }
@@ -26,7 +28,6 @@ class Campaign < ApplicationRecord
   end
 
   def search_data
-    url_en, url_nl = redirect_url
     attributes.merge(
       title_en: title_en,
       title_nl: title_nl,
@@ -34,11 +35,11 @@ class Campaign < ApplicationRecord
       description_nl: description_nl,
       regions: regions.collect(&:name),
       redirect_url_en: url_en,
-      redirect_url_nl: url_nl
+      redirect_url_nl: url_nl,
     )
   end
 
-  def redirect_url
+  def generate_url
     url_en = []
     url_nl = []
 
@@ -90,14 +91,15 @@ class Campaign < ApplicationRecord
         url_nl << "#{url_key}=#{values.join}"
       end
     end
-    ["?#{url_en.join("&")}", "?#{url_nl.join("&")}"]
+    self.url_en = "?#{url_en.join("&")}"
+    self.url_nl = "?#{url_nl.join("&")}"
   end
 
   def get_country(id)
-    Country.find_by(crm_id: id)
+    Country.find_by(id: id)
   end
 
   def get_region(id)
-    Region.find_by(crm_id: id)
+    Region.find_by(id: id)
   end
 end

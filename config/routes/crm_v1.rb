@@ -12,7 +12,9 @@ namespace :crm do
         get :resend_invitation, on: :member
       end
       resources :regions
-      resources :campaigns
+      resources :campaigns do
+        get :options, on: :collection
+      end
       resources :custom_texts
       resources :amenity_categories
       resources :cleaning_costs
