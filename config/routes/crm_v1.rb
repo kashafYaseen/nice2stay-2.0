@@ -8,6 +8,13 @@ namespace :crm do
       resources :countries do
         get :regions, on: :member
       end
+      resources :owners do
+        get :resend_invitation, on: :member
+        collection do
+          get :exact_partner_accounts
+          get :owners_commissions
+        end
+      end
       resources :regions
       resources :campaigns do
         get :options, on: :collection
