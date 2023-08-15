@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_31_061800) do
+ActiveRecord::Schema.define(version: 2023_08_08_122510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -809,8 +809,28 @@ ActiveRecord::Schema.define(version: 2023_07_31_061800) do
     t.bigint "admin_user_id"
     t.integer "pre_payment", default: 30
     t.integer "final_payment", default: 70
+    t.string "token_expires_at"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.bigint "invited_by_id"
+    t.string "invited_by_type"
+    t.integer "invitations_count", default: 0
+    t.string "business_name"
+    t.integer "account_id"
+    t.boolean "email_boolean", default: false
+    t.boolean "not_interested", default: false
+    t.string "language"
+    t.boolean "updating_availability", default: false
+    t.boolean "automated_availability", default: false
+    t.bigint "country_id"
+    t.bigint "region_id"
     t.index ["admin_user_id"], name: "index_owners_on_admin_user_id"
+    t.index ["country_id"], name: "index_owners_on_country_id"
     t.index ["email"], name: "index_owners_on_email", unique: true
+    t.index ["invited_by_id"], name: "index_owners_on_invited_by_id"
+    t.index ["region_id"], name: "index_owners_on_region_id"
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
   end
 
@@ -1422,6 +1442,9 @@ ActiveRecord::Schema.define(version: 2023_07_31_061800) do
   add_foreign_key "offer_lodgings", "offers", on_delete: :cascade
   add_foreign_key "offers", "leads", on_delete: :cascade
   add_foreign_key "owners", "admin_users"
+  add_foreign_key "owners", "admin_users", column: "invited_by_id"
+  add_foreign_key "owners", "countries"
+  add_foreign_key "owners", "regions"
   add_foreign_key "places", "countries", on_delete: :cascade
   add_foreign_key "places", "place_categories", on_delete: :cascade
   add_foreign_key "places", "regions", on_delete: :cascade
