@@ -3,8 +3,8 @@ class Crm::V1::AdminUser::AmenityCategoriesController < Crm::V1::AdminUser::ApiC
   before_action :set_amenity_category, only: %i[edit update destroy]
 
   def index
-    @q = AmenityCategory.ransack(translations_name_cont: params[:query])
-    @pagy, @records = pagy(@q.result(distinct: true), items: params[:items], page: params[:page], items: params[:per_page])
+    @q = ransack_search_translated(AmenityCategory, :name, query: params[:query])
+    @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::AmenityCategorySerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
