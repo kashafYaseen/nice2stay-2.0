@@ -3,7 +3,7 @@ class Crm::V1::AdminUser::ExperiencesController < Crm::V1::AdminUser::ApiControl
   before_action :get_experience, only: %i[edit update destroy]
 
   def index
-    @q = ransack_search_translated(Experience, :name, query: params[:query])
+    @q = ransack_search_translated(Experience, :translations_name, query: params[:query])
     @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::ExperienceSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
