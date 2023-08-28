@@ -1,6 +1,6 @@
 class Owner < ApplicationRecord
   devise :database_authenticatable, :registerable, :invitable,
-         :recoverable, :rememberable, :trackable
+         :recoverable, :rememberable, :trackable, :validatable
 
   has_many :lodgings
   belongs_to :admin_user
