@@ -30,7 +30,7 @@ class Crm::V1::Owner::ApiController < ActionController::API
     end
 
     def record_not_found_error
-      render json: { errors: ['Object was not found'] }, status: :not_found
+      render json: { errors: 'Object was not found' }, status: :not_found
     end
 
     def unprocessable_entity(errors)
@@ -45,16 +45,16 @@ class Crm::V1::Owner::ApiController < ActionController::API
 
 
     def authenticate_token
-      return false unless admin_user_id_in_token?
+      return false unless owner_id_in_token?
 
-      @current_user = Owner.find_by(id: auth_token[:admin_user_id])
+      @current_user = Owner.find_by(id: auth_token[:owner_id])
       return false unless @current_user.present?
       set_current_user @current_user
       true
     end
 
     def not_authenticated
-      render json: { errors: ['User not authorized'] }, status: :unauthorized
+      render json: { errors: 'User not authorized' }, status: :unauthorized
       return
     end
 
@@ -67,7 +67,7 @@ class Crm::V1::Owner::ApiController < ActionController::API
       @auth_token = JsonWebToken.decode(http_token)
     end
 
-    def admin_user_id_in_token?
-      http_token && auth_token && !auth_token.is_a?(String) && auth_token[:admin_user_id].to_i
+    def owner_id_in_token?
+      http_token && auth_token && !auth_token.is_a?(String) && auth_token[:owner_id].to_i
     end
 end

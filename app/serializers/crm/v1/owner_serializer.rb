@@ -4,7 +4,7 @@ class Crm::V1::OwnerSerializer
               :pre_payment, :final_payment, :invitation_accepted_at, :admin_user_id, :token_expires_at
 
   attribute :auth_token, if: Proc.new { |user, params|
-    params && params[:auth_token] == true
+    params && params[:auth_token]
   }
 
   attributes :admin_user_name do |owner|
