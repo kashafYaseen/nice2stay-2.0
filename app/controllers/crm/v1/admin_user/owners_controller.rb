@@ -3,10 +3,10 @@ class Crm::V1::AdminUser::OwnersController < Crm::V1::AdminUser::ApiController
   before_action :set_owner, only: %i[edit update destroy resend_invitation ]
 
   def index
-    if params[:active] == "true"
+    if params[:active].to_boolean
       @q = ransack_search_translated(Owner.active_partners, :first_name_or_last_name_or_business_name, query: params[:query])
 
-    elsif params[:active] == "false"
+    elsif !params[:active].to_boolean
       @q = ransack_search_translated(Owner.inactive_partners, :business_name_or_email, query: params[:query])
 
     end
@@ -62,7 +62,7 @@ class Crm::V1::AdminUser::OwnersController < Crm::V1::AdminUser::ApiController
 
   end
 
-  def exact_partner_accounts
+  def active_partners
     @q = ransack_search_translated(Owner, :first_name_or_last_name_or_business_name, query: params[:query])
     @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
@@ -70,12 +70,12 @@ class Crm::V1::AdminUser::OwnersController < Crm::V1::AdminUser::ApiController
 
   end
 
-  def owners_commissions
+  def commissions
     @q = ransack_search_translated(Owner, :business_name, query: params[:query])
 
     @owners_commissions = Owner.commission_by_years.where(id: @q.result.pluck(:id))
     @pagy, @records = pagy(@owners_commissions, items: params[:items], page: params[:page], items: params[:per_page])
-    @commissions = calculate_commissions(@owners_commissions)
+    calculate_commissions(@owners_commissions)
     render_commissions_response
   end
 
@@ -100,21 +100,6 @@ class Crm::V1::AdminUser::OwnersController < Crm::V1::AdminUser::ApiController
         :business_name,
         :account_id
       )
-    end
-
-    def calculate_commissions(owners)
-      owners.map do |owner|
-        {
-          commission_previous_7_year: owner.commission_previous_7_year.to_f.round(2),
-          commission_previous_6_year: owner.commission_previous_6_year.to_f.round(2),
-          commission_previous_5_year: owner.commission_previous_5_year.to_f.round(2),
-          commission_previous_4_year: owner.commission_previous_4_year.to_f.round(2),
-          commission_previous_3_year: owner.commission_previous_3_year.to_f.round(2),
-          commission_previous_2_year: owner.commission_previous_2_year.to_f.round(2),
-          commission_previous_1_year: owner.commission_previous_1_year.to_f.round(2),
-          commission_next_1_year: owner.commission_next_1_year.to_f.round(2)
-        }
-      end
     end
 
     def render_commissions_response

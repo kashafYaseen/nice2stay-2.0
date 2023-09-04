@@ -11,8 +11,8 @@ namespace :crm do
       resources :owners do
         get :resend_invitation, on: :member
         collection do
-          get :exact_partner_accounts
-          get :owners_commissions
+          get :active_partners
+          get :commissions
         end
       end
       resources :regions

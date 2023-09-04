@@ -6,7 +6,7 @@ class Crm::V1::OwnerSerializer
              :automated_availability, :country_id, :region_id
 
   attribute :auth_token, if: Proc.new { |user, params|
-    params && params[:auth_token] == true
+    params && params[:auth_token]
   }
 
   attributes :admin_user_name do |owner|
