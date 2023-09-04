@@ -10,6 +10,10 @@ namespace :crm do
       end
       resources :owners do
         get :resend_invitation, on: :member
+        collection do
+          get :active_partners
+          get :commissions
+        end
       end
       resources :regions
       resources :campaigns do

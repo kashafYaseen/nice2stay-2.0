@@ -1,16 +1,16 @@
 class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiController
   before_action :authenticate
   before_action :set_campaign, only: %i[edit update destroy]
+  before_action :initialize_form_data, only: %i[new edit]
 
   def index
-    @q = ransack_search_translated(Campaign, :title, query: params[:query])
+    @q = ransack_search_translated(Campaign, :translations_title, query: params[:query])
     @pagy, @records = pagy(@q.result, items: params[:items], page: params[:page], items: params[:per_page])
 
     render json: Crm::V1::CampaignSerializer.new(@records).serializable_hash.merge(count: @q.result.count), status: :ok
   end
 
   def new
-    render json: { countries: Crm::V1::CountrySerializer.new(Country.all).serializable_hash }, status: :ok
   end
 
   def create
@@ -57,6 +57,10 @@ class Crm::V1::AdminUser::CampaignsController < Crm::V1::AdminUser::ApiControlle
   end
 
   private
+
+    def initialize_form_data
+      render json: { countries: Crm::V1::CountrySerializer.new(Country.all).serializable_hash }, status: :ok
+    end
 
     def set_campaign
       @campaign = Campaign.find_by(id: params[:id])
