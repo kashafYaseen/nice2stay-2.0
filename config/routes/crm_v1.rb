@@ -8,6 +8,9 @@ namespace :crm do
       resources :countries do
         get :regions, on: :member
       end
+      resources :owners do
+        get :resend_invitation, on: :member
+      end
       resources :regions
       resources :campaigns do
         get :options, on: :collection
@@ -17,6 +20,12 @@ namespace :crm do
       resources :cleaning_costs
       resources :lodging_categories
       resources :place_categories
+    end
+
+    namespace :owner do
+      devise_for :owner
+      resource :sessions, only: [:create, :update]
+      resources :invitations
     end
   end
 end
