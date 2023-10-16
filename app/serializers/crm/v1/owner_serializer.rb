@@ -4,7 +4,8 @@ class Crm::V1::OwnerSerializer
              :final_payment, :token_expires_at, :invitation_accepted_at,
              :admin_user_id, :business_name, :account_id,
              :email_boolean, :not_interested, :language, :updating_availability,
-             :automated_availability, :country_id, :region_id
+             :automated_availability, :country_id,
+             :region_id
 
   attribute :auth_token, if: Proc.new { |user, params|
     params && params[:auth_token]
