@@ -69,8 +69,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'dotenv-rails'
-  gem 'pry'
-  gem 'pry-rails'
+  # gem 'pry'
+  # gem 'pry-rails'
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.2'
   gem 'selenium-webdriver'
@@ -80,9 +80,9 @@ group :production do
   gem 'exception_notification'
 end
 
-group :staging do
-  gem 'exception_notification'
-end
+# group :staging do
+#   gem 'exception_notification'
+# end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
@@ -103,12 +103,13 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'bootstrap4-kaminari-views'
 gem 'devise', '~> 4.4'
 gem 'devise_invitable'
-gem 'devise-bootstrapped', github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
+gem 'devise-bootstrapped'
+# /, github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
 gem 'jquery-rails', '~> 4.3.1'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'webpacker', '~> 3.5'
