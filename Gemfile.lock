@@ -355,6 +355,8 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    nokogiri (1.13.10-x86_64-linux)
+      racc (~> 1.4)
     numerizer (0.1.1)
     oauth2 (1.4.11)
       faraday (>= 0.17.3, < 3.0)
@@ -592,6 +594,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   activeadmin
